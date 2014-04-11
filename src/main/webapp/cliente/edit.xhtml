@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+	<ui:composition template="/layout.xhtml">
+		<ui:define name="title">#{bundle.cliente}</ui:define>
+		<ui:define name="content">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">EDITAR</div>
+				<div class="panel-body">
+					<div class="modal-header" align="center">
+						<h:form>
+							<h:link outcome="contrato"
+								styleClass="btn btn-primary btn-lg link-group"
+								style="width:170px;">
+								<i class="glyphicon glyphicon-file" /> Contrato
+								<f:param value="#{clienteController.clienteSelecionado.id}"
+									name="clienteId"></f:param>
+							</h:link>
+							<h:commandLink action="acesso"
+								styleClass="btn btn-primary btn-lg link-group"
+								style="width:170px;">
+								<i class="glyphicon glyphicon-cloud" /> Acesso
+							<f:param value="#{clienteController.clienteSelecionado.id}"
+									name="clienteId"></f:param>
+							</h:commandLink>
+							<h:commandLink action="edit"
+								styleClass="btn btn-primary btn-lg link-group"
+								style="width:170px;">
+								<i class="glyphicon glyphicon-usd" /> Mensalidades
+							<f:param value="#{clienteController.clienteSelecionado.id}"
+									name="clienteId"></f:param>
+							</h:commandLink>
+						</h:form>
+					</div>
+					<h:form>
+						<h:panelGrid columns="2" styleClass="form-horizontal">
+
+							<h:outputLabel for="nome" value="#{bundle.nome}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="nome" required="true"
+								value="#{clienteController.clienteSelecionado.nome}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="rg" value="#{bundle.rg}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="rg"
+								value="#{clienteController.clienteSelecionado.rg}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="cpf" value="#{bundle.cpf}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="cpf"
+								value="#{clienteController.clienteSelecionado.cpf}"
+								styleClass="form-control m5 cpf" />
+
+							<h:outputLabel for="fone" value="#{bundle.fone}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="fone"
+								value="#{clienteController.clienteSelecionado.foneTitular}"
+								styleClass="form-control m5 phone" />
+
+							<h:outputLabel for="contato" value="#{bundle.contato}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="contato"
+								value="#{clienteController.clienteSelecionado.contato}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="foneContato" value="#{bundle.foneContato}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="foneContato"
+								value="#{clienteController.clienteSelecionado.foneContato}"
+								styleClass="form-control m5 phone" />
+
+							<h:outputLabel for="email" value="#{bundle.email}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="email"
+								value="#{clienteController.clienteSelecionado.email}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="cidade" value="#{bundle.cidade}"
+								styleClass="col-md-2 control-label" />
+							<h:selectOneMenu id="cidade"
+								value="#{clienteController.cidadeId}"
+								styleClass="m5 btn-primary btn-lg" required="true">
+								<f:selectItem itemLabel="#{bundle.select}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{clienteController.listCidades}"
+									var="cidade" itemLabel="#{cidade.nome}"
+									itemValue="#{cidade.id}" />
+								<f:ajax listener="#{clienteController.atualizaBairros}"
+									render="bairro" />
+							</h:selectOneMenu>
+
+							<h:outputLabel for="bairro" value="#{bundle.bairro}"
+								styleClass="col-md-2 control-label" />
+							<h:selectOneMenu id="bairro"
+								value="#{clienteController.clienteSelecionado.endereco.bairro.id}"
+								styleClass="m5 btn-primary btn-lg" required="true">
+								<f:selectItem itemLabel="#{bundle.select}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{clienteController.listBairros}"
+									var="bairro" itemLabel="#{bairro.nome}"
+									itemValue="#{bairro.id}" />
+							</h:selectOneMenu>
+
+							<h:outputLabel for="logradouro" value="#{bundle.logradouro}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="logradouro" required="true"
+								value="#{clienteController.clienteSelecionado.endereco.logradouro}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="numero" value="#{bundle.numero}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="numero" required="true"
+								value="#{clienteController.clienteSelecionado.endereco.numero}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="complemento" value="#{bundle.complemento}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="complemento"
+								value="#{clienteController.clienteSelecionado.endereco.complemento}"
+								styleClass="form-control m5" />
+
+						</h:panelGrid>
+
+						<div class="modal-footer">
+							<h:commandLink action="#{clienteController.atualizar()}"
+								styleClass="btn btn-primary btn-lg">
+								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+										</h:commandLink>
+
+							<h:link outcome="list" class="btn btn-primary btn-lg"
+								style="margin-left: 5px;">
+								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+							</h:link>
+						</div>
+					</h:form>
+
+				</div>
+			</div>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

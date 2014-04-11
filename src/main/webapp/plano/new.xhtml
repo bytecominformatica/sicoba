@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+	<ui:composition template="/layout.xhtml">
+		<ui:define name="title">#{bundle.plano}</ui:define>
+		<ui:define name="content">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">NOVO</div>
+				<div class="panel-body">
+
+					<h:form>
+						<h:panelGrid columns="2" styleClass="form-horizontal">
+
+							<h:outputLabel for="nome" value="#{bundle.nome}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="nome" required="true"
+								requiredMessage="#{bundle.nome} obrigatório"
+								value="#{planoController.novoPlano.nome}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="download" value="#{bundle.download}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="download" required="true"
+								requiredMessage="#{bundle.download} obrigatório"
+								value="#{planoController.novoPlano.download}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="upload" value="#{bundle.upload}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="upload" required="true"
+								requiredMessage="#{bundle.upload} obrigatório"
+								value="#{planoController.novoPlano.upload}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="wifi" value="#{bundle.wifi}"
+								styleClass="col-md-2 control-label" />
+							<h:selectOneMenu id="wifi"
+								value="#{planoController.novoPlano.wifi}"
+								styleClass="m5 btn-primary btn-lg" required="true"
+								requiredMessage="#{bundle.wifi} obrigatório">
+								<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
+								<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
+							</h:selectOneMenu>
+
+							<h:outputLabel for="valorInstalacao"
+								value="#{bundle.valorInstalacao}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="valorInstalacao" required="true"
+								requiredMessage="#{bundle.valorInstalacao} obrigatório"
+								value="#{planoController.novoPlano.valorInstalacao}"
+								styleClass="form-control m5" />
+
+							<h:outputLabel for="valorMensalidade"
+								value="#{bundle.valorMensalidade}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="valorMensalidade" required="true"
+								requiredMessage="#{bundle.valorMensalidade} obrigatório"
+								value="#{planoController.novoPlano.valorMensalidade}"
+								styleClass="form-control m5" />
+						</h:panelGrid>
+
+						<div class="modal-footer">
+							<h:commandLink action="#{planoController.salvar()}"
+								styleClass="btn btn-primary btn-lg">
+								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+										</h:commandLink>
+
+							<h:link outcome="list" class="btn btn-primary btn-lg"
+								style="margin-left: 5px;">
+								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+							</h:link>
+						</div>
+					</h:form>
+
+				</div>
+			</div>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

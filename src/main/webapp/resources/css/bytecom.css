@@ -1,0 +1,57 @@
+.content {
+	margin-top: 60px;
+}
+
+.usuarioLogado {
+	color: white;
+}
+
+.m5 {
+	margin: 5px;
+}
+
+select {
+	width: 100%;
+}
+
+input, textarea {
+	width: 97%;
+}
+
+.clear {
+	clear: both;
+}
+
+a {
+	color: #7E9F19;
+	text-decoration: none;
+}
+
+a:hover {
+	color: adbcd4;
+}
+
+.link-group {
+	margin-right: 5px;
+	margin-top: 5px;
+}
+
+
+
+/*Copyright*/
+.copyright {
+	font-size: 12px;
+	padding: 11px 0 7px;
+	background-image: -webkit-linear-gradient(top, #3c3c3c 0, #222 100%);
+	background-image: linear-gradient(to bottom, #3c3c3c 0, #222 100%);
+	background-repeat: repeat-x;
+	border-top: solid 1px #777;
+}
+
+.copyright p {
+	color: #dadada;
+}
+
+.copyright p.copyright-space {
+	margin-top: 12px;
+}

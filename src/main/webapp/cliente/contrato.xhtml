@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+	<ui:composition template="/layout.xhtml">
+		<ui:define name="title">#{bundle.contrato}</ui:define>
+		<ui:define name="content">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">CONTRATO</div>
+				<div class="panel-body">
+					<h:form>
+						<h:panelGrid columns="2" styleClass="form-horizontal">
+
+							<h:outputLabel for="cliente" value="#{bundle.cliente}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="cliente" required="true"
+								value="#{contratoController.clienteSelecionado.nome}"
+								readonly="true" styleClass="form-control m5" />
+
+							<h:outputLabel for="plano" value="#{bundle.plano}"
+								styleClass="col-md-2 control-label" />
+							<h:selectOneMenu id="plano"
+								value="#{contratoController.planoId}"
+								styleClass="m5 btn-primary btn-lg" required="true">
+								<f:selectItem itemLabel="#{bundle.select}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{contratoController.listPlanos}"
+									var="plano" itemLabel="#{plano.nome}" itemValue="#{plano.id}" />
+							</h:selectOneMenu>
+
+							<h:outputLabel for="vencimento" value="#{bundle.vencimento}"
+								styleClass="col-md-2 control-label" />
+							<h:selectOneMenu id="vencimento"
+								value="#{contratoController.clienteSelecionado.contrato.vencimento}"
+								styleClass="m5 btn-primary btn-lg" required="true">
+								<f:selectItem itemLabel="#{bundle.select}"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="05" itemValue="5" />
+								<f:selectItem itemLabel="20" itemValue="20" />
+							</h:selectOneMenu>
+
+							<h:outputLabel for="dataInstalacao"
+								value="#{bundle.dataInstalacao}"
+								styleClass="col-md-2 control-label" />
+							<h:inputText id="dataInstalacao" required="true"
+								value="#{contratoController.clienteSelecionado.contrato.dataInstalacao}"
+								styleClass="form-control m5 data" maxlength="10">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+							</h:inputText>
+
+							<h:outputLabel for="equipamento" value="#{bundle.equipamento}"
+								styleClass="col-md-2 control-label" />
+							<h:selectOneMenu id="equipamento"
+								value="#{contratoController.equipamentoId}"
+								styleClass="m5 btn-primary btn-lg">
+								<f:selectItem itemLabel="#{bundle.select}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{contratoController.listEquipamentos}"
+									var="equipamento" itemLabel="#{equipamento.modelo} - #{equipamento.mac}" itemValue="#{equipamento.id}" />
+							</h:selectOneMenu>
+
+							<h:outputLabel for="equipamentoWifi" value="#{bundle.equipamentoWifi}"
+								styleClass="col-md-2 control-label" />
+							<h:selectOneMenu id="equipamentoWifi"
+								value="#{contratoController.equipamentoWifiId}"
+								styleClass="m5 btn-primary btn-lg">
+								<f:selectItem itemLabel="#{bundle.select}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{contratoController.listEquipamentosWifi}"
+									var="equipamentoWifi" itemLabel="#{equipamentoWifi.modelo} - #{equipamentoWifi.mac}" itemValue="#{equipamentoWifi.id}" />
+							</h:selectOneMenu>
+
+						</h:panelGrid>
+
+						<div class="modal-footer">
+							<h:commandLink action="#{contratoController.atualizar()}"
+								styleClass="btn btn-primary btn-lg">
+								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+								<f:param value="#{contratoController.clienteSelecionado.id}" name="id"></f:param>
+							</h:commandLink>
+
+							<h:link outcome="list" class="btn btn-primary btn-lg"
+								style="margin-left: 5px;">
+								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+							</h:link>
+						</div>
+					</h:form>
+
+				</div>
+			</div>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>
