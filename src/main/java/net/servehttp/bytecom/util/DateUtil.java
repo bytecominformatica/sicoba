@@ -87,10 +87,10 @@ public enum DateUtil {
 	 * @return java.util.Date
 	 * </pre>
 	 */
-	public static Date incrementaMesAtual(int quantidade) {
+	public static Calendar incrementaMesAtual(int quantidade) {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.MONTH, quantidade);
-		return c.getTime();
+		return c;
 	}
 
 }
