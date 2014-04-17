@@ -22,27 +22,6 @@ public class EquipamentoJPA {
 		this.em = em;
 	}
 
-	public Equipamento buscarPorId(int id) {
-		return em.find(Equipamento.class, id);
-	}
-
-	public void salvar(Equipamento equipamento) {
-		em.persist(equipamento);
-	}
-
-	public void atualizar(Equipamento equipamento) {
-		em.merge(equipamento);
-	}
-
-	public void remover(Equipamento equipamento) {
-		em.remove(em.merge(equipamento));
-	}
-
-	public List<Equipamento> buscaTodosOsEquipamentos() {
-		return em.createQuery("select e from Equipamento e order by e.modelo",
-				Equipamento.class).getResultList();
-	}
-
 	public List<Equipamento> buscaEquipamentosNaoUtilizados(int tipo, int status) {
 		List<Equipamento> list;
 		String jpql;

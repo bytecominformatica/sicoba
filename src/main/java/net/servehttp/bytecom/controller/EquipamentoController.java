@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Equipamento;
 import net.servehttp.bytecom.util.AlertaUtil;
 
@@ -32,13 +33,15 @@ public class EquipamentoController implements Serializable {
 	private EquipamentoJPA equipamentoJPA;
 	private String equipamentoId;
 	private String page;
+	@Inject
+	private GenericoJPA genericoJPA;
 
 	public EquipamentoController() {
 	}
 
 	@PostConstruct
 	public void load() {
-		listEquipamentos = equipamentoJPA.buscaTodosOsEquipamentos();
+		listEquipamentos = genericoJPA.buscarTodos(Equipamento.class);
 	}
 
 	public List<Equipamento> getListEquipamentos() {
@@ -69,7 +72,7 @@ public class EquipamentoController implements Serializable {
 	public String salvar() {
 		page = null;
 		if (!equipamentoJPA.existMAC(novoEquipamento.getMac())) {
-			equipamentoJPA.salvar(novoEquipamento);
+			genericoJPA.salvar(novoEquipamento);
 			AlertaUtil.alerta("Equipamento adicionado com sucesso!");
 			load();
 			page = "list";
@@ -82,7 +85,7 @@ public class EquipamentoController implements Serializable {
 	public String atualizar() {
 		page = null;
 		try {
-			equipamentoJPA.atualizar(equipamentoSelecionado);
+			genericoJPA.atualizar(equipamentoSelecionado);
 			load();
 			AlertaUtil.alerta("Equipamento atualizado com sucesso!");
 			page = "list";
@@ -97,7 +100,7 @@ public class EquipamentoController implements Serializable {
 	}
 
 	public String remover() {
-		equipamentoJPA.remover(equipamentoSelecionado);
+		genericoJPA.remover(equipamentoSelecionado);
 		load();
 		AlertaUtil.alerta("Equipamento removido com sucesso!");
 		return "list";

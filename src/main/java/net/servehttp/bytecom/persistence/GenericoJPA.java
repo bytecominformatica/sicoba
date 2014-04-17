@@ -21,8 +21,8 @@ public class GenericoJPA {
 		this.em = em;
 	}
 
-	public <T> Object buscarPorId(Class<T> klass, int id) {
-		return (T) em.find(klass, id);
+	public <T> T buscarPorId(Class<T> klass, int id) {
+		return ((T) em.find(klass, id));
 	}
 
 	public <T> void salvar(T t) {
@@ -37,11 +37,11 @@ public class GenericoJPA {
 		em.remove(em.merge(t));
 	}
 
-	public <T> List<T> buscaTodos(Class<T> klass) {
+	public <T> List<T> buscarTodos(Class<T> klass) {
 		String className = klass.getName().substring(
 				klass.getName().lastIndexOf('.') + 1);
+
 		String jpql = "select t from " + className + " t";
-		System.out.println(jpql);
 		return em.createQuery(jpql, klass).getResultList();
 	}
 

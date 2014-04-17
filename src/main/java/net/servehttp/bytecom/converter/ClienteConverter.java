@@ -9,7 +9,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.persistence.ClienteJPA;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Cliente;
 
 @ManagedBean
@@ -17,7 +17,7 @@ import net.servehttp.bytecom.persistence.entity.Cliente;
 public class ClienteConverter implements Converter {
 
 	@Inject
-	private ClienteJPA clienteJPA;
+	private GenericoJPA genericoJPA;
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
@@ -36,7 +36,7 @@ public class ClienteConverter implements Converter {
 			return null;
 		}
 
-		Cliente cliente = clienteJPA.buscarPorId(Integer.valueOf(value));
+		Cliente cliente = genericoJPA.buscarPorId(Cliente.class, Integer.valueOf(value));
 
 		if (cliente == null) {
 			throw new ConverterException(new FacesMessage("Unknown user ID: "

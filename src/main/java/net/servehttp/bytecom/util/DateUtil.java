@@ -5,10 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 
+ * @author clairton
+ *
+ */
 public enum DateUtil {
-	;
+	INSTANCE;
 
-	private final static SimpleDateFormat sdfData = new SimpleDateFormat(
+	private final SimpleDateFormat sdfData = new SimpleDateFormat(
 			"dd/MM/yyyy");
 
 	/**
@@ -20,7 +25,7 @@ public enum DateUtil {
 	 * @return String
 	 * </pre>
 	 */
-	public static String format(Date date) {
+	public String format(Date date) {
 		return sdfData.format(date);
 	}
 
@@ -33,7 +38,7 @@ public enum DateUtil {
 	 * @return java.util.Date
 	 * </pre>
 	 */
-	public static Date parse(String dateString) {
+	public Date parse(String dateString) {
 		Date date = null;
 		try {
 			date = sdfData.parse(dateString);
@@ -48,7 +53,7 @@ public enum DateUtil {
 	 * 
 	 * @return java.util.Date
 	 */
-	public static Date getHoje() {
+	public Date getHoje() {
 		String hojeString = format(new Date());
 		Date hoje = parse(hojeString);
 		return hoje;

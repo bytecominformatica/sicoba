@@ -9,7 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.AcessoJPA;
-import net.servehttp.bytecom.persistence.ClienteJPA;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Acesso;
 import net.servehttp.bytecom.persistence.entity.Cliente;
 import net.servehttp.bytecom.persistence.entity.Contrato;
@@ -30,12 +30,12 @@ public class AcessoController implements Serializable {
 	 */
 	private static final long serialVersionUID = 7972159878826621995L;
 	private List<Acesso> listAcessos;
-	private Acesso acesso;
+	// private Acesso acesso;
 	private Cliente cliente;
 	@Inject
-	private ClienteJPA clienteJPA;
-	@Inject
 	private AcessoJPA acessoJPA;
+	@Inject
+	GenericoJPA genericoJPA;
 	@Inject
 	private Util util;
 
@@ -44,21 +44,20 @@ public class AcessoController implements Serializable {
 		String clienteId = util.getParameters("clienteId");
 
 		if (clienteId != null && !clienteId.isEmpty()) {
-			if ((cliente = clienteJPA.buscarPorId(Integer.parseInt(clienteId))) != null) {
-				if ((acesso = cliente.getAcesso()) == null) {
-					acesso = new Acesso();
-					acesso.setCliente(cliente);
-					cliente.setAcesso(acesso);
+			if ((cliente = genericoJPA.buscarPorId(Cliente.class, Integer.parseInt(clienteId))) != null) {
+				if ((cliente.getAcesso()) == null) {
+					cliente.setAcesso(new Acesso());
+					cliente.getAcesso().setCliente(cliente);
 
-					acesso.setIp("192.168.33.2");
-					acesso.setMascara("255.255.255.0");
-					acesso.setGateway("192.168.33.1");
-					acesso.setStatus(Acesso.ATIVO);
-					Contrato c = acesso.getCliente().getContrato();
+					cliente.getAcesso().setIp("192.168.33.2");
+					cliente.getAcesso().setMascara("255.255.255.0");
+					cliente.getAcesso().setGateway("192.168.33.1");
+					cliente.getAcesso().setStatus(Acesso.ATIVO);
+					Contrato c = cliente.getContrato();
 					if (c != null) {
 						Equipamento e = c.getEquipamento();
 						if (e != null) {
-							acesso.setMac(e.getMac());
+							cliente.getAcesso().setMac(e.getMac());
 						}
 					}
 				}
@@ -74,16 +73,8 @@ public class AcessoController implements Serializable {
 		this.listAcessos = listAcessos;
 	}
 
-	public Acesso getNovoAcesso() {
-		return acesso;
-	}
-
-	public void setNovoAcesso(Acesso novoAcesso) {
-		this.acesso = novoAcesso;
-	}
-
 	public String salvar() {
-		acessoJPA.salvar(acesso);
+		genericoJPA.salvar(cliente);
 		load();
 		AlertaUtil.alerta("Acesso adicionado com sucesso!");
 		return "edit";
@@ -92,9 +83,9 @@ public class AcessoController implements Serializable {
 	public String atualizar() {
 		String page = null;
 
-		if (isDisponivel(acesso)) {
-			if (acesso.getId() > 0) {
-				acessoJPA.atualizar(acesso);
+		if (isDisponivel(cliente.getAcesso())) {
+			if (cliente.getAcesso().getId() > 0) {
+				genericoJPA.atualizar(cliente.getAcesso());
 				load();
 				AlertaUtil.alerta("Acesso atualizado com sucesso!");
 				page = "edit";
@@ -106,7 +97,7 @@ public class AcessoController implements Serializable {
 	}
 
 	public void remover() {
-		acessoJPA.remover(acesso);
+		acessoJPA.remover(cliente.getAcesso());
 		load();
 		AlertaUtil.alerta("Acesso removido com sucesso!");
 	}
@@ -127,14 +118,6 @@ public class AcessoController implements Serializable {
 		}
 
 		return disponivel;
-	}
-
-	public Acesso getAcesso() {
-		return acesso;
-	}
-
-	public void setAcesso(Acesso acesso) {
-		this.acesso = acesso;
 	}
 
 	public Cliente getCliente() {

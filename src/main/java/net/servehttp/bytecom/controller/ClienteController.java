@@ -9,7 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.ClienteJPA;
-import net.servehttp.bytecom.persistence.EnderecoJPA;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.Cliente;
@@ -40,7 +40,7 @@ public class ClienteController implements Serializable {
 	@Inject
 	private ClienteJPA clienteJPA;
 	@Inject
-	private EnderecoJPA enderecoJPA;
+	private GenericoJPA genericoJPA;
 
 	@Inject
 	private Util util;
@@ -51,15 +51,15 @@ public class ClienteController implements Serializable {
 	@PostConstruct
 	public void load() {
 		listClientes = clienteJPA.buscaUltimosClientesAlterados();
-		setListCidades(enderecoJPA.buscaTodasCidades());
+		setListCidades(genericoJPA.buscarTodos(Cidade.class));
 		getParameters();
 	}
 
 	private void getParameters() {
 		String clienteId = util.getParameters("id");
 		if (clienteId != null && !clienteId.isEmpty()) {
-			clienteSelecionado = clienteJPA.buscarPorId(Integer
-					.parseInt(clienteId));
+			clienteSelecionado = genericoJPA.buscarPorId(Cliente.class,
+					Integer.parseInt(clienteId));
 			cidadeId = clienteSelecionado.getEndereco().getBairro().getCidade()
 					.getId();
 			atualizaBairros();
@@ -90,8 +90,8 @@ public class ClienteController implements Serializable {
 		page = null;
 		if (isClienteValido(novoCliente)) {
 			novoCliente.getEndereco().setBairro(
-					enderecoJPA.buscaBairroPorId(bairroId));
-			clienteJPA.salvar(novoCliente);
+					genericoJPA.buscarPorId(Bairro.class, bairroId));
+			genericoJPA.salvar(novoCliente);
 			AlertaUtil.alerta("Cliente adicionado com sucesso!");
 			page = "list";
 		}
@@ -147,9 +147,9 @@ public class ClienteController implements Serializable {
 		page = null;
 		if (isClienteValido(clienteSelecionado)) {
 			clienteSelecionado.getEndereco().setBairro(
-					enderecoJPA.buscaBairroPorId(clienteSelecionado
+					genericoJPA.buscarPorId(Bairro.class, clienteSelecionado
 							.getEndereco().getBairro().getId()));
-			clienteJPA.atualizar(clienteSelecionado);
+			genericoJPA.atualizar(clienteSelecionado);
 			AlertaUtil.alerta("Cliente atualizado com sucesso!");
 			page = "list";
 		}
@@ -170,7 +170,7 @@ public class ClienteController implements Serializable {
 					"O cliente não pode ser removido pois possui contrato",
 					AlertaUtil.WARN);
 		} else {
-			clienteJPA.remover(clienteSelecionado);
+			genericoJPA.remover(clienteSelecionado);
 			AlertaUtil.alerta("Cliente removido com sucesso!");
 			page = "list";
 		}

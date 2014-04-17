@@ -72,11 +72,11 @@ public class Contrato implements Serializable {
     }
 
     public String getDataInstalacaoFormatada() {
-        return DateUtil.format(dataInstalacao);
+        return DateUtil.INSTANCE.format(dataInstalacao);
     }
 
     public void setDataInstalacaoFormatada(String dataInstalacao) {
-    	this.dataInstalacao = DateUtil.parse(dataInstalacao);
+    	this.dataInstalacao = DateUtil.INSTANCE.parse(dataInstalacao);
     }
 
     public void setDataInstalacao(Date dataInstalacao) {

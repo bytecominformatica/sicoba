@@ -68,7 +68,7 @@ public class Mensalidade implements Serializable {
     }
 
     public String getDataVencimentoFormatada() {
-        return DateUtil.format(dataVencimento);
+        return DateUtil.INSTANCE.format(dataVencimento);
     }
 
     public void setDataVencimento(Date dataVencimento) {

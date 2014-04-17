@@ -23,30 +23,10 @@ public class MensalidadeJPA {
     @PersistenceContext(unitName = "bytecom-pu")
     private EntityManager em;
 
-    public Mensalidade buscarPorId(int id) {
-        return em.find(Mensalidade.class, id);
-    }
-
-    public void salvar(Mensalidade mensalidade) {
-        em.persist(mensalidade);
-    }
-
     public void salvar(List<Mensalidade> mensalidades) {
         for (Mensalidade m : mensalidades) {
             em.persist(m);
         }
-    }
-
-    public void atualizar(Mensalidade mensalidade) {
-        em.merge(mensalidade);
-    }
-
-    public void remover(Mensalidade mensalidade) {
-        em.remove(em.merge(mensalidade));
-    }
-
-    public List<Mensalidade> getAllMensalidades() {
-        return em.createQuery("select m from Mensalidade m", Mensalidade.class).getResultList();
     }
 
     public List<Mensalidade> buscarMensalidadePorCliente(Cliente cliente) {
@@ -114,7 +94,7 @@ public class MensalidadeJPA {
             m.setStatus(Mensalidade.NAO_PAGA);
             m.setValor(contrato.getPlano().getValorMensalidade());
             int dia = contrato.getVencimento();
-            Date date = DateUtil.parse(dia + "/" + mes + "/" + ano);
+            Date date = DateUtil.INSTANCE.parse(dia + "/" + mes + "/" + ano);
             m.setDataVencimento(date);
             mensalidades.add(m);
         }

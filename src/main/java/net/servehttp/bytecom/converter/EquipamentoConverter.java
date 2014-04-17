@@ -9,7 +9,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.persistence.EquipamentoJPA;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Equipamento;
 
 @ManagedBean
@@ -17,7 +17,7 @@ import net.servehttp.bytecom.persistence.entity.Equipamento;
 public class EquipamentoConverter implements Converter {
 
 	@Inject
-	private EquipamentoJPA equipamentoJPA;
+	private GenericoJPA genericoJPA;
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
@@ -37,7 +37,7 @@ public class EquipamentoConverter implements Converter {
 			return null;
 		}
 
-		Equipamento equipamento = equipamentoJPA.buscarPorId(Integer
+		Equipamento equipamento = genericoJPA.buscarPorId(Equipamento.class, Integer
 				.valueOf(value));
 
 		if (equipamento == null) {

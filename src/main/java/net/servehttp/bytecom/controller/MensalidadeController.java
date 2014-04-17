@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.MensalidadeJPA;
 import net.servehttp.bytecom.persistence.entity.Mensalidade;
 import net.servehttp.bytecom.util.AlertaUtil;
@@ -33,6 +34,8 @@ public class MensalidadeController implements Serializable {
     private Mensalidade novoMensalidade = new Mensalidade();
     @Inject
     private MensalidadeJPA mensalidadeJPA;
+    @Inject
+    private GenericoJPA genericoJPA;
     private Date dataVencimento;
 
     private Calendar calendar;
@@ -48,7 +51,7 @@ public class MensalidadeController implements Serializable {
     }
 
     private void init() {
-        dataVencimento = DateUtil.getHoje();
+        dataVencimento = DateUtil.INSTANCE.getHoje();
         calendar = DateUtil.getProximoMes();
         calendar.set(Calendar.DAY_OF_MONTH, novoMensalidade.getCliente().getContrato().getVencimento());
 
@@ -116,7 +119,7 @@ public class MensalidadeController implements Serializable {
         try {
             dataVencimento = calendar.getTime();
             novoMensalidade.setDataVencimento(dataVencimento);
-            mensalidadeJPA.salvar(novoMensalidade);
+            genericoJPA.salvar(novoMensalidade);
             load();
             AlertaUtil.alerta("Mensalidade adicionada com sucesso!");
         } catch (EJBException e) {
@@ -129,13 +132,13 @@ public class MensalidadeController implements Serializable {
     }
 
     public void atualizar() {
-        mensalidadeJPA.atualizar(mensalidadeSelecionada);
+        genericoJPA.atualizar(mensalidadeSelecionada);
         load();
         AlertaUtil.alerta("Mensalidade atualizado com sucesso!");
     }
 
     public void remover() {
-        mensalidadeJPA.remover(mensalidadeSelecionada);
+        genericoJPA.remover(mensalidadeSelecionada);
         load();
         AlertaUtil.alerta("Mensalidade removido com sucesso!");
     }

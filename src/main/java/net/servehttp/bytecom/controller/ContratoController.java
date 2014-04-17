@@ -9,10 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.persistence.ClienteJPA;
-import net.servehttp.bytecom.persistence.ContratoJPA;
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
-import net.servehttp.bytecom.persistence.PlanoJPA;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Cliente;
 import net.servehttp.bytecom.persistence.entity.Contrato;
 import net.servehttp.bytecom.persistence.entity.Equipamento;
@@ -39,19 +37,15 @@ public class ContratoController implements Serializable {
 	private int equipamentoId;
 	private int equipamentoWifiId;
 	@Inject
-	private ContratoJPA contratoJPA;
-	@Inject
-	private PlanoJPA planoJPA;
-	@Inject
 	private EquipamentoJPA equipamentoJPA;
 	@Inject
-	private ClienteJPA clienteJPA;
-	@Inject
 	private Util util;
+	@Inject
+	private GenericoJPA genericoJPA;
 
 	@PostConstruct
 	public void load() {
-		listPlanos = planoJPA.buscaTodosOsPlanos();
+		listPlanos = genericoJPA.buscarTodos(Plano.class);
 		listEquipamentos = equipamentoJPA.buscaEquipamentosNaoUtilizados(
 				Equipamento.TIPO_INSTALACAO, Equipamento.STATUS_OK);
 		listEquipamentosWifi = equipamentoJPA.buscaEquipamentosNaoUtilizados(
@@ -62,8 +56,8 @@ public class ContratoController implements Serializable {
 	private void getParameters() {
 		String clienteId = util.getParameters("clienteId");
 		if (clienteId != null && !clienteId.isEmpty()) {
-			clienteSelecionado = clienteJPA.buscarPorId(Integer
-					.parseInt(clienteId));
+			clienteSelecionado = genericoJPA.buscarPorId(Cliente.class,
+					Integer.parseInt(clienteId));
 			if (clienteSelecionado.getContrato() == null) {
 				Contrato c = new Contrato();
 				c.setCliente(clienteSelecionado);
@@ -106,7 +100,7 @@ public class ContratoController implements Serializable {
 		this.planoId = planoId;
 		if (planoId > 0) {
 			clienteSelecionado.getContrato().setPlano(
-					planoJPA.buscarPorId(planoId));
+					genericoJPA.buscarPorId(Plano.class, planoId));
 		}
 	}
 
@@ -173,7 +167,7 @@ public class ContratoController implements Serializable {
 	}
 
 	public String salvar() {
-		contratoJPA.salvar(contrato);
+		genericoJPA.salvar(contrato);
 		load();
 		AlertaUtil.alerta("Contrato adicionado com sucesso!");
 		return "edit";
@@ -184,9 +178,7 @@ public class ContratoController implements Serializable {
 		contrato = clienteSelecionado.getContrato();
 		if (contrato != null) {
 			if (contrato.getId() > 0) {
-				System.out.println(contrato.getId());
-				System.out.println(contrato.getDataInstalacao());
-				contratoJPA.atualizar(contrato);
+				genericoJPA.atualizar(contrato);
 				load();
 				AlertaUtil.alerta("Contrato atualizado com sucesso!");
 				page = "edit";
@@ -196,13 +188,13 @@ public class ContratoController implements Serializable {
 		} else {
 			System.out.println("contrato null");
 			AlertaUtil.alerta("Contrato NULL!");
-			
+
 		}
 		return page;
 	}
 
 	public void remover() {
-		contratoJPA.remover(contrato);
+		genericoJPA.remover(contrato);
 		load();
 		AlertaUtil.alerta("Contrato removido com sucesso!");
 	}

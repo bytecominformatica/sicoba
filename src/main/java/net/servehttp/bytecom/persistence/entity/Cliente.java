@@ -55,9 +55,9 @@ public class Cliente implements Serializable {
     @Column(name = "updated_at")
     private Calendar updateAt;
 
-    @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Acesso acesso;
-    @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Contrato contrato;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Mensalidade> mensalidades;

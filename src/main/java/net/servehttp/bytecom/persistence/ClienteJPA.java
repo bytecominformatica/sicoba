@@ -21,29 +21,8 @@ public class ClienteJPA {
 	@PersistenceContext(unitName = "bytecom-pu")
 	private EntityManager em;
 
-	public Cliente buscarPorId(int id) {
-		return em.find(Cliente.class, id);
-	}
-
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
-	}
-
-	public void salvar(Cliente cliente) {
-		em.persist(cliente);
-	}
-
-	public void atualizar(Cliente cliente) {
-		em.merge(cliente);
-	}
-
-	public void remover(Cliente cliente) {
-		em.remove(em.merge(cliente));
-	}
-
-	public List<Cliente> buscaTodosOsClientes() {
-		return em.createQuery("select c from Cliente c order by c.nome",
-				Cliente.class).getResultList();
 	}
 
 	public List<Cliente> buscaClientesPorNomeFoneEmail(String nome,

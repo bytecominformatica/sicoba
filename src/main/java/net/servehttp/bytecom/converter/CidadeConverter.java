@@ -9,7 +9,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.persistence.EnderecoJPA;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 
 @ManagedBean
@@ -17,7 +17,7 @@ import net.servehttp.bytecom.persistence.entity.Cidade;
 public class CidadeConverter implements Converter {
 
 	@Inject
-	private EnderecoJPA enderecoJPA;
+	private GenericoJPA genericoJPA;
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
@@ -36,7 +36,7 @@ public class CidadeConverter implements Converter {
 			return null;
 		}
 
-		Cidade cidade = enderecoJPA.buscaCidadePorId(Integer.valueOf(value));
+		Cidade cidade = genericoJPA.buscarPorId(Cidade.class, Integer.valueOf(value));
 
 		if (cidade == null) {
 			throw new ConverterException(new FacesMessage("Registro Desconhecido ID: "

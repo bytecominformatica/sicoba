@@ -25,9 +25,15 @@ public class GenericoJPATest {
 	}
 
 	@Test
-	public void deveriaDeveriaSalva() {
-		List<Plano> list = genericoJPA.buscaTodos(Plano.class);
+	public void deveriaDeveriaBuscarTodos() {
+		List<Plano> list = genericoJPA.buscarTodos(Plano.class);
 		Assert.assertNotNull(list);
+	}
+
+	@Test
+	public void deveriaDeveriaBuscarPorId() {
+		Plano p = genericoJPA.buscarPorId(Plano.class, 1);
+		Assert.assertNotNull(p);
 	}
 
 	@AfterClass

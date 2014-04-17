@@ -23,38 +23,38 @@
 							<h:outputLabel for="status" value="#{bundle.status}"
 								styleClass="col-md-2 control-label" />
 							<h:selectOneMenu id="status"
-								value="#{acessoController.acesso.status}"
+								value="#{acessoController.cliente.acesso.status}"
 								styleClass="m5 btn-primary btn-lg" required="true">
 								<f:selectItem itemLabel="#{bundle.inativo}"
-									itemValue="#{acessoController.acesso.INATIVO}" />
+									itemValue="#{acessoController.cliente.acesso.INATIVO}" />
 								<f:selectItem itemLabel="#{bundle.ativo}"
-									itemValue="#{acessoController.acesso.ATIVO}" />
+									itemValue="#{acessoController.cliente.acesso.ATIVO}" />
 								<f:selectItem itemLabel="#{bundle.cancelado}"
-									itemValue="#{acessoController.acesso.CANCELADO}" />
+									itemValue="#{acessoController.cliente.acesso.CANCELADO}" />
 							</h:selectOneMenu>
 
 							<h:outputLabel for="ip" value="#{bundle.ip}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="ip" required="true"
-								value="#{acessoController.acesso.ip}"
+								value="#{acessoController.cliente.acesso.ip}"
 								styleClass="form-control m5" />
 
 							<h:outputLabel for="mascara" value="#{bundle.mascara}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="mascara" required="true"
-								value="#{acessoController.acesso.mascara}"
+								value="#{acessoController.cliente.acesso.mascara}"
 								styleClass="form-control m5" />
 
 							<h:outputLabel for="gateway" value="#{bundle.gateway}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="gateway" required="true"
-								value="#{acessoController.acesso.gateway}"
+								value="#{acessoController.cliente.acesso.gateway}"
 								styleClass="form-control m5" />
 
 							<h:outputLabel for="mac" value="#{bundle.mac}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="mac" required="true"
-								value="#{acessoController.acesso.mac}"
+								value="#{acessoController.cliente.acesso.mac}"
 								styleClass="form-control m5" />
 
 						</h:panelGrid>
@@ -63,13 +63,13 @@
 							<h:commandLink action="#{acessoController.atualizar()}"
 								styleClass="btn btn-primary btn-lg">
 								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
-								<f:param value="#{acessoController.cliente.id}"
-									name="clienteId"></f:param>
+								<f:param value="#{acessoController.cliente.id}" name="clienteId"></f:param>
 							</h:commandLink>
 
-							<h:link outcome="list" class="btn btn-primary btn-lg"
+							<h:link outcome="edit" class="btn btn-primary btn-lg"
 								style="margin-left: 5px;">
 								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+								<f:param value="#{acessoController.cliente.id}" name="id"></f:param>
 							</h:link>
 						</div>
 					</h:form>

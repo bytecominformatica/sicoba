@@ -3,6 +3,11 @@ package net.servehttp.bytecom.util;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+/**
+ * 
+ * @author Clairton Luz
+ *
+ */
 public class AlertaUtil {
 	public static final int INFO = 1;
 	public static final int WARN = 2;

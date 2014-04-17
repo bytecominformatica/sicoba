@@ -82,9 +82,10 @@
 								<f:param value="#{contratoController.clienteSelecionado.id}" name="id"></f:param>
 							</h:commandLink>
 
-							<h:link outcome="list" class="btn btn-primary btn-lg"
+							<h:link outcome="edit" class="btn btn-primary btn-lg"
 								style="margin-left: 5px;">
 								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+								<f:param value="#{contratoController.clienteSelecionado.id}" name="id"></f:param>
 							</h:link>
 						</div>
 					</h:form>
