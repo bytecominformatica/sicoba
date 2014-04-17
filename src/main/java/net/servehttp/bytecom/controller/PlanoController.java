@@ -9,7 +9,6 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.PlanoJPA;
 import net.servehttp.bytecom.persistence.entity.Plano;
 import net.servehttp.bytecom.util.AlertaUtil;
 
