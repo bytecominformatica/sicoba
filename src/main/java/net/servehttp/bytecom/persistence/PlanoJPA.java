@@ -22,26 +22,6 @@ public class PlanoJPA {
         this.em = em;
     }
 
-    public Plano buscarPorId(int id) {
-        return em.find(Plano.class, id);
-    }
-
-    public void salvar(Plano plano) {
-        em.persist(plano);
-    }
-
-    public void atualizar(Plano plano) {
-        em.merge(plano);
-    }
-
-    public void remover(Plano plano) {
-        em.remove(em.merge(plano));
-    }
-
-    public List<Plano> buscaTodosOsPlanos() {
-        return em.createQuery("select p from Plano p order by p.nome", Plano.class).getResultList();
-    }
-
     public List<Plano> buscarPlanoPorNome(String pesquisa) {
         return em.createQuery("select p from Plano p where p.nome like :nome", Plano.class)
                 .setParameter("nome", pesquisa + "%").getResultList();

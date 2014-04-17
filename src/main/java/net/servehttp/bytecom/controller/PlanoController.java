@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.PlanoJPA;
 import net.servehttp.bytecom.persistence.entity.Plano;
 import net.servehttp.bytecom.util.AlertaUtil;
@@ -25,16 +26,16 @@ public class PlanoController implements Serializable {
 	private Plano planoSelecionado;
 	private Plano novoPlano = new Plano();
 	@Inject
-	private PlanoJPA planoJPA;
-	@Inject
 	private Util util;
+	@Inject
+	private GenericoJPA genericoJPA;
 	
 	public PlanoController() {
 	}
 
 	@PostConstruct
 	public void load() {
-		listPlanos = planoJPA.buscaTodosOsPlanos();
+		listPlanos = genericoJPA.buscarTodos(Plano.class);
 		limpar();
 		getParameters();
 	}
@@ -42,7 +43,7 @@ public class PlanoController implements Serializable {
 	private void getParameters() {
 		String planoId = util.getParameters("planoId");
 		if (planoId != null && !planoId.isEmpty()) {
-			planoSelecionado = planoJPA.buscarPorId(Integer.parseInt(planoId));
+			planoSelecionado = genericoJPA.buscarPorId(Plano.class, Integer.parseInt(planoId));
 		}
 	}
 
@@ -81,7 +82,7 @@ public class PlanoController implements Serializable {
 	public String salvar() {
 		String page = null;
 		if (valida(novoPlano)) {
-			planoJPA.salvar(novoPlano);
+			genericoJPA.salvar(novoPlano);
 			AlertaUtil.alerta("Plano adicionado com sucesso!");
 			load();
 			novoPlano = new Plano();
@@ -102,14 +103,14 @@ public class PlanoController implements Serializable {
 	}
 
 	public String atualizar() {
-		planoJPA.atualizar(planoSelecionado);
+		genericoJPA.atualizar(planoSelecionado);
 		load();
 		AlertaUtil.alerta("Plano atualizado com sucesso!");
 		return "list";
 	}
 
 	public String remover() {
-		planoJPA.remover(planoSelecionado);
+		genericoJPA.remover(planoSelecionado);
 		load();
 		AlertaUtil.alerta("Plano removido com sucesso!");
 		return "list";
