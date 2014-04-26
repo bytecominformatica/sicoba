@@ -60,11 +60,13 @@ body {
 			<h:inputText id="usuario" value="#{authentication.usuario}"
 				styleClass="form-control" pt:placeholder="Login" />
 			<h:inputSecret value="#{authentication.senha}"
-				styleClass="form-control" pt:placeholder="Senha"/>
+				styleClass="form-control" pt:placeholder="Senha" />
 			<label class="checkbox"> <input type="checkbox"
 				value="remember-me" />Remember me
 			</label>
 			<h:commandButton action="#{authentication.login()}" value="Entrar"
+				styleClass="btn btn-lg btn-primary btn-block" />
+			<h:commandButton action="#{testeController.endereco()}" value="Endereço"
 				styleClass="btn btn-lg btn-primary btn-block" />
 		</h:form>
 	</div>
