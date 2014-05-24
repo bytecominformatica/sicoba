@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Plano;
@@ -16,8 +15,8 @@ import net.servehttp.bytecom.util.AlertaUtil;
  * 
  * @author clairton
  */
-@ManagedBean
-@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
 public class PlanoController implements Serializable {
 
 	private static final long serialVersionUID = 1L;

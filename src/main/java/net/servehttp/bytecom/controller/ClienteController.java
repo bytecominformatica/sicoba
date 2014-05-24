@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.ClienteJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
@@ -20,7 +20,7 @@ import net.servehttp.bytecom.util.StringUtil;
  * 
  * @author clairton
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class ClienteController implements Serializable {
 
@@ -66,8 +66,9 @@ public class ClienteController implements Serializable {
 		}
 	}
 
-	public String consultar() {
-		if (nomePesquisa.length() > 2) {
+	public void consultar() {
+		System.out.println("Nome pesquisa = " + nomePesquisa);
+		if (nomePesquisa != null && nomePesquisa.length() > 2) {
 			listClientes = clienteJPA.buscaClientesPorNomeFoneEmail(
 					nomePesquisa, fonePesquisa, emailPesquisa);
 		} else {
@@ -75,7 +76,6 @@ public class ClienteController implements Serializable {
 					.alerta("pesquisa por nome tem que possuir pelo menos 3 caracteres.",
 							AlertaUtil.ERROR);
 		}
-		return null;
 	}
 
 	public void atualizaBairros() {

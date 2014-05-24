@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">    
+    <head>
+        <title>HTML(5) Friendly Markup in JSF 2.2</title>
+   </head>
+   <body>
+       <form jsf:id="myForm">
+           <h:messages/>
+           <table>
+               <tr>
+                   <td><label jsf:for="email">E-Mail</label></td>
+                   <td>
+                       <input jsf:id="email" type="email" jsf:value="#{htmlController.email}" jsf:size="30" placeholder="email"/>
+                   </td>
+               </tr>
+           </table>        
+           <input type="submit" value="Submit" jsf:actionListener="#{htmlController.exibir()}"/>
+       </form>
+   </body>
+</html>

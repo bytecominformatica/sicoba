@@ -4,7 +4,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <h:body>
 	<ui:composition template="/layout.xhtml">
 		<ui:define name="title">#{bundle.cliente}</ui:define>
@@ -18,22 +19,13 @@
 				</div>
 				<div class="panel-header">
 					<div>
-						<h:form id="formPesquisa"
-							onkeypress="submitLink(event, 'formPesquisa:pesquisar');"
-							styleClass="form-inline">
 
-							<h:inputText value="#{clienteController.nomePesquisa}"
-								styleClass="form-control m5"
-								pt:placeholder="Nome ou parte do nome" />
-							<h:inputText value="#{clienteController.fonePesquisa}"
-								styleClass="form-control m5 phone" pt:placeholder="Fone" />
-							<h:inputText value="#{clienteController.emailPesquisa}"
-								styleClass="form-control m5" pt:placeholder="E-Mail" />
-							<h:commandLink action="#{clienteController.consultar}"
-								styleClass="btn btn-primary btn-lg m5">
-								<span class="glyphicon glyphicon-search" /> Pesquisar
-								</h:commandLink>
-						</h:form>
+						<form jsf:id="formPesquisa" class="form-inline">
+							<div class="form-group">
+								<input jsf:value="#{clienteController.nomePesquisa}" type="text" name="nome" class="form-control" placeholder="Nome" jsf:id="nome"/>
+							</div>
+							<button type="submit" class="btn btn-default" jsf:actionListener="#{clienteController.consultar()}">Submit</button>
+						</form>
 					</div>
 				</div>
 				<div class="panel-body">
