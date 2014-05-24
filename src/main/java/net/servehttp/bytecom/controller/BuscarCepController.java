@@ -2,12 +2,8 @@ package net.servehttp.bytecom.controller;
 
 import java.io.Serializable;
 
-import javassist.runtime.Inner;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
-import com.google.gson.Gson;
 
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
@@ -20,7 +16,7 @@ import net.servehttp.bytecom.util.EnderecoUtil;
  */
 @ManagedBean
 @ViewScoped
-public class TesteController implements Serializable {
+public class BuscarCepController implements Serializable {
 
 	/**
 	 * 
