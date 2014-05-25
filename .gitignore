@@ -1,7 +1,5 @@
-!.classpath
 *.class
 ~*
-.*
 
 # Package Files #
 *.jar
