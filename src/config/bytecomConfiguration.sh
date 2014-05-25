@@ -46,8 +46,17 @@ sleep 5
 
 ######################### ADD MODULOS #################################
 
-./jboss-cli.sh --connect --command='module add --name=com.mysql --resources=/home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar --dependencies=javax.api' 
+MYSQLDRIVER="/home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar";
+if ! [ -f $MYSQLDRIVER ]; then
 
+        echo "Downloading Mysql driver 5.1.29";
+	wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar;
+	
+	mkdir -p /home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29;
+        mv mysql-connector-java-5.1.29.jar /home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29;
+fi;
+
+./jboss-cli.sh --connect --command='module add --name=com.mysql --resources=/home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar --dependencies=javax.api' 
 
 
 ######################### POOL MYSQL #################################
