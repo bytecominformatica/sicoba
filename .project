@@ -56,5 +56,6 @@
 		<nature>org.jboss.tools.jst.web.kb.kbnature</nature>
 		<nature>org.hibernate.eclipse.console.hibernateNature</nature>
 		<nature>org.jboss.tools.cdi.core.cdinature</nature>
+		<nature>org.jboss.tools.jsf.jsfnature</nature>
 	</natures>
 </projectDescription>

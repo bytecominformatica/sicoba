@@ -26,7 +26,7 @@
 							<label jsf:for="nome" class="col-md-2 control-label">Nome</label>
 							<input jsf:id="nome" type="text"
 								jsf:value="#{planoController.novoPlano.nome}"
-								class="form-control m5" required="required" />
+								class="form-control m5" required="required" autofocus="autofocus"/>
 
 							<label jsf:for="download" class="col-md-2 control-label">Download</label>
 							<input jsf:id="download" type="number"
@@ -54,7 +54,7 @@
 
 							<label jsf:for="valorMensalidade" class="col-md-2 control-label">#{bundle.valorMensalidade}</label>
 							<input jsf:id="valorMensalidade" type="number" step="any"
-								jsf:value="#{planoController.novoPlano.valorInstalacao}"
+								jsf:value="#{planoController.novoPlano.valorMensalidade}"
 								class="form-control m5" required="required" min="0" />
 
 						</h:panelGrid>
