@@ -1,14 +1,9 @@
 #!/bin/bash
 echo "Starting configurations...";
  
-<<<<<<< HEAD
 DIR="/home/dev/servers";
 USER="dev";
 WILDFLY_DIR=$DIR/wildfly-8.0.0.Final;
-=======
-DIR="/home/clairton/servers";
-USER="clairton";
->>>>>>> 60484274c8053b0b07579fa60543a5fd318e496b
 
 ######################### ENVIRONMENT VARIABLE #########################
 WF_FILE=/etc/profile.d/wf.sh;
@@ -24,11 +19,7 @@ source $WF_FILE;
  
 WILDFLY_ZIP=wildfly-8.0.0.Final.zip;
  
-<<<<<<< HEAD
 if ! [ -d "$WILDFLY_DIR/bin" ]; then
-=======
-if ! [ -d "$WILDFLY_HOME/bin" ]; then
->>>>>>> 60484274c8053b0b07579fa60543a5fd318e496b
 	if ! [ -f "$WILDFLY_ZIP" ]; then
 		echo "Downloading Wildfly 8 Final...";
 		wget http://download.jboss.org/wildfly/8.0.0.Final/wildfly-8.0.0.Final.zip;
@@ -40,32 +31,19 @@ fi;
 ######################### MYSQL DRIVER #################################
  
 MYSQL_DRIVE=mysql-connector-java-5.1.29.jar;
-<<<<<<< HEAD
 if ! [ -f "$WILDFLY_DIR/modules/com/mysql/main/mysql-connector-java-5.1.18-bin.jar" ]; then
 	echo "setting mysql driver";
 	mkdir -p "$WILDFLY_DIR/modules/com/mysql/main";
-=======
-if ! [ -f "$WILDFLY_HOME/modules/com/mysql/main/mysql-connector-java-5.1.18-bin.jar" ]; then
-	echo "setting mysql driver";
-	mkdir -p "$WILDFLY_HOME/modules/com/mysql/main";
->>>>>>> 60484274c8053b0b07579fa60543a5fd318e496b
 	
 	if ! [ -f "$MYSQL_DRIVE" ]; then
 		echo "Downloading $MYSQL_DRIVE...";
 		wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar;
 	fi;
 
-<<<<<<< HEAD
 	cp mysql-connector-java-5.1.29.jar $WILDFLY_DIR/modules/com/mysql/main;
 	
 	if [ -f "$WILDFLY_DIR/modules/com/mysql/main/module.xml" ]; then
 		rm -f $WILDFLY_DIR/modules/com/mysql/main/;
-=======
-	cp mysql-connector-java-5.1.29.jar $WILDFLY_HOME/modules/com/mysql/main;
-	
-	if [ -f "$WILDFLY_HOME/modules/com/mysql/main/module.xml" ]; then
-		rm -f $WILDFLY_HOME/modules/com/mysql/main/;
->>>>>>> 60484274c8053b0b07579fa60543a5fd318e496b
 	fi;
 
 echo '<module xmlns="urn:jboss:module:1.0" name="com.mysql">
@@ -75,11 +53,7 @@ echo '<module xmlns="urn:jboss:module:1.0" name="com.mysql">
 		<dependencies>
 			<module name="javax.api"/>
 		</dependencies>
-<<<<<<< HEAD
 	</module>' >> $WILDFLY_DIR/modules/com/mysql/main/module.xml;
-=======
-	</module>' >> $WILDFLY_HOME/modules/com/mysql/main/module.xml;
->>>>>>> 60484274c8053b0b07579fa60543a5fd318e496b
 	
 fi;
 
@@ -88,11 +62,7 @@ fi;
 echo "Setting the server Wildfly";
 echo "Starting server wildfly";
 
-<<<<<<< HEAD
 cd $WILDFLY_DIR/bin;
-=======
-cd $WILDFLY_HOME/bin;
->>>>>>> 60484274c8053b0b07579fa60543a5fd318e496b
 ./standalone.sh &
 
 sleep 5
@@ -106,11 +76,7 @@ echo "SETTING DATASOURCE";
 ./subsystem=datasources/data-source=bytecomDS:add(enabled=true , jndi-name="java:/bytecomDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="bytecom", password="bytecom" , connection-url="jdbc:mysql://localhost:3306/bytecom" )';
  
 echo "SETTING OWNER";
-<<<<<<< HEAD
 chown -R $USER. $WILDFLY_DIR
-=======
-chown -R $USER. $WILDFLY_HOME
->>>>>>> 60484274c8053b0b07579fa60543a5fd318e496b
 
 sleep 2
 

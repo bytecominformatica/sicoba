@@ -1,18 +1,24 @@
 #!/bin/bash
+echo "#################################################################";
+echo "ATENÇÃO ESSE SCRIPT DEVE SER EXECUTADO COMO ROOT.";
+echo "#################################################################";
+
+echo "Digite o nome do seu usuario linux";
+read USUARIO;
+
 echo "Starting configurations...";
- 
-DIR="/home/dev/servers";
-USER="dev";
-WILDFLY_DIR=$DIR/wildfly-8.0.0.Final;
+
+USER_HOME=$(eval echo ~${SUDO_USER});
+
+WILDFLY_DIR=$USER_HOME/wildfly-8.0.0.Final;
 
 ######################### ENVIRONMENT VARIABLE #########################
 WF_FILE=/etc/profile.d/wf.sh;
- 
-if ! [ -f "$WF_FILE" ]; then
-	echo "Setting environment variable";
-	echo "creating $WF_FILE...";
-	echo "export WILDFLY_HOME=$DIR/wildfly-8.0.0.Final" >> $WF_FILE;
-fi;
+
+echo "Setting environment variable";
+echo "creating $WF_FILE...";
+echo "export WILDFLY_HOME=$USER_HOME/wildfly-8.0.0.Final" > $WF_FILE;
+
  
 source $WF_FILE;
 ######################### WILDFLY SERVER ###############################
@@ -25,38 +31,8 @@ if ! [ -d "$WILDFLY_DIR/bin" ]; then
 		wget http://download.jboss.org/wildfly/8.0.0.Final/wildfly-8.0.0.Final.zip;
 	fi;
 	echo "Extracting $WILDFLY_ZIP";
-	unzip wildfly-8.0.0.Final.zip -d $DIR;	
+	unzip wildfly-8.0.0.Final.zip -d $USER_HOME;	
 fi;
- 
-######################### MYSQL DRIVER #################################
- 
-MYSQL_DRIVE=mysql-connector-java-5.1.29.jar;
-if ! [ -f "$WILDFLY_DIR/modules/com/mysql/main/mysql-connector-java-5.1.18-bin.jar" ]; then
-	echo "setting mysql driver";
-	mkdir -p "$WILDFLY_DIR/modules/com/mysql/main";
-	
-	if ! [ -f "$MYSQL_DRIVE" ]; then
-		echo "Downloading $MYSQL_DRIVE...";
-		wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar;
-	fi;
-
-	cp mysql-connector-java-5.1.29.jar $WILDFLY_DIR/modules/com/mysql/main;
-	
-	if [ -f "$WILDFLY_DIR/modules/com/mysql/main/module.xml" ]; then
-		rm -f $WILDFLY_DIR/modules/com/mysql/main/;
-	fi;
-
-echo '<module xmlns="urn:jboss:module:1.0" name="com.mysql">
-		<resources>
-			<resource-root path="'$MYSQL_DRIVE'"/>
-		</resources>
-		<dependencies>
-			<module name="javax.api"/>
-		</dependencies>
-	</module>' >> $WILDFLY_DIR/modules/com/mysql/main/module.xml;
-	
-fi;
-
 
 #################### WILDFLY SERVER CONFIGURATION ######################
 echo "Setting the server Wildfly";
@@ -67,17 +43,33 @@ cd $WILDFLY_DIR/bin;
 
 sleep 5
 
-echo "SETTING DRIVER MYSQL";
-./jboss-cli.sh --commands='connect localhost:9990,
-./subsystem=datasources/jdbc-driver=com.mysql:add(driver-name="com.mysql", driver-module-name="com.mysql", driver-xa-datasource-class-name="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" )';
 
-echo "SETTING DATASOURCE";
-./jboss-cli.sh --commands='connect localhost:9990,
-./subsystem=datasources/data-source=bytecomDS:add(enabled=true , jndi-name="java:/bytecomDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="bytecom", password="bytecom" , connection-url="jdbc:mysql://localhost:3306/bytecom" )';
- 
-echo "SETTING OWNER";
-chown -R $USER. $WILDFLY_DIR
+######################### ADD MODULOS #################################
+
+./jboss-cli.sh --connect --command='module add --name=com.mysql --resources=/home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar --dependencies=javax.api' 
+
+
+
+######################### POOL MYSQL #################################
+echo "SETTING POOLS";
+
+./jboss-cli.sh --connect --commands='./subsystem=datasources/jdbc-driver=com.mysql:add(driver-name="com.mysql", driver-module-name="com.mysql", driver-xa-datasource-class-name="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" )';
+
+######################### DEFININDO DATASOURCES #################################
+
+echo "SETTING DATASOURCES";
+./jboss-cli.sh --connect --commands='./subsystem=datasources/data-source=bytecomDS:add(enabled=true , jndi-name="java:/bytecomDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="bytecom", password="bytecom" , connection-url="jdbc:mysql://localhost:3306/bytecom" )'
 
 sleep 2
 
 killall java
+
+sleep 2
+
+echo "SETTING OWNER";
+chown -R $USUARIO. $WILDFLY_DIR
+chown -R $USUARIO. $USER_HOME/.m2
+
+echo "############";
+echo "# TERMINOU #";
+echo "############";
