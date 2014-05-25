@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,7 +18,7 @@ import net.servehttp.bytecom.util.AlertaUtil;
  * @author clairton
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class PlanoController implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -112,7 +112,7 @@ public class PlanoController implements Serializable {
             load();
             AlertaUtil.alerta("Removido com sucesso!");
         } else {
-
+            AlertaUtil.alerta("Não é possível remover este plano, pois o mesmo está em uso!", AlertaUtil.ERROR);
         }
     }
 

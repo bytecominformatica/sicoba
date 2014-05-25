@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
 	<f:viewParam name="id" value="#{planoController.planoSelecionado}"
 		converter="#{planoConverter}"
@@ -64,15 +65,12 @@
 						</h:panelGrid>
 
 						<div class="modal-footer">
-							<h:commandLink action="#{planoController.atualizar()}"
-								styleClass="btn btn-primary btn-lg">
+							<button jsf:id="btAtualizar" jsf:action="#{planoController.atualizar()}" class="btn btn-primary">
 								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
-							</h:commandLink>
-
-							<h:link outcome="list" class="btn btn-primary btn-lg"
-								style="margin-left: 5px;">
+							</button>
+							<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left:5px;" class="btn btn-primary">
 								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
-							</h:link>
+							</button>
 						</div>
 					</h:form>
 

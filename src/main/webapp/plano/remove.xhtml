@@ -30,11 +30,9 @@
 								style="margin-rigth: 5px;">
 								#{bundle.no}
 							</h:link>
-							<button jsf:id="btRemover" jsf:actionListener="#{planoController.remover()}" jsf:outcome="list" class="btn btn-danger">
+							<button jsf:id="btRemover" jsf:action="#{planoController.remover()}" class="btn btn-danger">
 								#{bundle.yes}
 							</button>
-							<h:commandLink action="#{planoController.remover()}" value="Sim"
-								class="btn btn-danger btn-lg" />
 						</h:form>
 					</div>
 
