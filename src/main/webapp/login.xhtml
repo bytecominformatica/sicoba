@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:jsf="http://xmlns.jcp.org/jsf">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -10,8 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<link href="#{request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" />
+<link href="#{request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
 <style type="text/css">
 body {
 	padding-top: 40px;
@@ -51,31 +48,18 @@ body {
 </head>
 
 <h:body>
-	<h:messages id="msgs" showDetail="false"
-		errorClass="alert alert-danger" warnClass="alert alert-warning"
+	<h:messages id="msgs" showDetail="false" errorClass="alert alert-danger" warnClass="alert alert-warning"
 		fatalClass="alert alert-danger" infoClass="alert alert-info" />
 	<div class="container">
-		<h:form id="form1" styleClass="form-signin">
+		<form jsf:id="form1" class="form-signin">
 			<h2 class="form-signin-heading">Bem vindo!</h2>
-			<h:inputText id="usuario" value="#{authentication.usuario}"
-				styleClass="form-control" pt:placeholder="Login" />
-			<h:inputSecret value="#{authentication.senha}"
-				styleClass="form-control" pt:placeholder="Senha" />
-			<label class="checkbox"> <input type="checkbox"
-				value="remember-me" />Remember me
+			<input jsf:id="usuario" type="text" jsf:value="#{authentication.usuario}" class="form-control" placeholder="Login" autofocus="autofocus"/>
+			<input jsf:id="senha" type="password" jsf:value="#{authentication.senha}" class="form-control" placeholder="Senha" />
+			<label class="checkbox"> <input type="checkbox" value="remember-me" />Remember me
 			</label>
-			<h:commandButton action="#{authentication.login()}" value="Entrar"
-				styleClass="btn btn-lg btn-primary btn-block" />
-			<h:commandButton action="#{testeController.endereco()}" value="Endereço"
-				styleClass="btn btn-lg btn-primary btn-block" />
-		</h:form>
+			<h:commandButton action="#{authentication.login()}" value="Entrar" styleClass="btn btn-lg btn-primary btn-block" />
+		</form>
 	</div>
-
-	<script type="text/javascript">
-		window.onload = function() {
-			document.getElementById('form1:usuario').focus();
-		}
-	</script>
 
 </h:body>
 </html>

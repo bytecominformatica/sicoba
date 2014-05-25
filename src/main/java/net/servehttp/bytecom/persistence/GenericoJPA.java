@@ -37,6 +37,16 @@ public class GenericoJPA {
 		em.remove(em.merge(t));
 	}
 
+	public <T> List<T> buscarTodos(String hql, String parametro, Class<T> klass) {
+		return em.createQuery(hql, klass).setParameter(1, parametro)
+				.getResultList();
+	}
+
+	public <T> List<T> buscarTodos(String hql, int parametro, Class<T> klass) {
+		return em.createQuery(hql, klass).setParameter(1, parametro)
+				.getResultList();
+	}
+
 	public <T> List<T> buscarTodos(Class<T> klass) {
 		String className = klass.getName().substring(
 				klass.getName().lastIndexOf('.') + 1);

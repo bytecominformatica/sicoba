@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">  
 <f:metadata>
 	<f:viewParam name="id" value="#{planoController.planoSelecionado}"
 		converter="#{planoConverter}"
@@ -29,6 +30,9 @@
 								style="margin-rigth: 5px;">
 								#{bundle.no}
 							</h:link>
+							<button jsf:id="btRemover" jsf:actionListener="#{planoController.remover()}" jsf:outcome="list" class="btn btn-danger">
+								#{bundle.yes}
+							</button>
 							<h:commandLink action="#{planoController.remover()}" value="Sim"
 								class="btn btn-danger btn-lg" />
 						</h:form>
