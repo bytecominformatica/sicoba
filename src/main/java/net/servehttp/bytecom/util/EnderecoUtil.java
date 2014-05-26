@@ -13,21 +13,23 @@ public enum EnderecoUtil {
 
     public EnderecoPojo getEndereco(String cep) {
         // String path = "http://cep.correiocontrol.com.br/" + cep + ".json";
-        String path = "http://viacep.com.br/ws/" + cep + "/json/";
 
-        Client client = ClientBuilder.newClient();
-        String resultado = client.target(path).request("text/plain").get(String.class);
+        EnderecoPojo e = null;
+        if (cep != null && !cep.isEmpty()) {
+            String path = "http://viacep.com.br/ws/" + cep + "/json/";
 
-        EnderecoPojo e;
-        if (resultado.contains("\"erro\":true")) {
-            e = new EnderecoPojo();
-            e.setCep(cep);
-            return e;
+            Client client = ClientBuilder.newClient();
+            String resultado = client.target(path).request("text/plain").get(String.class);
+
+            if (resultado.contains("\"erro\":true")) {
+                e = new EnderecoPojo();
+                e.setCep(cep);
+            }
+
+            Gson g = new Gson();
+
+            e = g.fromJson(resultado, EnderecoPojo.class);
         }
-
-        Gson g = new Gson();
-
-        e = g.fromJson(resultado, EnderecoPojo.class);
         return e;
     }
 

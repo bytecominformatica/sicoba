@@ -86,11 +86,11 @@ public class ClienteJPA {
 		}
 	}
 
-	public Cliente buscarClientePorCpf(String cpf) {
+	public Cliente buscarClientePorCpf(String cpfCnpj) {
 		try {
 			return em
-					.createQuery("select c from Cliente c where c.cpf = :cpf",
-							Cliente.class).setParameter("cpf", cpf)
+					.createQuery("select c from Cliente c where c.cpfCnpj = :cpfCnpj",
+							Cliente.class).setParameter("cpfCnpj", cpfCnpj)
 					.getSingleResult();
 		} catch (javax.persistence.NoResultException e) {
 			return null;

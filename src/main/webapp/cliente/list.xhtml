@@ -22,9 +22,13 @@
 
 						<form jsf:id="formPesquisa" class="form-inline">
 							<div class="form-group">
-								<input jsf:value="#{clienteController.nomePesquisa}" type="text" name="nome" class="form-control" placeholder="Nome" jsf:id="nome"/>
+								<input jsf:value="#{clienteController.nomePesquisa}" type="text" name="nome" class="form-control m5" placeholder="Nome" jsf:id="nome" autofocus="autofocus"/>
+								<input jsf:value="#{clienteController.fonePesquisa}" type="tel" name="fone" class="form-control m5" placeholder="Fone" jsf:id="fone"/>
+								<input jsf:value="#{clienteController.emailPesquisa}" type="email" name="email" class="form-control m5" placeholder="Email" jsf:id="email"/>
 							</div>
-							<button type="submit" class="btn btn-default" jsf:actionListener="#{clienteController.consultar()}">Submit</button>
+							<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
+								<span class="glyphicon glyphicon-search" />
+							</button>
 						</form>
 					</div>
 				</div>
@@ -36,8 +40,8 @@
 							headerClass="tableColumnsHeader">
 							<f:facet name="header">
 								<div align="center">
-									<h:link outcome="new" styleClass="btn btn-primary btn-lg">
-										<i class="glyphicon glyphicon-plus" /> #{bundle.new}
+									<h:link outcome="new" styleClass="btn btn-primary">
+										<span class="glyphicon glyphicon-plus" /> #{bundle.new}
 									</h:link>
 								</div>
 							</f:facet>

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 /**
@@ -34,20 +36,23 @@ public class Cliente implements Serializable {
     private int id;
     private String nome;
     private String rg;
-    private String cpf;
-    private String cnpj;
+    
+    @Column(name="cpf_cnpj")
+    private String cpfCnpj;
 //    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email inválido")
-    @Size(max = 140)
     private String email;
     @Column(name = "fone_titular")
+    @Max(value=10, message="Telefone deve possuir 10 digitos ex: 9999999999")
     private String foneTitular;
     private String contato;
+    @Max(value=10, message="Telefone deve possuir 10 digitos ex: 9999999999")
     @Column(name = "fone_contato")
     private String foneContato;
     
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Calendar createdAt;
@@ -107,14 +112,6 @@ public class Cliente implements Serializable {
 
     public void setRg(String rg) {
         this.rg = rg;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getEmail() {
@@ -196,12 +193,12 @@ public class Cliente implements Serializable {
 		this.endereco = endereco;
 	}
 
-	public String getCnpj() {
-		return cnpj;
-	}
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
 
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
 	
 }

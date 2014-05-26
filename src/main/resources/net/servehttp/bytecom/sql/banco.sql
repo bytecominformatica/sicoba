@@ -245,3 +245,11 @@ CREATE TABLE fornecedor(
 create trigger fornecedor_on_insert before insert
 on fornecedor for each row set new.created_at = current_timestamp;
 
+alter table endereco
+add column cep varchar(255) not null;
+
+alter table cliente
+change cpf cpf_cnpj varchar(255);
+
+alter table cliente
+drop column cnpj;

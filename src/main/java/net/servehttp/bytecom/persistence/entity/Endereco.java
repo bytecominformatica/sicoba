@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "endereco")
@@ -20,18 +21,18 @@ public class Endereco implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	private String complemento;
-
+	
+	@NotNull(message="CEP é obrigatório")
+	private String cep;
+	@NotNull(message="logradouro é obrigatório")
 	private String logradouro;
-
+	@NotNull(message="número é obrigatório")
 	private String numero;
-
+	private String complemento;
+	
+	@NotNull(message="bairro é obrigatório")
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Bairro bairro;
-
-	public Endereco() {
-	}
 
 	public int getId() {
 		return this.id;
@@ -87,4 +88,12 @@ public class Endereco implements Serializable {
 		}
 		return sb.toString();
 	}
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
 }
