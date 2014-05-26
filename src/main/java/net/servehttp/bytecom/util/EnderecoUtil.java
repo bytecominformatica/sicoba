@@ -9,28 +9,26 @@ import net.servehttp.bytecom.pojo.EnderecoPojo;
 
 public enum EnderecoUtil {
 
-	INSTANCE;
+    INSTANCE;
 
-	public EnderecoPojo getEndereco(String cep) {
-		String path = "http://cep.correiocontrol.com.br/" + cep + ".json";
+    public EnderecoPojo getEndereco(String cep) {
+        // String path = "http://cep.correiocontrol.com.br/" + cep + ".json";
+        String path = "http://viacep.com.br/ws/" + cep + "/json/";
 
-		Client client = ClientBuilder.newClient();
-		String resultado = client.target(path).request("text/plain")
-				.get(String.class);
+        Client client = ClientBuilder.newClient();
+        String resultado = client.target(path).request("text/plain").get(String.class);
 
+        EnderecoPojo e;
+        if (resultado.contains("\"erro\":true")) {
+            e = new EnderecoPojo();
+            e.setCep(cep);
+            return e;
+        }
 
-		EnderecoPojo e;
-		if(resultado.contains("\"erro\":true")){
-			e = new EnderecoPojo();
-			e.setCep(cep);
-			return e;
-		}
+        Gson g = new Gson();
 
-
-		Gson g = new Gson();
-
-		e = g.fromJson(resultado, EnderecoPojo.class);
-		return e;
-	}
+        e = g.fromJson(resultado, EnderecoPojo.class);
+        return e;
+    }
 
 }

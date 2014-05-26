@@ -18,33 +18,33 @@
 							<h:outputLabel for="cep" value="#{bundle.cep}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="cep"
-								value="#{testeController.endereco.cep}" styleClass="form-control m5" />
+								value="#{buscarCepController.endereco.cep}" styleClass="form-control m5" />
 
 							<h:outputLabel for="logradouro" value="#{bundle.logradouro}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="logradouro"
-								value="#{testeController.endereco.logradouro}"
+								value="#{buscarCepController.endereco.logradouro}"
 								styleClass="form-control m5" />
 
 							<h:outputLabel for="bairro" value="#{bundle.bairro}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="bairro"
-								value="#{testeController.endereco.bairro}" styleClass="form-control m5" />
+								value="#{buscarCepController.endereco.bairro}" styleClass="form-control m5" />
 
 							<h:outputLabel for="cidade" value="#{bundle.cidade}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="cidade"
-								value="#{testeController.endereco.localidade}" styleClass="form-control m5" />
+								value="#{buscarCepController.endereco.localidade}" styleClass="form-control m5" />
 
 							<h:outputLabel for="uf" value="#{bundle.uf}"
 								styleClass="col-md-2 control-label" />
 							<h:inputText id="uf"
-								value="#{testeController.endereco.uf}" styleClass="form-control m5" />
+								value="#{buscarCepController.endereco.uf}" styleClass="form-control m5" />
 
 						</h:panelGrid>
 
 						<div class="modal-footer">
-							<h:commandLink action="#{testeController.buscar()}"
+							<h:commandLink action="#{buscarCepController.buscar()}"
 								styleClass="btn btn-primary btn-lg">
 								<span class="glyphicon glyphicon-floppy-save" /> Buscar
 										</h:commandLink>
