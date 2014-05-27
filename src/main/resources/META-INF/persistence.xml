@@ -19,6 +19,7 @@
 		<class>net.servehttp.bytecom.persistence.entity.Mensalidade</class>
 		<class>net.servehttp.bytecom.persistence.entity.Pais</class>
 		<class>net.servehttp.bytecom.persistence.entity.Plano</class>
+		<class>net.servehttp.bytecom.persistence.entity.Despesa</class>
 		<class>net.servehttp.bytecom.persistence.entity.Usuario</class>
 
 		<properties>

@@ -58,6 +58,9 @@
 						<li
 							class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}"><h:outputLink
 								value="#{request.contextPath}/equipamento/list.xhtml">#{bundle.equipamentos}</h:outputLink></li>
+						<li
+							class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}"><h:outputLink
+								value="#{request.contextPath}/despesa/list.xhtml">#{bundle.despesas}</h:outputLink></li>
 						<li class="#{view.viewId eq '/relatorios.xhtml' ? 'active' : ''}"><h:outputLink
 								value="#{request.contextPath}/relatorios.xhtml">#{bundle.relatorios}</h:outputLink></li>
 

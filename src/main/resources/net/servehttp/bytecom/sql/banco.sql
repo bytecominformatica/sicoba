@@ -253,3 +253,21 @@ change cpf cpf_cnpj varchar(255);
 
 alter table cliente
 drop column cnpj;
+
+-- 20140525
+CREATE TABLE despesa(
+	id int not null primary key auto_increment,
+	descricao varchar(255) NOT NULL,
+	fornecedor_id int,
+	valor dec(20,2),
+	data date not null,
+	status varchar(20) not null,
+	created_at datetime,
+    updated_at timestamp not null default current_timestamp on update current_timestamp,
+    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (id)
+);
+
+create trigger despesa_on_insert before insert
+on despesa for each row set new.created_at = current_timestamp;
+
+>>>>>>> Desenvolvimento do crud de despesas. Issue #1
