@@ -270,4 +270,3 @@ CREATE TABLE despesa(
 create trigger despesa_on_insert before insert
 on despesa for each row set new.created_at = current_timestamp;
 
->>>>>>> Desenvolvimento do crud de despesas. Issue #1
