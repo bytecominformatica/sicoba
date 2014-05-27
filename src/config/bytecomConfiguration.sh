@@ -10,14 +10,17 @@ echo "Starting configurations...";
 
 USER_HOME=$(eval echo ~${SUDO_USER});
 
-WILDFLY_DIR=$USER_HOME/wildfly-8.0.0.Final;
+echo "Digite o caminho onde deseja instalar o wildfly: ";
+read DIRETORIO_INSTALACAO;
+
+WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-8.0.0.Final;
 
 ######################### ENVIRONMENT VARIABLE #########################
 WF_FILE=/etc/profile.d/wf.sh;
 
 echo "Setting environment variable";
 echo "creating $WF_FILE...";
-echo "export WILDFLY_HOME=$USER_HOME/wildfly-8.0.0.Final" > $WF_FILE;
+echo "export WILDFLY_HOME=$WILDFLY_DIR" > $WF_FILE;
 
  
 source $WF_FILE;
@@ -31,7 +34,7 @@ if ! [ -d "$WILDFLY_DIR/bin" ]; then
 		wget http://download.jboss.org/wildfly/8.0.0.Final/wildfly-8.0.0.Final.zip;
 	fi;
 	echo "Extracting $WILDFLY_ZIP";
-	unzip wildfly-8.0.0.Final.zip -d $USER_HOME;	
+	unzip wildfly-8.0.0.Final.zip -d $DIRETORIO_INSTALACAO;	
 fi;
 
 #################### WILDFLY SERVER CONFIGURATION ######################
@@ -46,14 +49,14 @@ sleep 5
 
 ######################### ADD MODULOS #################################
 
-MYSQLDRIVER="/home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar";
+MYSQLDRIVER=$USER_HOME/.m2/repository/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar;
 if ! [ -f $MYSQLDRIVER ]; then
 
-        echo "Downloading Mysql driver 5.1.29";
+	echo "Downloading Mysql driver 5.1.29";
 	wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar;
 	
-	mkdir -p /home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29;
-        mv mysql-connector-java-5.1.29.jar /home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29;
+	mkdir -p $USER_HOME/.m2/repository/mysql/mysql-connector-java/5.1.29;
+	mv mysql-connector-java-5.1.29.jar $USER_HOME/.m2/repository/mysql/mysql-connector-java/5.1.29;
 fi;
 
 ./jboss-cli.sh --connect --command='module add --name=com.mysql --resources=/home/clairton/.m2/repository/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar --dependencies=javax.api' 
