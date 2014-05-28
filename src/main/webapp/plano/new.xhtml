@@ -21,59 +21,38 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">NOVO</div>
 				<div class="panel-body">
-					<h:form>
-						<h:panelGrid columns="2" styleClass="form-horizontal">
-							<label jsf:for="nome" class="col-md-2 control-label">Nome</label>
-							<input jsf:id="nome" type="text"
-								jsf:value="#{planoController.novoPlano.nome}"
-								class="form-control m5" required="required" autofocus="autofocus"/>
+				<form jsf:id="form" class="form-horizontal">
 
-							<label jsf:for="download" class="col-md-2 control-label">Download</label>
-							<input jsf:id="download" type="number"
-								jsf:value="#{planoController.novoPlano.download}"
-								class="form-control m5" required="required" min="1" />
+						<label jsf:for="nome" class="control-label" >#{bundle.nome}</label>
+						<input jsf:id="nome" type="text" class="form-control" jsf:value="#{planoController.novoPlano.nome}" autofocus="autofocus" required="required"/>
 
-							<label jsf:for="upload" class="col-md-2 control-label">Upload</label>
-							<input jsf:id="upload" type="number"
-								jsf:value="#{planoController.novoPlano.upload}"
-								class="form-control m5" required="required" min="1" />
+						<label jsf:for="download" class="control-label" >#{bundle.download}</label>
+						<input jsf:id="download" type="number" class="form-control" jsf:value="#{planoController.novoPlano.download}" required="required"/>
 
-							<label jsf:for="wifi" class="col-md-2 control-label">#{bundle.wifi}</label>
-							<h:selectOneMenu id="wifi"
-								value="#{planoController.novoPlano.wifi}"
-								styleClass="m5 btn-primary btn-lg" required="true"
-								requiredMessage="#{bundle.wifi} obrigatório">
-								<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
-								<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
-							</h:selectOneMenu>
+						<label jsf:for="upload" class="control-label" >#{bundle.upload}</label>
+						<input jsf:id="upload" type="number" class="form-control" jsf:value="#{planoController.novoPlano.upload}" required="required"/>
 
-							<label jsf:for="valorInstalacao" class="col-md-2 control-label">#{bundle.valorInstalacao}</label>
-							<input jsf:id="valorInstalacao" type="number" step="any"
-								jsf:value="#{planoController.novoPlano.valorInstalacao}"
-								class="form-control m5" required="required" min="0" />
+						<label jsf:for="wifi" class="control-label" >#{bundle.wifi}</label>
+						<h:selectOneMenu id="wifi" value="#{planoController.novoPlano.wifi}" styleClass="btn-primary btn-lg">
+							<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
+							<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
+						</h:selectOneMenu>
 
-							<label jsf:for="valorMensalidade" class="col-md-2 control-label">#{bundle.valorMensalidade}</label>
-							<input jsf:id="valorMensalidade" type="number" step="any"
-								jsf:value="#{planoController.novoPlano.valorMensalidade}"
-								class="form-control m5" required="required" min="0" />
+						<label jsf:for="valorInstalacao" class="control-label" >#{bundle.valorInstalacao}</label>
+						<input jsf:id="valorInstalacao" type="number" step="any" class="form-control" jsf:value="#{planoController.novoPlano.valorInstalacao}" required="required"/>
 
-						</h:panelGrid>
+						<label jsf:for="valorMensalidade" class="control-label" >#{bundle.valorMensalidade}</label>
+						<input jsf:id="valorMensalidade" type="number" step="any" class="form-control" jsf:value="#{planoController.novoPlano.valorMensalidade}" required="required"/>
 
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary"
-								jsf:actionListener="#{planoController.salvar()}">
-								<span class="glyphicon glyphicon-floppy-save" />
-								#{bundle.salvar}
-							</button>
-
-							<button class="btn btn-primary" jsf:outcome="list"
-								style="margin-left: 5px;">
-								<span class="glyphicon glyphicon-circle-arrow-left" />
-								#{bundle.back}
-							</button>
-						</div>
-					</h:form>
-
+					<div class="modal-footer">
+						<button jsf:id="btSalvar" jsf:action="#{planoController.salvar()}" class="btn btn-primary" jsf:outcome="list" type="submit">
+							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+						</button>
+						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;" class="btn btn-primary">
+							<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+						</button>
+					</div>
+				</form>
 				</div>
 			</div>
 

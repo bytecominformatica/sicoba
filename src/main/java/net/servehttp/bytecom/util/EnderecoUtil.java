@@ -12,7 +12,6 @@ public enum EnderecoUtil {
     INSTANCE;
 
     public EnderecoPojo getEndereco(String cep) {
-        // String path = "http://cep.correiocontrol.com.br/" + cep + ".json";
 
         EnderecoPojo e = null;
         if (cep != null && !cep.isEmpty()) {

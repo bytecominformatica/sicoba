@@ -31,9 +31,6 @@ public class PlanoController implements Serializable {
     @Inject
     private GenericoJPA genericoJPA;
 
-    public PlanoController() {
-    }
-
     @PostConstruct
     public void load() {
         listPlanos = genericoJPA.buscarTodos(Plano.class);
@@ -91,7 +88,7 @@ public class PlanoController implements Serializable {
 
     private boolean valida(Plano plano) {
         boolean result = true;
-        if (plano.getNome() == null || plano.getNome().isEmpty()) {
+        if (genericoJPA.buscarTodos("select p from Plano p where p.nome = ?1", plano.getNome(), Plano.class).isEmpty()) {
             result = false;
             AlertaUtil.alerta("Nome inválido!", AlertaUtil.ERROR);
         }
@@ -104,17 +101,19 @@ public class PlanoController implements Serializable {
         AlertaUtil.alerta("Plano atualizado com sucesso!");
     }
 
-    public void remover() {
-        System.out.println("Removendo");
+    public String remover() {
+        String page = null;
         List<Contrato> contratos = genericoJPA.buscarTodos("select c from Contrato c where c.plano.id = ?1",
                 planoSelecionado.getId(), Contrato.class);
         if (contratos.isEmpty()) {
             genericoJPA.remover(planoSelecionado);
             load();
             AlertaUtil.alerta("Removido com sucesso!");
+            page = "list";
         } else {
             AlertaUtil.alerta("Não é possível remover este plano, pois o mesmo está em uso!", AlertaUtil.ERROR);
         }
+        return page;
     }
 
 }

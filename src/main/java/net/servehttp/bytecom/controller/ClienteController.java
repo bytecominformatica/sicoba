@@ -169,7 +169,6 @@ public class ClienteController implements Serializable {
     }
 
     public void buscarEndereco() {
-        System.out.println("Busca endereço");
         EnderecoPojo ep = EnderecoUtil.INSTANCE.getEndereco(novoCliente.getEndereco().getCep());
         if (ep != null) {
             novoCliente.getEndereco().setLogradouro(ep.getLogradouro());
