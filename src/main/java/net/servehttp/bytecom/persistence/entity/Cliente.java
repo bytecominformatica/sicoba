@@ -19,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -34,12 +36,14 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull(message="nome é obrigatório")
+    @Size(max=255, message="nome tamanho máximo 255 caracteres")
     private String nome;
     private String rg;
     
     @Column(name="cpf_cnpj")
     private String cpfCnpj;
-    @Email
+    @Email(message="Email inválido")
     private String email;
     @Column(name = "fone_titular")
     @Max(value=10, message="Telefone deve possuir 10 digitos ex: 9999999999")
