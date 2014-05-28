@@ -1,84 +1,57 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
-	<f:viewParam name="id" value="#{planoController.planoSelecionado}"
-		converter="#{planoConverter}"
+	<f:viewParam name="id" value="#{planoController.novoPlano}" converter="#{planoConverter}"
 		converterMessage="Registro não encontrado." />
 </f:metadata>
-<h:body>
-	<ui:composition template="/layout.xhtml">
-		<ui:define name="title">#{bundle.plano}</ui:define>
-		<ui:define name="content">
+<ui:composition template="/layout.xhtml">
+	<ui:define name="title">#{bundle.plano}</ui:define>
+	<ui:define name="content">
 
-			<div class="panel panel-primary">
-				<div class="panel-heading">EDITAR</div>
-				<div class="panel-body">
+		<div class="panel panel-primary">
+			<div class="panel-heading">EDITAR</div>
+			<div class="panel-body">
 
-					<h:form>
-						<h:panelGrid columns="2" styleClass="form-horizontal">
+				<form jsf:id="form" class="form-horizontal">
 
-							<h:outputLabel for="nome" value="#{bundle.nome}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="nome" required="true"
-								value="#{planoController.planoSelecionado.nome}"
-								styleClass="form-control m5" />
+						<label jsf:for="nome" class="control-label" >#{bundle.nome}</label>
+						<input jsf:id="nome" type="text" class="form-control" jsf:value="#{planoController.planoSelecionado.nome}" autofocus="autofocus" required="required"/>
 
-							<h:outputLabel for="download" value="#{bundle.download}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="download" required="true"
-								value="#{planoController.planoSelecionado.download}"
-								styleClass="form-control m5" />
+						<label jsf:for="download" class="control-label" >#{bundle.download}</label>
+						<input jsf:id="download" type="number" class="form-control" jsf:value="#{planoController.planoSelecionado.download}" required="required"/>
 
-							<h:outputLabel for="upload" value="#{bundle.upload}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="upload" required="true"
-								value="#{planoController.planoSelecionado.upload}"
-								styleClass="form-control m5" />
+						<label jsf:for="upload" class="control-label" >#{bundle.upload}</label>
+						<input jsf:id="upload" type="number" class="form-control" jsf:value="#{planoController.planoSelecionado.upload}" required="required"/>
 
-							<h:outputLabel for="wifi" value="#{bundle.wifi}"
-								styleClass="col-md-2 control-label" />
-							<h:selectOneMenu id="wifi"
-								value="#{planoController.planoSelecionado.wifi}"
-								styleClass="m5 btn-primary btn-lg">
-								<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
-								<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
-							</h:selectOneMenu>
+						<label jsf:for="wifi" class="control-label" >#{bundle.wifi}</label>
+						<h:selectOneMenu id="wifi" value="#{planoController.planoSelecionado.wifi}" styleClass="btn-primary btn-lg">
+							<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
+							<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
+						</h:selectOneMenu>
 
-							<h:outputLabel for="valorInstalacao"
-								value="#{bundle.valorInstalacao}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="valorInstalacao" required="true"
-								value="#{planoController.planoSelecionado.valorInstalacao}"
-								styleClass="form-control m5" />
+						<label jsf:for="valorInstalacao" class="control-label" >#{bundle.valorInstalacao}</label>
+						<input jsf:id="valorInstalacao" type="number" step="any" class="form-control" jsf:value="#{planoController.planoSelecionado.valorInstalacao}" required="required"/>
 
-							<h:outputLabel for="valorMensalidade"
-								value="#{bundle.valorMensalidade}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="valorMensalidade" required="true"
-								value="#{planoController.planoSelecionado.valorMensalidade}"
-								styleClass="form-control m5" />
-						</h:panelGrid>
+						<label jsf:for="valorMensalidade" class="control-label" >#{bundle.valorMensalidade}</label>
+						<input jsf:id="valorMensalidade" type="number" step="any" class="form-control" jsf:value="#{planoController.planoSelecionado.valorMensalidade}" required="required"/>
 
-						<div class="modal-footer">
-							<button jsf:id="btAtualizar" jsf:action="#{planoController.atualizar()}" class="btn btn-primary">
-								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
-							</button>
-							<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left:5px;" class="btn btn-primary">
-								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
-							</button>
-						</div>
-					</h:form>
+					<div class="modal-footer">
+						<button jsf:id="btAtualizar" jsf:action="#{planoController.atualizar()}" class="btn btn-primary">
+							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+						</button>
+						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;" class="btn btn-primary">
+							<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+						</button>
+					</div>
+				</form>
 
-				</div>
 			</div>
+		</div>
 
-		</ui:define>
+	</ui:define>
 
-	</ui:composition>
-</h:body>
+</ui:composition>
 </html>
