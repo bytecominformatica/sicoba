@@ -31,6 +31,12 @@ public class GenericoJPATest {
 	}
 
 	@Test
+	public void deveriaDeveriaBuscarTodosComParametro() {
+	    List<Plano> list = genericoJPA.buscarTodos(Plano.class);
+	    Assert.assertNotNull(list);
+	}
+
+	@Test
 	public void deveriaDeveriaBuscarPorId() {
 		Plano p = genericoJPA.buscarPorId(Plano.class, 1);
 		Assert.assertNotNull(p);
