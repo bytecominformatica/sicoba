@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
@@ -41,28 +40,32 @@ public class GenericoJPA {
         em.remove(em.merge(t));
     }
 
-    public <T> List<T> buscarTodos(String hql, String parametro, Class<T> klass) {
-        return em.createQuery(hql, klass).setParameter(1, parametro).getResultList();
-    }
-
-    public <T> List<T> buscarTodos(String hql, int parametro, Class<T> klass) {
-        return em.createQuery(hql, klass).setParameter(1, parametro).getResultList();
-    }
-
-    
-    public <T> List<T> buscarTodos(String campo, Integer valor, Class<T> klass) {
+    /**
+     * Busca até 200 registro filtrando por algum parametro.
+     * 
+     * <pre>
+     * @param campo - nome do campo que deseja verificar 
+     * @param valor - valor usado para verificação
+     * @param klass - classe da entidade que deseja consultar
+     * @return List
+     * 
+     * <pre>
+     */
+    public <T> List<T> buscarTodos(String campo, Object valor, Class<T> klass) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> q = cb.createQuery(klass);
         Root<T> entidade = q.from(klass);
-        q.select(entidade).where(cb.equal(entidade.get("id"), valor));
+        q.select(entidade).where(cb.equal(entidade.get(campo), valor));
         return em.createQuery(q).setMaxResults(200).getResultList();
     }
 
     /**
      * Busca até 200 registros.
-     * <pre> 
+     * 
+     * <pre>
      * @param klass - Classe da entidade que deseja buscar
      * @return List<T>
+     * 
      * <pre>
      */
     public <T> List<T> buscarTodos(Class<T> klass) {
