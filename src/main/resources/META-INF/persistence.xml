@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
-             version="2.1">
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
 
 	<persistence-unit name="teste-pu" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
@@ -35,15 +33,7 @@
 	<persistence-unit name="bytecom-pu" transaction-type="JTA">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>java:/bytecomDS</jta-data-source>
-		<class>net.servehttp.bytecom.persistence.entity.Acesso</class>
-		<class>net.servehttp.bytecom.persistence.entity.Equipamento</class>
-		<class>net.servehttp.bytecom.persistence.entity.Mensalidade</class>
-		<class>net.servehttp.bytecom.persistence.entity.Contrato</class>
-		<class>net.servehttp.bytecom.persistence.entity.Bairro</class>
-		<class>net.servehttp.bytecom.persistence.entity.Cidade</class>
-		<class>net.servehttp.bytecom.persistence.entity.Endereco</class>
-		<class>net.servehttp.bytecom.persistence.entity.Estado</class>
-		<class>net.servehttp.bytecom.persistence.entity.Pais</class>
+
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

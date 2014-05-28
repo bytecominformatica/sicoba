@@ -14,9 +14,6 @@
 <link href="#{request.contextPath}/resources/css/bytecom.css" rel="stylesheet" />
 <link href="#{request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
 <link href="#{request.contextPath}/resources/css/bootstrap-theme.min.css" rel="stylesheet" />
-<!-- utilizando para datapicker -->
-<link href="#{request.contextPath}/resources/css/jquery-ui.custom.min.css" rel="stylesheet" />
-
 </head>
 <body jsf:id="body">
 	<div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,10 +23,11 @@
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<h:link outcome="index" styleClass="navbar-brand" style="margin-top: -18px;">
+				<a href="#{request.contextPath}" class="navbar-brand" style="margin-top: -18px;">
 					<h:graphicImage value="/resources/images/logo.png" style="margin-top: 4px;" />
-					<h:outputText value=" Bytecom" />
-				</h:link>
+					<h:outputText value=" Bytecom2" />
+				</a>
+				
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -112,12 +110,7 @@
 	<!--/copyright-->
 	<!--=== End Copyright ===-->
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-
 	<script src="#{request.contextPath}/resources/js/jquery-2.1.0.min.js"></script>
-	<script src="#{request.contextPath}/resources/js/jquery.maskedinput.js"></script>
-	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 	<script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<!-- Script personalizado bytecom.js deve ficar depois dos scripst jquery e maskedinput para as mascaras funcionarem -->
