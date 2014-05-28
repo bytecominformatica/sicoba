@@ -103,7 +103,7 @@ public class PlanoController implements Serializable {
 
     public String remover() {
         String page = null;
-        List<Contrato> contratos = genericoJPA.buscarTodos("select c from Contrato c where c.plano.id = ?1",
+        List<Contrato> contratos = genericoJPA.buscarTodos("id",
                 planoSelecionado.getId(), Contrato.class);
         if (contratos.isEmpty()) {
             genericoJPA.remover(planoSelecionado);
