@@ -75,27 +75,6 @@ public class ClienteJPA {
 				.getResultList();
 	}
 
-	public Cliente buscarClientePorRg(String rg) {
-		try {
-			return em
-					.createQuery("select c from Cliente c where c.rg = :rg",
-							Cliente.class).setParameter("rg", rg)
-					.getSingleResult();
-		} catch (javax.persistence.NoResultException e) {
-			return null;
-		}
-	}
-
-	public Cliente buscarClientePorCpf(String cpfCnpj) {
-		try {
-			return em
-					.createQuery("select c from Cliente c where c.cpfCnpj = :cpfCnpj",
-							Cliente.class).setParameter("cpfCnpj", cpfCnpj)
-					.getSingleResult();
-		} catch (javax.persistence.NoResultException e) {
-			return null;
-		}
-	}
 
 	public Cliente buscarClientePorEmail(String email) {
 		try {

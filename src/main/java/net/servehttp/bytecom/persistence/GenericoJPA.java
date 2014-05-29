@@ -58,6 +58,7 @@ public class GenericoJPA {
         q.select(entidade).where(cb.equal(entidade.get(campo), valor));
         return em.createQuery(q).setMaxResults(200).getResultList();
     }
+    
 
     /**
      * Busca até 200 registros.
