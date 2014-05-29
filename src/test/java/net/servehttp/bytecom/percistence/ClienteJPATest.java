@@ -37,16 +37,6 @@ public class ClienteJPATest {
 	}
 
 	@Test
-	public void deveriaBuscarUmClientePorRg() {
-		clienteJPA.buscarClientePorRg(teste);
-	}
-
-	@Test
-	public void deveriaBuscarUmClientePorCpf() {
-		clienteJPA.buscarClientePorCpf("023.239.345-45");
-	}
-
-	@Test
 	public void deveriaBuscarUmClientePorEmail() {
 		clienteJPA.buscarClientePorEmail("teste@teste.com");
 	}

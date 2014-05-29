@@ -15,9 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import net.servehttp.bytecom.util.DateUtil;
-
 
 @Entity
 @Table(name = "contrato")
@@ -27,8 +27,10 @@ public class Contrato implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull(message="vencimento é obrigatório")
     private short vencimento;
     @Column(name = "data_instalacao")
+    @NotNull(message="data de instalação é obrigatório")
     @Temporal(TemporalType.DATE)
     private Date dataInstalacao;
 
@@ -50,14 +52,13 @@ public class Contrato implements Serializable {
 
     @JoinColumn(name = "plano_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull(message="plano é obrigatório")
     private Plano plano;
 
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.EAGER)
+    @NotNull(message="cliente é obrigatório")
     private Cliente cliente;
-
-    public Contrato() {
-    }
 
     public short getVencimento() {
         return vencimento;
@@ -76,7 +77,7 @@ public class Contrato implements Serializable {
     }
 
     public void setDataInstalacaoFormatada(String dataInstalacao) {
-    	this.dataInstalacao = DateUtil.INSTANCE.parse(dataInstalacao);
+        this.dataInstalacao = DateUtil.INSTANCE.parse(dataInstalacao, "MM/dd/yyyy");
     }
 
     public void setDataInstalacao(Date dataInstalacao) {
@@ -131,12 +132,12 @@ public class Contrato implements Serializable {
         this.cliente = cliente;
     }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }

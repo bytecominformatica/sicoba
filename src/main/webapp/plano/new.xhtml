@@ -1,8 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:jsf="http://xmlns.jcp.org/jsf">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.plano}</ui:define>
@@ -13,30 +16,41 @@
 			<div class="panel-body">
 				<form jsf:id="form" class="form-horizontal">
 
-					<label jsf:for="nome" class="control-label">#{bundle.nome}</label> <input jsf:id="nome" type="text"
-						class="form-control" jsf:value="#{planoController.novoPlano.nome}" autofocus="autofocus" required="required" /> <label
-						jsf:for="download" class="control-label">#{bundle.download}</label> <input jsf:id="download" type="number"
-						class="form-control" jsf:value="#{planoController.novoPlano.download}" required="required" /> <label
-						jsf:for="upload" class="control-label">#{bundle.upload}</label> <input jsf:id="upload" type="number"
-						class="form-control" jsf:value="#{planoController.novoPlano.upload}" required="required" /> <label jsf:for="wifi"
-						class="control-label">#{bundle.wifi}</label>
-					<h:selectOneMenu id="wifi" value="#{planoController.novoPlano.wifi}" styleClass="btn-primary btn-lg">
+					<label jsf:for="nome" class="control-label">#{bundle.nome}</label> 
+					<input jsf:id="nome" type="text" class="form-control"
+						jsf:value="#{planoController.novoPlano.nome}" autofocus="autofocus"
+						required="required" /> <label jsf:for="download" class="control-label">#{bundle.download}</label>
+					<input jsf:id="download" type="number" class="form-control" min="1"
+						jsf:value="#{planoController.novoPlano.download}" required="required" />
+					
+					<label jsf:for="upload" class="control-label">#{bundle.upload}</label> 
+					<input jsf:id="upload" type="number" class="form-control"  min="1" 
+						jsf:value="#{planoController.novoPlano.upload}" required="required" /> 
+						
+					<label jsf:for="wifi" class="control-label">#{bundle.wifi}</label>
+					<h:selectOneMenu id="wifi" value="#{planoController.novoPlano.wifi}"
+						styleClass="btn-primary btn-lg">
 						<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
 						<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
 					</h:selectOneMenu>
 
-					<label jsf:for="valorInstalacao" class="control-label">#{bundle.valorInstalacao}</label> <input
-						jsf:id="valorInstalacao" type="number" step="any" class="form-control"
-						jsf:value="#{planoController.novoPlano.valorInstalacao}" required="required" /> <label jsf:for="valorMensalidade"
-						class="control-label">#{bundle.valorMensalidade}</label> <input jsf:id="valorMensalidade" type="number"
-						step="any" class="form-control" jsf:value="#{planoController.novoPlano.valorMensalidade}" required="required" />
+					<label jsf:for="valorInstalacao" class="control-label">#{bundle.valorInstalacao}</label>
+					<input jsf:id="valorInstalacao" type="number" step="any"
+						class="form-control"
+						jsf:value="#{planoController.novoPlano.valorInstalacao}"
+						required="required" /> <label jsf:for="valorMensalidade"
+						class="control-label">#{bundle.valorMensalidade}</label> <input
+						jsf:id="valorMensalidade" type="number" step="any" class="form-control"
+						jsf:value="#{planoController.novoPlano.valorMensalidade}"
+						required="required" />
 
 					<div class="modal-footer">
-						<button jsf:id="btSalvar" jsf:action="#{planoController.salvar()}" class="btn btn-primary" jsf:outcome="list"
-							type="submit">
+						<button jsf:id="btSalvar" jsf:action="#{planoController.salvar()}"
+							class="btn btn-primary" type="submit">
 							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
 						</button>
-						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;" class="btn btn-primary">
+						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
+							class="btn btn-primary">
 							<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
 						</button>
 					</div>

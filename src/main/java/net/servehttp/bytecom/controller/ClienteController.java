@@ -106,18 +106,18 @@ public class ClienteController implements Serializable {
             valido = false;
         }
 
-        Cliente c = clienteJPA.buscarClientePorRg(cliente.getRg());
-        if (c != null && c.getId() != cliente.getId()) {
+        List<Cliente> clientes = genericoJPA.buscarTodos("rg", cliente.getRg(), Cliente.class);
+        if (!clientes.isEmpty()) {
             AlertaUtil.alerta("RG já Cadastrado", AlertaUtil.ERROR);
             valido = false;
         } else {
-            c = clienteJPA.buscarClientePorCpf(cliente.getCpfCnpj());
-            if (c != null && c.getId() != cliente.getId()) {
+            clientes = genericoJPA.buscarTodos("cpfCnpj", cliente.getCpfCnpj(), Cliente.class);
+            if (!clientes.isEmpty()) {
                 AlertaUtil.alerta("CPF já Cadastrado", AlertaUtil.ERROR);
                 valido = false;
             } else {
-                c = clienteJPA.buscarClientePorEmail(cliente.getEmail());
-                if (c != null && c.getId() != cliente.getId()) {
+                clientes = genericoJPA.buscarTodos("email", cliente.getEmail(), Cliente.class);
+                if (!clientes.isEmpty()) {
                     AlertaUtil.alerta("E-Mail já Cadastrado", AlertaUtil.ERROR);
                     valido = false;
                 }

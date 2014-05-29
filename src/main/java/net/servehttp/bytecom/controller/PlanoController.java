@@ -77,18 +77,21 @@ public class PlanoController implements Serializable {
         this.novoPlano = novoPlano;
     }
 
-    public void salvar() {
+    public String salvar() {
+        String page = null;
         if (valida(novoPlano)) {
             genericoJPA.salvar(novoPlano);
             AlertaUtil.alerta("Plano adicionado com sucesso!");
             load();
             novoPlano = new Plano();
+            page = "list";
         }
+        return page;
     }
 
     private boolean valida(Plano plano) {
         boolean result = true;
-        if (genericoJPA.buscarTodos("select p from Plano p where p.nome = ?1", plano.getNome(), Plano.class).isEmpty()) {
+        if (!genericoJPA.buscarTodos("nome", plano.getNome(), Plano.class).isEmpty()) {
             result = false;
             AlertaUtil.alerta("Nome inválido!", AlertaUtil.ERROR);
         }
@@ -98,13 +101,12 @@ public class PlanoController implements Serializable {
     public void atualizar() {
         genericoJPA.atualizar(planoSelecionado);
         load();
-//        AlertaUtil.alerta("Plano atualizado com sucesso!");
+        // AlertaUtil.alerta("Plano atualizado com sucesso!");
     }
 
     public String remover() {
         String page = null;
-        List<Contrato> contratos = genericoJPA.buscarTodos("id",
-                planoSelecionado.getId(), Contrato.class);
+        List<Contrato> contratos = genericoJPA.buscarTodos("id", planoSelecionado.getId(), Contrato.class);
         if (contratos.isEmpty()) {
             genericoJPA.remover(planoSelecionado);
             load();
