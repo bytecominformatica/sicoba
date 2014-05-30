@@ -25,9 +25,46 @@
 						<h:panelGrid columns="2" styleClass="form-horizontal">
 							<label jsf:for="descricao" class="col-md-2 control-label">Descricao</label>
 							<input jsf:id="descricao" type="text" 
-							jsf:value="#{despesaController.novaDespesa.descricao}" 
-							class="form-control m5" required="required" autofocus="autofocus"/>
+								jsf:value="#{despesaController.novaDespesa.descricao}" 
+								class="form-control m5" required="required" autofocus="autofocus"/>
+							<label jsf:for="fornecedor" class="col-md-2 control-label">Fornecedor</label>
+							<h:selectOneMenu id="fornecedor" value="#{despesaController.fornecedorId}" styleClass="m5 btn-primary btn-lg"
+								required="true">
+								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+								<f:selectItems value="#{despesaController.listFornecedor}" var="fornecedor" itemLabel="#{fornecedor.nome}"
+									itemValue="#{fornecedor.id}"/>
+							</h:selectOneMenu>
+							
+							<label jsf:for="valorDespesa" class="col-md-2 control-label">#{bundle.valor}</label>
+							<input jsf:id="valorDespesa" type="number" step="any"
+								jsf:value="#{despesaController.novaDespesa.valor}"
+								class="form-control m5" required="required" min="0" />
+							<label jsf:for="dataVencimento" class="col-md-2 control-label">#{bundle.vencimento}</label>
+							<input jsf:id="dataVencimento" type="date" 
+									jsf:value="despesaController.novaDespesa.data" class="form-control m5" required="required"/>
+							<label jsf:for="status" class="col-md-2 control-label">#{bundle.status}</label>
+							<h:selectOneMenu id="status" value="despesaController.novaDespesa.status" 
+											styleClass="m5 btn-primary btn-lg" required="true" 
+											requiredMessage="#{bundle.status} obrigatório">
+											<f:selectItem itemLabel="#{bundle.aberto}" itemValue="false" />
+											<f:selectItem itemLabel="#{bundle.fechado}" itemValue="true" />
+							</h:selectOneMenu>
 						</h:panelGrid>
+						
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary"
+								jsf:actionListener="#{despesaController.salvar()}">
+								<span class="glyphicon glyphicon-floppy-save" />
+								#{bundle.salvar}
+							</button>
+
+							<button class="btn btn-primary" jsf:outcome="list"
+								style="margin-left: 5px;">
+								<span class="glyphicon glyphicon-circle-arrow-left" />
+								#{bundle.back}
+							</button>
+						</div>
+						
 					</h:form>
 				</div>
 			</div>
