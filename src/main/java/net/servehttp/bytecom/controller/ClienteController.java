@@ -26,233 +26,237 @@ import net.servehttp.bytecom.util.StringUtil;
 @ViewScoped
 public class ClienteController implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private List<Cliente> listClientes;
-    private Cliente clienteSelecionado;
-    private Cliente novoCliente = new Cliente();
-    private List<Cidade> listCidades;
-    private List<Bairro> listBairros;
-    private int cidadeId;
-    private int bairroId;
-    private String page;
-    private String nomePesquisa;
-    private String fonePesquisa;
-    private String emailPesquisa;
+  private static final long serialVersionUID = 1L;
+  private List<Cliente> listClientes;
+  private Cliente clienteSelecionado;
+  private Cliente novoCliente = new Cliente();
+  private List<Cidade> listCidades;
+  private List<Bairro> listBairros;
+  private int cidadeId;
+  private int bairroId;
+  private String page;
+  private String nomePesquisa;
+  private String fonePesquisa;
+  private String emailPesquisa;
 
-    @Inject
-    private ClienteJPA clienteJPA;
-    @Inject
-    private GenericoJPA genericoJPA;
+  @Inject
+  private ClienteJPA clienteJPA;
+  @Inject
+  private GenericoJPA genericoJPA;
 
-    @Inject
-    private Util util;
+  @Inject
+  private Util util;
 
-    public ClienteController() {
+  public ClienteController() {}
+
+  @PostConstruct
+  public void load() {
+    listClientes = clienteJPA.buscaUltimosClientesAlterados();
+    setListCidades(genericoJPA.buscarTodos(Cidade.class));
+    getParameters();
+  }
+
+  private void getParameters() {
+    String clienteId = util.getParameters("id");
+    if (clienteId != null && !clienteId.isEmpty()) {
+      clienteSelecionado = genericoJPA.buscarPorId(Cliente.class, Integer.parseInt(clienteId));
+      cidadeId = clienteSelecionado.getEndereco().getBairro().getCidade().getId();
+      atualizaBairros();
+    }
+  }
+
+  public void consultar() {
+    System.out.println("Nome pesquisa = " + nomePesquisa);
+    if (nomePesquisa != null && nomePesquisa.length() > 2) {
+      listClientes =
+          clienteJPA.buscaClientesPorNomeFoneEmail(nomePesquisa, fonePesquisa, emailPesquisa);
+    } else {
+      AlertaUtil.alerta("pesquisa por nome tem que possuir pelo menos 3 caracteres.",
+          AlertaUtil.ERROR);
+    }
+  }
+
+  public void atualizaBairros() {
+    for (Cidade c : listCidades) {
+      if (c.getId() == cidadeId) {
+        listBairros = c.getBairros();
+      }
+    }
+  }
+
+  public String salvar() {
+    page = null;
+    if (isClienteValido(novoCliente)) {
+      novoCliente.getEndereco().setBairro(genericoJPA.buscarPorId(Bairro.class, bairroId));
+      genericoJPA.salvar(novoCliente);
+      AlertaUtil.alerta("Cliente adicionado com sucesso!");
+      page = "list";
+    }
+    return page;
+  }
+
+  private boolean isClienteValido(Cliente cliente) {
+    boolean valido = true;
+
+    removeCamposVazios(cliente);
+
+    String cpfCnpj = cliente.getCpfCnpj();
+
+    if (cpfCnpj != null && !StringUtil.INSTANCE.isCpf(cpfCnpj)
+        && !StringUtil.INSTANCE.isCnpj(cpfCnpj)) {
+      AlertaUtil.alerta("CPF/CNPJ inválido", AlertaUtil.ERROR);
+      valido = false;
     }
 
-    @PostConstruct
-    public void load() {
-        listClientes = clienteJPA.buscaUltimosClientesAlterados();
-        setListCidades(genericoJPA.buscarTodos(Cidade.class));
-        getParameters();
-    }
-
-    private void getParameters() {
-        String clienteId = util.getParameters("id");
-        if (clienteId != null && !clienteId.isEmpty()) {
-            clienteSelecionado = genericoJPA.buscarPorId(Cliente.class, Integer.parseInt(clienteId));
-            cidadeId = clienteSelecionado.getEndereco().getBairro().getCidade().getId();
-            atualizaBairros();
-        }
-    }
-
-    public void consultar() {
-        System.out.println("Nome pesquisa = " + nomePesquisa);
-        if (nomePesquisa != null && nomePesquisa.length() > 2) {
-            listClientes = clienteJPA.buscaClientesPorNomeFoneEmail(nomePesquisa, fonePesquisa, emailPesquisa);
-        } else {
-            AlertaUtil.alerta("pesquisa por nome tem que possuir pelo menos 3 caracteres.", AlertaUtil.ERROR);
-        }
-    }
-
-    public void atualizaBairros() {
-        for (Cidade c : listCidades) {
-            if (c.getId() == cidadeId) {
-                listBairros = c.getBairros();
-            }
-        }
-    }
-
-    public String salvar() {
-        page = null;
-        if (isClienteValido(novoCliente)) {
-            novoCliente.getEndereco().setBairro(genericoJPA.buscarPorId(Bairro.class, bairroId));
-            genericoJPA.salvar(novoCliente);
-            AlertaUtil.alerta("Cliente adicionado com sucesso!");
-            page = "list";
-        }
-        return page;
-    }
-
-    private boolean isClienteValido(Cliente cliente) {
-        boolean valido = true;
-
-        removeCamposVazios(cliente);
-
-        String cpfCnpj = cliente.getCpfCnpj();
-
-        if (cpfCnpj != null && !StringUtil.INSTANCE.isCpf(cpfCnpj) && !StringUtil.INSTANCE.isCnpj(cpfCnpj)) {
-            AlertaUtil.alerta("CPF/CNPJ inválido", AlertaUtil.ERROR);
-            valido = false;
-        }
-
-        List<Cliente> clientes = genericoJPA.buscarTodos("rg", cliente.getRg(), Cliente.class);
+    List<Cliente> clientes = genericoJPA.buscarTodos("rg", cliente.getRg(), Cliente.class);
+    if (!clientes.isEmpty()) {
+      AlertaUtil.alerta("RG já Cadastrado", AlertaUtil.ERROR);
+      valido = false;
+    } else {
+      clientes = genericoJPA.buscarTodos("cpfCnpj", cliente.getCpfCnpj(), Cliente.class);
+      if (!clientes.isEmpty()) {
+        AlertaUtil.alerta("CPF já Cadastrado", AlertaUtil.ERROR);
+        valido = false;
+      } else {
+        clientes = genericoJPA.buscarTodos("email", cliente.getEmail(), Cliente.class);
         if (!clientes.isEmpty()) {
-            AlertaUtil.alerta("RG já Cadastrado", AlertaUtil.ERROR);
-            valido = false;
-        } else {
-            clientes = genericoJPA.buscarTodos("cpfCnpj", cliente.getCpfCnpj(), Cliente.class);
-            if (!clientes.isEmpty()) {
-                AlertaUtil.alerta("CPF já Cadastrado", AlertaUtil.ERROR);
-                valido = false;
-            } else {
-                clientes = genericoJPA.buscarTodos("email", cliente.getEmail(), Cliente.class);
-                if (!clientes.isEmpty()) {
-                    AlertaUtil.alerta("E-Mail já Cadastrado", AlertaUtil.ERROR);
-                    valido = false;
-                }
-            }
+          AlertaUtil.alerta("E-Mail já Cadastrado", AlertaUtil.ERROR);
+          valido = false;
         }
-
-        return valido;
+      }
     }
 
-    private void removeCamposVazios(Cliente c) {
-        if (c.getRg() != null && c.getRg().isEmpty()) {
-            c.setRg(null);
-        }
-        if (c.getCpfCnpj() != null && c.getCpfCnpj().isEmpty()) {
-            c.setCpfCnpj(null);
-        }
-        if (c.getEmail() != null && c.getEmail().isEmpty()) {
-            c.setEmail(null);
-        }
-    }
+    return valido;
+  }
 
-    public String atualizar() {
-        page = null;
-        if (isClienteValido(clienteSelecionado)) {
-            clienteSelecionado.getEndereco().setBairro(
-                    genericoJPA.buscarPorId(Bairro.class, clienteSelecionado.getEndereco().getBairro().getId()));
-            genericoJPA.atualizar(clienteSelecionado);
-            AlertaUtil.alerta("Cliente atualizado com sucesso!");
-            page = "list";
-        }
-        return page;
+  private void removeCamposVazios(Cliente c) {
+    if (c.getRg() != null && c.getRg().isEmpty()) {
+      c.setRg(null);
     }
+    if (c.getCpfCnpj() != null && c.getCpfCnpj().isEmpty()) {
+      c.setCpfCnpj(null);
+    }
+    if (c.getEmail() != null && c.getEmail().isEmpty()) {
+      c.setEmail(null);
+    }
+  }
 
-    /**
-     * Remove o cliente selecionado.
-     */
-    public String remover() {
-        page = null;
-        if (clienteSelecionado.getAcesso() != null) {
-            AlertaUtil.alerta("Cliente não pode ser removido pois possui acesso cadastrado", AlertaUtil.WARN);
-        } else if (clienteSelecionado.getContrato() != null) {
-            AlertaUtil.alerta("O cliente não pode ser removido pois possui contrato", AlertaUtil.WARN);
-        } else {
-            genericoJPA.remover(clienteSelecionado);
-            AlertaUtil.alerta("Cliente removido com sucesso!");
-            page = "list";
-        }
-        return page;
+  public String atualizar() {
+    page = null;
+    if (isClienteValido(clienteSelecionado)) {
+      clienteSelecionado.getEndereco().setBairro(
+          genericoJPA.buscarPorId(Bairro.class, clienteSelecionado.getEndereco().getBairro()
+              .getId()));
+      genericoJPA.atualizar(clienteSelecionado);
+      AlertaUtil.alerta("Cliente atualizado com sucesso!");
+      page = "list";
     }
+    return page;
+  }
 
-    public void buscarEndereco() {
-        EnderecoPojo ep = EnderecoUtil.INSTANCE.getEndereco(novoCliente.getEndereco().getCep());
-        if (ep != null) {
-            novoCliente.getEndereco().setLogradouro(ep.getLogradouro());
-        }
+  /**
+   * Remove o cliente selecionado.
+   */
+  public String remover() {
+    page = null;
+    if (clienteSelecionado.getAcesso() != null) {
+      AlertaUtil.alerta("Cliente não pode ser removido pois possui acesso cadastrado",
+          AlertaUtil.WARN);
+    } else if (clienteSelecionado.getContrato() != null) {
+      AlertaUtil.alerta("O cliente não pode ser removido pois possui contrato", AlertaUtil.WARN);
+    } else {
+      genericoJPA.remover(clienteSelecionado);
+      AlertaUtil.alerta("Cliente removido com sucesso!");
+      page = "list";
     }
+    return page;
+  }
 
-    public List<Cidade> getListCidades() {
-        return listCidades;
+  public void buscarEndereco() {
+    EnderecoPojo ep = EnderecoUtil.INSTANCE.getEndereco(novoCliente.getEndereco().getCep());
+    if (ep != null) {
+      novoCliente.getEndereco().setLogradouro(ep.getLogradouro());
     }
+  }
 
-    public void setListCidades(List<Cidade> listCidades) {
-        this.listCidades = listCidades;
-    }
+  public List<Cidade> getListCidades() {
+    return listCidades;
+  }
 
-    public List<Bairro> getListBairros() {
-        return listBairros;
-    }
+  public void setListCidades(List<Cidade> listCidades) {
+    this.listCidades = listCidades;
+  }
 
-    public void setListBairros(List<Bairro> listBairros) {
-        this.listBairros = listBairros;
-    }
+  public List<Bairro> getListBairros() {
+    return listBairros;
+  }
 
-    public int getCidadeId() {
-        return cidadeId;
-    }
+  public void setListBairros(List<Bairro> listBairros) {
+    this.listBairros = listBairros;
+  }
 
-    public void setCidadeId(int cidadeId) {
-        this.cidadeId = cidadeId;
-    }
+  public int getCidadeId() {
+    return cidadeId;
+  }
 
-    public int getBairroId() {
-        return bairroId;
-    }
+  public void setCidadeId(int cidadeId) {
+    this.cidadeId = cidadeId;
+  }
 
-    public void setBairroId(int bairroId) {
-        this.bairroId = bairroId;
-    }
+  public int getBairroId() {
+    return bairroId;
+  }
 
-    public List<Cliente> getListClientes() {
-        return listClientes;
-    }
+  public void setBairroId(int bairroId) {
+    this.bairroId = bairroId;
+  }
 
-    public void setListClientes(List<Cliente> listClientes) {
-        this.listClientes = listClientes;
-    }
+  public List<Cliente> getListClientes() {
+    return listClientes;
+  }
 
-    public Cliente getClienteSelecionado() {
-        return clienteSelecionado;
-    }
+  public void setListClientes(List<Cliente> listClientes) {
+    this.listClientes = listClientes;
+  }
 
-    public void setClienteSelecionado(Cliente clienteSelecionado) {
-        this.clienteSelecionado = clienteSelecionado;
-    }
+  public Cliente getClienteSelecionado() {
+    return clienteSelecionado;
+  }
 
-    public Cliente getNovoCliente() {
-        return novoCliente;
-    }
+  public void setClienteSelecionado(Cliente clienteSelecionado) {
+    this.clienteSelecionado = clienteSelecionado;
+  }
 
-    public void setNovoCliente(Cliente novoCliente) {
-        this.novoCliente = novoCliente;
-    }
+  public Cliente getNovoCliente() {
+    return novoCliente;
+  }
 
-    public String getNomePesquisa() {
-        return nomePesquisa;
-    }
+  public void setNovoCliente(Cliente novoCliente) {
+    this.novoCliente = novoCliente;
+  }
 
-    public void setNomePesquisa(String nomePesquisa) {
-        this.nomePesquisa = nomePesquisa;
-    }
+  public String getNomePesquisa() {
+    return nomePesquisa;
+  }
 
-    public String getFonePesquisa() {
-        return fonePesquisa;
-    }
+  public void setNomePesquisa(String nomePesquisa) {
+    this.nomePesquisa = nomePesquisa;
+  }
 
-    public void setFonePesquisa(String fonePesquisa) {
-        this.fonePesquisa = fonePesquisa;
-    }
+  public String getFonePesquisa() {
+    return fonePesquisa;
+  }
 
-    public String getEmailPesquisa() {
-        return emailPesquisa;
-    }
+  public void setFonePesquisa(String fonePesquisa) {
+    this.fonePesquisa = fonePesquisa;
+  }
 
-    public void setEmailPesquisa(String emailPesquisa) {
-        this.emailPesquisa = emailPesquisa;
-    }
+  public String getEmailPesquisa() {
+    return emailPesquisa;
+  }
+
+  public void setEmailPesquisa(String emailPesquisa) {
+    this.emailPesquisa = emailPesquisa;
+  }
 
 }

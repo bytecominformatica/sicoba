@@ -12,106 +12,106 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * 
  * @author clairton
  */
 @Entity
 @Table(name = "plano")
 public class Plano implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String nome;
-    private int upload;
-    private int download;
-    private boolean wifi;
-    @Column(name = "valor_instalacao")
-    private double valorInstalacao;
-    @Column(name = "valor_mensalidade")
-    private double valorMensalidade;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
-    private Calendar createdAt;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at")
-    private Calendar updatedAt;
-   
-    public int getId() {
-        return id;
-    }
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
+  private String nome;
+  private int upload;
+  private int download;
+  private boolean wifi;
+  @Column(name = "valor_instalacao")
+  private double valorInstalacao;
+  @Column(name = "valor_mensalidade")
+  private double valorMensalidade;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "created_at")
+  private Calendar createdAt;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "updated_at")
+  private Calendar updatedAt;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public String getNome() {
-        return nome;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+  public String getNome() {
+    return nome;
+  }
 
-    public int getUpload() {
-        return upload;
-    }
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-    public void setUpload(int upload) {
-        this.upload = upload;
-    }
+  public int getUpload() {
+    return upload;
+  }
 
-    public int getDownload() {
-        return download;
-    }
+  public void setUpload(int upload) {
+    this.upload = upload;
+  }
 
-    public void setDownload(int download) {
-        this.download = download;
-    }
+  public int getDownload() {
+    return download;
+  }
 
-    public double getValorInstalacao() {
-        return valorInstalacao;
-    }
+  public void setDownload(int download) {
+    this.download = download;
+  }
 
-    public void setValorInstalacao(double valorInstalacao) {
-        this.valorInstalacao = valorInstalacao;
-    }
+  public double getValorInstalacao() {
+    return valorInstalacao;
+  }
 
-    public double getValorMensalidade() {
-        return valorMensalidade;
-    }
+  public void setValorInstalacao(double valorInstalacao) {
+    this.valorInstalacao = valorInstalacao;
+  }
 
-    public void setValorMensalidade(double valorMensalidade) {
-        this.valorMensalidade = valorMensalidade;
-    }
+  public double getValorMensalidade() {
+    return valorMensalidade;
+  }
 
-    public Calendar getCreatedAt() {
-        return createdAt;
-    }
+  public void setValorMensalidade(double valorMensalidade) {
+    this.valorMensalidade = valorMensalidade;
+  }
 
-    public void setCreatedAt(Calendar createdAt) {
-        this.createdAt = createdAt;
-    }
+  public Calendar getCreatedAt() {
+    return createdAt;
+  }
 
-    public Calendar getUpdatedAt() {
-        return updatedAt;
-    }
+  public void setCreatedAt(Calendar createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    public void setUpdateAt(Calendar updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+  public Calendar getUpdatedAt() {
+    return updatedAt;
+  }
 
-	public boolean isWifi() {
-		return wifi;
-	}
+  public void setUpdateAt(Calendar updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 
-	public void setWifi(boolean wifi) {
-		this.wifi = wifi;
-	}    
-	
-	@Override
-	public String toString(){
-		return Integer.toString(id);
-	}
+  public boolean isWifi() {
+    return wifi;
+  }
+
+  public void setWifi(boolean wifi) {
+    this.wifi = wifi;
+  }
+
+  @Override
+  public String toString() {
+    return Integer.toString(id);
+  }
 }
