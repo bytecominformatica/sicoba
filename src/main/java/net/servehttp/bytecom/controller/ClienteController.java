@@ -44,7 +44,10 @@ public class ClienteController implements Serializable {
   private ClienteJPA clienteJPA;
   @Inject
   private GenericoJPA genericoJPA;
+  
 
+  @Inject
+  private EnderecoUtil enderecoUtil;
   @Inject
   private Util util;
 
@@ -175,8 +178,10 @@ public class ClienteController implements Serializable {
 
   public void buscarEndereco() {
     cidadeId = bairroId = 0;
-    EnderecoPojo ep = EnderecoUtil.INSTANCE.getEndereco(novoCliente.getEndereco().getCep());
-    novoCliente.getEndereco().setBairro(getBairro(ep));
+    novoCliente.getEndereco().setLogradouro(null);
+    EnderecoPojo ep = enderecoUtil.getEndereco(novoCliente.getEndereco().getCep());
+    novoCliente.getEndereco().setBairro(enderecoUtil.getBairro(ep));
+    listCidades = genericoJPA.buscarTodos(Cidade.class);
 
     if (novoCliente.getEndereco().getBairro() != null) {
       cidadeId = novoCliente.getEndereco().getBairro().getCidade().getId();
@@ -185,52 +190,6 @@ public class ClienteController implements Serializable {
       novoCliente.getEndereco().setLogradouro(ep.getLogradouro());
     }
 
-  }
-
-  /**
-   * Verifica se o bairro já existe, se o bairro não existe o mesmo é cadastrado.
-   * 
-   * @param enderecoPojo
-   * @return
-   */
-  private Bairro getBairro(EnderecoPojo enderecoPojo) {
-    Bairro bairro = null;
-
-    if (enderecoPojo != null) {
-      List<Bairro> bairros =
-          genericoJPA.buscarTodos("nome", enderecoPojo.getBairro(), Bairro.class);
-      if (bairros != null && !bairros.isEmpty()) {
-        bairro = bairros.get(0);
-      } else {
-        List<Cidade> cidades =
-            genericoJPA.buscarTodos("nome", enderecoPojo.getLocalidade(), Cidade.class);
-        if (cidades != null && !cidades.isEmpty()) {
-          bairro = new Bairro();
-          bairro.setNome(enderecoPojo.getBairro());
-          bairro.setCidade(cidades.get(0));
-          genericoJPA.salvar(bairro);
-          listCidades = genericoJPA.buscarTodos(Cidade.class);
-        } else {
-          List<Estado> estados =
-              genericoJPA.buscarTodos("uf", enderecoPojo.getUf(), Estado.class);
-          if (estados != null && !estados.isEmpty()) {
-            Cidade c = new Cidade();
-            c.setEstado(estados.get(0));
-            c.setNome(enderecoPojo.getLocalidade());
-            genericoJPA.salvar(c);
-            System.out.println("ID DA CIDADE NOVA = " + c.getId());
-            
-            bairro = new Bairro();
-            bairro.setNome(enderecoPojo.getBairro());
-            bairro.setCidade(c);
-            genericoJPA.salvar(bairro);
-            listCidades = genericoJPA.buscarTodos(Cidade.class);
-          }
-        }
-      }
-    }
-
-    return bairro;
   }
 
   public List<Cidade> getListCidades() {
