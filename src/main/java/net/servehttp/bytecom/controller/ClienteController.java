@@ -27,7 +27,11 @@ import net.servehttp.bytecom.util.StringUtil;
 @ViewScoped
 public class ClienteController implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 8827281306259995250L;
   private List<Cliente> listClientes;
   private Cliente clienteSelecionado;
   private Cliente novoCliente = new Cliente();

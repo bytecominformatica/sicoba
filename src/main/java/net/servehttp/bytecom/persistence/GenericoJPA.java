@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.persistence;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,8 +16,12 @@ import javax.transaction.Transactional;
  * @param <T>
  */
 @Transactional
-public class GenericoJPA {
+public class GenericoJPA implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -5183726686123081862L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
 

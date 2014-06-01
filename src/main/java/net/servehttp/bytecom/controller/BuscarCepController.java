@@ -25,10 +25,10 @@ public class BuscarCepController implements Serializable {
 	private EnderecoPojo endereco = new EnderecoPojo();
 
 	public void buscar() {
-		endereco = EnderecoUtil.INSTANCE.getEndereco(endereco.getCep());
-		if (endereco.getLocalidade() == null || endereco.getLocalidade().isEmpty()) {
-			AlertaUtil.alerta("CEP não encontrado!");
-		}
+//		endereco = EnderecoUtil.INSTANCE.getEndereco(endereco.getCep());
+//		if (endereco.getLocalidade() == null || endereco.getLocalidade().isEmpty()) {
+//			AlertaUtil.alerta("CEP não encontrado!");
+//		}
 	}
 
 	public EnderecoPojo getEndereco() {
