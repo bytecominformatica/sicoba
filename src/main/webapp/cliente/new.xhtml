@@ -45,7 +45,7 @@
 							<h:selectOneMenu id="cidade" value="#{clienteController.cidadeId}" styleClass="btn-primary btn-lg"
 								required="true">
 								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-								<f:selectItems value="#{clienteController.listCidades}" var="cidade" itemLabel="#{cidade.nome}"
+								<f:selectItems value="#{clienteController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"
 									itemValue="#{cidade.id}" />
 								<f:ajax listener="#{clienteController.atualizaBairros}" render="bairro" />
 							</h:selectOneMenu>

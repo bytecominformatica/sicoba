@@ -13,6 +13,7 @@ import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.Cliente;
+import net.servehttp.bytecom.persistence.entity.Estado;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.EnderecoUtil;
@@ -204,16 +205,27 @@ public class ClienteController implements Serializable {
         List<Cidade> cidades =
             genericoJPA.buscarTodos("nome", enderecoPojo.getLocalidade(), Cidade.class);
         if (cidades != null && !cidades.isEmpty()) {
-          System.out.println("ENCONTROU CIDADE");
-          Bairro novoBairro = new Bairro();
-          novoBairro.setNome(enderecoPojo.getBairro());
-          novoBairro.setCidade(cidades.get(0));
-          genericoJPA.salvar(novoBairro);
-          System.out.println("Bairro" + novoBairro.getId());
-          bairro = novoBairro;
+          bairro = new Bairro();
+          bairro.setNome(enderecoPojo.getBairro());
+          bairro.setCidade(cidades.get(0));
+          genericoJPA.salvar(bairro);
           listCidades = genericoJPA.buscarTodos(Cidade.class);
         } else {
-          System.out.println("NÃO ENCONTROU CIDADE");
+          List<Estado> estados =
+              genericoJPA.buscarTodos("uf", enderecoPojo.getUf(), Estado.class);
+          if (estados != null && !estados.isEmpty()) {
+            Cidade c = new Cidade();
+            c.setEstado(estados.get(0));
+            c.setNome(enderecoPojo.getLocalidade());
+            genericoJPA.salvar(c);
+            System.out.println("ID DA CIDADE NOVA = " + c.getId());
+            
+            bairro = new Bairro();
+            bairro.setNome(enderecoPojo.getBairro());
+            bairro.setCidade(c);
+            genericoJPA.salvar(bairro);
+            listCidades = genericoJPA.buscarTodos(Cidade.class);
+          }
         }
       }
     }
