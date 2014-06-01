@@ -11,42 +11,38 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">NOVO</div>
 				<div class="panel-body">
+					<form jsf:id="form" class="form-horizontal" >
+							<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
+							<input jsf:id="nome" type="text" jsf:value="#{clienteController.novoCliente.nome}" class="form-control" 
+                            required="required"/>
 
+							<label jsf:for="rg" class="control-label">#{bundle.rg}</label>
+							<input jsf:id="rg" type="number" jsf:value="#{clienteController.novoCliente.rg}" class="form-control" />
 
-
-					<h:form id="form">
-						<h:panelGrid columns="2" styleClass="form-horizontal">
-
-							<label jsf:for="nome" class="col-md-2 control-label">#{bundle.nome}</label>
-							<input jsf:id="nome" type="text" jsf:value="#{clienteController.novoCliente.nome}" class="form-control m5" />
-
-							<label jsf:for="rg" class="col-md-2 control-label">#{bundle.rg}</label>
-							<input jsf:id="rg" type="number" jsf:value="#{clienteController.novoCliente.rg}" class="form-control m5" />
-
-							<label jsf:for="cpfCnpj" class="col-md-2 control-label">#{bundle.cpfCnpj}</label>
+							<label jsf:for="cpfCnpj" class="control-label">#{bundle.cpfCnpj}</label>
 							<input jsf:id="cpfCnpj" type="number" jsf:value="#{clienteController.novoCliente.cpfCnpj}"
-								class="form-control m5" />
+								class="form-control" />
 
-							<label jsf:for="fone" class="col-md-2 control-label">#{bundle.fone}</label>
-							<input jsf:id="fone" type="tel" jsf:value="#{clienteController.novoCliente.foneTitular}" class="form-control m5" />
+							<label jsf:for="fone" class="control-label">#{bundle.fone}</label>
+							<input jsf:id="fone" type="tel" jsf:value="#{clienteController.novoCliente.foneTitular}" class="form-control" max="10"/>
 
-							<label jsf:for="contato" class="col-md-2 control-label">#{bundle.contato}</label>
-							<input jsf:id="contato" type="text" jsf:value="#{clienteController.novoCliente.contato}" class="form-control m5" />
+							<label jsf:for="contato" class="control-label">#{bundle.contato}</label>
+							<input jsf:id="contato" type="text" jsf:value="#{clienteController.novoCliente.contato}" class="form-control" />
 
-							<label jsf:for="foneContato" class="col-md-2 control-label">#{bundle.foneContato}</label>
+							<label jsf:for="foneContato" class="control-label">#{bundle.foneContato}</label>
 							<input jsf:id="foneContato" type="tel" jsf:value="#{clienteController.novoCliente.foneContato}"
-								class="form-control m5" />
+								class="form-control" max="10"/>
 
-							<label jsf:for="email" class="col-md-2 control-label">#{bundle.email}</label>
-							<input jsf:id="email" type="email" jsf:value="#{clienteController.novoCliente.email}" class="form-control m5" />
+							<label jsf:for="email" class="control-label">#{bundle.email}</label>
+							<input jsf:id="email" type="email" jsf:value="#{clienteController.novoCliente.email}" class="form-control" />
 
-							<label jsf:for="cep" class="col-md-2 control-label">#{bundle.cep}</label>
-							<h:inputText id="cep" value="#{clienteController.novoCliente.endereco.cep}" styleClass="form-control m5">
-								<f:ajax event="blur" listener="#{clienteController.buscarEndereco()}" render=":form"/>
+							<label jsf:for="cep" class="control-label">#{bundle.cep}</label>
+							<h:inputText id="cep" value="#{clienteController.novoCliente.endereco.cep}" styleClass="form-control">
+								<f:ajax event="blur" listener="#{clienteController.buscarEndereco()}" render=":form:logradouro"/>
 							</h:inputText>
 
-							<h:outputLabel for="cidade" value="#{bundle.cidade}" styleClass="col-md-2 control-label" />
-							<h:selectOneMenu id="cidade" value="#{clienteController.cidadeId}" styleClass="m5 btn-primary btn-lg"
+							<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
+							<h:selectOneMenu id="cidade" value="#{clienteController.cidadeId}" styleClass="btn-primary btn-lg"
 								required="true">
 								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
 								<f:selectItems value="#{clienteController.listCidades}" var="cidade" itemLabel="#{cidade.nome}"
@@ -54,37 +50,34 @@
 								<f:ajax listener="#{clienteController.atualizaBairros}" render="bairro" />
 							</h:selectOneMenu>
 
-							<h:outputLabel for="bairro" value="#{bundle.bairro}" styleClass="col-md-2 control-label" />
-							<h:selectOneMenu id="bairro" value="#{clienteController.bairroId}" styleClass="m5 btn-primary btn-lg"
+							<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
+							<h:selectOneMenu id="bairro" value="#{clienteController.bairroId}" styleClass="btn-primary btn-lg"
 								required="true">
 								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
 								<f:selectItems value="#{clienteController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"
 									itemValue="#{bairro.id}" />
 							</h:selectOneMenu>
 
-							<h:outputLabel for="logradouro" value="#{bundle.logradouro}" styleClass="col-md-2 control-label" />
-							<h:inputText id="logradouro" required="true" value="#{clienteController.novoCliente.endereco.logradouro}"
-								styleClass="form-control m5" />
+							<label jsf:for="logradouro" class="control-label">#{bundle.logradouro}</label>
+							<input jsf:id="logradouro" type="text" jsf:value="#{clienteController.novoCliente.endereco.logradouro}" class="form-control" />
 
-							<h:outputLabel for="numero" value="#{bundle.numero}" styleClass="col-md-2 control-label" />
-							<h:inputText id="numero" required="true" value="#{clienteController.novoCliente.endereco.numero}"
-								styleClass="form-control m5" />
+							<label jsf:for="numero" class="control-label">#{bundle.numero}</label>
+							<input jsf:id="numero" type="number" jsf:value="#{clienteController.novoCliente.endereco.numero}" class="form-control"/>
 
-							<h:outputLabel for="complemento" value="#{bundle.complemento}" styleClass="col-md-2 control-label" />
-							<h:inputText id="complemento" value="#{clienteController.novoCliente.endereco.complemento}"
-								styleClass="form-control m5" />
+							<label jsf:for="complemento" class="control-label">#{bundle.complemento}</label>
+							<input jsf:id="complemento" type="text" jsf:value="#{clienteController.novoCliente.endereco.complemento}" class="form-control"/>
 
-						</h:panelGrid>
 						<div class="modal-footer">
-							<h:commandLink action="#{clienteController.salvar()}" styleClass="btn btn-primary btn-lg">
-								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
-							</h:commandLink>
-
-							<h:link outcome="list" class="btn btn-primary btn-lg" style="margin-left: 5px;">
-								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
-							</h:link>
-						</div>
-					</h:form>
+                          <button jsf:id="btSalvar" jsf:action="#{clienteController.salvar()}"
+                            class="btn btn-primary" type="submit">
+                            <span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+                          </button>
+                          <button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
+                            class="btn btn-primary">
+                            <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+                          </button>
+  						</div>
+					</form>
 
 				</div>
 			</div>

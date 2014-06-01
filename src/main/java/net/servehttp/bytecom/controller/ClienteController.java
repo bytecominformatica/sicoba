@@ -175,6 +175,11 @@ public class ClienteController implements Serializable {
   public void buscarEndereco() {
     EnderecoPojo ep = EnderecoUtil.INSTANCE.getEndereco(novoCliente.getEndereco().getCep());
     if (ep != null) {
+      List<Bairro> bairros = genericoJPA.buscarTodos("nome", ep.getBairro(), Bairro.class);
+      if(bairros == null || bairros.isEmpty()){
+        List<Cidade> cidades = genericoJPA.buscarTodos("nome", ep.getLocalidade(), Cidade.class);
+        
+      }
       novoCliente.getEndereco().setLogradouro(ep.getLogradouro());
     }
   }

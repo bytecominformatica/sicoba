@@ -14,7 +14,7 @@ public enum EnderecoUtil {
     public EnderecoPojo getEndereco(String cep) {
 
         EnderecoPojo e = null;
-        if (cep != null && !cep.isEmpty()) {
+        if (cep != null && cep.length() >= 8) {
             String path = "http://viacep.com.br/ws/" + cep + "/json/";
 
             Client client = ClientBuilder.newClient();
