@@ -28,8 +28,10 @@ public class GenericoJPA {
     return ((T) em.find(klass, id));
   }
 
-  public <T> void salvar(T t) {
+  public <T> T salvar(T t) {
     em.persist(t);
+    em.flush();
+    return t;
   }
 
   public <T> void atualizar(T t) {

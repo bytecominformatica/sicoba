@@ -14,7 +14,7 @@
 					<form jsf:id="form" class="form-horizontal" >
 							<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
 							<input jsf:id="nome" type="text" jsf:value="#{clienteController.novoCliente.nome}" class="form-control" 
-                            required="required"/>
+                            required="required" autofocus="autofocus"/>
 
 							<label jsf:for="rg" class="control-label">#{bundle.rg}</label>
 							<input jsf:id="rg" type="number" jsf:value="#{clienteController.novoCliente.rg}" class="form-control" />
@@ -38,7 +38,7 @@
 
 							<label jsf:for="cep" class="control-label">#{bundle.cep}</label>
 							<h:inputText id="cep" value="#{clienteController.novoCliente.endereco.cep}" styleClass="form-control">
-								<f:ajax event="blur" listener="#{clienteController.buscarEndereco()}" render=":form:logradouro"/>
+								<f:ajax event="blur" listener="#{clienteController.buscarEndereco()}" render=":form:logradouro :form:cidade :form:bairro"/>
 							</h:inputText>
 
 							<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>

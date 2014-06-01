@@ -173,15 +173,52 @@ public class ClienteController implements Serializable {
   }
 
   public void buscarEndereco() {
+    cidadeId = bairroId = 0;
     EnderecoPojo ep = EnderecoUtil.INSTANCE.getEndereco(novoCliente.getEndereco().getCep());
-    if (ep != null) {
-      List<Bairro> bairros = genericoJPA.buscarTodos("nome", ep.getBairro(), Bairro.class);
-      if(bairros == null || bairros.isEmpty()){
-        List<Cidade> cidades = genericoJPA.buscarTodos("nome", ep.getLocalidade(), Cidade.class);
-        
-      }
+    novoCliente.getEndereco().setBairro(getBairro(ep));
+
+    if (novoCliente.getEndereco().getBairro() != null) {
+      cidadeId = novoCliente.getEndereco().getBairro().getCidade().getId();
+      atualizaBairros();
+      bairroId = novoCliente.getEndereco().getBairro().getId();
       novoCliente.getEndereco().setLogradouro(ep.getLogradouro());
     }
+
+  }
+
+  /**
+   * Verifica se o bairro já existe, se o bairro não existe o mesmo é cadastrado.
+   * 
+   * @param enderecoPojo
+   * @return
+   */
+  private Bairro getBairro(EnderecoPojo enderecoPojo) {
+    Bairro bairro = null;
+
+    if (enderecoPojo != null) {
+      List<Bairro> bairros =
+          genericoJPA.buscarTodos("nome", enderecoPojo.getBairro(), Bairro.class);
+      if (bairros != null && !bairros.isEmpty()) {
+        bairro = bairros.get(0);
+      } else {
+        List<Cidade> cidades =
+            genericoJPA.buscarTodos("nome", enderecoPojo.getLocalidade(), Cidade.class);
+        if (cidades != null && !cidades.isEmpty()) {
+          System.out.println("ENCONTROU CIDADE");
+          Bairro novoBairro = new Bairro();
+          novoBairro.setNome(enderecoPojo.getBairro());
+          novoBairro.setCidade(cidades.get(0));
+          genericoJPA.salvar(novoBairro);
+          System.out.println("Bairro" + novoBairro.getId());
+          bairro = novoBairro;
+          listCidades = genericoJPA.buscarTodos(Cidade.class);
+        } else {
+          System.out.println("NÃO ENCONTROU CIDADE");
+        }
+      }
+    }
+
+    return bairro;
   }
 
   public List<Cidade> getListCidades() {
