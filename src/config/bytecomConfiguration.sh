@@ -13,7 +13,7 @@ USER_HOME=$(eval echo ~${SUDO_USER});
 echo "Digite o caminho onde deseja instalar o wildfly: ";
 read DIRETORIO_INSTALACAO;
 
-WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-8.0.0.Final;
+WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-8.1.0.Final;
 
 ######################### ENVIRONMENT VARIABLE #########################
 WF_FILE=/etc/profile.d/wf.sh;
@@ -26,15 +26,15 @@ echo "export WILDFLY_HOME=$WILDFLY_DIR" > $WF_FILE;
 source $WF_FILE;
 ######################### WILDFLY SERVER ###############################
  
-WILDFLY_ZIP=wildfly-8.0.0.Final.zip;
+WILDFLY_ZIP=wildfly-8.1.0.Final.zip;
  
 if ! [ -d "$WILDFLY_DIR/bin" ]; then
 	if ! [ -f "$WILDFLY_ZIP" ]; then
 		echo "Downloading Wildfly 8 Final...";
-		wget http://download.jboss.org/wildfly/8.0.0.Final/wildfly-8.0.0.Final.zip;
+		wget http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip;
 	fi;
 	echo "Extracting $WILDFLY_ZIP";
-	unzip wildfly-8.0.0.Final.zip -d $DIRETORIO_INSTALACAO;	
+	unzip wildfly-8.1.0.Final.zip -d $DIRETORIO_INSTALACAO;	
 fi;
 
 #################### WILDFLY SERVER CONFIGURATION ######################
