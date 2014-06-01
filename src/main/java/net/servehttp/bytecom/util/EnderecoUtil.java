@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.util;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,8 +15,12 @@ import net.servehttp.bytecom.pojo.EnderecoPojo;
 
 import com.google.gson.Gson;
 
-public class EnderecoUtil {
+public class EnderecoUtil implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 6641797106513004435L;
   @Inject
   private GenericoJPA genericoJPA;
 

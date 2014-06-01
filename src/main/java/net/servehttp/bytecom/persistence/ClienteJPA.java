@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.persistence;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,12 @@ import net.servehttp.bytecom.util.DateUtil;
  * @author clairton
  */
 @Transactional
-public class ClienteJPA {
+public class ClienteJPA implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1857140370479772238L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
 
