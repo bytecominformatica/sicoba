@@ -2,10 +2,12 @@ package net.servehttp.bytecom.controller;
 
 import java.util.Map;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
+@RequestScoped
 public class Util {
 
 	public String removePage(String path) {
