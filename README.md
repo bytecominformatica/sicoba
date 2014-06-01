@@ -1,7 +1,35 @@
 BYTECOM
-========
+=======
 
-Tecnologias:
-*JPA 2.1
-*JSF 2.2
-*Wildfly 8.1.0 Final
+
+Contact
+-------
+
+            Project Leader: Clairton Carneiro Luz
+            Personal Blog: http://clairtonluz.github.io
+            Email Address: clairton at gmail.com
+   
+
+Technologies In Use
+-------------------
+
+JDK 7
+
+Wildfly 8.1.0 Final
+
+JPA 2.1
+
+Gson 2.2.4
+
+Mysql 5.1.29
+
+Hibernate
+
+JSF 2.2
+
+Bootstrap v3.1.1
+
+JUnit 4.8.2
+
+--------------------------------------------
+Copyright (C) 2013-2014, Clairton Carneiro Luz
