@@ -254,6 +254,7 @@ change cpf cpf_cnpj varchar(255);
 alter table cliente
 drop column cnpj;
 
+<<<<<<< HEAD
 
 INSERT INTO estado(id,uf,nome,pais_id)VALUES(99,'TT','CearaMigration',1);
 update cidade set estado_id = 99 where estado_id = 1;
@@ -289,3 +290,18 @@ INSERT INTO estado(id,uf,nome,pais_id)VALUES(27,'TO','Tocantins',1);
 
 update cidade set estado_id = 6 where estado_id = 99;
 delete from estado where id = 99;
+
+CREATE TABLE despesa(
+	id int not null primary key auto_increment,
+	descricao varchar(255) NOT NULL,
+	fornecedor_id int,
+	valor dec(20,2),
+	data date not null,
+	status varchar(20) not null,
+	created_at datetime,
+    updated_at timestamp not null default current_timestamp on update current_timestamp,
+    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (id)
+);
+
+create trigger despesa_on_insert before insert
+on despesa for each row set new.created_at = current_timestamp;
