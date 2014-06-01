@@ -7,7 +7,7 @@ Contact
 
             Project Leader: Clairton Carneiro Luz
             Personal Blog: http://clairtonluz.github.io
-            Email Address: clairton@gmail.com
+            Email Address: clairton.c.l@gmail.com
    
 
 Technologies In Use
