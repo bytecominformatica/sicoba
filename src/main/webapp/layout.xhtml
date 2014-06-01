@@ -32,26 +32,26 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<c:if test="#{authentication.usuarioLogado != null}">
+						<li class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}"><a href="#{request.contextPath}">#{bundle.home}</a></li>
 
-						<li class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}"><a
-							href="#{request.contextPath}">#{bundle.home}</a></li>
-						<li
-							class="#{util.removePage(view.viewId) eq '/plano' ? 'active' : ''}"><h:outputLink
-								value="#{request.contextPath}/plano/list.xhtml">#{bundle.planos}</h:outputLink></li>
-						<li
-							class="#{util.removePage(view.viewId) eq '/cliente' ? 'active' : ''}"><h:outputLink
-								value="#{request.contextPath}/cliente/list.xhtml">#{bundle.clientes}</h:outputLink></li>
-						<li
-							class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}"><h:outputLink
-								value="#{request.contextPath}/equipamento/list.xhtml">#{bundle.equipamentos}</h:outputLink></li>
+						<li class="#{util.removePage(view.viewId) eq '/plano' ? 'active' : ''}"><a
+							href="#{request.contextPath}/plano/list.xhtml">#{bundle.planos}</a></li>
+
+						<li class="#{util.removePage(view.viewId) eq '/cliente' ? 'active' : ''}"><a
+							href="#{request.contextPath}/cliente/list.xhtml">#{bundle.clientes}</a></li>
+
+						<li class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}"><a
+							href="#{request.contextPath}/equipamento/list.xhtml">#{bundle.equipamentos}</a></li>
+						
 						<li
 							class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}"><h:outputLink
-								value="#{request.contextPath}/despesa/list.xhtml">#{bundle.despesas}</h:outputLink></li>
-						<li class="#{view.viewId eq '/relatorios.xhtml' ? 'active' : ''}"><h:outputLink
-								value="#{request.contextPath}/relatorios.xhtml">#{bundle.relatorios}</h:outputLink></li>
+							href="#{request.contextPath}/despesa/list.xhtml">#{bundle.despesas}</h:outputLink></li>
+
+						<li class="#{view.viewId eq '/relatorios.xhtml' ? 'active' : ''}"><a
+							href="#{request.contextPath}/relatorios.xhtml">#{bundle.relatorios}</a></li>
+
 
 						<li class="dropdown"><a href="/bytecom#" class="dropdown-toggle" data-toggle="dropdown">APPs <b
->>>>>>> aplicando CriteriaQuery em GenericoJPA
 								class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#{request.contextPath}/app/clientesOnline.xhtml">#{bundle.clientesOnline}</a></li>

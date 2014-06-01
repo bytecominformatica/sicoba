@@ -23,121 +23,123 @@ import net.servehttp.bytecom.util.DateUtil;
 @Table(name = "contrato")
 public class Contrato implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @NotNull(message="vencimento é obrigatório")
-    private short vencimento;
-    @Column(name = "data_instalacao")
-    @NotNull(message="data de instalação é obrigatório")
-    @Temporal(TemporalType.DATE)
-    private Date dataInstalacao;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
+  @NotNull(message = "vencimento é obrigatório")
+  private short vencimento;
+  @Column(name = "data_instalacao")
+  @NotNull(message = "data de instalação é obrigatório")
+  @Temporal(TemporalType.DATE)
+  private Date dataInstalacao;
 
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
 
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+  @JoinColumn(name = "equipamento_wifi_id", referencedColumnName = "id")
+  @OneToOne(fetch = FetchType.EAGER)
+  private Equipamento equipamentoWifi;
 
-    @JoinColumn(name = "equipamento_wifi_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER)
-    private Equipamento equipamentoWifi;
+  @JoinColumn(name = "equipamento_id", referencedColumnName = "id")
+  @OneToOne(fetch = FetchType.EAGER)
+  private Equipamento equipamento;
 
-    @JoinColumn(name = "equipamento_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER)
-    private Equipamento equipamento;
+  @JoinColumn(name = "plano_id", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @NotNull(message = "plano é obrigatório")
+  private Plano plano;
 
-    @JoinColumn(name = "plano_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @NotNull(message="plano é obrigatório")
-    private Plano plano;
+  @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+  @OneToOne(fetch = FetchType.EAGER)
+  @NotNull(message = "cliente é obrigatório")
+  private Cliente cliente;
 
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER)
-    @NotNull(message="cliente é obrigatório")
-    private Cliente cliente;
+  @Column(name = "created_at")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date createdAt;
 
-    public short getVencimento() {
-        return vencimento;
-    }
+  @Column(name = "updated_at")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date updatedAt;
 
-    public void setVencimento(short vencimento) {
-        this.vencimento = vencimento;
-    }
 
-    public Date getDataInstalacao() {
-        return dataInstalacao;
-    }
+  public short getVencimento() {
+    return vencimento;
+  }
 
-    public String getDataInstalacaoFormatada() {
-        return DateUtil.INSTANCE.format(dataInstalacao);
-    }
+  public void setVencimento(short vencimento) {
+    this.vencimento = vencimento;
+  }
 
-    public void setDataInstalacaoFormatada(String dataInstalacao) {
-        this.dataInstalacao = DateUtil.INSTANCE.parse(dataInstalacao, "MM/dd/yyyy");
-    }
+  public Date getDataInstalacao() {
+    return dataInstalacao;
+  }
 
-    public void setDataInstalacao(Date dataInstalacao) {
-        this.dataInstalacao = dataInstalacao;
-    }
+  public String getDataInstalacaoFormatada() {
+    return DateUtil.INSTANCE.format(dataInstalacao);
+  }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+  public void setDataInstalacaoFormatada(String dataInstalacao) {
+    this.dataInstalacao = DateUtil.INSTANCE.parse(dataInstalacao, "MM/dd/yyyy");
+  }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setDataInstalacao(Date dataInstalacao) {
+    this.dataInstalacao = dataInstalacao;
+  }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+  public Date getCreatedAt() {
+    return createdAt;
+  }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    public Equipamento getEquipamentoWifi() {
-        return equipamentoWifi;
-    }
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
 
-    public void setEquipamentoWifi(Equipamento equipamentoWifi) {
-        this.equipamentoWifi = equipamentoWifi;
-    }
+  public void setUpdatedAt(Date updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 
-    public Equipamento getEquipamento() {
-        return equipamento;
-    }
+  public Equipamento getEquipamentoWifi() {
+    return equipamentoWifi;
+  }
 
-    public void setEquipamento(Equipamento equipamento) {
-        this.equipamento = equipamento;
-    }
+  public void setEquipamentoWifi(Equipamento equipamentoWifi) {
+    this.equipamentoWifi = equipamentoWifi;
+  }
 
-    public Plano getPlano() {
-        return plano;
-    }
+  public Equipamento getEquipamento() {
+    return equipamento;
+  }
 
-    public void setPlano(Plano plano) {
-        this.plano = plano;
-    }
+  public void setEquipamento(Equipamento equipamento) {
+    this.equipamento = equipamento;
+  }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+  public Plano getPlano() {
+    return plano;
+  }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+  public void setPlano(Plano plano) {
+    this.plano = plano;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public Cliente getCliente() {
+    return cliente;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
 }
