@@ -254,8 +254,6 @@ change cpf cpf_cnpj varchar(255);
 alter table cliente
 drop column cnpj;
 
-<<<<<<< HEAD
-
 INSERT INTO estado(id,uf,nome,pais_id)VALUES(99,'TT','CearaMigration',1);
 update cidade set estado_id = 99 where estado_id = 1;
 delete from estado where id = 1;
