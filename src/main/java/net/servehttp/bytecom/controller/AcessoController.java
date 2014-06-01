@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.AcessoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
@@ -21,7 +21,7 @@ import net.servehttp.bytecom.util.AlertaUtil;
  * @author clairton
  * 
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class AcessoController implements Serializable {
 
