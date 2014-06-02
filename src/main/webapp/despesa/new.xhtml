@@ -39,11 +39,15 @@
 							<input jsf:id="valorDespesa" type="number" step="any"
 								jsf:value="#{despesaController.novaDespesa.valor}"
 								class="form-control m5" required="required" min="0" />
+								
 							<label jsf:for="dataVencimento" class="col-md-2 control-label">#{bundle.vencimento}</label>
-							<input jsf:id="dataVencimento" type="date" 
-									jsf:value="despesaController.novaDespesa.data" class="form-control m5" required="required"/>
+							<input jsf:id="dataVencimento" type="date" required="required"
+									jsf:value="#{despesaController.novaDespesa.data}" class="form-control m5">
+									<f:convertDateTime pattern="yyyy-MM-dd"/>
+							</input>
+									
 							<label jsf:for="status" class="col-md-2 control-label">#{bundle.status}</label>
-							<h:selectOneMenu id="status" value="despesaController.novaDespesa.status" 
+							<h:selectOneMenu id="status" value="#{despesaController.novaDespesa.status}" 
 											styleClass="m5 btn-primary btn-lg" required="true" 
 											requiredMessage="#{bundle.status} obrigatório">
 											<f:selectItem itemLabel="#{bundle.aberto}" itemValue="false" />

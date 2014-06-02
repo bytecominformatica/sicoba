@@ -25,7 +25,7 @@
 				</button>
 				<a href="#{request.contextPath}" class="navbar-brand" style="margin-top: -18px;">
 					<h:graphicImage value="/resources/images/logo.png" style="margin-top: 4px;" />
-					<h:outputText value=" Bytecom2" />
+					<h:outputText value=" Bytecom" />
 				</a>
 				
 			</div>
@@ -44,8 +44,8 @@
 							href="#{request.contextPath}/equipamento/list.xhtml">#{bundle.equipamentos}</a></li>
 						
 						<li
-							class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}"><h:outputLink
-							href="#{request.contextPath}/despesa/list.xhtml">#{bundle.despesas}</h:outputLink></li>
+							class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}"><a
+							href="#{request.contextPath}/despesa/list.xhtml">#{bundle.despesas}</a></li>
 
 						<li class="#{view.viewId eq '/relatorios.xhtml' ? 'active' : ''}"><a
 							href="#{request.contextPath}/relatorios.xhtml">#{bundle.relatorios}</a></li>
