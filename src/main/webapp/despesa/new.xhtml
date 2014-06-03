@@ -12,7 +12,7 @@
       <div class="panel-body">
         <form jsf:id="form" class="form-horizontal">
 
-          <label jsf:for="descricao" class="control-label">Descricao</label> 
+          <label jsf:for="descricao" class="control-label">Descrição</label> 
           <input jsf:id="descricao" type="text" jsf:value="#{despesaController.novaDespesa.descricao}"
             class="form-control" required="required" autofocus="autofocus"/> 
           
@@ -25,8 +25,8 @@
           </h:selectOneMenu>
 
           <label jsf:for="valorDespesa" class="control-label">#{bundle.valor}</label> 
-          <input jsf:id="valorDespesa" type="number" step="any"class="form-control"
-            jsf:value="#{despesaController.novaDespesa.valor}" required="required" min="0"/> 
+          <input jsf:id="valorDespesa" type="number" step="any" class="form-control"
+            jsf:value="#{despesaController.novaDespesa.valor}" required="required"/> 
             
           <label jsf:for="dataVencimento" class="control-label">#{bundle.vencimento}</label> 
           <input jsf:id="dataVencimento" type="date" required="required"
@@ -52,6 +52,7 @@
               <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
             </button>
           </div>
+
         </form>
       </div>
     </div>
