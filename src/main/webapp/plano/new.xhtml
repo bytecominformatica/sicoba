@@ -4,7 +4,6 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <ui:composition template="/layout.xhtml">
@@ -19,7 +18,9 @@
 					<label jsf:for="nome" class="control-label">#{bundle.nome}</label> 
 					<input jsf:id="nome" type="text" class="form-control"
 						jsf:value="#{planoController.novoPlano.nome}" autofocus="autofocus"
-						required="required" /> <label jsf:for="download" class="control-label">#{bundle.download}</label>
+						required="required" /> 
+            
+                    <label jsf:for="download" class="control-label">#{bundle.download}</label>
 					<input jsf:id="download" type="number" class="form-control" min="1"
 						jsf:value="#{planoController.novoPlano.download}" required="required" />
 					

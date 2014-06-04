@@ -1,79 +1,61 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:jsf="http://xmlns.jcp.org/jsf">
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
-</head>
-<body>
-<h:body>
-	<ui:composition template="/layout.xhtml">
-		<ui:define name="title">#{bundle.despesas}</ui:define>
-		<ui:define name="content">
-			
-			<div class="panel panel-primary">
-				<div class="panel-heading">NOVO</div>
-				<div class="panel-body">
-					<h:form>
-						<h:panelGrid columns="2" styleClass="form-horizontal">
-							<label jsf:for="descricao" class="col-md-2 control-label">Descricao</label>
-							<input jsf:id="descricao" type="text" 
-								jsf:value="#{despesaController.novaDespesa.descricao}" 
-								class="form-control m5" required="required" autofocus="autofocus"/>
-							<label jsf:for="fornecedor" class="col-md-2 control-label">Fornecedor</label>
-							<h:selectOneMenu id="fornecedor" value="#{despesaController.fornecedorId}" styleClass="m5 btn-primary btn-lg"
-								required="true">
-								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-								<f:selectItems value="#{despesaController.listFornecedor}" var="fornecedor" itemLabel="#{fornecedor.nome}"
-									itemValue="#{fornecedor.id}"/>
-							</h:selectOneMenu>
-							
-							<label jsf:for="valorDespesa" class="col-md-2 control-label">#{bundle.valor}</label>
-							<input jsf:id="valorDespesa" type="number" step="any"
-								jsf:value="#{despesaController.novaDespesa.valor}"
-								class="form-control m5" required="required" min="0" />
-								
-							<label jsf:for="dataVencimento" class="col-md-2 control-label">#{bundle.vencimento}</label>
-							<input jsf:id="dataVencimento" type="date" required="required"
-									jsf:value="#{despesaController.novaDespesa.data}" class="form-control m5">
-									<f:convertDateTime pattern="yyyy-MM-dd"/>
-							</input>
-									
-							<label jsf:for="status" class="col-md-2 control-label">#{bundle.status}</label>
-							<h:selectOneMenu id="status" value="#{despesaController.novaDespesa.status}" 
-											styleClass="m5 btn-primary btn-lg" required="true" 
-											requiredMessage="#{bundle.status} obrigatório">
-											<f:selectItem itemLabel="#{bundle.aberto}" itemValue="false" />
-											<f:selectItem itemLabel="#{bundle.fechado}" itemValue="true" />
-							</h:selectOneMenu>
-						</h:panelGrid>
-						
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary"
-								jsf:action="#{despesaController.salvar()}">
-								<span class="glyphicon glyphicon-floppy-save" />
-								#{bundle.salvar}
-							</button>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+<ui:composition template="/layout.xhtml">
+  <ui:define name="title">#{bundle.despesas}</ui:define>
+  <ui:define name="content">
+    <div class="panel panel-primary">
+      <div class="panel-heading">NOVO</div>
+      <div class="panel-body">
+        <form jsf:id="form" class="form-horizontal">
 
-							<button class="btn btn-primary" jsf:outcome="list"
-								style="margin-left: 5px;">
-								<span class="glyphicon glyphicon-circle-arrow-left" />
-								#{bundle.back}
-							</button>
-						</div>
-						
-					</h:form>
-				</div>
-			</div>
-		</ui:define>
-	</ui:composition>
-</h:body>
-</body>
+          <label jsf:for="descricao" class="control-label">Descrição</label> 
+          <input jsf:id="descricao" type="text" jsf:value="#{despesaController.novaDespesa.descricao}"
+            class="form-control" required="required" autofocus="autofocus"/> 
+          
+          <label jsf:for="fornecedor" class="control-label">Fornecedor</label>
+          <h:selectOneMenu id="fornecedor" value="#{despesaController.fornecedorId}"
+            styleClass="btn-primary btn-lg" required="true">
+            <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+            <f:selectItems value="#{despesaController.listFornecedor}" var="fornecedor"
+              itemLabel="#{fornecedor.nome}" itemValue="#{fornecedor.id}"/>
+          </h:selectOneMenu>
+
+          <label jsf:for="valorDespesa" class="control-label">#{bundle.valor}</label> 
+          <input jsf:id="valorDespesa" type="number" step="any" class="form-control"
+            jsf:value="#{despesaController.novaDespesa.valor}" required="required"/> 
+            
+          <label jsf:for="dataVencimento" class="control-label">#{bundle.vencimento}</label> 
+          <input jsf:id="dataVencimento" type="date" required="required"
+            jsf:value="#{despesaController.novaDespesa.data}" class="form-control">
+            <f:convertDateTime pattern="yyyy-MM-dd" />
+          </input> 
+          
+          <label jsf:for="status" class="control-label">#{bundle.status}</label>
+          <h:selectOneMenu id="status" value="#{despesaController.novaDespesa.status}"
+            styleClass="btn-primary btn-lg" required="true"
+            requiredMessage="#{bundle.status} obrigatório">
+            <f:selectItem itemLabel="#{bundle.aberto}" itemValue="false" />
+            <f:selectItem itemLabel="#{bundle.fechado}" itemValue="true" />
+          </h:selectOneMenu>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary"
+              jsf:action="#{despesaController.salvar()}">
+              <span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+            </button>
+
+            <button class="btn btn-primary" jsf:outcome="list" style="margin-left: 5px;">
+              <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
 </html>
