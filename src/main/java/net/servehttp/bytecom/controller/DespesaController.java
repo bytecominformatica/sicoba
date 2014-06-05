@@ -54,6 +54,7 @@ public class DespesaController implements Serializable {
 	
 	public void atualizar(){
 		genericoJPA.atualizar(despesaSelecionada);
+		load();
 	}
 	
 	public void remover(){
@@ -83,7 +84,7 @@ public class DespesaController implements Serializable {
 	
 	private void getParameters(){
 		String despesaId = util.getParameters("despesaId");
-		if((despesaId != null) && (despesaId.isEmpty())){
+		if(despesaId != null && !despesaId.isEmpty()){
 			despesaSelecionada = genericoJPA.buscarPorId(Despesa.class, Integer.parseInt(despesaId));
 		}
 		

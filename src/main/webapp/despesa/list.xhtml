@@ -6,7 +6,6 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-<h:body>
 	<ui:composition template="/layout.xhtml">
 		<ui:define name="title">#{bundle.despesas}</ui:define>
 		<ui:define name="content">
@@ -27,38 +26,37 @@
 								</f:facet>
 								<h:column>
 									<f:facet name="header">#{bundle.descricao}</f:facet>
-									<h:outputText value="#{despesa.descricao}"/>
+									#{despesa.descricao}
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.fornecedor}</f:facet>
-									<h:outputText value="#{despesa.fornecedor.nome}"/>
+									#{despesa.fornecedor.nome}
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.valor}</f:facet>
-									<h:outputText value="#{despesa.valor}"/>
+									#{despesa.valor}
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.vencimento}</f:facet>
-									<h:outputText value="#{despesa.data}"/>
+									#{despesa.data}
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.status}</f:facet>
-									<h:outputText value="#{despesa.status}"/>
+									#{despesa.status}
 								</h:column>
 								
 								<h:column>
 								<f:facet name="header">#{bundle.actions}</f:facet>
 								<h:panelGrid columns="2" style="text-align:center;">
-									<h:link outcome="edit" styleClass="btn btn-primary btn-lg">
-										<i class="glyphicon glyphicon-edit" />
+									<button jsf:id="btnEdit" class="btn btn-primary" jsf:outcome="edit">
+										<span class="glyphicon glyphicon-edit" />
 										<f:param value="#{despesa.id}" name="id"></f:param>
-									</h:link>
+									</button>
 
-									<h:link outcome="remove" styleClass="btn btn-danger btn-lg"
-										style="margin-left:5px;">
-										<i class="glyphicon glyphicon-remove" />
+									<button jsf:id="btnRemove" class="btn btn-danger" jsf:outcome="remove" style="margin-left: 5px;">
+										<span class="glyphicon glyphicon-remove" />
 										<f:param value="#{despesa.id}" name="id"></f:param>
-									</h:link>
+									</button>
 								</h:panelGrid>
 							</h:column>
 						</h:dataTable>
@@ -68,5 +66,5 @@
 		</ui:define>
 		
 	</ui:composition>
-</h:body>
+	
 </html>
