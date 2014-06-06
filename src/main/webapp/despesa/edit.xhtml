@@ -2,8 +2,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
   xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
-  xmlns:jsf="http://xmlns.jcp.org/jsf"
->
+  xmlns:jsf="http://xmlns.jcp.org/jsf">
+<f:metadata>
+	<f:viewParam name="id" value="#{despesaController.despesaSelecionada}" converter="#{despesaConverter}"
+		converterMessage="Registro não encontrado."/>
+</f:metadata>
 <ui:composition template="/layout.xhtml">
   <ui:define name="title">#{bundle.despesas}</ui:define>
   <ui:define name="content">
