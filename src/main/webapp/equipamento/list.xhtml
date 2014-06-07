@@ -25,38 +25,34 @@
 							</f:facet>
 							<h:column>
 								<f:facet name="header">#{bundle.modelo}</f:facet>
-								<h:outputText value="#{equipamento.modelo}" />
+								#{equipamento.modelo}
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.mac}</f:facet>
-								<h:outputText value="#{equipamento.mac}" />
+								#{equipamento.mac}
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.status}</f:facet>
-								<h:outputText value="#{equipamento.status}" />
+								#{equipamento.status}
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.actions}</f:facet>
 								<h:panelGrid columns="2" style="text-align:center;">
-									<h:link outcome="edit" styleClass="btn btn-primary btn-lg">
-										<i class="glyphicon glyphicon-edit" />
-										<f:param value="#{equipamento.id}" name="id"></f:param>
-									</h:link>
-
-									<h:link outcome="remove" styleClass="btn btn-danger btn-lg"
-										style="margin-left:5px;">
-										<i class="glyphicon glyphicon-remove" />
-										<f:param value="#{equipamento.id}" name="id"></f:param>
-									</h:link>
+                                  <button jsf:id="btnEdit" class="btn btn-primary" jsf:outcome="edit">
+                                    <span class="glyphicon glyphicon-edit" />
+									<f:param value="#{equipamento.id}" name="id"></f:param>
+                                  </button>
+                  
+                                  <button jsf:id="btnRemove" class="btn btn-danger" jsf:outcome="remove" style="margin-left: 5px;">
+                                    <span class="glyphicon glyphicon-remove" />
+									<f:param value="#{equipamento.id}" name="id"></f:param>
+                                  </button>                
 								</h:panelGrid>
 							</h:column>
 						</h:dataTable>
-					</h:form>
+					</form>
 				</div>
 			</div>
-
 		</ui:define>
-
 	</ui:composition>
-</h:body>
 </html>
