@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:body>
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
 	<ui:composition template="/layout.xhtml">
 		<ui:define name="title">#{bundle.equipamento}</ui:define>
 		<ui:define name="content">
@@ -12,15 +12,15 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">EQUIPAMENTO</div>
 				<div class="panel-body">
-					<h:form id="form">
+					<form jsf:id="form">
 						<h:dataTable value="#{equipamentoController.listEquipamentos}"
 							var="equipamento" styleClass="table table-striped table-bordered"
 							headerClass="tableColumnsHeader">
 							<f:facet name="header">
 								<div align="center">
-									<h:commandLink action="new" styleClass="btn btn-primary btn-lg">
-										<i class="glyphicon glyphicon-plus" /> #{bundle.new}
-									</h:commandLink>
+                                    <button jsf:outcome="new" class="btn btn-primary">
+										<span class="glyphicon glyphicon-plus" /> #{bundle.new}
+                                    </button>
 								</div>
 							</f:facet>
 							<h:column>
