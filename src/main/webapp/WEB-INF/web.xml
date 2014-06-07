@@ -29,9 +29,9 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 	
-	 <listener>
+	<listener>
         <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
-     </listener>
+    </listener>
 	
 	<session-config>
 		<session-timeout>15</session-timeout>
