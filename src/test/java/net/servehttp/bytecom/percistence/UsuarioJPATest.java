@@ -24,8 +24,7 @@ public class UsuarioJPATest {
 	
 	@Test
 	public void deveriaBuscarUsuarioPorLoginESenha(){
-		Usuario u = usuarioJPA.buscaUsuario("logindeteste", "logindeteste");
-		Assert.assertNotNull(u);
+		usuarioJPA.buscaUsuario("logindeteste", "logindeteste");
 	}
 
 	@Test
@@ -44,5 +43,4 @@ public class UsuarioJPATest {
 	public void closeUp(){
 		em.close();
 	}
-
 }
