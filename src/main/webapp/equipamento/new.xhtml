@@ -1,94 +1,60 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:body>
-	<ui:composition template="/layout.xhtml">
-		<ui:define name="title">#{bundle.equipamento}</ui:define>
-		<ui:define name="content">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+<ui:composition template="/layout.xhtml">
+  <ui:define name="title">#{bundle.equipamento}</ui:define>
+  <ui:define name="content">
+    <div class="panel panel-primary">
+      <div class="panel-heading">NOVO</div>
+      <div class="panel-body">
+        <form jsf:id="form" class="form-horizontal">
 
-			<div class="panel panel-primary">
-				<div class="panel-heading">NOVO</div>
-				<div class="panel-body">
+          <label jsf:for="marca" class="control-label">#{bundle.marca}</label> 
+          <input jsf:id="marca" type="text" class="form-control" autofocus="autofocus" required="required" 
+          jsf:value="#{equipamentoController.novoEquipamento.marca}"/>
 
-					<h:form id="form">
-						<h:panelGrid columns="2" styleClass="form-inline">
+          <label jsf:for="modelo" class="control-label">#{bundle.modelo}</label> 
+          <input jsf:id="modelo" type="text" class="form-control" required="required" 
+          jsf:value="#{equipamentoController.novoEquipamento.modelo}"/>
 
-							<h:outputLabel for="marca" value="#{bundle.marca}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="marca" required="true"
-								requiredMessage="#{bundle.marca} obrigatório"
-								value="#{equipamentoController.novoEquipamento.marca}"
-								styleClass="form-control m5" />
+          <label jsf:for="mac" class="control-label">#{bundle.mac}</label> 
+          <input jsf:id="mac" type="text" class="form-control" required="required" 
+          jsf:value="#{equipamentoController.novoEquipamento.mac}" 
+          pattern="^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$"/>
 
-							<h:outputLabel for="modelo" value="#{bundle.modelo}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="modelo" required="true"
-								requiredMessage="#{bundle.modelo} obrigatório"
-								value="#{equipamentoController.novoEquipamento.modelo}"
-								styleClass="form-control m5" />
+          <label jsf:for="descricao" class="control-label">#{bundle.descricao}</label> 
+          <textarea rows="4" jsf:id="descricao" class="form-control" required="required" 
+          jsf:value="#{equipamentoController.novoEquipamento.descricao}"/>
 
-							<h:outputLabel for="mac" value="#{bundle.mac}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="mac" required="true"
-								requiredMessage="#{bundle.mac} obrigatório"
-								value="#{equipamentoController.novoEquipamento.mac}"
-								styleClass="form-control m5 mac" />
+          <label jsf:for="tipo" class="control-label">#{bundle.tipo}</label> 
+          <h:selectOneMenu id="tipo" value="#{equipamentoController.novoEquipamento.tipo}"
+            styleClass="btn-primary btn-lg">
+            <f:selectItem itemLabel="Instalação" itemValue="#{equipamentoController.novoEquipamento.TIPO_INSTALACAO}"/>
+            <f:selectItem itemLabel="WIFI" itemValue="#{equipamentoController.novoEquipamento.TIPO_WIFI}"/>
+          </h:selectOneMenu>
 
-							<h:outputLabel for="descricao" value="#{bundle.descricao}"
-								styleClass="col-md-2 control-label" />
-							<h:inputTextarea id="descricao" required="true"
-								requiredMessage="#{bundle.descricao} obrigatório"
-								value="#{equipamentoController.novoEquipamento.descricao}"
-								styleClass="form-control m5" />
+          <label jsf:for="status" class="control-label">#{bundle.status}</label> 
+          <h:selectOneMenu id="status" value="#{equipamentoController.novoEquipamento.status}"
+            styleClass="btn-primary btn-lg">
+            <f:selectItem itemLabel="OK" itemValue="#{equipamentoController.novoEquipamento.STATUS_OK}"/>
+            <f:selectItem itemLabel="DEFEITO" itemValue="#{equipamentoController.novoEquipamento.STATUS_DEFEITO}"/>
+          </h:selectOneMenu>
 
-							<h:outputLabel for="tipo" value="#{bundle.tipo}"
-								styleClass="col-md-2 control-label" />
-							<h:selectOneMenu id="tipo"
-								value="#{equipamentoController.novoEquipamento.tipo}"
-								styleClass="m5 btn-primary btn-lg">
-								<f:selectItem itemLabel="Instalação"
-									itemValue="#{equipamentoController.novoEquipamento.TIPO_INSTALACAO}" />
-								<f:selectItem itemLabel="WIFI"
-									itemValue="#{equipamentoController.novoEquipamento.TIPO_WIFI}" />
-							</h:selectOneMenu>
-
-							<h:outputLabel for="status" value="#{bundle.status}"
-								styleClass="col-md-2 control-label" />
-							<h:selectOneMenu id="status"
-								value="#{equipamentoController.novoEquipamento.status}"
-								styleClass="m5 btn-primary btn-lg">
-								<f:selectItem itemLabel="OK"
-									itemValue="#{equipamentoController.novoEquipamento.STATUS_OK}" />
-								<f:selectItem itemLabel="DEFEITO"
-									itemValue="#{equipamentoController.novoEquipamento.STATUS_DEFEITO}" />
-							</h:selectOneMenu>
-						</h:panelGrid>
-
-						<div class="modal-footer">
-							<h:commandLink action="#{equipamentoController.salvar()}"
-								styleClass="btn btn-primary btn-lg">
-								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
-										</h:commandLink>
-
-							<h:link outcome="list" class="btn btn-primary btn-lg"
-								style="margin-left: 5px;">
-								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
-							</h:link>
-						</div>
-					</h:form>
-
-				</div>
-			</div>
-	<script type="text/javascript">
-		window.onload = function() {
-			document.getElementById('form:marca').focus();
-		}
-	</script>
-		</ui:define>
-
-	</ui:composition>
-</h:body>
+          <div class="modal-footer">
+            <button jsf:id="btSalvar" jsf:action="#{equipamentoController.salvar()}" class="btn btn-primary" type="submit">
+              <span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+            </button>
+            <button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
+              class="btn btn-primary">
+              <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
 </html>
