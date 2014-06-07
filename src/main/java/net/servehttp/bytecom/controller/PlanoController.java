@@ -98,10 +98,11 @@ public class PlanoController implements Serializable {
     return result;
   }
 
-  public void atualizar() {
+  public String atualizar() {
     genericoJPA.atualizar(planoSelecionado);
     load();
-    // AlertaUtil.alerta("Plano atualizado com sucesso!");
+    AlertaUtil.alerta("Atualizado com sucesso!");
+    return "list";
   }
 
   public String remover() {

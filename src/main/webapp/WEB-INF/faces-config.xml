@@ -8,10 +8,6 @@
 			<base-name>net.servehttp.bytecom.web.bundles.Resources</base-name>
 			<var>bundle</var>
 		</resource-bundle>
-
-		<locale-config>
-			<default-locale>pt</default-locale>
-		</locale-config>
 	</application>
 
 	<lifecycle>
