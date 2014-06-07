@@ -5,6 +5,20 @@
          version="3.1">
 
 	<display-name>bytecom</display-name>
+	<!-- Liquibase -->
+    <context-param>
+        <param-name>liquibase.changelog</param-name>
+        <param-value>net/servehttp/bytecom/db/changelog.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>liquibase.datasource</param-name>
+        <param-value>java:/bytecomDS</param-value>
+    </context-param>
+    <context-param>
+        <param-name>liquibase.onerror.fail</param-name>
+        <param-value>true</param-value>
+    </context-param>
+	
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -14,6 +28,11 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
+	 <listener>
+        <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
+     </listener>
+	
 	<session-config>
 		<session-timeout>15</session-timeout>
 	</session-config>

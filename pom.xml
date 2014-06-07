@@ -64,6 +64,12 @@
 			<artifactId>jersey-json</artifactId>
 			<version>1.8</version>
 		</dependency>
+		
+		 <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.2.0</version>
+        </dependency>
 
 
 	</dependencies>
