@@ -13,4 +13,12 @@
 	<sqlFile path="net/servehttp/bytecom/db/changelog/carga-dados.sql" stripComments="true"/>
 </changeSet>
 
+<changeSet id="3" author="felipewmartins">
+	<sqlFile path="net/servehttp/bytecom/db/changelog/20140607-3-felipewmartins.sql" stripComments="true"/>
+</changeSet>
+
+<changeSet id="4" author="felipewmartins">
+	<sqlFile path="net/servehttp/bytecom/db/changelog/20140607-4-felipewmartins.sql" stripComments="true"/>
+</changeSet>
+
 </databaseChangeLog>

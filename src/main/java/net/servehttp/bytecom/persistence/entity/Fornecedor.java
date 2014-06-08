@@ -31,8 +31,8 @@ public class Fornecedor implements Serializable {
 	private String nome;
 	private String fone;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "empresa_id")
-	private Empresa empresa;
+	@JoinColumn(name = "endereco_id")
+	private Endereco endereco;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at")
 	private Calendar createdAt;
@@ -64,12 +64,12 @@ public class Fornecedor implements Serializable {
 		this.fone = fone;
 	}
 
-	public Empresa getEmpresa() {
-		return empresa;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public Calendar getCreatedAt() {
