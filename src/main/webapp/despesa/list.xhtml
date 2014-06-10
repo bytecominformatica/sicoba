@@ -38,7 +38,9 @@
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.vencimento}</f:facet>
-									#{despesa.data}
+									<h:outputText value="#{despesa.data}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.status}</f:facet>
