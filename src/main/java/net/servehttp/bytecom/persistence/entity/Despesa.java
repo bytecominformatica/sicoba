@@ -36,7 +36,7 @@ public class Despesa implements Serializable {
 	private Fornecedor fornecedor;
 	private double valor;
 	private Date data;
-	private String status;
+	private char status;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at")
 	private Calendar createdAt;
@@ -75,10 +75,10 @@ public class Despesa implements Serializable {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	public String getStatus() {
+	public char getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(char status) {
 		this.status = status;
 	}
 	public Calendar getCreatedAt() {
