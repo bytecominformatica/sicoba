@@ -37,7 +37,7 @@ public class UsuarioJPA {
 		Usuario l = null;
 		try {
 			l = em.createQuery(
-					"SELECT u FROM Usuario u where u.login = :login and u.senha = FUNCTION('md5', :senha)",
+					"SELECT u FROM Usuario u where u.login = :login and u.senha = FUNCTION('sha2', :senha , 256)",
 					Usuario.class).setParameter("login", login)
 					.setParameter("senha", senha).getSingleResult();
 		} catch (NoResultException e) {
