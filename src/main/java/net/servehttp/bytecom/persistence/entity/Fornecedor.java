@@ -24,68 +24,79 @@ import javax.persistence.TemporalType;
 @Table(name = "fornecedor")
 public class Fornecedor implements Serializable {
 
-	private static final long serialVersionUID = -4003398104522589791L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String nome;
-	private String fone;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "endereco_id")
-	private Endereco endereco;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at")
-	private Calendar createdAt;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at")
-	private Calendar updateAt;
+  private static final long serialVersionUID = -4003398104522589791L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
+  private String nome;
+  @Column(name = "razao_social")
+  private String razaoSocial;
+  private String fone;
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name = "endereco_id")
+  private Endereco endereco;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "created_at")
+  private Calendar createdAt;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "updated_at")
+  private Calendar updateAt;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public String getNome() {
-		return nome;
-	}
+  public String getNome() {
+    return nome;
+  }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-	public String getFone() {
-		return fone;
-	}
 
-	public void setFone(String fone) {
-		this.fone = fone;
-	}
+  public String getRazaoSocial() {
+    return razaoSocial;
+  }
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+  public void setRazaoSocial(String razaoSocial) {
+    this.razaoSocial = razaoSocial;
+  }
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
+  public String getFone() {
+    return fone;
+  }
 
-	public Calendar getCreatedAt() {
-		return createdAt;
-	}
+  public void setFone(String fone) {
+    this.fone = fone;
+  }
 
-	public void setCreatedAt(Calendar createdAt) {
-		this.createdAt = createdAt;
-	}
+  public Endereco getEndereco() {
+    return endereco;
+  }
 
-	public Calendar getUpdateAt() {
-		return updateAt;
-	}
+  public void setEndereco(Endereco endereco) {
+    this.endereco = endereco;
+  }
 
-	public void setUpdateAt(Calendar updateAt) {
-		this.updateAt = updateAt;
-	}
+  public Calendar getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Calendar createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Calendar getUpdateAt() {
+    return updateAt;
+  }
+
+  public void setUpdateAt(Calendar updateAt) {
+    this.updateAt = updateAt;
+  }
 
 }
