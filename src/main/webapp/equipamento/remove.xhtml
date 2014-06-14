@@ -1,36 +1,37 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
-  xmlns:jsf="http://xmlns.jcp.org/jsf"
->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
-  <f:viewParam name="id" value="#{equipamentoController.equipamentoSelecionado}"
-    converter="#{equipamentoConverter}" converterMessage="Registro não encontrado."/>
+	<f:viewParam name="id" value="#{equipamentoController.equipamento}"
+		converter="#{equipamentoConverter}"
+		converterMessage="Registro não encontrado." />
 </f:metadata>
 <ui:composition template="/layout.xhtml">
-  <ui:define name="title">#{bundle.equipamento}</ui:define>
-  <ui:define name="content">
+	<ui:define name="title">#{bundle.equipamento}</ui:define>
+	<ui:define name="content">
 
-    <div class="panel panel-primary">
-      <div class="panel-heading">REMOVER</div>
-      <div class="panel-body">
-        <div class="modal-body">
-          #{bundle.messageRemoveConfirm} <b>#{equipamentoController.equipamentoSelecionado.modelo}
-            - #{equipamentoController.equipamentoSelecionado.mac}</b>?
-        </div>
-        <div class="modal-footer">
-          <form jsf:id="removeForm">
-            <button jsf:id="btnNo" class="btn btn-default" jsf:outcome="list" style="margin-left: 5px;">
-              #{bundle.no}
-            </button>
-            
-            <button jsf:id="btnYes" class="btn btn-danger" jsf:action="#{equipamentoController.remover()}">
-              <f:param value="#{plano.id}" name="id"></f:param>
-            </button>
+		<div class="panel panel-primary">
+			<div class="panel-heading">REMOVER</div>
+			<div class="panel-body">
+				<div class="modal-body">
+					#{bundle.messageRemoveConfirm} <b>#{equipamentoController.equipamento.modelo}
+						- #{equipamentoController.equipamento.mac}</b>?
+				</div>
+				<div class="modal-footer">
+					<form jsf:id="removeForm">
+						<button jsf:id="btnNo" class="btn btn-default" jsf:outcome="list"
+							style="margin-left: 5px;">#{bundle.no}</button>
 
-          </form>
-        </div>
-      </div>
-    </div>
-  </ui:define>
+						<button jsf:id="btnYes" class="btn btn-danger"
+							jsf:action="#{equipamentoController.remover()}">
+							#{bundle.yes}</button>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
 </ui:composition>
 </html>
