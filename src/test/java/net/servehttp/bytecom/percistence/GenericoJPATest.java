@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 
 import net.servehttp.bytecom.facede.CreateEntityManager;
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Contrato;
 import net.servehttp.bytecom.persistence.entity.Plano;
 
 import org.junit.AfterClass;
@@ -33,7 +32,7 @@ public class GenericoJPATest {
   
   @Test
   public void deveriaDeveriaBuscarTodosComParametroString() {
-    List<Plano> list = genericoJPA.buscarTodos("id", 1, Plano.class);
+    genericoJPA.buscarTodos("id", 1, Plano.class);
   }
 
   @Test
@@ -44,7 +43,7 @@ public class GenericoJPATest {
 
   @Test
   public void deveriaDeveriaBuscarPorId() {
-    Plano p = genericoJPA.buscarPorId(Plano.class, 1);
+    genericoJPA.buscarPorId(Plano.class, 1);
   }
 
   @AfterClass

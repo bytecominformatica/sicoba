@@ -13,7 +13,6 @@ import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.Cliente;
-import net.servehttp.bytecom.persistence.entity.Estado;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.EnderecoUtil;
