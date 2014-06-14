@@ -30,46 +30,13 @@ public class ClienteJPA implements Serializable {
     this.em = em;
   }
 
-  public List<Cliente> buscaClientesPorNomeFoneEmail(String nome, String fone, String email) {
+  public List<Cliente> buscaClientesPorNomeFoneEmail(String pesquisa) {
+    String jpql =
+        "select c from Cliente c where c.nome like :pesquisa or c.fone = :pesquisa or c.email = :pesquisa order by c.nome";
 
-    List<Cliente> list;
-
-    String jpql = "select c from Cliente c where 1 = 1";
-    boolean buscar = false;
-
-    if (nome != null && !nome.isEmpty()) {
-      jpql += " and c.nome like :nome";
-      buscar = true;
-    }
-    if (fone != null && !fone.isEmpty()) {
-      jpql += " and (c.foneTitular = :fone or c.foneContato = :fone)";
-      buscar = true;
-    }
-    if (email != null && !email.isEmpty()) {
-      jpql += " and c.email= :email";
-      buscar = true;
-    }
-
-    jpql += " order by c.nome";
-
-    if (buscar) {
-      TypedQuery<Cliente> query = em.createQuery(jpql, Cliente.class);
-
-      if (nome != null && !nome.isEmpty()) {
-        query.setParameter("nome", "%" + nome + "%");
-      }
-      if (fone != null && !fone.isEmpty()) {
-        query.setParameter("fone", fone);
-      }
-      if (email != null && !email.isEmpty()) {
-        query.setParameter("email", email);
-      }
-
-      list = query.getResultList();
-    } else {
-      list = new ArrayList<>();
-    }
-    return list;
+    TypedQuery<Cliente> query =
+        em.createQuery(jpql, Cliente.class).setParameter("pesquisa", "%" + pesquisa + "%");
+    return query.getResultList();
   }
 
   public List<Cliente> buscarClientePorNome(String pesquisa) {

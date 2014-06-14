@@ -26,28 +26,22 @@ import net.servehttp.bytecom.util.StringUtil;
 @ViewScoped
 public class ClienteController implements Serializable {
 
-  
-  /**
-   * 
-   */
+
   private static final long serialVersionUID = 8827281306259995250L;
   private List<Cliente> listClientes;
-  private Cliente clienteSelecionado;
-  private Cliente novoCliente = new Cliente();
+  private Cliente cliente = new Cliente();
   private List<Cidade> listCidades;
   private List<Bairro> listBairros;
   private int cidadeId;
   private int bairroId;
   private String page;
-  private String nomePesquisa;
-  private String fonePesquisa;
-  private String emailPesquisa;
+  private String pesquisa;
 
   @Inject
   private ClienteJPA clienteJPA;
   @Inject
   private GenericoJPA genericoJPA;
-  
+
 
   @Inject
   private EnderecoUtil enderecoUtil;
@@ -66,17 +60,16 @@ public class ClienteController implements Serializable {
   private void getParameters() {
     String clienteId = util.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      clienteSelecionado = genericoJPA.buscarPorId(Cliente.class, Integer.parseInt(clienteId));
-      cidadeId = clienteSelecionado.getEndereco().getBairro().getCidade().getId();
+      cliente = genericoJPA.buscarPorId(Cliente.class, Integer.parseInt(clienteId));
+      cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
+      bairroId = cliente.getEndereco().getBairro().getId();
       atualizaBairros();
     }
   }
 
   public void consultar() {
-    System.out.println("Nome pesquisa = " + nomePesquisa);
-    if (nomePesquisa != null && nomePesquisa.length() > 2) {
-      listClientes =
-          clienteJPA.buscaClientesPorNomeFoneEmail(nomePesquisa, fonePesquisa, emailPesquisa);
+    if (pesquisa != null && pesquisa.length() > 2) {
+      listClientes = clienteJPA.buscaClientesPorNomeFoneEmail(pesquisa);
     } else {
       AlertaUtil.alerta("pesquisa por nome tem que possuir pelo menos 3 caracteres.",
           AlertaUtil.ERROR);
@@ -93,14 +86,20 @@ public class ClienteController implements Serializable {
 
   public String salvar() {
     page = null;
-    if (isClienteValido(novoCliente)) {
-      novoCliente.getEndereco().setBairro(genericoJPA.buscarPorId(Bairro.class, bairroId));
-      genericoJPA.salvar(novoCliente);
-      AlertaUtil.alerta("Cliente adicionado com sucesso!");
+    if (isClienteValido(cliente)) {
+      cliente.getEndereco().setBairro(genericoJPA.buscarPorId(Bairro.class, bairroId));
+      if (cliente.getId() == 0) {
+        genericoJPA.salvar(cliente);
+        AlertaUtil.alerta("Cliente adicionado com sucesso!");
+      } else {
+        genericoJPA.atualizar(cliente);
+        AlertaUtil.alerta("Cliente atualizado com sucesso!");
+      }
       page = "list";
     }
     return page;
   }
+
 
   private boolean isClienteValido(Cliente cliente) {
     boolean valido = true;
@@ -116,17 +115,17 @@ public class ClienteController implements Serializable {
     }
 
     List<Cliente> clientes = genericoJPA.buscarTodos("rg", cliente.getRg(), Cliente.class);
-    if (!clientes.isEmpty()) {
+    if (!clientes.isEmpty() && clientes.get(0).getId() != cliente.getId()) {
       AlertaUtil.alerta("RG já Cadastrado", AlertaUtil.ERROR);
       valido = false;
     } else {
       clientes = genericoJPA.buscarTodos("cpfCnpj", cliente.getCpfCnpj(), Cliente.class);
-      if (!clientes.isEmpty()) {
+      if (!clientes.isEmpty() && clientes.get(0).getId() != cliente.getId()) {
         AlertaUtil.alerta("CPF já Cadastrado", AlertaUtil.ERROR);
         valido = false;
       } else {
         clientes = genericoJPA.buscarTodos("email", cliente.getEmail(), Cliente.class);
-        if (!clientes.isEmpty()) {
+        if (!clientes.isEmpty() && clientes.get(0).getId() != cliente.getId()) {
           AlertaUtil.alerta("E-Mail já Cadastrado", AlertaUtil.ERROR);
           valido = false;
         }
@@ -148,31 +147,15 @@ public class ClienteController implements Serializable {
     }
   }
 
-  public String atualizar() {
-    page = null;
-    if (isClienteValido(clienteSelecionado)) {
-      clienteSelecionado.getEndereco().setBairro(
-          genericoJPA.buscarPorId(Bairro.class, clienteSelecionado.getEndereco().getBairro()
-              .getId()));
-      genericoJPA.atualizar(clienteSelecionado);
-      AlertaUtil.alerta("Cliente atualizado com sucesso!");
-      page = "list";
-    }
-    return page;
-  }
-
-  /**
-   * Remove o cliente selecionado.
-   */
   public String remover() {
     page = null;
-    if (clienteSelecionado.getAcesso() != null) {
+    if (cliente.getAcesso() != null) {
       AlertaUtil.alerta("Cliente não pode ser removido pois possui acesso cadastrado",
           AlertaUtil.WARN);
-    } else if (clienteSelecionado.getContrato() != null) {
+    } else if (cliente.getContrato() != null) {
       AlertaUtil.alerta("O cliente não pode ser removido pois possui contrato", AlertaUtil.WARN);
     } else {
-      genericoJPA.remover(clienteSelecionado);
+      genericoJPA.remover(cliente);
       AlertaUtil.alerta("Cliente removido com sucesso!");
       page = "list";
     }
@@ -181,16 +164,16 @@ public class ClienteController implements Serializable {
 
   public void buscarEndereco() {
     cidadeId = bairroId = 0;
-    novoCliente.getEndereco().setLogradouro(null);
-    EnderecoPojo ep = enderecoUtil.getEndereco(novoCliente.getEndereco().getCep());
-    novoCliente.getEndereco().setBairro(enderecoUtil.getBairro(ep));
+    cliente.getEndereco().setLogradouro(null);
+    EnderecoPojo ep = enderecoUtil.getEndereco(cliente.getEndereco().getCep());
+    cliente.getEndereco().setBairro(enderecoUtil.getBairro(ep));
     listCidades = genericoJPA.buscarTodos(Cidade.class);
 
-    if (novoCliente.getEndereco().getBairro() != null) {
-      cidadeId = novoCliente.getEndereco().getBairro().getCidade().getId();
+    if (cliente.getEndereco().getBairro() != null) {
+      cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
       atualizaBairros();
-      bairroId = novoCliente.getEndereco().getBairro().getId();
-      novoCliente.getEndereco().setLogradouro(ep.getLogradouro());
+      bairroId = cliente.getEndereco().getBairro().getId();
+      cliente.getEndereco().setLogradouro(ep.getLogradouro());
     }
 
   }
@@ -235,44 +218,20 @@ public class ClienteController implements Serializable {
     this.listClientes = listClientes;
   }
 
-  public Cliente getClienteSelecionado() {
-    return clienteSelecionado;
+  public Cliente getCliente() {
+    return cliente;
   }
 
-  public void setClienteSelecionado(Cliente clienteSelecionado) {
-    this.clienteSelecionado = clienteSelecionado;
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
   }
 
-  public Cliente getNovoCliente() {
-    return novoCliente;
+  public String getPesquisa() {
+    return pesquisa;
   }
 
-  public void setNovoCliente(Cliente novoCliente) {
-    this.novoCliente = novoCliente;
-  }
-
-  public String getNomePesquisa() {
-    return nomePesquisa;
-  }
-
-  public void setNomePesquisa(String nomePesquisa) {
-    this.nomePesquisa = nomePesquisa;
-  }
-
-  public String getFonePesquisa() {
-    return fonePesquisa;
-  }
-
-  public void setFonePesquisa(String fonePesquisa) {
-    this.fonePesquisa = fonePesquisa;
-  }
-
-  public String getEmailPesquisa() {
-    return emailPesquisa;
-  }
-
-  public void setEmailPesquisa(String emailPesquisa) {
-    this.emailPesquisa = emailPesquisa;
+  public void setPesquisa(String pesquisa) {
+    this.pesquisa = pesquisa;
   }
 
 }

@@ -18,22 +18,21 @@
 				</div>
 				<div class="panel-header">
 					<div>
-
-						<form jsf:id="formPesquisa" class="form-inline">
-							<div class="form-group">
-								<input jsf:value="#{clienteController.nomePesquisa}" type="text" name="nome" class="form-control m5" placeholder="Nome" jsf:id="nome" autofocus="autofocus"/>
-								<input jsf:value="#{clienteController.fonePesquisa}" type="tel" name="fone" class="form-control m5" placeholder="Fone" jsf:id="fone"/>
-								<input jsf:value="#{clienteController.emailPesquisa}" type="email" name="email" class="form-control m5" placeholder="Email" jsf:id="email"/>
-							</div>
-							<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
-								<span class="glyphicon glyphicon-search" />
-							</button>
+						<form jsf:id="formPesquisa" class="form-horizontal">
+						    <div class="input-group m5">
+								<input jsf:value="#{clienteController.pesquisa}" type="text" name="pesquisa" class="form-control" placeholder="Nome, Fone ou Email" jsf:id="pesquisa" autofocus="autofocus"/>
+						      <span class="input-group-btn">
+								<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
+									<span class="glyphicon glyphicon-search" />
+								</button>
+						      </span>
+						    </div><!-- /input-group -->
 						</form>
 					</div>
 				</div>
 				<div class="panel-body">
 
-					<h:form id="form">
+					<form jsf:id="form">
 						<h:dataTable value="#{clienteController.listClientes}"
 							var="cliente" styleClass="table table-striped table-bordered"
 							headerClass="tableColumnsHeader">
@@ -53,26 +52,25 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.nome}</f:facet>
-								<h:outputText value="#{cliente.nome}" />
+								#{cliente.nome}
 							</h:column>
+							
 							<h:column>
 								<f:facet name="header">#{bundle.actions}</f:facet>
-								<h:panelGrid columns="2">
-									<h:link outcome="edit" styleClass="btn btn-primary btn-lg">
-										<i class="glyphicon glyphicon-edit" />
+								<h:panelGrid columns="2" style="text-align:center;">
+									<button jsf:id="btnEdit" class="btn btn-primary" jsf:outcome="edit">
+										<span class="glyphicon glyphicon-edit" />
 										<f:param value="#{cliente.id}" name="id"></f:param>
-									</h:link>
-
-									<h:link outcome="remove" styleClass="btn btn-danger btn-lg"
-										style="margin-left:5px;">
-										<i class="glyphicon glyphicon-remove" />
+									</button>
+	
+									<button jsf:id="btnRemove" class="btn btn-danger" jsf:outcome="remove" style="margin-left: 5px;">
+										<span class="glyphicon glyphicon-remove" />
 										<f:param value="#{cliente.id}" name="id"></f:param>
-									</h:link>
-
+									</button>
 								</h:panelGrid>
 							</h:column>
 						</h:dataTable>
-					</h:form>
+					</form>
 				</div>
 			</div>
 
