@@ -4,12 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.EquipamentoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Equipamento;
 import net.servehttp.bytecom.util.AlertaUtil;
@@ -18,100 +16,83 @@ import net.servehttp.bytecom.util.AlertaUtil;
  * 
  * @author clairton
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class EquipamentoController implements Serializable {
 
-	/**
+  /**
 	 * 
 	 */
-	private static final long serialVersionUID = 8291411734476446041L;
-	private List<Equipamento> listEquipamentos;
-	private Equipamento equipamentoSelecionado = new Equipamento();
-	private Equipamento novoEquipamento = new Equipamento();
-	@Inject
-	private EquipamentoJPA equipamentoJPA;
-	private String equipamentoId;
-	private String page;
-	@Inject
-	private GenericoJPA genericoJPA;
+  private static final long serialVersionUID = 8291411734476446041L;
+  private List<Equipamento> listEquipamentos;
+  private Equipamento equipamento = new Equipamento();
+  private String equipamentoId;
+  @Inject
+  private GenericoJPA genericoJPA;
 
-	public EquipamentoController() {
-	}
+  public EquipamentoController() {}
 
-	@PostConstruct
-	public void load() {
-		listEquipamentos = genericoJPA.buscarTodos(Equipamento.class);
-	}
+  @PostConstruct
+  public void load() {
+    listEquipamentos = genericoJPA.buscarTodos(Equipamento.class);
+  }
 
-	public List<Equipamento> getListEquipamentos() {
-		return listEquipamentos;
-	}
+  public List<Equipamento> getListEquipamentos() {
+    return listEquipamentos;
+  }
 
-	public void setListEquipamentos(List<Equipamento> listEquipamentos) {
-		this.listEquipamentos = listEquipamentos;
-	}
+  public void setListEquipamentos(List<Equipamento> listEquipamentos) {
+    this.listEquipamentos = listEquipamentos;
+  }
 
-	public Equipamento getEquipamentoSelecionado() {
+  public String salvar() {
+    String page = null;
+    if (isValido(equipamento)) {
+      if (equipamento.getId() == 0) {
+        genericoJPA.salvar(equipamento);
+        AlertaUtil.alerta("Equipamento adicionado com sucesso!");
+      } else {
+        genericoJPA.atualizar(equipamento);
+        AlertaUtil.alerta("Equipamento atualizado com sucesso!");
 
-		return equipamentoSelecionado;
-	}
+      }
+      load();
+      page = "list";
+    }
+    return page;
+  }
 
-	public void setEquipamentoSelecionado(Equipamento equipamentoSelecionado) {
-		this.equipamentoSelecionado = equipamentoSelecionado;
-	}
+  public boolean isValido(Equipamento e) {
+    boolean valido = true;
+    List<Equipamento> equipamentos = genericoJPA.buscarTodos("mac", e.getMac(), Equipamento.class);
+    if (!equipamentos.isEmpty() && equipamentos.get(0).getId() != e.getId()) {
+      AlertaUtil.alerta("MAC já Cadastrado", AlertaUtil.ERROR);
+      valido = false;
+    }
+    return valido;
+  }
 
-	public Equipamento getNovoEquipamento() {
-		return novoEquipamento;
-	}
+  public String remover() {
+    genericoJPA.remover(equipamento);
+    load();
+    AlertaUtil.alerta("Equipamento removido com sucesso!");
+    return "list";
+  }
 
-	public void setNovoEquipamento(Equipamento novoEquipamento) {
-		this.novoEquipamento = novoEquipamento;
-	}
+  public String getEquipamentoId() {
+    return equipamentoId;
+  }
 
-	public String salvar() {
-		page = null;
-		if (!equipamentoJPA.existMAC(novoEquipamento.getMac())) {
-			genericoJPA.salvar(novoEquipamento);
-			AlertaUtil.alerta("Equipamento adicionado com sucesso!");
-			load();
-			page = "list";
-		} else {
-			AlertaUtil.alerta("MAC já Cadastrado", AlertaUtil.ERROR);
-		}
-		return page;
-	}
+  public void setEquipamentoId(String equipamentoId) {
+    this.equipamentoId = equipamentoId;
+  }
 
-	public String atualizar() {
-		page = null;
-		try {
-			genericoJPA.atualizar(equipamentoSelecionado);
-			load();
-			AlertaUtil.alerta("Equipamento atualizado com sucesso!");
-			page = "list";
-		} catch (EJBException e) {
-			if (equipamentoJPA.existMAC(equipamentoSelecionado.getMac())) {
-				AlertaUtil.alerta("MAC já Cadastrado", AlertaUtil.ERROR);
-			} else {
-				throw e;
-			}
-		}
-		return page;
-	}
+  public Equipamento getEquipamento() {
+    return equipamento;
+  }
 
-	public String remover() {
-		genericoJPA.remover(equipamentoSelecionado);
-		load();
-		AlertaUtil.alerta("Equipamento removido com sucesso!");
-		return "list";
-	}
-
-	public String getEquipamentoId() {
-		return equipamentoId;
-	}
-
-	public void setEquipamentoId(String equipamentoId) {
-		this.equipamentoId = equipamentoId;
-	}
+  public void setEquipamento(Equipamento equipamento) {
+    this.equipamento = equipamento;
+  }
 
 }

@@ -7,7 +7,7 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
 	<f:viewParam name="id"
-		value="#{equipamentoController.equipamentoSelecionado}"
+		value="#{equipamentoController.equipamento}"
 		converter="#{equipamentoConverter}"
 		converterMessage="Registro não encontrado" />
 </f:metadata>
@@ -20,69 +20,58 @@
 				<div class="panel-heading">EDITAR</div>
 				<div class="panel-body">
 
-					<h:form>
-						<h:panelGrid columns="2" styleClass="form-inline">
+				<form jsf:id="form" class="form-horizontal">
 
-							<h:outputLabel for="marca" value="#{bundle.marca}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="marca" required="true"
-								value="#{equipamentoController.equipamentoSelecionado.marca}"
-								styleClass="form-control m5" />
+					<label jsf:for="marca" class="control-label">#{bundle.marca}</label>
+					<input jsf:id="marca" type="text" class="form-control uppercase"
+						autofocus="autofocus" required="required"
+						jsf:value="#{equipamentoController.equipamento.marca}" /> 
+					<label jsf:for="modelo" class="control-label">#{bundle.modelo}</label> 
+					<input jsf:id="modelo" type="text" class="form-control uppercase" required="required"
+						jsf:value="#{equipamentoController.equipamento.modelo}" /> 
+					<label jsf:for="mac" class="control-label">#{bundle.mac}</label> 
+					<input jsf:id="mac" type="text" class="form-control uppercase" required="required"
+						jsf:value="#{equipamentoController.equipamento.mac}" maxlength="17"
+						pattern="^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$" />
 
-							<h:outputLabel for="modelo" value="#{bundle.modelo}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="modelo" required="true"
-								value="#{equipamentoController.equipamentoSelecionado.modelo}"
-								styleClass="form-control m5" />
+					<label jsf:for="descricao" class="control-label">#{bundle.descricao}</label>
+					<textarea rows="4" jsf:id="descricao" class="form-control"
+						jsf:value="#{equipamentoController.equipamento.descricao}" />
 
-							<h:outputLabel for="mac" value="#{bundle.mac}"
-								styleClass="col-md-2 control-label" />
-							<h:inputText id="mac" required="true"
-								value="#{equipamentoController.equipamentoSelecionado.mac}"
-								styleClass="form-control m5 mac"
-								style="text-transform: uppercase;" />
+					<label jsf:for="tipo" class="control-label">#{bundle.tipo}</label>
+					<h:selectOneMenu id="tipo"
+						value="#{equipamentoController.equipamento.tipo}"
+						styleClass="btn-primary btn-lg">
+						<f:selectItem itemLabel="Instalação"
+							itemValue="#{equipamentoController.equipamento.TIPO_INSTALACAO}" />
+						<f:selectItem itemLabel="WIFI"
+							itemValue="#{equipamentoController.equipamento.TIPO_WIFI}" />
+					</h:selectOneMenu>
 
-							<h:outputLabel for="descricao" value="#{bundle.descricao}"
-								styleClass="col-md-2 control-label" />
-							<h:inputTextarea id="descricao"
-								value="#{equipamentoController.equipamentoSelecionado.descricao}"
-								styleClass="form-control m5" />
+					<label jsf:for="status" class="control-label">#{bundle.status}</label>
+					<h:selectOneMenu id="status"
+						value="#{equipamentoController.equipamento.status}"
+						styleClass="btn-primary btn-lg">
+						<f:selectItem itemLabel="OK"
+							itemValue="#{equipamentoController.equipamento.STATUS_OK}" />
+						<f:selectItem itemLabel="DEFEITO"
+							itemValue="#{equipamentoController.equipamento.STATUS_DEFEITO}" />
+					</h:selectOneMenu>
 
-							<h:outputLabel for="tipo" value="#{bundle.tipo}"
-								styleClass="col-md-2 control-label" />
-							<h:selectOneMenu id="tipo"
-								value="#{equipamentoController.equipamentoSelecionado.tipo}"
-								styleClass="m5 btn-primary btn-lg">
-								<f:selectItem itemLabel="Instalação"
-									itemValue="#{equipamentoController.equipamentoSelecionado.TIPO_INSTALACAO}" />
-								<f:selectItem itemLabel="WIFI"
-									itemValue="#{equipamentoController.equipamentoSelecionado.TIPO_WIFI}" />
-							</h:selectOneMenu>
-
-							<h:outputLabel for="status" value="#{bundle.status}"
-								styleClass="col-md-2 control-label" />
-							<h:selectOneMenu id="status"
-								value="#{equipamentoController.equipamentoSelecionado.status}"
-								styleClass="m5 btn-primary btn-lg">
-								<f:selectItem itemLabel="OK"
-									itemValue="#{equipamentoController.equipamentoSelecionado.STATUS_OK}" />
-								<f:selectItem itemLabel="DEFEITO"
-									itemValue="#{equipamentoController.equipamentoSelecionado.STATUS_DEFEITO}" />
-							</h:selectOneMenu>
-						</h:panelGrid>
-
-						<div class="modal-footer">
-							<h:commandLink action="#{equipamentoController.atualizar()}"
-								styleClass="btn btn-primary btn-lg">
-								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
-							</h:commandLink>
-
-							<h:link outcome="list" class="btn btn-primary btn-lg"
-								style="margin-left: 5px;">
-								<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
-							</h:link>
-						</div>
-					</h:form>
+					<div class="modal-footer">
+						<button jsf:id="btSalvar"
+							jsf:action="#{equipamentoController.salvar()}"
+							class="btn btn-primary" type="submit">
+							<span class="glyphicon glyphicon-floppy-save" />
+							#{bundle.salvar}
+						</button>
+						<button jsf:id="btVoltar" jsf:outcome="list"
+							style="margin-left: 5px;" class="btn btn-primary">
+							<span class="glyphicon glyphicon-circle-arrow-left" />
+							#{bundle.back}
+						</button>
+					</div>
+				</form>
 
 				</div>
 			</div>

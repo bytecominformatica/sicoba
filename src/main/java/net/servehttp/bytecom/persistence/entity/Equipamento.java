@@ -69,7 +69,7 @@ public class Equipamento implements Serializable {
     }
 
     public void setMarca(String marca) {
-        this.marca = marca;
+        this.marca = marca != null ? marca.toUpperCase() : marca;
     }
 
     public String getModelo() {
@@ -77,7 +77,7 @@ public class Equipamento implements Serializable {
     }
 
     public void setModelo(String modelo) {
-        this.modelo = modelo;
+        this.modelo = modelo != null ? modelo.toUpperCase() : modelo;
     }
 
     public String getMac() {
@@ -85,7 +85,7 @@ public class Equipamento implements Serializable {
     }
 
     public void setMac(String mac) {
-        this.mac = mac.toUpperCase();
+        this.mac = mac != null ? mac.toUpperCase() : mac;
     }
 
     public int getTipo() {

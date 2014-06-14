@@ -44,26 +44,4 @@ public class EquipamentoJPA implements Serializable {
     return list;
   }
 
-  public Equipamento buscarEquipamentoPorMac(String mac) {
-    try {
-      return em.createQuery("select e from Equipamento e where e.mac = :mac", Equipamento.class)
-          .setParameter("mac", mac).getSingleResult();
-    } catch (javax.persistence.NoResultException e) {
-      return null;
-    }
-  }
-
-  /**
-   * Verifica se o MAC já existe.
-   * 
-   * @return boolean
-   */
-  public boolean existMAC(String mac) {
-    Equipamento e = buscarEquipamentoPorMac(mac);
-    if (e == null) {
-      return false;
-    }
-    return true;
-  }
-
 }
