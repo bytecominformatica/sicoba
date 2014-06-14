@@ -18,7 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -46,10 +45,10 @@ public class Cliente implements Serializable {
     @Email(message="Email inválido")
     private String email;
     @Column(name = "fone_titular")
-    @Max(value=10, message="fone deve possuir 10 digitos ex: 9999999999")
+    @Size(max=10, message="fone deve possuir 10 digitos ex: 9999999999")
     private String foneTitular;
     private String contato;
-    @Max(value=10, message="fone contato deve possuir 10 digitos ex: 9999999999")
+    @Size(max=10, message="fone contato deve possuir 10 digitos ex: 9999999999")
     @Column(name = "fone_contato")
     private String foneContato;
     
@@ -107,7 +106,7 @@ public class Cliente implements Serializable {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = nome != null ? nome.toUpperCase() : nome;
     }
 
     public String getRg() {
@@ -171,7 +170,7 @@ public class Cliente implements Serializable {
     }
 
     public void setContato(String contato) {
-        this.contato = contato;
+        this.contato = contato != null ? contato.toUpperCase() : contato;
     }
 
     public String getFoneContato() {

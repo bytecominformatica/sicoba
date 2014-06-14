@@ -19,6 +19,10 @@ select {
 	width: 100%;
 }
 
+.uppercase {
+	text-transform: uppercase;
+}
+
 input, textarea {
 	width: 97%;
 }

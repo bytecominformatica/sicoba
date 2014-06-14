@@ -1,9 +1,10 @@
 package net.servehttp.bytecom;
 
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.UsuarioJPA;
 import net.servehttp.bytecom.persistence.entity.Usuario;
@@ -13,7 +14,8 @@ import net.servehttp.bytecom.util.AlertaUtil;
  * 
  * @author clairton
  */
-@ManagedBean
+@Named
+@RequestScoped
 public class Authentication {
 
 	private String usuario;
