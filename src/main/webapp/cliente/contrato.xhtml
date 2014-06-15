@@ -34,7 +34,7 @@
           <label jsf:for="dataInstalacao" class="control-label">#{bundle.dataInstalacao}</label>
           <input jsf:id="dataInstalacao" type="date" required="required"
             jsf:value="#{contratoController.clienteSelecionado.contrato.dataInstalacao}" class="form-control">
-            <f:convertDateTime pattern="yyyy-MM-dd"/>
+            <f:convertDateTime pattern="yyyy-MM-dd"  timeZone="GMT-03:00"/>
           </input>
 
           <label jsf:for="equipamento" class="control-label">#{bundle.equipamento}</label>

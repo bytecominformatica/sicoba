@@ -30,7 +30,7 @@
 					<label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label>
 			        <input jsf:id="vencimento" type="date" required="required"
 			            jsf:value="#{mensalidadeController.mensalidade.dataVencimento}" class="form-control">
-			            <f:convertDateTime pattern="yyyy-MM-dd"/>
+			            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00"/>
 			        </input>
 
 					<label jsf:for="status" class="control-label">#{bundle.status}</label>
@@ -53,6 +53,35 @@
 		              </button>
 		            </div>
 					
+				</form>
+				
+				<form jsf:id="formMensalidades">
+					<h:dataTable value="#{mensalidadeController.cliente.mensalidades}"
+						var="m" styleClass="table table-striped table-bordered"
+						headerClass="tableColumnsHeader">
+						
+						<h:column>
+							<f:facet name="header">#{bundle.vencimento}</f:facet>
+							#{m.dataVencimento}
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">#{bundle.valor}</f:facet>
+							#{m.valor}
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">#{bundle.status}</f:facet>
+							#{m.statusFormatado}
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{bundle.actions}</f:facet>
+								<button jsf:id="btnEdit" class="btn btn-primary link-group">
+									<span class="glyphicon glyphicon-edit" />
+									<f:setPropertyActionListener target="#{mensalidadeController.mensalidade}" value="#{m}"/>
+								</button>
+						</h:column>
+					</h:dataTable>
 				</form>
 
 			</div>

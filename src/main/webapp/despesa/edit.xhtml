@@ -34,7 +34,7 @@
           <label jsf:for="dataVencimento" class="control-label">#{bundle.vencimento}</label> 
           <input jsf:id="dataVencimento" type="date" required="required"
             jsf:value="#{despesaController.despesaSelecionada.data}" class="form-control">
-            <f:convertDateTime pattern="yyyy-MM-dd" />
+            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00" />
           </input> 
           
           <label jsf:for="status" class="control-label">#{bundle.status}</label>
