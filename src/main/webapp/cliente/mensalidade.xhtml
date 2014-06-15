@@ -16,6 +16,14 @@
 			<div class="panel-heading">CONTRATO</div>
 			<div class="panel-body">
 				<form jsf:id="form" class="form-horizontal">
+				<div class="modal-header">
+					<div align="center">
+						<button jsf:id="btNovo" jsf:actionListener="#{mensalidadeController.novaMensalidade()}"
+			                class="btn btn-primary" type="submit">
+			                <span class="glyphicon glyphicon-plus" /> #{bundle.new}
+		              	</button>
+	              	</div>
+				</div>
 
 					<label jsf:for="cliente" class="control-label">#{bundle.cliente}</label>
 					<input jsf:id="cliente" type="text" class="form-control"
@@ -23,7 +31,7 @@
 						required="required" />
 
 					<label jsf:for="valor" class="control-label">#{bundle.valor}</label>
-					<input jsf:id="valor" type="number" step="any" class="form-control"
+					<input jsf:id="valor" type="number" step="any" class="form-control" autofocus="autofocus"
 						jsf:value="#{mensalidadeController.mensalidade.valor}"
 						required="required" />
 
@@ -44,7 +52,7 @@
 					<div class="modal-footer">
 		              <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvar()}"
 		                class="btn btn-primary" type="submit">
-		                <span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+		                <span class="glyphicon glyphicon-floppy-save" /> #{mensalidadeController.mensalidade.id == 0 ?  bundle.salvar : bundle.update}
 		              </button>
 		              <button jsf:id="btVoltar" jsf:outcome="edit" style="margin-left: 5px;"
 		                class="btn btn-primary">
