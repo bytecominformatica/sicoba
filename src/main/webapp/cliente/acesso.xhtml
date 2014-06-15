@@ -1,7 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
   xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
-  xmlns:jsf="http://xmlns.jcp.org/jsf"
->
+  xmlns:jsf="http://xmlns.jcp.org/jsf">
+<f:metadata>
+	<f:viewParam name="clienteId" value="#{acessoController.cliente}" converter="#{clienteConverter}"
+	converterMessage="Registro não encontrado." />
+	<f:viewAction action="#{acessoController.load()}" />
+</f:metadata>
   <ui:composition template="/layout.xhtml">
     <ui:define name="title">#{bundle.acesso}</ui:define>
     <ui:define name="content">
@@ -42,7 +46,7 @@
                 jsf:value="#{acessoController.cliente.acesso.mac}" required="required" pattern="^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$"/>
 
             <div class="modal-footer">
-              <button jsf:id="btSalvar" jsf:action="#{acessoController.atualizar()}"
+              <button jsf:id="btSalvar" jsf:action="#{acessoController.salvar()}"
                 class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
               </button>
