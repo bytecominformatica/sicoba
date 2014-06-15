@@ -48,4 +48,11 @@
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
+	<error-page>
+		<location>/error/500.xhtml</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404.xhtml</location>
+	</error-page>
 </web-app>

@@ -24,8 +24,6 @@ public class EquipamentoJPATest {
 		equipamentoJPA.setEntityManager(em);
 	}
 
-
-
 	@Test
 	public void deveriaBuscarOsEquipamentosNaoFiltrandoPorTipo() {
 		List<Equipamento> list = equipamentoJPA.buscaEquipamentosNaoUtilizados(Equipamento.TIPO_INSTALACAO, Equipamento.STATUS_OK);
@@ -33,11 +31,6 @@ public class EquipamentoJPATest {
 
 		list = equipamentoJPA.buscaEquipamentosNaoUtilizados(Equipamento.TIPO_WIFI, Equipamento.STATUS_OK);
 		Assert.assertNotNull(list);
-	}
-
-	@Test
-	public void deveriaVericicarSeMacExite() {
-		equipamentoJPA.existMAC("01:03:04:22:22:11");
 	}
 
 	@AfterClass
