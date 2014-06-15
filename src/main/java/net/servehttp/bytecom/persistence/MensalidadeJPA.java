@@ -23,44 +23,6 @@ public class MensalidadeJPA {
     @PersistenceContext(unitName = "bytecom-pu")
     private EntityManager em;
 
-    public void salvar(List<Mensalidade> mensalidades) {
-        for (Mensalidade m : mensalidades) {
-            em.persist(m);
-        }
-    }
-
-    public List<Mensalidade> buscarMensalidadePorCliente(Cliente cliente) {
-        return em.createQuery("select m from Mensalidade m where m.cliente.id = :clienteId order by m.dataVencimento desc", Mensalidade.class)
-                .setParameter("clienteId", cliente.getId()).setMaxResults(12).getResultList();
-    }
-
-    /**
-     * retorna as mensalidades por status.
-     *
-     * @param status
-     * @return Mensalidade
-     */
-    public Mensalidade buscarMensalidadesPorStatus(int status) {
-        try {
-            return em.createQuery("select m from Mensalidade m where m.status = :status", Mensalidade.class)
-                    .setParameter("status", status)
-                    .getSingleResult();
-        } catch (javax.persistence.NoResultException e) {
-            return null;
-        }
-    }
-
-    public List<Mensalidade> buscarMensalidadesPorClienteEVencimento(Cliente cliente, Date vencimento) {
-        try {
-            return em.createQuery("select m from Mensalidade m inner join m.cliente c where m.cliente.id = :clienteId and m.dataVencimento = :vencimento", Mensalidade.class)
-                    .setParameter("vencimento", vencimento)
-                    .setParameter("clienteId", cliente.getId())
-                    .getResultList();
-        } catch (javax.persistence.NoResultException e) {
-            return null;
-        }
-    }
-
     /**
      *
      * @param mes int 0 - 11
@@ -98,7 +60,7 @@ public class MensalidadeJPA {
             m.setDataVencimento(date);
             mensalidades.add(m);
         }
-        salvar(mensalidades);
+        em.persist(mensalidades);
         return mensalidades;
     }
 }

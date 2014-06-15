@@ -8,7 +8,7 @@ create table plano (
     valor_mensalidade dec(20,2),
     created_at datetime,
     updated_at timestamp not null default current_timestamp on update current_timestamp
-);
+) ENGINE=InnoDB;
 
 create trigger plano_on_insert before insert
 on plano for each row set new.created_at = current_timestamp;
@@ -28,7 +28,7 @@ create table cliente (
     unique key(rg),
     unique key(cpf),
     unique key(email)
-);
+) ENGINE=InnoDB;
 
 create trigger cliente_on_insert before insert
 on cliente for each row set new.created_at = current_timestamp;
@@ -42,7 +42,7 @@ create table equipamento (
     created_at datetime,
     updated_at timestamp not null default current_timestamp on update current_timestamp,
     unique key(mac)
-);
+) ENGINE=InnoDB;
 
 create trigger equipamento_on_insert before insert
 on equipamento for each row set new.created_at = current_timestamp;
@@ -64,7 +64,7 @@ create table contrato (
   foreign key (plano_id) references plano (id),
   foreign key (equipamento_id) references equipamento (id),
   foreign key (equipamento_wifi_id) references equipamento (id)
-);
+) ENGINE=InnoDB;
 
 create trigger contrato_on_insert before insert
 on contrato for each row set new.created_at = current_timestamp;
@@ -82,7 +82,7 @@ create table acesso (
     unique key(ip),
     unique key(mac),
     foreign key(cliente_id) references cliente(id)
-);
+) ENGINE=InnoDB;
 
 create trigger acesso_on_insert before insert
 on acesso for each row set new.created_at = current_timestamp;
@@ -97,7 +97,7 @@ create table mensalidade (
     updated_at timestamp not null default current_timestamp on update current_timestamp,
     unique key(cliente_id,data_vencimento),
     foreign key(cliente_id) references cliente(id)
-);
+) ENGINE=InnoDB;
 
 create trigger mensalidade_on_insert before insert
 on mensalidade for each row set new.created_at = current_timestamp;
@@ -110,12 +110,10 @@ create table usuario (
     unique key(login),
     created_at datetime,
     updated_at timestamp not null default current_timestamp on update current_timestamp
-);
+) ENGINE=InnoDB;
 
 create trigger usuario_on_insert before insert
 on usuario for each row set new.created_at = current_timestamp;
-
---20140107
 
 alter table acesso
 add constraint uk_acesso_cliente_id unique key(cliente_id);
@@ -123,18 +121,15 @@ add constraint uk_acesso_cliente_id unique key(cliente_id);
 alter table contrato
 add constraint uk_contrato_cliente_id unique key(cliente_id);
 
---20140129
-
 alter table equipamento
 add column descricao varchar(255) after id,
 add column status int not null default 0 after tipo;
-
 
 create table pais(
 	id int not null primary key auto_increment,
 	nome varchar(255) not null,
 	unique key(nome)
-);
+) ENGINE=InnoDB;
 
 insert into pais (nome) values ('Brasil');
 
@@ -146,7 +141,7 @@ create table estado(
 	constraint fk_estado_pais_id
 	foreign key(pais_id) references pais(id),
 	unique key(nome, pais_id)
-);
+) ENGINE=InnoDB;
 
 insert into estado (nome, uf, pais_id) values ('Ceará','CE', 1);
 
@@ -157,7 +152,7 @@ create table cidade(
 	constraint fk_cidade_estado_id
 	foreign key(estado_id) references estado(id),
 	unique key(nome, estado_id)
-);
+) ENGINE=InnoDB;
 
 insert into cidade (nome, estado_id) values ('Caucaia', 1);
 insert into cidade (nome, estado_id) values ('Fortaleza', 1);
@@ -170,7 +165,7 @@ create table bairro(
 	foreign key(cidade_id) references cidade(id),
 	unique key(nome, cidade_id)
 	
-);
+) ENGINE=InnoDB;
 
 insert into bairro (nome, cidade_id) values ('Conj. Metropolitano', 1);
 insert into bairro (nome, cidade_id) values ('Patrícia Gomes', 1);
@@ -189,7 +184,7 @@ create table endereco(
 	bairro_id int,
 	constraint fk_endereco_bairro_id
 	foreign key(bairro_id) references bairro(id)
-);
+) ENGINE=InnoDB;
 
 
 alter table cliente
@@ -226,7 +221,7 @@ CREATE TABLE empresa(
   	created_at datetime,
     updated_at timestamp not null default current_timestamp on update current_timestamp,
   	FOREIGN KEY(endereco_id) REFERENCES endereco (id)
-);
+) ENGINE=InnoDB;
 
 create trigger empresa_on_insert before insert
 on empresa for each row set new.created_at = current_timestamp;
@@ -240,7 +235,7 @@ CREATE TABLE fornecedor(
   	created_at datetime,
     updated_at timestamp not null default current_timestamp on update current_timestamp,
   	FOREIGN KEY(empresa_id) REFERENCES endereco (id)
-);
+) ENGINE=InnoDB;
 --liquibase formatted sql
 
 --changeset felipewmartins:1
@@ -266,7 +261,7 @@ CREATE TABLE despesa(
 	created_at datetime,
     updated_at timestamp not null default current_timestamp on update current_timestamp,
     FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (id)
-);
+) ENGINE=InnoDB;
 
 create trigger despesa_on_insert before insert
 on despesa for each row set new.created_at = current_timestamp;
