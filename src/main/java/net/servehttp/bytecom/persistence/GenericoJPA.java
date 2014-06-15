@@ -13,14 +13,10 @@ import javax.transaction.Transactional;
 /**
  * 
  * @author clairton
- * @param <T>
  */
 @Transactional
 public class GenericoJPA implements Serializable {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = -5183726686123081862L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;

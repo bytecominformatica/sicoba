@@ -24,28 +24,31 @@ import net.servehttp.bytecom.util.AlertaUtil;
 public class AcessoController implements Serializable {
 
   private static final long serialVersionUID = 7972159878826621995L;
-  private List<Acesso> listAcessos;
-  // private Acesso acesso;
   private Cliente cliente;
+  private int clienteId;
   @Inject
   GenericoJPA genericoJPA;
 
 
   public void load() {
-    if (cliente != null) {
-      System.out.println("cliente not null");
+    System.out.println("Cliente = " + clienteId);
+    if (clienteId > 0) {
+      cliente = genericoJPA.buscarPorId(Cliente.class, clienteId);
       if ((cliente.getAcesso()) == null) {
-        System.out.println("acesso null");
+        System.out.println("Acesso null");
         cliente.setAcesso(new Acesso());
         cliente.getAcesso().setCliente(cliente);
         cliente.getAcesso().setIp("192.168.33.2");
         cliente.getAcesso().setMascara("255.255.255.0");
         cliente.getAcesso().setGateway("192.168.33.1");
         cliente.getAcesso().setStatus(Acesso.ATIVO);
+        System.out.println("ACESSO = " + cliente.getAcesso());
         Contrato c = cliente.getContrato();
         if (c != null) {
+          System.out.println("contrato not null");
           Equipamento e = c.getEquipamento();
           if (e != null) {
+            System.out.println("equipamento not null");
             cliente.getAcesso().setMac(e.getMac());
           }
         }
@@ -53,20 +56,17 @@ public class AcessoController implements Serializable {
     }
   }
 
-  public List<Acesso> getListAcessos() {
-    return listAcessos;
-  }
-
-  public void setListAcessos(List<Acesso> listAcessos) {
-    this.listAcessos = listAcessos;
-  }
-
   public String salvar() {
     String page = null;
 
+    System.out.println("Salvar cliente = " + cliente);
+    System.out.println("Salvar acess0 = " + cliente.getAcesso());
     if (isDisponivel(cliente.getAcesso())) {
+
+      System.out.println("Salvar cliente = " + cliente);
+      System.out.println("Salvar acess0 = " + cliente.getAcesso());
       if (cliente.getAcesso().getId() == 0) {
-        genericoJPA.salvar(cliente);
+        genericoJPA.salvar(cliente.getAcesso());
         AlertaUtil.alerta("Acesso adicionado com sucesso!");
       } else {
         genericoJPA.atualizar(cliente.getAcesso());
@@ -113,6 +113,14 @@ public class AcessoController implements Serializable {
 
   public void setCliente(Cliente cliente) {
     this.cliente = cliente;
+  }
+
+  public int getClienteId() {
+    return clienteId;
+  }
+
+  public void setClienteId(int clienteId) {
+    this.clienteId = clienteId;
   }
 
 }
