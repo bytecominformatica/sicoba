@@ -2,17 +2,14 @@ package net.servehttp.bytecom.controller;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.MensalidadeJPA;
+import net.servehttp.bytecom.persistence.entity.Cliente;
 import net.servehttp.bytecom.persistence.entity.Mensalidade;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.DateUtil;
@@ -21,131 +18,104 @@ import net.servehttp.bytecom.util.DateUtil;
  *
  * @author clairton
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class MensalidadeController implements Serializable {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -866830816286480241L;
-	private List<Mensalidade> listMensalidades;
-    private Mensalidade mensalidadeSelecionada = new Mensalidade();
-    private Mensalidade novoMensalidade = new Mensalidade();
-    @Inject
-    private MensalidadeJPA mensalidadeJPA;
-    @Inject
-    private GenericoJPA genericoJPA;
-    private Date dataVencimento;
+  private static final long serialVersionUID = -866830816286480241L;
+  private List<Mensalidade> listMensalidades;
+  private Mensalidade mensalidade;
+  @Inject
+  private GenericoJPA genericoJPA;
+  private Cliente cliente;
+  private int clienteId;
 
-    private Calendar calendar;
+  private Calendar calendar;
 
-    public MensalidadeController() {
+  public void load() {
+    if (clienteId > 0) {
+      cliente = genericoJPA.buscarPorId(Cliente.class, clienteId);
+      if (mensalidade == null) {
+        novaMensalidade();
+      }
     }
+  }
 
-    @PostConstruct
-    public void load() {
-        exibirMensalidades();
-        desmarcaItenSelecionado();
-        init();
+  private void novaMensalidade() {
+    mensalidade = new Mensalidade();
+    if (mensalidade.getDataVencimento() == null) {
+      calendar = DateUtil.getProximoMes();
+      calendar.set(Calendar.DAY_OF_MONTH, cliente.getContrato().getVencimento());
+      mensalidade.setDataVencimento(calendar.getTime());
     }
+    mensalidade.setValor(cliente.getContrato().getPlano().getValorMensalidade());
+    mensalidade.setCliente(cliente);
+  }
 
-    private void init() {
-        dataVencimento = DateUtil.INSTANCE.getHoje();
-        calendar = DateUtil.getProximoMes();
-        calendar.set(Calendar.DAY_OF_MONTH, novoMensalidade.getCliente().getContrato().getVencimento());
+  public List<Mensalidade> getListMensalidades() {
+    return listMensalidades;
+  }
 
-        novoMensalidade.setValor(novoMensalidade.getCliente().getContrato().getPlano().getValorMensalidade());
+  public void setListMensalidades(List<Mensalidade> listMensalidades) {
+    this.listMensalidades = listMensalidades;
+  }
+
+  public int getMes() {
+    return calendar.get(Calendar.MONTH);
+  }
+
+  public void setMes(int mes) {
+    calendar.set(Calendar.MONTH, mes);
+  }
+
+  public int getAno() {
+    return calendar.get(Calendar.YEAR);
+  }
+
+  public void setAno(int ano) {
+    calendar.set(Calendar.YEAR, ano);
+  }
+
+  public void salvar() {
+    if (mensalidade.getId() == 0) {
+      genericoJPA.salvar(mensalidade);
+      AlertaUtil.alerta("Mensalidade adicionada com sucesso!");
+    } else {
+      genericoJPA.atualizar(mensalidade);
+      AlertaUtil.alerta("Mensalidade atualizado com sucesso!");
     }
+    novaMensalidade();
+    load();
+  }
 
-    private void desmarcaItenSelecionado() {
-        mensalidadeSelecionada = null;
-    }
-//
-//    public StreamedContent getRecibo() {
-//        if (mensalidadeSelecionada != null) {
-//            List<Mensalidade> mensalidades = new ArrayList<>();
-//            mensalidades.add(mensalidadeSelecionada);
-//            InputStream stream = new ByteArrayInputStream(new MensalidadeRelatorioEJB().getRecibos(mensalidades));
-//            Locale locale = new Locale("pt", "BR");
-//            return new DefaultStreamedContent(stream, "application/pdf", "Mensalidade de " + new SimpleDateFormat("MMMM/yyyy", locale).format(new Date()) + ".pdf");
-//        } else {
-//            AlertaHelper.alertaError("Selecione uma mensalidade!");
-//            return null;
-//        }
-//    }
+  public void remover() {
+    genericoJPA.remover(mensalidade);
+    novaMensalidade();
+    load();
+    AlertaUtil.alerta("Mensalidade removido com sucesso!");
+  }
 
-    public List<Mensalidade> getListMensalidades() {
-        return listMensalidades;
-    }
+  public Cliente getCliente() {
+    return cliente;
+  }
 
-    public void setListMensalidades(List<Mensalidade> listMensalidades) {
-        this.listMensalidades = listMensalidades;
-    }
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
+  }
 
-    public int getMes() {
-        return calendar.get(Calendar.MONTH);
-    }
+  public int getClienteId() {
+    return clienteId;
+  }
 
-    public void setMes(int mes) {
-        calendar.set(Calendar.MONTH, mes);
-    }
+  public void setClienteId(int clienteId) {
+    this.clienteId = clienteId;
+  }
 
-    public int getAno() {
-        return calendar.get(Calendar.YEAR);
-    }
+  public Mensalidade getMensalidade() {
+    return mensalidade;
+  }
 
-    public void setAno(int ano) {
-        calendar.set(Calendar.YEAR, ano);
-    }
-
-    public Mensalidade getMensalidadeSelecionada() {
-        return mensalidadeSelecionada;
-    }
-
-    public void setMensalidadeSelecionada(Mensalidade mensalidadeSelecionada) {
-        this.mensalidadeSelecionada = mensalidadeSelecionada;
-    }
-
-    public Mensalidade getNovoMensalidade() {
-        return novoMensalidade;
-    }
-
-    public void setNovoMensalidade(Mensalidade novoMensalidade) {
-        this.novoMensalidade = novoMensalidade;
-    }
-
-    public void salvar() {
-        try {
-            dataVencimento = calendar.getTime();
-            novoMensalidade.setDataVencimento(dataVencimento);
-            genericoJPA.salvar(novoMensalidade);
-            load();
-            AlertaUtil.alerta("Mensalidade adicionada com sucesso!");
-        } catch (EJBException e) {
-            if (mensalidadeJPA.buscarMensalidadesPorClienteEVencimento(novoMensalidade.getCliente(), dataVencimento) != null) {
-                AlertaUtil.alerta("Mensalidade já Cadastrada", AlertaUtil.ERROR);
-            } else {
-                throw e;
-            }
-        }
-    }
-
-    public void atualizar() {
-        genericoJPA.atualizar(mensalidadeSelecionada);
-        load();
-        AlertaUtil.alerta("Mensalidade atualizado com sucesso!");
-    }
-
-    public void remover() {
-        genericoJPA.remover(mensalidadeSelecionada);
-        load();
-        AlertaUtil.alerta("Mensalidade removido com sucesso!");
-    }
-
-    private void exibirMensalidades() {
-        if (novoMensalidade.getCliente() != null) {
-            listMensalidades = mensalidadeJPA.buscarMensalidadePorCliente(novoMensalidade.getCliente());
-        }
-    }
+  public void setMensalidade(Mensalidade mensalidade) {
+    this.mensalidade = mensalidade;
+  }
 }

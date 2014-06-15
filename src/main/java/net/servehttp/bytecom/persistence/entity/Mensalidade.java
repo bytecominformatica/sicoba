@@ -31,7 +31,7 @@ public class Mensalidade implements Serializable {
     public static final short PAGA = 1;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.DATE)
     private Date dataVencimento;
@@ -52,15 +52,7 @@ public class Mensalidade implements Serializable {
     }
 
     public Mensalidade(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        this.setId(id);
     }
 
     public Date getDataVencimento() {
@@ -129,6 +121,14 @@ public class Mensalidade implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public int getId() {
+      return id;
+    }
+
+    public void setId(int id) {
+      this.id = id;
     }
 
 }
