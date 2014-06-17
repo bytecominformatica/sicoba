@@ -41,7 +41,7 @@ public class MensalidadeController implements Serializable {
     }
   }
 
-  private void novaMensalidade() {
+  public void novaMensalidade() {
     mensalidade = new Mensalidade();
     if (mensalidade.getDataVencimento() == null) {
       calendar = DateUtil.getProximoMes();
