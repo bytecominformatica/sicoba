@@ -9,21 +9,33 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
+import net.servehttp.bytecom.persistence.entity.Bairro;
+import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.Fornecedor;
-import net.servehttp.bytecom.persistence.entity.Endereco;
+import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.EnderecoUtil;
 
+/**
+ * 
+ * @author felipe
+ *
+ */
 @Named
 @ViewScoped
 public class FornecedorController implements Serializable {
 
   private static final long serialVersionUID = 5557798779948742363L;
   private List<Fornecedor> listFornecedor;
-  private List<Endereco> listEndereco;
-  private int enderecoId;
+  private List<Cidade> listCidades;
+  private List<Bairro> listBairros;
+  private int cidadeId;
+  private int bairroId;
   private Fornecedor fornecedorSelecionado;
   private Fornecedor novoFornecedor = new Fornecedor();
   
+  @Inject
+  private EnderecoUtil enderecoUtil;
   @Inject
   private Util util;
   @Inject
@@ -34,19 +46,21 @@ public class FornecedorController implements Serializable {
   @PostConstruct
   public void load(){
     listFornecedor = genericoJPA.buscarTodos(Fornecedor.class);
-    //setListEndereco(genericoJPA.buscarTodos(Endereco.class));
-    limpar();
+    setListCidades(genericoJPA.buscarTodos(Cidade.class));
     getParameters();
   }
   
   public String salvar(){
     String page = null;
     if(valida(novoFornecedor)){
-      novoFornecedor.setEndereco(genericoJPA.buscarPorId(Endereco.class, enderecoId));
-      genericoJPA.salvar(novoFornecedor);
-      AlertaUtil.alerta("Fornecedor gravado com sucesso!");
-      load();
-      novoFornecedor = new Fornecedor();
+      novoFornecedor.getEndereco().setBairro(genericoJPA.buscarPorId(Bairro.class, bairroId));
+      if(novoFornecedor.getId() == 0){
+        genericoJPA.salvar(novoFornecedor);
+        AlertaUtil.alerta("Fornecedor gravado com sucesso!");
+      }else{
+        genericoJPA.atualizar(novoFornecedor);
+        AlertaUtil.alerta("Fornecedor atualizado com sucesso!");
+      }
       page = "list";
     }return page;
   }
@@ -67,9 +81,20 @@ public class FornecedorController implements Serializable {
   }
   
   private void getParameters(){
-    String fornecedorId = util.getParameters("fornecedorId");
+    String fornecedorId = util.getParameters("id");
     if(fornecedorId != null && !fornecedorId.isEmpty()){
       fornecedorSelecionado = genericoJPA.buscarPorId(Fornecedor.class, Integer.parseInt(fornecedorId));
+      cidadeId = novoFornecedor.getEndereco().getBairro().getCidade().getId();
+      bairroId = novoFornecedor.getEndereco().getBairro().getId();
+      atualizaBairros();
+    }
+  }
+  
+  public void atualizaBairros() {
+    for (Cidade c : listCidades) {
+      if (c.getId() == cidadeId) {
+        listBairros = c.getBairros();
+      }
     }
   }
   
@@ -85,28 +110,27 @@ public class FornecedorController implements Serializable {
     fornecedorSelecionado = null;
   }
 
+  public void buscarEndereco() {
+    cidadeId = bairroId = 0;
+    novoFornecedor.getEndereco().setLogradouro(null);
+    EnderecoPojo ep = enderecoUtil.getEndereco(novoFornecedor.getEndereco().getCep());
+    novoFornecedor.getEndereco().setBairro(enderecoUtil.getBairro(ep));
+    listCidades = genericoJPA.buscarTodos(Cidade.class);
+
+    if (novoFornecedor.getEndereco().getBairro() != null) {
+      cidadeId = novoFornecedor.getEndereco().getBairro().getCidade().getId();
+      atualizaBairros();
+      bairroId = novoFornecedor.getEndereco().getBairro().getId();
+      novoFornecedor.getEndereco().setLogradouro(ep.getLogradouro());
+    }
+
+  }
   public List<Fornecedor> getListFornecedor() {
     return listFornecedor;
   }
 
   public void setListFornecedor(List<Fornecedor> listFornecedor) {
     this.listFornecedor = listFornecedor;
-  }
-
-  public List<Endereco> getListEndereco() {
-    return listEndereco;
-  }
-
-  public void setListEndereco(List<Endereco> listEndereco) {
-    this.listEndereco = listEndereco;
-  }
-
-  public int getEnderecoId() {
-    return enderecoId;
-  }
-
-  public void setEnderecoId(int enderecoId) {
-    this.enderecoId = enderecoId;
   }
 
   public Fornecedor getFornecedorSelecionado() {
@@ -124,6 +148,39 @@ public class FornecedorController implements Serializable {
   public void setNovoFornecedor(Fornecedor novoFornecedor) {
     this.novoFornecedor = novoFornecedor;
   }
+
+  public List<Cidade> getListCidades() {
+    return listCidades;
+  }
+
+  public void setListCidades(List<Cidade> listCidade) {
+    this.listCidades = listCidade;
+  }
+
+  public List<Bairro> getListBairros() {
+    return listBairros;
+  }
+
+  public void setListBairros(List<Bairro> listBairro) {
+    this.listBairros = listBairro;
+  }
+
+  public int getCidadeId() {
+    return cidadeId;
+  }
+
+  public void setCidadeId(int cidadeId) {
+    this.cidadeId = cidadeId;
+  }
+
+  public int getBairroId() {
+    return bairroId;
+  }
+
+  public void setBairroId(int bairroId) {
+    this.bairroId = bairroId;
+  }
+  
   
   
 
