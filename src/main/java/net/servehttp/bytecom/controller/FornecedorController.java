@@ -12,7 +12,9 @@ import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.Fornecedor;
+import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.EnderecoUtil;
 
 /**
  * 
@@ -33,6 +35,8 @@ public class FornecedorController implements Serializable {
   private Fornecedor novoFornecedor = new Fornecedor();
   
   @Inject
+  private EnderecoUtil enderecoUtil;
+  @Inject
   private Util util;
   @Inject
   private GenericoJPA genericoJPA;
@@ -43,7 +47,6 @@ public class FornecedorController implements Serializable {
   public void load(){
     listFornecedor = genericoJPA.buscarTodos(Fornecedor.class);
     setListCidades(genericoJPA.buscarTodos(Cidade.class));
-    //limpar();
     getParameters();
   }
   
@@ -83,6 +86,7 @@ public class FornecedorController implements Serializable {
       fornecedorSelecionado = genericoJPA.buscarPorId(Fornecedor.class, Integer.parseInt(fornecedorId));
       cidadeId = novoFornecedor.getEndereco().getBairro().getCidade().getId();
       bairroId = novoFornecedor.getEndereco().getBairro().getId();
+      atualizaBairros();
     }
   }
   
@@ -106,6 +110,21 @@ public class FornecedorController implements Serializable {
     fornecedorSelecionado = null;
   }
 
+  public void buscarEndereco() {
+    cidadeId = bairroId = 0;
+    novoFornecedor.getEndereco().setLogradouro(null);
+    EnderecoPojo ep = enderecoUtil.getEndereco(novoFornecedor.getEndereco().getCep());
+    novoFornecedor.getEndereco().setBairro(enderecoUtil.getBairro(ep));
+    listCidades = genericoJPA.buscarTodos(Cidade.class);
+
+    if (novoFornecedor.getEndereco().getBairro() != null) {
+      cidadeId = novoFornecedor.getEndereco().getBairro().getCidade().getId();
+      atualizaBairros();
+      bairroId = novoFornecedor.getEndereco().getBairro().getId();
+      novoFornecedor.getEndereco().setLogradouro(ep.getLogradouro());
+    }
+
+  }
   public List<Fornecedor> getListFornecedor() {
     return listFornecedor;
   }

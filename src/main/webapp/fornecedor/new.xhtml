@@ -28,6 +28,40 @@
 					<input jsf:id="fone" type="text" class="form-control"
 						jsf:value="#{fornecedorController.novoFornecedor.fone}" />
 					
+					<label jsf:for="cpfCnpj" class="control-label">#{bundle.cpfCnpj}</label>
+					<input jsf:id="cpfCnpj" type="text" jsf:value="#{fornecedorController.novoFornecedor.cpfCnpj}"
+						class="form-control" />
+					
+					<label jsf:for="cep" class="control-label">#{bundle.cep}</label>
+							<h:inputText id="cep" value="#{fornecedorController.novoFornecedor.endereco.cep}" styleClass="form-control">
+								<f:ajax event="blur" listener="#{fornecedorController.buscarEndereco()}" render=":form:logradouro :form:cidade :form:bairro" onevent="setFocus('form:numero')" />
+							</h:inputText>
+
+							<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
+							<h:selectOneMenu id="cidade" value="#{fornecedorController.cidadeId}" styleClass="btn-primary btn-lg"
+								required="true">
+								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+								<f:selectItems value="#{fornecedorController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"
+									itemValue="#{cidade.id}" />
+								<f:ajax listener="#{fornecedorController.atualizaBairros}" render="bairro" />
+							</h:selectOneMenu>
+
+							<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
+							<h:selectOneMenu id="bairro" value="#{fornecedorController.bairroId}" styleClass="btn-primary btn-lg"
+								required="true">
+								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+								<f:selectItems value="#{fornecedorController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"
+									itemValue="#{bairro.id}" />
+							</h:selectOneMenu>
+
+							<label jsf:for="logradouro" class="control-label">#{bundle.logradouro}</label>
+							<input jsf:id="logradouro" type="text" jsf:value="#{fornecedorController.novoFornecedor.endereco.logradouro}" class="form-control" />
+
+							<label jsf:for="numero" class="control-label">#{bundle.numero}</label>
+							<input jsf:id="numero" type="number" jsf:value="#{fornecedorController.novoFornecedor.endereco.numero}" class="form-control"/>
+
+							<label jsf:for="complemento" class="control-label">#{bundle.complemento}</label>
+							<input jsf:id="complemento" type="text" jsf:value="#{fornecedorController.novoFornecedor.endereco.complemento}" class="form-control"/>
 
 					<div class="modal-footer">
 						<button jsf:id="btSalvar" jsf:action="#{fornecedorController.salvar()}"

@@ -35,6 +35,9 @@ public class Fornecedor implements Serializable {
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "endereco_id")
   private Endereco endereco;
+  
+  @Column(name = "cpf_cnpj")
+  private String cpfCnpj;
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
   private Calendar createdAt;
@@ -81,6 +84,14 @@ public class Fornecedor implements Serializable {
 
   public void setEndereco(Endereco endereco) {
     this.endereco = endereco;
+  }
+
+  public String getCpfCnpj() {
+    return cpfCnpj;
+  }
+
+  public void setCpfCnpj(String cpfCnpj) {
+    this.cpfCnpj = cpfCnpj;
   }
 
   public Calendar getCreatedAt() {
