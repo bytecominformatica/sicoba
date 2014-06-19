@@ -27,6 +27,8 @@ public class AcessoController implements Serializable {
   private Cliente cliente;
   private int clienteId;
   @Inject
+  ServidorController servidorController;
+  @Inject
   GenericoJPA genericoJPA;
 
 
@@ -61,6 +63,7 @@ public class AcessoController implements Serializable {
         genericoJPA.atualizar(cliente.getAcesso());
         AlertaUtil.alerta("Acesso atualizado com sucesso!");
       }
+      servidorController.atualizarAcesso();
       load();
       page = "edit";
     }
