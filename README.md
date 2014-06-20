@@ -9,7 +9,13 @@ Contact
             Project Leader: Clairton Carneiro Luz
             Personal Blog: http://clairtonluz.github.io
             Email Address: clairton.c.l@gmail.com
-   
+
+Main Contributors
+-------------------
+
+            Clairton Carneiro Luz
+            Felipe Wender Mendonça Martins
+
 
 Technologies In Use
 -------------------
