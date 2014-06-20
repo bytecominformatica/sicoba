@@ -1,12 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
-<f:metadata>
-	<f:viewParam name="id" value="#{fornecedorController.fornecedorSelecionado}" converter="#{fornecedorConverter}"
-		converterMessage="Registro não encontrado." />
-</f:metadata>
+<h:body>
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.fornecedor}</ui:define>
 	<ui:define name="content">
@@ -14,36 +13,73 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">EDITAR</div>
 			<div class="panel-body">
-
 				<form jsf:id="form" class="form-horizontal">
 
-						<label jsf:for="nome" class="control-label">#{bundle.nome}</label> 
-						<input jsf:id="nome" type="text" class="form-control"
-						jsf:value="#{fornecedorController.fornecedorSelecionado.nome}" autofocus="autofocus"
+					<label jsf:for="nome" class="control-label">#{bundle.nome}</label> 
+					<input jsf:id="nome" type="text" class="form-control uppercase"
+						jsf:value="#{fornecedorController.fornecedor.nome}" autofocus="autofocus"
 						required="required" /> 
             
-                   	 	<label jsf:for="razaoSocial" class="control-label">#{bundle.razaoSocial}</label>
-						<input jsf:id="razaoSocial" type="text" class="form-control"
-						jsf:value="#{fornecedorController.fornecedorSelecionado.razaoSocial}" required="required" />
+                    <label jsf:for="razaoSocial" class="control-label">#{bundle.razaoSocial}</label>
+					<input jsf:id="razaoSocial" type="text" class="form-control"
+						jsf:value="#{fornecedorController.fornecedor.razaoSocial}" required="required" />
 					
-						<label jsf:for="fone" class="control-label">#{bundle.fone}</label>
-						<input jsf:id="fone" type="text" class="form-control"
-						jsf:value="#{fornecedorController.fornecedorSelecionado.fone}" />
+					<label jsf:for="fone" class="control-label">#{bundle.fone}</label>
+					<input jsf:id="fone" type="text" class="form-control"
+						jsf:value="#{fornecedorController.fornecedor.fone}" />
+					
+					<label jsf:for="cpfCnpj" class="control-label">#{bundle.cpfCnpj}</label>
+					<input jsf:id="cpfCnpj" type="text" jsf:value="#{fornecedorController.fornecedor.cpfCnpj}"
+						class="form-control" />
+					
+					<label jsf:for="cep" class="control-label">#{bundle.cep}</label>
+							<h:inputText id="cep" value="#{fornecedorController.fornecedor.endereco.cep}" styleClass="form-control">
+								<f:ajax event="blur" listener="#{fornecedorController.buscarEndereco()}" render=":form:logradouro :form:cidade :form:bairro" onevent="setFocus('form:numero')" />
+							</h:inputText>
+
+							<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
+							<h:selectOneMenu id="cidade" value="#{fornecedorController.cidadeId}" styleClass="btn-primary btn-lg"
+								required="true">
+								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+								<f:selectItems value="#{fornecedorController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"
+									itemValue="#{cidade.id}" />
+								<f:ajax listener="#{fornecedorController.atualizaBairros}" render="bairro" />
+							</h:selectOneMenu>
+
+							<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
+							<h:selectOneMenu id="bairro" value="#{fornecedorController.bairroId}" styleClass="btn-primary btn-lg"
+								required="true">
+								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+								<f:selectItems value="#{fornecedorController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"
+									itemValue="#{bairro.id}" />
+							</h:selectOneMenu>
+
+							<label jsf:for="logradouro" class="control-label">#{bundle.logradouro}</label>
+							<input jsf:id="logradouro" type="text" jsf:value="#{fornecedorController.fornecedor.endereco.logradouro}" class="form-control" />
+
+							<label jsf:for="numero" class="control-label">#{bundle.numero}</label>
+							<input jsf:id="numero" type="number" jsf:value="#{fornecedorController.fornecedor.endereco.numero}" class="form-control"/>
+
+							<label jsf:for="complemento" class="control-label">#{bundle.complemento}</label>
+							<input jsf:id="complemento" type="text" jsf:value="#{fornecedorController.fornecedor.endereco.complemento}" class="form-control"/>
+					
 
 					<div class="modal-footer">
-						<button jsf:id="btAtualizar" jsf:action="#{fornecedorController.atualizar()}" class="btn btn-primary">
+						<button jsf:id="btSalvar" jsf:action="#{fornecedorController.salvar()}"
+							class="btn btn-primary" type="submit">
 							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
 						</button>
-						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;" class="btn btn-primary">
+						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
+							class="btn btn-primary">
 							<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
 						</button>
 					</div>
 				</form>
-
 			</div>
 		</div>
 
 	</ui:define>
 
 </ui:composition>
+</h:body>
 </html>

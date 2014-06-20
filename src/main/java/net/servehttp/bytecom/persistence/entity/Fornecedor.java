@@ -44,70 +44,60 @@ public class Fornecedor implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "updated_at")
   private Calendar updateAt;
-
+  
+  public Fornecedor(){
+    this.endereco = new Endereco();
+  }
+  
   public int getId() {
     return id;
   }
-
   public void setId(int id) {
     this.id = id;
   }
-
   public String getNome() {
     return nome;
   }
-
   public void setNome(String nome) {
     this.nome = nome;
   }
-
-
   public String getRazaoSocial() {
     return razaoSocial;
   }
-
   public void setRazaoSocial(String razaoSocial) {
     this.razaoSocial = razaoSocial;
   }
-
   public String getFone() {
     return fone;
   }
-
   public void setFone(String fone) {
     this.fone = fone;
   }
-
   public Endereco getEndereco() {
     return endereco;
   }
-
   public void setEndereco(Endereco endereco) {
     this.endereco = endereco;
   }
-
   public String getCpfCnpj() {
     return cpfCnpj;
   }
-
   public void setCpfCnpj(String cpfCnpj) {
     this.cpfCnpj = cpfCnpj;
   }
-
   public Calendar getCreatedAt() {
     return createdAt;
   }
-
   public void setCreatedAt(Calendar createdAt) {
     this.createdAt = createdAt;
   }
-
   public Calendar getUpdateAt() {
     return updateAt;
   }
-
   public void setUpdateAt(Calendar updateAt) {
     this.updateAt = updateAt;
   }
+
+  
 
 }
