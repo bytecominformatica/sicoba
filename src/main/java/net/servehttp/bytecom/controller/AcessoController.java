@@ -38,9 +38,9 @@ public class AcessoController implements Serializable {
       if ((cliente.getAcesso()) == null) {
         cliente.setAcesso(new Acesso());
         cliente.getAcesso().setCliente(cliente);
-        cliente.getAcesso().setIp("10.0.0.2");
-        cliente.getAcesso().setMascara("255.0.0.0");
-        cliente.getAcesso().setGateway("10.0.0.1");
+        cliente.getAcesso().setIp("10.10.0.2");
+        cliente.getAcesso().setMascara("255.255.0.0");
+        cliente.getAcesso().setGateway("10.10.0.1");
         cliente.getAcesso().setStatus(Acesso.ATIVO);
         Contrato c = cliente.getContrato();
         if (c != null) {
