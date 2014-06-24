@@ -13,7 +13,7 @@
 			<div class="panel-heading">EDITAR</div>
 			<div class="panel-body">
 				<div class="modal-header" align="center">
-					<form jsf:id="form">
+					<form jsf:id="formActions">
 						<button jsf:id="btnContrato" class="btn btn-primary link-group" jsf:outcome="contrato">
 							<span class="glyphicon glyphicon-file" /> Contrato
 							<f:param value="#{clienteController.cliente.id}"
@@ -32,7 +32,7 @@
 						
 					</form>
 				</div>
-				<form jsf:id="formEdit" class="form-horizontal" >
+				<form jsf:id="form" class="form-horizontal" >
 							<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
 							<input jsf:id="nome" type="text" jsf:value="#{clienteController.cliente.nome}" class="form-control uppercase" 
                             required="required" autofocus="autofocus"/>
@@ -59,7 +59,7 @@
 
 							<label jsf:for="cep" class="control-label">#{bundle.cep}</label>
 							<h:inputText id="cep" value="#{clienteController.cliente.endereco.cep}" styleClass="form-control">
-								<f:ajax event="blur" listener="#{clienteController.buscarEndereco()}" render=":form:logradouro :form:cidade :form:bairro"/>
+								<f:ajax event="blur" listener="#{clienteController.buscarEndereco()}" render=":form:logradouro :form:cidade :form:bairro" onevent="setFocus('form:numero')" />
 							</h:inputText>
 
 							<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>

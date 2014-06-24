@@ -1,10 +1,8 @@
 package net.servehttp.bytecom.controller;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ejb.Schedule;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -21,7 +19,7 @@ public class ServidorController {
         + "\n#                                                    #"
         + "\n######################################################");
 
-    executar("/opt/script/./startServer.sh start");
+    executar("/opt/script/./SICOBA.sh start");
   }
 
   private void executar(String command) {

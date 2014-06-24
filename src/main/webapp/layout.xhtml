@@ -53,21 +53,14 @@
 						<li class="#{view.viewId eq '/relatorios.xhtml' ? 'active' : ''}"><a
 							href="#{request.contextPath}/relatorios.xhtml">#{bundle.relatorios}</a></li>
 
-
 						<li class="dropdown"><a href="/bytecom#" class="dropdown-toggle" data-toggle="dropdown">APPs <b
 								class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#{request.contextPath}/app/clientesOnline.xhtml">#{bundle.clientesOnline}</a></li>
-								<li class="divider"></li>
+								<!-- <li><a href="#{request.contextPath}/app/clientesOnline.xhtml">#{bundle.clientesOnline}</a></li> 
+								<li class="divider"></li>-->
 								<li class="dropdown-header">Redes Sociais</li>
 								<li><a href="#">Like Pages +20</a></li>
 								<li><a href="https://www.facebook.com/BytecomOficial?fref=ts">Facebook</a></li>
-								<li class="divider"></li>
-								<li class="dropdown-header">Configurações</li>
-								<li><a href="#">Account Settings</a></li>
-								<li><a href="#">Terms &amp; Polices</a></li>
-								<li><a href="#">Report a Problem</a></li>
-								<li><a href="#">#{bundle.exit}</a></li>
 							</ul></li>
 					</c:if>
 				</ul>
@@ -81,6 +74,7 @@
 								</a>
 									<ul class="dropdown-menu">
 										<li><a href="#">Account Settings</a></li>
+										<li><a href="#">Terms &amp; Polices</a></li>
 										<li><a href="#">Report a Problem</a></li>
 										<li><h:commandLink action="#{authentication.logout()}" value="Sair" /></li>
 									</ul></li>
