@@ -67,7 +67,7 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<div class="avatar">
-										<img src="img/avatar.jpg" class="img-rounded" alt="avatar" />
+										<img src="#{request.contextPath}/resources/images/logo.png" class="img-rounded" alt="avatar" />
 									</div>
 									<i class="fa fa-angle-down pull-right"/>
 									<div class="user-mini pull-right">
@@ -129,37 +129,37 @@
 			<ul class="nav main-menu">
 				<li>
 					<a href="#{request.contextPath}" class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}">
-						<i class="fa fa-dashboard"></i>
+						<i class="fa fa-home"></i>
 						<span class="hidden-xs">#{bundle.home}</span>
 					</a>
 				</li>
 				<li>
 					<a href="#{request.contextPath}/plano/list.xhtml" class="#{util.removePage(view.viewId) eq '/plano' ? 'active' : ''}">
-						<i class="fa fa-dashboard"></i>
+						<i class="fa fa-globe"></i>
 						<span class="hidden-xs">#{bundle.planos}</span>
 					</a>
 				</li>				
 				<li>
 					<a href="#{request.contextPath}/cliente/list.xhtml" class="#{util.removePage(view.viewId) eq '/cliente' ? 'active' : ''}">
-						<i class="fa fa-dashboard"></i>
+						<i class="fa fa-users"></i>
 						<span class="hidden-xs">#{bundle.clientes}</span>
 					</a>
 				</li>
 				<li>
 					<a href="#{request.contextPath}/equipamento/list.xhtml" class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}">
-						<i class="fa fa-dashboard"></i>
+						<i class="fa fa-desktop"></i>
 						<span class="hidden-xs">#{bundle.equipamentos}</span>
 					</a>
 				</li>
 				<li>
 					<a href="#{request.contextPath}/fornecedor/list.xhtml" class="#{util.removePage(view.viewId) eq '/fornecedor' ? 'active' : ''}">
-						<i class="fa fa-dashboard"></i>
+						<i class="fa fa-user"></i>
 						<span class="hidden-xs">#{bundle.fornecedor}</span>
 					</a>
 				</li>
 				<li>
 					<a href="#{request.contextPath}/despesa/list.xhtml" class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}">
-						<i class="fa fa-dashboard"></i>
+						<i class="fa fa-dollar"></i>
 						<span class="hidden-xs">#{bundle.despesas}</span>
 					</a>
 				</li>
