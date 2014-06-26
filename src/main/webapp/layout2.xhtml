@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:jsf="http://xmlns.jcp.org/jsf">
+<head jsf:id="head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Clairton Luz" />
+<link rel="icon" href="#{request.contextPath}/resources/images/logo.png" />
+<title>#{bundle.applicationName} - <ui:insert name="title">Title</ui:insert></title>
+
+<!-- Bootstrap -->
+<link href="#{request.contextPath}/resources/css/bytecom.css" rel="stylesheet" />
+<link href="#{request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
+<link href="#{request.contextPath}/resources/css/bootstrap-theme.min.css" rel="stylesheet" />
+</head>
+<body jsf:id="body">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a href="#{request.contextPath}" class="navbar-brand" style="margin-top: -18px;">
+					<h:graphicImage value="/resources/images/logo.png" style="margin-top: 4px;" />
+					<h:outputText value=" Bytecom" />
+				</a>
+				
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<c:if test="#{authentication.usuarioLogado != null}">
+						<li class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}"><a href="#{request.contextPath}">#{bundle.home}</a></li>
+
+						<li class="#{util.removePage(view.viewId) eq '/plano' ? 'active' : ''}"><a
+							href="#{request.contextPath}/plano/list.xhtml">#{bundle.planos}</a></li>
+
+						<li class="#{util.removePage(view.viewId) eq '/cliente' ? 'active' : ''}"><a
+							href="#{request.contextPath}/cliente/list.xhtml">#{bundle.clientes}</a></li>
+
+						<li class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}"><a
+							href="#{request.contextPath}/equipamento/list.xhtml">#{bundle.equipamentos}</a></li>
+							
+						<li class="#{util.removePage(view.viewId) eq '/fornecedor' ? 'active' : ''}"><a
+							href="#{request.contextPath}/fornecedor/list.xhtml">#{bundle.fornecedor}</a></li>
+						
+						<li
+							class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}"><a
+							href="#{request.contextPath}/despesa/list.xhtml">#{bundle.despesas}</a></li>
+
+						<li class="#{view.viewId eq '/relatorios.xhtml' ? 'active' : ''}"><a
+							href="#{request.contextPath}/relatorios.xhtml">#{bundle.relatorios}</a></li>
+
+						<li class="dropdown"><a href="/bytecom#" class="dropdown-toggle" data-toggle="dropdown">APPs <b
+								class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<!-- <li><a href="#{request.contextPath}/app/clientesOnline.xhtml">#{bundle.clientesOnline}</a></li> 
+								<li class="divider"></li>-->
+								<li class="dropdown-header">Redes Sociais</li>
+								<li><a href="#">Like Pages +20</a></li>
+								<li><a href="https://www.facebook.com/BytecomOficial?fref=ts">Facebook</a></li>
+							</ul></li>
+					</c:if>
+				</ul>
+
+				<form jsf:id="formAccount" class="navbar-form navbar-right">
+					<c:if test="#{authentication.usuarioLogado != null}">
+						<h4 class="usuarioLogado">
+							<ul class="nav navbar-nav">
+								<li class="dropdown"><a href="/bytecom#" class="dropdown-toggle" data-toggle="dropdown">#{authentication.usuarioLogado.nome}
+										<b class="caret"></b>
+								</a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Account Settings</a></li>
+										<li><a href="#">Terms &amp; Polices</a></li>
+										<li><a href="#">Report a Problem</a></li>
+										<li><h:commandLink action="#{authentication.logout()}" value="Sair" /></li>
+									</ul></li>
+							</ul>
+						</h4>
+					</c:if>
+				</form>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+
+	<div class="content">
+		<h:messages id="msgs" showDetail="false" errorClass="alert alert-danger" warnClass="alert alert-warning"
+			fatalClass="alert alert-danger" infoClass="alert alert-info" />
+		<ui:insert name="content">Content</ui:insert>
+	</div>
+
+	<!--=== Copyright ===-->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p class="copyright-space">
+						2013 -2014 © Bytecom. Todos os direitos reservados. <a href="#">Política de Segurança</a> | <a href="#">Termos
+							de Serviço</a>
+					</p>
+				</div>
+			</div>
+			<!--/row-->
+		</div>
+		<!--/container-->
+	</div>
+	<!--/copyright-->
+	<!--=== End Copyright ===-->
+
+	<script src="#{request.contextPath}/resources/js/jquery-2.1.0.min.js"></script>
+
+	<script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
+	<!-- Script personalizado bytecom.js deve ficar depois dos scripst jquery e maskedinput para as mascaras funcionarem -->
+	<script src="#{request.contextPath}/resources/js/bytecom.js"></script>
+
+</body>
+</html>
+
