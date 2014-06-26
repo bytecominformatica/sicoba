@@ -19,6 +19,7 @@
 		<class>net.servehttp.bytecom.persistence.entity.Plano</class>
 		<class>net.servehttp.bytecom.persistence.entity.Despesa</class>
 		<class>net.servehttp.bytecom.persistence.entity.Usuario</class>
+		<class>net.servehttp.bytecom.persistence.entity.Tecnico</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />
