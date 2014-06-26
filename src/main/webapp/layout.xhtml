@@ -69,10 +69,10 @@
 									<div class="avatar">
 										<img src="img/avatar.jpg" class="img-rounded" alt="avatar" />
 									</div>
-									<i class="fa fa-angle-down pull-right"></i>
+									<i class="fa fa-angle-down pull-right"/>
 									<div class="user-mini pull-right">
 										<span class="welcome">Bem vindo,</span>
-										<span>Clairton Carneiro Luz</span>
+										<span>#{authentication.usuarioLogado.nome}</span>
 									</div>
 								</a>
 								<ul class="dropdown-menu">
@@ -128,11 +128,42 @@
 		<div id="sidebar-left" class="col-xs-2 col-sm-2">
 			<ul class="nav main-menu">
 				<li>
-					<a href="#" class="active">
+					<a href="#{request.contextPath}" class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}">
 						<i class="fa fa-dashboard"></i>
-						<span class="hidden-xs">Home</span>
+						<span class="hidden-xs">#{bundle.home}</span>
 					</a>
 				</li>
+				<li>
+					<a href="#{request.contextPath}/plano/list.xhtml" class="#{util.removePage(view.viewId) eq '/plano' ? 'active' : ''}">
+						<i class="fa fa-dashboard"></i>
+						<span class="hidden-xs">#{bundle.planos}</span>
+					</a>
+				</li>				
+				<li>
+					<a href="#{request.contextPath}/cliente/list.xhtml" class="#{util.removePage(view.viewId) eq '/cliente' ? 'active' : ''}">
+						<i class="fa fa-dashboard"></i>
+						<span class="hidden-xs">#{bundle.clientes}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/equipamento/list.xhtml" class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}">
+						<i class="fa fa-dashboard"></i>
+						<span class="hidden-xs">#{bundle.equipamentos}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/fornecedor/list.xhtml" class="#{util.removePage(view.viewId) eq '/fornecedor' ? 'active' : ''}">
+						<i class="fa fa-dashboard"></i>
+						<span class="hidden-xs">#{bundle.fornecedor}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/despesa/list.xhtml" class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}">
+						<i class="fa fa-dashboard"></i>
+						<span class="hidden-xs">#{bundle.despesas}</span>
+					</a>
+				</li>
+				
 			</ul>
 		</div>
 		<!--Start Content-->
