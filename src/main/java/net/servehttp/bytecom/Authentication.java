@@ -47,7 +47,7 @@ public class Authentication {
 	}
 
 	public String logout() {
-		String page = "/bytecom/login.xhtml";
+		String page = "login.xhtml";
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		ec.getSessionMap().remove("currentUser");
 

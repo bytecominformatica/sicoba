@@ -11,11 +11,7 @@
 		<ui:define name="content">
 
 			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div>
-						<b>CLIENTES</b>
-					</div>
-				</div>
+				<div class="panel-heading">CLIENTES</div>
 				<div class="panel-header">
 					<div>
 						<form jsf:id="formPesquisa" class="form-horizontal">
@@ -47,7 +43,7 @@
 								<f:facet name="header">#{bundle.status}</f:facet>
 								<div align="center">
 									<h:graphicImage
-										value="/resources/images/#{cliente.status eq 1? 'ativo.png' : cliente.status eq 0? 'inativo.png' : cliente.status eq 2? 'cancelado.png' : 'x.png'}" />
+										value="/resources/img/#{cliente.status eq 1? 'ativo.png' : cliente.status eq 0? 'inativo.png' : cliente.status eq 2? 'cancelado.png' : 'x.png'}" />
 								</div>
 							</h:column>
 							<h:column>
