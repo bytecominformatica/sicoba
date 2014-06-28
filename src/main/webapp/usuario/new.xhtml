@@ -16,7 +16,7 @@
 				<form jsf:id="form" class="form-horizontal">
 
 					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
-					<input jsf:id="nome" type="text" class="form-control uppercase"
+					<input jsf:id="login" type="text" class="form-control uppercase"
 						jsf:value="#{usuarioController.usuario.login}" autofocus="autofocus"
 						required="required" /> 
 					
@@ -26,12 +26,16 @@
 					
 					<label jsf:for="password" class="control-label">#{bundle.pass}</label>
 					<input jsf:id="password" type="password" jsf:value="#{usuarioController.usuario.senha}" class="form-control" 
-						required="true" />
+						required="required" />
+					
+					<label jsf:for="conf_pass" class="control-label">#{bundle.conf_pass}</label>
+					<input id="conf_password" type="password" class="form-control" 
+						required="required" onBlur="validaSenhaIgual()"/>
 					
 
 					<div class="modal-footer">
 						<button jsf:id="btSalvar" jsf:action="#{usuarioController.salvar()}"
-							class="btn btn-primary" type="submit">
+							class="btn btn-primary" type="submit" >
 							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
 						</button>
 						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
