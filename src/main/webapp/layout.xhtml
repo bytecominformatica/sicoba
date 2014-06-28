@@ -5,7 +5,7 @@
 <head jsf:id="head">
 <meta charset="utf-8"/>
 		<title>#{bundle.applicationName} - <ui:insert name="title">Title</ui:insert></title>
-		<link rel="icon" href="#{request.contextPath}/resources/images/logo.png" />
+		<link rel="icon" href="#{request.contextPath}/resources/img/logo.png" />
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -63,7 +63,7 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<div class="avatar">
-										<img src="#{request.contextPath}/resources/images/logo.png" class="img-rounded" alt="avatar" />
+										<img src="#{request.contextPath}/resources/img/logo.png" class="img-rounded" alt="avatar" />
 									</div>
 									<i class="fa fa-angle-down pull-right"/>
 									<div class="user-mini pull-right">
@@ -79,7 +79,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="ajax/page_messages.html" class="ajax-link">
+										<a href="#" class="ajax-link">
 											<i class="fa fa-envelope"></i>
 											<span class="hidden-sm text">Messages</span>
 										</a>
@@ -103,10 +103,12 @@
 										</a>
 									</li>
 									<li>
-										<a href="#">
-											<i class="fa fa-power-off"></i>
-											<span class="hidden-sm text">Logout</span>
-										</a>
+										<form jsf:id="formLogout">
+											<a href="/" jsf:action="#{authentication.logout()}">
+												<i class="fa fa-power-off"></i>
+												<span class="hidden-sm text">Logout</span>
+											</a>
+										</form>
 									</li>
 								</ul>
 							</li>
@@ -182,7 +184,6 @@
 <!--End Container-->
 
 	<script src="#{request.contextPath}/resources/js/jquery-2.1.0.min.js"></script>
-	<script src="#{request.contextPath}/resources/js/bootstrap.js"></script>
 	<script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<!-- Script personalizado bytecom.js deve ficar depois dos scripst jquery e maskedinput para as mascaras funcionarem -->
 	<script src="#{request.contextPath}/resources/js/bytecom.js"></script>

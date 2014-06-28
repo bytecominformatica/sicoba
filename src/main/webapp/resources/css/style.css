@@ -26,7 +26,7 @@ h1, .h1, h2, .h2, h3, .h3 {
   display: block;
   font-size: 20px;
   line-height: 50px;
-  background: url(../images/logo.png) right 42px no-repeat;
+  background: url(../img/logo.png) right 42px no-repeat;
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
@@ -54,7 +54,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 a.show-sidebar {
   float: left;
-  color:#6d6d6d;
+  color:#ffffff;
   outline: none;
   -webkit-transition: 0.2s;
   -moz-transition: 0.2s;
@@ -78,7 +78,7 @@ a.show-sidebar:hover {
 #content {
   position: relative;
   z-index: 10;
-  background: #ebebeb;
+  background: #ffffff;
   box-shadow: 0 0 6px #131313;
   padding-bottom: 3000px !important;
   margin-bottom: -2980px !important;
@@ -171,7 +171,7 @@ a.show-sidebar:hover {
 #top-panel {
   line-height: 50px;
   height: 50px;
-  background: #ebebeb;
+  background: #525252;
 }
 #main {
   margin-top: 50px;
@@ -184,7 +184,7 @@ a.show-sidebar:hover {
 }
 #search > input {
   width: 80%;
-  background: #dfdfdf;
+  background: #ffffff;
   border: 1px solid #C7C7C7;
   text-shadow:0 1px 1px #EEE;
   -webkit-border-radius: 3px;
@@ -204,7 +204,7 @@ a.show-sidebar:hover {
   position: absolute;
   top: 18px;
   right: 10px;
-  color: #fff;
+  color: #C7C7C7;
   -webkit-transition: 0.4s;
   -moz-transition: 0.4s;
   -o-transition: 0.4s;
@@ -281,7 +281,7 @@ a.show-sidebar:hover {
 .user-mini > span {
   display: block;
   font-size: 12px;
-  color:#363636;
+  color:#ffffff;
   margin-bottom: -4px;
 }
 .user-mini > span.welcome {

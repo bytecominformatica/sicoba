@@ -43,7 +43,7 @@ body {
 </style>
 
 <!-- Fav and touch icons -->
-<link rel="icon" href="#{request.contextPath}/images/favicon.ico" />
+<link rel="icon" href="#{request.contextPath}/img/favicon.ico" />
 </head>
 
 <h:body>
@@ -54,8 +54,6 @@ body {
 			<h2 class="form-signin-heading">Bem vindo!</h2>
 			<input jsf:id="usuario" type="text" jsf:value="#{authentication.usuario}" class="form-control" placeholder="Login" autofocus="autofocus"/>
 			<input jsf:id="senha" type="password" jsf:value="#{authentication.senha}" class="form-control" placeholder="Senha" />
-			<label class="checkbox"> <input type="checkbox" value="remember-me" />Remember me
-			</label>
 			<button jsf:id="btLogin" jsf:action="#{authentication.login()}" class="btn btn-primary btn-block" >Entrar</button>
 		</form>
 	</div>
