@@ -1,12 +1,14 @@
-package net.servehttp.bytecom.util;
+package net.servehttp.bytecom.validator;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.faces.application.FacesMessage;
 
+@FacesValidator("passwordValidator")
 public class PasswordValidator implements Validator {
 
 	@Override
@@ -20,7 +22,8 @@ public class PasswordValidator implements Validator {
 		
 		if(!password.equals(confirmPassword)){
 			uiConfirmPassword.setValid(false);
-			throw new ValidatorException(new FacesMessage("A senha está diferente da confirmação"));
+			throw new ValidatorException(new FacesMessage(
+					FacesMessage.SEVERITY_WARN,"As senhas digitadas não conferem!!",null));
 		}
 	}
 
