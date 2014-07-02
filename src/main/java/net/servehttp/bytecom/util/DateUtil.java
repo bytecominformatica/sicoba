@@ -100,6 +100,15 @@ public enum DateUtil {
         c.add(Calendar.MONTH, 1);
         return c.getTime();
     }
+    
+    public static Date getPrimeiroDiaDoMes() {
+    	Calendar c = Calendar.getInstance();
+    	c.set(Calendar.DAY_OF_MONTH, 1);
+    	c.set(Calendar.HOUR, 0);
+    	c.set(Calendar.MINUTE, 0);
+    	c.set(Calendar.SECOND, 0);
+    	return c.getTime();
+    }
 
     /**
      * Incrementa o mês da data atual. O mês pode ser incrementado para mais ou

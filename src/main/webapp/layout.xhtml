@@ -167,7 +167,12 @@
 						<span class="hidden-xs">#{bundle.despesas}</span>
 					</a>
 				</li>
-				
+				<li>
+					<a href="#{request.contextPath}/relatorios/relatorio_mensalidade.xhtml" class="#{util.removePage(view.viewId) eq '/relatorios' ? 'active' : ''}">
+						<i class="fa fa-files-o"></i>
+						<span class="hidden-xs">#{bundle.relatorios}</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 		<!--Start Content-->
@@ -182,7 +187,6 @@
 	</div>
 </div>
 <!--End Container-->
-
 	<script src="#{request.contextPath}/resources/js/jquery-2.1.0.min.js"></script>
 	<script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<!-- Script personalizado bytecom.js deve ficar depois dos scripst jquery e maskedinput para as mascaras funcionarem -->
