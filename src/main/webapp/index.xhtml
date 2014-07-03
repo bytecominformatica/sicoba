@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"	
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:body>
 	<ui:composition template="/layout.xhtml">
@@ -77,85 +78,19 @@
 									class="fa fa-bookmark-o"></i></a> <a href="#"><i
 									class="fa fa-globe"></i></a>
 							</div>
-							<h4 class="page-header">MARKETPLACE</h4>
-							<table id="ticker-table"
-								class="table m-table table-bordered table-hover table-heading">
-								<thead>
-									<tr>
-										<th>Ticker</th>
-										<th>Price</th>
-										<th>Change</th>
-										<th>Weekly Chart</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td class="m-ticker"><b>BRDM</b><span>Broadem Inc.</span></td>
-										<td class="m-price">33.27</td>
-										<td class="m-change"><i class="fa fa-angle-up"></i> 1.45
-											(27&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>ASWLL</b><span>Aswell
-												Corp.</span></td>
-										<td class="m-price">45.13</td>
-										<td class="m-change"><i class="fa fa-angle-up"></i> 6.32
-											(12&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>MIXL</b><span>Mixal LTD.</span></td>
-										<td class="m-price">71.13</td>
-										<td class="m-change"><i class="fa fa-angle-down"></i> 7.2
-											(12&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>LMPRD</b><span>L.A. Prod.</span></td>
-										<td class="m-price">30.24</td>
-										<td class="m-change"><i class="fa fa-angle-up"></i> 5.3
-											(18&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>ALK</b><span>Allien K.</span></td>
-										<td class="m-price">51.1</td>
-										<td class="m-change"><i class="fa fa-angle-up"></i> 7.5
-											(3.5&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>LNISW</b><span>Lenstri
-												Sweet</span></td>
-										<td class="m-price">123.12</td>
-										<td class="m-change"><i class="fa fa-angle-down"></i>
-											54.3 (15.3&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>RNLD</b><span>Ron LEED</span></td>
-										<td class="m-price">64.14</td>
-										<td class="m-change"><i class="fa fa-angle-up"></i> 12.33
-											(0.3&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>BCN</b><span>BeetCN Corp.</span></td>
-										<td class="m-price">64.14</td>
-										<td class="m-change"><i class="fa fa-angle-up"></i> 12.33
-											(0.3&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-									<tr>
-										<td class="m-ticker"><b>AWS</b><span>Awesome Inc.</span></td>
-										<td class="m-price">64.14</td>
-										<td class="m-change"><i class="fa fa-angle-up"></i> 12.33
-											(0.3&#37;)</td>
-										<td class="td-graph"></td>
-									</tr>
-								</tbody>
-							</table>
+							<h4 class="page-header">ULTIMAS INSTALAÇÕES</h4>
+							<h:dataTable id="ticker-table" styleClass="table m-table table-bordered table-hover table-heading"
+							 value="#{dashboardController.listClientesInstalados}" var="c">
+								<h:column>
+									<f:facet name="header">#{bundle.nome}</f:facet>
+									#{c.nome}
+								</h:column>
+								<h:column>
+									<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
+									#{c.contrato.dataInstalacao}
+								</h:column>
+							</h:dataTable>
+							
 						</div>
 						<div class="col-xs-12 col-md-6">
 							<div id="ow-donut" class="row">
