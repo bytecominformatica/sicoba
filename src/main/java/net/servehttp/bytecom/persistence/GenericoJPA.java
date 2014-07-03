@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
@@ -84,10 +85,28 @@ public class GenericoJPA implements Serializable {
    * <pre>
    */
   public <T> List<T> buscarTodos(Class<T> klass) {
-    CriteriaQuery<T> q = em.getCriteriaBuilder().createQuery(klass);
-    q.select(q.from(klass));
-    return em.createQuery(q).setMaxResults(200).getResultList();
+    return buscarTodos(klass, 200);
+  }
+  
+  public <T> List<T> buscarTodos(Class<T> klass, int limit) {
+	  CriteriaQuery<T> q = em.getCriteriaBuilder().createQuery(klass);
+	  q.select(q.from(klass));
+	  return em.createQuery(q).setMaxResults(limit).getResultList();
+	  
+  }
 
+  public <T> List<T> buscarTodos(Class<T> klass,boolean ascendente, String campo, int limit) {
+	  CriteriaBuilder cb = em.getCriteriaBuilder();
+	  CriteriaQuery<T> q = cb.createQuery(klass);
+	  Root<T> c = q.from(klass);
+	  q.select(c);
+	  if(ascendente){
+		  q.orderBy(cb.asc(c.get(campo)));
+	  } else {
+		  q.orderBy(cb.desc(c.get(campo)));
+	  }
+	  return em.createQuery(q).setMaxResults(limit).getResultList();
+	  
   }
 
 }

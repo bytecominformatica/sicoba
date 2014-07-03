@@ -89,6 +89,18 @@ public class Endereco implements Serializable {
 		return sb.toString();
 	}
 
+	public String getEnderecoSimples() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(logradouro).append(", ").append(numero);
+		if (complemento != null && !complemento.isEmpty()) {
+			sb.append(", ").append(complemento);
+		}
+		if (bairro != null) {
+			sb.append(", ").append(bairro.getNome());
+		}
+		return sb.toString();
+	}
+
     public String getCep() {
         return cep;
     }
