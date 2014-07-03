@@ -1,58 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	version="3.1">
-
-	<display-name>bytecom</display-name>
-	
-	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-		<param-value>messages</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-		<param-value>pt_BR</param-value>
-	</context-param>
-	
-	<!-- Liquibase -->
-	<context-param>
-		<param-name>liquibase.changelog</param-name>
-		<param-value>net/servehttp/bytecom/db/changelog.xml</param-value>
-	</context-param>
-	<context-param>
-		<param-name>liquibase.datasource</param-name>
-		<param-value>java:/bytecomDS</param-value>
-	</context-param>
-	<context-param>
-		<param-name>liquibase.onerror.fail</param-name>
-		<param-value>false</param-value>
-	</context-param>
-
-	<listener>
-		<listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
-	</listener>
-
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
-	</servlet-mapping>
-
-	<session-config>
-		<session-timeout>15</session-timeout>
-	</session-config>
-	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
-	</welcome-file-list>
-	<error-page>
-		<location>/error/500.xhtml</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/error/404.xhtml</location>
-	</error-page>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>sicoba</display-name>
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+    <param-value>messages</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+    <param-value>pt_BR</param-value>
+  </context-param>
+  <context-param>
+    <param-name>liquibase.changelog</param-name>
+    <param-value>net/servehttp/bytecom/db/changelog.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>liquibase.datasource</param-name>
+    <param-value>java:/bytecomDS</param-value>
+  </context-param>
+  <context-param>
+    <param-name>liquibase.onerror.fail</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <listener>
+    <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <session-config>
+    <session-timeout>15</session-timeout>
+  </session-config>
+  <welcome-file-list>
+    <welcome-file>index.xhtml</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <location>/error/500.xhtml</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error/404.xhtml</location>
+  </error-page>
 </web-app>
