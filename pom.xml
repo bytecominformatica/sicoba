@@ -82,7 +82,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>bytecom</finalName>
+		<finalName>sicoba</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
