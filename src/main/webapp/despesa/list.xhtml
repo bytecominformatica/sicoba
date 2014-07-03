@@ -14,6 +14,7 @@
 				<div class="panel-heading">DESPESAS</div>
 				<div class="panel-body">
 					<form jsf:id="form">
+					<div class="table-responsive">
 						<h:dataTable value="#{despesaController.listDespesa}" var="despesa" 
 							styleClass="table table-striped table-bordered" 
 							headerClass="tableColumnsHeader">
@@ -62,6 +63,7 @@
 								</h:panelGrid>
 							</h:column>
 						</h:dataTable>
+						</div>
 					</form>
 				</div>
 			</div>

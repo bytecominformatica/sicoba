@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.persistence;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import javax.transaction.Transactional;
 
 /**
@@ -61,6 +64,14 @@ public class GenericoJPA implements Serializable {
     q.select(entidade).where(cb.equal(entidade.get(campo), valor));
     return em.createQuery(q).setMaxResults(200).getResultList();
   }
+  
+  public <T> List<T> buscarJpql(String jpql, Object valor, Class<T> klass) {
+	  return em.createQuery(jpql, klass)
+			  .setParameter(1, valor)
+			  .setMaxResults(200).getResultList();
+  }
+  
+
 
 
   /**

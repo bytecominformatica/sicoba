@@ -10,6 +10,7 @@
 			<div class="panel-heading">USUARIOS</div>
 			<div class="panel-body">
 				<form jsf:id="form">
+				<div class="table-responsive">
 					<h:dataTable value="#{usuarioController.listUsuario}" var="tecnico" styleClass="table table-striped table-bordered"
 						headerClass="tableColumnsHeader">
 						<f:facet name="header">
@@ -47,6 +48,7 @@
 							</h:panelGrid>
 						</h:column>
 					</h:dataTable>
+					</div>
 				</form>
 			</div>
 		</div>

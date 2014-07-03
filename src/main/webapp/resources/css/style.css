@@ -26,14 +26,14 @@ h1, .h1, h2, .h2, h3, .h3 {
   display: block;
   font-size: 20px;
   line-height: 50px;
-  background: url(../img/logo.png) right 42px no-repeat;
+  background: url(../img/logo.png) right 0px no-repeat;
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
 }
 #logo a:hover {
-  background-position: right 0px;
+  background-position: center 0px;
   text-decoration: none;
 }
 .navbar {
