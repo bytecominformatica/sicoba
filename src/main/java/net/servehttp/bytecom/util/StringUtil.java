@@ -17,6 +17,10 @@ public enum StringUtil {
 		return line.substring(inicio, fim);
 	}
 
+	public char getChar(String line, int index){
+		return line.charAt(index);
+	}
+
 	public int getInt(String line, int inicio, int fim){
 		return Integer.parseInt(get(line, inicio, fim));
 	}
@@ -25,9 +29,14 @@ public enum StringUtil {
 		return Double.parseDouble(get(line, inicio, fim));
 	}
 
-	public Date getData(String line, int inicio, int fim){
+	public Date getDataHora(String line, int inicio, int fim){
 		String data = get(line, inicio, fim);
 		return DateUtil.INSTANCE.parse(data, "ddMMyyyyHHmmss");
+	}
+
+	public Date getData(String line, int inicio, int fim){
+		String data = get(line, inicio, fim);
+		return DateUtil.INSTANCE.parse(data, "ddMMyyyy");
 	}
 
 	public String formatCurrence(double value) {

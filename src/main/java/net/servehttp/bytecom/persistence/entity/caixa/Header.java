@@ -71,4 +71,12 @@ public class Header implements Serializable {
 		this.trailer = trailer;
 	}
 
+	public HeaderLote getHeaderLote() {
+		return headerLote;
+	}
+
+	public void setHeaderLote(HeaderLote headerLote) {
+		this.headerLote = headerLote;
+	}
+
 }
