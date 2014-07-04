@@ -23,6 +23,7 @@ public class CaixaEJB {
 	private final int HEADER = 0;
 	private final int HEADER_LOTE = 1;
 	private final int REGISTRO = 3;
+	private final int DETALHE6 = 6;
 	private final int TRAILER = 9;
 
 	public Header tratarArquivo(Part file) {
@@ -46,6 +47,15 @@ public class CaixaEJB {
 						break;
 					case REGISTRO:
 						listRegistros.add(preencheRegistro(line, header));
+						switch (tipoRegistro) {
+						case DETALHES6:
+							
+							break;
+
+						default:
+							break;
+						}
+						
 						break;
 					case TRAILER:
 						header.setTrailer(preencheTrailer(line, header));

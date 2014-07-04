@@ -10,15 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "registro_t")
+@Table(name = "registro")
 public class Registro implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6545044532807044580L;
 
 	@Id
@@ -42,6 +40,10 @@ public class Registro implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "header_lote_id")
 	private HeaderLote headerLote;
+	
+	@OneToOne(mappedBy="registro")
+	private RegistroDetalhe registroDetalhe;
+	
 
 	public int getId() {
 		return id;

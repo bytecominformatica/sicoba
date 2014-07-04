@@ -24,6 +24,7 @@
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Trailer</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.HeaderLote</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Registro</class>
+		<class>net.servehttp.bytecom.persistence.entity.caixa.RegistroDetalhe</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />
