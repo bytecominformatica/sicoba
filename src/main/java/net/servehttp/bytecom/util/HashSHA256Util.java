@@ -11,14 +11,20 @@ public enum HashSHA256Util {
   
   INSTANCE;
   
-  public static byte[] geraHash256(String valor){
+  public static String geraHash256(String valor){
     try{
       MessageDigest md = MessageDigest.getInstance("SHA-256");
       md.update(valor.getBytes());
-      return md.digest();
+      byte[] dataBytes = md.digest();
+      StringBuffer sb = new StringBuffer();
+      for (int i = 0; i < dataBytes.length; i++) {
+       sb.append(Integer.toString((dataBytes[i] & 0xff) + 0x100, 16).substring(1));
+      }
+      return sb.toString();
+      
     }catch(NoSuchAlgorithmException alg){
       return null;
-    }   
+    }
    
   }
 
