@@ -58,7 +58,7 @@ public enum DateUtil {
     public Date parse(String dateString, String pattern) {
         Date date = null;
         try {
-            date = sdfData.parse(dateString);
+            date = new SimpleDateFormat(pattern).parse(dateString);
         } catch (ParseException e) {
             AlertaUtil.alerta("Data inválida", AlertaUtil.ERROR);
         }

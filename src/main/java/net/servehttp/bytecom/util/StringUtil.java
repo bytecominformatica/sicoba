@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.util;
 
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Locale;
 
@@ -9,8 +10,25 @@ import java.util.Locale;
  */
 public enum StringUtil {
 	INSTANCE;
-
+	
 	private Extenso extenso = new Extenso();
+	
+	public String get(String line, int inicio, int fim){
+		return line.substring(inicio, fim);
+	}
+
+	public int getInt(String line, int inicio, int fim){
+		return Integer.parseInt(get(line, inicio, fim));
+	}
+
+	public double getDouble(String line, int inicio, int fim){
+		return Double.parseDouble(get(line, inicio, fim));
+	}
+
+	public Date getData(String line, int inicio, int fim){
+		String data = get(line, inicio, fim);
+		return DateUtil.INSTANCE.parse(data, "ddMMyyyyHHmmss");
+	}
 
 	public String formatCurrence(double value) {
 		Locale brasil = new Locale("pt", "BR");
