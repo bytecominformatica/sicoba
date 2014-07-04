@@ -13,6 +13,7 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">NOVO</div>
 			<div class="panel-body">
+			
 				<form jsf:id="form" class="form-horizontal">
 
 					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
@@ -23,6 +24,10 @@
 					<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
 					<input jsf:id="nome" type="text" class="form-control"
 						jsf:value="#{usuarioController.usuario.nome}" />
+					
+					<label jsf:for="email" class="control-label">#{bundle.email}</label>
+					<input jsf:id="email" type="text" class="form-control"
+						jsf:value="#{usuarioController.usuario.email}" />
 					
 					<label jsf:for="password" class="control-label">#{bundle.pass}</label>
 					<h:inputSecret id="password" value="#{usuarioController.usuario.senha}" required="true"

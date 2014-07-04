@@ -46,6 +46,11 @@ public class UsuarioController implements Serializable {
       AlertaUtil.alerta("Login já cadastrado!", AlertaUtil.ERROR);
       result = false;
     }
+    usuarios = genericoJPA.buscarTodos("email", usuario.getEmail(), Usuario.class);
+    if(!usuarios.isEmpty() && usuarios.get(0).getId() != usuario.getId()){
+      AlertaUtil.alerta("Email já cadastrado!", AlertaUtil.ERROR);
+      result = false;
+    }
     return result;
   }
 

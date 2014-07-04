@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+
 import net.servehttp.bytecom.util.HashSHA256Util;
 
 /**
@@ -37,6 +39,8 @@ public class Usuario implements Serializable {
     @NotNull
     @Size(min = 1, max = 20)
     private String login;
+    @Email(message="Email inválido")
+    private String email;
     @Basic(optional = false)
     @NotNull
     private String senha;
@@ -91,6 +95,14 @@ public class Usuario implements Serializable {
 
     public String getSenha() {
       return senha;
+    }
+
+    public String getEmail() {
+      return email;
+    }
+
+    public void setEmail(String email) {
+      this.email = email;
     }
 
     public void setSenha(String senha) {
