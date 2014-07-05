@@ -10,7 +10,6 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Cliente;
-import net.servehttp.bytecom.util.DateUtil;
 
 /**
  * 

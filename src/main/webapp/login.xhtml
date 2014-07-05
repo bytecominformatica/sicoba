@@ -54,7 +54,7 @@ body {
 			<h2 class="form-signin-heading">Bem vindo!</h2>
 			<input jsf:id="usuario" type="text" jsf:value="#{authentication.usuario}" class="form-control" placeholder="Login" autofocus="autofocus"/>
 			<input jsf:id="senha" type="password" jsf:value="#{authentication.senha}" class="form-control" placeholder="Senha" />
-			<button jsf:id="btLogin" jsf:action="#{authentication.login()}" class="btn btn-primary btn-block" >Entrar</button>
+			<button jsf:id="btLogin" jsf:actionListener="#{authentication.login()}" class="btn btn-primary btn-block" >Entrar</button>
 		</form>
 	</div>
 

@@ -8,8 +8,15 @@
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.plano}</ui:define>
 	<ui:define name="content">
+		<div class="row">
+		<div id="breadcrumb" class="col-xs-12">
+			<ol class="breadcrumb">
+				<li><a href="#{request.contextPath}">Início</a></li>
+				<li><a href="#">Plano</a></li>
+			</ol>
+		</div>
+	</div>
 		<div class="panel panel-primary">
-			<div class="panel-heading">PLANO</div>
 			<div class="panel-body">
 				<form jsf:id="form">
 					<div class="table-responsive">

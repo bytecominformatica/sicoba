@@ -1,5 +1,9 @@
 package net.servehttp.bytecom;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -9,6 +13,7 @@ import javax.inject.Named;
 import net.servehttp.bytecom.persistence.UsuarioJPA;
 import net.servehttp.bytecom.persistence.entity.Usuario;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.WebUtil;
 
 /**
  * 
@@ -22,15 +27,17 @@ public class Authentication {
 	private String senha;
 	@Inject
 	UsuarioJPA usuarioJPA;
+	@Inject
+	WebUtil webUtil;
 
-	public String login() {
-		String page = "login.xhtml";
+	public void login() {
 
 		Usuario l = usuarioJPA.buscaUsuario(usuario, senha);
 		if (l != null) {
-			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			ExternalContext ec = FacesContext.getCurrentInstance()
+					.getExternalContext();
 			ec.getSessionMap().put("currentUser", l);
-			page = "index.xhtml";
+			webUtil.redirect("index.xhtml");
 		} else {
 			// final String assunto = "Tentativa de acesso";
 			// final String para = "clairton.c.l@gmail.com";
@@ -41,21 +48,22 @@ public class Authentication {
 			//
 			// MailUtil.INSTANCE.enviarDepois(assunto, mensagem, para);
 
+			Logger.getLogger("USUÁRIO = " + usuario).severe("ACESSO NEGADO");
 			AlertaUtil.alerta("Usuário e/ou senha inválida!", AlertaUtil.ERROR);
 		}
-		return page;
 	}
 
-	public String logout() {
-		String page = "login.xhtml";
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	public void logout() {
+		ExternalContext ec = FacesContext.getCurrentInstance()
+				.getExternalContext();
 		ec.getSessionMap().remove("currentUser");
 
-		return page;
+		webUtil.redirect("login.xhtml");
 	}
 
 	public Usuario getUsuarioLogado() {
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		ExternalContext ec = FacesContext.getCurrentInstance()
+				.getExternalContext();
 		return (Usuario) ec.getSessionMap().get("currentUser");
 	}
 
