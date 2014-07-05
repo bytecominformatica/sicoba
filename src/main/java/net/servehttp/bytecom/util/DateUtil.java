@@ -84,7 +84,7 @@ public enum DateUtil {
      */
     public static Calendar getProximoMes() {
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.MONTH, 1);
+        c.add(Calendar.MONTH, 1);
         return c;
     }
 

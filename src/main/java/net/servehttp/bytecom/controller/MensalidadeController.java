@@ -29,7 +29,6 @@ public class MensalidadeController implements Serializable {
   private GenericoJPA genericoJPA;
   private Cliente cliente;
   private int clienteId;
-
   private Calendar calendar;
 
   public void load() {
