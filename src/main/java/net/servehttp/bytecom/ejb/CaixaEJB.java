@@ -66,6 +66,7 @@ public class CaixaEJB {
 		}
 		
 		if(isCorrompido(header)){
+			header = null;
 			throw new IllegalArgumentException("O ARQUIVO DE RETORNO " + file.getSubmittedFileName() + " ESTÁ CORROMPIDO!");
 		}
 
