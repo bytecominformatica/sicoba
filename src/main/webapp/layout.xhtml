@@ -46,75 +46,74 @@
 							<i class="fa fa-search"></i>
 						</div>
 					</div>
-					<div class="col-xs-4 col-sm-8 top-panel-right">
-						<ul class="nav navbar-nav pull-right panel-menu">
-							<li class="hidden-xs">
-								<a href="#" class="modal-link">
-									<i class="fa fa-bell"></i>
-									<span class="badge">7</span>
-								</a>
-							</li>
-							<li class="hidden-xs">
-								<a href="#" class="ajax-link">
-									<i class="fa fa-envelope"></i>
-									<span class="badge">7</span>
-								</a>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
-									<div class="avatar">
-										<!-- <img src="#{request.contextPath}/resources/img/logo.png" class="img-rounded" alt="avatar" />-->
-										<img src="#{profilePictureFinder.getPictureFromEmail(authentication.usuarioLogado.email)}" class="img-rounded" alt="avatar" />
-									</div>
-									<i class="fa fa-angle-down pull-right"/>
-									<div class="user-mini pull-right">
-										<span class="welcome">Bem vindo,</span>
-										<span>#{authentication.usuarioLogado.nome}</span>
-									</div>
-								</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">
-											<i class="fa fa-user"></i>
-											<span class="hidden-sm text">Profile</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="ajax-link">
-											<i class="fa fa-envelope"></i>
-											<span class="hidden-sm text">Messages</span>
-										</a>
-									</li>
-									<li>
-										<a href="ajax/gallery_simple.html" class="ajax-link">
-											<i class="fa fa-picture-o"></i>
-											<span class="hidden-sm text">Albums</span>
-										</a>
-									</li>
-									<li>
-										<a href="ajax/calendar.html" class="ajax-link">
-											<i class="fa fa-tasks"></i>
-											<span class="hidden-sm text">Tasks</span>
-										</a>
-									</li>
-									<li>
-										<a href="#{request.contextPath}/usuario/list.xhtml" class="#{util.removePage(view.viewId) eq '/usuario' ? 'active' : ''}">
-											<i class="fa fa-cog"></i>
-											<span class="hidden-sm text">Settings</span>
-										</a>
-									</li>
-									<li>
-										<form jsf:id="formLogout">
-											<a href="/" jsf:actionListener="#{authentication.logout()}">
+					<form jsf:id="formAccount">
+						<div class="col-xs-4 col-sm-8 top-panel-right">
+							<ul class="nav navbar-nav pull-right panel-menu">
+								<li class="hidden-xs">
+									<a href="#" class="modal-link">
+										<i class="fa fa-bell"></i>
+										<span class="badge">7</span>
+									</a>
+								</li>
+								<li class="hidden-xs">
+									<a href="#" class="ajax-link">
+										<i class="fa fa-envelope"></i>
+										<span class="badge">7</span>
+									</a>
+								</li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+										<div class="avatar">
+											<img src="#{profilePictureFinder.getPictureFromEmail(usuarioLogado.email)}" class="img-rounded" alt="avatar" />
+										</div>
+										<i class="fa fa-angle-down pull-right"/>
+										<div class="user-mini pull-right">
+											<span class="welcome">Bem vindo,</span>
+											<span>#{usuarioLogado.nome}</span>
+										</div>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="#{request.contextPath}/profile/edit.xhtml">
+												<i class="fa fa-user"></i>
+												<span class="hidden-sm text">Profile</span>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="ajax-link">
+												<i class="fa fa-envelope"></i>
+												<span class="hidden-sm text">Messages</span>
+											</a>
+										</li>
+										<li>
+											<a href="ajax/gallery_simple.html" class="ajax-link">
+												<i class="fa fa-picture-o"></i>
+												<span class="hidden-sm text">Albums</span>
+											</a>
+										</li>
+										<li>
+											<a href="ajax/calendar.html" class="ajax-link">
+												<i class="fa fa-tasks"></i>
+												<span class="hidden-sm text">Tasks</span>
+											</a>
+										</li>
+										<li>
+											<a href="#{request.contextPath}/usuario/list.xhtml" class="#{util.removePage(view.viewId) eq '/usuario' ? 'active' : ''}">
+												<i class="fa fa-cog"></i>
+												<span class="hidden-sm text">Settings</span>
+											</a>
+										</li>
+										<li>
+											<a href="#" jsf:actionListener="#{authentication.logout()}">
 												<i class="fa fa-power-off"></i>
 												<span class="hidden-sm text">Logout</span>
 											</a>
-										</form>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

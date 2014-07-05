@@ -1,7 +1,5 @@
 package net.servehttp.bytecom;
 
-import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -59,12 +57,6 @@ public class Authentication {
 		ec.getSessionMap().remove("currentUser");
 
 		webUtil.redirect("login.xhtml");
-	}
-
-	public Usuario getUsuarioLogado() {
-		ExternalContext ec = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		return (Usuario) ec.getSessionMap().get("currentUser");
 	}
 
 	public String getUsuario() {
