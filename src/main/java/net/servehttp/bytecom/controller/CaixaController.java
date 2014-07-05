@@ -34,14 +34,18 @@ public class CaixaController implements Serializable {
 	}
 
 	public void upload() {
-		try {
-			Header header = caixaEJB.tratarArquivo(file);
-			if (notExists(header)) {
-				genericoJPA.salvar(header);
-				AlertaUtil.alerta("Arquivo enviado com sucesso!");
+		if (file != null) {
+			try {
+				Header header = caixaEJB.tratarArquivo(file);
+				if (notExists(header)) {
+					genericoJPA.salvar(header);
+					AlertaUtil.alerta("Arquivo enviado com sucesso!");
+				}
+			} catch (IllegalArgumentException e) {
+				AlertaUtil.alerta("Arquivo corrompido!", AlertaUtil.ERROR);
 			}
-		} catch (IllegalArgumentException e) {
-			AlertaUtil.alerta("Arquivo corrompido!", AlertaUtil.ERROR);
+		} else {
+			AlertaUtil.alerta("Nenhum arquivo selecionado!", AlertaUtil.WARN);
 		}
 	}
 
