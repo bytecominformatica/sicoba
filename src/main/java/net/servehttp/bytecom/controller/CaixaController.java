@@ -11,7 +11,6 @@ import javax.servlet.http.Part;
 import net.servehttp.bytecom.ejb.CaixaEJB;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
-import net.servehttp.bytecom.persistence.entity.caixa.Registro;
 import net.servehttp.bytecom.util.AlertaUtil;
 
 /**
@@ -35,24 +34,28 @@ public class CaixaController implements Serializable {
 	}
 
 	public void upload() {
-		Header header = caixaEJB.tratarArquivo(file);
-		
-		if(isValido(header)){
-			genericoJPA.salvar(header);
+		try {
+			Header header = caixaEJB.tratarArquivo(file);
+			if (notExists(header)) {
+				genericoJPA.salvar(header);
+				AlertaUtil.alerta("Arquivo enviado com sucesso!");
+			}
+		} catch (IllegalArgumentException e) {
+			AlertaUtil.alerta("Arquivo corrompido!", AlertaUtil.ERROR);
 		}
 	}
 
-	private boolean isValido(Header header) {
-		boolean valido = true;
-		
-		List<Header> list = genericoJPA.buscarTodos("sequencial", header.getSequencial(), Header.class);
+	private boolean notExists(Header header) {
+		boolean exists = false;
+
+		List<Header> list = genericoJPA.buscarTodos("sequencial",
+				header.getSequencial(), Header.class);
 		if (!list.isEmpty()) {
-			valido = false;
+			exists = true;
 			AlertaUtil.alerta("Arquivo já foi enviado", AlertaUtil.WARN);
 		}
-		pagina 31 trailer do lote
-		
-		return valido;
+
+		return !exists;
 	}
 
 	public Part getFile() {

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,20 +28,18 @@ public class HeaderLote implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="tipo_operacao")
-	private char tipoOperacao;
-	@Column(name="tipo_servico")
-	private int tipoServico;
 	@Column(name="numero_remessa_retorno")
 	private int numeroRemessaRetorno;
 	@Column(name="data_gravacao_remessa_retorno")
 	private Date dataGravacaoRemessaRetorno;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "header_id")
 	private Header header;
 	@OneToMany(mappedBy="headerLote", cascade= CascadeType.ALL)
 	private List<Registro> registros;
+	@OneToOne(mappedBy="headerLote", cascade= CascadeType.ALL)
+	private TrailerLote trailerLote;
 	
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -55,22 +54,6 @@ public class HeaderLote implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public char getTipoOperacao() {
-		return tipoOperacao;
-	}
-
-	public void setTipoOperacao(char tipoOperacao) {
-		this.tipoOperacao = tipoOperacao;
-	}
-
-	public int getTipoServico() {
-		return tipoServico;
-	}
-
-	public void setTipoServico(int tipoServico) {
-		this.tipoServico = tipoServico;
 	}
 
 	public int getNumeroRemessaRetorno() {
@@ -103,6 +86,14 @@ public class HeaderLote implements Serializable {
 
 	public void setRegistros(List<Registro> registros) {
 		this.registros = registros;
+	}
+
+	public TrailerLote getTrailerLote() {
+		return trailerLote;
+	}
+
+	public void setTrailerLote(TrailerLote trailerLote) {
+		this.trailerLote = trailerLote;
 	}
 	
 }

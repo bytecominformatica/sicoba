@@ -26,14 +26,10 @@ public class Registro implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "numero_registro_no_lote")
-	private int numeroRegistroNoLote;
 	@Column(name = "modalidade_nosso_numero")
 	private int modalidadeNossoNumero;
 	@Column(name = "nosso_numero")
 	private int nossoNumero;
-	@Column(name = "codigo_carteira")
-	private int codigoCarteira;
 	private Date vencimento;
 	@Column(name = "valor_titulo")
 	private double valorTitulo;
@@ -70,14 +66,6 @@ public class Registro implements Serializable {
 		this.headerLote = headerLote;
 	}
 
-	public int getNumeroRegistroNoLote() {
-		return numeroRegistroNoLote;
-	}
-
-	public void setNumeroRegistroNoLote(int numeroRegistroNoLote) {
-		this.numeroRegistroNoLote = numeroRegistroNoLote;
-	}
-
 	public int getModalidadeNossoNumero() {
 		return modalidadeNossoNumero;
 	}
@@ -92,14 +80,6 @@ public class Registro implements Serializable {
 
 	public void setNossoNumero(int nossoNumero) {
 		this.nossoNumero = nossoNumero;
-	}
-
-	public int getCodigoCarteira() {
-		return codigoCarteira;
-	}
-
-	public void setCodigoCarteira(int codigoCarteira) {
-		this.codigoCarteira = codigoCarteira;
 	}
 
 	public Date getVencimento() {

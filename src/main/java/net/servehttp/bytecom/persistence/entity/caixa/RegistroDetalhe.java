@@ -23,8 +23,6 @@ public class RegistroDetalhe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "numero_registro_no_lote")
-	private int numeroRegistroNoLote;
 	@Column(name = "juros_multas_encargos")
 	private double jurosMultasEncargos;
 	private double desconto;
@@ -58,14 +56,6 @@ public class RegistroDetalhe implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getNumeroRegistroNoLote() {
-		return numeroRegistroNoLote;
-	}
-
-	public void setNumeroRegistroNoLote(int numeroRegistroNoLote) {
-		this.numeroRegistroNoLote = numeroRegistroNoLote;
 	}
 
 	public double getJurosMultasEncargos() {
