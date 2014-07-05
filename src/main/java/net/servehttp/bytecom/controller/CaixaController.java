@@ -10,7 +10,10 @@ import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.ejb.CaixaEJB;
 import net.servehttp.bytecom.persistence.GenericoJPA;
+import net.servehttp.bytecom.persistence.entity.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
+import net.servehttp.bytecom.persistence.entity.caixa.HeaderLote;
+import net.servehttp.bytecom.persistence.entity.caixa.Registro;
 import net.servehttp.bytecom.util.AlertaUtil;
 
 /**
@@ -35,9 +38,21 @@ public class CaixaController implements Serializable {
 
 	public void upload() {
 		if (file != null) {
+			Header header = null;
 			try {
-				Header header = caixaEJB.tratarArquivo(file);
+				header = caixaEJB.tratarArquivo(file);
 				if (notExists(header)) {
+					for(HeaderLote hl : header.getHeaderLotes()){
+						for(Registro r : hl.getRegistros()){
+							Mensalidade m = genericoJPA.buscarUm("numeroBoleto", r.getNossoNumero(), Mensalidade.class);
+							if(m != null){
+								System.out.println("ENTROU mensalidade = " + m.getId());
+								m.setStatus(Mensalidade.PAGA);
+								m.setValor(r.getRegistroDetalhe().getValorPago());
+								genericoJPA.atualizar(m);
+							}
+						}
+					}
 					genericoJPA.salvar(header);
 					AlertaUtil.alerta("Arquivo enviado com sucesso!");
 				}

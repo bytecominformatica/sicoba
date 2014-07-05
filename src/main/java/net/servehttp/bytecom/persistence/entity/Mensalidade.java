@@ -35,18 +35,21 @@ public class Mensalidade implements Serializable {
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.DATE)
     private Date dataVencimento;
-    @Column(name = "valor")
     private double valor;
     private short status;
+    @Column(name = "numero_boleto")
+    private Integer numeroBoleto;
+ 
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Cliente cliente;
+
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Cliente cliente;
 
     public Mensalidade() {
     }
@@ -130,5 +133,13 @@ public class Mensalidade implements Serializable {
     public void setId(int id) {
       this.id = id;
     }
+
+	public Integer getNumeroBoleto() {
+		return numeroBoleto;
+	}
+
+	public void setNumeroBoleto(Integer numeroBoleto) {
+		this.numeroBoleto = numeroBoleto;
+	}
 
 }
