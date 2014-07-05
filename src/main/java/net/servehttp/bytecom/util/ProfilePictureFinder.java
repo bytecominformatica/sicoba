@@ -76,6 +76,6 @@ public class ProfilePictureFinder {
     }
 
     private String getDefaultAvatar() {
-        return "/img/default_avatar.png";
+        return "/sicoba/resources/img/default_avatar.png";
     }
 }
