@@ -1,7 +1,8 @@
 package net.servehttp.bytecom.persistence.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,10 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+
+import net.servehttp.bytecom.util.HashSHA256Util;
+
 /**
  *
  * @author clairton
@@ -25,7 +30,7 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer id;
+    private int id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -34,27 +39,28 @@ public class Usuario implements Serializable {
     @NotNull
     @Size(min = 1, max = 20)
     private String login;
+    @Email(message="Email inválido")
+    private String email;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
     private String senha;
+    
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-    @Basic(optional = false)
-    @NotNull
+    private Calendar createdAt;
+    
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+    private Calendar updatedAt;
 
     public Usuario() {
     }
 
-    public Usuario(Integer id) {
+    public Usuario(int id) {
         this.id = id;
     }
 
-    public Usuario(Integer id, String nome, String login, String senha, Date updatedAt) {
+    public Usuario(int id, String nome, String login, String senha, Calendar updatedAt) {
         this.id = id;
         this.nome = nome;
         this.login = login;
@@ -62,60 +68,69 @@ public class Usuario implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getId() {
-        return id;
+
+    public int getId() {
+      return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(int id) {
+      this.id = id;
     }
 
     public String getNome() {
-        return nome;
+      return nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+      this.nome = nome;
     }
 
     public String getLogin() {
-        return login;
+      return login;
     }
 
     public void setLogin(String login) {
-        this.login = login;
+      this.login = login;
     }
 
     public String getSenha() {
-        return senha;
+      return senha;
+    }
+
+    public String getEmail() {
+      return email;
+    }
+
+    public void setEmail(String email) {
+      this.email = email;
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+      this.senha = HashSHA256Util.geraHash256(senha);
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Calendar getCreatedAt() {
+      return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt(Calendar createdAt) {
+      this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Calendar getUpdatedAt() {
+      return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdatedAt(Calendar updatedAt) {
+      this.updatedAt = updatedAt;
     }
 
-    @Override
+    /*@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
-    }
+    }*/
 
     @Override
     public String toString() {

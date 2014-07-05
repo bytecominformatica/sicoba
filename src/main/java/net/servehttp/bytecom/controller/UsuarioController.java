@@ -12,6 +12,11 @@ import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Usuario;
 import net.servehttp.bytecom.util.AlertaUtil;
 
+/**
+ * 
+ * @author felipe
+ *
+ */
 @Named
 @ViewScoped
 public class UsuarioController implements Serializable {
@@ -20,46 +25,65 @@ public class UsuarioController implements Serializable {
   private List<Usuario> listUsuario;
   private Usuario usuario = new Usuario();
   private String page;
-  
+
   @Inject
   private GenericoJPA genericoJPA;
   @Inject
   private Util util;
-  
-  public UsuarioController(){}
-  
+
+  public UsuarioController() {}
+
   @PostConstruct
-  public void load(){
+  public void load() {
     listUsuario = genericoJPA.buscarTodos(Usuario.class);
     getParameters();
   }
-  
-  public String salvar(){
-   page = null;
-   if(usuario.getId() == 0){
-	   genericoJPA.salvar(usuario);
-	   AlertaUtil.alerta("Usuário gravado com sucesso!");
-   }else{
-	   genericoJPA.atualizar(usuario);
-	   AlertaUtil.alerta("Usuário atualizado com sucesso!");
-   }
-   page = "list";
-   return page;
+
+  private boolean valida(Usuario usuario) {
+    boolean result = true;
+    List<Usuario> usuarios = genericoJPA.buscarTodos("login", usuario.getLogin(), Usuario.class);
+    if (!usuarios.isEmpty() && usuarios.get(0).getId() != usuario.getId()) {
+      AlertaUtil.alerta("Login já cadastrado!", AlertaUtil.ERROR);
+      result = false;
+    }
+    usuarios = genericoJPA.buscarTodos("email", usuario.getEmail(), Usuario.class);
+    if(!usuarios.isEmpty() && usuarios.get(0).getId() != usuario.getId()){
+      AlertaUtil.alerta("Email já cadastrado!", AlertaUtil.ERROR);
+      result = false;
+    }
+    return result;
   }
-  
-  private void getParameters(){
-	  String usuarioId = util.getParameters("id");
-	  if(usuarioId != null && !usuarioId.isEmpty()){
-		  usuario = genericoJPA.buscarPorId(Usuario.class, Integer.parseInt(usuarioId));
-	  }
-  }
-  
-  public String remove(){
+
+  public String salvar() {
     page = null;
-    genericoJPA.remover(usuario);
+    if (valida(usuario)) {
+      if (usuario.getId() == 0) {
+        genericoJPA.salvar(usuario);
+        AlertaUtil.alerta("Usuário gravado com sucesso!");
+      } else {
+        genericoJPA.atualizar(usuario);
+        AlertaUtil.alerta("Usuário atualizado com sucesso!");
+      }
+      page = "list";
+    }
+
     return page;
   }
-  
+
+  private void getParameters() {
+    String usuarioId = util.getParameters("id");
+    if (usuarioId != null && !usuarioId.isEmpty()) {
+      usuario = genericoJPA.buscarPorId(Usuario.class, Integer.parseInt(usuarioId));
+    }
+  }
+
+  public String remover() {
+    page = null;
+    genericoJPA.remover(usuario);
+    page = "list";
+    return page;
+  }
+
   public List<Usuario> getListUsuario() {
     return listUsuario;
   }
@@ -83,8 +107,7 @@ public class UsuarioController implements Serializable {
   public void setPage(String page) {
     this.page = page;
   }
-  
-  
-  
+
+
 
 }

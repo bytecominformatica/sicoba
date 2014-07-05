@@ -11,11 +11,12 @@
 	<ui:define name="content">
 
 		<div class="panel panel-primary">
-			<div class="panel-heading">NOVO</div>
+			<div class="panel-heading">EDITAR</div>
 			<div class="panel-body">
-			
 				<form jsf:id="form" class="form-horizontal">
 
+					<h:graphicImage value="#{profilePictureFinder.getPictureFromEmail(usuarioController.usuario.email)}" class="img-responsive" />
+					
 					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
 					<input jsf:id="login" type="text" class="form-control"
 						jsf:value="#{usuarioController.usuario.login}" autofocus="autofocus"
@@ -24,7 +25,7 @@
 					<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
 					<input jsf:id="nome" type="text" class="form-control"
 						jsf:value="#{usuarioController.usuario.nome}" />
-					
+						
 					<label jsf:for="email" class="control-label">#{bundle.email}</label>
 					<input jsf:id="email" type="text" class="form-control"
 						jsf:value="#{usuarioController.usuario.email}" />
