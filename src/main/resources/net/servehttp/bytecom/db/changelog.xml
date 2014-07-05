@@ -53,4 +53,8 @@
 	<sqlFile path="net/servehttp/bytecom/db/changelog/20140705-11-felipewmartins.sql" stripComments="true"/>
 </changeSet>
 
+<changeSet id="12" author="clairtonluz">
+	<sqlFile path="net/servehttp/bytecom/db/changelog/20140705-12-clairtonluz.sql" stripComments="true"/>
+</changeSet>
+
 </databaseChangeLog>
