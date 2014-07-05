@@ -3,6 +3,7 @@ package net.servehttp.bytecom.persistence.entity.caixa;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "registro")
@@ -41,9 +44,15 @@ public class Registro implements Serializable {
 	@JoinColumn(name = "header_lote_id")
 	private HeaderLote headerLote;
 	
-	@OneToOne(mappedBy="registro")
+	@OneToOne(mappedBy="registro", cascade= CascadeType.ALL)
 	private RegistroDetalhe registroDetalhe;
 	
+	@Column(name = "created_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
 	public int getId() {
 		return id;
@@ -115,6 +124,14 @@ public class Registro implements Serializable {
 
 	public void setValorTarifa(double valorTarifa) {
 		this.valorTarifa = valorTarifa;
+	}
+
+	public RegistroDetalhe getRegistroDetalhe() {
+		return registroDetalhe;
+	}
+
+	public void setRegistroDetalhe(RegistroDetalhe registroDetalhe) {
+		this.registroDetalhe = registroDetalhe;
 	}
 
 }

@@ -4,18 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.persistence.Column;
 import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.controller.CaixaController;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
 import net.servehttp.bytecom.persistence.entity.caixa.HeaderLote;
 import net.servehttp.bytecom.persistence.entity.caixa.Registro;
+import net.servehttp.bytecom.persistence.entity.caixa.RegistroDetalhe;
 import net.servehttp.bytecom.persistence.entity.caixa.Trailer;
 import net.servehttp.bytecom.util.StringUtil;
 
@@ -33,9 +32,8 @@ public class CaixaEJB {
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						file.getInputStream()));
 				String line = null;
-				int i = 0;
 				List<Registro> listRegistros = new ArrayList<>();
-				
+
 				while ((line = in.readLine()) != null) {
 					int tipoRegistro = StringUtil.INSTANCE.getInt(line, 7, 8);
 					switch (tipoRegistro) {
@@ -46,23 +44,14 @@ public class CaixaEJB {
 						header.setHeaderLote(preencheHeaderLote(line, header));
 						break;
 					case REGISTRO:
-						listRegistros.add(preencheRegistro(line, header));
-						switch (tipoRegistro) {
-						case DETALHES6:
-							
-							break;
-
-						default:
-							break;
-						}
-						
+						listRegistros.add(preencheRegistro(line, header, in));
 						break;
 					case TRAILER:
 						header.setTrailer(preencheTrailer(line, header));
 						break;
 					}
 				}
-				
+
 				header.getHeaderLote().setRegistros(listRegistros);
 			} catch (IOException e) {
 				Logger.getLogger(CaixaController.class.getName()).log(
@@ -87,13 +76,11 @@ public class CaixaEJB {
 		hl.setTipoOperacao(StringUtil.INSTANCE.getChar(line, 8));
 		hl.setTipoServico(StringUtil.INSTANCE.getInt(line, 9, 11));
 		hl.setNumeroRemessaRetorno(StringUtil.INSTANCE.getInt(line, 183, 191));
-		hl.setDataGravacaoRemessaRetorno(StringUtil.INSTANCE.getData(line, 191,
-				199));
-		hl.setDataCredito(StringUtil.INSTANCE.getData(line, 199, 207));
+		hl.setDataGravacaoRemessaRetorno(StringUtil.INSTANCE.getData(line, 191,199));
 		return hl;
 	}
 
-	private Registro preencheRegistro(String line, Header header) {
+	private Registro preencheRegistro(String line, Header header, BufferedReader in) throws IOException {
 		Registro r = new Registro();
 		r.setHeaderLote(header.getHeaderLote());
 		r.setNumeroRegistroNoLote(StringUtil.INSTANCE.getInt(line, 8, 13));
@@ -101,9 +88,30 @@ public class CaixaEJB {
 		r.setNossoNumero(StringUtil.INSTANCE.getInt(line, 41, 56));
 		r.setCodigoCarteira(StringUtil.INSTANCE.getInt(line, 57, 58));
 		r.setVencimento(StringUtil.INSTANCE.getData(line, 73, 81));
-		r.setValorTitulo(StringUtil.INSTANCE.getDouble(line, 81, 96));
-		r.setValorTarifa(StringUtil.INSTANCE.getDouble(line, 198, 212));
+		r.setValorTitulo(StringUtil.INSTANCE.getDouble2Decimal(line, 81, 96));
+		r.setValorTarifa(StringUtil.INSTANCE.getDouble2Decimal(line, 198, 212));
 		
+		if (((line = in.readLine()) != null)) {
+			int tipoDetalhe = StringUtil.INSTANCE.getInt(line, 15, 17);
+			
+			RegistroDetalhe rd = new RegistroDetalhe();
+			rd.setRegistro(r);
+			rd.setNumeroRegistroNoLote(StringUtil.INSTANCE.getInt(line, 8, 13));
+			rd.setJurosMultasEncargos(StringUtil.INSTANCE.getDouble2Decimal(line, 17, 32));
+			rd.setDesconto(StringUtil.INSTANCE.getDouble2Decimal(line, 32, 47));
+			rd.setAbatimento(StringUtil.INSTANCE.getDouble2Decimal(line, 47, 62));
+			rd.setIof(StringUtil.INSTANCE.getDouble2Decimal(line, 62, 77));
+			rd.setValorPago(StringUtil.INSTANCE.getDouble2Decimal(line, 77, 92));
+			rd.setValorLiquido(StringUtil.INSTANCE.getDouble2Decimal(line, 92, 107));
+			rd.setDataOcorrencia(StringUtil.INSTANCE.getData(line, 137, 145));
+			rd.setDataCredito(StringUtil.INSTANCE.getData(line, 145, 153));
+			
+			if (tipoDetalhe == DETALHE6) {	
+				rd.setDataDebitoTarifa(StringUtil.INSTANCE.getData(line, 157, 165));
+			}
+			r.setRegistroDetalhe(rd);
+		}
+
 		return r;
 	}
 
@@ -121,12 +129,6 @@ public class CaixaEJB {
 			return false;
 		}
 		return true;
-	}
-
-	public static void main(String... strings) {
-		String line = "10400000         1000052749623510000000000000000000001089848492400000000CLAUDIO CARNEIRO LUZ          C ECON FEDERAL                          20206201402162000001304000000                    RETORNO-PRODUCAO                  000            ";
-		CaixaEJB caixa = new CaixaEJB();
-		// caixa.preencheHeader(line);
 	}
 
 }

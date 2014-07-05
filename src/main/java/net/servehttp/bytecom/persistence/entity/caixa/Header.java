@@ -3,6 +3,7 @@ package net.servehttp.bytecom.persistence.entity.caixa;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "header")
@@ -26,11 +29,18 @@ public class Header implements Serializable {
 	@Column(name = "data_geracao")
 	private Date dataGeracao;
 	
-	@OneToOne(mappedBy="header")
+	@OneToOne(mappedBy="header", cascade= CascadeType.ALL)
 	private HeaderLote headerLote;
-	@OneToOne(mappedBy="header")
+	@OneToOne(mappedBy="header", cascade= CascadeType.ALL)
 	private Trailer trailer;
 
+	@Column(name = "created_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
+	
 	public int getId() {
 		return id;
 	}

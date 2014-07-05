@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "header_lote")
@@ -32,14 +35,19 @@ public class HeaderLote implements Serializable {
 	private int numeroRemessaRetorno;
 	@Column(name="data_gravacao_remessa_retorno")
 	private Date dataGravacaoRemessaRetorno;
-	@Column(name="data_credito")
-	private Date dataCredito;
 
 	@OneToOne
 	@JoinColumn(name = "header_id")
 	private Header header;
-	@OneToMany(mappedBy="headerLote")
+	@OneToMany(mappedBy="headerLote", cascade= CascadeType.ALL)
 	private List<Registro> registros;
+	
+	@Column(name = "created_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
 	public int getId() {
 		return id;
@@ -79,14 +87,6 @@ public class HeaderLote implements Serializable {
 
 	public void setDataGravacaoRemessaRetorno(Date dataGravacaoRemessaRetorno) {
 		this.dataGravacaoRemessaRetorno = dataGravacaoRemessaRetorno;
-	}
-
-	public Date getDataCredito() {
-		return dataCredito;
-	}
-
-	public void setDataCredito(Date dataCredito) {
-		this.dataCredito = dataCredito;
 	}
 
 	public Header getHeader() {

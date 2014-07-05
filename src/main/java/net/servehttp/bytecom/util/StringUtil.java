@@ -25,8 +25,8 @@ public enum StringUtil {
 		return Integer.parseInt(get(line, inicio, fim));
 	}
 
-	public double getDouble(String line, int inicio, int fim){
-		return Double.parseDouble(get(line, inicio, fim));
+	public double getDouble2Decimal(String line, int inicio, int fim){
+		return Double.parseDouble(get(line, inicio, fim)) / 100;
 	}
 
 	public Date getDataHora(String line, int inicio, int fim){
