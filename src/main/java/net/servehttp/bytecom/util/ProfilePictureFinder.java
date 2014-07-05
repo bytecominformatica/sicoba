@@ -20,12 +20,6 @@
  * */
 package net.servehttp.bytecom.util;
 
-import de.bripkens.gravatar.DefaultImage;
-import de.bripkens.gravatar.Gravatar;
-import de.bripkens.gravatar.Rating;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -33,10 +27,17 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
+import de.bripkens.gravatar.DefaultImage;
+import de.bripkens.gravatar.Gravatar;
+import de.bripkens.gravatar.Rating;
+
 /**
  * @author Daniel Cunha - danielsoro@gmail.com
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class ProfilePictureFinder {
 
