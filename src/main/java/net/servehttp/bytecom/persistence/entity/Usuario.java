@@ -15,9 +15,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Email;
-
 import net.servehttp.bytecom.util.HashSHA256Util;
+
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
     private int id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 30)
     private String nome;
     @Basic(optional = false)
     @NotNull
