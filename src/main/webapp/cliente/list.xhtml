@@ -9,9 +9,16 @@
 	<ui:composition template="/layout.xhtml">
 		<ui:define name="title">#{bundle.cliente}</ui:define>
 		<ui:define name="content">
+		<div class="row">
+			<div id="breadcrumb" class="col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
+					<li><a href="#">#{bundle.cliente}</a></li>
+				</ol>
+			</div>
+		</div>
 
 			<div class="panel panel-primary">
-				<div class="panel-heading">CLIENTES</div>
 				<div class="panel-header">
 					<div>
 						<form jsf:id="formPesquisa" class="form-horizontal">

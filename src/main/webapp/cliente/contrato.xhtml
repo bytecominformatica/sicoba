@@ -4,9 +4,17 @@
 <ui:composition template="/layout.xhtml">
   <ui:define name="title">#{bundle.contrato}</ui:define>
   <ui:define name="content">
+	<div class="row">
+		<div id="breadcrumb" class="col-xs-12">
+			<ol class="breadcrumb">
+				<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
+				<li><a href="#{request.contextPath}/cliente/list.xhtml">#{bundle.cliente}</a></li>
+				<li><a href="#">#{bundle.contrato}</a></li>
+			</ol>
+		</div>
+	</div>
 
     <div class="panel panel-primary">
-      <div class="panel-heading">CONTRATO</div>
       <div class="panel-body">
         <form jsf:id="form" class="form-horizontal">
 

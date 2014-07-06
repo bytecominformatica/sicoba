@@ -8,9 +8,17 @@
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.cliente}</ui:define>
 	<ui:define name="content">
+		<div class="row">
+			<div id="breadcrumb" class="col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
+					<li><a href="#{request.contextPath}/cliente/list.xhtml">#{bundle.cliente}</a></li>
+					<li><a href="#">#{bundle.edit}</a></li>
+				</ol>
+			</div>
+		</div>
 
 		<div class="panel panel-primary">
-			<div class="panel-heading">EDITAR</div>
 			<div class="panel-body">
 				<div class="modal-header" align="center">
 					<form jsf:id="formActions">

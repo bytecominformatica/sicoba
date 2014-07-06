@@ -9,11 +9,18 @@
 	<f:event listener="#{mensalidadeController.load()}" type="preRenderView"/>
 </f:metadata>
 <ui:composition template="/layout.xhtml">
-	<ui:define name="title">#{bundle.contrato}</ui:define>
+	<ui:define name="title">#{bundle.mensalidade}</ui:define>
 	<ui:define name="content">
-
+		<div class="row">
+			<div id="breadcrumb" class="col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
+					<li><a href="#{request.contextPath}/cliente/list.xhtml">#{bundle.cliente}</a></li>
+					<li><a href="#">#{bundle.mensalidade}</a></li>
+				</ol>
+			</div>
+		</div>
 		<div class="panel panel-primary">
-			<div class="panel-heading">CONTRATO</div>
 			<div class="panel-body">
 				<form jsf:id="form" class="form-horizontal">
 				<div class="modal-header">
@@ -48,6 +55,9 @@
 						<f:selectItem itemLabel="PAGA" itemValue="#{mensalidadeController.mensalidade.PAGA}" />
 					</h:selectOneMenu>
 
+					<label jsf:for="numeroBoleto" class="control-label">#{bundle.boleto}</label>
+					<input jsf:id="numeroBoleto" type="number" class="form-control"
+						jsf:value="#{mensalidadeController.mensalidade.numeroBoleto}"/>
 
 					<div class="modal-footer">
 		              <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvar()}"
@@ -67,6 +77,29 @@
 					
 				</form>
 				
+				<form jsf:id="formBoletos">
+					<label jsf:for="numeroBoletoInicio" class="control-label">#{bundle.boletoInicio}</label>
+					<input jsf:id="numeroBoletoInicio" type="number" class="form-control" required="required"
+						jsf:value="#{mensalidadeController.numeroBoletoInicio}"/>
+					
+					<label jsf:for="numeroBoletoFim" class="control-label">#{bundle.boletoFim}</label>
+					<input jsf:id="numeroBoletoFim" type="number" class="form-control" required="required"
+						jsf:value="#{mensalidadeController.numeroBoletoFim}"/>
+						
+					<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
+			        <input jsf:id="dataInicio" type="date" required="required"
+			            jsf:value="#{mensalidadeController.dataInicio}" class="form-control">
+			            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00"/>
+			        </input>
+			        
+			        <div class="modal-footer">
+		              <button jsf:id="btGerar" jsf:actionListener="#{mensalidadeController.gerarBoletos()}"
+		                class="btn btn-primary" type="submit">
+		                <span class="glyphicon glyphicon-cog" /> #{bundle.gerar}
+		              </button>
+		            </div>
+				</form>
+				
 				<form jsf:id="formMensalidades">
 					<h:dataTable value="#{mensalidadeController.cliente.mensalidades}"
 						var="m" styleClass="table table-striped table-bordered"
@@ -80,6 +113,11 @@
 						<h:column>
 							<f:facet name="header">#{bundle.valor}</f:facet>
 							#{m.valor}
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">#{bundle.boleto}</f:facet>
+							#{m.numeroBoleto}
 						</h:column>
 						
 						<h:column>
