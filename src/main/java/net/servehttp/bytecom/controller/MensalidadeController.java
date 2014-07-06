@@ -2,6 +2,7 @@ package net.servehttp.bytecom.controller;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -30,14 +31,60 @@ public class MensalidadeController implements Serializable {
   private Cliente cliente;
   private int clienteId;
   private Calendar calendar;
+  private int numeroBoletoInicio;
+  private int numeroBoletoFim;
+  private Date dataInicio;
 
   public void load() {
     if (clienteId > 0) {
       cliente = genericoJPA.buscarPorId(Cliente.class, clienteId);
       if (mensalidade == null) {
         novaMensalidade();
+        dataInicio = mensalidade.getDataVencimento();
       }
     }
+  }
+
+  public void gerarBoletos() {
+    if (isBoletosValidos(numeroBoletoInicio, numeroBoletoFim)) {
+      Calendar c = Calendar.getInstance();
+      c.setTime(dataInicio);
+
+      Mensalidade m;
+      for (int i = numeroBoletoInicio; i <= numeroBoletoFim; i++) {
+        m = new Mensalidade();
+        m.setDataVencimento(c.getTime());
+        m.setValor(cliente.getContrato().getPlano().getValorMensalidade());
+        m.setCliente(cliente);
+        m.setNumeroBoleto(i);
+
+        c.add(Calendar.MONTH, 1);
+        genericoJPA.salvar(m);
+      }
+
+      AlertaUtil.alerta("Boletos gerados com sucesso!");
+    }
+  }
+
+  public boolean isBoletosValidos(int inicio, int fim) {
+    boolean validos = true;
+
+    if (inicio > fim) {
+      validos = false;
+      AlertaUtil.alerta("número do boleto início não pode ser maior que o número do boleto fim",
+          AlertaUtil.WARN);
+    } else {
+      List<Mensalidade> listMensalidades = genericoJPA.buscarJpql("select m from Mensalidade m where m.numeroBoleto between ?1 and ?2 ", inicio, fim, Mensalidade.class);
+      if(!listMensalidades.isEmpty()){
+        validos = false;
+        StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
+        for(Mensalidade m : listMensalidades){
+          sb.append(" : " + m.getNumeroBoleto());
+        }
+        AlertaUtil.alerta(sb.toString(), AlertaUtil.WARN);
+      }
+    }
+    return validos;
   }
 
   public void novaMensalidade() {
@@ -117,4 +164,29 @@ public class MensalidadeController implements Serializable {
   public void setMensalidade(Mensalidade mensalidade) {
     this.mensalidade = mensalidade;
   }
+
+  public int getNumeroBoletoInicio() {
+    return numeroBoletoInicio;
+  }
+
+  public void setNumeroBoletoInicio(int numeroBoletoInicio) {
+    this.numeroBoletoInicio = numeroBoletoInicio;
+  }
+
+  public int getNumeroBoletoFim() {
+    return numeroBoletoFim;
+  }
+
+  public void setNumeroBoletoFim(int numeroBoletoFim) {
+    this.numeroBoletoFim = numeroBoletoFim;
+  }
+
+  public Date getDataInicio() {
+    return dataInicio;
+  }
+
+  public void setDataInicio(Date dataInicio) {
+    this.dataInicio = dataInicio;
+  }
+
 }

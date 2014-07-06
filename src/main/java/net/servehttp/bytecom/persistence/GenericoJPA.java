@@ -76,6 +76,14 @@ public class GenericoJPA implements Serializable {
 		return em.createQuery(jpql, klass).setParameter(1, valor)
 				.setMaxResults(200).getResultList();
 	}
+	
+	public <T> List<T> buscarJpql(String jpql, Object valor1, Object valor2, Class<T> klass) {
+	  return em.createQuery(jpql, klass)
+	      .setParameter(1, valor1)
+	      .setParameter(2, valor2)
+	      .setMaxResults(200)
+	      .getResultList();
+	}
 
 	/**
 	 * Busca até 200 registros.
