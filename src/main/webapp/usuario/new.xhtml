@@ -14,7 +14,12 @@
 			<div class="panel-heading">NOVO</div>
 			<div class="panel-body">
 			
-				<form jsf:id="form" class="form-horizontal">
+				<form jsf:id="form" enctype="multipart/form-data" class="form-horizontal">
+				
+					<input type="file" jsf:id="file" jsf:value="#{usuarioController.file}" class="btn btn-primary btn-block">
+						<i class="glyphicon glyphicon-plus"></i>
+	            		<span>Add files...</span>
+					</input>
 
 					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
 					<input jsf:id="login" type="text" class="form-control"
