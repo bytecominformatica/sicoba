@@ -13,6 +13,20 @@ sudo chmod 777 /tmp
 
 WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-8.1.0.Final;
 
+
+######################### CONFIGURANDO BANCO ###########################
+
+echo "DIGITE A SENHA DO USUARIO ROOT DO MYSQL. CASO SUA SEU USUARIO ROOT ESTEJA EM SENHA PRECIONE ENTER QUE IREMOS MODIFICAR A SENHA DO USUARIO ROOT PARA 'root'"
+read MYSQL_SENHA;
+if [ $MYSQL_SENHA == "" ]; then
+ $MYSQL_SENHA = "root";
+ mysqladmin -u root password $MYSQL_SENHA
+fi
+
+mysql -u root -p$MYSQL_SENHA -e 'CREATE DATABASE IF NOT EXISTS bytecom'
+
+mysql -u root -p$MYSQL_SENHA -e "grant all privileges on bytecom.* to bytecom@localhost identified by 'bytecom'"
+
 ######################### ENVIRONMENT VARIABLE #########################
 WF_FILE=/etc/profile.d/wf.sh;
 
