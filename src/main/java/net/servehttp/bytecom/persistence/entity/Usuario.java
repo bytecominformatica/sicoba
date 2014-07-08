@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,6 +45,9 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     private String senha;
+    
+    @Lob
+    private byte[] img;
     
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -107,6 +111,14 @@ public class Usuario implements Serializable {
 
     public void setSenha(String senha) {
       this.senha = HashSHA256Util.geraHash256(senha);
+    }
+
+    public byte[] getImg() {
+      return img;
+    }
+
+    public void setImg(byte[] img) {
+      this.img = img;
     }
 
     public Calendar getCreatedAt() {

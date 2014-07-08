@@ -7,7 +7,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
+import net.servehttp.bytecom.ejb.ProfileImageEJB;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Usuario;
 import net.servehttp.bytecom.util.AlertaUtil;
@@ -25,11 +27,15 @@ public class UsuarioController implements Serializable {
   private List<Usuario> listUsuario;
   private Usuario usuario = new Usuario();
   private String page;
+  
+  private Part file;
 
   @Inject
   private GenericoJPA genericoJPA;
   @Inject
   private Util util;
+  @Inject
+  private ProfileImageEJB profileImage;
 
   public UsuarioController() {}
 
@@ -58,6 +64,7 @@ public class UsuarioController implements Serializable {
     page = null;
     if (valida(usuario)) {
       if (usuario.getId() == 0) {
+        usuario.setImg(profileImage.tratarImagem(file));
         genericoJPA.salvar(usuario);
         AlertaUtil.alerta("Usuário gravado com sucesso!");
       } else {
@@ -69,6 +76,8 @@ public class UsuarioController implements Serializable {
 
     return page;
   }
+  
+ 
 
   private void getParameters() {
     String usuarioId = util.getParameters("id");
@@ -98,6 +107,15 @@ public class UsuarioController implements Serializable {
 
   public void setUsuario(Usuario usuario) {
     this.usuario = usuario;
+  }
+
+
+  public Part getFile() {
+    return file;
+  }
+
+  public void setFile(Part file) {
+    this.file = file;
   }
 
   public String getPage() {
