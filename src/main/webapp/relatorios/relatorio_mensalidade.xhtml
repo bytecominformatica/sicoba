@@ -21,10 +21,14 @@
 			<div>
 				<form jsf:id="formPesquisa" class="form-horizontal">
 					<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
-					<input jsf:id="dataInicio" jsf:value="#{mensalidadeRelatorioController.dataInicio}" type="date" class="form-control" required="required"/>
+					<input jsf:id="dataInicio" jsf:value="#{mensalidadeRelatorioController.dataInicio}" type="date" class="form-control" required="required">
+						<f:convertDateTime pattern="yyyy-MM-dd"  timeZone="GMT-03:00"/>
+					</input>
 
 					<label jsf:for="dataFim" class="control-label">#{bundle.dataFim}</label>
-					<input jsf:id="dataFim" jsf:value="#{mensalidadeRelatorioController.dataFim}" type="date" class="form-control" required="required"/>
+					<input jsf:id="dataFim" jsf:value="#{mensalidadeRelatorioController.dataFim}" type="date" class="form-control" required="required">
+						<f:convertDateTime pattern="yyyy-MM-dd"  timeZone="GMT-03:00"/>
+					</input>
 
 			    	<div class="modal-footer">
 		              <button jsf:id="btConsultar" jsf:actionListener="#{mensalidadeRelatorioController.consultar()}"
@@ -47,15 +51,15 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.valor}</f:facet>
-								#{m.valor}
+								#{m.valorFormatada}
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.valorPago}</f:facet>
-								#{m.valorPago}
+								#{m.valorPagoFormatada}
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.tarifa}</f:facet>
-								#{m.tarifa}
+								#{m.tarifaFormatada}
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.vencimento}</f:facet>
@@ -65,6 +69,16 @@
 								<f:facet name="header">#{bundle.dataOcorrencia}</f:facet>
 								#{m.dataOcorrencia}
 							</h:column>
+							
+							<f:facet name="footer">
+								<tr>
+									<th>Total</th>
+									<th>#{mensalidadeRelatorioController.valorTotal}</th>
+									<th>#{mensalidadeRelatorioController.valorPagoTotal}</th>
+									<th>#{mensalidadeRelatorioController.tarifa}</th>
+									<th colspan="3"></th>
+								</tr>
+							</f:facet>
 							
 						</h:dataTable>
 					</div>

@@ -90,7 +90,7 @@ public class MensalidadeController implements Serializable {
   public void novaMensalidade() {
     mensalidade = new Mensalidade();
     if (mensalidade.getDataVencimento() == null) {
-      calendar = DateUtil.getProximoMes();
+      calendar = DateUtil.INSTANCE.getProximoMes();
       calendar.set(Calendar.DAY_OF_MONTH, cliente.getContrato().getVencimento());
       mensalidade.setDataVencimento(calendar.getTime());
     }

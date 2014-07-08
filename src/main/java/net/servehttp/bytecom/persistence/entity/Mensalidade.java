@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import net.servehttp.bytecom.util.DateUtil;
+import net.servehttp.bytecom.util.StringUtil;
 
 /**
  *
@@ -154,7 +155,6 @@ public class Mensalidade implements Serializable {
   public void setValorPago(double valorPago) {
     this.valorPago = valorPago;
   }
-
   public double getTarifa() {
     return tarifa;
   }
@@ -169,6 +169,17 @@ public class Mensalidade implements Serializable {
 
   public void setDataOcorrencia(Date dataOcorrencia) {
     this.dataOcorrencia = dataOcorrencia;
+  }
+  
+  public String getTarifaFormatada() {
+    return StringUtil.INSTANCE.formatCurrence(tarifa);
+  }
+
+  public String getValorFormatada() {
+    return StringUtil.INSTANCE.formatCurrence(valor);
+  }
+  public String getValorPagoFormatada() {
+    return StringUtil.INSTANCE.formatCurrence(valorPago);
   }
 
 }
