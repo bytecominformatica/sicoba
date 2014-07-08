@@ -23,21 +23,7 @@ public class MensalidadeJPA {
     @PersistenceContext(unitName = "bytecom-pu")
     private EntityManager em;
 
-    /**
-     *
-     * @param mes int 0 - 11
-     * @param ano int
-     * @return List< Mensalidade >
-     */
-    public List<Mensalidade> buscarMensalidadePorMesAno(int mes, int ano) {
-        Date inicio = DateUtil.getDate(1, mes, ano);
-        Date fim = DateUtil.getUltimoDiaDoMes(inicio);
-        return em.createQuery("select m from Mensalidade m where m.dataVencimento between :inicio and :fim", Mensalidade.class)
-                .setParameter("inicio", inicio)
-                .setParameter("fim", fim)
-                .getResultList();
-    }
-
+    
     /**
      * gera a mensalidade dos clientes
      *

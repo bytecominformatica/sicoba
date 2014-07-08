@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import net.servehttp.bytecom.util.DateUtil;
+import net.servehttp.bytecom.util.StringUtil;
 
 /**
  *
@@ -35,7 +36,13 @@ public class Mensalidade implements Serializable {
   @Column(name = "data_vencimento")
   @Temporal(TemporalType.DATE)
   private Date dataVencimento;
+  @Column(name = "data_ocorrencia")
+  @Temporal(TemporalType.DATE)
+  private Date dataOcorrencia;
   private double valor;
+  @Column(name = "valor_pago")
+  private double valorPago;
+  private double tarifa;
   private short status;
   @Column(name = "numero_boleto")
   private Integer numeroBoleto;
@@ -139,6 +146,40 @@ public class Mensalidade implements Serializable {
 
   public void setNumeroBoleto(Integer numeroBoleto) {
     this.numeroBoleto = numeroBoleto;
+  }
+
+  public double getValorPago() {
+    return valorPago;
+  }
+
+  public void setValorPago(double valorPago) {
+    this.valorPago = valorPago;
+  }
+  public double getTarifa() {
+    return tarifa;
+  }
+
+  public void setTarifa(double tarifa) {
+    this.tarifa = tarifa;
+  }
+
+  public Date getDataOcorrencia() {
+    return dataOcorrencia;
+  }
+
+  public void setDataOcorrencia(Date dataOcorrencia) {
+    this.dataOcorrencia = dataOcorrencia;
+  }
+  
+  public String getTarifaFormatada() {
+    return StringUtil.INSTANCE.formatCurrence(tarifa);
+  }
+
+  public String getValorFormatada() {
+    return StringUtil.INSTANCE.formatCurrence(valor);
+  }
+  public String getValorPagoFormatada() {
+    return StringUtil.INSTANCE.formatCurrence(valorPago);
   }
 
 }

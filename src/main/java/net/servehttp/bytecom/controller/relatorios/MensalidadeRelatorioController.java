@@ -1,0 +1,99 @@
+package net.servehttp.bytecom.controller.relatorios;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.relatorios.MensalidadeRelatorioJPA;
+import net.servehttp.bytecom.util.DateUtil;
+import net.servehttp.bytecom.util.StringUtil;
+
+
+@Named
+@ViewScoped
+public class MensalidadeRelatorioController implements Serializable {
+
+  private static final long serialVersionUID = -7284911722827189143L;
+  private Date dataInicio;
+  private Date dataFim;
+  private int status;
+  private double valorTotal;
+  private double valorPagoTotal;
+  private double tarifa;
+
+  private List<Mensalidade> listMensalidades;
+  @Inject
+  MensalidadeRelatorioJPA mensalidadeRelatorioJPA;
+
+  public MensalidadeRelatorioController() {
+    dataInicio = DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime();
+    dataFim = DateUtil.INSTANCE.getUltimoDiaDoMes().getTime();
+  }
+
+  public void consultar() {
+    listMensalidades =
+        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, getStatus());
+    calcularTotalizadores();
+  }
+
+  private void calcularTotalizadores() {
+    valorTotal = valorPagoTotal = tarifa = 0;
+    for (Mensalidade m : listMensalidades) {
+      valorTotal += m.getValor();
+      valorPagoTotal += m.getValorPago();
+      tarifa += m.getTarifa();
+    }
+
+  }
+
+  public Date getDataInicio() {
+    return dataInicio;
+  }
+
+  public void setDataInicio(Date dataInicio) {
+    this.dataInicio = dataInicio;
+  }
+
+  public Date getDataFim() {
+    return dataFim;
+  }
+
+  public void setDataFim(Date dataFim) {
+    this.dataFim = dataFim;
+  }
+
+  public List<Mensalidade> getListMensalidades() {
+    return listMensalidades;
+  }
+
+  public void setListMensalidades(List<Mensalidade> listMensalidades) {
+    this.listMensalidades = listMensalidades;
+  }
+
+  public String getValorTotal() {
+    return StringUtil.INSTANCE.formatCurrence(valorTotal);
+  }
+
+  public String getValorPagoTotal() {
+    return StringUtil.INSTANCE.formatCurrence(valorPagoTotal);
+  }
+
+  public String getTarifa() {
+    return StringUtil.INSTANCE.formatCurrence(tarifa);
+  }
+
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
+  }
+
+
+}
