@@ -49,6 +49,7 @@ public class CaixaController implements Serializable {
 								m.setStatus(Mensalidade.PAGA);
 								m.setValor(r.getValorTitulo());
 								m.setValorPago(r.getRegistroDetalhe().getValorPago());
+								m.setDesconto(r.getRegistroDetalhe().getDesconto());
 								m.setTarifa(r.getValorTarifa());
 								m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
 								genericoJPA.atualizar(m);

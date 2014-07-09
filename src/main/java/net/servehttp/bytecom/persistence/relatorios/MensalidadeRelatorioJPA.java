@@ -19,7 +19,7 @@ public class MensalidadeRelatorioJPA implements Serializable {
   private EntityManager em;
 
   public List<Mensalidade> buscarPorDataStatus(Date inicio, Date fim, int status) {
-    String jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";
+    String jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim order by m.dataOcorrencia desc";
 
     TypedQuery<Mensalidade> query =
         em.createQuery(jpql, Mensalidade.class).setParameter("inicio", inicio)

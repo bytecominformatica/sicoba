@@ -58,6 +58,10 @@
 								#{m.valorPagoFormatada}
 							</h:column>
 							<h:column>
+								<f:facet name="header">#{bundle.desconto}</f:facet>
+								#{m.desconto}
+							</h:column>
+							<h:column>
 								<f:facet name="header">#{bundle.tarifa}</f:facet>
 								#{m.tarifaFormatada}
 							</h:column>
@@ -75,7 +79,8 @@
 									<th>Total</th>
 									<th>#{mensalidadeRelatorioController.valorTotal}</th>
 									<th>#{mensalidadeRelatorioController.valorPagoTotal}</th>
-									<th>#{mensalidadeRelatorioController.tarifa}</th>
+									<th>#{mensalidadeRelatorioController.descontoTotal}</th>
+									<th>#{mensalidadeRelatorioController.tarifaTotal}</th>
 									<th colspan="3"></th>
 								</tr>
 							</f:facet>

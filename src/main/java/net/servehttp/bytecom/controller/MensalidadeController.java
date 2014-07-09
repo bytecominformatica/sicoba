@@ -134,11 +134,13 @@ public class MensalidadeController implements Serializable {
     load();
   }
 
-  public void remover() {
-    genericoJPA.remover(mensalidade);
+  public String remover() {
+    System.out.println("MENSALIDADE = " + mensalidade.getId() + " - " + mensalidade.getDataVencimentoFormatada());
+    genericoJPA.remover(Mensalidade.class, mensalidade.getId());
     novaMensalidade();
     load();
     AlertaUtil.alerta("Mensalidade removido com sucesso!");
+    return null;
   }
 
   public Cliente getCliente() {

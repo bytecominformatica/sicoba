@@ -73,7 +73,7 @@ public class EquipamentoController implements Serializable {
   }
 
   public String remover() {
-    genericoJPA.remover(equipamento);
+    genericoJPA.remover(Equipamento.class, equipamento.getId());
     load();
     AlertaUtil.alerta("Equipamento removido com sucesso!");
     return "list";
