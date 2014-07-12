@@ -39,8 +39,8 @@ public class GenericoJPA implements Serializable {
 		em.merge(t);
 	}
 
-	public <T> void remover(T t) {
-		em.remove(em.merge(t));
+	public <T> void remover(Class<T> klass, int id) {
+		em.remove(buscarPorId(klass, id));
 	}
 
 	/**

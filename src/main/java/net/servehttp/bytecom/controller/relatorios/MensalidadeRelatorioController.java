@@ -24,7 +24,8 @@ public class MensalidadeRelatorioController implements Serializable {
   private int status;
   private double valorTotal;
   private double valorPagoTotal;
-  private double tarifa;
+  private double descontoTotal;
+  private double tarifaTotal;
 
   private List<Mensalidade> listMensalidades;
   @Inject
@@ -42,11 +43,13 @@ public class MensalidadeRelatorioController implements Serializable {
   }
 
   private void calcularTotalizadores() {
-    valorTotal = valorPagoTotal = tarifa = 0;
+    valorTotal = valorPagoTotal = tarifaTotal = descontoTotal = 0;
     for (Mensalidade m : listMensalidades) {
       valorTotal += m.getValor();
       valorPagoTotal += m.getValorPago();
-      tarifa += m.getTarifa();
+      descontoTotal += m.getDesconto();
+      tarifaTotal += m.getTarifa();
+      
     }
 
   }
@@ -83,8 +86,12 @@ public class MensalidadeRelatorioController implements Serializable {
     return StringUtil.INSTANCE.formatCurrence(valorPagoTotal);
   }
 
-  public String getTarifa() {
-    return StringUtil.INSTANCE.formatCurrence(tarifa);
+  public String getTarifaTotal() {
+    return StringUtil.INSTANCE.formatCurrence(tarifaTotal);
+  }
+  
+  public String getDescontoTotal() {
+    return StringUtil.INSTANCE.formatCurrence(descontoTotal);
   }
 
   public int getStatus() {
@@ -94,6 +101,7 @@ public class MensalidadeRelatorioController implements Serializable {
   public void setStatus(int status) {
     this.status = status;
   }
+
 
 
 }

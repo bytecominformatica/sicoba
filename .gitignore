@@ -9,3 +9,7 @@
 
 # Maven #
 target/
+.classpath
+.project
+.settings
+

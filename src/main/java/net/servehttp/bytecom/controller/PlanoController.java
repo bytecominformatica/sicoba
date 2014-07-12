@@ -8,7 +8,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.controller.Util;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Contrato;
 import net.servehttp.bytecom.persistence.entity.Plano;
@@ -110,7 +109,7 @@ public class PlanoController implements Serializable {
     List<Contrato> contratos =
         genericoJPA.buscarTodos("plano", planoSelecionado, Contrato.class);
     if (contratos.isEmpty()) {
-      genericoJPA.remover(planoSelecionado);
+      genericoJPA.remover(Plano.class, planoSelecionado.getId());
       load();
       AlertaUtil.alerta("Removido com sucesso!");
       page = "list";

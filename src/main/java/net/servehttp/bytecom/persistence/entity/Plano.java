@@ -2,6 +2,7 @@ package net.servehttp.bytecom.persistence.entity;
 
 import java.io.Serializable;
 import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import javax.persistence.TemporalType;
 @Table(name = "plano")
 public class Plano implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 5998642329673118596L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;

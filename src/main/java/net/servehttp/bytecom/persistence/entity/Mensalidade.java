@@ -42,13 +42,14 @@ public class Mensalidade implements Serializable {
   private double valor;
   @Column(name = "valor_pago")
   private double valorPago;
+  private double desconto;
   private double tarifa;
   private short status;
   @Column(name = "numero_boleto")
   private Integer numeroBoleto;
 
-  @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-  @ManyToOne(optional = false, fetch = FetchType.EAGER)
+  @JoinColumn(name = "cliente_id")
+  @ManyToOne(fetch = FetchType.EAGER)
   private Cliente cliente;
 
   @Column(name = "created_at")
@@ -155,6 +156,7 @@ public class Mensalidade implements Serializable {
   public void setValorPago(double valorPago) {
     this.valorPago = valorPago;
   }
+
   public double getTarifa() {
     return tarifa;
   }
@@ -170,7 +172,7 @@ public class Mensalidade implements Serializable {
   public void setDataOcorrencia(Date dataOcorrencia) {
     this.dataOcorrencia = dataOcorrencia;
   }
-  
+
   public String getTarifaFormatada() {
     return StringUtil.INSTANCE.formatCurrence(tarifa);
   }
@@ -178,8 +180,17 @@ public class Mensalidade implements Serializable {
   public String getValorFormatada() {
     return StringUtil.INSTANCE.formatCurrence(valor);
   }
+
   public String getValorPagoFormatada() {
     return StringUtil.INSTANCE.formatCurrence(valorPago);
+  }
+
+  public double getDesconto() {
+    return desconto;
+  }
+
+  public void setDesconto(double desconto) {
+    this.desconto = desconto;
   }
 
 }

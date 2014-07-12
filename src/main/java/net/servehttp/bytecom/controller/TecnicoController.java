@@ -79,7 +79,7 @@ public class TecnicoController implements Serializable {
   
   public String remover(){
     page = null;
-    genericoJPA.remover(tecnico);
+    genericoJPA.remover(Tecnico.class, tecnico.getId());
     page = "list";
     
     return page;

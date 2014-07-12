@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:body>
+	<ui:composition template="/layout.xhtml">
+		<ui:define name="title">#{bundle.cliente}</ui:define>
+		<ui:define name="content">
+			<div class="row">
+				<div id="breadcrumb" class="col-xs-12">
+					<ol class="breadcrumb">
+						<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
+						<li><a href="#">#{bundle.relatorios}</a></li>
+					</ol>
+				</div>
+			</div>
+
+			<div>
+				<form jsf:id="formPesquisa" class="form-horizontal">
+					<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
+					<input jsf:id="dataInicio" jsf:value="#{mensalidadeRelatorioController.dataInicio}" type="date" class="form-control" required="required">
+						<f:convertDateTime pattern="yyyy-MM-dd"  timeZone="GMT-03:00"/>
+					</input>
+
+					<label jsf:for="dataFim" class="control-label">#{bundle.dataFim}</label>
+					<input jsf:id="dataFim" jsf:value="#{mensalidadeRelatorioController.dataFim}" type="date" class="form-control" required="required">
+						<f:convertDateTime pattern="yyyy-MM-dd"  timeZone="GMT-03:00"/>
+					</input>
+
+			    	<div class="modal-footer">
+		              <button jsf:id="btConsultar" jsf:actionListener="#{mensalidadeRelatorioController.consultar()}"
+		                class="btn btn-primary" type="submit">
+		                <span class="glyphicon glyphicon-search" /> #{bundle.search}
+		              </button>
+		            </div>
+				</form>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<div class="table-responsive">
+						<h:dataTable value="#{mensalidadeRelatorioController.listMensalidades}"
+							var="m" styleClass="table table-striped table-bordered"
+							headerClass="tableColumnsHeader">
+							
+							<h:column>
+								<f:facet name="header">#{bundle.cliente}</f:facet>
+								#{m.cliente.nome}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.valor}</f:facet>
+								#{m.valorFormatada}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.valorPago}</f:facet>
+								#{m.valorPagoFormatada}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.desconto}</f:facet>
+								#{m.desconto}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.tarifa}</f:facet>
+								#{m.tarifaFormatada}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.vencimento}</f:facet>
+								#{m.dataVencimento}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.dataOcorrencia}</f:facet>
+								#{m.dataOcorrencia}
+							</h:column>
+							
+							<f:facet name="footer">
+								<tr>
+									<th>Total</th>
+									<th>#{mensalidadeRelatorioController.valorTotal}</th>
+									<th>#{mensalidadeRelatorioController.valorPagoTotal}</th>
+									<th>#{mensalidadeRelatorioController.descontoTotal}</th>
+									<th>#{mensalidadeRelatorioController.tarifaTotal}</th>
+									<th colspan="3"></th>
+								</tr>
+							</f:facet>
+							
+						</h:dataTable>
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>
