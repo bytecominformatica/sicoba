@@ -3,117 +3,197 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:jsf="http://xmlns.jcp.org/jsf">
 <head jsf:id="head">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="author" content="Clairton Luz" />
-<link rel="icon" href="#{request.contextPath}/resources/img/logo.png" />
-<title>#{bundle.applicationName} - <ui:insert name="title">Title</ui:insert></title>
+<meta charset="utf-8"/>
+		<title>#{bundle.applicationName} - <ui:insert name="title">Title</ui:insert></title>
+		<link rel="icon" href="#{request.contextPath}/resources/img/logo.png" />
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="author" content="Clairton Luz" />
+		
+		<link href="#{request.contextPath}/resources/css/bytecom.css" rel="stylesheet" />
+		<link href="#{request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="#{request.contextPath}/resources/css/bootstrap-theme.min.css" rel="stylesheet" />
+		<link href="#{request.contextPath}/resources/css/style.css" rel="stylesheet" />
+		<link href="#{request.contextPath}/resources/css/font-awesome.css" rel="stylesheet" />
+		
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+				<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
+				<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
+		<![endif]-->
 
 <!-- Bootstrap -->
-<link href="#{request.contextPath}/resources/css/bytecom.css" rel="stylesheet" />
-<link href="#{request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
-<link href="#{request.contextPath}/resources/css/bootstrap-theme.min.css" rel="stylesheet" />
+
 </head>
 <body jsf:id="body">
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a href="#{request.contextPath}" class="navbar-brand" style="margin-top: -18px;">
-					<h:graphicImage value="/resources/img/logo.png" style="margin-top: 4px;" />
-					<h:outputText value=" Bytecom" />
-				</a>
-				
+	<!--Start Header-->
+<header class="navbar">
+	<div class="container-fluid expanded-panel">
+		<div class="row">
+			<div id="logo" class="col-xs-12 col-sm-2">
+				<a href="#{request.contextPath}">#{bundle.applicationName}</a>
 			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<c:if test="#{authentication.usuarioLogado != null}">
-						<li class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}"><a href="#{request.contextPath}">#{bundle.home}</a></li>
-
-						<li class="#{util.removePage(view.viewId) eq '/plano' ? 'active' : ''}"><a
-							href="#{request.contextPath}/plano/list.xhtml">#{bundle.planos}</a></li>
-
-						<li class="#{util.removePage(view.viewId) eq '/cliente' ? 'active' : ''}"><a
-							href="#{request.contextPath}/cliente/list.xhtml">#{bundle.clientes}</a></li>
-
-						<li class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}"><a
-							href="#{request.contextPath}/equipamento/list.xhtml">#{bundle.equipamentos}</a></li>
-							
-						<li class="#{util.removePage(view.viewId) eq '/fornecedor' ? 'active' : ''}"><a
-							href="#{request.contextPath}/fornecedor/list.xhtml">#{bundle.fornecedor}</a></li>
-						
-						<li
-							class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}"><a
-							href="#{request.contextPath}/despesa/list.xhtml">#{bundle.despesas}</a></li>
-
-						<li class="#{view.viewId eq '/relatorios.xhtml' ? 'active' : ''}"><a
-							href="#{request.contextPath}/relatorios.xhtml">#{bundle.relatorios}</a></li>
-
-						<li class="dropdown"><a href="/bytecom#" class="dropdown-toggle" data-toggle="dropdown">APPs <b
-								class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<!-- <li><a href="#{request.contextPath}/app/clientesOnline.xhtml">#{bundle.clientesOnline}</a></li> 
-								<li class="divider"></li>-->
-								<li class="dropdown-header">Redes Sociais</li>
-								<li><a href="#">Like Pages +20</a></li>
-								<li><a href="https://www.facebook.com/BytecomOficial?fref=ts">Facebook</a></li>
-							</ul></li>
-					</c:if>
-				</ul>
-
-				<form jsf:id="formAccount" class="navbar-form navbar-right">
-					<c:if test="#{authentication.usuarioLogado != null}">
-						<h4 class="usuarioLogado">
-							<ul class="nav navbar-nav">
-								<li class="dropdown"><a href="/bytecom#" class="dropdown-toggle" data-toggle="dropdown">#{authentication.usuarioLogado.nome}
-										<b class="caret"></b>
-								</a>
+			<div id="top-panel" class="col-xs-12 col-sm-10">
+				<div class="row">
+					<div class="col-xs-8 col-sm-4">
+						<a href="#" class="show-sidebar">
+						  <i class="fa fa-bars"></i>
+						</a>
+						<div id="search">
+							<input type="text" placeholder="search"/>
+							<i class="fa fa-search"></i>
+						</div>
+					</div>
+					<form jsf:id="formAccount">
+						<div class="col-xs-4 col-sm-8 top-panel-right">
+							<ul class="nav navbar-nav pull-right panel-menu">
+								<li class="hidden-xs">
+									<a href="#" class="modal-link">
+										<i class="fa fa-bell"></i>
+										<span class="badge">7</span>
+									</a>
+								</li>
+								<li class="hidden-xs">
+									<a href="#" class="ajax-link">
+										<i class="fa fa-envelope"></i>
+										<span class="badge">7</span>
+									</a>
+								</li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+										<div class="avatar">
+											<img src="#{request.contextPath}/resources/img/default_avatar.png" class="img-rounded" alt="avatar" />
+										</div>
+										<i class="fa fa-angle-down pull-right"/>
+										<div class="user-mini pull-right">
+											<span class="welcome">Bem vindo,</span>
+											<span>#{usuarioLogado.nome}</span>
+										</div>
+									</a>
 									<ul class="dropdown-menu">
-										<li><a href="#">Account Settings</a></li>
-										<li><a href="#">Terms &amp; Polices</a></li>
-										<li><a href="#">Report a Problem</a></li>
-										<li><h:commandLink action="#{authentication.logout()}" value="Sair" /></li>
-									</ul></li>
+										<li>
+											<a href="#{request.contextPath}/profile/edit.xhtml">
+												<i class="fa fa-user"></i>
+												<span class="hidden-sm text">Profile</span>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="ajax-link">
+												<i class="fa fa-envelope"></i>
+												<span class="hidden-sm text">Messages</span>
+											</a>
+										</li>
+										<li>
+											<a href="ajax/gallery_simple.html" class="ajax-link">
+												<i class="fa fa-picture-o"></i>
+												<span class="hidden-sm text">Albums</span>
+											</a>
+										</li>
+										<li>
+											<a href="ajax/calendar.html" class="ajax-link">
+												<i class="fa fa-tasks"></i>
+												<span class="hidden-sm text">Tasks</span>
+											</a>
+										</li>
+										<li>
+											<a href="#{request.contextPath}/usuario/list.xhtml" class="#{util.removePage(view.viewId) eq '/usuario' ? 'active' : ''}">
+												<i class="fa fa-cog"></i>
+												<span class="hidden-sm text">Settings</span>
+											</a>
+										</li>
+										<li>
+											<a href="#" jsf:actionListener="#{authentication.logout()}">
+												<i class="fa fa-power-off"></i>
+												<span class="hidden-sm text">Logout</span>
+											</a>
+										</li>
+									</ul>
+								</li>
 							</ul>
-						</h4>
-					</c:if>
-				</form>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
-	</div>
-
-
-	<div class="content">
-		<h:messages id="msgs" showDetail="false" errorClass="alert alert-danger" warnClass="alert alert-warning"
-			fatalClass="alert alert-danger" infoClass="alert alert-info" />
-		<ui:insert name="content">Content</ui:insert>
-	</div>
-
-	<!--=== Copyright ===-->
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6">
-					<p class="copyright-space">
-						2013 -2014 © Bytecom. Todos os direitos reservados. <a href="#">Política de Segurança</a> | <a href="#">Termos
-							de Serviço</a>
-					</p>
+						</div>
+					</form>
 				</div>
 			</div>
-			<!--/row-->
 		</div>
-		<!--/container-->
 	</div>
-	<!--/copyright-->
-	<!--=== End Copyright ===-->
-
+</header>
+<!--End Header-->
+<!--Start Container-->
+<div id="main" class="container-fluid">
+	<div class="row">
+		<div id="sidebar-left" class="col-xs-2 col-sm-2">
+			<ul class="nav main-menu">
+				<li>
+					<a href="#{request.contextPath}" class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}">
+						<i class="fa fa-home"></i>
+						<span class="hidden-xs">#{bundle.home}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/plano/list.xhtml" class="#{util.removePage(view.viewId) eq '/plano' ? 'active' : ''}">
+						<i class="fa fa-globe"></i>
+						<span class="hidden-xs">#{bundle.planos}</span>
+					</a>
+				</li>				
+				<li>
+					<a href="#{request.contextPath}/cliente/list.xhtml" class="#{util.removePage(view.viewId) eq '/cliente' ? 'active' : ''}">
+						<i class="fa fa-users"></i>
+						<span class="hidden-xs">#{bundle.clientes}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/equipamento/list.xhtml" class="#{util.removePage(view.viewId) eq '/equipamento' ? 'active' : ''}">
+						<i class="fa fa-desktop"></i>
+						<span class="hidden-xs">#{bundle.equipamentos}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/tecnico/list.xhtml" class="#{util.removePage(view.viewId) eq '/tecnico' ? 'active' : ''}">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">#{bundle.tecnicos}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/fornecedor/list.xhtml" class="#{util.removePage(view.viewId) eq '/fornecedor' ? 'active' : ''}">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">#{bundle.fornecedor}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/despesa/list.xhtml" class="#{util.removePage(view.viewId) eq '/despesa' ? 'active' : ''}">
+						<i class="fa fa-dollar"></i>
+						<span class="hidden-xs">#{bundle.despesas}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/caixa/caixa.xhtml" class="#{util.removePage(view.viewId) eq '/caixa' ? 'active' : ''}">
+						<i class="fa fa-upload"></i>
+						<span class="hidden-xs">#{bundle.caixa}</span>
+					</a>
+				</li>
+				<li>
+					<a href="#{request.contextPath}/relatorios/relatorio_mensalidade.xhtml" class="#{util.removePage(view.viewId) eq '/relatorios' ? 'active' : ''}">
+						<i class="fa fa-files-o"></i>
+						<span class="hidden-xs">#{bundle.relatorios}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!--Start Content-->
+		<div id="content" class="col-xs-12 col-sm-10">
+	
+			<h:messages id="msgs" showDetail="false" errorClass="alert alert-danger" warnClass="alert alert-warning"
+				fatalClass="alert alert-danger" infoClass="alert alert-info" />
+			<ui:insert name="content">Content</ui:insert>
+		
+		</div>
+		<!--End Content-->
+	</div>
+</div>
+<!--End Container-->
 	<script src="#{request.contextPath}/resources/js/jquery-2.1.0.min.js"></script>
-
 	<script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<!-- Script personalizado bytecom.js deve ficar depois dos scripst jquery e maskedinput para as mascaras funcionarem -->
 	<script src="#{request.contextPath}/resources/js/bytecom.js"></script>
