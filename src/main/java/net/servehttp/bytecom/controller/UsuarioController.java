@@ -1,12 +1,20 @@
 package net.servehttp.bytecom.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.ejb.ProfileImageEJB;
@@ -27,6 +35,7 @@ public class UsuarioController implements Serializable {
   private List<Usuario> listUsuario;
   private Usuario usuario = new Usuario();
   private String page;
+  private BufferedImage bufImage;
   
   private Part file;
 
@@ -77,6 +86,26 @@ public class UsuarioController implements Serializable {
     return page;
   }
   
+  public void exibirImagem(byte[] regImage){
+   try{
+     FacesContext context = FacesContext.getCurrentInstance();
+     ServletContext servletcontext = (ServletContext)context.getExternalContext().getContext();
+     String imageUsers = servletcontext.getRealPath("/resources/img/users/");
+     File dirImageUsers = new File(imageUsers);
+     
+     if(!dirImageUsers.exists()){
+       dirImageUsers.createNewFile();
+     }
+     
+     byte[] bytes = usuario.getImg();
+     /*FileImageOutputStream imageOutput = new FileImageOutputStream(new File(dirImageUsers,
+         imageOutput.write(bytes,0,bytes.length))) */
+     
+   }catch(Exception e){
+     
+   }
+    
+  }
  
 
   private void getParameters() {
