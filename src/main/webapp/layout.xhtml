@@ -52,11 +52,9 @@
                         <ui:insert name="title">Title</ui:insert>
                         <small><ui:insert name="subtitle">subTitle</ui:insert></small>
                     </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> #{bundle.home}</a></li>
-                        <ui:insert name="menuPath"></ui:insert>	
-                        <li class="active"><ui:insert name="title">Title</ui:insert></li>
-                    </ol>
+
+                   	<ui:insert name="submenu"></ui:insert>
+                   	
                 </section>
 				<ui:insert name="content">Content</ui:insert>
 			</aside>
