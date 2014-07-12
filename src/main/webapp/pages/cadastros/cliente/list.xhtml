@@ -10,14 +10,7 @@
 		<ui:define name="title">#{bundle.cliente}</ui:define>
 		<ui:define name="subtitle">#{bundle.listagem}</ui:define>
 		<ui:define name="content">
-		<div class="row">
-			<div id="breadcrumb" class="col-xs-12">
-				<ol class="breadcrumb">
-					<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
-					<li><a href="#">#{bundle.cliente}</a></li>
-				</ol>
-			</div>
-		</div>
+		
 
 			<div class="panel panel-primary">
 				<div class="panel-header">
@@ -39,7 +32,7 @@
 					<form jsf:id="form">
 					<div class="table-responsive">
 						<h:dataTable value="#{clienteController.listClientes}"
-							var="cliente" styleClass="table table-striped table-bordered"
+							var="cliente" styleClass="table table-hover"
 							headerClass="tableColumnsHeader">
 							<f:facet name="header">
 								<div align="center">

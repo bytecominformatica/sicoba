@@ -137,16 +137,8 @@ public class Usuario implements Serializable {
       this.updatedAt = updatedAt;
     }
 
-    /*@Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }*/
-
-    @Override
-    public String toString() {
-        return "br.com.bytecom.entity.Login[ id=" + id + " ]";
+    public String getMenbroDesde(){
+      return createdAt.get(Calendar.MONTH) + ", " + createdAt.get(Calendar.YEAR);
     }
     
 }
