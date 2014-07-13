@@ -10,22 +10,19 @@
 		<ui:define name="submenu">
 			<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
 		</ui:define>
-		
 		<ui:define name="content">
-		
 			<div class="panel-header">
-			<div class="col-xs-12">
-					<form jsf:id="formPesquisa" class="form-horizontal">
-					    <div class="input-group">
-							<input jsf:value="#{clienteController.pesquisa}" type="text" name="pesquisa" class="form-control" placeholder="Nome, Fone ou Email" jsf:id="pesquisa" autofocus="autofocus"/>
-					      <span class="input-group-btn">
-							<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
-								<span class="glyphicon glyphicon-search" />
-							</button>
-					      </span>
-					    </div><!-- /input-group -->
-					</form>
-					</div>
+			<br/>
+				<form jsf:id="formPesquisa" class="form-horizontal">
+				    <div class="input-group">
+						<input jsf:value="#{clienteController.pesquisa}" type="text" name="pesquisa" class="form-control" placeholder="Nome, Fone ou Email" jsf:id="pesquisa" autofocus="autofocus"/>
+				      <span class="input-group-btn">
+						<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
+							<span class="glyphicon glyphicon-search" />
+						</button>
+				      </span>
+				    </div><!-- /input-group -->
+				</form>
 			</div>
 			<div class="panel-body">
 
