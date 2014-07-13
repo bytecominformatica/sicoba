@@ -19,7 +19,7 @@
   </context-param>
   <context-param>
     <param-name>liquibase.onerror.fail</param-name>
-    <param-value>false</param-value>
+    <param-value>true</param-value>
   </context-param>
   <listener>
     <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
