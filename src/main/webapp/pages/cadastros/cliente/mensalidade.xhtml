@@ -18,14 +18,14 @@
 	<ui:define name="content">
 			<div class="panel-body">
 				<form jsf:id="form" class="form-horizontal">
-				<div class="modal-header">
-					<div align="center">
-						<button jsf:id="btNovo" jsf:actionListener="#{mensalidadeController.novaMensalidade()}"
-			                class="btn btn-primary" type="submit">
-			                <span class="glyphicon glyphicon-plus" /> #{bundle.new}
-		              	</button>
-	              	</div>
-				</div>
+					<div class="modal-header">
+						<div align="center">
+							<button jsf:id="btNovo" jsf:actionListener="#{mensalidadeController.novaMensalidade()}"
+				                class="btn btn-primary" type="submit">
+				                <span class="glyphicon glyphicon-plus" /> #{bundle.new}
+			              	</button>
+		              	</div>
+					</div>
 
 					<label jsf:for="cliente" class="control-label">#{bundle.cliente}</label>
 					<input jsf:id="cliente" type="text" class="form-control"

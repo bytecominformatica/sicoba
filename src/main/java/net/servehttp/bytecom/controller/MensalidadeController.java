@@ -2,6 +2,8 @@ package net.servehttp.bytecom.controller;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -38,11 +40,21 @@ public class MensalidadeController implements Serializable {
   public void load() {
     if (clienteId > 0) {
       cliente = genericoJPA.buscarPorId(Cliente.class, clienteId);
+      
+      ordernarMensalidades();
       if (mensalidade == null) {
         novaMensalidade();
         dataInicio = mensalidade.getDataVencimento();
       }
     }
+  }
+
+  private void ordernarMensalidades() {
+    Collections.sort(cliente.getMensalidades(), new Comparator<Mensalidade>() {
+        public int compare(Mensalidade m1, Mensalidade m2) {
+            return m1.getDataVencimento().compareTo(m2.getDataVencimento());
+        }
+    });
   }
 
   public void gerarBoletos() {
