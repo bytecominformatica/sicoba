@@ -26,7 +26,6 @@ import net.servehttp.bytecom.util.DateUtil;
 public class MensalidadeController implements Serializable {
 
   private static final long serialVersionUID = -866830816286480241L;
-  private List<Mensalidade> listMensalidades;
   private Mensalidade mensalidade;
   @Inject
   private GenericoJPA genericoJPA;
@@ -110,14 +109,6 @@ public class MensalidadeController implements Serializable {
     mensalidade.setCliente(cliente);
   }
 
-  public List<Mensalidade> getListMensalidades() {
-    return listMensalidades;
-  }
-
-  public void setListMensalidades(List<Mensalidade> listMensalidades) {
-    this.listMensalidades = listMensalidades;
-  }
-
   public int getMes() {
     return calendar.get(Calendar.MONTH);
   }
@@ -146,10 +137,10 @@ public class MensalidadeController implements Serializable {
     load();
   }
 
-  public String remover() {
-    System.out.println("MENSALIDADE = " + mensalidade.getId() + " - " + mensalidade.getDataVencimentoFormatada());
-    genericoJPA.remover(Mensalidade.class, mensalidade.getId());
-    novaMensalidade();
+  public String remover(Mensalidade m) {
+    System.out.println("MENSALIDADE = " + m.getId() + " - " + m.getDataVencimentoFormatada());
+    cliente.getMensalidades().remove(m);
+    genericoJPA.remover(m);
     load();
     AlertaUtil.alerta("Mensalidade removido com sucesso!");
     return null;

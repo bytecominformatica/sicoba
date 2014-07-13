@@ -71,7 +71,7 @@ public class AcessoController implements Serializable {
   }
 
   public void remover() {
-    genericoJPA.remover(Acesso.class, cliente.getAcesso().getId());
+    genericoJPA.remover(cliente.getAcesso());
     load();
     AlertaUtil.alerta("Acesso removido com sucesso!");
   }
