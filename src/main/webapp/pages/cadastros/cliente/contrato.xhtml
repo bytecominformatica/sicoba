@@ -3,18 +3,12 @@
   xmlns:jsf="http://xmlns.jcp.org/jsf">
 <ui:composition template="/layout.xhtml">
   <ui:define name="title">#{bundle.contrato}</ui:define>
-  <ui:define name="content">
-	<div class="row">
-		<div id="breadcrumb" class="col-xs-12">
-			<ol class="breadcrumb">
-				<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
-				<li><a href="#{request.contextPath}/cliente/list.xhtml">#{bundle.cliente}</a></li>
-				<li><a href="#">#{bundle.contrato}</a></li>
-			</ol>
-		</div>
-	</div>
+  <ui:define name="subtitle">#{bundle.edit}</ui:define>
+  <ui:define name="submenu">
+	<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
+  </ui:define>
 
-    <div class="panel panel-primary">
+  <ui:define name="content">
       <div class="panel-body">
         <form jsf:id="form" class="form-horizontal">
 
@@ -24,7 +18,7 @@
           
           <label jsf:for="plano" class="control-label">#{bundle.plano}</label> 
           <h:selectOneMenu id="plano" value="#{contratoController.planoId}"
-            styleClass="btn-primary btn-lg" required="true">
+            styleClass="form-control" required="true">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItems value="#{contratoController.listPlanos}" var="plano" itemLabel="#{plano.nome}" 
             itemValue="#{plano.id}"/>
@@ -33,7 +27,7 @@
           <label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label> 
           <h:selectOneMenu id="vencimento"
             value="#{contratoController.clienteSelecionado.contrato.vencimento}" required="true"
-            styleClass="btn-primary btn-lg">
+            styleClass="form-control">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItem itemLabel="05" itemValue="5" />
             <f:selectItem itemLabel="20" itemValue="20" />
@@ -47,7 +41,7 @@
 
           <label jsf:for="equipamento" class="control-label">#{bundle.equipamento}</label>
           <h:selectOneMenu id="equipamento" value="#{contratoController.equipamentoId}"
-            styleClass="btn-primary btn-lg">
+            styleClass="form-control">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItems value="#{contratoController.listEquipamentos}" var="equipamento"
               itemLabel="#{equipamento.modelo} - #{equipamento.mac}" itemValue="#{equipamento.id}"/>
@@ -55,7 +49,7 @@
 
           <label jsf:for="equipamentoWifi" class="control-label">#{bundle.equipamentoWifi}</label>
           <h:selectOneMenu id="equipamentoWifi" value="#{contratoController.equipamentoWifiId}"
-            styleClass="btn-primary btn-lg">
+            styleClass="form-control">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItems value="#{contratoController.listEquipamentosWifi}" var="equipamentoWifi"
               itemLabel="#{equipamentoWifi.modelo} - #{equipamentoWifi.mac}"
@@ -76,7 +70,6 @@
           </div>
         </form>
       </div>
-    </div>
   </ui:define>
 </ui:composition>
 </html>

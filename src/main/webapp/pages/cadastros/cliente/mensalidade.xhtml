@@ -10,17 +10,12 @@
 </f:metadata>
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.mensalidade}</ui:define>
+	<ui:define name="subtitle">#{bundle.edit}</ui:define>
+	<ui:define name="submenu">
+		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
+	</ui:define>
+	
 	<ui:define name="content">
-		<div class="row">
-			<div id="breadcrumb" class="col-xs-12">
-				<ol class="breadcrumb">
-					<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
-					<li><a href="#{request.contextPath}/cliente/list.xhtml">#{bundle.cliente}</a></li>
-					<li><a href="#">#{bundle.mensalidade}</a></li>
-				</ol>
-			</div>
-		</div>
-		<div class="panel panel-primary">
 			<div class="panel-body">
 				<form jsf:id="form" class="form-horizontal">
 				<div class="modal-header">
@@ -50,7 +45,7 @@
 
 					<label jsf:for="status" class="control-label">#{bundle.status}</label>
 					<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
-						styleClass="m5 btn-primary btn-lg" required="true">
+						styleClass="form-control" required="true">
 						<f:selectItem itemLabel="EM ABERTO" itemValue="#{mensalidadeController.mensalidade.NAO_PAGA}" />
 						<f:selectItem itemLabel="PAGA" itemValue="#{mensalidadeController.mensalidade.PAGA}" />
 					</h:selectOneMenu>
@@ -135,7 +130,6 @@
 				</form>
 
 			</div>
-		</div>
 	</ui:define>
 </ui:composition>
 </html>
