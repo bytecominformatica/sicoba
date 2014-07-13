@@ -21,7 +21,7 @@ public class MensalidadeRelatorioController implements Serializable {
   private static final long serialVersionUID = -7284911722827189143L;
   private Date dataInicio;
   private Date dataFim;
-  private int status;
+  private int status = -1;
   private double valorTotal;
   private double valorPagoTotal;
   private double descontoTotal;
@@ -38,7 +38,7 @@ public class MensalidadeRelatorioController implements Serializable {
 
   public void consultar() {
     listMensalidades =
-        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, getStatus());
+        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status);
     calcularTotalizadores();
   }
 

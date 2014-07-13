@@ -206,7 +206,7 @@ public class ContratoController implements Serializable {
     }
 
     public void remover() {
-        genericoJPA.remover(Contrato.class, contrato.getId());
+        genericoJPA.remover(contrato);
         load();
         AlertaUtil.alerta("Contrato removido com sucesso!");
     }

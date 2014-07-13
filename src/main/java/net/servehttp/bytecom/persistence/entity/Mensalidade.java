@@ -28,8 +28,8 @@ import net.servehttp.bytecom.util.StringUtil;
 public class Mensalidade implements Serializable {
 
   private static final long serialVersionUID = -8955481650524371350L;
-  public static final short NAO_PAGA = 0;
-  public static final short PAGA = 1;
+  public static final int NAO_PAGA = 0;
+  public static final int PAGA = 1;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -44,7 +44,7 @@ public class Mensalidade implements Serializable {
   private double valorPago;
   private double desconto;
   private double tarifa;
-  private short status;
+  private int status;
   @Column(name = "numero_boleto")
   private Integer numeroBoleto;
 
@@ -85,11 +85,11 @@ public class Mensalidade implements Serializable {
     this.valor = valor;
   }
 
-  public short getStatus() {
+  public int getStatus() {
     return status;
   }
 
-  public void setStatus(short status) {
+  public void setStatus(int status) {
     this.status = status;
   }
 
@@ -193,4 +193,5 @@ public class Mensalidade implements Serializable {
     this.desconto = desconto;
   }
 
+  
 }

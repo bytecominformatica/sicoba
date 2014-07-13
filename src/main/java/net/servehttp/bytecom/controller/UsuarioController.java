@@ -122,7 +122,7 @@ public class UsuarioController implements Serializable {
 
   public String remover() {
     page = null;
-    genericoJPA.remover(Usuario.class, usuario.getId());
+    genericoJPA.remover(usuario);
     page = "list";
     return page;
   }

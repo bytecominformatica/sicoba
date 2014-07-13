@@ -155,7 +155,7 @@ public class ClienteController implements Serializable {
     } else if (cliente.getContrato() != null) {
       AlertaUtil.alerta("O cliente não pode ser removido pois possui contrato", AlertaUtil.WARN);
     } else {
-      genericoJPA.remover(Cliente.class, cliente.getId());
+      genericoJPA.remover(cliente);
       AlertaUtil.alerta("Cliente removido com sucesso!");
       page = "list";
     }

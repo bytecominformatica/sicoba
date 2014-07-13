@@ -91,7 +91,7 @@ public class FornecedorController implements Serializable {
   public String remover(){
     String page = null;
     if(existeDespesaRelacionada(fornecedor)){
-      genericoJPA.remover(Fornecedor.class, fornecedor.getId());
+      genericoJPA.remover(fornecedor);
       AlertaUtil.alerta("Removido com sucesso!");
     }  
     page = "list";

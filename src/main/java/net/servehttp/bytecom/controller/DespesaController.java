@@ -59,7 +59,7 @@ public class DespesaController implements Serializable {
 	
 	public String remover(){
 		String page = null;
-			genericoJPA.remover(Despesa.class, despesaSelecionada.getId());
+			genericoJPA.remover(despesaSelecionada);
 			load();
 			AlertaUtil.alerta("Removido com sucesso!");
 			page = "list";
