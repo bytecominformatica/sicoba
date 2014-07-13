@@ -8,11 +8,15 @@
 <h:body>
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.user}</ui:define>
+	<ui:define name="subtitle">#{bundle.edit}</ui:define>
+	<ui:define name="submenu">
+		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
+	</ui:define>
 	<ui:define name="content">
 			<div class="panel-body">
 				<form jsf:id="form" class="form-horizontal">
 					
-					<h:graphicImage value="#{usuarioController.exibirImage(usuarioController.usuario.img)}" />
+					<h:graphicImage value="#{usuarioController.exibirImagem(usuarioController.usuario.img)}" />
 					
 					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
 					<input jsf:id="login" type="text" class="form-control"
