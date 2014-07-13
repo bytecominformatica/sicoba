@@ -4,42 +4,64 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.persistence.DashboadJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Cliente;
+import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.util.StringUtil;
 
 /**
  * 
  * @author clairton
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class DashboardController implements Serializable {
 
-	private static final long serialVersionUID = 8827281306259995250L;
+  private static final long serialVersionUID = 8827281306259995250L;
 
-	@Inject
-	private GenericoJPA genericoJPA;
+  @Inject
+  private GenericoJPA genericoJPA;
+  @Inject
+  private DashboadJPA dashboadJPA;
+  private long quantidadeInstalacoes;
+  private double faturamentoDoMes;
+  private double faturamentoPrevistoDoMes;
+  private List<Mensalidade> listMensalidadesAtrasadas;
+  private List<Cliente> listClientesInstalados;
 
-	private List<Cliente> listClientesInstalados;
+  @PostConstruct
+  public void load() {
+    listClientesInstalados = genericoJPA.buscarTodos(Cliente.class, false, "createdAt", 10);
+    quantidadeInstalacoes = dashboadJPA.getQuantidadeInstalacoesDoMes();
+    faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
+    faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
+    listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();
+  }
 
-	public DashboardController() {
-	}
+  public List<Cliente> getListClientesInstalados() {
+    return listClientesInstalados;
+  }
 
-	@PostConstruct
-	public void load() {
-		listClientesInstalados = genericoJPA.buscarTodos(Cliente.class, false, "createdAt", 10);
-	}
+  public long getQuantidadeInstalacoes() {
+    return quantidadeInstalacoes;
+  }
 
-	public List<Cliente> getListClientesInstalados() {
-		return listClientesInstalados;
-	}
+  public String getFaturamentoDoMes() {
+    return StringUtil.INSTANCE.formatCurrence(faturamentoDoMes);
+  }
 
-	public void setListClientesInstalados(List<Cliente> listClientesInstalados) {
-		this.listClientesInstalados = listClientesInstalados;
-	}
+  public String getFaturamentoPrevistoDoMes() {
+    return StringUtil.INSTANCE.formatCurrence(faturamentoPrevistoDoMes);
+  }
+
+  public List<Mensalidade> getListMensalidadesAtrasadas() {
+    return listMensalidadesAtrasadas;
+  }
+
 
 }

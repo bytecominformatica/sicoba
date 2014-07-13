@@ -11,6 +11,87 @@
 
                 <!-- Main content -->
                 <section class="content">
+                
+                <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>
+                                        <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoPrevistoDoMes}
+                                    </h3>
+                                    <p>
+                                        Faturamento previsto do mês
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">
+                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>
+                                        <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoDoMes}
+                                    </h3>
+                                    <p>
+                                        Faturamento Atual do mês
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">
+                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>
+                                        #{dashboardController.quantidadeInstalacoes}
+                                    </h3>
+                                    <p>
+                                        Instalações do Mês
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">
+                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <h3>
+                                        #{dashboardController.listMensalidadesAtrasadas.size()}
+                                    </h3>
+                                    <p>
+                                        Mensalidades em atraso
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">
+                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div><!-- ./col -->
+                    </div><!-- /.row -->
+                
                	
 				<div id="dashboard_tabs" class="col-xs-12 col-sm-10">
 					
@@ -26,6 +107,26 @@
 								<h:column>
 									<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
 									#{c.contrato.dataInstalacao}
+								</h:column>
+							</h:dataTable>
+							
+						</div>
+						<div id="ow-marketplace" class="col-sm-12 col-md-6">
+							
+							<h4 class="page-header">MENSALIDADES EM ATRASO</h4>
+							<h:dataTable id="ticker-table" styleClass="table m-table table-bordered table-hover table-heading"
+							 value="#{dashboardController.listMensalidadesAtrasadas}" var="m">
+								<h:column>
+									<f:facet name="header">#{bundle.cliente}</f:facet>
+									#{m.cliente.nome}
+								</h:column>
+								<h:column>
+									<f:facet name="header">#{bundle.valor}</f:facet>
+									#{m.valor}
+								</h:column>
+								<h:column>
+									<f:facet name="header">#{bundle.vencimento}</f:facet>
+									#{m.dataVencimento}
 								</h:column>
 							</h:dataTable>
 							
