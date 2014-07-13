@@ -7,17 +7,12 @@
 
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.cliente}</ui:define>
+	<ui:define name="subtitle">#{bundle.edit}</ui:define>
+	<ui:define name="submenu">
+		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
+	</ui:define>
+	
 	<ui:define name="content">
-		<div class="row">
-			<div id="breadcrumb" class="col-xs-12">
-				<ol class="breadcrumb">
-					<li><a href="#{request.contextPath}">#{bundle.home}</a></li>
-					<li><a href="#{request.contextPath}/cliente/list.xhtml">#{bundle.cliente}</a></li>
-					<li><a href="#">#{bundle.edit}</a></li>
-				</ol>
-			</div>
-		</div>
-
 			<div class="panel-body">
 				<div class="modal-header" align="center">
 					<form jsf:id="formActions">
@@ -70,7 +65,7 @@
 							</h:inputText>
 
 							<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
-							<h:selectOneMenu id="cidade" value="#{clienteController.cidadeId}" styleClass="btn-primary btn-lg"
+							<h:selectOneMenu id="cidade" value="#{clienteController.cidadeId}" styleClass="form-control"
 								required="true">
 								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
 								<f:selectItems value="#{clienteController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"
@@ -79,7 +74,7 @@
 							</h:selectOneMenu>
 
 							<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
-							<h:selectOneMenu id="bairro" value="#{clienteController.bairroId}" styleClass="btn-primary btn-lg"
+							<h:selectOneMenu id="bairro" value="#{clienteController.bairroId}" styleClass="form-control"
 								required="true">
 								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
 								<f:selectItems value="#{clienteController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"
