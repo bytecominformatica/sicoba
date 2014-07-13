@@ -20,6 +20,14 @@
 					<f:convertDateTime pattern="yyyy-MM-dd"  timeZone="GMT-03:00"/>
 				</input>
 
+				<label jsf:for="status" class="control-label">#{bundle.status}</label>
+				<h:selectOneMenu id="status" value="#{mensalidadeRelatorioController.status}"
+					styleClass="form-control" required="true">
+					<f:selectItem itemLabel="TODOS" itemValue="-1" />
+					<f:selectItem itemLabel="EM ABERTO" itemValue="0" />
+					<f:selectItem itemLabel="PAGA" itemValue="1" />
+				</h:selectOneMenu>
+			
 		    	<div class="modal-footer">
 	              <button jsf:id="btConsultar" jsf:actionListener="#{mensalidadeRelatorioController.consultar()}"
 	                class="btn btn-primary" type="submit">
