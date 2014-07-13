@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -6,18 +5,9 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <ui:composition template="/layout.xhtml">
-	<ui:define name="title">#{bundle.retorno}</ui:define>
+	<ui:define name="title">#{bundle.caixa}</ui:define>
+	<ui:define name="subtitle">#{bundle.retorno}</ui:define>
 	<ui:define name="content">
-		<!--Start Breadcrumb-->
-		<div class="row">
-			<div id="breadcrumb" class="col-xs-12">
-				<ol class="breadcrumb">
-					<li><a href="#">#{bundle.retorno}</a></li>
-				</ol>
-			</div>
-		</div>
-		<!--End Breadcrumb-->
-
 		<form jsf:id="form" enctype="multipart/form-data" class="form-horizontal">
 				<input type="file" jsf:id="file" jsf:value="#{caixaController.file}" class="btn btn-primary btn-block">
 				<i class="glyphicon glyphicon-plus"></i>
