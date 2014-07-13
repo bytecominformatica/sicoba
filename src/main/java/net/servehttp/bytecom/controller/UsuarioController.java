@@ -49,6 +49,11 @@ public class UsuarioController implements Serializable {
   public void load() {
     listUsuario = genericoJPA.buscarTodos(Usuario.class);
     getParameters();
+    if(usuario.getImg() != null){
+      exibirImagem();
+    }else{
+      setImage("/resources/img/default_avatar.png");
+    }
   }
 
   private boolean valida(Usuario usuario) {
