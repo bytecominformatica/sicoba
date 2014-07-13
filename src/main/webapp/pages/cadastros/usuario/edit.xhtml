@@ -14,9 +14,12 @@
 	</ui:define>
 	<ui:define name="content">
 			<div class="panel-body">
+				<h:graphicImage value="#{usuarioController.image}" width="80px;"/>
+				<input type="file" jsf:id="file" jsf:value="#{usuarioController.file}" class="btn btn-primary btn-block">
+						<i class="glyphicon glyphicon-plus"></i>
+	            		<span>Add files...</span>
+				</input>
 				<form jsf:id="form" class="form-horizontal">
-					
-					<h:graphicImage value="#{usuarioController.exibirImagem(usuarioController.usuario.img)}" />
 					
 					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
 					<input jsf:id="login" type="text" class="form-control"
