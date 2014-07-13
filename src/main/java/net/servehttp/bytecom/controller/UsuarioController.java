@@ -1,6 +1,5 @@
 package net.servehttp.bytecom.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
@@ -31,7 +31,8 @@ public class UsuarioController implements Serializable {
   private List<Usuario> listUsuario;
   private Usuario usuario = new Usuario();
   private String page;
-  private BufferedImage bufImage;
+  private String image;
+  private static final String EXTENSION = "png";
   
   private Part file;
 
@@ -48,6 +49,11 @@ public class UsuarioController implements Serializable {
   public void load() {
     listUsuario = genericoJPA.buscarTodos(Usuario.class);
     getParameters();
+    if(usuario.getImg() != null){
+      exibirImagem();
+    }else{
+      setImage("/resources/img/default_avatar.png");
+    }
   }
 
   private boolean valida(Usuario usuario) {
@@ -69,7 +75,7 @@ public class UsuarioController implements Serializable {
     page = null;
     if (valida(usuario)) {
       if (usuario.getId() == 0) {
-        usuario.setImg(profileImage.tratarImagem(file));
+        usuario.setImg(profileImage.setThumbnail(profileImage.tratarImagem(file), EXTENSION));
         genericoJPA.salvar(usuario);
         AlertaUtil.alerta("Usuário gravado com sucesso!");
       } else {
@@ -82,26 +88,28 @@ public class UsuarioController implements Serializable {
     return page;
   }
   
-  public void exibirImagem(byte[] regImage){
-   try{
-     FacesContext context = FacesContext.getCurrentInstance();
-     ServletContext servletcontext = (ServletContext)context.getExternalContext().getContext();
-     String imageUsers = servletcontext.getRealPath("/resources/img/users/");
-     File dirImageUsers = new File(imageUsers);
-     
-     if(!dirImageUsers.exists()){
-       dirImageUsers.createNewFile();
-     }
-     
-     byte[] bytes = usuario.getImg();
-     /*FileImageOutputStream imageOutput = new FileImageOutputStream(new File(dirImageUsers,
-         imageOutput.write(bytes,0,bytes.length))) */
-     
-   }catch(Exception e){
+  public void exibirImagem(){
+    try{
+      FacesContext context = FacesContext.getCurrentInstance();
+      ServletContext servletcontext = (ServletContext)context.getExternalContext().getContext();
+      String imageUsers = servletcontext.getRealPath("/resources/img/users/");
+      File dirImageUsers = new File(imageUsers);
+      
+      if(!dirImageUsers.exists()){
+        dirImageUsers.createNewFile();
+      }
+      
+      byte[] bytes = usuario.getImg();
+      FileImageOutputStream imageOutput = new FileImageOutputStream(new File(dirImageUsers, usuario.getNome() + "." + EXTENSION));
+      imageOutput.write(bytes, 0, bytes.length);
+      imageOutput.flush();
+      imageOutput.close();
+      setImage("/resources/img/users/" + usuario.getNome() + "."+ EXTENSION);
+    }catch(Exception e){
+      e.printStackTrace();
+    }
      
    }
-    
-  }
  
 
   private void getParameters() {
@@ -134,13 +142,20 @@ public class UsuarioController implements Serializable {
     this.usuario = usuario;
   }
 
-
   public Part getFile() {
     return file;
   }
 
   public void setFile(Part file) {
     this.file = file;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
   public String getPage() {
