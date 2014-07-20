@@ -22,10 +22,14 @@ public class MensalidadeRelatorioController implements Serializable {
   private Date dataInicio;
   private Date dataFim;
   private int status = -1;
+  private boolean pesquisarPorDataOcorrencia = true;
+  
   private double valorTotal;
   private double valorPagoTotal;
   private double descontoTotal;
   private double tarifaTotal;
+  
+
 
   private List<Mensalidade> listMensalidades;
   @Inject
@@ -38,7 +42,7 @@ public class MensalidadeRelatorioController implements Serializable {
 
   public void consultar() {
     listMensalidades =
-        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status);
+        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status, pesquisarPorDataOcorrencia);
     calcularTotalizadores();
   }
 
@@ -100,6 +104,14 @@ public class MensalidadeRelatorioController implements Serializable {
 
   public void setStatus(int status) {
     this.status = status;
+  }
+
+  public boolean isPesquisarPorDataOcorrencia() {
+    return pesquisarPorDataOcorrencia;
+  }
+
+  public void setPesquisarPorDataOcorrencia(boolean pesquisarPorDataOcorrencia) {
+    this.pesquisarPorDataOcorrencia = pesquisarPorDataOcorrencia;
   }
 
 
