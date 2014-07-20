@@ -22,7 +22,7 @@ public class MensalidadeRelatorioController implements Serializable {
   private Date dataInicio;
   private Date dataFim;
   private int status = -1;
-  private boolean pesquisarPorDataOcorrencia;
+  private boolean pesquisarPorDataOcorrencia = true;
   
   private double valorTotal;
   private double valorPagoTotal;
