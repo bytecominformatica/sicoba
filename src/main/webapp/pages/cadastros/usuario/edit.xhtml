@@ -35,17 +35,17 @@
 						jsf:value="#{usuarioController.usuario.email}" />
 					
 					<label jsf:for="password" class="control-label">#{bundle.pass}</label>
-					<h:inputSecret id="password" value="#{usuarioController.usuario.senha}" required="true"
+					<h:inputSecret id="password" value="#{usuarioController.usuario.senha}" required="false"
 						requiredMessage="Digite a Senha" class="form-control">
-						<f:validator validatorId="passwordValidator" />
-						<f:attribute name="confirmPassword" value="#{confirmPassword}" />
+						<!-- <f:validator validatorId="passwordValidator" />
+						<f:attribute name="confirmPassword" value="#{confirmPassword}" />-->
 					</h:inputSecret>
 					
-					<label jsf:for="conf_pass" class="control-label">#{bundle.conf_pass}</label>
-					<h:inputSecret id="confirmPassword" required="true"
+					<!-- <label jsf:for="conf_pass" class="control-label">#{bundle.conf_pass}</label>
+					<h:inputSecret id="confirmPassword" required="false"
 						binding="#{confirmPassword}"
 						requiredMessage="Por favor confirme a senha." class="form-control" />
-					<h:message for="confirmPassword" style="color: red;" />
+					<h:message for="confirmPassword" style="color: red;" />-->
 					
 
 					<div class="modal-footer">
