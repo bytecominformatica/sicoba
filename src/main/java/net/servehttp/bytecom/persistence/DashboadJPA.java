@@ -38,18 +38,20 @@ public class DashboadJPA implements Serializable {
   }
 
   public double getFaturamentoDoMes(){
-    return em.createQuery("select sum(m.valorPago) from Mensalidade m where m.dataVencimento between :inicio and :fim", Double.class)
+    Double d = em.createQuery("select sum(m.valorPago) from Mensalidade m where m.dataVencimento between :inicio and :fim", Double.class)
         .setParameter("inicio", DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime())
         .setParameter("fim", DateUtil.INSTANCE.getUltimoDiaDoMes().getTime())
         .getSingleResult();
+     
+    return d != null ? d : 0;
   }
 
   public double getFaturamentoPrevistoDoMes() {
-    return em.createQuery("select sum(m.valor) from Mensalidade m where m.dataVencimento between :inicio and :fim", Double.class)
+    Double d = em.createQuery("select sum(m.valor) from Mensalidade m where m.dataVencimento between :inicio and :fim", Double.class)
         .setParameter("inicio", DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime())
         .setParameter("fim", DateUtil.INSTANCE.getUltimoDiaDoMes().getTime())
         .getSingleResult();
-    
+    return d != null ? d : 0;
   }
 
 }
