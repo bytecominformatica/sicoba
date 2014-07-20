@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.persistence.AcessoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Acesso;
 import net.servehttp.bytecom.persistence.entity.Cliente;
@@ -30,6 +31,8 @@ public class AcessoController implements Serializable {
   ServidorController servidorController;
   @Inject
   GenericoJPA genericoJPA;
+  @Inject
+  AcessoJPA acessoJPA;
 
 
   public void load() {
@@ -38,7 +41,9 @@ public class AcessoController implements Serializable {
       if ((cliente.getAcesso()) == null) {
         cliente.setAcesso(new Acesso());
         cliente.getAcesso().setCliente(cliente);
-        cliente.getAcesso().setIp("10.10.0.2");
+        
+        String ipLivre = acessoJPA.getIpLivre();
+        cliente.getAcesso().setIp(ipLivre);
         cliente.getAcesso().setMascara("255.255.0.0");
         cliente.getAcesso().setGateway("10.10.0.1");
         cliente.getAcesso().setStatus(Acesso.ATIVO);
