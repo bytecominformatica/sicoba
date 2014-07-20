@@ -31,7 +31,11 @@ public class MensalidadeRelatorioJPA implements Serializable {
       jpql += "and m.status = :status ";
     }
     
-    jpql += "order by m.dataOcorrencia desc ";
+    if(buscarPorDataOcorrencia){
+      jpql += "order by m.dataOcorrencia, m.dataVencimento desc ";
+    } else {
+      jpql += "order by m.dataVencimento, m.dataOcorrencia desc ";
+    }
 
     TypedQuery<Mensalidade> query =
         em.createQuery(jpql, Mensalidade.class).setParameter("inicio", inicio)
