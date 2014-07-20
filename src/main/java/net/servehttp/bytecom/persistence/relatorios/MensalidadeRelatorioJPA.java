@@ -18,9 +18,14 @@ public class MensalidadeRelatorioJPA implements Serializable {
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
 
-  public List<Mensalidade> buscarPorDataStatus(Date inicio, Date fim, int status) {
+  public List<Mensalidade> buscarPorDataStatus(Date inicio, Date fim, int status, boolean buscarPorDataOcorrencia) {
 
-    String jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";
+    String jpql;
+    if(buscarPorDataOcorrencia){
+      jpql = "select m from Mensalidade m where m.dataOcorrencia between :inicio and :fim ";
+    } else {
+      jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";  
+    }
     
     if (status != -1) {
       jpql += "and m.status = :status ";
@@ -37,5 +42,9 @@ public class MensalidadeRelatorioJPA implements Serializable {
     }
     
     return query.getResultList();
+  }
+
+  public void setEntityManager(EntityManager em2) {
+    this.em = em2;
   }
 }

@@ -49,4 +49,9 @@ public class MensalidadeJPA {
         em.persist(mensalidades);
         return mensalidades;
     }
+
+
+    public void setEntityManager(EntityManager em) {
+      this.em = em;
+    }
 }
