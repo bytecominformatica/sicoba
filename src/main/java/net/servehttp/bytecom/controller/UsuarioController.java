@@ -79,9 +79,15 @@ public class UsuarioController implements Serializable {
         genericoJPA.salvar(usuario);
         AlertaUtil.alerta("Usuário gravado com sucesso!");
       } else {
-        usuario.setImg(profileImage.setThumbnail(profileImage.tratarImagem(file), EXTENSION));
-        genericoJPA.atualizar(usuario);
-        AlertaUtil.alerta("Usuário atualizado com sucesso!");
+        if (usuario.getImg() != null) {
+          genericoJPA.atualizar(usuario);
+          AlertaUtil.alerta("Usuário atualizado com sucesso!");
+        }else{
+          usuario.setImg(profileImage.setThumbnail(profileImage.tratarImagem(file), EXTENSION));
+          genericoJPA.atualizar(usuario);
+          AlertaUtil.alerta("Usuário atualizado com sucesso!");
+        }
+        
       }
       page = "list";
     }
