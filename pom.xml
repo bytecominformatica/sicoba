@@ -121,16 +121,6 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12</version>
-				<configuration>
-					<systemPropertyVariables>
-						<JBOSS_HOME>${env.WILDFLY_HOME}</JBOSS_HOME>
-					</systemPropertyVariables>
-					<skip>false</skip>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 </project>
