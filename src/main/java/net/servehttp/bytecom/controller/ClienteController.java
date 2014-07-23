@@ -16,7 +16,6 @@ import net.servehttp.bytecom.persistence.entity.Cliente;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.EnderecoUtil;
-import net.servehttp.bytecom.util.StringUtil;
 
 /**
  * 
@@ -105,14 +104,6 @@ public class ClienteController implements Serializable {
     boolean valido = true;
 
     removeCamposVazios(cliente);
-
-    String cpfCnpj = cliente.getCpfCnpj();
-
-    if (cpfCnpj != null && !StringUtil.INSTANCE.isCpf(cpfCnpj)
-        && !StringUtil.INSTANCE.isCnpj(cpfCnpj)) {
-      AlertaUtil.alerta("CPF/CNPJ inválido", AlertaUtil.ERROR);
-      valido = false;
-    }
 
     List<Cliente> clientes = genericoJPA.buscarTodos("rg", cliente.getRg(), Cliente.class);
     if (!clientes.isEmpty() && clientes.get(0).getId() != cliente.getId()) {

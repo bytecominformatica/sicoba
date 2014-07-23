@@ -21,6 +21,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import net.servehttp.bytecom.annotation.CpfCnpj;
+
 import org.hibernate.validator.constraints.Email;
 
 /**
@@ -41,6 +43,7 @@ public class Cliente implements Serializable {
     private String rg;
     
     @Column(name="cpf_cnpj")
+    @CpfCnpj
     private String cpfCnpj;
     @Email(message="Email inválido")
     private String email;

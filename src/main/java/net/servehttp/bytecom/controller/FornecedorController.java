@@ -16,7 +16,6 @@ import net.servehttp.bytecom.persistence.entity.Fornecedor;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.EnderecoUtil;
-import net.servehttp.bytecom.util.StringUtil;
 
 /**
  * 
@@ -112,23 +111,17 @@ public class FornecedorController implements Serializable {
   
   private boolean valida(Fornecedor fornecedor){
     boolean result = true;
-    String cpfCnpj = fornecedor.getCpfCnpj();
     List<Fornecedor> fornecedores = genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
     if(!genericoJPA.buscarTodos("nome",fornecedor.getNome(),Fornecedor.class).isEmpty()){
       result = false;
       AlertaUtil.alerta("Nome Inválido", AlertaUtil.ERROR);
     }
-    if(cpfCnpj != null && !StringUtil.INSTANCE.isCnpj(cpfCnpj)
-        && !StringUtil.INSTANCE.isCpf(cpfCnpj)){
-      AlertaUtil.alerta("CPF/CNPJ inválido", AlertaUtil.ERROR);
-      result = false;
-    }else{
+   
       fornecedores = genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
       if(!fornecedores.isEmpty() && fornecedores.get(0).getId() != fornecedor.getId()){
         AlertaUtil.alerta("CPF/CNPJ já Cadastrado", AlertaUtil.ERROR);
         result = false;
       }
-    }
     return result;
   }
   

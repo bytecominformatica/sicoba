@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import net.servehttp.bytecom.annotation.CpfCnpj;
+
 /**
  * 
  * @author clairton
@@ -37,6 +39,7 @@ public class Fornecedor implements Serializable {
   private Endereco endereco;
   
   @Column(name = "cpf_cnpj")
+  @CpfCnpj
   private String cpfCnpj;
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
