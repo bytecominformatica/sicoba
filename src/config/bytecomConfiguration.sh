@@ -80,6 +80,12 @@ $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='./subsystem=datasources/jd
 echo "SETTING DATASOURCES";
 $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='./subsystem=datasources/data-source=bytecomDS:add(enabled=true , jndi-name="java:/bytecomDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="bytecom", password="bytecom" , connection-url="jdbc:mysql://localhost:3306/bytecom" )'
 
+######################### CONFIGURANDO EMAIL #################################
+
+# $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp-gmail:add(host=smtp.gmail.com, port=465)'
+# $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='/subsystem=mail/mail-session=bytecom:add(jndi-name=java:/mail/bytecom)'
+# $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='/subsystem=mail/mail-session=bytecom/server=smtp:add(outbound-socket-binding-ref=mail-smtp-gmail,username=your_email@gmail.com,password=secret,ssl=true)'
+
 sleep 2
 
 killall java
