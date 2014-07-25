@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -20,6 +21,7 @@ public class MailEJB {
 	private static final Logger LOGGER = Logger.getLogger(MailEJB.class
 			.getSimpleName());
 
+	@Asynchronous
 	public void send(String destinatario, String assunto, String mensagemTexto) {
 
 		try {
