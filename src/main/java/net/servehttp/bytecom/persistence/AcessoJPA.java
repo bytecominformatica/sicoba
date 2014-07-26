@@ -7,7 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.persistence.entity.Acesso;
+import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
 
 /**
  * 

@@ -9,10 +9,10 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.AcessoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Acesso;
-import net.servehttp.bytecom.persistence.entity.Cliente;
-import net.servehttp.bytecom.persistence.entity.Contrato;
-import net.servehttp.bytecom.persistence.entity.Equipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
+import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
+import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.util.AlertaUtil;
 
 /**

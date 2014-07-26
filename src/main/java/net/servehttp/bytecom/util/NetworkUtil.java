@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.servehttp.bytecom.util;
 
 import java.io.IOException;
@@ -16,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 
- * @author clairton
+ * @author Clairton Luz - clairton.c.l@gmail.com
+ *
  */
 public enum NetworkUtil {
 

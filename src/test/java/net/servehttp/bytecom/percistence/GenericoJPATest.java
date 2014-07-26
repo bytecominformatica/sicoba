@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 
 import net.servehttp.bytecom.facede.CreateEntityManager;
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Plano;
+import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 
 import org.junit.AfterClass;
 import org.junit.Assert;

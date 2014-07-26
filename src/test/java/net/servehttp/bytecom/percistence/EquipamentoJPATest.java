@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 
 import net.servehttp.bytecom.facede.CreateEntityManager;
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
-import net.servehttp.bytecom.persistence.entity.Equipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 
 import org.junit.AfterClass;
 import org.junit.Assert;

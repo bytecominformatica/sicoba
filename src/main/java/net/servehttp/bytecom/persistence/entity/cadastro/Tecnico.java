@@ -1,56 +1,40 @@
-package net.servehttp.bytecom.persistence.entity;
+package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
 import java.util.Calendar;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
-import net.servehttp.bytecom.annotation.CpfCnpj;
+import org.hibernate.validator.constraints.Email;
 
-/**
- * 
- * @author clairton
- */
 @Entity
-@Table(name = "fornecedor")
-public class Fornecedor implements Serializable {
+@Table(name = "tecnico")
+public class Tecnico implements Serializable {
 
-  private static final long serialVersionUID = -4003398104522589791L;
+  private static final long serialVersionUID = -4731640193484264555L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+  @Size(max=255, message="nome tamanho máximo de 255 caracteres!")
   private String nome;
-  @Column(name = "razao_social")
-  private String razaoSocial;
+  @Size(max=10, message="fone deve possuir 10 digitos ex: 9999999999")
   private String fone;
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "endereco_id")
-  private Endereco endereco;
+  @Email(message="Email inválido")
+  private String email;
   
-  @Column(name = "cpf_cnpj")
-  @CpfCnpj
-  private String cpfCnpj;
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
   private Calendar createdAt;
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "updated_at")
   private Calendar updateAt;
-  
-  public Fornecedor(){
-    this.endereco = new Endereco();
-  }
   
   public int getId() {
     return id;
@@ -64,29 +48,17 @@ public class Fornecedor implements Serializable {
   public void setNome(String nome) {
     this.nome = nome;
   }
-  public String getRazaoSocial() {
-    return razaoSocial;
-  }
-  public void setRazaoSocial(String razaoSocial) {
-    this.razaoSocial = razaoSocial;
-  }
   public String getFone() {
     return fone;
   }
   public void setFone(String fone) {
     this.fone = fone;
   }
-  public Endereco getEndereco() {
-    return endereco;
+  public String getEmail() {
+    return email;
   }
-  public void setEndereco(Endereco endereco) {
-    this.endereco = endereco;
-  }
-  public String getCpfCnpj() {
-    return cpfCnpj;
-  }
-  public void setCpfCnpj(String cpfCnpj) {
-    this.cpfCnpj = cpfCnpj;
+  public void setEmail(String email) {
+    this.email = email;
   }
   public Calendar getCreatedAt() {
     return createdAt;
@@ -100,7 +72,7 @@ public class Fornecedor implements Serializable {
   public void setUpdateAt(Calendar updateAt) {
     this.updateAt = updateAt;
   }
-
+  
   
 
 }

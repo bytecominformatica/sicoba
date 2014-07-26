@@ -12,8 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Cliente;
-import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.DateUtil;
 

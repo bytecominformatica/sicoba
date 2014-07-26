@@ -8,9 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.persistence.entity.Cliente;
-import net.servehttp.bytecom.persistence.entity.Contrato;
-import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
+import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.util.DateUtil;
 
 /**

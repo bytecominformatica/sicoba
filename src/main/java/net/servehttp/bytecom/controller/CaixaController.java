@@ -10,7 +10,7 @@ import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.ejb.CaixaEJB;
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
 import net.servehttp.bytecom.persistence.entity.caixa.HeaderLote;
 import net.servehttp.bytecom.persistence.entity.caixa.Registro;

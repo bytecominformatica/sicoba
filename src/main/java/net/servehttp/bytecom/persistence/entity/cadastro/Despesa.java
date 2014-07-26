@@ -1,9 +1,9 @@
-package net.servehttp.bytecom.persistence.entity;
+package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Calendar;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,92 +18,85 @@ import javax.persistence.TemporalType;
 
 /**
  * 
- * @author clairton
+ * @author felipe
+ *
  */
 @Entity
-@Table(name = "empresa")
-public class Empresa implements Serializable {
+@Table(name = "despesa")
+public class Despesa implements Serializable {
 
-	private static final long serialVersionUID = -8007583719716152783L;
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String cnpj;
-	private String nome;
-	@Column(name = "razao_social")
-	private String razaoSocial;
-	private String fone;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "endereco_id")
-	private Endereco endereco;
+	private String descricao;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "fornecedor_id")
+	private Fornecedor fornecedor;
+	private double valor;
+	private Date data;
+	private char status;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at")
 	private Calendar createdAt;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
 	private Calendar updateAt;
-
+	
+	
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getCnpj() {
-		return cnpj;
+	public String getDescricao() {
+		return descricao;
 	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
-
-	public String getNome() {
-		return nome;
+	public Fornecedor getFornecedor() {
+		return fornecedor;
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
-
-	public String getRazaoSocial() {
-		return razaoSocial;
+	public double getValor() {
+		return valor;
 	}
-
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
-
-	public String getFone() {
-		return fone;
+	public Date getData() {
+		return data;
 	}
-
-	public void setFone(String fone) {
-		this.fone = fone;
+	public void setData(Date data) {
+		this.data = data;
 	}
-
-	public Endereco getEndereco() {
-		return endereco;
+	public char getStatus() {
+		return status;
 	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setStatus(char status) {
+		this.status = status;
 	}
-
 	public Calendar getCreatedAt() {
 		return createdAt;
 	}
-
 	public void setCreatedAt(Calendar createdAt) {
 		this.createdAt = createdAt;
 	}
-
 	public Calendar getUpdateAt() {
 		return updateAt;
 	}
-
 	public void setUpdateAt(Calendar updateAt) {
 		this.updateAt = updateAt;
 	}
+	
+	@Override
+	public String toString(){
+		return Integer.toString(id);
+	}
+
 }

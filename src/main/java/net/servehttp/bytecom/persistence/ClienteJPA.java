@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.persistence.entity.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.util.DateUtil;
 
 /**

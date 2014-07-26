@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 
 @Transactional
 public class MensalidadeRelatorioJPA implements Serializable {

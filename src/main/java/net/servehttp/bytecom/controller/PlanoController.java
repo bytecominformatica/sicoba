@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Contrato;
-import net.servehttp.bytecom.persistence.entity.Plano;
+import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
+import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 import net.servehttp.bytecom.util.AlertaUtil;
 
 /**

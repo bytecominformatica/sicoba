@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.persistence.entity;
+package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import net.servehttp.bytecom.annotation.CpfCnpj;
+import net.servehttp.bytecom.persistence.entity.Endereco;
 
 import org.hibernate.validator.constraints.Email;
 

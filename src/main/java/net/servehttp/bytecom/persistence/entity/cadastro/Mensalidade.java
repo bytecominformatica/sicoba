@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.persistence.entity;
+package net.servehttp.bytecom.persistence.entity.cadastro;
 
 
 import java.io.Serializable;

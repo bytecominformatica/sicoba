@@ -10,7 +10,7 @@ import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 
 @ManagedBean
 @RequestScoped

@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 
 @Named
 @RequestScoped
