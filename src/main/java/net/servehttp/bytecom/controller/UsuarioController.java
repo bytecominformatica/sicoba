@@ -1,16 +1,12 @@
 package net.servehttp.bytecom.controller;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.ejb.ProfileImageEJB;
@@ -50,7 +46,8 @@ public class UsuarioController implements Serializable {
     listUsuario = genericoJPA.buscarTodos(Usuario.class);
     getParameters();
     if(usuario.getImg() != null){
-      exibirImagem();
+      //exibirImagem();
+      setImage(profileImage.exibirImagem(usuario.getImg(), usuario.getNome()));
     }else{
       setImage("/resources/img/default_avatar.png");
     }
@@ -95,30 +92,7 @@ public class UsuarioController implements Serializable {
     return page;
   }
   
-  public void exibirImagem(){
-    try{
-      FacesContext context = FacesContext.getCurrentInstance();
-      ServletContext servletcontext = (ServletContext)context.getExternalContext().getContext();
-      String imageUsers = servletcontext.getRealPath("/resources/img/users/");
-      File dirImageUsers = new File(imageUsers);
-      
-      if(!dirImageUsers.exists()){
-        dirImageUsers.createNewFile();
-      }
-      
-      byte[] bytes = usuario.getImg();
-      FileImageOutputStream imageOutput = new FileImageOutputStream(new File(dirImageUsers, usuario.getNome() + "." + EXTENSION));
-      imageOutput.write(bytes, 0, bytes.length);
-      imageOutput.flush();
-      imageOutput.close();
-      setImage("/resources/img/users/" + usuario.getNome() + "."+ EXTENSION);
-    }catch(Exception e){
-      e.printStackTrace();
-    }
-     
-   }
  
-
   private void getParameters() {
     String usuarioId = util.getParameters("id");
     if (usuarioId != null && !usuarioId.isEmpty()) {
