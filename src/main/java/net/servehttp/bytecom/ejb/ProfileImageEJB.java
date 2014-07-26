@@ -5,13 +5,17 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 import javax.swing.ImageIcon;
 
@@ -72,4 +76,36 @@ public class ProfileImageEJB implements Serializable {
     }
     return null;
   }
+  /**
+   * <pre> 
+   * Método responsável por montar uma imagem a partir de um path especifico
+   * @param bytesImagem
+   * @param name
+   * @return path
+   * </pre>
+   */
+  public String exibirImagem(byte[] bytesImagem, String name){
+    String path = null;
+    try{
+      FacesContext context = FacesContext.getCurrentInstance();
+      ServletContext servletcontext = (ServletContext)context.getExternalContext().getContext();
+      String imageUsers = servletcontext.getRealPath("/resources/img/users/");
+      File dirImageUsers = new File(imageUsers);
+      
+      if(!dirImageUsers.exists()){
+        dirImageUsers.createNewFile();
+      }
+      
+      byte[] bytes = bytesImagem;
+      FileImageOutputStream imageOutput = new FileImageOutputStream(new File(dirImageUsers, name + "." + "png"));
+      imageOutput.write(bytes, 0, bytes.length);
+      imageOutput.flush();
+      imageOutput.close();
+      path = "/resources/img/users/" + name + "." + "png"; 
+      
+    }catch(Exception e){
+      e.printStackTrace();
+    }
+    return path;
+   }
 }
