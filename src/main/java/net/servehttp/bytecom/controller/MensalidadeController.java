@@ -72,7 +72,6 @@ public class MensalidadeController implements Serializable {
         c.add(Calendar.MONTH, 1);
         genericoJPA.salvar(m);
       }
-
       AlertaUtil.alerta("Boletos gerados com sucesso!");
     }
   }
@@ -138,7 +137,6 @@ public class MensalidadeController implements Serializable {
   }
 
   public String remover(Mensalidade m) {
-    System.out.println("MENSALIDADE = " + m.getId() + " - " + m.getDataVencimentoFormatada());
     cliente.getMensalidades().remove(m);
     genericoJPA.remover(m);
     load();

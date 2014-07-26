@@ -2,15 +2,18 @@ package net.servehttp.bytecom;
 
 import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.ejb.MailEJB;
 import net.servehttp.bytecom.persistence.UsuarioJPA;
 import net.servehttp.bytecom.persistence.entity.Usuario;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.NetworkUtil;
 import net.servehttp.bytecom.util.WebUtil;
 
 /**
@@ -27,6 +30,8 @@ public class Authentication {
 	UsuarioJPA usuarioJPA;
 	@Inject
 	WebUtil webUtil;
+	@EJB
+	MailEJB mailEJB;
 
 	public void login() {
 
@@ -37,14 +42,13 @@ public class Authentication {
 			ec.getSessionMap().put("currentUser", l);
 			webUtil.redirect("index.xhtml");
 		} else {
-			// final String assunto = "Tentativa de acesso";
-			// final String para = "clairton.c.l@gmail.com";
-			// final String ipQueTentouAcessar = NetworkUtil.INSTANCE.getIp();
-			// final String mensagem =
-			// "O seguinte ip tentou acessar o sistema: " + ipQueTentouAcessar
-			// + " com o seguite usuario: " + usuario;
-			//
-			// MailUtil.INSTANCE.enviarDepois(assunto, mensagem, para);
+			final String assunto = "Tentativa de acesso";
+			final String destinatario = "clairton.c.l@gmail.com";
+			final String ipQueTentouAcessar = NetworkUtil.INSTANCE.getIp();
+			final String mensagem = "O seguinte ip tentou acessar o sistema: "
+					+ ipQueTentouAcessar + " com o seguite usuario: " + usuario;
+
+			mailEJB.send(destinatario, assunto, mensagem);
 
 			Logger.getLogger("USUÁRIO = " + usuario).severe("ACESSO NEGADO");
 			AlertaUtil.alerta("Usuário e/ou senha inválida!", AlertaUtil.ERROR);

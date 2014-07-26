@@ -30,7 +30,9 @@ public class MailEJB {
 					InternetAddress.parse(destinatario));
 			message.setSubject(assunto);
 			message.setText(mensagemTexto);
+			System.out.println("ENVIANDO");
 			Transport.send(message);
+			System.out.println("finish");
 		} catch (MessagingException e) {
 			LOGGER.log(Level.WARNING, "EMAIL NÃO ENVIADO", e);
 		}
