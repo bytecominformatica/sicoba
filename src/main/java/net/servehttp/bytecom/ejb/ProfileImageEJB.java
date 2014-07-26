@@ -21,6 +21,12 @@ import javax.swing.ImageIcon;
 
 import org.apache.commons.io.IOUtils;
 
+/**
+ * 
+ * @author felipe
+ * 
+ */
+
 public class ProfileImageEJB implements Serializable {
 
   private static final long serialVersionUID = 8974017859406844766L;
