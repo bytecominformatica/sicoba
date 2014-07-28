@@ -59,14 +59,6 @@ public class Cliente implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
-    private Calendar createdAt;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at")
-    private Calendar updateAt;
-
     @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Acesso acesso;
     @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -76,6 +68,13 @@ public class Cliente implements Serializable {
 
     @Transient
     private boolean online;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Calendar createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    private Calendar updatedAt;
 
     public Cliente(){
 		this.endereco = new Endereco();
@@ -150,7 +149,7 @@ public class Cliente implements Serializable {
     }
 
     public Calendar getUpdatedAt() {
-        return updateAt;
+        return updatedAt;
     }
 
     public void setCreatedAt(Calendar createdAt) {
@@ -158,7 +157,7 @@ public class Cliente implements Serializable {
     }
 
     public void setUpdatedAt(Calendar updatedAt) {
-        this.updateAt = updatedAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getFoneTitular() {

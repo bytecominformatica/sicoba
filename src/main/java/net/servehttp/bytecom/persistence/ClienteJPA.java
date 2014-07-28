@@ -40,7 +40,7 @@ public class ClienteJPA implements Serializable {
 
   public List<Cliente> buscaUltimosClientesAlterados() {
     return em
-        .createQuery("select c from Cliente c where c.updateAt > :date order by c.updateAt desc",
+        .createQuery("select c from Cliente c where c.updatedAt > :date order by c.updatedAt desc",
             Cliente.class).setParameter("date", DateUtil.INSTANCE.incrementaMesAtual(-2)).setMaxResults(20)
         .getResultList();
   }

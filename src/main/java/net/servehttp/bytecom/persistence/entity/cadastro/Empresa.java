@@ -43,7 +43,7 @@ public class Empresa implements Serializable {
 	private Calendar createdAt;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
-	private Calendar updateAt;
+	private Calendar updatedAt;
 
 	public int getId() {
 		return id;
@@ -101,11 +101,11 @@ public class Empresa implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public Calendar getUpdateAt() {
-		return updateAt;
+	public Calendar getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setUpdateAt(Calendar updateAt) {
-		this.updateAt = updateAt;
+	public void setUpdatedAt(Calendar updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }

@@ -42,7 +42,7 @@ public class Despesa implements Serializable {
 	private Calendar createdAt;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
-	private Calendar updateAt;
+	private Calendar updatedAt;
 	
 	
 	public int getId() {
@@ -87,11 +87,11 @@ public class Despesa implements Serializable {
 	public void setCreatedAt(Calendar createdAt) {
 		this.createdAt = createdAt;
 	}
-	public Calendar getUpdateAt() {
-		return updateAt;
+	public Calendar getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setUpdateAt(Calendar updateAt) {
-		this.updateAt = updateAt;
+	public void setUpdatedAt(Calendar updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	
 	@Override

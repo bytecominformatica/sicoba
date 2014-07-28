@@ -99,7 +99,7 @@ public class Plano implements Serializable {
     return updatedAt;
   }
 
-  public void setUpdateAt(Calendar updatedAt) {
+  public void setUpdatedAt(Calendar updatedAt) {
     this.updatedAt = updatedAt;
   }
 
