@@ -89,10 +89,11 @@ $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='./subsystem=datasources/da
 ######################### CONFIGURANDO SECURITY REALM #################################
 
 # $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='./subsystem=security/security-domain=bytecom:add(cache-type="default")'
-# $WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='./subsystem=security/security-domain=bytecom/authentication=classic:add(login-modules=[ {code="Database", flag="required", module-options={dsJndiName="java:/bytecomDS", principalsQuery="select password from authentication where username=?", rolesQuery="select group_name, 'Roles' from user_group ug inner join authentication a on ug.user_id = a.user_account_id where a.username = ?", hashAlgorithm="SHA-256", hashEncoding="BASE64", unauthenticatedIdentity="guest"}}, {code="RoleMapping", flag="required", module-options={rolesProperties="file:${jboss.server.config.dir}/bytecom.properties", replaceRole="false"}}])'
+#$WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='cd ./subsystem=security/security-domain=bytecom, 
+#./authentication=classic:add(login-modules=[ {code="Database", flag="required", module-options={dsJndiName="java:/bytecomDS", principalsQuery="select password from authentication where username=?", rolesQuery="select group_name, 'Roles' from user_group ug inner join authentication a on ug.user_id = a.user_account_id where a.username = ?", hashAlgorithm="SHA-256", hashEncoding="BASE64", unauthenticatedIdentity="guest"}}, {code="RoleMapping", flag="required", module-options={rolesProperties="file:${jboss.server.config.dir}/bytecom.properties", replaceRole="false"}}])'
 
-echo admins=admin,financial,report		> $WILDFLY_DIR/standalone/configuration/bytecom.properties;
-echo technical=report			>> $WILDFLY_DIR/standalone/configuration/bytecom.properties;
+#echo admins=admin,financial,report		> $WILDFLY_DIR/standalone/configuration/bytecom.properties;
+#echo technical=report			>> $WILDFLY_DIR/standalone/configuration/bytecom.properties;
 
 sleep 2
 

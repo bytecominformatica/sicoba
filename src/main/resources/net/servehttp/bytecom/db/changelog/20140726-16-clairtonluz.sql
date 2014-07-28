@@ -19,6 +19,7 @@ create table user_account (
 );
 
 create table user_group (
+	id int not null primary key auto_increment,
 	group_id int not null,
 	user_id int not null,
 	username varchar(255) not null,
@@ -26,7 +27,9 @@ create table user_group (
 	constraint fk_group_id_access_group_id
 	foreign key(group_id) references access_group(id),
 	constraint fk_user_id_user_accounnt_id
-	foreign key(user_id) references user_account(id)
+	foreign key(user_id) references user_account(id),
+	constraint uk_user_group_group_id_user_id
+	unique key(group_id, user_id)
 );
 
 create table authentication (
