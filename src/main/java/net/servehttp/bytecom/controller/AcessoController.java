@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.controller;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -9,10 +10,10 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.AcessoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Acesso;
-import net.servehttp.bytecom.persistence.entity.Cliente;
-import net.servehttp.bytecom.persistence.entity.Contrato;
-import net.servehttp.bytecom.persistence.entity.Equipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
+import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
+import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.util.AlertaUtil;
 
 /**
@@ -65,7 +66,8 @@ public class AcessoController implements Serializable {
         genericoJPA.salvar(cliente.getAcesso());
         AlertaUtil.alerta("Acesso adicionado com sucesso!");
       } else {
-        genericoJPA.atualizar(cliente.getAcesso());
+        cliente.setUpdatedAt(Calendar.getInstance());
+        genericoJPA.atualizar(cliente);
         AlertaUtil.alerta("Acesso atualizado com sucesso!");
       }
       servidorController.atualizarAcesso();

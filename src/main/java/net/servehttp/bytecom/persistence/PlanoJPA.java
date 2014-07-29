@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.persistence.entity.Plano;
+import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 
 /**
  *

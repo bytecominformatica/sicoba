@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.relatorios.MensalidadeRelatorioJPA;
 import net.servehttp.bytecom.util.DateUtil;
 import net.servehttp.bytecom.util.StringUtil;

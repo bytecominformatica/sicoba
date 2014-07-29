@@ -4,22 +4,22 @@
 
 	<persistence-unit name="teste-pu" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>net.servehttp.bytecom.persistence.entity.Acesso</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Acesso</class>
 		<class>net.servehttp.bytecom.persistence.entity.Bairro</class>
 		<class>net.servehttp.bytecom.persistence.entity.Cidade</class>
-		<class>net.servehttp.bytecom.persistence.entity.Cliente</class>
-		<class>net.servehttp.bytecom.persistence.entity.Contrato</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Cliente</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Contrato</class>
 		<class>net.servehttp.bytecom.persistence.entity.Endereco</class>
-		<class>net.servehttp.bytecom.persistence.entity.Empresa</class>
-		<class>net.servehttp.bytecom.persistence.entity.Equipamento</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Empresa</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Equipamento</class>
 		<class>net.servehttp.bytecom.persistence.entity.Estado</class>
-		<class>net.servehttp.bytecom.persistence.entity.Fornecedor</class>
-		<class>net.servehttp.bytecom.persistence.entity.Mensalidade</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Fornecedor</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade</class>
 		<class>net.servehttp.bytecom.persistence.entity.Pais</class>
-		<class>net.servehttp.bytecom.persistence.entity.Plano</class>
-		<class>net.servehttp.bytecom.persistence.entity.Despesa</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Plano</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Despesa</class>
 		<class>net.servehttp.bytecom.persistence.entity.Usuario</class>
-		<class>net.servehttp.bytecom.persistence.entity.Tecnico</class>
+		<class>net.servehttp.bytecom.persistence.entity.cadastro.Tecnico</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Header</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Trailer</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.HeaderLote</class>

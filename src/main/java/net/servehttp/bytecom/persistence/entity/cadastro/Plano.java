@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.persistence.entity;
+package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -99,7 +99,7 @@ public class Plano implements Serializable {
     return updatedAt;
   }
 
-  public void setUpdateAt(Calendar updatedAt) {
+  public void setUpdatedAt(Calendar updatedAt) {
     this.updatedAt = updatedAt;
   }
 

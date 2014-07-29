@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.persistence.entity;
+package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import net.servehttp.bytecom.persistence.entity.Endereco;
 
 /**
  * 
@@ -41,7 +43,7 @@ public class Empresa implements Serializable {
 	private Calendar createdAt;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
-	private Calendar updateAt;
+	private Calendar updatedAt;
 
 	public int getId() {
 		return id;
@@ -99,11 +101,11 @@ public class Empresa implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public Calendar getUpdateAt() {
-		return updateAt;
+	public Calendar getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setUpdateAt(Calendar updateAt) {
-		this.updateAt = updateAt;
+	public void setUpdatedAt(Calendar updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }

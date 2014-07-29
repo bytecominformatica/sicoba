@@ -2,6 +2,14 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
   <display-name>sicoba</display-name>
   <context-param>
+      <param-name>javax.faces.PROJECT_STAGE</param-name>
+      <param-value>Production</param-value>
+  </context-param>
+  <context-param>
+      <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+      <param-value>true</param-value>
+  </context-param>
+  <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
     <param-value>messages</param-value>
   </context-param>
@@ -40,16 +48,24 @@
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
   <session-config>
-    <session-timeout>15</session-timeout>
+    <session-timeout>20</session-timeout>
   </session-config>
   <welcome-file-list>
     <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
-  <error-page>
-    <location>/error/500.xhtml</location>
-  </error-page>
-  <error-page>
-    <error-code>404</error-code>
-    <location>/error/404.xhtml</location>
-  </error-page>
+
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/index.xhtml</location>
+	</error-page>
+	
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/pages/error/404.xhtml</location>
+	</error-page>
+	<error-page>
+	    <error-code>403</error-code>
+	    <location>/pages/error/403.xhtml</location>
+	</error-page>
+
 </web-app>
