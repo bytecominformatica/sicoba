@@ -1,64 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-  <display-name>sicoba</display-name>
-  <context-param>
-      <param-name>javax.faces.PROJECT_STAGE</param-name>
-      <param-value>Production</param-value>
-  </context-param>
-  <context-param>
-      <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
-      <param-value>true</param-value>
-  </context-param>
-  <context-param>
-    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-    <param-value>messages</param-value>
-  </context-param>
-  <context-param>
-    <param-name>
-        javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL
-    </param-name>
-    <param-value>true</param-value>
-</context-param>
-  <context-param>
-    <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-    <param-value>pt_BR</param-value>
-  </context-param>
-  <context-param>
-    <param-name>liquibase.changelog</param-name>
-    <param-value>net/servehttp/bytecom/db/changelog.xml</param-value>
-  </context-param>
-  <context-param>
-    <param-name>liquibase.datasource</param-name>
-    <param-value>java:/bytecomDS</param-value>
-  </context-param>
-  <context-param>
-    <param-name>liquibase.onerror.fail</param-name>
-    <param-value>true</param-value>
-  </context-param>
-  <listener>
-    <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
-  </listener>
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.xhtml</url-pattern>
-  </servlet-mapping>
-  <session-config>
-    <session-timeout>20</session-timeout>
-  </session-config>
-  <welcome-file-list>
-    <welcome-file>index.xhtml</welcome-file>
-  </welcome-file-list>
-
+	<display-name>sicoba</display-name>
+	
+	<!-- PREFERENCES -->
+	<context-param>
+	    <param-name>javax.faces.PROJECT_STAGE</param-name>
+	    <param-value>Production</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+	    <param-value>true</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>
+	      javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL
+	  </param-name>
+	  <param-value>true</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+	  <param-value>messages</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+	  <param-value>pt_BR</param-value>
+	</context-param>
+	
+	<!-- LIQUIBASE -->
+	<context-param>
+	  <param-name>liquibase.changelog</param-name>
+	  <param-value>net/servehttp/bytecom/db/changelog.xml</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>liquibase.datasource</param-name>
+	  <param-value>java:/bytecomDS</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>liquibase.onerror.fail</param-name>
+	  <param-value>true</param-value>
+	</context-param>
+	<listener>
+	  <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
+	</listener>
+	
+	<!-- JSF -->
+	<servlet>
+	  <servlet-name>Faces Servlet</servlet-name>
+	  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+	  <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>Faces Servlet</servlet-name>
+	  <url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	
+	<!-- SESSION -->
+	<session-config>
+	  <session-timeout>20</session-timeout>
+	</session-config>
+	
+	<!-- PAGES -->
+	<welcome-file-list>
+	  <welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
 	<error-page>
 		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
 		<location>/index.xhtml</location>
 	</error-page>
-	
 	<error-page>
 	    <error-code>404</error-code>
 	    <location>/pages/error/404.xhtml</location>
@@ -67,5 +75,7 @@
 	    <error-code>403</error-code>
 	    <location>/pages/error/403.xhtml</location>
 	</error-page>
+	
+	<!-- APACHE SHIRO -->
 
 </web-app>
