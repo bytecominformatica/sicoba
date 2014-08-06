@@ -4,10 +4,17 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.util.AlertaUtil;
+
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 
 /**
  * 
@@ -24,15 +31,26 @@ public class SecurityController implements Serializable {
 
 	private String username;
 	private String password;
-//	private Subject currentUser = SecurityUtils.getSubject();
+	private boolean remember;
+	
+	private Subject currentUser = SecurityUtils.getSubject();
 	
 	public void authenticate(){
-//		if(!currentUser.isAuthenticated()){
-//			System.out.println("não autenticado");
-//		} else {
-//			System.out.println("autenticado");
-//			
-//		}
+		if(!currentUser.isAuthenticated()){
+			try {
+	            currentUser.login(new UsernamePasswordToken(username, password, remember));
+//	            SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(Faces.getRequest());
+//	            Faces.redirect(savedRequest != null ? savedRequest.getRequestUrl() : HOME_URL);
+	        }
+	        catch (AuthenticationException e) {
+	            AlertaUtil.alerta("Unknown user, please try again");
+	            e.printStackTrace(); // TODO: logger.
+	        }
+			System.out.println("não autenticado");
+		} else {
+			System.out.println("autenticado");
+			
+		}
 	}
 
 	public String getUsername() {
