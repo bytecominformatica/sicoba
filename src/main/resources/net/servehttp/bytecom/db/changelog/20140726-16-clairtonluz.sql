@@ -2,7 +2,7 @@
 
 --changeset clairtonluz:16
 
-create table user (
+create table user_account (
     id int not null primary key auto_increment, 
     password varchar(255) not null, 
     username varchar(255) not null, 
@@ -10,7 +10,7 @@ create table user (
 );
 
 create table user_roles (
-    userId int not null, 
+    user_id int not null, 
     role varchar(255)
 );
 
