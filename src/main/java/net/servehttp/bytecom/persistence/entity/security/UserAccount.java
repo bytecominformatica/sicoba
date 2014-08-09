@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,8 +29,10 @@ public class UserAccount {
   private String firstName;
   @Column(name = "last_name")
   private String lastName;
-  @OneToMany(mappedBy = "userAccount")
-  private List<UserGroup> userGroup;
+  @ManyToMany
+  @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
+    inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
+  private List<AccessGroup> accessGroup;
 
   public int getId() {
     return id;
@@ -62,12 +66,12 @@ public class UserAccount {
     this.lastName = lastName;
   }
 
-  public List<UserGroup> getUserGroup() {
-    return userGroup;
+  public List<AccessGroup> getAccessGroup() {
+    return accessGroup;
   }
 
-  public void setUserGroup(List<UserGroup> userGroup) {
-    this.userGroup = userGroup;
+  public void setAccessGroup(List<AccessGroup> accessGroup) {
+    this.accessGroup = accessGroup;
   }
 
 }
