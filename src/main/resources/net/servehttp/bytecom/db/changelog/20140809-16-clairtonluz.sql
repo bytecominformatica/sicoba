@@ -8,7 +8,7 @@ create table access_group (
 	id int not null primary key auto_increment,
 	name varchar(255) not null,
 	description varchar(255),
-	user_default tinyint(1),
+	user_default tinyint(1) not null default 0,
 	unique key(name)
 );
 

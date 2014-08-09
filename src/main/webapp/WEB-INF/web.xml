@@ -72,8 +72,8 @@
 	    <location>/pages/error/404.xhtml</location>
 	</error-page>
 	<error-page>
-	    <error-code>403</error-code>
-	    <location>/pages/error/403.xhtml</location>
+	    <error-code>401</error-code>
+	    <location>/pages/error/401.xhtml</location>
 	</error-page>
 	
 	<!-- APACHE SHIRO -->
