@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import net.servehttp.bytecom.util.HashSHA256Util;
+import net.servehttp.bytecom.util.HashUtil;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -110,7 +110,7 @@ public class Usuario implements Serializable {
     }
 
     public void setSenha(String senha) {
-      this.senha = HashSHA256Util.geraHash256(senha);
+      this.senha = HashUtil.sha256ToHex(senha);
     }
 
     public byte[] getImg() {
