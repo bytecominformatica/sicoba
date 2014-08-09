@@ -40,7 +40,7 @@ public class PlanoController implements Serializable {
   private void getParameters() {
     String planoId = util.getParameters("planoId");
     if (planoId != null && !planoId.isEmpty()) {
-      planoSelecionado = genericoJPA.buscarPorId(Plano.class, Integer.parseInt(planoId));
+      planoSelecionado = genericoJPA.findById(Plano.class, Integer.parseInt(planoId));
     }
   }
 

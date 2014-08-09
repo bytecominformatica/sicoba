@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.persistence.entity.security;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 
@@ -30,9 +34,20 @@ public class UserAccount {
   @Column(name = "last_name")
   private String lastName;
   @ManyToMany
-  @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
-    inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
+  @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id",
+      referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "group_id",
+      referencedColumnName = "id"))
   private List<AccessGroup> accessGroup;
+  @Lob
+  private byte[] img;
+
+  @Column(name = "created_at")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Calendar createdAt;
+
+  @Column(name = "updated_at")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Calendar updatedAt;
 
   public int getId() {
     return id;
@@ -72,6 +87,19 @@ public class UserAccount {
 
   public void setAccessGroup(List<AccessGroup> accessGroup) {
     this.accessGroup = accessGroup;
+  }
+
+  public byte[] getImg() {
+    return img;
+  }
+
+  public void setImg(byte[] img) {
+    this.img = img;
+  }
+
+  public Object getLogin() {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

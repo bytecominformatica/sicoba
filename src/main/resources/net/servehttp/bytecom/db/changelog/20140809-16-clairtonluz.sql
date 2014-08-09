@@ -2,23 +2,27 @@
 
 --changeset clairtonluz:16
 
-
-
 create table access_group (
 	id int not null primary key auto_increment,
 	name varchar(255) not null,
 	description varchar(255),
 	user_default tinyint(1) not null default 0,
 	unique key(name)
-);
+) ENGINE=InnoDB;
 
 create table user_account (
 	id int not null primary key auto_increment,
 	email varchar(255) not null,
 	first_name varchar(255),
 	last_name varchar(255),
-	unique key(email)
-);
+	img blob,
+	unique key(email),
+	created_at datetime,
+    updated_at timestamp not null default current_timestamp on update current_timestamp
+) ENGINE=InnoDB;
+
+create trigger user_account_on_insert before insert
+on user_account for each row set new.created_at = current_timestamp;
 
 create table user_group (
 	group_id int not null,
@@ -28,7 +32,7 @@ create table user_group (
 	foreign key(group_id) references access_group(id),
 	constraint fk_user_id_user_accounnt_id
 	foreign key(user_id) references user_account(id)
-);
+) ENGINE=InnoDB;
 
 create table authentication (
 	id int not null primary key auto_increment,
@@ -38,5 +42,10 @@ create table authentication (
 	unique key(username),
 	unique key(user_account_id),
 	constraint fk_user_account_id_user_accounnt_id
-	foreign key(user_account_id) references user_account(id)
-);
+	foreign key(user_account_id) references user_account(id),
+	created_at datetime,
+    updated_at timestamp not null default current_timestamp on update current_timestamp
+) ENGINE=InnoDB;
+
+create trigger authentication_on_insert before insert
+on authentication for each row set new.created_at = current_timestamp;

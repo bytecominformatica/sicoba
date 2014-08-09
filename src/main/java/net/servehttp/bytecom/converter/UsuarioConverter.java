@@ -37,7 +37,7 @@ public class UsuarioConverter implements Converter {
           return null;
       }
 
-      Usuario usuario = genericoJPA.buscarPorId(Usuario.class, Integer.valueOf(value));
+      Usuario usuario = genericoJPA.findById(Usuario.class, Integer.valueOf(value));
 
       if (usuario == null) {
           throw new ConverterException(new FacesMessage("Unknown user ID: "

@@ -36,7 +36,7 @@ public class PlanoConverter implements Converter {
 			return null;
 		}
 
-		Plano plano = genericoJPA.buscarPorId(Plano.class, Integer.valueOf(value));
+		Plano plano = genericoJPA.findById(Plano.class, Integer.valueOf(value));
 
 		if (plano == null) {
 			throw new ConverterException(new FacesMessage("Registro desconhecido ID: "

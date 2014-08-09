@@ -56,7 +56,7 @@ public class ContratoController implements Serializable {
     private void getParameters() {
         String clienteId = util.getParameters("clienteId");
         if (clienteId != null && !clienteId.isEmpty()) {
-            clienteSelecionado = genericoJPA.buscarPorId(Cliente.class, Integer.parseInt(clienteId));
+            clienteSelecionado = genericoJPA.findById(Cliente.class, Integer.parseInt(clienteId));
             if (clienteSelecionado.getContrato() == null) {
                 Contrato c = new Contrato();
                 c.setCliente(clienteSelecionado);
@@ -98,7 +98,7 @@ public class ContratoController implements Serializable {
     public void setPlanoId(int planoId) {
         this.planoId = planoId;
         if (planoId > 0) {
-            clienteSelecionado.getContrato().setPlano(genericoJPA.buscarPorId(Plano.class, planoId));
+            clienteSelecionado.getContrato().setPlano(genericoJPA.findById(Plano.class, planoId));
         }
     }
 

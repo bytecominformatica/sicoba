@@ -24,7 +24,7 @@ public class FornecedorConverter implements Converter {
     if(value == null || value.matches("\\d+")){
       return null;
     }
-    Fornecedor fornecedor = genericoJPA.buscarPorId(Fornecedor.class, Integer.valueOf(value));
+    Fornecedor fornecedor = genericoJPA.findById(Fornecedor.class, Integer.valueOf(value));
     
     if(fornecedor == null){
       throw new ConverterException(new FacesMessage("Registro desconhecido ID:"+value));

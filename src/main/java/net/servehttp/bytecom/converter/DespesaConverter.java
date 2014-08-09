@@ -26,7 +26,7 @@ public class DespesaConverter implements Converter {
 			return null;
 		}
 
-		Despesa despesa = genericoJPA.buscarPorId(Despesa.class, Integer.valueOf(value));
+		Despesa despesa = genericoJPA.findById(Despesa.class, Integer.valueOf(value));
 
 		if (despesa == null) {
 			throw new ConverterException(new FacesMessage("Registro desconhecido ID: "

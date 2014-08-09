@@ -18,7 +18,6 @@
 		<class>net.servehttp.bytecom.persistence.entity.Pais</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Plano</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Despesa</class>
-		<class>net.servehttp.bytecom.persistence.entity.Usuario</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Tecnico</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Header</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Trailer</class>
@@ -26,6 +25,9 @@
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Registro</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.RegistroDetalhe</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.TrailerLote</class>
+		<class>net.servehttp.bytecom.persistence.entity.security.UserAccount</class>
+		<class>net.servehttp.bytecom.persistence.entity.security.AccessGroup</class>
+		<class>net.servehttp.bytecom.persistence.entity.security.Authentication</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />

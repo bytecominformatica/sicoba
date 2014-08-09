@@ -36,7 +36,7 @@ public class ClienteConverter implements Converter {
 			return null;
 		}
 
-		Cliente cliente = genericoJPA.buscarPorId(Cliente.class, Integer.valueOf(value));
+		Cliente cliente = genericoJPA.findById(Cliente.class, Integer.valueOf(value));
 
 		if (cliente == null) {
 			throw new ConverterException(new FacesMessage("Unknown user ID: "

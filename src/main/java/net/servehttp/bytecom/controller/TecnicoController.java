@@ -43,7 +43,7 @@ public class TecnicoController implements Serializable {
   private void getParameters(){
     String tecnicoId = util.getParameters("id");
     if(tecnicoId != null && !tecnicoId.isEmpty()){
-      tecnico = genericoJPA.buscarPorId(Tecnico.class, Integer.parseInt(tecnicoId));
+      tecnico = genericoJPA.findById(Tecnico.class, Integer.parseInt(tecnicoId));
     }
   }
   

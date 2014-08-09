@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import net.servehttp.bytecom.Authentication;
-
 /**
  * 
  * @author Clairton Luz
@@ -21,7 +19,7 @@ public class WebUtil {
 			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 			ec.redirect(page);
 		} catch (IOException e) {
-			Logger.getLogger(Authentication.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(WebUtil.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 }

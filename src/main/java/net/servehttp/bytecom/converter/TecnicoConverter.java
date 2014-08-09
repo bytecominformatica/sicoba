@@ -36,7 +36,7 @@ public class TecnicoConverter implements Converter {
           return null;
       }
 
-      Tecnico tecnico = genericoJPA.buscarPorId(Tecnico.class, Integer.valueOf(value));
+      Tecnico tecnico = genericoJPA.findById(Tecnico.class, Integer.valueOf(value));
 
       if (tecnico == null) {
           throw new ConverterException(new FacesMessage("Unknown user ID: "
