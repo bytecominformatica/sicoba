@@ -13,7 +13,7 @@ public abstract class genericoBusiness {
     return genericoJPA.salvar(t);
   }
 
-  public <T> T atualizar(T t) {
+  public <T> T atualizar(T t) {    
     return genericoJPA.atualizar(t);
   }
   

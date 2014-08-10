@@ -3,12 +3,12 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
-	<f:viewParam name="id" value="#{planoController.planoSelecionado}" converter="#{planoConverter}"
+	<f:viewParam name="id" value="#{planoController.plano}" converter="#{planoConverter}"
 		converterMessage="Registro não encontrado." />
 </f:metadata>
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.plano}</ui:define>
-	<ui:define name="subtitle">#{bundle.edit}</ui:define>
+	<ui:define name="subtitle">#{planoController.plano.id == 0 ? bundle.new : bundle.edit}</ui:define>
 	<ui:define name="submenu">
 		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
 	</ui:define>
@@ -16,29 +16,29 @@
 		<div class="panel-body">
 			<form jsf:id="form" class="form-horizontal">
 					<label jsf:for="nome" class="control-label" >#{bundle.nome}</label>
-					<input jsf:id="nome" type="text" class="form-control" jsf:value="#{planoController.planoSelecionado.nome}" autofocus="autofocus" required="required"/>
+					<input jsf:id="nome" type="text" class="form-control" jsf:value="#{planoController.plano.nome}" autofocus="autofocus" required="required"/>
 
 					<label jsf:for="download" class="control-label" >#{bundle.download}</label>
-					<input jsf:id="download" type="number" class="form-control" jsf:value="#{planoController.planoSelecionado.download}" required="required"/>
+					<input jsf:id="download" type="number" class="form-control" jsf:value="#{planoController.plano.download}" required="required"/>
 
 					<label jsf:for="upload" class="control-label" >#{bundle.upload}</label>
-					<input jsf:id="upload" type="number" class="form-control" jsf:value="#{planoController.planoSelecionado.upload}" required="required"/>
+					<input jsf:id="upload" type="number" class="form-control" jsf:value="#{planoController.plano.upload}" required="required"/>
 
 					<label jsf:for="wifi" class="control-label" >#{bundle.wifi}</label>
-					<h:selectOneMenu id="wifi" value="#{planoController.planoSelecionado.wifi}" styleClass="form-control">
+					<h:selectOneMenu id="wifi" value="#{planoController.plano.wifi}" styleClass="form-control">
 						<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
 						<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
 					</h:selectOneMenu>
 
 					<label jsf:for="valorInstalacao" class="control-label" >#{bundle.valorInstalacao}</label>
-					<input jsf:id="valorInstalacao" type="number" step="any" class="form-control" jsf:value="#{planoController.planoSelecionado.valorInstalacao}" required="required"/>
+					<input jsf:id="valorInstalacao" type="number" step="any" class="form-control" jsf:value="#{planoController.plano.valorInstalacao}" required="required"/>
 
 					<label jsf:for="valorMensalidade" class="control-label" >#{bundle.valorMensalidade}</label>
-					<input jsf:id="valorMensalidade" type="number" step="any" class="form-control" jsf:value="#{planoController.planoSelecionado.valorMensalidade}" required="required"/>
+					<input jsf:id="valorMensalidade" type="number" step="any" class="form-control" jsf:value="#{planoController.plano.valorMensalidade}" required="required"/>
 
 				<div class="modal-footer">
-					<button jsf:id="btAtualizar" jsf:action="#{planoController.atualizar()}" class="btn btn-primary">
-						<span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+					<button jsf:id="btAtualizar" jsf:action="#{planoController.salvar()}" class="btn btn-primary">
+						<span class="glyphicon glyphicon-floppy-save" /> #{planoController.plano.id == 0 ? bundle.save : bundle.update}
 					</button>
 					<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;" class="btn btn-primary">
 						<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
