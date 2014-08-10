@@ -9,7 +9,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.business.AccountBussiness;
 import net.servehttp.bytecom.ejb.MailEJB;
+import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.NetworkUtil;
 import net.servehttp.bytecom.util.WebUtil;
@@ -39,6 +41,8 @@ public class SecurityController implements Serializable {
   private Subject currentUser = SecurityUtils.getSubject();
 
   @Inject
+  private AccountBussiness accountBussiness;
+  @Inject
   private WebUtil webUtil;
   @EJB
   private MailEJB mail;
@@ -47,8 +51,8 @@ public class SecurityController implements Serializable {
     if (!currentUser.isAuthenticated()) {
       try {
         currentUser.login(new UsernamePasswordToken(username, password, remember));
-        // UserAccount userAccount = gene
-        // currentUser.getSession().setAttribute("accountUser", value);
+         UserAccount userAccount = accountBussiness.findUserAccountByUsername(username);
+         currentUser.getSession().setAttribute("currentUser", userAccount);
       } catch (AuthenticationException e) {
         AlertaUtil.alerta("Unknown user, please try again");
         LOGGER.info("[" + new Date() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");

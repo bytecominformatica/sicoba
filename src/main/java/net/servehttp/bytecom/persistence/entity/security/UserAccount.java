@@ -97,9 +97,20 @@ public class UserAccount {
     this.img = img;
   }
 
-  public Object getLogin() {
-    // TODO Auto-generated method stub
-    return null;
+  public Calendar getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Calendar createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Calendar getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Calendar updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
 }

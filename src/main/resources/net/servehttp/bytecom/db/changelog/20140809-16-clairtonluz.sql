@@ -49,3 +49,13 @@ create table authentication (
 
 create trigger authentication_on_insert before insert
 on authentication for each row set new.created_at = current_timestamp;
+
+insert into user_account (email, first_name, last_name, img, updated_at) SELECT email, substring_index(nome, ' ', 1), substring_index(nome, ' ', -2), img, created_at FROM usuario where email is not null;
+insert into authentication (username, password, user_account_id, updated_at) SELECT u.login, u.senha, ua.id, u.created_at FROM usuario u inner join user_account ua on substring_index(nome, ' ', 1) = ua.first_name where u.email is not null;
+insert into access_group (name, description) values ('ADMIN', 'Administrador do sistema'), ('DIRETORIA', 'Diretores da empresa'), ('FINANCEIRO', 'Acesso a funções financeiras do sistema');
+insert user_group (user_id, group_id) select ua.id, (select ag.id from access_group ag where name = 'ADMIN') from user_account ua;
+
+update user_account set created_at = updated_at;
+update authentication set created_at = updated_at;
+
+drop table usuario;
