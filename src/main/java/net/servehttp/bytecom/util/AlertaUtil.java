@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.util;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
 /**
@@ -8,32 +9,23 @@ import javax.faces.context.FacesContext;
  * @author Clairton Luz
  *
  */
-public class AlertaUtil {
-	public static final int INFO = 1;
-	public static final int WARN = 2;
-	public static final int ERROR = 3;
+public abstract class AlertaUtil {
 
-	public static void alerta(String mensagem) {
-		alerta(mensagem, INFO);
-	}
+  public static void info(String mensagem) {
+    alert(mensagem, FacesMessage.SEVERITY_INFO);
+  }
 
-	public static void alerta(String mensagem, int tipo) {
-		FacesMessage msg;
-		switch (tipo) {
-		case ERROR:
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, null);
-			FacesContext.getCurrentInstance().validationFailed();
-			break;
+  public static void warn(String mensagem) {
+    alert(mensagem, FacesMessage.SEVERITY_WARN);
+  }
 
-		case WARN:
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, null);
-			break;
+  public static void error(String mensagem) {
+    alert(mensagem, FacesMessage.SEVERITY_ERROR);
+    FacesContext.getCurrentInstance().validationFailed();
+  }
 
-		default:
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, mensagem, null);
-			break;
-		}
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  private static void alert(String mensagem, Severity type) {
+    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(type, mensagem, null));
+  }
 
 }

@@ -64,11 +64,11 @@ public class AcessoController implements Serializable {
     if (isDisponivel(cliente.getAcesso())) {
       if (cliente.getAcesso().getId() == 0) {
         genericoJPA.salvar(cliente.getAcesso());
-        AlertaUtil.alerta("Acesso adicionado com sucesso!");
+        AlertaUtil.info("Acesso adicionado com sucesso!");
       } else {
         cliente.setUpdatedAt(Calendar.getInstance());
         genericoJPA.atualizar(cliente);
-        AlertaUtil.alerta("Acesso atualizado com sucesso!");
+        AlertaUtil.info("Acesso atualizado com sucesso!");
       }
       servidorController.atualizarAcesso();
       load();
@@ -80,25 +80,25 @@ public class AcessoController implements Serializable {
   public void remover() {
     genericoJPA.remover(cliente.getAcesso());
     load();
-    AlertaUtil.alerta("Acesso removido com sucesso!");
+    AlertaUtil.info("Acesso removido com sucesso!");
   }
 
   private boolean isDisponivel(Acesso a) {
     boolean disponivel = true;
     if (a == null) {
       disponivel = false;
-      AlertaUtil.alerta("Acesso Null", AlertaUtil.ERROR);
+      AlertaUtil.error("Acesso Null");
     } else {
 
       List<Acesso> acessos = genericoJPA.buscarTodos("ip", a.getIp(), Acesso.class);
       if (!acessos.isEmpty() && acessos.get(0).getId() != a.getId()) {
-        AlertaUtil.alerta("IP já Cadastrado", AlertaUtil.ERROR);
+        AlertaUtil.error("IP já Cadastrado");
         disponivel = false;
       } else {
 
         acessos = genericoJPA.buscarTodos("mac", a.getMac(), Acesso.class);
         if (!acessos.isEmpty() && acessos.get(0).getId() != a.getId()) {
-          AlertaUtil.alerta("MAC já Cadastrado", AlertaUtil.ERROR);
+          AlertaUtil.error("MAC já Cadastrado");
           disponivel = false;
         }
       }

@@ -72,7 +72,7 @@ public class MensalidadeController implements Serializable {
         c.add(Calendar.MONTH, 1);
         genericoJPA.salvar(m);
       }
-      AlertaUtil.alerta("Boletos gerados com sucesso!");
+      AlertaUtil.info("Boletos gerados com sucesso!");
     }
   }
 
@@ -81,8 +81,7 @@ public class MensalidadeController implements Serializable {
 
     if (inicio > fim) {
       validos = false;
-      AlertaUtil.alerta("número do boleto início não pode ser maior que o número do boleto fim",
-          AlertaUtil.WARN);
+      AlertaUtil.warn("número do boleto início não pode ser maior que o número do boleto fim");
     } else {
       List<Mensalidade> listMensalidades = genericoJPA.buscarJpql("select m from Mensalidade m where m.numeroBoleto between ?1 and ?2 ", inicio, fim, Mensalidade.class);
       if(!listMensalidades.isEmpty()){
@@ -91,7 +90,7 @@ public class MensalidadeController implements Serializable {
         for(Mensalidade m : listMensalidades){
           sb.append(" : " + m.getNumeroBoleto());
         }
-        AlertaUtil.alerta(sb.toString(), AlertaUtil.WARN);
+        AlertaUtil.error(sb.toString());
       }
     }
     return validos;
@@ -127,10 +126,10 @@ public class MensalidadeController implements Serializable {
   public void salvar() {
     if (mensalidade.getId() == 0) {
       genericoJPA.salvar(mensalidade);
-      AlertaUtil.alerta("Mensalidade adicionada com sucesso!");
+      AlertaUtil.info("Mensalidade adicionada com sucesso!");
     } else {
       genericoJPA.atualizar(mensalidade);
-      AlertaUtil.alerta("Mensalidade atualizado com sucesso!");
+      AlertaUtil.info("Mensalidade atualizado com sucesso!");
     }
     novaMensalidade();
     load();
@@ -140,7 +139,7 @@ public class MensalidadeController implements Serializable {
     cliente.getMensalidades().remove(m);
     genericoJPA.remover(m);
     load();
-    AlertaUtil.alerta("Mensalidade removido com sucesso!");
+    AlertaUtil.info("Mensalidade removido com sucesso!");
     return null;
   }
 

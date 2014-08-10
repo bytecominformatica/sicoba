@@ -55,16 +55,16 @@ public class PlanoController implements Serializable {
     if (planoBussiness.planAvaliable(getPlano())) {
       if (getPlano().getId() == 0) {
         planoBussiness.salvar(getPlano());
-        AlertaUtil.alerta("Plano adicionado com sucesso!");
+        AlertaUtil.info("Plano adicionado com sucesso!");
       } else {
         planoBussiness.atualizar(getPlano());
-        AlertaUtil.alerta("Atualizado com sucesso!");
+        AlertaUtil.info("Atualizado com sucesso!");
       }
       load();
       setPlano(new Plano());
       page = "list";
     } else {
-      AlertaUtil.alerta("Plano já cadastrado!", AlertaUtil.ERROR);
+      AlertaUtil.error("Plano já cadastrado!");
     }
     return page;
   }
@@ -75,11 +75,10 @@ public class PlanoController implements Serializable {
     if (planoBussiness.planWithoutUse(getPlano())) {
       planoBussiness.remover(getPlano());
       load();
-      AlertaUtil.alerta("Removido com sucesso!");
+      AlertaUtil.info("Removido com sucesso!");
       page = "list";
     } else {
-      AlertaUtil.alerta("Não é possível remover este plano, pois o mesmo está em uso!",
-          AlertaUtil.ERROR);
+      AlertaUtil.error("Não é possível remover este plano, pois o mesmo está em uso!");
     }
     return page;
   }

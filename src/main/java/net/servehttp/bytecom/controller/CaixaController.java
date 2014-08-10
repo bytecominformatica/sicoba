@@ -57,13 +57,13 @@ public class CaixaController implements Serializable {
 						}
 					}
 					genericoJPA.salvar(header);
-					AlertaUtil.alerta("Arquivo enviado com sucesso!");
+					AlertaUtil.info("Arquivo enviado com sucesso!");
 				}
 			} catch (IllegalArgumentException e) {
-				AlertaUtil.alerta("Arquivo corrompido!", AlertaUtil.ERROR);
+				AlertaUtil.error("Arquivo corrompido!");
 			}
 		} else {
-			AlertaUtil.alerta("Nenhum arquivo selecionado!", AlertaUtil.WARN);
+			AlertaUtil.error("Nenhum arquivo selecionado!");
 		}
 	}
 
@@ -74,7 +74,7 @@ public class CaixaController implements Serializable {
 				header.getSequencial(), Header.class);
 		if (!list.isEmpty()) {
 			exists = true;
-			AlertaUtil.alerta("Arquivo já foi enviado", AlertaUtil.WARN);
+			AlertaUtil.error("Arquivo já foi enviado");
 		}
 
 		return !exists;

@@ -54,7 +54,7 @@ public class SecurityController implements Serializable {
          UserAccount userAccount = accountBussiness.findUserAccountByUsername(username);
          currentUser.getSession().setAttribute("currentUser", userAccount);
       } catch (AuthenticationException e) {
-        AlertaUtil.alerta("Unknown user, please try again");
+        AlertaUtil.info("Unknown user, please try again");
         LOGGER.info("[" + new Date() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");
         sendAlert();
       }
