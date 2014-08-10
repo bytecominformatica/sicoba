@@ -1,23 +1,25 @@
 package net.servehttp.bytecom.util;
 
 import javax.enterprise.inject.Produces;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.entity.Usuario;
+import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.qualifier.UsuarioLogado;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 /**
  * @author Clairton Luz
  */
 public class ProducesUtil {
 
-    @Produces @Named @UsuarioLogado
-    public Usuario getUsuarioLogado() {
-    	ExternalContext ec = FacesContext.getCurrentInstance()
-				.getExternalContext();
-        return (Usuario) ec.getSessionMap().get("currentUser");
-    }
-   
+  @Produces
+  @Named
+  @UsuarioLogado
+  public UserAccount getUserAccount() {
+    Subject currentUser = SecurityUtils.getSubject();
+    return (UserAccount) currentUser.getSession().getAttribute("currentUser");
+  }
+
 }

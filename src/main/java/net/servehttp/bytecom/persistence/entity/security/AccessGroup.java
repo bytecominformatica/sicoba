@@ -1,11 +1,15 @@
 package net.servehttp.bytecom.persistence.entity.security;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 
@@ -22,7 +26,15 @@ public class AccessGroup {
   private String name;
   private String description;
   @Column(name = "user_default")
-  private int userDefault;
+  private boolean userDefault;
+
+  @Column(name = "created_at")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Calendar createdAt;
+
+  @Column(name = "updated_at")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Calendar updatedAt;
 
   public int getId() {
     return id;
@@ -48,12 +60,28 @@ public class AccessGroup {
     this.description = description;
   }
 
-  public int getUserDefault() {
+  public boolean isUserDefault() {
     return userDefault;
   }
 
-  public void setUserDefault(int userDefault) {
+  public void setUserDefault(boolean userDefault) {
     this.userDefault = userDefault;
+  }
+
+  public Calendar getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Calendar createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Calendar getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Calendar updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
 }

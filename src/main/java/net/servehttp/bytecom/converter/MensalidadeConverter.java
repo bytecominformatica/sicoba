@@ -36,7 +36,7 @@ public class MensalidadeConverter implements Converter {
 			return null;
 		}
 
-		Mensalidade mensalidade = genericoJPA.buscarPorId(Mensalidade.class, Integer.valueOf(value));
+		Mensalidade mensalidade = genericoJPA.findById(Mensalidade.class, Integer.valueOf(value));
 
 		if (mensalidade == null) {
 			throw new ConverterException(new FacesMessage("mensalidade desconhecido ID: "

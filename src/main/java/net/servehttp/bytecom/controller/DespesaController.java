@@ -42,7 +42,7 @@ public class DespesaController implements Serializable {
 	public String salvar(){
 	  String page = null;
 	  if(valida(novaDespesa)){
-	    novaDespesa.setFornecedor(genericoJPA.buscarPorId(Fornecedor.class, fornecedorId));
+	    novaDespesa.setFornecedor(genericoJPA.findById(Fornecedor.class, fornecedorId));
         genericoJPA.salvar(novaDespesa);
         AlertaUtil.alerta("Despesa gravada com sucesso!");
         load();
@@ -83,7 +83,7 @@ public class DespesaController implements Serializable {
 	private void getParameters(){
 		String despesaId = util.getParameters("despesaId");
 		if(despesaId != null && !despesaId.isEmpty()){
-			despesaSelecionada = genericoJPA.buscarPorId(Despesa.class, Integer.parseInt(despesaId));
+			despesaSelecionada = genericoJPA.findById(Despesa.class, Integer.parseInt(despesaId));
 		}
 		
 	}

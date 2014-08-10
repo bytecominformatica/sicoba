@@ -8,8 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
+import net.servehttp.bytecom.business.PlanoBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 import net.servehttp.bytecom.util.AlertaUtil;
 
@@ -21,35 +20,26 @@ import net.servehttp.bytecom.util.AlertaUtil;
 @ViewScoped
 public class PlanoController implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = -676355663109515972L;
   private List<Plano> listPlanos;
-  private Plano planoSelecionado;
-  private Plano novoPlano = new Plano();
+  @Inject
+  private Plano plano;
   @Inject
   private Util util;
   @Inject
-  private GenericoJPA genericoJPA;
+  private PlanoBussiness planoBussiness;
 
   @PostConstruct
   public void load() {
-    listPlanos = genericoJPA.buscarTodos(Plano.class);
-    limpar();
+    listPlanos = planoBussiness.findPlans();
     getParameters();
   }
 
   private void getParameters() {
     String planoId = util.getParameters("planoId");
     if (planoId != null && !planoId.isEmpty()) {
-      planoSelecionado = genericoJPA.buscarPorId(Plano.class, Integer.parseInt(planoId));
+      setPlano(planoBussiness.findById(Integer.parseInt(planoId)));
     }
-  }
-
-  public void setSelecionado(Plano plano) {
-    planoSelecionado = plano;
-  }
-
-  private void limpar() {
-    planoSelecionado = null;
   }
 
   public List<Plano> getListPlanos() {
@@ -60,56 +50,30 @@ public class PlanoController implements Serializable {
     this.listPlanos = listPlanos;
   }
 
-  public Plano getPlanoSelecionado() {
-    return planoSelecionado;
-  }
-
-  public void setPlanoSelecionado(Plano planoSelecionado) {
-    this.planoSelecionado = planoSelecionado;
-  }
-
-  public Plano getNovoPlano() {
-    return novoPlano;
-  }
-
-  public void setNovoPlano(Plano novoPlano) {
-    this.novoPlano = novoPlano;
-  }
-
   public String salvar() {
     String page = null;
-    if (valida(novoPlano)) {
-      genericoJPA.salvar(novoPlano);
-      AlertaUtil.alerta("Plano adicionado com sucesso!");
+    if (planoBussiness.planAvaliable(getPlano())) {
+      if (getPlano().getId() == 0) {
+        planoBussiness.salvar(getPlano());
+        AlertaUtil.alerta("Plano adicionado com sucesso!");
+      } else {
+        planoBussiness.atualizar(getPlano());
+        AlertaUtil.alerta("Atualizado com sucesso!");
+      }
       load();
-      novoPlano = new Plano();
+      setPlano(new Plano());
       page = "list";
+    } else {
+      AlertaUtil.alerta("Plano já cadastrado!", AlertaUtil.ERROR);
     }
     return page;
   }
 
-  private boolean valida(Plano plano) {
-    boolean result = true;
-    if (!genericoJPA.buscarTodos("nome", plano.getNome(), Plano.class).isEmpty()) {
-      result = false;
-      AlertaUtil.alerta("Nome inválido!", AlertaUtil.ERROR);
-    }
-    return result;
-  }
-
-  public String atualizar() {
-    genericoJPA.atualizar(planoSelecionado);
-    load();
-    AlertaUtil.alerta("Atualizado com sucesso!");
-    return "list";
-  }
 
   public String remover() {
     String page = null;
-    List<Contrato> contratos =
-        genericoJPA.buscarTodos("plano", planoSelecionado, Contrato.class);
-    if (contratos.isEmpty()) {
-      genericoJPA.remover(planoSelecionado);
+    if (planoBussiness.planWithoutUse(getPlano())) {
+      planoBussiness.remover(getPlano());
       load();
       AlertaUtil.alerta("Removido com sucesso!");
       page = "list";
@@ -118,6 +82,14 @@ public class PlanoController implements Serializable {
           AlertaUtil.ERROR);
     }
     return page;
+  }
+
+  public Plano getPlano() {
+    return plano;
+  }
+
+  public void setPlano(Plano plano) {
+    this.plano = plano;
   }
 
 }

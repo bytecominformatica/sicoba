@@ -38,7 +38,7 @@ public class DashboadJPA implements Serializable {
   }
 
   public double getFaturamentoDoMes(){
-    Double d = em.createQuery("select sum(m.valorPago) from Mensalidade m where m.dataVencimento between :inicio and :fim", Double.class)
+    Double d = em.createQuery("select sum(m.valorPago) from Mensalidade m where m.dataOcorrencia between :inicio and :fim", Double.class)
         .setParameter("inicio", DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime())
         .setParameter("fim", DateUtil.INSTANCE.getUltimoDiaDoMes().getTime())
         .getSingleResult();

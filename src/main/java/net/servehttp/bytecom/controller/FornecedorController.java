@@ -57,7 +57,7 @@ public class FornecedorController implements Serializable {
   public String salvar(){
     String page = null;
     if(valida(fornecedor)){
-      fornecedor.getEndereco().setBairro(genericoJPA.buscarPorId(Bairro.class, bairroId));
+      fornecedor.getEndereco().setBairro(genericoJPA.findById(Bairro.class, bairroId));
       if(fornecedor.getId() == 0){
         genericoJPA.salvar(fornecedor);
         AlertaUtil.alerta("Fornecedor gravado com sucesso!");
@@ -101,7 +101,7 @@ public class FornecedorController implements Serializable {
   private void getParameters(){
     String fornecedorId = util.getParameters("id");
     if(fornecedorId != null && !fornecedorId.isEmpty()){
-      fornecedor = genericoJPA.buscarPorId(Fornecedor.class, Integer.parseInt(fornecedorId));
+      fornecedor = genericoJPA.findById(Fornecedor.class, Integer.parseInt(fornecedorId));
       cidadeId = fornecedor.getEndereco().getBairro().getCidade().getId();
       bairroId = fornecedor.getEndereco().getBairro().getId();
       atualizaBairros();

@@ -38,7 +38,7 @@ public class AcessoController implements Serializable {
 
   public void load() {
     if (clienteId > 0) {
-      cliente = genericoJPA.buscarPorId(Cliente.class, clienteId);
+      cliente = genericoJPA.findById(Cliente.class, clienteId);
       if ((cliente.getAcesso()) == null) {
         cliente.setAcesso(new Acesso());
         cliente.getAcesso().setCliente(cliente);

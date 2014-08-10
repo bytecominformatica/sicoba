@@ -59,7 +59,7 @@ public class ClienteController implements Serializable {
   private void getParameters() {
     String clienteId = util.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = genericoJPA.buscarPorId(Cliente.class, Integer.parseInt(clienteId));
+      cliente = genericoJPA.findById(Cliente.class, Integer.parseInt(clienteId));
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
       bairroId = cliente.getEndereco().getBairro().getId();
       atualizaBairros();
@@ -86,7 +86,7 @@ public class ClienteController implements Serializable {
   public String salvar() {
     page = null;
     if (isClienteValido(cliente)) {
-      cliente.getEndereco().setBairro(genericoJPA.buscarPorId(Bairro.class, bairroId));
+      cliente.getEndereco().setBairro(genericoJPA.findById(Bairro.class, bairroId));
       if (cliente.getId() == 0) {
         genericoJPA.salvar(cliente);
         AlertaUtil.alerta("Cliente adicionado com sucesso!");

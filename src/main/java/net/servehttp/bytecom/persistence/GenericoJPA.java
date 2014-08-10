@@ -25,7 +25,7 @@ public class GenericoJPA implements Serializable {
 		this.em = em;
 	}
 
-	public <T> T buscarPorId(Class<T> klass, int id) {
+	public <T> T findById(Class<T> klass, int id) {
 		return ((T) em.find(klass, id));
 	}
 
@@ -35,8 +35,8 @@ public class GenericoJPA implements Serializable {
 		return t;
 	}
 
-	public <T> void atualizar(T t) {
-		em.merge(t);
+	public <T> T atualizar(T t) {
+		return em.merge(t);
 	}
 
 	public <T> void remover(T t) {

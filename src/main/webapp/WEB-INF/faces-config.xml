@@ -9,9 +9,9 @@
 			<var>bundle</var>
 		</resource-bundle>
 	</application>
-
+<!-- 
 	<lifecycle>
 		<phase-listener>net.servehttp.bytecom.AuthorizationListener</phase-listener>
-	</lifecycle>
+	</lifecycle> -->
 
 </faces-config>

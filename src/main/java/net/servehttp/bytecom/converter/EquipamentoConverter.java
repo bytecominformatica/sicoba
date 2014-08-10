@@ -37,7 +37,7 @@ public class EquipamentoConverter implements Converter {
 			return null;
 		}
 
-		Equipamento equipamento = genericoJPA.buscarPorId(Equipamento.class, Integer
+		Equipamento equipamento = genericoJPA.findById(Equipamento.class, Integer
 				.valueOf(value));
 
 		if (equipamento == null) {

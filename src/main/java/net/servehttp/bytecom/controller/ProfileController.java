@@ -1,15 +1,14 @@
 package net.servehttp.bytecom.controller;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.Usuario;
+import net.servehttp.bytecom.business.AccountBussiness;
+import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.ProducesUtil;
 
@@ -23,29 +22,24 @@ import net.servehttp.bytecom.util.ProducesUtil;
 public class ProfileController implements Serializable {
 
   private static final long serialVersionUID = -2081234112300283530L;
-  private Usuario usuario;
+  private UserAccount userAccount;
 
   @Inject
-  private GenericoJPA genericoJPA;
-  
+  private AccountBussiness accountBussiness;
+
   private ProducesUtil producesUtil = new ProducesUtil();
+
 
   public ProfileController() {}
 
   @PostConstruct
-  public void load(){
-	  usuario = producesUtil.getUsuarioLogado();
+  public void load() {
+    userAccount = producesUtil.getUserAccount();
   }
 
-  private boolean valida(Usuario usuario) {
+  private boolean valida(UserAccount userAccount) {
     boolean result = true;
-    List<Usuario> usuarios = genericoJPA.buscarTodos("login", usuario.getLogin(), Usuario.class);
-    if (!usuarios.isEmpty() && usuarios.get(0).getId() != usuario.getId()) {
-      AlertaUtil.alerta("Login já cadastrado!", AlertaUtil.ERROR);
-      result = false;
-    }
-    usuarios = genericoJPA.buscarTodos("email", usuario.getEmail(), Usuario.class);
-    if(!usuarios.isEmpty() && usuarios.get(0).getId() != usuario.getId()){
+    if (!accountBussiness.emailAvaliable(userAccount)) {
       AlertaUtil.alerta("Email já cadastrado!", AlertaUtil.ERROR);
       result = false;
     }
@@ -54,12 +48,12 @@ public class ProfileController implements Serializable {
 
   public String salvar() {
     String page = null;
-    if (valida(usuario)) {
-      if (usuario.getId() == 0) {
-        genericoJPA.salvar(usuario);
+    if (valida(userAccount)) {
+      if (userAccount.getId() == 0) {
+        accountBussiness.salvar(userAccount);
         AlertaUtil.alerta("Usuário gravado com sucesso!");
       } else {
-        genericoJPA.atualizar(usuario);
+        accountBussiness.atualizar(userAccount);
         AlertaUtil.alerta("Usuário atualizado com sucesso!");
       }
       page = "list";
@@ -69,12 +63,12 @@ public class ProfileController implements Serializable {
   }
 
 
-  public Usuario getUsuario() {
-    return usuario;
+  public UserAccount getUserAccount() {
+    return userAccount;
   }
 
-  public void setUsuario(Usuario usuario) {
-    this.usuario = usuario;
+  public void setUserAccount(UserAccount userAccount) {
+    this.userAccount = userAccount;
   }
 
 }

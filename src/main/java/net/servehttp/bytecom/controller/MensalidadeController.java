@@ -38,7 +38,7 @@ public class MensalidadeController implements Serializable {
 
   public void load() {
     if (clienteId > 0) {
-      cliente = genericoJPA.buscarPorId(Cliente.class, clienteId);
+      cliente = genericoJPA.findById(Cliente.class, clienteId);
       
       ordernarMensalidades();
       if (mensalidade == null) {
