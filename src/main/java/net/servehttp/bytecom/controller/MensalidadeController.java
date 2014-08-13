@@ -11,7 +11,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.GenericoJPA;
+import net.servehttp.bytecom.business.ClientBussiness;
+import net.servehttp.bytecom.business.MensalidadeBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.util.AlertaUtil;
@@ -27,19 +28,21 @@ public class MensalidadeController implements Serializable {
 
   private static final long serialVersionUID = -866830816286480241L;
   private Mensalidade mensalidade;
-  @Inject
-  private GenericoJPA genericoJPA;
   private Cliente cliente;
   private int clienteId;
   private Calendar calendar;
   private int numeroBoletoInicio;
   private int numeroBoletoFim;
   private Date dataInicio;
+  @Inject
+  private MensalidadeBussiness mensalidadeBussiness;
+  @Inject
+  private ClientBussiness clientBussiness;
 
   public void load() {
     if (clienteId > 0) {
-      cliente = genericoJPA.findById(Cliente.class, clienteId);
-      
+      cliente = clientBussiness.findById(clienteId);
+
       ordernarMensalidades();
       if (mensalidade == null) {
         novaMensalidade();
@@ -50,14 +53,14 @@ public class MensalidadeController implements Serializable {
 
   private void ordernarMensalidades() {
     Collections.sort(cliente.getMensalidades(), new Comparator<Mensalidade>() {
-        public int compare(Mensalidade m1, Mensalidade m2) {
-            return m1.getDataVencimento().compareTo(m2.getDataVencimento());
-        }
+      public int compare(Mensalidade m1, Mensalidade m2) {
+        return m1.getDataVencimento().compareTo(m2.getDataVencimento());
+      }
     });
   }
 
   public void gerarBoletos() {
-    if (isBoletosValidos(numeroBoletoInicio, numeroBoletoFim)) {
+    if (boletosNaoRegistrado(numeroBoletoInicio, numeroBoletoFim)) {
       Calendar c = Calendar.getInstance();
       c.setTime(dataInicio);
 
@@ -70,30 +73,10 @@ public class MensalidadeController implements Serializable {
         m.setNumeroBoleto(i);
 
         c.add(Calendar.MONTH, 1);
-        genericoJPA.salvar(m);
+        mensalidadeBussiness.salvar(m);
       }
       AlertaUtil.info("Boletos gerados com sucesso!");
     }
-  }
-
-  public boolean isBoletosValidos(int inicio, int fim) {
-    boolean validos = true;
-
-    if (inicio > fim) {
-      validos = false;
-      AlertaUtil.warn("número do boleto início não pode ser maior que o número do boleto fim");
-    } else {
-      List<Mensalidade> listMensalidades = genericoJPA.buscarJpql("select m from Mensalidade m where m.numeroBoleto between ?1 and ?2 ", inicio, fim, Mensalidade.class);
-      if(!listMensalidades.isEmpty()){
-        validos = false;
-        StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
-        for(Mensalidade m : listMensalidades){
-          sb.append(" : " + m.getNumeroBoleto());
-        }
-        AlertaUtil.error(sb.toString());
-      }
-    }
-    return validos;
   }
 
   public void novaMensalidade() {
@@ -105,6 +88,20 @@ public class MensalidadeController implements Serializable {
     }
     mensalidade.setValor(cliente.getContrato().getPlano().getValorMensalidade());
     mensalidade.setCliente(cliente);
+  }
+  
+  private boolean boletosNaoRegistrado(int inicio, int fim) {
+    boolean validos = true;
+      List<Mensalidade> listMensalidades = mensalidadeBussiness.buscarMensalidadesPorBoleto(inicio, fim);
+      if (!listMensalidades.isEmpty()) {
+        validos = false;
+        StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
+        for (Mensalidade m : listMensalidades) {
+          sb.append(" : " + m.getNumeroBoleto());
+        }
+        AlertaUtil.error(sb.toString());
+      }
+    return validos;
   }
 
   public int getMes() {
@@ -125,10 +122,10 @@ public class MensalidadeController implements Serializable {
 
   public void salvar() {
     if (mensalidade.getId() == 0) {
-      genericoJPA.salvar(mensalidade);
+      mensalidadeBussiness.salvar(mensalidade);
       AlertaUtil.info("Mensalidade adicionada com sucesso!");
     } else {
-      genericoJPA.atualizar(mensalidade);
+      mensalidadeBussiness.atualizar(mensalidade);
       AlertaUtil.info("Mensalidade atualizado com sucesso!");
     }
     novaMensalidade();
@@ -136,8 +133,7 @@ public class MensalidadeController implements Serializable {
   }
 
   public String remover(Mensalidade m) {
-    cliente.getMensalidades().remove(m);
-    genericoJPA.remover(m);
+    mensalidadeBussiness.remover(m);
     load();
     AlertaUtil.info("Mensalidade removido com sucesso!");
     return null;

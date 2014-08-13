@@ -117,7 +117,7 @@ public class Cliente implements Serializable {
     }
 
     public void setRg(String rg) {
-        this.rg = rg;
+        this.rg = rg != null && rg.isEmpty() ? null : rg;
     }
 
     public String getEmail() {
@@ -125,7 +125,7 @@ public class Cliente implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email != null && email.isEmpty() ? null : email;
     }
 
     public Acesso getAcesso() {
@@ -204,7 +204,7 @@ public class Cliente implements Serializable {
     }
 
     public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
+        this.cpfCnpj = cpfCnpj != null && cpfCnpj.isEmpty() ? null : cpfCnpj;
     }
 	
 }

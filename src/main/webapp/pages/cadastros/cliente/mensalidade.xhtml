@@ -57,7 +57,7 @@
 					<div class="modal-footer">
 		              <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvar()}"
 		                class="btn btn-primary" type="submit">
-		                <span class="glyphicon glyphicon-floppy-save" /> #{mensalidadeController.mensalidade.id == 0 ?  bundle.salvar : bundle.update}
+		                <span class="glyphicon glyphicon-floppy-save" /> #{mensalidadeController.mensalidade.id == 0 ?  bundle.save : bundle.update}
 		              </button>
 		              <button jsf:id="btnRemove" jsf:actionListener="#{mensalidadeController.remover(mensalidadeController.mensalidade)}"
 						class="btn btn-danger" style="margin-left: 5px; #{mensalidadeController.mensalidade.id == 0 ?  'display: none' : ''}">
