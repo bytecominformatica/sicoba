@@ -32,23 +32,30 @@
 						jsf:value="#{mensalidadeController.mensalidade.cliente.nome}" readonly="readonly"
 						required="required" />
 
+					<label jsf:for="status" class="control-label">#{bundle.status}</label>
+					<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
+						styleClass="form-control" required="true">
+						<f:selectItem itemLabel="EM ABERTO" itemValue="#{mensalidadeController.mensalidade.NAO_PAGA}" />
+						<f:selectItem itemLabel="PAGA" itemValue="#{mensalidadeController.mensalidade.PAGA}" />
+						<f:ajax event="change" render=":form:valorPagoDisplay"/>
+					</h:selectOneMenu>
+
 					<label jsf:for="valor" class="control-label">#{bundle.valor}</label>
 					<input jsf:id="valor" type="number" step="any" class="form-control" autofocus="autofocus"
 						jsf:value="#{mensalidadeController.mensalidade.valor}"
 						required="required" />
+
+					<div jsf:id="valorPagoDisplay" style="display: #{mensalidadeController.mensalidade.status == 1 ?  'inline' : 'none'}">
+						<label jsf:for="valorPago" class="control-label" >#{bundle.valorPago}</label>
+						<input jsf:id="valorPago" type="number" step="any" class="form-control"
+							jsf:value="#{mensalidadeController.mensalidade.valorPago}" />
+					</div>
 
 					<label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label>
 			        <input jsf:id="vencimento" type="date" required="required"
 			            jsf:value="#{mensalidadeController.mensalidade.dataVencimento}" class="form-control">
 			            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00"/>
 			        </input>
-
-					<label jsf:for="status" class="control-label">#{bundle.status}</label>
-					<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
-						styleClass="form-control" required="true">
-						<f:selectItem itemLabel="EM ABERTO" itemValue="#{mensalidadeController.mensalidade.NAO_PAGA}" />
-						<f:selectItem itemLabel="PAGA" itemValue="#{mensalidadeController.mensalidade.PAGA}" />
-					</h:selectOneMenu>
 
 					<label jsf:for="numeroBoleto" class="control-label">#{bundle.boleto}</label>
 					<input jsf:id="numeroBoleto" type="number" class="form-control"
@@ -107,7 +114,12 @@
 						
 						<h:column>
 							<f:facet name="header">#{bundle.valor}</f:facet>
-							#{m.valor}
+							#{m.valorFormatada}
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">#{bundle.valorPago}</f:facet>
+							#{m.valorPagoFormatada}
 						</h:column>
 						
 						<h:column>
