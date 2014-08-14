@@ -35,8 +35,8 @@
 					<label jsf:for="status" class="control-label">#{bundle.status}</label>
 					<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
 						styleClass="form-control" required="true">
-						<f:selectItem itemLabel="EM ABERTO" itemValue="#{mensalidadeController.mensalidade.NAO_PAGA}" />
-						<f:selectItem itemLabel="PAGA" itemValue="#{mensalidadeController.mensalidade.PAGA}" />
+						<f:selectItem itemLabel="EM ABERTO" itemValue="0" />
+						<f:selectItem itemLabel="BAIXA" itemValue="3" />
 						<f:ajax event="change" render=":form:valorPagoDisplay"/>
 					</h:selectOneMenu>
 

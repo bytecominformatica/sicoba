@@ -30,6 +30,7 @@ public class Mensalidade implements Serializable {
   private static final long serialVersionUID = -8955481650524371350L;
   public static final int NAO_PAGA = 0;
   public static final int PAGA = 1;
+  public static final int BAIXA = 2;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -94,19 +95,19 @@ public class Mensalidade implements Serializable {
   }
 
   public String getStatusFormatado() {
-    if (status == Mensalidade.PAGA) {
-      return "PAGA";
-    } else {
-      return "NÃO PAGA";
+    String s = "STATUS INVÁLIDO";
+    switch (status) {
+      case PAGA:
+        s = "PAGA";
+        break;
+      case NAO_PAGA:
+        s = "EM ABERTO";
+        break;
+      case BAIXA:
+        s = "BAIXA";
+        break;
     }
-  }
-
-  public short getNAO_PAGA() {
-    return NAO_PAGA;
-  }
-
-  public short getPAGA() {
-    return PAGA;
+    return s;
   }
 
   public Date getCreatedAt() {
@@ -193,5 +194,5 @@ public class Mensalidade implements Serializable {
     this.desconto = desconto;
   }
 
-  
+
 }
