@@ -27,7 +27,7 @@ public class AcessoJPATest extends Assert {
 
 	@Test
 	public void deveriaBuscarUmPlanoPorNomeEBuscarUmPlanoPorId() {
-		System.out.println(acessoJPA.getIpLivre());
+		acessoJPA.getIpLivre();
 	}
 
 	@AfterClass

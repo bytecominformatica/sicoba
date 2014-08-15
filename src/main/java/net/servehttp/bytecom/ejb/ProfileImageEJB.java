@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
@@ -30,24 +29,24 @@ import org.apache.commons.io.IOUtils;
 public class ProfileImageEJB implements Serializable {
 
   private static final long serialVersionUID = 8974017859406844766L;
-  private static final Logger LOGGER = Logger.getLogger(ProfileImageEJB.class.getSimpleName());
+  private Logger logger = Logger.getLogger(ProfileImageEJB.class.getName());
   private byte[] byteArray;
-  
-  public byte[] tratarImagem(Part file){
-    try{
-      if(file != null){
+
+  public byte[] tratarImagem(Part file) {
+    try {
+      if (file != null) {
         InputStream is = file.getInputStream();
         byteArray = IOUtils.toByteArray(is);
-      }else{
+      } else {
         byteArray = null;
       }
-    }catch(IOException e){
-      LOGGER.log(Level.SEVERE, e.getMessage());
+    } catch (IOException e) {
+
     }
-   
-   return byteArray;
+
+    return byteArray;
   }
-  
+
   public byte[] setThumbnail(byte[] arquivo, String extensao) {
     ImageIcon imageIcon = new ImageIcon(arquivo);
     Image inImage = imageIcon.getImage();
@@ -67,51 +66,46 @@ public class ProfileImageEJB implements Serializable {
     g2d.drawImage(inImage, tx, null);
     g2d.dispose();
 
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    try {
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
       ImageIO.write(outImage, extensao, baos);
       return baos.toByteArray();
     } catch (IOException e) {
-      System.out.println("Error");
-    } finally {
-      try {
-        baos.close();
-      } catch (IOException e) {
-        System.out.println("Error");
-      }
+      logger.severe(e.getMessage());
     }
     return null;
   }
+
   /**
-   * <pre> 
+   * <pre>
    * Método responsável por montar uma imagem a partir de um path especifico
    * @param bytesImagem
    * @param name
    * @return path
    * </pre>
    */
-  public String exibirImagem(byte[] bytesImagem, String name){
+  public String exibirImagem(byte[] bytesImagem, String name) {
     String path = null;
-    try{
+    try {
       FacesContext context = FacesContext.getCurrentInstance();
-      ServletContext servletcontext = (ServletContext)context.getExternalContext().getContext();
+      ServletContext servletcontext = (ServletContext) context.getExternalContext().getContext();
       String imageUsers = servletcontext.getRealPath("/resources/img/users/");
       File dirImageUsers = new File(imageUsers);
-      
-      if(!dirImageUsers.exists()){
+
+      if (!dirImageUsers.exists()) {
         dirImageUsers.createNewFile();
       }
-      
+
       byte[] bytes = bytesImagem;
-      FileImageOutputStream imageOutput = new FileImageOutputStream(new File(dirImageUsers, name + "." + "png"));
+      FileImageOutputStream imageOutput =
+          new FileImageOutputStream(new File(dirImageUsers, name + "." + "png"));
       imageOutput.write(bytes, 0, bytes.length);
       imageOutput.flush();
       imageOutput.close();
-      path = "/resources/img/users/" + name + "." + "png"; 
-      
-    }catch(Exception e){
-      e.printStackTrace();
+      path = "/resources/img/users/" + name + "." + "png";
+
+    } catch (IOException e) {
+      logger.severe(e.getMessage());
     }
     return path;
-   }
+  }
 }

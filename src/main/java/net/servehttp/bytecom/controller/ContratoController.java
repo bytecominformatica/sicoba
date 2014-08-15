@@ -77,7 +77,6 @@ public class ContratoController implements Serializable {
             e = clienteSelecionado.getContrato().getEquipamentoWifi();
             if (e != null && !listEquipamentosWifi.contains(e)) {
                 equipamentoWifiId = e.getId();
-                System.out.println("ADICIONOU");
                 listEquipamentosWifi.add(e);
             }
         }
@@ -178,7 +177,6 @@ public class ContratoController implements Serializable {
      */
     private boolean valida(Contrato contrato) {
         boolean valido = true;
-        System.out.println("DATAAAAAAAAAAAAA = " + contrato.getDataInstalacao());
         if (contrato.getDataInstalacao() == null) {
             valido = false;
         }
@@ -198,7 +196,6 @@ public class ContratoController implements Serializable {
                 page = salvar();
             }
         } else {
-            System.out.println("contrato null");
             AlertaUtil.info("Contrato NULL!");
 
         }

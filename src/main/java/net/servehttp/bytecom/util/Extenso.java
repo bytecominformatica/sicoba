@@ -4,11 +4,10 @@ package net.servehttp.bytecom.util;
  * @author Desconhecido
  * Classe para escrever um valor por extenso
  */
-import java.math.BigInteger;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Extenso {
 	private ArrayList<Integer> nro;
@@ -84,18 +83,6 @@ public class Extenso {
 
 	public void setNumber(double dec) {
 		setNumber(new BigDecimal(dec));
-	}
-
-	/**
-	 * Descrição do Método
-	 */
-	public void show() {
-		Iterator<Integer> valores = nro.iterator();
-
-		while (valores.hasNext()) {
-			System.out.println(((Integer) valores.next()).intValue());
-		}
-		System.out.println(toString());
 	}
 
 	/**
@@ -236,21 +223,5 @@ public class Extenso {
 		}
 
 		return buf.toString();
-	}
-
-	/**
-	 * Para teste
-	 * 
-	 * @param args
-	 *            numero a ser convertido
-	 */
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.out.println("Sintax : ...Extenso <numero>");
-			return;
-		}
-		Extenso teste = new Extenso(new BigDecimal(args[0]));
-		System.out.println("Numero  : " + (new DecimalFormat().format(Double.valueOf(args[0]))));
-		System.out.println("Extenso : " + teste.toString());
 	}
 }
