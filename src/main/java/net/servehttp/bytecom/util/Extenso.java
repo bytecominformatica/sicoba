@@ -6,7 +6,6 @@ package net.servehttp.bytecom.util;
  */
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Extenso {
@@ -103,12 +102,13 @@ public class Extenso {
 			buf.append(numToString(((Integer) nro.get(ct)).intValue(), ct));
 		}
 		if (buf.length() > 0) {
-			if (ehUnicoGrupo())
+			if (ehUnicoGrupo()){
 				buf.append(" de ");
+			}
 			while (buf.toString().endsWith(" "))
 				buf.setLength(buf.length() - 1);
-			if (ehPrimeiroGrupoUm())
-				buf.insert(0, "h");
+			if (ehPrimeiroGrupoUm()){
+				buf.insert(0, "h");}
 			if (nro.size() == 2 && ((Integer) nro.get(1)).intValue() == 1) {
 				buf.append(" real");
 			} else {
@@ -125,9 +125,7 @@ public class Extenso {
 	}
 
 	private boolean ehPrimeiroGrupoUm() {
-		if (((Integer) nro.get(nro.size() - 1)).intValue() == 1)
-			return true;
-		return false;
+		return ((Integer) nro.get(nro.size() - 1)).intValue() == 1;
 	}
 
 	/**
@@ -154,15 +152,15 @@ public class Extenso {
 	 * @return Descrição do Valor Retornado
 	 */
 	private boolean ehUnicoGrupo() {
-		if (nro.size() <= 3)
+		if (nro.size() <= 3 || (!ehGrupoZero(1) && !ehGrupoZero(2))){
 			return false;
-		if (!ehGrupoZero(1) && !ehGrupoZero(2))
-			return false;
+		}
 		boolean hasOne = false;
 		for (int i = 3; i < nro.size(); i++) {
 			if (((Integer) nro.get(i)).intValue() != 0) {
-				if (hasOne)
+				if (hasOne){
 					return false;
+				}
 				hasOne = true;
 			}
 		}
