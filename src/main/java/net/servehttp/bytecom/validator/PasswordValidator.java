@@ -14,7 +14,6 @@ public class PasswordValidator implements Validator {
 	@Override
 	public void validate(FacesContext arg0, UIComponent componente, Object value)
 			throws ValidatorException {
-		// TODO Auto-generated method stub
 		String password = value.toString();
 		
 		UIInput uiConfirmPassword = (UIInput)componente.getAttributes().get("confirmPassword");

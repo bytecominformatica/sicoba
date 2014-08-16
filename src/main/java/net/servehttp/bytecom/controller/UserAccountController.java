@@ -39,8 +39,6 @@ public class UserAccountController implements Serializable {
   @Inject
   private ProfileImageEJB profileImage;
 
-  public UserAccountController() {}
-
   @PostConstruct
   public void load() {
     listUserAccount = accountBussiness.findUsersAccounts();

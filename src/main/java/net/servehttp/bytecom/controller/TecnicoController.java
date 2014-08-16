@@ -32,8 +32,6 @@ public class TecnicoController implements Serializable {
   @Inject
   private Util util;
   
-  public TecnicoController(){}
-  
   @PostConstruct
   public void load(){
     listTecnico = genericoJPA.buscarTodos(Tecnico.class);

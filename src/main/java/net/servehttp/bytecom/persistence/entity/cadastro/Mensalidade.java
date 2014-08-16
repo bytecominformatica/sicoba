@@ -60,12 +60,6 @@ public class Mensalidade implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
 
-  public Mensalidade() {}
-
-  public Mensalidade(Integer id) {
-    this.setId(id);
-  }
-
   public Date getDataVencimento() {
     return dataVencimento;
   }
@@ -105,6 +99,9 @@ public class Mensalidade implements Serializable {
         break;
       case BAIXA:
         s = "BAIXA";
+        break;
+      default:
+        s = "STATUS INVÁLIDO";
         break;
     }
     return s;
