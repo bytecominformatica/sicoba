@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.controller;
+package net.servehttp.bytecom.util;
 
 import java.util.Map;
 

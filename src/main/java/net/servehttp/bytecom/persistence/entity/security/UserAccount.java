@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import net.servehttp.bytecom.ejb.ImageUtil;
+import net.servehttp.bytecom.util.ImageUtil;
 
 /**
  * 
@@ -46,7 +45,6 @@ public class UserAccount implements Serializable {
   private List<AccessGroup> accessGroup;
   @Lob
   private byte[] img;
-  
 
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
@@ -55,21 +53,12 @@ public class UserAccount implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar updatedAt;
-  
-  @Inject
+
   @Transient
-  private ImageUtil imageUtil;
+  private ImageUtil imageUtil = new ImageUtil();
   @Transient
   private String imageGerada;
 
-  public UserAccount(){
-    if(img != null){
-      setImageGerada(imageUtil.exibirImagem(img, id));
-    }else{
-      setImageGerada("/img/users/avatar_male.png");
-    }
-  }
-  
   public int getId() {
     return id;
   }
@@ -135,6 +124,13 @@ public class UserAccount implements Serializable {
   }
 
   public String getImageGerada() {
+    if (imageGerada == null) {
+      if (img != null) {
+        imageGerada = imageUtil.exibirImagem(img, System.currentTimeMillis());
+      } else {
+        imageGerada = "/img/users/avatar_male.png";
+      }
+    }
     return imageGerada;
   }
 

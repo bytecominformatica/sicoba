@@ -7,13 +7,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.Transient;
 import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.business.AccountBussiness;
-import net.servehttp.bytecom.ejb.ImageUtil;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.ImageUtil;
+import net.servehttp.bytecom.util.Util;
 
 /**
  * 
@@ -28,7 +28,6 @@ public class UserAccountController implements Serializable {
   private List<UserAccount> listUserAccount;
   private UserAccount userAccount = new UserAccount();
   private String page;
-  private String image;
   private static final String EXTENSION = "png";
   
   private Part file;
@@ -38,18 +37,13 @@ public class UserAccountController implements Serializable {
   @Inject
   private Util util;
   @Inject
-  private ImageUtil profileImage;
+  private ImageUtil imageUtil;
 
   @PostConstruct
   public void load() {
     listUserAccount = accountBussiness.findUsersAccounts();
     getParameters();
-    if(userAccount.getImg() != null){
-      //exibirImagem();
-      setImage(profileImage.exibirImagem(userAccount.getImg(), userAccount.getId()));
-    }else{
-      setImage("/img/avatar5.png");
-    }
+    
   }
 
   private boolean valida(UserAccount userAccount) {
@@ -64,17 +58,19 @@ public class UserAccountController implements Serializable {
 
   public String salvar() {
     page = null;
+    
+    System.out.println("FILE " + file);
     if (valida(userAccount)) {
       if (userAccount.getId() == 0) {
-        userAccount.setImg(profileImage.setThumbnail(profileImage.tratarImagem(file), EXTENSION));
+        userAccount.setImg(imageUtil.setThumbnail(imageUtil.tratarImagem(file), EXTENSION));
         accountBussiness.salvar(userAccount);
         AlertaUtil.info("Usuário gravado com sucesso!");
       } else {
-        if (userAccount.getImg() != null) {
+        if (file == null) {
           accountBussiness.atualizar(userAccount);
           AlertaUtil.info("Usuário atualizado com sucesso!");
         }else{
-          userAccount.setImg(profileImage.setThumbnail(profileImage.tratarImagem(file), EXTENSION));
+          userAccount.setImg(imageUtil.setThumbnail(imageUtil.tratarImagem(file), EXTENSION));
           accountBussiness.atualizar(userAccount);
           AlertaUtil.info("Usuário atualizado com sucesso!");
         }
@@ -123,14 +119,6 @@ public class UserAccountController implements Serializable {
 
   public void setFile(Part file) {
     this.file = file;
-  }
-
-  public String getImage() {
-    return image;
-  }
-
-  public void setImage(String image) {
-    this.image = image;
   }
 
   public String getPage() {

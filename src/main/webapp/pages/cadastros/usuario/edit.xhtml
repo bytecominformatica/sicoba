@@ -14,7 +14,7 @@
 	</ui:define>
 	<ui:define name="content">
 			<div class="panel-body">
-				<h:graphicImage value="#{userAccountController.image}" width="80px;"/>
+				<h:graphicImage value="#{userAccountController.userAccount.imageGerada}" width="80px;"/>
 				
 				<form jsf:id="form" class="form-horizontal" enctype="multipart/form-data">
 					<input type="file" jsf:id="file" jsf:value="#{userAccountController.file}" class="btn btn-primary btn-block">
