@@ -12,11 +12,11 @@ public class Extenso {
 	private ArrayList<Integer> nro;
 	private BigInteger num;
 
-	private String Qualificadores[][] = { { "centavo", "centavos" }, { "", "" }, { "mil", "mil" },
+	private final String qualificadores[][] = { { "centavo", "centavos" }, { "", "" }, { "mil", "mil" },
 			{ "milhão", "milhões" }, { "bilhão", "bilhões" }, { "trilhão", "trilhões" },
 			{ "quatrilhão", "quatrilhões" }, { "quintilhão", "quintilhões" }, { "sextilhão", "sextilhões" },
 			{ "septilhão", "septilhões" } };
-	private String Numeros[][] = {
+	private final String numeros[][] = {
 			{ "zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze",
 					"treze", "quatorze", "quinze", "desesseis", "desessete", "dezoito", "desenove" },
 			{ "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa" },
@@ -105,8 +105,9 @@ public class Extenso {
 			if (ehUnicoGrupo()){
 				buf.append(" de ");
 			}
-			while (buf.toString().endsWith(" "))
+			while (buf.toString().endsWith(" ")){
 				buf.setLength(buf.length() - 1);
+			}
 			if (ehPrimeiroGrupoUm()){
 				buf.insert(0, "h");}
 			if (nro.size() == 2 && ((Integer) nro.get(1)).intValue() == 1) {
@@ -168,8 +169,9 @@ public class Extenso {
 	}
 
 	boolean ehGrupoZero(int ps) {
-		if (ps <= 0 || ps >= nro.size())
+		if (ps <= 0 || ps >= nro.size()){
 			return true;
+		}
 		return ((Integer) nro.get(ps)).intValue() == 0;
 	}
 
@@ -183,18 +185,18 @@ public class Extenso {
 	 * @return Descrição do Valor Retornado
 	 */
 	private String numToString(int numero, int escala) {
-		int unidade = (numero % 10);
-		int dezena = (numero % 100); // * nao pode dividir por 10 pois verifica
+		int unidade = numero % 10;
+		int dezena = numero % 100; // * nao pode dividir por 10 pois verifica
 										// de 0..19
-		int centena = (numero / 100);
+		int centena = numero / 100;
 		StringBuffer buf = new StringBuffer();
 
 		if (numero != 0) {
 			if (centena != 0) {
 				if (dezena == 0 && centena == 1) {
-					buf.append(Numeros[2][0]);
+					buf.append(numeros[2][0]);
 				} else {
-					buf.append(Numeros[2][centena]);
+					buf.append(numeros[2][centena]);
 				}
 			}
 
@@ -203,20 +205,20 @@ public class Extenso {
 			}
 			if (dezena > 19) {
 				dezena /= 10;
-				buf.append(Numeros[1][dezena - 2]);
+				buf.append(numeros[1][dezena - 2]);
 				if (unidade != 0) {
 					buf.append(" e ");
-					buf.append(Numeros[0][unidade]);
+					buf.append(numeros[0][unidade]);
 				}
 			} else if (centena == 0 || dezena != 0) {
-				buf.append(Numeros[0][dezena]);
+				buf.append(numeros[0][dezena]);
 			}
 
 			buf.append(" ");
 			if (numero == 1) {
-				buf.append(Qualificadores[escala][0]);
+				buf.append(qualificadores[escala][0]);
 			} else {
-				buf.append(Qualificadores[escala][1]);
+				buf.append(qualificadores[escala][1]);
 			}
 		}
 

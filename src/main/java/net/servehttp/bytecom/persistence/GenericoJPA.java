@@ -26,7 +26,7 @@ public class GenericoJPA implements Serializable {
 	}
 
 	public <T> T findById(Class<T> klass, int id) {
-		return ((T) em.find(klass, id));
+		return (T) em.find(klass, id);
 	}
 
 	public <T> T salvar(T t) {

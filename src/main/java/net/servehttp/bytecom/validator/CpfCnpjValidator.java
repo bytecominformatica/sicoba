@@ -95,8 +95,8 @@ public class CpfCnpjValidator implements ConstraintValidator<CpfCnpj, String> {
     }
 
 
-    if (cnpjInvalido.contains(cnpj) || (cnpj.length() != 14)) {
-      return (false);
+    if (cnpjInvalido.contains(cnpj) || cnpj.length() != 14) {
+      return false;
     }
     char dig13, dig14;
     int sm, i, r, num, peso;
@@ -129,10 +129,10 @@ public class CpfCnpjValidator implements ConstraintValidator<CpfCnpj, String> {
       r = sm % 11;
       dig14 = (r == 0) || (r == 1) ? '0' : (char) ((11 - r) + 48);
 
-      return ((dig13 == cnpj.charAt(12)) && (dig14 == cnpj.charAt(13)));
+      return dig13 == cnpj.charAt(12) && dig14 == cnpj.charAt(13);
 
     } catch (InputMismatchException erro) {
-      return (false);
+      return false;
     }
   }
 }

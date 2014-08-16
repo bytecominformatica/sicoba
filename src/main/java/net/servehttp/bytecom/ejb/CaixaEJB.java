@@ -19,12 +19,12 @@ import net.servehttp.bytecom.persistence.entity.caixa.TrailerLote;
 import net.servehttp.bytecom.util.StringUtil;
 
 public class CaixaEJB {
-	private final int HEADER = 0;
-	private final int HEADER_LOTE = 1;
-	private final int REGISTRO = 3;
-	private final int DETALHE6 = 6;
-	private final int TRAILER_LOTE = 5;
-	private final int TRAILER = 9;
+	private static final int HEADER = 0;
+	private static final int HEADER_LOTE = 1;
+	private static final int REGISTRO = 3;
+	private static final int DETALHE6 = 6;
+	private static final int TRAILER_LOTE = 5;
+	private static final int TRAILER = 9;
 
 	public Header tratarArquivo(Part file) {
 		Header header = null;
@@ -138,7 +138,7 @@ public class CaixaEJB {
 		r.setValorTitulo(StringUtil.INSTANCE.getDouble2Decimal(line, 81, 96));
 		r.setValorTarifa(StringUtil.INSTANCE.getDouble2Decimal(line, 198, 212));
 
-		if (((line = in.readLine()) != null)) {
+		if ((line = in.readLine()) != null) {
 			int tipoDetalhe = StringUtil.INSTANCE.getInt(line, 15, 17);
 
 			RegistroDetalhe rd = new RegistroDetalhe();
