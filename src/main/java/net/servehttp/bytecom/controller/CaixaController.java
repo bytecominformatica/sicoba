@@ -46,7 +46,7 @@ public class CaixaController implements Serializable {
 						for(Registro r : hl.getRegistros()){
 							Mensalidade m = genericoJPA.buscarUm("numeroBoleto", r.getNossoNumero(), Mensalidade.class);
 							if(m != null){
-								m.setStatus(Mensalidade.PAGA);
+								m.setStatus(Mensalidade.BOLETO_PAGO);
 								m.setValor(r.getValorTitulo());
 								m.setValorPago(r.getRegistroDetalhe().getValorPago());
 								m.setDesconto(r.getRegistroDetalhe().getDesconto());

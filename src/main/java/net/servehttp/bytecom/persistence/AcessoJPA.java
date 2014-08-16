@@ -40,5 +40,10 @@ public class AcessoJPA implements Serializable {
 
     return ipLivre;
   }
+  
+  public void remover(Acesso a) {
+    em.createQuery("delete from Acesso m where m.id  = :id").setParameter("id", a.getId())
+        .executeUpdate();
+  }
 
 }

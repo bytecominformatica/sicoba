@@ -29,7 +29,7 @@ public class MensalidadeRelatorioTestJPA {
     Date inicio = DateUtil.INSTANCE.getHoje();
     Date fim = DateUtil.INSTANCE.getHoje();
     boolean buscarPorDataOcorrencia = true;
-    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, Mensalidade.PAGA, buscarPorDataOcorrencia);
+    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, Mensalidade.BOLETO_PAGO, buscarPorDataOcorrencia);
   }
 
   @Test
@@ -37,7 +37,7 @@ public class MensalidadeRelatorioTestJPA {
     Date inicio = DateUtil.INSTANCE.getHoje();
     Date fim = DateUtil.INSTANCE.getHoje();
     boolean buscarPorDataOcorrencia = false;
-    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, Mensalidade.PAGA, buscarPorDataOcorrencia);
+    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, Mensalidade.BOLETO_PAGO, buscarPorDataOcorrencia);
   }
  
   @AfterClass

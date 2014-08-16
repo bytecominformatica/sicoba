@@ -28,9 +28,9 @@ import net.servehttp.bytecom.util.StringUtil;
 public class Mensalidade implements Serializable {
 
   private static final long serialVersionUID = -8955481650524371350L;
-  public static final int NAO_PAGA = 0;
-  public static final int PAGA = 1;
-  public static final int BAIXA = 2;
+  public static final int EM_ABERTO = 0;
+  public static final int BOLETO_PAGO = 1;
+  public static final int BAIXA_MANUAL = 2;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -91,14 +91,14 @@ public class Mensalidade implements Serializable {
   public String getStatusFormatado() {
     String s = "STATUS INVÁLIDO";
     switch (status) {
-      case PAGA:
-        s = "PAGA";
+      case BOLETO_PAGO:
+        s = "BOLETO PAGO";
         break;
-      case NAO_PAGA:
+      case EM_ABERTO:
         s = "EM ABERTO";
         break;
-      case BAIXA:
-        s = "BAIXA";
+      case BAIXA_MANUAL:
+        s = "BAIXA MANUAL";
         break;
       default:
         s = "STATUS INVÁLIDO";

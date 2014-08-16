@@ -39,7 +39,7 @@ public class MensalidadeJPA {
       Contrato contrato = c.getContrato();
       Mensalidade m = new Mensalidade();
       m.setCliente(c);
-      m.setStatus(Mensalidade.NAO_PAGA);
+      m.setStatus(Mensalidade.EM_ABERTO);
       m.setValor(contrato.getPlano().getValorMensalidade());
       int dia = contrato.getVencimento();
       Date date = DateUtil.INSTANCE.parse(dia + "/" + mes + "/" + ano);

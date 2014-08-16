@@ -59,6 +59,21 @@ public class MensalidadeController implements Serializable {
     });
   }
 
+  public void prepararBaixaMensalidade() {
+    if (mensalidade.getStatus() == Mensalidade.BAIXA_MANUAL) {
+      if (mensalidade.getValorPago() == 0) {
+        mensalidade.setValorPago(mensalidade.getValor());
+      }
+      if (mensalidade.getDataOcorrencia() == null) {
+        mensalidade.setDataOcorrencia(new Date());
+      }
+    } else if (mensalidade.getStatus() == Mensalidade.EM_ABERTO) {
+      mensalidade.setValorPago(0);
+      mensalidade.setDataOcorrencia(null);
+    }
+
+  }
+
   public void gerarBoletos() {
     if (boletosNaoRegistrado(numeroBoletoInicio, numeroBoletoFim)) {
       Calendar c = Calendar.getInstance();
@@ -89,18 +104,19 @@ public class MensalidadeController implements Serializable {
     mensalidade.setValor(cliente.getContrato().getPlano().getValorMensalidade());
     mensalidade.setCliente(cliente);
   }
-  
+
   private boolean boletosNaoRegistrado(int inicio, int fim) {
     boolean validos = true;
-      List<Mensalidade> listMensalidades = mensalidadeBussiness.buscarMensalidadesPorBoleto(inicio, fim);
-      if (!listMensalidades.isEmpty()) {
-        validos = false;
-        StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
-        for (Mensalidade m : listMensalidades) {
-          sb.append(" : " + m.getNumeroBoleto());
-        }
-        AlertaUtil.error(sb.toString());
+    List<Mensalidade> listMensalidades =
+        mensalidadeBussiness.buscarMensalidadesPorBoleto(inicio, fim);
+    if (!listMensalidades.isEmpty()) {
+      validos = false;
+      StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
+      for (Mensalidade m : listMensalidades) {
+        sb.append(" : " + m.getNumeroBoleto());
       }
+      AlertaUtil.error(sb.toString());
+    }
     return validos;
   }
 
@@ -134,6 +150,7 @@ public class MensalidadeController implements Serializable {
 
   public String remover(Mensalidade m) {
     mensalidadeBussiness.remover(m);
+    mensalidade = new Mensalidade();
     load();
     AlertaUtil.info("Mensalidade removido com sucesso!");
     return null;

@@ -33,7 +33,7 @@ public class DashboadJPA implements Serializable {
 
   public List<Mensalidade> getMensalidadesEmAtraso(){
     return em.createQuery("select m from Mensalidade m where m.status = :status and m.dataVencimento < :date order by m.dataVencimento desc", Mensalidade.class)
-        .setParameter("status", Mensalidade.NAO_PAGA)
+        .setParameter("status", Mensalidade.EM_ABERTO)
         .setParameter("date", DateUtil.INSTANCE.getHoje())
         .getResultList();
   }
