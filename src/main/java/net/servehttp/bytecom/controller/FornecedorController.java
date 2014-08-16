@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.business.AddressBussiness;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
@@ -15,7 +16,6 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Despesa;
 import net.servehttp.bytecom.persistence.entity.cadastro.Fornecedor;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
-import net.servehttp.bytecom.util.EnderecoUtil;
 
 /**
  * 
@@ -38,13 +38,11 @@ public class FornecedorController implements Serializable {
 
   
   @Inject
-  private EnderecoUtil enderecoUtil;
+  private AddressBussiness addressBussiness;
   @Inject
   private Util util;
   @Inject
   private GenericoJPA genericoJPA;
-  
-  public FornecedorController(){}
   
   @PostConstruct
   public void load(){
@@ -60,10 +58,10 @@ public class FornecedorController implements Serializable {
       fornecedor.getEndereco().setBairro(genericoJPA.findById(Bairro.class, bairroId));
       if(fornecedor.getId() == 0){
         genericoJPA.salvar(fornecedor);
-        AlertaUtil.alerta("Fornecedor gravado com sucesso!");
+        AlertaUtil.info("Fornecedor gravado com sucesso!");
       }else{
         genericoJPA.atualizar(fornecedor);
-        AlertaUtil.alerta("Fornecedor atualizado com sucesso!");
+        AlertaUtil.info("Fornecedor atualizado com sucesso!");
       }
       page = "list";
     }return page;
@@ -80,7 +78,7 @@ public class FornecedorController implements Serializable {
     boolean retorno = true;
     for(Despesa d : listDespesa){
       if(d.getFornecedor().getId() == fornecedor.getId()){
-        AlertaUtil.alerta("Existem despesas relacionadas a esse fornecedor. Não poderá ser excluído!", AlertaUtil.WARN);
+        AlertaUtil.error("Existem despesas relacionadas a esse fornecedor. Não poderá ser excluído!");
         retorno = false;
       }
     }
@@ -91,7 +89,7 @@ public class FornecedorController implements Serializable {
     String page = null;
     if(existeDespesaRelacionada(fornecedor)){
       genericoJPA.remover(fornecedor);
-      AlertaUtil.alerta("Removido com sucesso!");
+      AlertaUtil.info("Removido com sucesso!");
     }  
     page = "list";
     
@@ -114,12 +112,12 @@ public class FornecedorController implements Serializable {
     List<Fornecedor> fornecedores = genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
     if(!genericoJPA.buscarTodos("nome",fornecedor.getNome(),Fornecedor.class).isEmpty()){
       result = false;
-      AlertaUtil.alerta("Nome Inválido", AlertaUtil.ERROR);
+      AlertaUtil.error("Nome Inválido");
     }
    
       fornecedores = genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
       if(!fornecedores.isEmpty() && fornecedores.get(0).getId() != fornecedor.getId()){
-        AlertaUtil.alerta("CPF/CNPJ já Cadastrado", AlertaUtil.ERROR);
+        AlertaUtil.error("CPF/CNPJ já Cadastrado");
         result = false;
       }
     return result;
@@ -140,8 +138,8 @@ public class FornecedorController implements Serializable {
   public void buscarEndereco() {
     cidadeId = bairroId = 0;
     fornecedor.getEndereco().setLogradouro(null);
-    EnderecoPojo ep = enderecoUtil.getEndereco(fornecedor.getEndereco().getCep());
-    fornecedor.getEndereco().setBairro(enderecoUtil.getBairro(ep));
+    EnderecoPojo ep = addressBussiness.findAddressByCep(fornecedor.getEndereco().getCep());
+    fornecedor.getEndereco().setBairro(addressBussiness.getNeighborhood(ep));
     listCidades = genericoJPA.buscarTodos(Cidade.class);
 
     if (fornecedor.getEndereco().getBairro() != null) {
@@ -215,14 +213,6 @@ public class FornecedorController implements Serializable {
 
   public void setFornecedorSelecionado(Fornecedor fornecedorSelecionado) {
     this.fornecedorSelecionado = fornecedorSelecionado;
-  }
-
-  public EnderecoUtil getEnderecoUtil() {
-    return enderecoUtil;
-  }
-
-  public void setEnderecoUtil(EnderecoUtil enderecoUtil) {
-    this.enderecoUtil = enderecoUtil;
   }
 
 }

@@ -28,8 +28,9 @@ import net.servehttp.bytecom.util.StringUtil;
 public class Mensalidade implements Serializable {
 
   private static final long serialVersionUID = -8955481650524371350L;
-  public static final int NAO_PAGA = 0;
-  public static final int PAGA = 1;
+  public static final int EM_ABERTO = 0;
+  public static final int BOLETO_PAGO = 1;
+  public static final int BAIXA_MANUAL = 2;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -58,12 +59,6 @@ public class Mensalidade implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-
-  public Mensalidade() {}
-
-  public Mensalidade(Integer id) {
-    this.setId(id);
-  }
 
   public Date getDataVencimento() {
     return dataVencimento;
@@ -94,19 +89,22 @@ public class Mensalidade implements Serializable {
   }
 
   public String getStatusFormatado() {
-    if (status == Mensalidade.PAGA) {
-      return "PAGA";
-    } else {
-      return "NÃO PAGA";
+    String s = "STATUS INVÁLIDO";
+    switch (status) {
+      case BOLETO_PAGO:
+        s = "BOLETO PAGO";
+        break;
+      case EM_ABERTO:
+        s = "EM ABERTO";
+        break;
+      case BAIXA_MANUAL:
+        s = "BAIXA MANUAL";
+        break;
+      default:
+        s = "STATUS INVÁLIDO";
+        break;
     }
-  }
-
-  public short getNAO_PAGA() {
-    return NAO_PAGA;
-  }
-
-  public short getPAGA() {
-    return PAGA;
+    return s;
   }
 
   public Date getCreatedAt() {
@@ -193,5 +191,5 @@ public class Mensalidade implements Serializable {
     this.desconto = desconto;
   }
 
-  
+
 }

@@ -46,7 +46,7 @@ public class CaixaController implements Serializable {
 						for(Registro r : hl.getRegistros()){
 							Mensalidade m = genericoJPA.buscarUm("numeroBoleto", r.getNossoNumero(), Mensalidade.class);
 							if(m != null){
-								m.setStatus(Mensalidade.PAGA);
+								m.setStatus(Mensalidade.BOLETO_PAGO);
 								m.setValor(r.getValorTitulo());
 								m.setValorPago(r.getRegistroDetalhe().getValorPago());
 								m.setDesconto(r.getRegistroDetalhe().getDesconto());
@@ -57,13 +57,13 @@ public class CaixaController implements Serializable {
 						}
 					}
 					genericoJPA.salvar(header);
-					AlertaUtil.alerta("Arquivo enviado com sucesso!");
+					AlertaUtil.info("Arquivo enviado com sucesso!");
 				}
 			} catch (IllegalArgumentException e) {
-				AlertaUtil.alerta("Arquivo corrompido!", AlertaUtil.ERROR);
+				AlertaUtil.error("Arquivo corrompido!");
 			}
 		} else {
-			AlertaUtil.alerta("Nenhum arquivo selecionado!", AlertaUtil.WARN);
+			AlertaUtil.error("Nenhum arquivo selecionado!");
 		}
 	}
 
@@ -74,7 +74,7 @@ public class CaixaController implements Serializable {
 				header.getSequencial(), Header.class);
 		if (!list.isEmpty()) {
 			exists = true;
-			AlertaUtil.alerta("Arquivo já foi enviado", AlertaUtil.WARN);
+			AlertaUtil.error("Arquivo já foi enviado");
 		}
 
 		return !exists;

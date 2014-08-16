@@ -32,8 +32,6 @@ public class TecnicoController implements Serializable {
   @Inject
   private Util util;
   
-  public TecnicoController(){}
-  
   @PostConstruct
   public void load(){
     listTecnico = genericoJPA.buscarTodos(Tecnico.class);
@@ -52,11 +50,11 @@ public class TecnicoController implements Serializable {
     List<Tecnico> tecnicos = genericoJPA.buscarTodos("email", tecnico.getEmail(), Tecnico.class);
     if(!genericoJPA.buscarTodos("nome", tecnico.getNome(), Tecnico.class).isEmpty()){
       result = false;
-      AlertaUtil.alerta("Nome Inválido", AlertaUtil.ERROR);
+      AlertaUtil.error("Nome Inválido");
     }
     tecnicos = genericoJPA.buscarTodos("email", tecnico.getEmail(), Tecnico.class);
     if(!tecnicos.isEmpty() && tecnicos.get(0).getId() != tecnico.getId()){
-      AlertaUtil.alerta("E-Mail já Cadastrado", AlertaUtil.ERROR);
+      AlertaUtil.error("E-Mail já Cadastrado");
       result = false;
     }
     return result;
@@ -67,10 +65,10 @@ public class TecnicoController implements Serializable {
     if(valida(tecnico)){
       if(tecnico.getId() == 0){
         genericoJPA.salvar(tecnico);
-        AlertaUtil.alerta("Tecnico adicionado com sucesso!");
+        AlertaUtil.info("Tecnico adicionado com sucesso!");
       }else{
         genericoJPA.atualizar(tecnico);
-        AlertaUtil.alerta("Tecnico atualizado com sucesso!");
+        AlertaUtil.info("Tecnico atualizado com sucesso!");
       }
       page = "list";
     }

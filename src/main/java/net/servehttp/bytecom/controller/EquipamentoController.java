@@ -20,17 +20,12 @@ import net.servehttp.bytecom.util.AlertaUtil;
 @ViewScoped
 public class EquipamentoController implements Serializable {
 
-  /**
-	 * 
-	 */
   private static final long serialVersionUID = 8291411734476446041L;
   private List<Equipamento> listEquipamentos;
   private Equipamento equipamento = new Equipamento();
   private String equipamentoId;
   @Inject
   private GenericoJPA genericoJPA;
-
-  public EquipamentoController() {}
 
   @PostConstruct
   public void load() {
@@ -50,10 +45,10 @@ public class EquipamentoController implements Serializable {
     if (isValido(equipamento)) {
       if (equipamento.getId() == 0) {
         genericoJPA.salvar(equipamento);
-        AlertaUtil.alerta("Equipamento adicionado com sucesso!");
+        AlertaUtil.info("Equipamento adicionado com sucesso!");
       } else {
         genericoJPA.atualizar(equipamento);
-        AlertaUtil.alerta("Equipamento atualizado com sucesso!");
+        AlertaUtil.info("Equipamento atualizado com sucesso!");
 
       }
       load();
@@ -66,7 +61,7 @@ public class EquipamentoController implements Serializable {
     boolean valido = true;
     List<Equipamento> equipamentos = genericoJPA.buscarTodos("mac", e.getMac(), Equipamento.class);
     if (!equipamentos.isEmpty() && equipamentos.get(0).getId() != e.getId()) {
-      AlertaUtil.alerta("MAC já Cadastrado", AlertaUtil.ERROR);
+      AlertaUtil.error("MAC já Cadastrado");
       valido = false;
     }
     return valido;
@@ -75,7 +70,7 @@ public class EquipamentoController implements Serializable {
   public String remover() {
     genericoJPA.remover(equipamento);
     load();
-    AlertaUtil.alerta("Equipamento removido com sucesso!");
+    AlertaUtil.info("Equipamento removido com sucesso!");
     return "list";
   }
 

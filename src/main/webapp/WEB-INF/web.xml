@@ -2,30 +2,6 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
 	<display-name>sicoba</display-name>
 	
-	<!-- PREFERENCES -->
-	<context-param>
-	    <param-name>javax.faces.PROJECT_STAGE</param-name>
-	    <param-value>Production</param-value>
-	</context-param>
-	<context-param>
-	    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
-	    <param-value>true</param-value>
-	</context-param>
-	<context-param>
-	  <param-name>
-	      javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL
-	  </param-name>
-	  <param-value>true</param-value>
-	</context-param>
-	<context-param>
-	  <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-	  <param-value>messages</param-value>
-	</context-param>
-	<context-param>
-	  <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-	  <param-value>pt_BR</param-value>
-	</context-param>
-	
 	<!-- LIQUIBASE -->
 	<context-param>
 	  <param-name>liquibase.changelog</param-name>
@@ -53,6 +29,31 @@
 	  <servlet-name>Faces Servlet</servlet-name>
 	  <url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
+	<!-- PREFERENCES -->
+	<context-param>
+	    <param-name>javax.faces.PROJECT_STAGE</param-name>
+	    <param-value>Production</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+	    <param-value>true</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>
+	        javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL
+	    </param-name>
+	    <param-value>true</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+	  <param-value>messages</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+	  <param-value>pt_BR</param-value>
+	</context-param>
+	
 	
 	<!-- SESSION -->
 	<session-config>

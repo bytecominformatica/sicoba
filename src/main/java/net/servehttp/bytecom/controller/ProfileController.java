@@ -29,9 +29,6 @@ public class ProfileController implements Serializable {
 
   private ProducesUtil producesUtil = new ProducesUtil();
 
-
-  public ProfileController() {}
-
   @PostConstruct
   public void load() {
     userAccount = producesUtil.getUserAccount();
@@ -40,7 +37,7 @@ public class ProfileController implements Serializable {
   private boolean valida(UserAccount userAccount) {
     boolean result = true;
     if (!accountBussiness.emailAvaliable(userAccount)) {
-      AlertaUtil.alerta("Email já cadastrado!", AlertaUtil.ERROR);
+      AlertaUtil.error("Email já cadastrado!");
       result = false;
     }
     return result;
@@ -51,10 +48,10 @@ public class ProfileController implements Serializable {
     if (valida(userAccount)) {
       if (userAccount.getId() == 0) {
         accountBussiness.salvar(userAccount);
-        AlertaUtil.alerta("Usuário gravado com sucesso!");
+        AlertaUtil.info("Usuário gravado com sucesso!");
       } else {
         accountBussiness.atualizar(userAccount);
-        AlertaUtil.alerta("Usuário atualizado com sucesso!");
+        AlertaUtil.info("Usuário atualizado com sucesso!");
       }
       page = "list";
     }

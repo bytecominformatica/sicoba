@@ -12,14 +12,14 @@ import javax.ejb.Startup;
 @Startup
 public class TarefaController {
 
-  private static final Logger logger = Logger.getLogger(TarefaController.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TarefaController.class.getName());
 
   /**
    * Esse metodo é executado a cada 1 minuto de cada hora
    */
   @Schedule(dayOfWeek = "Sun - Sat", hour = "3", persistent = false)
   public void backup() {
-    logger.info("\n######################################################"
+    LOGGER.info("\n######################################################"
         + "\n#                                                    #"
         + "\n#                 EFETUANDO BACKUP                   #"
         + "\n#                                                    #"
@@ -32,7 +32,7 @@ public class TarefaController {
     try {
       Runtime.getRuntime().exec(command);
     } catch (IOException e) {
-      logger.log(Level.SEVERE, null, e);
+      LOGGER.log(Level.SEVERE, null, e);
     }
   }
 

@@ -77,7 +77,6 @@ public class ContratoController implements Serializable {
             e = clienteSelecionado.getContrato().getEquipamentoWifi();
             if (e != null && !listEquipamentosWifi.contains(e)) {
                 equipamentoWifiId = e.getId();
-                System.out.println("ADICIONOU");
                 listEquipamentosWifi.add(e);
             }
         }
@@ -167,7 +166,7 @@ public class ContratoController implements Serializable {
         if (valida(contrato)) {
             genericoJPA.salvar(contrato);
             load();
-            AlertaUtil.alerta("Contrato adicionado com sucesso!");
+            AlertaUtil.info("Contrato adicionado com sucesso!");
             page = "edit";
         }
         return page;
@@ -178,7 +177,6 @@ public class ContratoController implements Serializable {
      */
     private boolean valida(Contrato contrato) {
         boolean valido = true;
-        System.out.println("DATAAAAAAAAAAAAA = " + contrato.getDataInstalacao());
         if (contrato.getDataInstalacao() == null) {
             valido = false;
         }
@@ -192,14 +190,13 @@ public class ContratoController implements Serializable {
             if (contrato.getId() > 0) {
                 genericoJPA.atualizar(contrato);
                 load();
-                AlertaUtil.alerta("Contrato atualizado com sucesso!");
+                AlertaUtil.info("Contrato atualizado com sucesso!");
                 page = "edit";
             } else {
                 page = salvar();
             }
         } else {
-            System.out.println("contrato null");
-            AlertaUtil.alerta("Contrato NULL!");
+            AlertaUtil.info("Contrato NULL!");
 
         }
         return page;
@@ -208,7 +205,7 @@ public class ContratoController implements Serializable {
     public void remover() {
         genericoJPA.remover(contrato);
         load();
-        AlertaUtil.alerta("Contrato removido com sucesso!");
+        AlertaUtil.info("Contrato removido com sucesso!");
     }
 
     public Contrato getContrato() {

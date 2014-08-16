@@ -10,10 +10,10 @@ import javax.inject.Named;
 @RequestScoped
 public class ServidorController {
 
-  private static final Logger logger = Logger.getLogger(ServidorController.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ServidorController.class.getName());
 
   public void atualizarAcesso() {
-    logger.info("\n######################################################"
+    LOGGER.info("\n######################################################"
         + "\n#                                                    #"
         + "\n#         ATUALIZANDO ACESSO DOS CLIENTES            #"
         + "\n#                                                    #"
@@ -26,7 +26,7 @@ public class ServidorController {
     try {
       Runtime.getRuntime().exec(command);
     } catch (IOException e) {
-      logger.info("O ACESSO DOS CLIENTES NÃO FOI ATUALIZADO PORQUE VOCÊ NÃO ESTA NO SERVIDOR, DEVIDO A ISSO VOCÊ NÃO TEM O SCRIPT DE ATUALIZAÇÃO /opt/script/startServer.sh");
+      LOGGER.info("O ACESSO DOS CLIENTES NÃO FOI ATUALIZADO PORQUE VOCÊ NÃO ESTA NO SERVIDOR, DEVIDO A ISSO VOCÊ NÃO TEM O SCRIPT DE ATUALIZAÇÃO /opt/script/startServer.sh");
     }
   }
 

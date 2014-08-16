@@ -33,7 +33,7 @@
 						headerClass="tableColumnsHeader">
 						<f:facet name="header">
 							<div align="center">
-								<h:link outcome="new" styleClass="btn btn-primary">
+								<h:link outcome="edit" styleClass="btn btn-primary">
 									<span class="glyphicon glyphicon-plus" /> #{bundle.new}
 								</h:link>
 							</div>
@@ -48,6 +48,11 @@
 						<h:column>
 							<f:facet name="header">#{bundle.nome}</f:facet>
 							#{cliente.nome}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">#{bundle.ip}</f:facet>
+							#{cliente.acesso.ip}
 						</h:column>
 						
 						<h:column>

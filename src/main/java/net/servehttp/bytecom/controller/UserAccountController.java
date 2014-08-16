@@ -39,8 +39,6 @@ public class UserAccountController implements Serializable {
   @Inject
   private ProfileImageEJB profileImage;
 
-  public UserAccountController() {}
-
   @PostConstruct
   public void load() {
     listUserAccount = accountBussiness.findUsersAccounts();
@@ -57,7 +55,7 @@ public class UserAccountController implements Serializable {
     boolean result = true;
 
     if(!accountBussiness.emailAvaliable(userAccount)){
-      AlertaUtil.alerta("Email já cadastrado!", AlertaUtil.ERROR);
+      AlertaUtil.error("Email já cadastrado!");
       result = false;
     }
     return result;
@@ -69,15 +67,15 @@ public class UserAccountController implements Serializable {
       if (userAccount.getId() == 0) {
         userAccount.setImg(profileImage.setThumbnail(profileImage.tratarImagem(file), EXTENSION));
         accountBussiness.salvar(userAccount);
-        AlertaUtil.alerta("Usuário gravado com sucesso!");
+        AlertaUtil.info("Usuário gravado com sucesso!");
       } else {
         if (userAccount.getImg() != null) {
           accountBussiness.atualizar(userAccount);
-          AlertaUtil.alerta("Usuário atualizado com sucesso!");
+          AlertaUtil.info("Usuário atualizado com sucesso!");
         }else{
           userAccount.setImg(profileImage.setThumbnail(profileImage.tratarImagem(file), EXTENSION));
           accountBussiness.atualizar(userAccount);
-          AlertaUtil.alerta("Usuário atualizado com sucesso!");
+          AlertaUtil.info("Usuário atualizado com sucesso!");
         }
         
       }

@@ -8,14 +8,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.ClienteJPA;
-import net.servehttp.bytecom.persistence.GenericoJPA;
+import net.servehttp.bytecom.business.AddressBussiness;
+import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
-import net.servehttp.bytecom.util.EnderecoUtil;
 
 /**
  * 
@@ -24,7 +23,6 @@ import net.servehttp.bytecom.util.EnderecoUtil;
 @Named
 @ViewScoped
 public class ClienteController implements Serializable {
-
 
   private static final long serialVersionUID = 8827281306259995250L;
   private List<Cliente> listClientes;
@@ -36,30 +34,25 @@ public class ClienteController implements Serializable {
   private String page;
   private String pesquisa;
 
-  @Inject
-  private ClienteJPA clienteJPA;
-  @Inject
-  private GenericoJPA genericoJPA;
-
 
   @Inject
-  private EnderecoUtil enderecoUtil;
+  private ClientBussiness clientBussiness;
+  @Inject
+  private AddressBussiness addressBussiness;
   @Inject
   private Util util;
 
-  public ClienteController() {}
-
   @PostConstruct
   public void load() {
-    listClientes = clienteJPA.buscaUltimosClientesAlterados();
-    setListCidades(genericoJPA.buscarTodos(Cidade.class));
+    listClientes = clientBussiness.buscaUltimosClientesAlterados();
+    setListCidades(addressBussiness.findCities());
     getParameters();
   }
 
   private void getParameters() {
     String clienteId = util.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = genericoJPA.findById(Cliente.class, Integer.parseInt(clienteId));
+      cliente = clientBussiness.findById(Integer.parseInt(clienteId));
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
       bairroId = cliente.getEndereco().getBairro().getId();
       atualizaBairros();
@@ -68,10 +61,9 @@ public class ClienteController implements Serializable {
 
   public void consultar() {
     if (pesquisa != null && pesquisa.length() > 2) {
-      listClientes = clienteJPA.buscaClientesPorNomeFoneEmail(pesquisa);
+      listClientes = clientBussiness.findClientByNamePhoneEmail(pesquisa);
     } else {
-      AlertaUtil.alerta("pesquisa por nome tem que possuir pelo menos 3 caracteres.",
-          AlertaUtil.ERROR);
+      AlertaUtil.error("pesquisa por nome tem que possuir pelo menos 3 caracteres.");
     }
   }
 
@@ -86,13 +78,13 @@ public class ClienteController implements Serializable {
   public String salvar() {
     page = null;
     if (isClienteValido(cliente)) {
-      cliente.getEndereco().setBairro(genericoJPA.findById(Bairro.class, bairroId));
+      cliente.getEndereco().setBairro(addressBussiness.findById(bairroId));
       if (cliente.getId() == 0) {
-        genericoJPA.salvar(cliente);
-        AlertaUtil.alerta("Cliente adicionado com sucesso!");
+        clientBussiness.salvar(cliente);
+        AlertaUtil.info("Cliente adicionado com sucesso!");
       } else {
-        genericoJPA.atualizar(cliente);
-        AlertaUtil.alerta("Cliente atualizado com sucesso!");
+        clientBussiness.atualizar(cliente);
+        AlertaUtil.info("Cliente atualizado com sucesso!");
       }
       page = "list";
     }
@@ -103,51 +95,28 @@ public class ClienteController implements Serializable {
   private boolean isClienteValido(Cliente cliente) {
     boolean valido = true;
 
-    removeCamposVazios(cliente);
-
-    List<Cliente> clientes = genericoJPA.buscarTodos("rg", cliente.getRg(), Cliente.class);
-    if (!clientes.isEmpty() && clientes.get(0).getId() != cliente.getId()) {
-      AlertaUtil.alerta("RG já Cadastrado", AlertaUtil.ERROR);
+    if (!clientBussiness.rgAvaliable(cliente)) {
+      AlertaUtil.error("RG já Cadastrado");
       valido = false;
-    } else {
-      clientes = genericoJPA.buscarTodos("cpfCnpj", cliente.getCpfCnpj(), Cliente.class);
-      if (!clientes.isEmpty() && clientes.get(0).getId() != cliente.getId()) {
-        AlertaUtil.alerta("CPF já Cadastrado", AlertaUtil.ERROR);
-        valido = false;
-      } else {
-        clientes = genericoJPA.buscarTodos("email", cliente.getEmail(), Cliente.class);
-        if (!clientes.isEmpty() && clientes.get(0).getId() != cliente.getId()) {
-          AlertaUtil.alerta("E-Mail já Cadastrado", AlertaUtil.ERROR);
-          valido = false;
-        }
-      }
+    } else if (!clientBussiness.cpfCnpjAvaliable(cliente)) {
+      AlertaUtil.error("CPF já Cadastrado");
+      valido = false;
+    } else if (!clientBussiness.emailAvaliable(cliente)) {
+      AlertaUtil.error("E-Mail já Cadastrado");
+      valido = false;
     }
-
     return valido;
-  }
-
-  private void removeCamposVazios(Cliente c) {
-    if (c.getRg() != null && c.getRg().isEmpty()) {
-      c.setRg(null);
-    }
-    if (c.getCpfCnpj() != null && c.getCpfCnpj().isEmpty()) {
-      c.setCpfCnpj(null);
-    }
-    if (c.getEmail() != null && c.getEmail().isEmpty()) {
-      c.setEmail(null);
-    }
   }
 
   public String remover() {
     page = null;
     if (cliente.getAcesso() != null) {
-      AlertaUtil.alerta("Cliente não pode ser removido pois possui acesso cadastrado",
-          AlertaUtil.WARN);
+      AlertaUtil.warn("Cliente não pode ser removido pois possui acesso cadastrado");
     } else if (cliente.getContrato() != null) {
-      AlertaUtil.alerta("O cliente não pode ser removido pois possui contrato", AlertaUtil.WARN);
+      AlertaUtil.error("O cliente não pode ser removido pois possui contrato");
     } else {
-      genericoJPA.remover(cliente);
-      AlertaUtil.alerta("Cliente removido com sucesso!");
+      clientBussiness.remover(cliente);
+      AlertaUtil.info("Cliente removido com sucesso!");
       page = "list";
     }
     return page;
@@ -156,9 +125,9 @@ public class ClienteController implements Serializable {
   public void buscarEndereco() {
     cidadeId = bairroId = 0;
     cliente.getEndereco().setLogradouro(null);
-    EnderecoPojo ep = enderecoUtil.getEndereco(cliente.getEndereco().getCep());
-    cliente.getEndereco().setBairro(enderecoUtil.getBairro(ep));
-    listCidades = genericoJPA.buscarTodos(Cidade.class);
+    EnderecoPojo ep = addressBussiness.findAddressByCep(cliente.getEndereco().getCep());
+    cliente.getEndereco().setBairro(addressBussiness.getNeighborhood(ep));
+    listCidades = addressBussiness.findCities();
 
     if (cliente.getEndereco().getBairro() != null) {
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
@@ -166,7 +135,6 @@ public class ClienteController implements Serializable {
       bairroId = cliente.getEndereco().getBairro().getId();
       cliente.getEndereco().setLogradouro(ep.getLogradouro());
     }
-
   }
 
   public List<Cidade> getListCidades() {

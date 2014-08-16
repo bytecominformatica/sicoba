@@ -49,9 +49,13 @@
             <div class="modal-footer">
               <button jsf:id="btSalvar" jsf:action="#{acessoController.salvar()}"
                 class="btn btn-primary" type="submit">
-                <span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+                <span class="glyphicon glyphicon-floppy-save" /> #{acessoController.cliente.acesso.id == 0 ? bundle.save : bundle.update}
 				<f:param value="#{acessoController.cliente.id}" name="id"></f:param>
               </button>
+              <button jsf:id="btnRemove" jsf:actionListener="#{acessoController.remover()}"
+				class="btn btn-danger" style="margin-left: 5px; #{acessoController.cliente.acesso.id == 0 ?  'display: none' : ''}">
+				<span class="glyphicon glyphicon-remove" /> Remover
+	  		  </button>	
               <button jsf:id="btVoltar" jsf:outcome="edit" style="margin-left: 5px;"
                 class="btn btn-primary">
                 <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}

@@ -20,4 +20,5 @@ public abstract class genericoBusiness {
   public <T> void remover(T t) {
     genericoJPA.remover(t);
   }
+  
 }

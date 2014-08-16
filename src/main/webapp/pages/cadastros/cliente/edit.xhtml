@@ -7,15 +7,15 @@
 
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.cliente}</ui:define>
-	<ui:define name="subtitle">#{bundle.edit}</ui:define>
+	<ui:define name="subtitle">#{clienteController.cliente.id == 0 ? bundle.new : bundle.edit}</ui:define>
 	<ui:define name="submenu">
 		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
 	</ui:define>
 	
 	<ui:define name="content">
 			<div class="panel-body">
-				<div class="modal-header" align="center">
-					<form jsf:id="formActions">
+				<div class="modal-header" align="center" >
+					<form jsf:id="formActions" rendered="#{clienteController.cliente.id != 0}">
 						<button jsf:id="btnContrato" class="btn btn-primary link-group" jsf:outcome="contrato">
 							<span class="glyphicon glyphicon-file" /> Contrato
 							<f:param value="#{clienteController.cliente.id}"
@@ -93,7 +93,7 @@
 						<div class="modal-footer">
                           <button jsf:id="btSalvar" jsf:action="#{clienteController.salvar()}"
                             class="btn btn-primary" type="submit">
-                            <span class="glyphicon glyphicon-floppy-save" /> #{bundle.salvar}
+                            <span class="glyphicon glyphicon-floppy-save" /> #{clienteController.cliente.id == 0 ? bundle.save : bundle.update}
                           </button>
                           <button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
                             class="btn btn-primary">

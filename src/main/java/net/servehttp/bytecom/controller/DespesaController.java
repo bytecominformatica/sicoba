@@ -29,8 +29,6 @@ public class DespesaController implements Serializable {
 	@Inject
 	private GenericoJPA genericoJPA;
 	
-	public DespesaController(){}
-	
 	@PostConstruct
 	public void load(){
 		listDespesa = genericoJPA.buscarTodos(Despesa.class);
@@ -44,7 +42,7 @@ public class DespesaController implements Serializable {
 	  if(valida(novaDespesa)){
 	    novaDespesa.setFornecedor(genericoJPA.findById(Fornecedor.class, fornecedorId));
         genericoJPA.salvar(novaDespesa);
-        AlertaUtil.alerta("Despesa gravada com sucesso!");
+        AlertaUtil.info("Despesa gravada com sucesso!");
         load();
         novaDespesa = new Despesa();
         page = "list";
@@ -61,7 +59,7 @@ public class DespesaController implements Serializable {
 		String page = null;
 			genericoJPA.remover(despesaSelecionada);
 			load();
-			AlertaUtil.alerta("Removido com sucesso!");
+			AlertaUtil.info("Removido com sucesso!");
 			page = "list";
 		
 		return page;
@@ -71,7 +69,7 @@ public class DespesaController implements Serializable {
 	  boolean result = true;
 	  if(!genericoJPA.buscarTodos("descricao", despesa.getDescricao(), Despesa.class).isEmpty()){
 	    result = false;
-	    AlertaUtil.alerta("Nome Inválido",AlertaUtil.ERROR);
+	    AlertaUtil.error("Nome Inválido");
 	  }
 	  return result;
 	}

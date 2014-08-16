@@ -60,7 +60,7 @@ public enum DateUtil {
         try {
             date = new SimpleDateFormat(pattern).parse(dateString);
         } catch (ParseException e) {
-            AlertaUtil.alerta("Data inválida", AlertaUtil.ERROR);
+            AlertaUtil.error("Data inválida");
         }
         return date;
     }

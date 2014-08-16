@@ -29,7 +29,7 @@ public class AcessoJPA implements Serializable {
     String ipLivre = null;
     for (int i = 10; i <= 250; i++) {
       try {
-        Acesso a = em.createQuery("select a from Acesso a where a.ip = :ip", Acesso.class)
+        em.createQuery("select a from Acesso a where a.ip = :ip", Acesso.class)
                 .setParameter("ip", rede + i).getSingleResult();
       } catch (NoResultException e) {
         ipLivre = rede + i;
@@ -39,6 +39,11 @@ public class AcessoJPA implements Serializable {
     }
 
     return ipLivre;
+  }
+  
+  public void remover(Acesso a) {
+    em.createQuery("delete from Acesso m where m.id  = :id").setParameter("id", a.getId())
+        .executeUpdate();
   }
 
 }
