@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.DashboadJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
+import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.util.StringUtil;
@@ -33,6 +34,7 @@ public class DashboardController implements Serializable {
   private double faturamentoPrevistoDoMes;
   private List<Mensalidade> listMensalidadesAtrasadas;
   private List<Cliente> listClientesInstalados;
+  private List<Acesso> listClientesInativos;
 
   @PostConstruct
   public void load() {
@@ -41,6 +43,7 @@ public class DashboardController implements Serializable {
     faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
     faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
     listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();
+    listClientesInativos = dashboadJPA.getClientesInativos();
   }
 
   public List<Cliente> getListClientesInstalados() {
@@ -61,6 +64,10 @@ public class DashboardController implements Serializable {
 
   public List<Mensalidade> getListMensalidadesAtrasadas() {
     return listMensalidadesAtrasadas;
+  }
+
+  public List<Acesso> getListClientesInativos() {
+    return listClientesInativos;
   }
 
 

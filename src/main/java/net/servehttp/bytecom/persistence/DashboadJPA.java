@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.util.DateUtil;
 
@@ -53,5 +54,10 @@ public class DashboadJPA implements Serializable {
         .getSingleResult();
     return d != null ? d : 0;
   }
-
+  
+  public List<Acesso> getClientesInativos(){
+    return em.createQuery("select a from Acesso a where a.status = :status", Acesso.class)
+        .setParameter("status", Acesso.INATIVO)
+        .getResultList();
+  }
 }
