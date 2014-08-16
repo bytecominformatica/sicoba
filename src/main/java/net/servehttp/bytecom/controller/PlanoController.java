@@ -11,6 +11,7 @@ import javax.inject.Named;
 import net.servehttp.bytecom.business.PlanoBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.Util;
 
 /**
  * 

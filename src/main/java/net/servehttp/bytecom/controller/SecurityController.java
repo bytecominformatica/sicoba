@@ -46,12 +46,14 @@ public class SecurityController implements Serializable {
   private WebUtil webUtil;
   @EJB
   private MailEJB mail;
+  @Inject
+  private UserAccount userAccount;
 
   public void authenticate() {
     if (!currentUser.isAuthenticated()) {
       try {
         currentUser.login(new UsernamePasswordToken(username, password, remember));
-         UserAccount userAccount = accountBussiness.findUserAccountByUsername(username);
+         userAccount = accountBussiness.findUserAccountByUsername(username);
          currentUser.getSession().setAttribute("currentUser", userAccount);
       } catch (AuthenticationException e) {
         AlertaUtil.info("Unknown user, please try again");

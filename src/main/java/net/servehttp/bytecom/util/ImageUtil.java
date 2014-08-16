@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.ejb;
+package net.servehttp.bytecom.util;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -83,7 +83,7 @@ public class ImageUtil implements Serializable {
    * @return path
    * </pre>
    */
-  public String exibirImagem(byte[] bytesImagem, int id) {
+  public String exibirImagem(byte[] bytesImagem, long id) {
     String path = null;
     try {
       FacesContext context = FacesContext.getCurrentInstance();
