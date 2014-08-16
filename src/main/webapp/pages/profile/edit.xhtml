@@ -20,23 +20,23 @@
 		<div class="panel panel-primary">
 			<div class="panel-body">
 				<form jsf:id="form" class="form-horizontal">
-					<img src="#{profilePictureFinder.getPictureFromEmail(profileController.usuario.email)}" class="img-rounded" alt="avatar" />
+					<img src="#{profilePictureFinder.getPictureFromEmail(profileController.userAccount.email)}" class="img-rounded" alt="avatar" />
 					<br/>
 					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
 					<input jsf:id="login" type="text" class="form-control"
-						jsf:value="#{profileController.usuario.login}" autofocus="autofocus"
+						jsf:value="#{profileController.userAccount.login}" autofocus="autofocus"
 						required="required" /> 
 					
 					<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
 					<input jsf:id="nome" type="text" class="form-control"
-						jsf:value="#{profileController.usuario.nome}" />
+						jsf:value="#{profileController.userAccount.nome}" />
 						
 					<label jsf:for="email" class="control-label">#{bundle.email}</label>
 					<input jsf:id="email" type="text" class="form-control"
-						jsf:value="#{profileController.usuario.email}" />
+						jsf:value="#{profileController.userAccount.email}" />
 					
 					<label jsf:for="password" class="control-label">#{bundle.pass}</label>
-					<h:inputSecret id="password" value="#{profileController.usuario.senha}" required="true"
+					<h:inputSecret id="password" value="#{profileController.userAccount.senha}" required="true"
 						requiredMessage="Digite a Senha" class="form-control">
 						<f:validator validatorId="passwordValidator" />
 						<f:attribute name="confirmPassword" value="#{confirmPassword}" />

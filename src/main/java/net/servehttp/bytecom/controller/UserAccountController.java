@@ -7,10 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.Transient;
 import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.business.AccountBussiness;
-import net.servehttp.bytecom.ejb.ProfileImageEJB;
+import net.servehttp.bytecom.ejb.ImageUtil;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
 
@@ -37,7 +38,7 @@ public class UserAccountController implements Serializable {
   @Inject
   private Util util;
   @Inject
-  private ProfileImageEJB profileImage;
+  private ImageUtil profileImage;
 
   @PostConstruct
   public void load() {
@@ -45,9 +46,9 @@ public class UserAccountController implements Serializable {
     getParameters();
     if(userAccount.getImg() != null){
       //exibirImagem();
-      setImage(profileImage.exibirImagem(userAccount.getImg(), userAccount.getFirstName()));
+      setImage(profileImage.exibirImagem(userAccount.getImg(), userAccount.getId()));
     }else{
-      setImage("/resources/img/default_avatar.png");
+      setImage("/img/avatar5.png");
     }
   }
 

@@ -84,4 +84,11 @@ public class AccessGroup {
     this.updatedAt = updatedAt;
   }
 
+  @Override
+  public String toString() {
+    return name;
+  }
+  
+  
+
 }

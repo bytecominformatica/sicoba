@@ -26,10 +26,10 @@ import org.apache.commons.io.IOUtils;
  * 
  */
 
-public class ProfileImageEJB implements Serializable {
+public class ImageUtil implements Serializable {
 
   private static final long serialVersionUID = 8974017859406844766L;
-  private static final Logger LOGGER = Logger.getLogger(ProfileImageEJB.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ImageUtil.class.getName());
   private byte[] byteArray;
 
   public byte[] tratarImagem(Part file) {
@@ -79,29 +79,31 @@ public class ProfileImageEJB implements Serializable {
    * <pre>
    * Método responsável por montar uma imagem a partir de um path especifico
    * @param bytesImagem
-   * @param name
+   * @param id
    * @return path
    * </pre>
    */
-  public String exibirImagem(byte[] bytesImagem, String name) {
+  public String exibirImagem(byte[] bytesImagem, int id) {
     String path = null;
     try {
       FacesContext context = FacesContext.getCurrentInstance();
       ServletContext servletcontext = (ServletContext) context.getExternalContext().getContext();
-      String imageUsers = servletcontext.getRealPath("/resources/img/users/");
+      String imageUsers = servletcontext.getRealPath("/img/users/");
       File dirImageUsers = new File(imageUsers);
+      System.out.println(dirImageUsers);
 
       if (!dirImageUsers.exists()) {
+        System.out.println("Diretorio existe");
         dirImageUsers.createNewFile();
       }
 
       byte[] bytes = bytesImagem;
       FileImageOutputStream imageOutput =
-          new FileImageOutputStream(new File(dirImageUsers, name + "." + "png"));
+          new FileImageOutputStream(new File(dirImageUsers, id + "." + "png"));
       imageOutput.write(bytes, 0, bytes.length);
       imageOutput.flush();
       imageOutput.close();
-      path = "/resources/img/users/" + name + "." + "png";
+      path = "/img/users/" + id + "." + "png";
 
     } catch (IOException e) {
       LOGGER.severe(e.getMessage());

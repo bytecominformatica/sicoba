@@ -1,8 +1,10 @@
 package net.servehttp.bytecom.persistence.entity.security;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import net.servehttp.bytecom.ejb.ImageUtil;
 
 /**
  * 
@@ -23,8 +28,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "user_account")
-public class UserAccount {
+public class UserAccount implements Serializable {
 
+  private static final long serialVersionUID = -7710346689149270175L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -40,6 +46,7 @@ public class UserAccount {
   private List<AccessGroup> accessGroup;
   @Lob
   private byte[] img;
+  
 
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
@@ -48,7 +55,21 @@ public class UserAccount {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar updatedAt;
+  
+  @Inject
+  @Transient
+  private ImageUtil imageUtil;
+  @Transient
+  private String imageGerada;
 
+  public UserAccount(){
+    if(img != null){
+      setImageGerada(imageUtil.exibirImagem(img, id));
+    }else{
+      setImageGerada("/img/users/avatar_male.png");
+    }
+  }
+  
   public int getId() {
     return id;
   }
@@ -111,6 +132,14 @@ public class UserAccount {
 
   public void setUpdatedAt(Calendar updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public String getImageGerada() {
+    return imageGerada;
+  }
+
+  public void setImageGerada(String imageGerada) {
+    this.imageGerada = imageGerada;
   }
 
 }

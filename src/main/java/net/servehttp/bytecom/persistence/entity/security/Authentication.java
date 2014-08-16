@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.persistence.entity.security;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -20,8 +21,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "authentication")
-public class Authentication {
+public class 
+Authentication implements Serializable {
 
+  private static final long serialVersionUID = 6300355473032048549L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
