@@ -20,17 +20,12 @@ import net.servehttp.bytecom.util.AlertaUtil;
 @ViewScoped
 public class EquipamentoController implements Serializable {
 
-  /**
-	 * 
-	 */
   private static final long serialVersionUID = 8291411734476446041L;
   private List<Equipamento> listEquipamentos;
   private Equipamento equipamento = new Equipamento();
   private String equipamentoId;
   @Inject
   private GenericoJPA genericoJPA;
-
-  public EquipamentoController() {}
 
   @PostConstruct
   public void load() {

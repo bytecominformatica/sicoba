@@ -29,7 +29,7 @@ import org.apache.commons.io.IOUtils;
 public class ProfileImageEJB implements Serializable {
 
   private static final long serialVersionUID = 8974017859406844766L;
-  private Logger logger = Logger.getLogger(ProfileImageEJB.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ProfileImageEJB.class.getName());
   private byte[] byteArray;
 
   public byte[] tratarImagem(Part file) {
@@ -70,7 +70,7 @@ public class ProfileImageEJB implements Serializable {
       ImageIO.write(outImage, extensao, baos);
       return baos.toByteArray();
     } catch (IOException e) {
-      logger.severe(e.getMessage());
+      LOGGER.severe(e.getMessage());
     }
     return null;
   }
@@ -104,7 +104,7 @@ public class ProfileImageEJB implements Serializable {
       path = "/resources/img/users/" + name + "." + "png";
 
     } catch (IOException e) {
-      logger.severe(e.getMessage());
+      LOGGER.severe(e.getMessage());
     }
     return path;
   }

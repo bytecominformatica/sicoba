@@ -29,8 +29,6 @@ public class DespesaController implements Serializable {
 	@Inject
 	private GenericoJPA genericoJPA;
 	
-	public DespesaController(){}
-	
 	@PostConstruct
 	public void load(){
 		listDespesa = genericoJPA.buscarTodos(Despesa.class);

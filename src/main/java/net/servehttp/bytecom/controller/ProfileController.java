@@ -29,9 +29,6 @@ public class ProfileController implements Serializable {
 
   private ProducesUtil producesUtil = new ProducesUtil();
 
-
-  public ProfileController() {}
-
   @PostConstruct
   public void load() {
     userAccount = producesUtil.getUserAccount();

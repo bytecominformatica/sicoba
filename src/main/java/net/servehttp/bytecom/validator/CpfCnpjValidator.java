@@ -22,7 +22,9 @@ public class CpfCnpjValidator implements ConstraintValidator<CpfCnpj, String> {
       "77777777777777", "88888888888888", "99999999999999");
 
   @Override
-  public void initialize(CpfCnpj constraintAnnotation) {}
+  public void initialize(CpfCnpj constraintAnnotation) {
+
+  }
 
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {

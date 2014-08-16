@@ -26,6 +26,8 @@ import net.servehttp.bytecom.util.AlertaUtil;
 public class AcessoController implements Serializable {
 
   private static final long serialVersionUID = 7972159878826621995L;
+  private static final String GATEWAY = "10.10.0.1";
+  private static final String MASK = "255.255.0.0";
   private Cliente cliente;
   private int clienteId;
   @Inject
@@ -45,8 +47,8 @@ public class AcessoController implements Serializable {
         
         String ipLivre = acessoJPA.getIpLivre();
         cliente.getAcesso().setIp(ipLivre);
-        cliente.getAcesso().setMascara("255.255.0.0");
-        cliente.getAcesso().setGateway("10.10.0.1");
+        cliente.getAcesso().setMascara(MASK);
+        cliente.getAcesso().setGateway(GATEWAY);
         cliente.getAcesso().setStatus(Acesso.ATIVO);
         Contrato c = cliente.getContrato();
         if (c != null) {

@@ -44,8 +44,6 @@ public class FornecedorController implements Serializable {
   @Inject
   private GenericoJPA genericoJPA;
   
-  public FornecedorController(){}
-  
   @PostConstruct
   public void load(){
     listFornecedor = genericoJPA.buscarTodos(Fornecedor.class);

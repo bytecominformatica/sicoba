@@ -42,8 +42,6 @@ public class ClienteController implements Serializable {
   @Inject
   private Util util;
 
-  public ClienteController() {}
-
   @PostConstruct
   public void load() {
     listClientes = clientBussiness.buscaUltimosClientesAlterados();
