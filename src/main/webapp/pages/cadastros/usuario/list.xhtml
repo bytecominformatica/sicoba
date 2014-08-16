@@ -14,7 +14,7 @@
 			<div class="panel-body">
 				<form jsf:id="form">
 				<div class="table-responsive">
-					<h:dataTable value="#{usuarioController.listUsuario}" var="usuario" styleClass="table table-hover"
+					<h:dataTable value="#{userAccountController.listUserAccount}" var="usuario" styleClass="table table-hover"
 						headerClass="tableColumnsHeader">
 						<f:facet name="header">
 							<div align="center">
@@ -28,13 +28,10 @@
 								#{usuario.id}
 							</h:column>
 						<h:column>
-							<f:facet name="header">#{bundle.login}</f:facet>
-								#{usuario.login}
-							</h:column>
-						<h:column>
 							<f:facet name="header">#{bundle.nome}</f:facet>
-								#{usuario.nome}
+								#{usuario.firstName} #{usuario.lastName}
 							</h:column>
+				
 
 						<h:column>
 							<f:facet name="header">#{bundle.actions}</f:facet>

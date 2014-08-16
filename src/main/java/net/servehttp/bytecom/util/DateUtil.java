@@ -12,10 +12,11 @@ import java.util.Date;
  */
 public enum DateUtil {
     INSTANCE;
-
-    private final SimpleDateFormat sdfData = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat DEFAULT = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat ANO_MES_DIA= new SimpleDateFormat("yyyyMMdd");
 
     /**
+     * 
      * 
      * Converte uma data para String no formato <b>dd/MM/yyyy<b>.
      * 
@@ -25,8 +26,13 @@ public enum DateUtil {
      * </pre>
      */
     public String format(Date date) {
-        return sdfData.format(date);
+        return DEFAULT.format(date);
     }
+
+    public String formataAnoMesDia(Date date) {
+      return ANO_MES_DIA.format(date);
+    }
+
 
     /**
      * 
@@ -40,7 +46,7 @@ public enum DateUtil {
     public Date parse(String dateString) {
         Date date = null;
         try {
-            date = sdfData.parse(dateString);
+            date = DEFAULT.parse(dateString);
         } catch (ParseException e) {
         }
         return date;

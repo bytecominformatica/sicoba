@@ -14,32 +14,25 @@
 	</ui:define>
 	<ui:define name="content">
 			<div class="panel-body">
-				<h:graphicImage value="#{usuarioController.image}" width="80px;"/>
+				<h:graphicImage value="#{userAccountController.image}" width="80px;"/>
 				
 				<form jsf:id="form" class="form-horizontal" enctype="multipart/form-data">
-					<input type="file" jsf:id="file" jsf:value="#{usuarioController.file}" class="btn btn-primary btn-block">
+					<input type="file" jsf:id="file" jsf:value="#{userAccountController.file}" class="btn btn-primary btn-block">
 						<i class="glyphicon glyphicon-plus"></i>
 	            		<span>Add files...</span>
 					</input>
-					<label jsf:for="login" class="control-label">#{bundle.login}</label> 
-					<input jsf:id="login" type="text" class="form-control"
-						jsf:value="#{usuarioController.usuario.login}" autofocus="autofocus"
+					<label jsf:for="firstName" class="control-label">#{bundle.firstName}</label> 
+					<input jsf:id="firstName" type="text" class="form-control"
+						jsf:value="#{userAccountController.userAccount.firstName}" autofocus="autofocus"
 						required="required" /> 
 					
-					<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
-					<input jsf:id="nome" type="text" class="form-control"
-						jsf:value="#{usuarioController.usuario.nome}" />
+					<label jsf:for="lastName" class="control-label">#{bundle.lastName}</label>
+					<input jsf:id="lastName" type="text" class="form-control"
+						jsf:value="#{userAccountController.userAccount.lastName}" />
 						
 					<label jsf:for="email" class="control-label">#{bundle.email}</label>
 					<input jsf:id="email" type="text" class="form-control"
-						jsf:value="#{usuarioController.usuario.email}" />
-					
-					<label jsf:for="password" class="control-label">#{bundle.pass}</label>
-					<h:inputSecret id="password" value="#{usuarioController.usuario.senha}" required="false"
-						requiredMessage="Digite a Senha" class="form-control">
-						<!-- <f:validator validatorId="passwordValidator" />
-						<f:attribute name="confirmPassword" value="#{confirmPassword}" />-->
-					</h:inputSecret>
+						jsf:value="#{userAccountController.userAccount.email}" />
 					
 					<!-- <label jsf:for="conf_pass" class="control-label">#{bundle.conf_pass}</label>
 					<h:inputSecret id="confirmPassword" required="false"
@@ -49,7 +42,7 @@
 					
 
 					<div class="modal-footer">
-						<button jsf:id="btSalvar" jsf:action="#{usuarioController.salvar()}"
+						<button jsf:id="btSalvar" jsf:action="#{userAccountController.salvar()}"
 							class="btn btn-primary" type="submit" >
 							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.save}
 						</button>

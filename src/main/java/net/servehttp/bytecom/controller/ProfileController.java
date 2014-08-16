@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.business.AccountBussiness;
+import net.servehttp.bytecom.persistence.entity.security.Authentication;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.ProducesUtil;
@@ -22,7 +23,10 @@ import net.servehttp.bytecom.util.ProducesUtil;
 public class ProfileController implements Serializable {
 
   private static final long serialVersionUID = -2081234112300283530L;
+  @Inject
   private UserAccount userAccount;
+  @Inject
+  private Authentication authentication;
 
   @Inject
   private AccountBussiness accountBussiness;
