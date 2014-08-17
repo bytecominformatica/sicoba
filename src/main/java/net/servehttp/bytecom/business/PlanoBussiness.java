@@ -10,7 +10,7 @@ public class PlanoBussiness extends genericoBusiness implements Serializable {
 
   private static final long serialVersionUID = -8296012997453708684L;
 
-  public List<Plano> findPlans() {
+  public List<Plano> findAll() {
     return genericoJPA.buscarTodos(Plano.class, true, "nome", 2000);
   }
 

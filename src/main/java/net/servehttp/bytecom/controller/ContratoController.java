@@ -9,8 +9,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.EquipamentoJPA;
-import net.servehttp.bytecom.persistence.GenericoJPA;
+import net.servehttp.bytecom.business.ClientBussiness;
+import net.servehttp.bytecom.business.ContratoBusiness;
+import net.servehttp.bytecom.business.EquipamentoBussiness;
+import net.servehttp.bytecom.business.PlanoBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
@@ -26,211 +28,181 @@ import net.servehttp.bytecom.util.Util;
 @ViewScoped
 public class ContratoController implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private List<Contrato> listContratos;
-    private List<Plano> listPlanos;
-    private List<Equipamento> listEquipamentos;
-    private List<Equipamento> listEquipamentosWifi;
-    private Contrato contrato;
-    private Cliente clienteSelecionado;
-    private int clienteId;
-    private int planoId;
-    private int equipamentoId;
-    private int equipamentoWifiId;
-    @Inject
-    private EquipamentoJPA equipamentoJPA;
-    @Inject
-    private Util util;
-    @Inject
-    private GenericoJPA genericoJPA;
+  private static final long serialVersionUID = -5226446405193705169L;
+  private List<Contrato> listContratos;
+  private List<Plano> listPlanos;
+  private List<Equipamento> listEquipamentos;
+  private List<Equipamento> listEquipamentosWifi;
 
-    @PostConstruct
-    public void load() {
-        listPlanos = genericoJPA.buscarTodos(Plano.class);
-        listEquipamentos = equipamentoJPA.buscaEquipamentosNaoUtilizados(Equipamento.TIPO_INSTALACAO,
-                Equipamento.STATUS_OK);
-        listEquipamentosWifi = equipamentoJPA.buscaEquipamentosNaoUtilizados(Equipamento.TIPO_WIFI,
-                Equipamento.STATUS_OK);
-        getParameters();
+  private Cliente cliente;
+  private int clienteId;
+  private int planoId;
+  private int equipamentoId;
+  private int equipamentoWifiId;
+  @Inject
+  private Util util;
+  @Inject
+  private PlanoBussiness planoBusiness;
+  @Inject
+  private EquipamentoBussiness equipamentoBusiness;
+  @Inject
+  private ClientBussiness clientBusiness;
+  @Inject
+  private ContratoBusiness contratoBusiness;
+
+  @PostConstruct
+  public void load() {
+    listPlanos = planoBusiness.findAll();
+    listEquipamentos = equipamentoBusiness.buscarEquipamentosInstalacaoNaoUtilizados();
+    listEquipamentosWifi = equipamentoBusiness.buscarEquipamentosWifiNaoUtilizados();
+    getParameters();
+  }
+
+  private void getParameters() {
+    String clienteId = util.getParameters("clienteId");
+    if (clienteId != null && !clienteId.isEmpty()) {
+      setCliente(clientBusiness.findById(Integer.parseInt(clienteId)));
+      if (getCliente().getContrato() == null) {
+        Contrato c = new Contrato();
+        c.setCliente(getCliente());
+        c.setDataInstalacao(new Date());
+        getCliente().setContrato(c);
+      }
+
+      if (getCliente().getContrato().getPlano() != null) {
+        planoId = getCliente().getContrato().getPlano().getId();
+      }
+
+      Equipamento e = getCliente().getContrato().getEquipamento();
+      if (e != null && !listEquipamentos.contains(e)) {
+        equipamentoId = e.getId();
+        listEquipamentos.add(e);
+      }
+
+      e = getCliente().getContrato().getEquipamentoWifi();
+      if (e != null && !listEquipamentosWifi.contains(e)) {
+        equipamentoWifiId = e.getId();
+        listEquipamentosWifi.add(e);
+      }
     }
+  }
 
-    private void getParameters() {
-        String clienteId = util.getParameters("clienteId");
-        if (clienteId != null && !clienteId.isEmpty()) {
-            clienteSelecionado = genericoJPA.findById(Cliente.class, Integer.parseInt(clienteId));
-            if (clienteSelecionado.getContrato() == null) {
-                Contrato c = new Contrato();
-                c.setCliente(clienteSelecionado);
-                c.setDataInstalacao(new Date());
-                clienteSelecionado.setContrato(c);
-            }
+  public List<Equipamento> getListEquipamentosWifi() {
+    return listEquipamentosWifi;
+  }
 
-            if (clienteSelecionado.getContrato().getPlano() != null) {
-                planoId = clienteSelecionado.getContrato().getPlano().getId();
-            }
+  public void setListEquipamentosWifi(List<Equipamento> listEquipamentosWifi) {
+    this.listEquipamentosWifi = listEquipamentosWifi;
+  }
 
-            Equipamento e = clienteSelecionado.getContrato().getEquipamento();
-            if (e != null && !listEquipamentos.contains(e)) {
-                equipamentoId = e.getId();
-                listEquipamentos.add(e);
-            }
+  public int getPlanoId() {
+    return planoId;
+  }
 
-            e = clienteSelecionado.getContrato().getEquipamentoWifi();
-            if (e != null && !listEquipamentosWifi.contains(e)) {
-                equipamentoWifiId = e.getId();
-                listEquipamentosWifi.add(e);
-            }
-        }
+  public void setPlanoId(int planoId) {
+    this.planoId = planoId;
+    if (planoId > 0) {
+      getCliente().getContrato().setPlano(planoBusiness.findById(planoId));
     }
+  }
 
-    public List<Equipamento> getListEquipamentosWifi() {
-        return listEquipamentosWifi;
+  public int getEquipamentoId() {
+    return equipamentoId;
+  }
+
+  public void setEquipamentoId(int equipamentoId) {
+    this.equipamentoId = equipamentoId;
+    getCliente().getContrato().setEquipamento(buscaNaListaEquipamento(equipamentoId));
+  }
+
+  public int getEquipamentoWifiId() {
+    return equipamentoWifiId;
+  }
+
+  public void setEquipamentoWifiId(int equipamentoWifiId) {
+    this.equipamentoWifiId = equipamentoWifiId;
+    getCliente().getContrato().setEquipamentoWifi(buscaNaListaWifi(equipamentoWifiId));
+  }
+
+  private Equipamento buscaNaListaWifi(int id) {
+    for (Equipamento e : listEquipamentosWifi) {
+      if (e.getId() == id) {
+        return e;
+      }
     }
+    return null;
+  }
 
-    public void setListEquipamentosWifi(List<Equipamento> listEquipamentosWifi) {
-        this.listEquipamentosWifi = listEquipamentosWifi;
+  private Equipamento buscaNaListaEquipamento(int id) {
+    for (Equipamento e : listEquipamentos) {
+      if (e.getId() == id) {
+        return e;
+      }
     }
+    return null;
+  }
 
-    public int getPlanoId() {
-        return planoId;
+  public List<Equipamento> getListEquipamentos() {
+    return listEquipamentos;
+  }
+
+  public void setListEquipamentos(List<Equipamento> listEquipamentos) {
+    this.listEquipamentos = listEquipamentos;
+  }
+
+  public List<Plano> getListPlanos() {
+    return listPlanos;
+  }
+
+  public void setListPlanos(List<Plano> listPlanos) {
+    this.listPlanos = listPlanos;
+  }
+
+  public List<Contrato> getListContratos() {
+    return listContratos;
+  }
+
+  public void setListContratos(List<Contrato> listContratos) {
+    this.listContratos = listContratos;
+  }
+
+  public String salvar() {
+    String page = null;
+    if (cliente.getContrato().getId() == 0) {
+      contratoBusiness.salvar(cliente.getContrato());
+      load();
+      AlertaUtil.info("Contrato adicionado com sucesso!");
+      page = "edit";
+    } else {
+      contratoBusiness.atualizar(cliente.getContrato());
+      load();
+      AlertaUtil.info("Contrato atualizado com sucesso!");
+      page = "edit";
     }
+    return page;
+  }
 
-    public void setPlanoId(int planoId) {
-        this.planoId = planoId;
-        if (planoId > 0) {
-            clienteSelecionado.getContrato().setPlano(genericoJPA.findById(Plano.class, planoId));
-        }
-    }
+  public void remover() {
+    contratoBusiness.remover(cliente.getContrato());
+    cliente.setContrato(new Contrato());
+    load();
+    AlertaUtil.info("Contrato removido com sucesso!");
+  }
 
-    public int getEquipamentoId() {
-        return equipamentoId;
-    }
+  public int getClienteId() {
+    return clienteId;
+  }
 
-    public void setEquipamentoId(int equipamentoId) {
-        this.equipamentoId = equipamentoId;
-        clienteSelecionado.getContrato().setEquipamento(buscaNaListaEquipamento(equipamentoId));
-    }
+  public void setClienteId(int clienteId) {
+    this.clienteId = clienteId;
+  }
 
-    public int getEquipamentoWifiId() {
-        return equipamentoWifiId;
-    }
+  public Cliente getCliente() {
+    return cliente;
+  }
 
-    public void setEquipamentoWifiId(int equipamentoWifiId) {
-        this.equipamentoWifiId = equipamentoWifiId;
-        clienteSelecionado.getContrato().setEquipamentoWifi(buscaNaListaWifi(equipamentoWifiId));
-    }
-
-    private Equipamento buscaNaListaWifi(int id) {
-        for (Equipamento e : listEquipamentosWifi) {
-            if (e.getId() == id) {
-                return e;
-            }
-        }
-        return null;
-    }
-
-    private Equipamento buscaNaListaEquipamento(int id) {
-        for (Equipamento e : listEquipamentos) {
-            if (e.getId() == id) {
-                return e;
-            }
-        }
-        return null;
-    }
-
-    public List<Equipamento> getListEquipamentos() {
-        return listEquipamentos;
-    }
-
-    public void setListEquipamentos(List<Equipamento> listEquipamentos) {
-        this.listEquipamentos = listEquipamentos;
-    }
-
-    public List<Plano> getListPlanos() {
-        return listPlanos;
-    }
-
-    public void setListPlanos(List<Plano> listPlanos) {
-        this.listPlanos = listPlanos;
-    }
-
-    public List<Contrato> getListContratos() {
-        return listContratos;
-    }
-
-    public void setListContratos(List<Contrato> listContratos) {
-        this.listContratos = listContratos;
-    }
-
-    public String salvar() {
-        String page = null;
-        if (valida(contrato)) {
-            genericoJPA.salvar(contrato);
-            load();
-            AlertaUtil.info("Contrato adicionado com sucesso!");
-            page = "edit";
-        }
-        return page;
-    }
-
-    /**
-     * @param contrato2
-     */
-    private boolean valida(Contrato contrato) {
-        boolean valido = true;
-        if (contrato.getDataInstalacao() == null) {
-            valido = false;
-        }
-        return valido;
-    }
-
-    public String atualizar() {
-        String page = null;
-        contrato = clienteSelecionado.getContrato();
-        if (contrato != null) {
-            if (contrato.getId() > 0) {
-                genericoJPA.atualizar(contrato);
-                load();
-                AlertaUtil.info("Contrato atualizado com sucesso!");
-                page = "edit";
-            } else {
-                page = salvar();
-            }
-        } else {
-            AlertaUtil.info("Contrato NULL!");
-
-        }
-        return page;
-    }
-
-    public void remover() {
-        genericoJPA.remover(contrato);
-        load();
-        AlertaUtil.info("Contrato removido com sucesso!");
-    }
-
-    public Contrato getContrato() {
-        return contrato;
-    }
-
-    public void setContrato(Contrato contrato) {
-        this.contrato = contrato;
-    }
-
-    public Cliente getClienteSelecionado() {
-        return clienteSelecionado;
-    }
-
-    public void setClienteSelecionado(Cliente clienteSelecionado) {
-        this.clienteSelecionado = clienteSelecionado;
-    }
-
-    public int getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(int clienteId) {
-        this.clienteId = clienteId;
-    }
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
+  }
 
 }

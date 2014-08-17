@@ -26,10 +26,10 @@ public class EquipamentoJPATest {
 
 	@Test
 	public void deveriaBuscarOsEquipamentosNaoFiltrandoPorTipo() {
-		List<Equipamento> list = equipamentoJPA.buscaEquipamentosNaoUtilizados(Equipamento.TIPO_INSTALACAO, Equipamento.STATUS_OK);
+		List<Equipamento> list = equipamentoJPA.buscarEquipamentosNaoUtilizados(Equipamento.TIPO_INSTALACAO, Equipamento.STATUS_OK);
 		Assert.assertNotNull(list);
 
-		list = equipamentoJPA.buscaEquipamentosNaoUtilizados(Equipamento.TIPO_WIFI, Equipamento.STATUS_OK);
+		list = equipamentoJPA.buscarEquipamentosNaoUtilizados(Equipamento.TIPO_WIFI, Equipamento.STATUS_OK);
 		Assert.assertNotNull(list);
 	}
 

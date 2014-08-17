@@ -32,7 +32,7 @@ public class PlanoController implements Serializable {
 
   @PostConstruct
   public void load() {
-    listPlanos = planoBussiness.findPlans();
+    listPlanos = planoBussiness.findAll();
     getParameters();
   }
 

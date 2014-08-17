@@ -6,9 +6,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -21,12 +18,9 @@ import net.servehttp.bytecom.util.DateUtil;
 
 @Entity
 @Table(name = "contrato")
-public class Contrato implements Serializable {
+public class Contrato extends EntityGeneric implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private static final long serialVersionUID = 5212667637827467419L;
   @NotNull(message = "vencimento é obrigatório")
   private short vencimento;
   @Column(name = "data_instalacao")
@@ -53,15 +47,6 @@ public class Contrato implements Serializable {
   @NotNull(message = "cliente é obrigatório")
   private Cliente cliente;
 
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-
-  @Column(name = "updated_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date updatedAt;
-
-
   public short getVencimento() {
     return vencimento;
   }
@@ -84,22 +69,6 @@ public class Contrato implements Serializable {
 
   public void setDataInstalacao(Date dataInstalacao) {
     this.dataInstalacao = dataInstalacao;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public Date getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Date updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   public Equipamento getEquipamentoWifi() {
@@ -132,14 +101,6 @@ public class Contrato implements Serializable {
 
   public void setCliente(Cliente cliente) {
     this.cliente = cliente;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
 }

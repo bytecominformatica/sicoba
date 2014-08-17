@@ -21,16 +21,19 @@
 							<f:param value="#{clienteController.cliente.id}"
 								name="clienteId"></f:param>
 						</button>
-						<button jsf:id="btnAcesso" class="btn btn-primary link-group" jsf:outcome="acesso">
-							<span class="glyphicon glyphicon-cloud" /> Acesso
-							<f:param value="#{clienteController.cliente.id}"
-								name="clienteId"></f:param>
-						</button>
-						<button jsf:id="btnMensalidade" class="btn btn-primary link-group" jsf:outcome="mensalidade">
-							<span class="glyphicon glyphicon-usd" /> Mensalidades
-							<f:param value="#{clienteController.cliente.id}"
-								name="clienteId"></f:param>
-						</button>
+						
+						<div jsf:id="display" style="display: #{clienteController.cliente.contrato != null ?  'inline' : 'none'}">
+							<button jsf:id="btnAcesso" class="btn btn-primary link-group" jsf:outcome="acesso">
+								<span class="glyphicon glyphicon-cloud" /> Acesso
+								<f:param value="#{clienteController.cliente.id}"
+									name="clienteId"></f:param>
+							</button>
+							<button jsf:id="btnMensalidade" class="btn btn-primary link-group" jsf:outcome="mensalidade" >
+								<span class="glyphicon glyphicon-usd" /> Mensalidades
+								<f:param value="#{clienteController.cliente.id}"
+									name="clienteId"></f:param>
+							</button>
+						</div>
 						
 					</form>
 				</div>

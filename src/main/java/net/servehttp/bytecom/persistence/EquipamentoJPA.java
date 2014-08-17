@@ -27,7 +27,7 @@ public class EquipamentoJPA implements Serializable {
     this.em = em;
   }
 
-  public List<Equipamento> buscaEquipamentosNaoUtilizados(int tipo, int status) {
+  public List<Equipamento> buscarEquipamentosNaoUtilizados(int tipo, int status) {
     List<Equipamento> list;
     String jpql;
     if (tipo == Equipamento.TIPO_INSTALACAO) {
@@ -42,6 +42,11 @@ public class EquipamentoJPA implements Serializable {
             .setParameter("status", status).getResultList();
 
     return list;
+  }
+
+  public void remover(Equipamento e) {
+    em.createQuery("delete from Equipamento e where e.id  = :id").setParameter("id", e.getId())
+    .executeUpdate();
   }
 
 }

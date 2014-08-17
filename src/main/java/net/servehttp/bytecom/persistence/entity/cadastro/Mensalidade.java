@@ -7,9 +7,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -25,15 +22,12 @@ import net.servehttp.bytecom.util.StringUtil;
  */
 @Entity
 @Table(name = "mensalidade")
-public class Mensalidade implements Serializable {
+public class Mensalidade extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -8955481650524371350L;
   public static final int EM_ABERTO = 0;
   public static final int BOLETO_PAGO = 1;
   public static final int BAIXA_MANUAL = 2;
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
   @Column(name = "data_vencimento")
   @Temporal(TemporalType.DATE)
   private Date dataVencimento;
@@ -52,13 +46,6 @@ public class Mensalidade implements Serializable {
   @JoinColumn(name = "cliente_id")
   @ManyToOne(fetch = FetchType.EAGER)
   private Cliente cliente;
-
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Column(name = "updated_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date updatedAt;
 
   public Date getDataVencimento() {
     return dataVencimento;
@@ -107,22 +94,6 @@ public class Mensalidade implements Serializable {
     return s;
   }
 
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public Date getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Date updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
   public Cliente getCliente() {
     return cliente;
   }
@@ -131,13 +102,6 @@ public class Mensalidade implements Serializable {
     this.cliente = cliente;
   }
 
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
 
   public Integer getNumeroBoleto() {
     return numeroBoleto;
