@@ -42,7 +42,6 @@ public class MensalidadeController implements Serializable {
   public void load() {
     if (clienteId > 0) {
       cliente = clientBussiness.findById(clienteId);
-
       ordernarMensalidades();
       if (mensalidade == null) {
         novaMensalidade();
