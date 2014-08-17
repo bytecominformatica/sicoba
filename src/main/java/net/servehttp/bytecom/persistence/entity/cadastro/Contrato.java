@@ -23,7 +23,7 @@ import net.servehttp.bytecom.util.DateUtil;
 @Table(name = "contrato")
 public class Contrato implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 5212667637827467419L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;

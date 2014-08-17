@@ -14,7 +14,7 @@
 
           <label jsf:for="cliente" class="control-label">#{bundle.cliente}</label> 
           <input jsf:id="cliente" type="text" class="form-control"  readonly="readonly"
-          jsf:value="#{contratoController.clienteSelecionado.nome}"/> 
+          jsf:value="#{contratoController.cliente.nome}"/> 
           
           <label jsf:for="plano" class="control-label">#{bundle.plano}</label> 
           <h:selectOneMenu id="plano" value="#{contratoController.planoId}"
@@ -26,7 +26,7 @@
 
           <label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label> 
           <h:selectOneMenu id="vencimento"
-            value="#{contratoController.clienteSelecionado.contrato.vencimento}" required="true"
+            value="#{contratoController.cliente.contrato.vencimento}"
             styleClass="form-control">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItem itemLabel="05" itemValue="5" />
@@ -34,8 +34,8 @@
           </h:selectOneMenu>
 
           <label jsf:for="dataInstalacao" class="control-label">#{bundle.dataInstalacao}</label>
-          <input jsf:id="dataInstalacao" type="date" required="required"
-            jsf:value="#{contratoController.clienteSelecionado.contrato.dataInstalacao}" class="form-control">
+          <input jsf:id="dataInstalacao" type="date"
+            jsf:value="#{contratoController.cliente.contrato.dataInstalacao}" class="form-control">
             <f:convertDateTime pattern="yyyy-MM-dd"  timeZone="GMT-03:00"/>
           </input>
 
@@ -57,16 +57,20 @@
           </h:selectOneMenu>
 
           <div class="modal-footer">
-            <h:commandLink action="#{contratoController.atualizar()}"
-              styleClass="btn btn-primary">
-              <span class="glyphicon glyphicon-floppy-save" /> #{bundle.save}
-              <f:param value="#{contratoController.clienteSelecionado.id}" name="id"/>
-            </h:commandLink>
-
-            <h:link outcome="edit" class="btn btn-primary" style="margin-left: 5px;">
-              <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
-              <f:param value="#{contratoController.clienteSelecionado.id}" name="id"/>
-            </h:link>
+			  <button jsf:id="btSalvar" jsf:action="#{contratoController.salvar()}"
+                class="btn btn-primary" type="submit">
+                <span class="glyphicon glyphicon-floppy-save" /> #{contratoController.cliente.contrato.id == 0 ? bundle.save : bundle.update}
+				<f:param value="#{contratoController.cliente.id}" name="id"></f:param>
+              </button>
+              <button jsf:id="btnRemove" jsf:action="#{contratoController.remover()}"
+				class="btn btn-danger" style="margin-left: 5px; #{contratoController.cliente.contrato.id == 0 ?  'display: none' : ''}">
+				<span class="glyphicon glyphicon-remove" /> Remover
+	  		  </button>
+              <button jsf:id="btVoltar" jsf:outcome="edit" style="margin-left: 5px;"
+                class="btn btn-primary">
+                <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
+				<f:param value="#{contratoController.cliente.id}" name="id"></f:param>
+              </button>
           </div>
         </form>
       </div>
