@@ -2,6 +2,7 @@ package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -46,6 +47,8 @@ public class Cliente implements Serializable {
     @Column(name="cpf_cnpj")
     @CpfCnpj
     private String cpfCnpj;
+    @Column(name="dt_nascimento")
+    private Date dataNascimento;
     @Email(message="Email inválido")
     private String email;
     @Column(name = "fone_titular")
@@ -205,6 +208,14 @@ public class Cliente implements Serializable {
 
     public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj != null && cpfCnpj.isEmpty() ? null : cpfCnpj;
+    }
+
+    public Date getDataNascimento() {
+      return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+      this.dataNascimento = dataNascimento;
     }
 	
 }
