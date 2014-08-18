@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -32,7 +33,8 @@ public class Acesso extends EntityGeneric implements Serializable {
 	@Size(min = 1, max = 20)
 	private String gateway;
 	@Pattern(regexp = "^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$", message = "MAC inválido")
-	@Size(min = 1, max = 20)
+	@Size(min = 1, max = 20, message="MAC inválido 1-20")
+	@NotNull(message="MAC inválido")
 	private String mac;
 	private int status;
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
