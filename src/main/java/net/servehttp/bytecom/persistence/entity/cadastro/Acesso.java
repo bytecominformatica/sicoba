@@ -38,7 +38,7 @@ public class Acesso extends EntityGeneric implements Serializable {
 	private String mac;
 	private int status;
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
-	@OneToOne(optional = false)
+	@OneToOne
 	private Cliente cliente;
 
 	public String getIp() {

@@ -57,6 +57,10 @@
 				        </input>
 					</div>
 
+					<label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
+					<input jsf:id="desconto" type="number" step="any" class="form-control"
+						jsf:value="#{mensalidadeController.mensalidade.desconto}" />
+
 					<label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label>
 			        <input jsf:id="vencimento" type="date" required="required"
 			            jsf:value="#{mensalidadeController.mensalidade.dataVencimento}" class="form-control">
