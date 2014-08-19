@@ -33,6 +33,7 @@ public class MensalidadeController implements Serializable {
   private Calendar calendar;
   private int numeroBoletoInicio;
   private int numeroBoletoFim;
+  private double descontoGeracao;
   private Date dataInicio;
   @Inject
   private MensalidadeBussiness mensalidadeBussiness;
@@ -99,6 +100,7 @@ public class MensalidadeController implements Serializable {
     m.setValor(cliente.getContrato().getPlano().getValorMensalidade());
     m.setCliente(cliente);
     m.setNumeroBoleto(i);
+    m.setDesconto(descontoGeracao);
 
     c.add(Calendar.MONTH, 1);
     mensalidadeBussiness.salvar(m);
@@ -212,6 +214,14 @@ public class MensalidadeController implements Serializable {
 
   public void setDataInicio(Date dataInicio) {
     this.dataInicio = dataInicio;
+  }
+
+  public double getDescontoGeracao() {
+    return descontoGeracao;
+  }
+
+  public void setDescontoGeracao(double descontoGeracao) {
+    this.descontoGeracao = descontoGeracao;
   }
 
 }
