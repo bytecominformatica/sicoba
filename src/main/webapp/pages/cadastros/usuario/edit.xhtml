@@ -21,6 +21,7 @@
 						<i class="glyphicon glyphicon-plus"></i>
 	            		<span>Add files...</span>
 					</input>
+
 					<label jsf:for="firstName" class="control-label">#{bundle.firstName}</label> 
 					<input jsf:id="firstName" type="text" class="form-control"
 						jsf:value="#{userAccountController.userAccount.firstName}" autofocus="autofocus"
@@ -34,13 +35,18 @@
 					<input jsf:id="email" type="text" class="form-control"
 						jsf:value="#{userAccountController.userAccount.email}" />
 					
-					<!-- <label jsf:for="conf_pass" class="control-label">#{bundle.conf_pass}</label>
-					<h:inputSecret id="confirmPassword" required="false"
-						binding="#{confirmPassword}"
-						requiredMessage="Por favor confirme a senha." class="form-control" />
-					<h:message for="confirmPassword" style="color: red;" />-->
+					<label jsf:for="username" class="control-label">#{bundle.username}</label>
+					<input jsf:id="username" type="text" class="form-control"
+						jsf:value="#{userAccountController.username}"/>
+						
+					<label jsf:for="password" class="control-label">#{bundle.password}</label>
+					<input jsf:id="password" type="password" class="form-control"
+						jsf:value="#{userAccountController.password}"/>
 					
-
+					<label jsf:for="confirmPassword" class="control-label">#{bundle.confirmPassword}</label>
+					<input jsf:id="confirmPassword" type="password" class="form-control"
+						jsf:value="#{userAccountController.confirmPassword}"/>
+					
 					<div class="modal-footer">
 						<button jsf:id="btSalvar" jsf:action="#{userAccountController.salvar()}"
 							class="btn btn-primary" type="submit" >

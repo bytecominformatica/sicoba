@@ -10,8 +10,10 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 
 import net.servehttp.bytecom.business.AccountBussiness;
+import net.servehttp.bytecom.persistence.entity.security.Authentication;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.HashUtil;
 import net.servehttp.bytecom.util.ImageUtil;
 import net.servehttp.bytecom.util.Util;
 
@@ -27,9 +29,12 @@ public class UserAccountController implements Serializable {
   private static final long serialVersionUID = -2081234112300283530L;
   private List<UserAccount> listUserAccount;
   private UserAccount userAccount = new UserAccount();
+  private String username;
+  private String password;
+  private String confirmPassword;
   private String page;
   private static final String EXTENSION = "png";
-  
+
   private Part file;
 
   @Inject
@@ -43,46 +48,49 @@ public class UserAccountController implements Serializable {
   public void load() {
     listUserAccount = accountBussiness.findUsersAccounts();
     getParameters();
-    
+
   }
 
   private boolean valida(UserAccount userAccount) {
     boolean result = true;
 
-    if(!accountBussiness.emailAvaliable(userAccount)){
+    if (!accountBussiness.emailAvaliable(userAccount)) {
       AlertaUtil.error("Email já cadastrado!");
       result = false;
+    }
+
+    if (password != null && !password.isEmpty() && !password.equals(confirmPassword)) {
+      AlertaUtil.error("As senhas não confere");
+      return false;
     }
     return result;
   }
 
   public String salvar() {
     page = null;
-    
-    System.out.println("FILE " + file);
+
     if (valida(userAccount)) {
-      if (userAccount.getId() == 0) {
+      if (file != null) {
         userAccount.setImg(imageUtil.setThumbnail(imageUtil.tratarImagem(file), EXTENSION));
-        accountBussiness.salvar(userAccount);
+      }
+      if (userAccount.getId() == 0) {
+        Authentication auth = new Authentication();
+        auth.setUsername(username);
+        auth.setPassword(HashUtil.sha256ToHex(password));
+        auth.setUserAccount(userAccount);
+        accountBussiness.salvar(auth);
         AlertaUtil.info("Usuário gravado com sucesso!");
       } else {
-        if (file == null) {
-          accountBussiness.atualizar(userAccount);
-          AlertaUtil.info("Usuário atualizado com sucesso!");
-        }else{
-          userAccount.setImg(imageUtil.setThumbnail(imageUtil.tratarImagem(file), EXTENSION));
-          accountBussiness.atualizar(userAccount);
-          AlertaUtil.info("Usuário atualizado com sucesso!");
-        }
-        
+        accountBussiness.atualizar(userAccount);
+        AlertaUtil.info("Usuário atualizado com sucesso!");
       }
       page = "list";
     }
 
     return page;
   }
-  
- 
+
+
   private void getParameters() {
     String userAccountId = util.getParameters("id");
     if (userAccountId != null && !userAccountId.isEmpty()) {
@@ -127,6 +135,30 @@ public class UserAccountController implements Serializable {
 
   public void setPage(String page) {
     this.page = page;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getConfirmPassword() {
+    return confirmPassword;
+  }
+
+  public void setConfirmPassword(String confirmPassword) {
+    this.confirmPassword = confirmPassword;
   }
 
 

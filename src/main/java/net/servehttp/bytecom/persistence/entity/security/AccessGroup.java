@@ -1,15 +1,13 @@
 package net.servehttp.bytecom.persistence.entity.security;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
 
 /**
  * 
@@ -18,31 +16,13 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "access_group")
-public class AccessGroup {
+public class AccessGroup extends EntityGeneric implements Serializable {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private static final long serialVersionUID = 7776068215045578731L;
   private String name;
   private String description;
   @Column(name = "user_default")
   private boolean userDefault;
-
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Calendar createdAt;
-
-  @Column(name = "updated_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Calendar updatedAt;
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
 
   public String getName() {
     return name;
