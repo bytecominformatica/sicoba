@@ -12,7 +12,6 @@ import javax.inject.Named;
 import net.servehttp.bytecom.business.AccountBussiness;
 import net.servehttp.bytecom.ejb.MailEJB;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
-import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.NetworkUtil;
 import net.servehttp.bytecom.util.WebUtil;
 
@@ -48,20 +47,22 @@ public class SecurityController implements Serializable {
   private MailEJB mail;
   @Inject
   private UserAccount userAccount;
+  private String error;
 
   public void authenticate() {
+    error = null;
     if (!currentUser.isAuthenticated()) {
       try {
         currentUser.login(new UsernamePasswordToken(username, password, remember));
          userAccount = accountBussiness.findUserAccountByUsername(username);
          currentUser.getSession().setAttribute("currentUser", userAccount);
+         webUtil.redirect(HOME_URL);
       } catch (AuthenticationException e) {
-        AlertaUtil.info("Unknown user, please try again");
+        error = "CREDENCIAIS INVÁLIDAS";
         LOGGER.info("[" + new Date() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");
-        sendAlert();
+//        sendAlert();
       }
     }
-    webUtil.redirect(HOME_URL);
   }
 
   public void logout() {
@@ -93,6 +94,14 @@ public class SecurityController implements Serializable {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getError() {
+    return error;
+  }
+
+  public void setError(String error) {
+    this.error = error;
   }
 
 }

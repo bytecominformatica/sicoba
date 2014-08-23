@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.util;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,9 +13,11 @@ import javax.faces.context.FacesContext;
  * @author Clairton Luz
  *
  */
-public class WebUtil {
+public class WebUtil implements Serializable {
 	
-	public void redirect(String page) {
+  private static final long serialVersionUID = -2462589699177123967L;
+
+  public void redirect(String page) {
 		try {
 			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 			ec.redirect(page);

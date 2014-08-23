@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:body>
+<ui:composition template="/layout.xhtml">
+	<ui:define name="title">#{bundle.profile}</ui:define>
+	<ui:define name="subtitle">#{bundle.edit}</ui:define>
+	<ui:define name="submenu">
+		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
+	</ui:define>
+	<ui:define name="content">
+			<div class="panel-body">
+				<h:graphicImage id="imagem" value="#{perfilController.userAccount.imageGerada}" width="80px;"/>
+				
+				<form jsf:id="form" class="form-horizontal" enctype="multipart/form-data">
+					<input type="file" jsf:id="file" jsf:value="#{perfilController.file}" class="btn btn-primary btn-block">
+						<i class="glyphicon glyphicon-plus"></i>
+	            		<span>Add files...</span>
+	            		<f:ajax event="change" listener="#{perfilController.carregarImagem()}" render=":imagem"></f:ajax>
+					</input>
+
+					<label jsf:for="username" class="control-label">#{bundle.username}</label>
+					<input jsf:id="username" type="text" class="form-control"
+						jsf:value="#{perfilController.authentication.username}"/>
+
+					<label jsf:for="firstName" class="control-label">#{bundle.firstName}</label> 
+					<input jsf:id="firstName" type="text" class="form-control"
+						jsf:value="#{perfilController.userAccount.firstName}" autofocus="autofocus"
+						required="required" /> 
+					
+					<label jsf:for="lastName" class="control-label">#{bundle.lastName}</label>
+					<input jsf:id="lastName" type="text" class="form-control"
+						jsf:value="#{perfilController.userAccount.lastName}" />
+						
+					<label jsf:for="email" class="control-label">#{bundle.email}</label>
+					<input jsf:id="email" type="text" class="form-control"
+						jsf:value="#{perfilController.userAccount.email}" />
+
+						<label jsf:for="password" class="control-label">#{bundle.password}</label>
+						<input jsf:id="password" type="password" class="form-control"
+							jsf:value="#{perfilController.password}"/>
+						
+						<label jsf:for="confirmPassword" class="control-label">#{bundle.confirmPassword}</label>
+						<input jsf:id="confirmPassword" type="password" class="form-control"
+							jsf:value="#{perfilController.confirmPassword}"/>
+					<div class="modal-footer">
+						<button jsf:id="btSalvar" jsf:actionListener="#{perfilController.salvar()}"
+							class="btn btn-primary" type="submit" >
+							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.save}
+						</button>
+					</div>
+				</form>
+			</div>
+	</ui:define>
+</ui:composition>
+</h:body>
+</html>
