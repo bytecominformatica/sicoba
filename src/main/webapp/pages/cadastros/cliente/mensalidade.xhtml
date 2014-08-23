@@ -32,14 +32,15 @@
 						jsf:value="#{mensalidadeController.mensalidade.cliente.nome}" readonly="readonly"
 						required="required" />
 
-					<label jsf:for="status" class="control-label">#{bundle.status}</label>
-					<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
-						styleClass="form-control" required="true">
-						<f:selectItem itemLabel="EM ABERTO" itemValue="0" />
-						<f:selectItem itemLabel="BAIXA MANUAL" itemValue="2" />
-						<f:ajax event="change" render=":form:valorPagoDisplay" listener="#{mensalidadeController.prepararBaixaMensalidade()}"/>
-					</h:selectOneMenu>
-
+					<div style="display: #{mensalidadeController.mensalidade.id != 0 ?  'inline' : 'none'}">
+						<label jsf:for="status" class="control-label">#{bundle.status}</label>
+						<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
+							styleClass="form-control" required="true">
+							<f:selectItem itemLabel="EM ABERTO" itemValue="0" />
+							<f:selectItem itemLabel="BAIXA MANUAL" itemValue="2" />
+							<f:ajax event="change" render=":form:valorPagoDisplay" listener="#{mensalidadeController.prepararBaixaMensalidade()}"/>
+						</h:selectOneMenu>
+					</div>
 					<label jsf:for="valor" class="control-label">#{bundle.valor}</label>
 					<input jsf:id="valor" type="number" step="any" class="form-control"
 						jsf:value="#{mensalidadeController.mensalidade.valor}"
