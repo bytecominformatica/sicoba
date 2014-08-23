@@ -22,6 +22,12 @@
 	            		<span>Add files...</span>
 					</input>
 
+					<div style="display: #{userAccountController.userAccount.id == 0 ?  'inline' : 'none'}">
+						<label jsf:for="username" class="control-label">#{bundle.username}</label>
+						<input jsf:id="username" type="text" class="form-control"
+							jsf:value="#{userAccountController.username}"/>
+					</div>					
+
 					<label jsf:for="firstName" class="control-label">#{bundle.firstName}</label> 
 					<input jsf:id="firstName" type="text" class="form-control"
 						jsf:value="#{userAccountController.userAccount.firstName}" autofocus="autofocus"
@@ -34,24 +40,27 @@
 					<label jsf:for="email" class="control-label">#{bundle.email}</label>
 					<input jsf:id="email" type="text" class="form-control"
 						jsf:value="#{userAccountController.userAccount.email}" />
-					
-					<label jsf:for="username" class="control-label">#{bundle.username}</label>
-					<input jsf:id="username" type="text" class="form-control"
-						jsf:value="#{userAccountController.username}"/>
+
+					<div style="display: #{userAccountController.userAccount.id == 0 ?  'inline' : 'none'}">
+						<label jsf:for="password" class="control-label">#{bundle.password}</label>
+						<input jsf:id="password" type="password" class="form-control"
+							jsf:value="#{userAccountController.password}"/>
 						
-					<label jsf:for="password" class="control-label">#{bundle.password}</label>
-					<input jsf:id="password" type="password" class="form-control"
-						jsf:value="#{userAccountController.password}"/>
-					
-					<label jsf:for="confirmPassword" class="control-label">#{bundle.confirmPassword}</label>
-					<input jsf:id="confirmPassword" type="password" class="form-control"
-						jsf:value="#{userAccountController.confirmPassword}"/>
-					
+						<label jsf:for="confirmPassword" class="control-label">#{bundle.confirmPassword}</label>
+						<input jsf:id="confirmPassword" type="password" class="form-control"
+							jsf:value="#{userAccountController.confirmPassword}"/>
+					</div>
 					<div class="modal-footer">
 						<button jsf:id="btSalvar" jsf:action="#{userAccountController.salvar()}"
 							class="btn btn-primary" type="submit" >
 							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.save}
 						</button>
+						<div style="display: #{userAccountController.userAccount.id != 0 ?  'inline' : 'none'}">
+							<button jsf:id="btResetPass" jsf:action="#{userAccountController.resetPassword()}"
+								class="btn btn-primary" >
+								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.resetPassword}
+							</button>
+						</div>
 						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
 							class="btn btn-primary">
 							<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}

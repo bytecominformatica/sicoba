@@ -55,11 +55,17 @@ public class UserJPA implements Serializable {
 
   public UserAccount findUserAccountByUsername(String username) {
     try {
-      return em.createQuery("select a.userAccount from Authentication a where a.username = :username",
+      return em
+          .createQuery("select a.userAccount from Authentication a where a.username = :username",
               UserAccount.class).setParameter("username", username).getSingleResult();
     } catch (NoResultException e) {
       return null;
     }
+  }
+
+  public Authentication findAuthenticationByUserAccount(UserAccount userAccount) {
+    return em.createQuery("select a from Authentication a where a.userAccount.id = :id",
+            Authentication.class).setParameter("id", userAccount.getId()).getSingleResult();
   }
 
 }

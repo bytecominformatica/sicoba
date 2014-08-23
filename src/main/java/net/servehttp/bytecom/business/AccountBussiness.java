@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.UserJPA;
+import net.servehttp.bytecom.persistence.entity.security.Authentication;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 
 public class AccountBussiness extends genericoBusiness implements Serializable {
@@ -29,6 +30,10 @@ public class AccountBussiness extends genericoBusiness implements Serializable {
 
   public UserAccount findUserAccountById(int id) {
     return genericoJPA.findById(UserAccount.class, id);
+  }
+
+  public Authentication findAuthenticationByUserAccount(UserAccount userAccount) {
+    return userJPA.findAuthenticationByUserAccount(userAccount);
   }
 
 }

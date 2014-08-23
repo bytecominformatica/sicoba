@@ -15,6 +15,7 @@ import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.HashUtil;
 import net.servehttp.bytecom.util.ImageUtil;
+import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.util.Util;
 
 /**
@@ -90,6 +91,13 @@ public class UserAccountController implements Serializable {
     return page;
   }
 
+  public void resetPassword(){
+    Authentication auth = accountBussiness.findAuthenticationByUserAccount(userAccount);
+    String senha = StringUtil.INSTANCE.gerarSenha(8);
+    auth.setPassword(HashUtil.sha256ToHex(senha));
+    accountBussiness.atualizar(auth);
+    AlertaUtil.info("A senha do usuário " + auth.getUsername() + " foi alterada para " + senha);
+  }
 
   private void getParameters() {
     String userAccountId = util.getParameters("id");
