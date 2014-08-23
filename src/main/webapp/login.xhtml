@@ -47,13 +47,14 @@ body {
 </head>
 
 <h:body>
-	<h:messages id="msgs" showDetail="false" errorClass="alert alert-danger" warnClass="alert alert-warning"
-		fatalClass="alert alert-danger" infoClass="alert alert-info" />
 	<div class="container">
 		<form jsf:id="form1" class="form-signin">
 			<h2 class="form-signin-heading">Bem vindo!</h2>
-			<input jsf:id="usuario" type="text" jsf:value="#{securityController.username}" class="form-control" placeholder="Login" autofocus="autofocus"/>
-			<input jsf:id="senha" type="password" jsf:value="#{securityController.password}" class="form-control" placeholder="Senha" />
+			<div class="form-group #{securityController.error != null ? 'has-error' : ''}">
+				<label class="control-label" for="inputError" style="display: #{securityController.error != null ?  'inline' : 'none'}"><i class="fa fa-times-circle-o"></i> Credenciais inválidas</label>
+				<input jsf:id="usuario" type="text" jsf:value="#{securityController.username}" class="form-control danger" placeholder="Login" autofocus="autofocus"/>
+				<input jsf:id="senha" type="password" jsf:value="#{securityController.password}" class="form-control" placeholder="Senha" />
+			</div>
 			<button jsf:id="btLogin" jsf:actionListener="#{securityController.authenticate()}" class="btn btn-primary btn-block" >Entrar</button>
 		</form>
 	</div>

@@ -7,63 +7,50 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <h:body>
 <ui:composition template="/layout.xhtml">
-	<ui:define name="title">#{bundle.user}</ui:define>
+	<ui:define name="title">#{bundle.profile}</ui:define>
 	<ui:define name="subtitle">#{bundle.edit}</ui:define>
 	<ui:define name="submenu">
 		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
 	</ui:define>
 	<ui:define name="content">
 			<div class="panel-body">
-				<h:graphicImage value="#{userAccountController.userAccount.imageGerada}" width="80px;"/>
+				<h:graphicImage id="imagem" value="#{perfilController.userAccount.imageGerada}" width="80px;"/>
 				
 				<form jsf:id="form" class="form-horizontal" enctype="multipart/form-data">
-					<input type="file" jsf:id="file" jsf:value="#{userAccountController.file}" class="btn btn-primary btn-block">
+					<input type="file" jsf:id="file" jsf:value="#{perfilController.file}" class="btn btn-primary btn-block">
 						<i class="glyphicon glyphicon-plus"></i>
 	            		<span>Add files...</span>
+	            		<f:ajax event="change" listener="#{perfilController.carregarImagem()}" render=":imagem"></f:ajax>
 					</input>
 
-					<div style="display: #{userAccountController.userAccount.id == 0 ?  'inline' : 'none'}">
-						<label jsf:for="username" class="control-label">#{bundle.username}</label>
-						<input jsf:id="username" type="text" class="form-control"
-							jsf:value="#{userAccountController.username}"/>
-					</div>					
+					<label jsf:for="username" class="control-label">#{bundle.username}</label>
+					<input jsf:id="username" type="text" class="form-control"
+						jsf:value="#{perfilController.authentication.username}"/>
 
 					<label jsf:for="firstName" class="control-label">#{bundle.firstName}</label> 
 					<input jsf:id="firstName" type="text" class="form-control"
-						jsf:value="#{userAccountController.userAccount.firstName}" autofocus="autofocus"
+						jsf:value="#{perfilController.userAccount.firstName}" autofocus="autofocus"
 						required="required" /> 
 					
 					<label jsf:for="lastName" class="control-label">#{bundle.lastName}</label>
 					<input jsf:id="lastName" type="text" class="form-control"
-						jsf:value="#{userAccountController.userAccount.lastName}" />
+						jsf:value="#{perfilController.userAccount.lastName}" />
 						
 					<label jsf:for="email" class="control-label">#{bundle.email}</label>
 					<input jsf:id="email" type="text" class="form-control"
-						jsf:value="#{userAccountController.userAccount.email}" />
+						jsf:value="#{perfilController.userAccount.email}" />
 
-					<div style="display: #{userAccountController.userAccount.id == 0 ?  'inline' : 'none'}">
 						<label jsf:for="password" class="control-label">#{bundle.password}</label>
 						<input jsf:id="password" type="password" class="form-control"
-							jsf:value="#{userAccountController.password}"/>
+							jsf:value="#{perfilController.password}"/>
 						
 						<label jsf:for="confirmPassword" class="control-label">#{bundle.confirmPassword}</label>
 						<input jsf:id="confirmPassword" type="password" class="form-control"
-							jsf:value="#{userAccountController.confirmPassword}"/>
-					</div>
+							jsf:value="#{perfilController.confirmPassword}"/>
 					<div class="modal-footer">
-						<button jsf:id="btSalvar" jsf:action="#{userAccountController.salvar()}"
+						<button jsf:id="btSalvar" jsf:actionListener="#{perfilController.salvar()}"
 							class="btn btn-primary" type="submit" >
 							<span class="glyphicon glyphicon-floppy-save" /> #{bundle.save}
-						</button>
-						<div style="display: #{userAccountController.userAccount.id != 0 ?  'inline' : 'none'}">
-							<button jsf:id="btResetPass" jsf:action="#{userAccountController.resetPassword()}"
-								class="btn btn-primary" >
-								<span class="glyphicon glyphicon-floppy-save" /> #{bundle.resetPassword}
-							</button>
-						</div>
-						<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
-							class="btn btn-primary">
-							<span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
 						</button>
 					</div>
 				</form>

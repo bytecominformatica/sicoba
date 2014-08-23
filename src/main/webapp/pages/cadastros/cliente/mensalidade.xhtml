@@ -57,6 +57,10 @@
 				        </input>
 					</div>
 
+					<label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
+					<input jsf:id="desconto" type="number" step="any" class="form-control"
+						jsf:value="#{mensalidadeController.mensalidade.desconto}" />
+
 					<label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label>
 			        <input jsf:id="vencimento" type="date" required="required"
 			            jsf:value="#{mensalidadeController.mensalidade.dataVencimento}" class="form-control">
@@ -100,6 +104,10 @@
 			            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00"/>
 			        </input>
 			        
+					<label jsf:for="descontoGeracao" class="control-label">#{bundle.desconto}</label>
+					<input jsf:id="descontoGeracao" type="number" step="any" class="form-control"
+						jsf:value="#{mensalidadeController.descontoGeracao}" />
+			        
 			        <div class="modal-footer">
 		              <button jsf:id="btGerar" jsf:actionListener="#{mensalidadeController.gerarBoletos()}"
 		                class="btn btn-primary" type="submit">
@@ -121,6 +129,11 @@
 						<h:column>
 							<f:facet name="header">#{bundle.valor}</f:facet>
 							#{m.valorFormatada}
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">#{bundle.desconto}</f:facet>
+							#{m.desconto}
 						</h:column>
 						
 						<h:column>

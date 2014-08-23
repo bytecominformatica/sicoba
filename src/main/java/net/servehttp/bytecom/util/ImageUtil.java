@@ -50,7 +50,7 @@ public class ImageUtil implements Serializable {
   public byte[] setThumbnail(byte[] arquivo, String extensao) {
     ImageIcon imageIcon = new ImageIcon(arquivo);
     Image inImage = imageIcon.getImage();
-    double scale = (double) 140 / (double) inImage.getWidth(null);
+    double scale = 140 / (double) inImage.getWidth(null);
 
     int scaledW = (int) (scale * inImage.getWidth(null));
     int scaledH = (int) (scale * inImage.getHeight(null));
@@ -90,10 +90,8 @@ public class ImageUtil implements Serializable {
       ServletContext servletcontext = (ServletContext) context.getExternalContext().getContext();
       String imageUsers = servletcontext.getRealPath("/img/users/");
       File dirImageUsers = new File(imageUsers);
-      System.out.println(dirImageUsers);
 
       if (!dirImageUsers.exists()) {
-        System.out.println("Diretorio existe");
         dirImageUsers.createNewFile();
       }
 
@@ -104,7 +102,6 @@ public class ImageUtil implements Serializable {
       imageOutput.flush();
       imageOutput.close();
       path = "/img/users/" + id + "." + "png";
-
     } catch (IOException e) {
       LOGGER.severe(e.getMessage());
     }

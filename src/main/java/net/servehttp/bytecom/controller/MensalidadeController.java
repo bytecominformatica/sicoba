@@ -33,6 +33,7 @@ public class MensalidadeController implements Serializable {
   private Calendar calendar;
   private int numeroBoletoInicio;
   private int numeroBoletoFim;
+  private double descontoGeracao;
   private Date dataInicio;
   @Inject
   private MensalidadeBussiness mensalidadeBussiness;
@@ -61,7 +62,7 @@ public class MensalidadeController implements Serializable {
   public void prepararBaixaMensalidade() {
     if (mensalidade.getStatus() == Mensalidade.BAIXA_MANUAL) {
       if (mensalidade.getValorPago() == 0) {
-        mensalidade.setValorPago(mensalidade.getValor());
+        mensalidade.setValorPago(mensalidade.getValor() - mensalidade.getDesconto());
       }
       if (mensalidade.getDataOcorrencia() == null) {
         mensalidade.setDataOcorrencia(new Date());
@@ -78,19 +79,31 @@ public class MensalidadeController implements Serializable {
       Calendar c = Calendar.getInstance();
       c.setTime(dataInicio);
 
-      Mensalidade m;
-      for (int i = numeroBoletoInicio; i <= numeroBoletoFim; i++) {
-        m = new Mensalidade();
-        m.setDataVencimento(c.getTime());
-        m.setValor(cliente.getContrato().getPlano().getValorMensalidade());
-        m.setCliente(cliente);
-        m.setNumeroBoleto(i);
+      if (numeroBoletoInicio < numeroBoletoFim) {
+        for (int i = numeroBoletoInicio; i <= numeroBoletoFim; i++) {
+          gravarBoleto(c, i);
+        }
+      } else {
+        for (int i = numeroBoletoInicio; i >= numeroBoletoFim; i--) {
+          gravarBoleto(c, i);
+        }
 
-        c.add(Calendar.MONTH, 1);
-        mensalidadeBussiness.salvar(m);
       }
       AlertaUtil.info("Boletos gerados com sucesso!");
     }
+  }
+
+  private void gravarBoleto(Calendar c, int i) {
+    Mensalidade m;
+    m = new Mensalidade();
+    m.setDataVencimento(c.getTime());
+    m.setValor(cliente.getContrato().getPlano().getValorMensalidade());
+    m.setCliente(cliente);
+    m.setNumeroBoleto(i);
+    m.setDesconto(descontoGeracao);
+
+    c.add(Calendar.MONTH, 1);
+    mensalidadeBussiness.salvar(m);
   }
 
   public void novaMensalidade() {
@@ -201,6 +214,14 @@ public class MensalidadeController implements Serializable {
 
   public void setDataInicio(Date dataInicio) {
     this.dataInicio = dataInicio;
+  }
+
+  public double getDescontoGeracao() {
+    return descontoGeracao;
+  }
+
+  public void setDescontoGeracao(double descontoGeracao) {
+    this.descontoGeracao = descontoGeracao;
   }
 
 }
