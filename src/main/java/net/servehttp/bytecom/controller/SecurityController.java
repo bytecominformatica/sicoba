@@ -60,7 +60,7 @@ public class SecurityController implements Serializable {
       } catch (AuthenticationException e) {
         error = "CREDENCIAIS INVÁLIDAS";
         LOGGER.info("[" + new Date() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");
-//        sendAlert();
+        sendAlert();
       }
     }
   }
