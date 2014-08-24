@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import net.servehttp.bytecom.annotation.CpfCnpj;
@@ -38,15 +39,14 @@ public class Cliente extends EntityGeneric implements Serializable {
   @Column(name = "cpf_cnpj")
   @CpfCnpj
   private String cpfCnpj;
+  @Past(message="Data de Nascimento Inválida")
   @Column(name = "dt_nascimento")
   private Date dataNascimento;
   @Email(message = "Email inválido")
   private String email;
   @Column(name = "fone_titular")
-  @Size(max = 10, message = "fone deve possuir 10 digitos ex: 9999999999")
   private String foneTitular;
   private String contato;
-  @Size(max = 10, message = "fone contato deve possuir 10 digitos ex: 9999999999")
   @Column(name = "fone_contato")
   private String foneContato;
 

@@ -9,9 +9,7 @@
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.profile}</ui:define>
 	<ui:define name="subtitle">#{bundle.edit}</ui:define>
-	<ui:define name="submenu">
-		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
-	</ui:define>
+	
 	<ui:define name="content">
 			<div class="panel-body">
 				<h:graphicImage id="imagem" value="#{perfilController.userAccount.imageGerada}" width="80px;"/>
@@ -37,16 +35,16 @@
 						jsf:value="#{perfilController.userAccount.lastName}" />
 						
 					<label jsf:for="email" class="control-label">#{bundle.email}</label>
-					<input jsf:id="email" type="text" class="form-control"
+					<input jsf:id="email" type="email" class="form-control"
 						jsf:value="#{perfilController.userAccount.email}" />
 
-						<label jsf:for="password" class="control-label">#{bundle.password}</label>
-						<input jsf:id="password" type="password" class="form-control"
-							jsf:value="#{perfilController.password}"/>
-						
-						<label jsf:for="confirmPassword" class="control-label">#{bundle.confirmPassword}</label>
-						<input jsf:id="confirmPassword" type="password" class="form-control"
-							jsf:value="#{perfilController.confirmPassword}"/>
+					<label jsf:for="password" class="control-label">#{bundle.password}</label>
+					<input jsf:id="password" type="password" class="form-control"
+						jsf:value="#{perfilController.password}"/>
+					
+					<label jsf:for="confirmPassword" class="control-label">#{bundle.confirmPassword}</label>
+					<input jsf:id="confirmPassword" type="password" class="form-control"
+						jsf:value="#{perfilController.confirmPassword}"/>
 					<div class="modal-footer">
 						<button jsf:id="btSalvar" jsf:actionListener="#{perfilController.salvar()}"
 							class="btn btn-primary" type="submit" >

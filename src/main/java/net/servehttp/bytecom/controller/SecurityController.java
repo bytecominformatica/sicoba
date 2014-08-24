@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -48,6 +49,14 @@ public class SecurityController implements Serializable {
   @Inject
   private UserAccount userAccount;
   private String error;
+  
+  @PostConstruct
+  public void carregar(){
+    if (currentUser.isAuthenticated()) {
+      LOGGER.info("[" + new Date() + "] - " + "USUÁRIO JÁ ESTA LOGADO");
+      webUtil.redirect(HOME_URL);
+    }
+  }
 
   public void authenticate() {
     error = null;

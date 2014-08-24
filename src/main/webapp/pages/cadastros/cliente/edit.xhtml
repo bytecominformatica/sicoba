@@ -56,14 +56,14 @@
 							</input>
 
 							<label jsf:for="fone" class="control-label">#{bundle.fone}</label>
-							<input jsf:id="fone" type="tel" jsf:value="#{clienteController.cliente.foneTitular}" class="form-control" max="10"/>
+							<input jsf:id="fone" type="tel" jsf:value="#{clienteController.cliente.foneTitular}" class="form-control"/>
 
 							<label jsf:for="contato" class="control-label">#{bundle.contato}</label>
 							<input jsf:id="contato" type="text" jsf:value="#{clienteController.cliente.contato}" class="form-control uppercase" />
 
 							<label jsf:for="foneContato" class="control-label">#{bundle.foneContato}</label>
 							<input jsf:id="foneContato" type="tel" jsf:value="#{clienteController.cliente.foneContato}"
-								class="form-control" max="10"/>
+								class="form-control"/>
 
 							<label jsf:for="email" class="control-label">#{bundle.email}</label>
 							<input jsf:id="email" type="email" jsf:value="#{clienteController.cliente.email}" class="form-control" />
@@ -100,7 +100,7 @@
 							<input jsf:id="complemento" type="text" jsf:value="#{clienteController.cliente.endereco.complemento}" class="form-control"/>
 
 						<div class="modal-footer">
-                          <button jsf:id="btSalvar" jsf:action="#{clienteController.salvar()}"
+                          <button jsf:id="btSalvar" jsf:actionListener="#{clienteController.salvar()}"
                             class="btn btn-primary" type="submit">
                             <span class="glyphicon glyphicon-floppy-save" /> #{clienteController.cliente.id == 0 ? bundle.save : bundle.update}
                           </button>

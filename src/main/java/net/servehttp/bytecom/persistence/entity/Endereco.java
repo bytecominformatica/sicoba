@@ -21,12 +21,9 @@ public class Endereco implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@NotNull(message="CEP é obrigatório")
 	private String cep;
 	@NotNull(message="logradouro é obrigatório")
 	private String logradouro;
-	@NotNull(message="número é obrigatório")
 	private String numero;
 	private String complemento;
 	

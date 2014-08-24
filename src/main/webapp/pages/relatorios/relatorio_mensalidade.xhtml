@@ -9,6 +9,41 @@
 	<ui:define name="subtitle">#{bundle.mensalidades}</ui:define>
 	<ui:define name="content">
 		<div class="panel-body">
+		
+		                    <div class="row">
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>
+                                        <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoPrevistoDoMes}
+                                    </h3>
+                                    <p>
+                                        Faturamento previsto do mês
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                            </div>
+                        </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>
+                                        <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoDoMes}
+                                    </h3>
+                                    <p>
+                                        Faturamento Atual do mês
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                            </div>
+                        </div><!-- ./col -->
+		</div>
 			<form jsf:id="formPesquisa" class="form-horizontal">
 			
 				<div class="checkbox">
@@ -29,8 +64,10 @@
 				<h:selectOneMenu id="status" value="#{mensalidadeRelatorioController.status}"
 					styleClass="form-control" required="true">
 					<f:selectItem itemLabel="TODOS" itemValue="-1" />
+					<f:selectItem itemLabel="PAGOS" itemValue="-2" />
 					<f:selectItem itemLabel="EM ABERTO" itemValue="0" />
-					<f:selectItem itemLabel="PAGA" itemValue="1" />
+					<f:selectItem itemLabel="PAGO BOLETO" itemValue="1" />
+					<f:selectItem itemLabel="BAIXA MANUAL" itemValue="2" />
 				</h:selectOneMenu>
 
 		    	<div class="modal-footer">
@@ -66,6 +103,10 @@
 					<h:column>
 						<f:facet name="header">#{bundle.tarifa}</f:facet>
 						#{m.tarifaFormatada}
+					</h:column>
+					<h:column>
+						<f:facet name="header">#{bundle.status}</f:facet>
+						#{m.statusFormatado}
 					</h:column>
 					<h:column>
 						<f:facet name="header">#{bundle.vencimento}</f:facet>

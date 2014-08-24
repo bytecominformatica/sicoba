@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.Email;
+
 import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
 import net.servehttp.bytecom.util.ImageUtil;
 
@@ -25,6 +27,7 @@ import net.servehttp.bytecom.util.ImageUtil;
 public class UserAccount extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -7710346689149270175L;
+  @Email(message="Email inválido")
   private String email;
   @Column(name = "first_name")
   private String firstName;

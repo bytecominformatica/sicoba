@@ -36,9 +36,8 @@ public class AcessoController implements Serializable {
   @Inject
   private ClientBussiness clientBusiness;
 
-
   public void load() {
-    if (clienteId > 0) {
+    if (clienteId > 0 && cliente == null) {
       cliente = clientBusiness.findById(clienteId);
       if ((cliente.getAcesso()) == null) {
         cliente.setAcesso(new Acesso());
@@ -60,8 +59,7 @@ public class AcessoController implements Serializable {
     }
   }
 
-  public String salvar() {
-    String page = null;
+  public void salvar() {
     if (isDisponivel(cliente.getAcesso())) {
       if (cliente.getAcesso().getId() == 0) {
         acessoBusiness.salvar(cliente.getAcesso());
@@ -73,9 +71,7 @@ public class AcessoController implements Serializable {
       }
       servidorController.atualizarAcesso();
       load();
-      page = "edit";
     }
-    return page;
   }
 
   public void remover() {

@@ -27,7 +27,9 @@ public class MensalidadeRelatorioJPA implements Serializable {
       jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";  
     }
     
-    if (status != -1) {
+    if (status == -2) {
+      jpql += "and (m.status = 1 or m.status = 2) ";
+    } else if (status != -1) {
       jpql += "and m.status = :status ";
     }
     
@@ -41,7 +43,7 @@ public class MensalidadeRelatorioJPA implements Serializable {
         em.createQuery(jpql, Mensalidade.class).setParameter("inicio", inicio)
             .setParameter("fim", fim);
     
-    if (status != -1) {
+    if (status != -1 && status != -2) {
       query.setParameter("status", status);
     }
     
