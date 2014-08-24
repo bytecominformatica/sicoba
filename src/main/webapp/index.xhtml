@@ -86,7 +86,7 @@
                             <div class="small-box bg-purple">
                                 <div class="inner">
                                     <h3>
-                                        #{dashboardController.listClientesInativos.size()}
+                                        #{dashboardController.quantidadeClientesInativos.size()}
                                     </h3>
                                     <p>
                                         Clientes Inativos
@@ -118,6 +118,20 @@
 							</h:dataTable>
 							
 						</div>
+						
+						<div id="clientesinativos" class="col-sm-12 col-md-6">
+							
+							<h4 class="page-header">CLIENTES INATIVOS</h4>
+							<h:dataTable styleClass="table m-table table-bordered table-hover table-heading"
+							 value="#{dashboardController.listClientesInativos}" var="c">
+								<h:column>
+									<f:facet name="header">#{bundle.nome}</f:facet>
+									#{c.nome}
+								</h:column>
+							</h:dataTable>
+							
+						</div>
+						
 						<div id="ow-marketplace" class="col-sm-12 col-md-6">
 							
 							<h4 class="page-header">MENSALIDADES EM ATRASO</h4>
