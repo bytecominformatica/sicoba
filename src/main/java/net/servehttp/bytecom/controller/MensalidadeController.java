@@ -15,6 +15,7 @@ import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.MensalidadeBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.DateUtil;
 
@@ -60,14 +61,14 @@ public class MensalidadeController implements Serializable {
   }
 
   public void prepararBaixaMensalidade() {
-    if (mensalidade.getStatus() == Mensalidade.BAIXA_MANUAL) {
+    if (mensalidade.getStatus() == StatusMensalidade.BAIXA_MANUAL) {
       if (mensalidade.getValorPago() == 0) {
         mensalidade.setValorPago(mensalidade.getValor() - mensalidade.getDesconto());
       }
       if (mensalidade.getDataOcorrencia() == null) {
         mensalidade.setDataOcorrencia(new Date());
       }
-    } else if (mensalidade.getStatus() == Mensalidade.EM_ABERTO) {
+    } else if (mensalidade.getStatus() == StatusMensalidade.PENDENTE) {
       mensalidade.setValorPago(0);
       mensalidade.setDataOcorrencia(null);
     }

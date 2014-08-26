@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 
 @Transactional
 public class MensalidadeRelatorioJPA implements Serializable {
@@ -18,7 +19,7 @@ public class MensalidadeRelatorioJPA implements Serializable {
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
 
-  public List<Mensalidade> buscarPorDataStatus(Date inicio, Date fim, int status, boolean buscarPorDataOcorrencia) {
+  public List<Mensalidade> buscarPorDataStatus(Date inicio, Date fim, StatusMensalidade status, boolean buscarPorDataOcorrencia) {
 
     String jpql;
     if(buscarPorDataOcorrencia){
@@ -27,9 +28,7 @@ public class MensalidadeRelatorioJPA implements Serializable {
       jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";  
     }
     
-    if (status == -2) {
-      jpql += "and (m.status = 1 or m.status = 2) ";
-    } else if (status != -1) {
+    if (status != null) {
       jpql += "and m.status = :status ";
     }
     
@@ -43,7 +42,7 @@ public class MensalidadeRelatorioJPA implements Serializable {
         em.createQuery(jpql, Mensalidade.class).setParameter("inicio", inicio)
             .setParameter("fim", fim);
     
-    if (status != -1 && status != -2) {
+    if (status != null) {
       query.setParameter("status", status);
     }
     

@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import net.servehttp.bytecom.persistence.UserJPA;
 import net.servehttp.bytecom.persistence.entity.security.Authentication;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
-import net.servehttp.bytecom.util.ImageUtil;
 
 public class AccountBussiness extends genericoBusiness implements Serializable {
 
@@ -16,8 +15,6 @@ public class AccountBussiness extends genericoBusiness implements Serializable {
 
   @Inject
   private UserJPA userJPA;
-  @Inject
-  private ImageUtil imageUtil;
 
   public List<UserAccount> findUsersAccounts() {
     return genericoJPA.buscarTodos(UserAccount.class);

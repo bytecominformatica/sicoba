@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import net.servehttp.bytecom.facede.CreateEntityManager;
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusEquipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.TipoEquipamento;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -26,10 +28,10 @@ public class EquipamentoJPATest {
 
 	@Test
 	public void deveriaBuscarOsEquipamentosNaoFiltrandoPorTipo() {
-		List<Equipamento> list = equipamentoJPA.buscarEquipamentosNaoUtilizados(Equipamento.TIPO_INSTALACAO, Equipamento.STATUS_OK);
+		List<Equipamento> list = equipamentoJPA.buscarEquipamentosNaoUtilizados(TipoEquipamento.INSTALACAO, StatusEquipamento.OK);
 		Assert.assertNotNull(list);
 
-		list = equipamentoJPA.buscarEquipamentosNaoUtilizados(Equipamento.TIPO_WIFI, Equipamento.STATUS_OK);
+		list = equipamentoJPA.buscarEquipamentosNaoUtilizados(TipoEquipamento.WIFI, StatusEquipamento.OK);
 		Assert.assertNotNull(list);
 	}
 

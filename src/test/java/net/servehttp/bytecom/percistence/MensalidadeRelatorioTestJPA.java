@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 
 import net.servehttp.bytecom.facede.CreateEntityManager;
-import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.relatorios.MensalidadeRelatorioJPA;
 import net.servehttp.bytecom.util.DateUtil;
 
@@ -29,7 +29,7 @@ public class MensalidadeRelatorioTestJPA {
     Date inicio = DateUtil.INSTANCE.getHoje();
     Date fim = DateUtil.INSTANCE.getHoje();
     boolean buscarPorDataOcorrencia = true;
-    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, Mensalidade.BOLETO_PAGO, buscarPorDataOcorrencia);
+    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, StatusMensalidade.PAGO_NO_BOLETO, buscarPorDataOcorrencia);
   }
 
   @Test
@@ -37,7 +37,7 @@ public class MensalidadeRelatorioTestJPA {
     Date inicio = DateUtil.INSTANCE.getHoje();
     Date fim = DateUtil.INSTANCE.getHoje();
     boolean buscarPorDataOcorrencia = false;
-    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, Mensalidade.BOLETO_PAGO, buscarPorDataOcorrencia);
+    mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, StatusMensalidade.PAGO_NO_BOLETO, buscarPorDataOcorrencia);
   }
  
   @AfterClass

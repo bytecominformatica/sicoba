@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.relatorios.MensalidadeRelatorioJPA;
 import net.servehttp.bytecom.util.DateUtil;
 import net.servehttp.bytecom.util.StringUtil;
@@ -21,14 +22,14 @@ public class MensalidadeRelatorioController implements Serializable {
   private static final long serialVersionUID = -7284911722827189143L;
   private Date dataInicio;
   private Date dataFim;
-  private int status = -1;
+  private StatusMensalidade status;
   private boolean pesquisarPorDataOcorrencia = true;
-  
+
   private double valorTotal;
   private double valorPagoTotal;
   private double descontoTotal;
   private double tarifaTotal;
-  
+
 
 
   private List<Mensalidade> listMensalidades;
@@ -42,7 +43,8 @@ public class MensalidadeRelatorioController implements Serializable {
 
   public void consultar() {
     listMensalidades =
-        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status, pesquisarPorDataOcorrencia);
+        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status,
+            pesquisarPorDataOcorrencia);
     calcularTotalizadores();
   }
 
@@ -53,7 +55,7 @@ public class MensalidadeRelatorioController implements Serializable {
       valorPagoTotal += m.getValorPago();
       descontoTotal += m.getDesconto();
       tarifaTotal += m.getTarifa();
-      
+
     }
 
   }
@@ -93,16 +95,16 @@ public class MensalidadeRelatorioController implements Serializable {
   public String getTarifaTotal() {
     return StringUtil.INSTANCE.formatCurrence(tarifaTotal);
   }
-  
+
   public String getDescontoTotal() {
     return StringUtil.INSTANCE.formatCurrence(descontoTotal);
   }
 
-  public int getStatus() {
+  public StatusMensalidade getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(StatusMensalidade status) {
     this.status = status;
   }
 

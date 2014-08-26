@@ -11,6 +11,7 @@ import javax.servlet.http.Part;
 import net.servehttp.bytecom.ejb.CaixaEJB;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
 import net.servehttp.bytecom.persistence.entity.caixa.HeaderLote;
 import net.servehttp.bytecom.persistence.entity.caixa.Registro;
@@ -46,7 +47,7 @@ public class CaixaController implements Serializable {
 						for(Registro r : hl.getRegistros()){
 							Mensalidade m = genericoJPA.buscarUm("numeroBoleto", r.getNossoNumero(), Mensalidade.class);
 							if(m != null){
-								m.setStatus(Mensalidade.BOLETO_PAGO);
+								m.setStatus(StatusMensalidade.PAGO_NO_BOLETO);
 								m.setValor(r.getValorTitulo());
 								m.setValorPago(r.getRegistroDetalhe().getValorPago());
 								m.setDesconto(r.getRegistroDetalhe().getDesconto());

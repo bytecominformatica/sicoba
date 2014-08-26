@@ -36,8 +36,8 @@
 						<label jsf:for="status" class="control-label">#{bundle.status}</label>
 						<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
 							styleClass="form-control" required="true">
-							<f:selectItem itemLabel="EM ABERTO" itemValue="0" />
-							<f:selectItem itemLabel="BAIXA MANUAL" itemValue="2" />
+							<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
+							<f:selectItem itemLabel="BAIXA MANUAL" itemValue="BAIXA_MANUAL" />
 							<f:ajax event="change" render=":form:valorPagoDisplay" listener="#{mensalidadeController.prepararBaixaMensalidade()}"/>
 						</h:selectOneMenu>
 					</div>
@@ -46,7 +46,7 @@
 						jsf:value="#{mensalidadeController.mensalidade.valor}"
 						required="required" />
 
-					<div jsf:id="valorPagoDisplay" style="display: #{mensalidadeController.mensalidade.status == 2 ?  'inline' : 'none'}">
+					<div jsf:id="valorPagoDisplay" style="display: #{mensalidadeController.mensalidade.status == 'BAIXA_MANUAL' ?  'inline' : 'none'}">
 						<label jsf:for="valorPago" class="control-label" >#{bundle.valorPago}</label>
 						<input jsf:id="valorPago" type="number" step="any" class="form-control"
 							jsf:value="#{mensalidadeController.mensalidade.valorPago}" />
@@ -124,22 +124,31 @@
 						
 						<h:column>
 							<f:facet name="header">#{bundle.vencimento}</f:facet>
-							#{m.dataVencimentoFormatada}
+							<h:outputText value="#{m.dataVencimento}" >
+								<f:convertDateTime locale="pt" pattern="dd/MM/yyyy"/>
+							</h:outputText>
 						</h:column>
 						
 						<h:column>
 							<f:facet name="header">#{bundle.valor}</f:facet>
-							#{m.valorFormatada}
+							<h:outputText value="#{m.valor}" >
+								<f:convertNumber minFractionDigits="2"/>
+							</h:outputText>
 						</h:column>
 						
 						<h:column>
 							<f:facet name="header">#{bundle.desconto}</f:facet>
-							#{m.desconto}
+							<h:outputText value="#{m.desconto}" >
+								<f:convertNumber minFractionDigits="2"/>
+							</h:outputText>
+							
 						</h:column>
 						
 						<h:column>
 							<f:facet name="header">#{bundle.valorPago}</f:facet>
-							#{m.valorPagoFormatada}
+							<h:outputText value="#{m.valorPago}" >
+								<f:convertNumber minFractionDigits="2"/>
+							</h:outputText>
 						</h:column>
 						
 						<h:column>
@@ -149,7 +158,7 @@
 						
 						<h:column>
 							<f:facet name="header">#{bundle.status}</f:facet>
-							#{m.statusFormatado}
+							#{m.status}
 						</h:column>
 						<h:column>
 							<f:facet name="header">#{bundle.actions}</f:facet>
