@@ -35,7 +35,8 @@ public class DashboardController implements Serializable {
   private List<Mensalidade> listMensalidadesAtrasadas;
   private List<Cliente> listClientesInstalados;
   private List<Cliente> listClientesSemMensalidades;
-  private List<Acesso> listClientesInativos;
+  private List<Cliente> listClientesInativos;
+  private List<Acesso> quantidadeClientesInativos;
 
   @PostConstruct
   public void load() {
@@ -44,6 +45,7 @@ public class DashboardController implements Serializable {
     faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
     faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
     listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();
+    quantidadeClientesInativos = dashboadJPA.getQuantidadeClientesInativos();
     listClientesInativos = dashboadJPA.getClientesInativos();
 //    listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
   }
@@ -68,17 +70,16 @@ public class DashboardController implements Serializable {
     return listMensalidadesAtrasadas;
   }
 
-  public List<Acesso> getListClientesInativos() {
-    return listClientesInativos;
+  public List<Acesso> getQuantidadeClientesInativos() {
+    return quantidadeClientesInativos;
   }
 
   public List<Cliente> getListClientesSemMensalidades() {
     return listClientesSemMensalidades;
   }
 
-  public void setListClientesSemMensalidades(List<Cliente> listClientesSemMensalidades) {
-    this.listClientesSemMensalidades = listClientesSemMensalidades;
+  public List<Cliente> getListClientesInativos() {
+    return listClientesInativos;
   }
-
 
 }
