@@ -47,7 +47,7 @@
                 jsf:value="#{acessoController.cliente.acesso.mac}" required="required" pattern="^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$"/>
 
             <div class="modal-footer">
-              <button jsf:id="btSalvar" jsf:action="#{acessoController.salvar()}"
+              <button jsf:id="btSalvar" jsf:actionListener="#{acessoController.salvar()}"
                 class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-floppy-save" /> #{acessoController.cliente.acesso.id == 0 ? bundle.save : bundle.update}
 				<f:param value="#{acessoController.cliente.id}" name="id"></f:param>

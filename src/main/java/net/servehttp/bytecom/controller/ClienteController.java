@@ -1,7 +1,6 @@
 package net.servehttp.bytecom.controller;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -77,8 +76,7 @@ public class ClienteController implements Serializable {
     }
   }
 
-  public String salvar() {
-    page = null;
+  public void salvar() {
     if (isClienteValido(cliente)) {
       cliente.getEndereco().setBairro(addressBussiness.findById(bairroId));
       if (cliente.getId() == 0) {
@@ -88,15 +86,12 @@ public class ClienteController implements Serializable {
         clientBussiness.atualizar(cliente);
         AlertaUtil.info("Cliente atualizado com sucesso!");
       }
-      page = "list";
     }
-    return page;
   }
 
 
   private boolean isClienteValido(Cliente cliente) {
     boolean valido = true;
-    Date dataAtual = new Date();
     if (!clientBussiness.rgAvaliable(cliente)) {
       AlertaUtil.error("RG já Cadastrado");
       valido = false;
@@ -105,9 +100,6 @@ public class ClienteController implements Serializable {
       valido = false;
     } else if (!clientBussiness.emailAvaliable(cliente)) {
       AlertaUtil.error("E-Mail já Cadastrado");
-      valido = false;
-    } else if(cliente.getDataNascimento().compareTo(dataAtual) > 0){
-      AlertaUtil.error("Data de Nascimento Inválida");
       valido = false;
     }
     return valido;
