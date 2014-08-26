@@ -70,20 +70,6 @@
                	
 				<div id="dashboard_tabs" class="col-xs-12 col-sm-10">
 					
-						
-						<div id="clientesinativos" class="col-sm-12 col-md-6">
-							
-							<h4 class="page-header">CLIENTES INATIVOS</h4>
-							<h:dataTable styleClass="table m-table table-bordered table-hover table-heading"
-							 value="#{dashboardController.listClientesInativos}" var="c">
-								<h:column>
-									<f:facet name="header">#{bundle.nome}</f:facet>
-									#{c.nome}
-								</h:column>
-							</h:dataTable>
-							
-						</div>
-						
 						<div id="ow-marketplace" class="col-sm-12 col-md-6">
 							
 							<h4 class="page-header">MENSALIDADES EM ATRASO</h4>
@@ -120,7 +106,19 @@
 							</h:dataTable>
 							
 						</div>
-						 	
+
+						<div id="clientesinativos" class="col-sm-12 col-md-6">
+							
+							<h4 class="page-header">CLIENTES INATIVOS</h4>
+							<h:dataTable styleClass="table m-table table-bordered table-hover table-heading"
+							 value="#{dashboardController.listClientesInativos}" var="c">
+								<h:column>
+									<f:facet name="header">#{bundle.nome}</f:facet>
+									#{c.nome}
+								</h:column>
+							</h:dataTable>
+							
+						</div>						 	
 					</div>
 					<!--End Dashboard Tab 1-->
 			 </section><!-- /.content -->

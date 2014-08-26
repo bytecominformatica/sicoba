@@ -6,15 +6,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import net.servehttp.bytecom.util.DateUtil;
-import net.servehttp.bytecom.util.StringUtil;
 
 /**
  *
@@ -25,9 +23,6 @@ import net.servehttp.bytecom.util.StringUtil;
 public class Mensalidade extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -8955481650524371350L;
-  public static final int EM_ABERTO = 0;
-  public static final int BOLETO_PAGO = 1;
-  public static final int BAIXA_MANUAL = 2;
   @Column(name = "data_vencimento")
   @Temporal(TemporalType.DATE)
   private Date dataVencimento;
@@ -39,7 +34,8 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   private double valorPago;
   private double desconto;
   private double tarifa;
-  private int status;
+  @Enumerated
+  private StatusMensalidade status;
   @Column(name = "numero_boleto")
   private Integer numeroBoleto;
 
@@ -49,10 +45,6 @@ public class Mensalidade extends EntityGeneric implements Serializable {
 
   public Date getDataVencimento() {
     return dataVencimento;
-  }
-
-  public String getDataVencimentoFormatada() {
-    return DateUtil.INSTANCE.format(dataVencimento);
   }
 
   public void setDataVencimento(Date dataVencimento) {
@@ -67,31 +59,12 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     this.valor = valor;
   }
 
-  public int getStatus() {
+  public StatusMensalidade getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(StatusMensalidade status) {
     this.status = status;
-  }
-
-  public String getStatusFormatado() {
-    String s = "STATUS INVÁLIDO";
-    switch (status) {
-      case BOLETO_PAGO:
-        s = "BOLETO PAGO";
-        break;
-      case EM_ABERTO:
-        s = "EM ABERTO";
-        break;
-      case BAIXA_MANUAL:
-        s = "BAIXA MANUAL";
-        break;
-      default:
-        s = "STATUS INVÁLIDO";
-        break;
-    }
-    return s;
   }
 
   public Cliente getCliente() {
@@ -101,7 +74,6 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   public void setCliente(Cliente cliente) {
     this.cliente = cliente;
   }
-
 
   public Integer getNumeroBoleto() {
     return numeroBoleto;
@@ -133,18 +105,6 @@ public class Mensalidade extends EntityGeneric implements Serializable {
 
   public void setDataOcorrencia(Date dataOcorrencia) {
     this.dataOcorrencia = dataOcorrencia;
-  }
-
-  public String getTarifaFormatada() {
-    return StringUtil.INSTANCE.formatCurrence(tarifa);
-  }
-
-  public String getValorFormatada() {
-    return StringUtil.INSTANCE.formatCurrence(valor);
-  }
-
-  public String getValorPagoFormatada() {
-    return StringUtil.INSTANCE.formatCurrence(valorPago);
   }
 
   public double getDesconto() {

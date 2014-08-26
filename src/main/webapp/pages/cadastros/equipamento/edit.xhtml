@@ -38,23 +38,15 @@
 					jsf:value="#{equipamentoController.equipamento.descricao}" />
 
 				<label jsf:for="tipo" class="control-label">#{bundle.tipo}</label>
-				<h:selectOneMenu id="tipo"
-					value="#{equipamentoController.equipamento.tipo}"
-					styleClass="form-control">
-					<f:selectItem itemLabel="Instalação"
-						itemValue="#{equipamentoController.equipamento.TIPO_INSTALACAO}" />
-					<f:selectItem itemLabel="WIFI"
-						itemValue="#{equipamentoController.equipamento.TIPO_WIFI}" />
+				<h:selectOneMenu id="tipo" value="#{equipamentoController.equipamento.tipo}" styleClass="form-control">
+					<f:selectItem itemLabel="INSTALAÇÃO" itemValue="INSTALACAO" />
+					<f:selectItem itemLabel="WIFI" itemValue="WIFI" />
 				</h:selectOneMenu>
 
 				<label jsf:for="status" class="control-label">#{bundle.status}</label>
-				<h:selectOneMenu id="status"
-					value="#{equipamentoController.equipamento.status}"
-					styleClass="form-control">
-					<f:selectItem itemLabel="OK"
-						itemValue="#{equipamentoController.equipamento.STATUS_OK}" />
-					<f:selectItem itemLabel="DEFEITO"
-						itemValue="#{equipamentoController.equipamento.STATUS_DEFEITO}" />
+				<h:selectOneMenu id="status" value="#{equipamentoController.equipamento.status}" styleClass="form-control">
+					<f:selectItem itemLabel="OK" itemValue="OK" />
+					<f:selectItem itemLabel="DEFEITO" itemValue="DEFEITO" />
 				</h:selectOneMenu>
 
 				<div class="modal-footer">

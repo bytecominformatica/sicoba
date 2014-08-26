@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.util.DateUtil;
 
 /**
@@ -34,7 +35,7 @@ public class DashboadJPA implements Serializable {
 
   public List<Mensalidade> getMensalidadesEmAtraso(){
     return em.createQuery("select m from Mensalidade m where m.status = :status and m.dataVencimento < :date order by m.dataVencimento desc", Mensalidade.class)
-        .setParameter("status", Mensalidade.EM_ABERTO)
+        .setParameter("status", StatusMensalidade.PENDENTE)
         .setParameter("date", DateUtil.INSTANCE.getHoje())
         .getResultList();
   }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -17,11 +18,6 @@ import javax.validation.constraints.Size;
 public class Equipamento extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -6708003996308589556L;
-  public static final int STATUS_OK = 0;
-  public static final int STATUS_DEFEITO = 1;
-
-  public static final int TIPO_INSTALACAO = 0;
-  public static final int TIPO_WIFI = 1;
 
   private String descricao;
   @Size(min = 1, max = 30)
@@ -33,8 +29,10 @@ public class Equipamento extends EntityGeneric implements Serializable {
       regexp = "^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$",
       message = "MAC inválido")
   private String mac;
-  private int tipo;
-  private int status;
+  @Enumerated
+  private TipoEquipamento tipo;
+  @Enumerated
+  private StatusEquipamento status;
 
   public Equipamento() {}
 
@@ -74,30 +72,6 @@ public class Equipamento extends EntityGeneric implements Serializable {
     this.mac = mac != null ? mac.toUpperCase() : mac;
   }
 
-  public int getTipo() {
-    return tipo;
-  }
-
-  public void setTipo(int tipo) {
-    this.tipo = tipo;
-  }
-
-  public int getTIPO_INSTALACAO() {
-    return TIPO_INSTALACAO;
-  }
-
-  public int getTIPO_WIFI() {
-    return TIPO_WIFI;
-  }
-
-  public int getSTATUS_OK() {
-    return STATUS_OK;
-  }
-
-  public int getSTATUS_DEFEITO() {
-    return STATUS_DEFEITO;
-  }
-
   @Override
   public String toString() {
     return modelo + " - " + mac;
@@ -111,11 +85,19 @@ public class Equipamento extends EntityGeneric implements Serializable {
     this.descricao = descricao;
   }
 
-  public int getStatus() {
+  public TipoEquipamento getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(TipoEquipamento tipo) {
+    this.tipo = tipo;
+  }
+
+  public StatusEquipamento getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(StatusEquipamento status) {
     this.status = status;
   }
 

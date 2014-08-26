@@ -7,6 +7,8 @@ import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusEquipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.TipoEquipamento;
 
 public class EquipamentoBussiness extends genericoBusiness implements Serializable {
 
@@ -23,11 +25,11 @@ public class EquipamentoBussiness extends genericoBusiness implements Serializab
   }
 
   public List<Equipamento> buscarEquipamentosInstalacaoNaoUtilizados() {
-    return equipamentoJPA.buscarEquipamentosNaoUtilizados(Equipamento.TIPO_INSTALACAO, Equipamento.STATUS_OK);
+    return equipamentoJPA.buscarEquipamentosNaoUtilizados(TipoEquipamento.INSTALACAO, StatusEquipamento.OK);
   }
 
   public List<Equipamento> buscarEquipamentosWifiNaoUtilizados() {
-    return equipamentoJPA.buscarEquipamentosNaoUtilizados(Equipamento.TIPO_WIFI, Equipamento.STATUS_OK);
+    return equipamentoJPA.buscarEquipamentosNaoUtilizados(TipoEquipamento.WIFI, StatusEquipamento.OK);
   }
 
 }

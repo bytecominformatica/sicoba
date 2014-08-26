@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.util.DateUtil;
 
 /**
@@ -39,7 +40,7 @@ public class MensalidadeJPA {
       Contrato contrato = c.getContrato();
       Mensalidade m = new Mensalidade();
       m.setCliente(c);
-      m.setStatus(Mensalidade.EM_ABERTO);
+      m.setStatus(StatusMensalidade.PENDENTE);
       m.setValor(contrato.getPlano().getValorMensalidade());
       int dia = contrato.getVencimento();
       Date date = DateUtil.INSTANCE.parse(dia + "/" + mes + "/" + ano);

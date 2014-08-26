@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusEquipamento;
+import net.servehttp.bytecom.persistence.entity.cadastro.TipoEquipamento;
 
 /**
  * 
@@ -27,10 +29,10 @@ public class EquipamentoJPA implements Serializable {
     this.em = em;
   }
 
-  public List<Equipamento> buscarEquipamentosNaoUtilizados(int tipo, int status) {
+  public List<Equipamento> buscarEquipamentosNaoUtilizados(TipoEquipamento tipo, StatusEquipamento status) {
     List<Equipamento> list;
     String jpql;
-    if (tipo == Equipamento.TIPO_INSTALACAO) {
+    if (tipo == TipoEquipamento.INSTALACAO) {
       jpql =
           "select e from Equipamento e where e.tipo = :tipo and e.status = :status and e.id not in (select c.equipamento.id from Contrato c where c.equipamento.id is not null) order by e.modelo)";
     } else {
