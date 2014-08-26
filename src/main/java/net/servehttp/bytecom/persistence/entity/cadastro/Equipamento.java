@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -28,7 +29,9 @@ public class Equipamento extends EntityGeneric implements Serializable {
       regexp = "^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$",
       message = "MAC inválido")
   private String mac;
+  @Enumerated
   private TipoEquipamento tipo;
+  @Enumerated
   private StatusEquipamento status;
 
   public Equipamento() {}
