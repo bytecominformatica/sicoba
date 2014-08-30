@@ -41,6 +41,15 @@
 							<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
 							<input jsf:id="nome" type="text" jsf:value="#{clienteController.cliente.nome}" class="form-control uppercase" 
                             required="required" autofocus="autofocus"/>
+                            
+                            <label jsf:for="status" class="control-label">#{bundle.status}</label>
+							<h:selectOneMenu id="status" value="#{clienteController.cliente.status}"
+								styleClass="form-control" required="true">
+								<f:selectItem itemLabel="#{bundle.inativo}" itemValue="INATIVO"/>
+								<f:selectItem itemLabel="#{bundle.ativo}" itemValue="ATIVO"/>
+								<f:selectItem itemLabel="#{bundle.cancelado}" itemValue="CANCELADO"/>
+							</h:selectOneMenu>
+                            
 
 							<label jsf:for="rg" class="control-label">#{bundle.rg}</label>
 							<input jsf:id="rg" type="number" jsf:value="#{clienteController.cliente.rg}" class="form-control"/>

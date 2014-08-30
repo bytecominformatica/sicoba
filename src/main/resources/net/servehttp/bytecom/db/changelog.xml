@@ -104,8 +104,16 @@
 			stripComments="true" />
 	</changeSet>
 
-<changeSet id="17" author="felipewmartins">
-	<sqlFile path="net/servehttp/bytecom/db/changelog/20140816-17-felipewmartins.sql" stripComments="true"/>
-</changeSet>
+	<changeSet id="17" author="felipewmartins">
+		<sqlFile
+			path="net/servehttp/bytecom/db/changelog/20140816-17-felipewmartins.sql"
+			stripComments="true" />
+	</changeSet>
+
+	<changeSet id="18" author="clairtonluz">
+		<sqlFile
+			path="net/servehttp/bytecom/db/changelog/20140826-18-clairtonluz.sql"
+			stripComments="true" />
+	</changeSet>
 
 </databaseChangeLog>

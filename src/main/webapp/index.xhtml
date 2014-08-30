@@ -54,7 +54,7 @@
                             <div class="small-box bg-purple">
                                 <div class="inner">
                                     <h3>
-                                        #{dashboardController.quantidadeClientesInativos.size()}
+                                        #{dashboardController.listClientesInativos.size()}
                                     </h3>
                                     <p>
                                         Clientes Inativos
@@ -114,7 +114,7 @@
 							 value="#{dashboardController.listClientesInativos}" var="c">
 								<h:column>
 									<f:facet name="header">#{bundle.nome}</f:facet>
-									#{c.nome}
+									<a href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
 								</h:column>
 							</h:dataTable>
 							

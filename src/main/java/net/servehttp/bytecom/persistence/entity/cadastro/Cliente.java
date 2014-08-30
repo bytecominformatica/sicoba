@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -35,6 +36,8 @@ public class Cliente extends EntityGeneric implements Serializable {
   @Size(max = 255, message = "nome tamanho máximo 255 caracteres")
   private String nome;
   private String rg;
+  @Enumerated
+  private StatusCliente status;
 
   @Column(name = "cpf_cnpj")
   @CpfCnpj
@@ -147,13 +150,6 @@ public class Cliente extends EntityGeneric implements Serializable {
     this.foneContato = foneContato;
   }
 
-  public int getStatus() {
-    if (acesso != null) {
-      return acesso.getStatus();
-    }
-    return -1;
-  }
-
   public Endereco getEndereco() {
     return endereco;
   }
@@ -176,6 +172,14 @@ public class Cliente extends EntityGeneric implements Serializable {
 
   public void setDataNascimento(Date dataNascimento) {
     this.dataNascimento = dataNascimento;
+  }
+
+  public StatusCliente getStatus() {
+    return status;
+  }
+
+  public void setStatus(StatusCliente status) {
+    this.status = status;
   }
 
 }

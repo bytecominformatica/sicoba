@@ -46,7 +46,7 @@ public class MensalidadeController implements Serializable {
       cliente = clientBussiness.findById(clienteId);
       ordernarMensalidades();
       if (mensalidade == null) {
-        novaMensalidade();
+        mensalidade = getNovaMensalidade();
         dataInicio = mensalidade.getDataVencimento();
       }
     }
@@ -103,10 +103,10 @@ public class MensalidadeController implements Serializable {
     business.salvar(m);
   }
 
-  private void novaMensalidade() {
+  private Mensalidade getNovaMensalidade() {
     calendar = DateUtil.INSTANCE.getProximoMes();
     calendar.set(Calendar.DAY_OF_MONTH, cliente.getContrato().getVencimento());
-    mensalidade = business.getNovaMensalidade(cliente, calendar.getTime());
+    return business.getNovaMensalidade(cliente, calendar.getTime());
   }
 
   private boolean boletosNaoRegistrado(int inicio, int fim) {
@@ -147,13 +147,13 @@ public class MensalidadeController implements Serializable {
       business.atualizar(mensalidade);
       AlertaUtil.info("Mensalidade atualizado com sucesso!");
     }
-    novaMensalidade();
+    mensalidade = getNovaMensalidade();
     load();
   }
 
   public String remover(Mensalidade m) {
     business.remover(m);
-    mensalidade = new Mensalidade();
+    mensalidade = getNovaMensalidade();
     load();
     AlertaUtil.info("Mensalidade removido com sucesso!");
     return null;
