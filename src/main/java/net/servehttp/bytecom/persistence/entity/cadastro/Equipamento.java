@@ -24,7 +24,6 @@ public class Equipamento extends EntityGeneric implements Serializable {
   private String marca;
   @Size(min = 1, max = 30)
   private String modelo;
-  @Size(min = 1, max = 20)
   @Pattern(
       regexp = "^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$",
       message = "MAC inválido")
