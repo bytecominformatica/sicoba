@@ -37,7 +37,7 @@ public class MensalidadeController implements Serializable {
   private double descontoGeracao;
   private Date dataInicio;
   @Inject
-  private MensalidadeBussiness mensalidadeBussiness;
+  private MensalidadeBussiness business;
   @Inject
   private ClientBussiness clientBussiness;
 
@@ -46,7 +46,7 @@ public class MensalidadeController implements Serializable {
       cliente = clientBussiness.findById(clienteId);
       ordernarMensalidades();
       if (mensalidade == null) {
-        novaMensalidade();
+        mensalidade = getNovaMensalidade();
         dataInicio = mensalidade.getDataVencimento();
       }
     }
@@ -83,10 +83,12 @@ public class MensalidadeController implements Serializable {
       if (numeroBoletoInicio < numeroBoletoFim) {
         for (int i = numeroBoletoInicio; i <= numeroBoletoFim; i++) {
           gravarBoleto(c, i);
+          c.add(Calendar.MONTH, 1);
         }
       } else {
         for (int i = numeroBoletoInicio; i >= numeroBoletoFim; i--) {
           gravarBoleto(c, i);
+          c.add(Calendar.MONTH, 1);
         }
 
       }
@@ -94,34 +96,22 @@ public class MensalidadeController implements Serializable {
     }
   }
 
-  private void gravarBoleto(Calendar c, int i) {
-    Mensalidade m;
-    m = new Mensalidade();
-    m.setDataVencimento(c.getTime());
-    m.setValor(cliente.getContrato().getPlano().getValorMensalidade());
-    m.setCliente(cliente);
-    m.setNumeroBoleto(i);
+  private void gravarBoleto(Calendar c, int numeroBoleto) {
+    Mensalidade m = business.getNovaMensalidade(cliente, c.getTime());
+    m.setNumeroBoleto(numeroBoleto);
     m.setDesconto(descontoGeracao);
-
-    c.add(Calendar.MONTH, 1);
-    mensalidadeBussiness.salvar(m);
+    business.salvar(m);
   }
 
-  public void novaMensalidade() {
-    mensalidade = new Mensalidade();
-    if (mensalidade.getDataVencimento() == null) {
-      calendar = DateUtil.INSTANCE.getProximoMes();
-      calendar.set(Calendar.DAY_OF_MONTH, cliente.getContrato().getVencimento());
-      mensalidade.setDataVencimento(calendar.getTime());
-    }
-    mensalidade.setValor(cliente.getContrato().getPlano().getValorMensalidade());
-    mensalidade.setCliente(cliente);
+  private Mensalidade getNovaMensalidade() {
+    calendar = DateUtil.INSTANCE.getProximoMes();
+    calendar.set(Calendar.DAY_OF_MONTH, cliente.getContrato().getVencimento());
+    return business.getNovaMensalidade(cliente, calendar.getTime());
   }
 
   private boolean boletosNaoRegistrado(int inicio, int fim) {
     boolean validos = true;
-    List<Mensalidade> listMensalidades =
-        mensalidadeBussiness.buscarMensalidadesPorBoleto(inicio, fim);
+    List<Mensalidade> listMensalidades = business.buscarMensalidadesPorBoleto(inicio, fim);
     if (!listMensalidades.isEmpty()) {
       validos = false;
       StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
@@ -151,19 +141,19 @@ public class MensalidadeController implements Serializable {
 
   public void salvar() {
     if (mensalidade.getId() == 0) {
-      mensalidadeBussiness.salvar(mensalidade);
+      business.salvar(mensalidade);
       AlertaUtil.info("Mensalidade adicionada com sucesso!");
     } else {
-      mensalidadeBussiness.atualizar(mensalidade);
+      business.atualizar(mensalidade);
       AlertaUtil.info("Mensalidade atualizado com sucesso!");
     }
-    novaMensalidade();
+    mensalidade = getNovaMensalidade();
     load();
   }
 
   public String remover(Mensalidade m) {
-    mensalidadeBussiness.remover(m);
-    mensalidade = new Mensalidade();
+    business.remover(m);
+    mensalidade = getNovaMensalidade();
     load();
     AlertaUtil.info("Mensalidade removido com sucesso!");
     return null;

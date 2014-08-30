@@ -158,7 +158,8 @@
 						
 						<h:column>
 							<f:facet name="header">#{bundle.status}</f:facet>
-							#{m.status}
+							<span class="label #{m.status == 'PENDENTE' ? 'label-warning' : m.status == 'PAGO_NO_BOLETO' || m.status == 'BAIXA_MANUAL' ? 'label-success' : ''}">#{m.status}</span>
+							
 						</h:column>
 						<h:column>
 							<f:facet name="header">#{bundle.actions}</f:facet>

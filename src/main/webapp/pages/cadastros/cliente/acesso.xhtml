@@ -19,17 +19,6 @@
               <input jsf:id="cliente" type="text" class="form-control"
                 jsf:value="#{acessoController.cliente.nome}" readonly="readonly" required="required"/>
 
-              <label jsf:for="status" class="control-label">#{bundle.status}</label>
-              <h:selectOneMenu id="status" value="#{acessoController.cliente.acesso.status}"
-                styleClass="form-control" required="true">
-                <f:selectItem itemLabel="#{bundle.ativo}"
-                  itemValue="#{acessoController.cliente.acesso.ATIVO}"/>
-                <f:selectItem itemLabel="#{bundle.inativo}"
-                  itemValue="#{acessoController.cliente.acesso.INATIVO}"/>
-                <f:selectItem itemLabel="#{bundle.cancelado}"
-                  itemValue="#{acessoController.cliente.acesso.CANCELADO}"/>
-              </h:selectOneMenu>
-
               <label jsf:for="ip" class="control-label">#{bundle.ip}</label>
               <input jsf:id="ip" type="text" class="form-control"
                 jsf:value="#{acessoController.cliente.acesso.ip}" required="required"/>

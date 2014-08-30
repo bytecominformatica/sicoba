@@ -39,22 +39,25 @@ public class AcessoController implements Serializable {
   public void load() {
     if (clienteId > 0 && cliente == null) {
       cliente = clientBusiness.findById(clienteId);
-      if ((cliente.getAcesso()) == null) {
-        cliente.setAcesso(new Acesso());
-        cliente.getAcesso().setCliente(cliente);
+    }
+    if ((cliente.getAcesso()) == null) {
+      getNovoAcesso();
+    }
+  }
 
-        String ipLivre = acessoBusiness.getIpLivre();
-        cliente.getAcesso().setIp(ipLivre);
-        cliente.getAcesso().setMascara(MASK);
-        cliente.getAcesso().setGateway(GATEWAY);
-        cliente.getAcesso().setStatus(Acesso.ATIVO);
-        Contrato c = cliente.getContrato();
-        if (c != null) {
-          Equipamento e = c.getEquipamento();
-          if (e != null) {
-            cliente.getAcesso().setMac(e.getMac());
-          }
-        }
+  private void getNovoAcesso() {
+    cliente.setAcesso(new Acesso());
+    cliente.getAcesso().setCliente(cliente);
+    
+    String ipLivre = acessoBusiness.getIpLivre();
+    cliente.getAcesso().setIp(ipLivre);
+    cliente.getAcesso().setMascara(MASK);
+    cliente.getAcesso().setGateway(GATEWAY);
+    Contrato c = cliente.getContrato();
+    if (c != null) {
+      Equipamento e = c.getEquipamento();
+      if (e != null) {
+        cliente.getAcesso().setMac(e.getMac());
       }
     }
   }
@@ -76,6 +79,7 @@ public class AcessoController implements Serializable {
 
   public void remover() {
     acessoBusiness.remover(cliente.getAcesso());
+    cliente.setAcesso(null);
     load();
     AlertaUtil.info("Acesso removido com sucesso!");
   }

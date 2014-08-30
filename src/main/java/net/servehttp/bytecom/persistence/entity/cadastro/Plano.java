@@ -18,7 +18,6 @@ public class Plano extends EntityGeneric implements Serializable {
   private String nome;
   private int upload;
   private int download;
-  private boolean wifi;
   @Column(name = "valor_instalacao")
   private double valorInstalacao;
   @Column(name = "valor_mensalidade")
@@ -64,11 +63,4 @@ public class Plano extends EntityGeneric implements Serializable {
     this.valorMensalidade = valorMensalidade;
   }
 
-  public boolean isWifi() {
-    return wifi;
-  }
-
-  public void setWifi(boolean wifi) {
-    this.wifi = wifi;
-  }
 }

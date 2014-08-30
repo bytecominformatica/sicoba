@@ -35,7 +35,8 @@ public class ClienteController implements Serializable {
   private String page;
   private String pesquisa;
 
-
+  @Inject
+  private ServidorController servidorController;
   @Inject
   private ClientBussiness clientBussiness;
   @Inject
@@ -85,6 +86,9 @@ public class ClienteController implements Serializable {
       } else {
         clientBussiness.atualizar(cliente);
         AlertaUtil.info("Cliente atualizado com sucesso!");
+      }
+      if (cliente.getAcesso() != null) {
+        servidorController.atualizarAcesso();
       }
     }
   }

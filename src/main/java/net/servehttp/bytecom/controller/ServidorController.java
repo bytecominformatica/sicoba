@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,11 +14,9 @@ public class ServidorController {
   private static final Logger LOGGER = Logger.getLogger(ServidorController.class.getName());
 
   public void atualizarAcesso() {
-    LOGGER.info("\n######################################################"
-        + "\n#                                                    #"
-        + "\n#         ATUALIZANDO ACESSO DOS CLIENTES            #"
-        + "\n#                                                    #"
-        + "\n######################################################");
+    StringBuilder sb = new StringBuilder();
+    sb.append("[").append(new Date()).append("] ATUALIZANDO ACESSO DOS CLIENTES");
+    LOGGER.info(sb.toString());
 
     executar("/opt/script/./SICOBA.sh start");
   }
@@ -26,7 +25,8 @@ public class ServidorController {
     try {
       Runtime.getRuntime().exec(command);
     } catch (IOException e) {
-      LOGGER.info("O ACESSO DOS CLIENTES NÃO FOI ATUALIZADO PORQUE VOCÊ NÃO ESTA NO SERVIDOR, DEVIDO A ISSO VOCÊ NÃO TEM O SCRIPT DE ATUALIZAÇÃO /opt/script/startServer.sh");
+      LOGGER
+          .info("O ACESSO DOS CLIENTES NÃO FOI ATUALIZADO PORQUE VOCÊ NÃO ESTA NO SERVIDOR, DEVIDO A ISSO VOCÊ NÃO TEM O SCRIPT DE ATUALIZAÇÃO /opt/script/startServer.sh");
     }
   }
 

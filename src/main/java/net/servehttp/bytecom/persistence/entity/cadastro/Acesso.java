@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -16,12 +15,6 @@ import javax.validation.constraints.Size;
 public class Acesso extends EntityGeneric implements Serializable {
 
 	private static final long serialVersionUID = 4021634951278920635L;
-	@Transient
-	public final static int INATIVO = 0;
-	@Transient
-	public final static int ATIVO = 1;
-	@Transient
-	public final static int CANCELADO = 2;
 
 	@Pattern(regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", message = "IP inválido")
 	@Size(min = 1, max = 20)
@@ -36,7 +29,6 @@ public class Acesso extends EntityGeneric implements Serializable {
 	@Size(min = 1, max = 20, message="MAC inválido 1-20")
 	@NotNull(message="MAC inválido")
 	private String mac;
-	private int status;
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	@OneToOne
 	private Cliente cliente;
@@ -73,45 +65,12 @@ public class Acesso extends EntityGeneric implements Serializable {
 		this.mac = mac;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-
-	public int getINATIVO() {
-		return INATIVO;
-	}
-
-	public int getATIVO() {
-		return ATIVO;
-	}
-
-	public int getCANCELADO() {
-		return CANCELADO;
-	}
-
-	public String getStatusFormatado() {
-		switch (status) {
-		case 0:
-			return "INATIVO";
-		case 1:
-			return "ATIVO";
-		case 2:
-			return "CANCELADO";
-		default:
-			return "";
-		}
 	}
 
 }

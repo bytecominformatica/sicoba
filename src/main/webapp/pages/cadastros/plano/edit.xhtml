@@ -24,12 +24,6 @@
 					<label jsf:for="upload" class="control-label" >#{bundle.upload}</label>
 					<input jsf:id="upload" type="number" class="form-control" jsf:value="#{planoController.plano.upload}" required="required"/>
 
-					<label jsf:for="wifi" class="control-label" >#{bundle.wifi}</label>
-					<h:selectOneMenu id="wifi" value="#{planoController.plano.wifi}" styleClass="form-control">
-						<f:selectItem itemLabel="#{bundle.no}" itemValue="false" />
-						<f:selectItem itemLabel="#{bundle.yes}" itemValue="true" />
-					</h:selectOneMenu>
-
 					<label jsf:for="valorInstalacao" class="control-label" >#{bundle.valorInstalacao}</label>
 					<input jsf:id="valorInstalacao" type="number" step="any" class="form-control" jsf:value="#{planoController.plano.valorInstalacao}" required="required"/>
 
