@@ -34,9 +34,20 @@ public class PingTestController implements Serializable {
   public void pingAll() {
     html = new StringBuilder();
 
+    html.append("<li> <label>");
+    html.append("INTERNET");
+    html.append("</label>");
+    if (pontos != null && !pontos.isEmpty()) {
+      html.append("<ul>");
+    }
     for (PontoTransmissao p : pontos) {
       gerarHTML(p);
     }
+    if (pontos != null && !pontos.isEmpty()) {
+      html.append("</ul>");
+    }
+    html.append("</li>");
+    
     ultimoHtml = html.toString();
     PingTestEndpoint.send(html.toString());
   }
@@ -77,6 +88,7 @@ public class PingTestController implements Serializable {
       if (p.getTransmitePara() != null && !p.getTransmitePara().isEmpty()) {
         html.append("</ul>");
       }
+      html.append("</li>");
     }
   }
 
