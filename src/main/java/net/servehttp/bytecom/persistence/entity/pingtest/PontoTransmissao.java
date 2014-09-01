@@ -10,6 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -53,6 +54,9 @@ public class PontoTransmissao extends EntityGeneric implements Serializable {
   
   @Lob
   private String observacoes;
+  
+  @Transient
+  private boolean online;
   
   public int getIp1() {
     return ip1;
@@ -121,6 +125,16 @@ public class PontoTransmissao extends EntityGeneric implements Serializable {
 
   public void setMac(String mac) {
     this.mac = mac;
+  }
+
+
+  public boolean isOnline() {
+    return online;
+  }
+
+
+  public void setOnline(boolean online) {
+    this.online = online;
   }
 
 }

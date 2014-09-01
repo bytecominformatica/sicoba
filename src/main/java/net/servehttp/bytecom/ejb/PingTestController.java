@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.PontoTransmissaoJPA;
 import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
+import net.servehttp.bytecom.util.NetworkUtil;
 import net.servehttp.bytecom.web.websocket.PingTestEndpoint;
 
 @Startup
@@ -27,11 +28,11 @@ public class PingTestController implements Serializable {
   @PostConstruct
   public void init() {
     pontos = pontoTransmissaoJPA.buscarTodosPontoTransmissaoInicial();
-    System.out.println("SIZE = " + pontos.size());
   }
 
-  @Schedule(hour = "*", minute = "*", second = "*/5", persistent = false)
+  @Schedule(hour = "*", minute = "*", second = "*/60", persistent = false)
   public void pingAll() {
+    System.out.println("INICIANDO PING");
     html = new StringBuilder();
 
     html.append("<li> <label>");
@@ -50,6 +51,7 @@ public class PingTestController implements Serializable {
     
     ultimoHtml = html.toString();
     PingTestEndpoint.send(html.toString());
+    System.out.println("enviou");
   }
 
   public String getUltimoHtml() {
@@ -61,7 +63,14 @@ public class PingTestController implements Serializable {
       html.append("<li> <label id='");
       html.append(p.getId());
       html.append("'>");
-      html.append(getIp(p));
+      String ip = getIp(p);
+      if(NetworkUtil.INSTANCE.ping(ip)){
+        html.append("<font color='greem'>");
+      } else {
+        html.append("<font color='red'>");
+      }
+      html.append(ip);
+      html.append("</font>");
       html.append("</label>");
       if (p.getTransmitePara() != null && !p.getTransmitePara().isEmpty()) {
         html.append("<ul>");
@@ -77,7 +86,14 @@ public class PingTestController implements Serializable {
       html.append("<li> <label id='");
       html.append(p.getId());
       html.append("'>");
-      html.append(getIp(p));
+      String ip = getIp(p);
+      if(NetworkUtil.INSTANCE.ping(ip)){
+        html.append("<font color='greem'>");
+      } else {
+        html.append("<font color='red'>");
+      }
+      html.append(ip);
+      html.append("</font>");
       html.append("</label>");
       if (p.getTransmitePara() != null && !p.getTransmitePara().isEmpty()) {
         html.append("<ul>");
