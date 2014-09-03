@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.controller;
+package net.servehttp.bytecom.web.controller;
 
 import java.io.IOException;
 import java.util.Date;
