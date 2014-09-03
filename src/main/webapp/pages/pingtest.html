@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/jOrgChart/jquery.jOrgChart.css"/>
+    <link rel="stylesheet" href="../css/jOrgChart/custom.css"/>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    
+    <script src="../js/jquery.jOrgChart.js"></script>
+
+    <script>
+	    jQuery(document).ready(function() {
+	        $("#org").jOrgChart({
+	            chartElement : '#chart',
+	            dragAndDrop  : false
+	        });
+	    });
+    </script>
+  
+</head>
+<body>
+	<ul id="org" style="display:none">
+	</ul>            
+    
+    <div id="chart" class="orgChart"></div>
+	
+	<script type="text/javascript">
+		var wsocket;
+		function connect() {
+		   wsocket = new WebSocket("ws://localhost:8080/pingtest");
+		   wsocket.onmessage = onMessage;
+		}
+		function onMessage(evt) {
+		   var msg = evt.data;
+		   document.getElementById("org").innerHTML = msg;
+		   document.getElementById("chart").innerHTML = '';
+
+		   $("#org").jOrgChart({
+	            chartElement : '#chart',
+	            dragAndDrop  : false
+	        });
+		}
+		window.addEventListener("load", connect, false);
+	</script>
+</body>
+</html>

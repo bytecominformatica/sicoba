@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.controller.relatorios;
+package net.servehttp.bytecom.web.controller.relatorios;
 
 import java.io.Serializable;
 import java.util.Date;

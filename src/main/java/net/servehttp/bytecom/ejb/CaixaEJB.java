@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.Part;
 
-import net.servehttp.bytecom.controller.CaixaController;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
 import net.servehttp.bytecom.persistence.entity.caixa.HeaderLote;
 import net.servehttp.bytecom.persistence.entity.caixa.Registro;
@@ -17,6 +16,7 @@ import net.servehttp.bytecom.persistence.entity.caixa.RegistroDetalhe;
 import net.servehttp.bytecom.persistence.entity.caixa.Trailer;
 import net.servehttp.bytecom.persistence.entity.caixa.TrailerLote;
 import net.servehttp.bytecom.util.StringUtil;
+import net.servehttp.bytecom.web.controller.CaixaController;
 
 public class CaixaEJB {
 	private static final int HEADER = 0;
