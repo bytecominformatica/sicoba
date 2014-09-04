@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.DependsOn;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -13,8 +14,9 @@ import net.servehttp.bytecom.persistence.PontoTransmissaoJPA;
 import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
 import net.servehttp.bytecom.web.websocket.PingTestEndpoint;
 
-@Startup
+//@Startup
 @Singleton
+@DependsOn("LiquibaseEJB")
 public class PingTestController implements Serializable {
 
   private static final long serialVersionUID = 9080885798882188070L;
