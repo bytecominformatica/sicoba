@@ -2,17 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Bytecom - PingTest</title>
 
-	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../css/jOrgChart/jquery.jOrgChart.css"/>
-    <link rel="stylesheet" href="../css/jOrgChart/custom.css"/>
+<link rel="icon" href="../img/logo.png" />
+<link rel="stylesheet" href="../css/bootstrap.min.css" />
+<link rel="stylesheet" href="../css/jOrgChart/jquery.jOrgChart.css" />
+<link rel="stylesheet" href="../css/jOrgChart/custom.css" />
 
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    
-    <script src="../js/jquery.jOrgChart.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 
-    <script>
+<script src="../js/jquery.jOrgChart.js"></script>
+
+<script>
 	    jQuery(document).ready(function() {
 	        $("#org").jOrgChart({
 	            chartElement : '#chart',
@@ -20,29 +21,77 @@
 	        });
 	    });
     </script>
-  
+
+
 </head>
 <body>
-	<ul id="org" style="display:none">
-	</ul>            
-    
-    <div id="chart" class="orgChart"></div>
-	
+	<ul id="org" style="display: none">
+	</ul>
+
+	<div id="chart" class="orgChart"></div>
+
 	<script type="text/javascript">
+		function gerarHTML(ponto){
+			var html = "<li> <label>";
+
+			if (ponto.online) {
+				html += "<font color='greem'>";
+			} else {
+				html += "<font color='red'>";
+			}
+
+			html += ponto.ip1 + "." + ponto.ip2 + "." + ponto.ip3 + "." + ponto.ip4;
+		    html += "</font> </label>";
+
+		    if (ponto.transmitePara.length > 0) {
+		        html += "<ul>";
+
+		    }
+			    for (var p in ponto.transmitePara) {
+			       html += gerarHTML(ponto.transmitePara[p]);
+			    }
+		    if (ponto.transmitePara.length > 0) {
+		        html += "</ul>";
+		    }
+		    html += "</li>";
+		    
+			return html
+		}
+	
+		function gerarDiagrama(pontos){
+			var html = "<li> <label>INTERNET</label>";
+			if(pontos != "[]"){
+		      html += "<ul>";
+			}
+		    for (var p in pontos) {
+		       html += gerarHTML(pontos[p]);
+		    }
+			if(pontos != "[]"){
+		      html += "<ul>";
+			}
+		    
+			html += "</li>";
+			return html;
+		}
+		
+
 		var wsocket;
 		function connect() {
 		   wsocket = new WebSocket("ws://localhost:8080/pingtest");
 		   wsocket.onmessage = onMessage;
 		}
+
 		function onMessage(evt) {
-		   var msg = evt.data;
-		   document.getElementById("org").innerHTML = msg;
+		   var pontos = JSON.parse(evt.data);
+		   console.log(pontos[0]);
+		   document.getElementById("org").innerHTML = gerarDiagrama(pontos);
 		   document.getElementById("chart").innerHTML = '';
 
 		   $("#org").jOrgChart({
 	            chartElement : '#chart',
 	            dragAndDrop  : false
 	        });
+		   
 		}
 		window.addEventListener("load", connect, false);
 	</script>

@@ -19,97 +19,34 @@ import net.servehttp.bytecom.web.websocket.PingTestEndpoint;
 public class PingTestController implements Serializable {
 
   private static final long serialVersionUID = 9080885798882188070L;
-  private List<PontoTransmissao> pontos;
-  private StringBuilder html;
-  private String ultimoHtml;
+  public static List<PontoTransmissao> PONTOS;
   @Inject
   private PontoTransmissaoJPA pontoTransmissaoJPA;
 
   @PostConstruct
   public void init() {
-    pontos = pontoTransmissaoJPA.buscarTodosPontoTransmissaoInicial();
+    PONTOS = pontoTransmissaoJPA.buscarTodosPontoTransmissaoInicial();
+    pingAll();
   }
 
   @Schedule(hour = "*", minute = "*", second = "*/60", persistent = false)
   public void pingAll() {
-    System.out.println("INICIANDO PING");
-    html = new StringBuilder();
-
-    html.append("<li> <label>");
-    html.append("INTERNET");
-    html.append("</label>");
-    if (pontos != null && !pontos.isEmpty()) {
-      html.append("<ul>");
+    for (PontoTransmissao p : PONTOS) {
+      verificarPontosOnline(p);
     }
-    for (PontoTransmissao p : pontos) {
-      gerarHTML(p);
-    }
-    if (pontos != null && !pontos.isEmpty()) {
-      html.append("</ul>");
-    }
-    html.append("</li>");
-    
-    ultimoHtml = html.toString();
-    PingTestEndpoint.send(html.toString());
-    System.out.println("enviou");
+    PingTestEndpoint.send(PONTOS);
   }
 
-  public String getUltimoHtml() {
-    return ultimoHtml;
-  }
-
-  private void gerarHTML(PontoTransmissao p) {
-    if (p.getRecebeDe() == null) {
-      html.append("<li> <label id='");
-      html.append(p.getId());
-      html.append("'>");
-      String ip = getIp(p);
-      if(NetworkUtil.INSTANCE.ping(ip)){
-        html.append("<font color='greem'>");
-      } else {
-        html.append("<font color='red'>");
-      }
-      html.append(ip);
-      html.append("</font>");
-      html.append("</label>");
-      if (p.getTransmitePara() != null && !p.getTransmitePara().isEmpty()) {
-        html.append("<ul>");
-      }
-      for (PontoTransmissao p1 : p.getTransmitePara()) {
-        gerarHTML(p1);
-      }
-      if (p.getTransmitePara() != null && !p.getTransmitePara().isEmpty()) {
-        html.append("</ul>");
-      }
-      html.append("</li>");
-    } else {
-      html.append("<li> <label id='");
-      html.append(p.getId());
-      html.append("'>");
-      String ip = getIp(p);
-      if(NetworkUtil.INSTANCE.ping(ip)){
-        html.append("<font color='greem'>");
-      } else {
-        html.append("<font color='red'>");
-      }
-      html.append(ip);
-      html.append("</font>");
-      html.append("</label>");
-      if (p.getTransmitePara() != null && !p.getTransmitePara().isEmpty()) {
-        html.append("<ul>");
-      }
-      for (PontoTransmissao p1 : p.getTransmitePara()) {
-        gerarHTML(p1);
-      }
-      if (p.getTransmitePara() != null && !p.getTransmitePara().isEmpty()) {
-        html.append("</ul>");
-      }
-      html.append("</li>");
+  private void verificarPontosOnline(PontoTransmissao p) {
+    p.setOnline(NetworkUtil.INSTANCE.ping(getIp(p)));
+    // define null pois sem isso a conversão para JSON quebra
+    p.setRecebeDe(null);
+    for (PontoTransmissao p1 : p.getTransmitePara()) {
+      verificarPontosOnline(p1);
     }
   }
 
   private String getIp(PontoTransmissao p) {
-    return new StringBuilder().append(p.getIp1()).append(".").append(p.getIp2()).append(".")
-        .append(p.getIp3()).append(".").append(p.getIp4()).toString();
+    return String.format("%d.%d.%d.%d", p.getIp1(), p.getIp2(), p.getIp3(), p.getIp4());
   }
 }
