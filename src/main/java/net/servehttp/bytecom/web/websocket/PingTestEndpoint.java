@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -16,7 +15,6 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import net.servehttp.bytecom.ejb.PingTestController;
-import net.servehttp.bytecom.persistence.PontoTransmissaoJPA;
 import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
 
 @ServerEndpoint(value = "/pingtest", encoders = {PontoTransmissaoTextEncoder.class})
