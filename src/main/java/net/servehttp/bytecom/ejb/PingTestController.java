@@ -14,7 +14,7 @@ import net.servehttp.bytecom.persistence.PontoTransmissaoJPA;
 import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
 import net.servehttp.bytecom.web.websocket.PingTestEndpoint;
 
-//@Startup
+@Startup
 @Singleton
 @DependsOn("LiquibaseEJB")
 public class PingTestController implements Serializable {
