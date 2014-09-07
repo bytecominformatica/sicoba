@@ -15,15 +15,15 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import net.servehttp.bytecom.ejb.PingTestController;
-import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
+import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissaoPojo;
 
-@ServerEndpoint(value = "/pingtest", encoders = {PontoTransmissaoTextEncoder.class})
+@ServerEndpoint(value = "/pingtest", encoders = {PontoTransmissaoPojoTextEncoder.class})
 public class PingTestEndpoint {
 
   private static final Logger logger = Logger.getLogger("PingTestEndpoint");
   static Queue<Session> queue = new ConcurrentLinkedQueue<>();
 
-  public static void send(List<PontoTransmissao> pontos) {
+  public static void send(List<PontoTransmissaoPojo> pontos) {
     try {
       if (pontos != null) {
         for (Session session : queue) {

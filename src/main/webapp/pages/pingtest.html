@@ -14,13 +14,13 @@
 <script src="../js/jquery.jOrgChart.js"></script>
 
 <script>
-	    jQuery(document).ready(function() {
-	        $("#org").jOrgChart({
-	            chartElement : '#chart',
-	            dragAndDrop  : false
-	        });
+	jQuery(document).ready(function() {
+	    $("#org").jOrgChart({
+	        chartElement : '#chart',
+	        dragAndDrop  : false
 	    });
-    </script>
+	});
+</script>
 
 
 </head>
@@ -45,17 +45,16 @@
 
 		    if (ponto.transmitePara.length > 0) {
 		        html += "<ul>";
-
 		    }
-			    for (var p in ponto.transmitePara) {
-			       html += gerarHTML(ponto.transmitePara[p]);
-			    }
+		    for (var p in ponto.transmitePara) {
+		       html += gerarHTML(ponto.transmitePara[p]);
+		    }
 		    if (ponto.transmitePara.length > 0) {
 		        html += "</ul>";
 		    }
 		    html += "</li>";
 		    
-			return html
+			return html;
 		}
 	
 		function gerarDiagrama(pontos){
@@ -77,13 +76,12 @@
 
 		var wsocket;
 		function connect() {
-		   wsocket = new WebSocket("ws://localhost:8080/pingtest");
+		   wsocket = new WebSocket("ws://10.10.0.1:8080/pingtest");
 		   wsocket.onmessage = onMessage;
 		}
 
 		function onMessage(evt) {
 		   var pontos = JSON.parse(evt.data);
-		   console.log(pontos[0]);
 		   document.getElementById("org").innerHTML = gerarDiagrama(pontos);
 		   document.getElementById("chart").innerHTML = '';
 

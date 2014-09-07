@@ -137,4 +137,14 @@ public class PontoTransmissao extends EntityGeneric implements Serializable {
     this.online = online;
   }
 
+
+  public String getObservacoes() {
+    return observacoes;
+  }
+
+
+  public void setObservacoes(String observacoes) {
+    this.observacoes = observacoes;
+  }
+
 }

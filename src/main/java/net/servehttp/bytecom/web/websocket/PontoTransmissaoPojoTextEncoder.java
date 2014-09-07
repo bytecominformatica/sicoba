@@ -6,11 +6,11 @@ import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
-import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
+import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissaoPojo;
 
 import com.google.gson.Gson;
 
-public class PontoTransmissaoTextEncoder implements Encoder.Text<List<PontoTransmissao>> {
+public class PontoTransmissaoPojoTextEncoder implements Encoder.Text<List<PontoTransmissaoPojo>> {
 
   private Gson gson = new Gson();
 
@@ -21,7 +21,7 @@ public class PontoTransmissaoTextEncoder implements Encoder.Text<List<PontoTrans
   public void destroy() {}
 
   @Override
-  public String encode(List<PontoTransmissao> pontos) throws EncodeException {
+  public String encode(List<PontoTransmissaoPojo> pontos) throws EncodeException {
     return gson.toJson(pontos);
   }
 }

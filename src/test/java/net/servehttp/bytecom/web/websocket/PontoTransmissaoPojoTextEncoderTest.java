@@ -3,21 +3,20 @@ package net.servehttp.bytecom.web.websocket;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
+import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissaoPojo;
 
 import org.junit.Test;
 
-public class PontoTransmissaoTextEncoderTest {
+public class PontoTransmissaoPojoTextEncoderTest {
 
   @Test
   public void testEncode() throws Exception {
-    PontoTransmissaoTextEncoder encoder = new PontoTransmissaoTextEncoder();
-    List<PontoTransmissao> pontos = new ArrayList<>();
+    PontoTransmissaoPojoTextEncoder encoder = new PontoTransmissaoPojoTextEncoder();
+    List<PontoTransmissaoPojo> pontos = new ArrayList<>();
 
-    PontoTransmissao p1 = null;
+    PontoTransmissaoPojo p1 = null;
     for (int i = 0; i < 10; i++) {
-      PontoTransmissao p = new PontoTransmissao();
-      p.setId(i);
+      PontoTransmissaoPojo p = new PontoTransmissaoPojo();
       p.setIp1(192);
       p.setIp2(168);
       p.setIp3(33);
