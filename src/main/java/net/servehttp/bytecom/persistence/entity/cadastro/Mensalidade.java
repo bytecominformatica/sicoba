@@ -42,6 +42,10 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   @JoinColumn(name = "cliente_id")
   @ManyToOne(fetch = FetchType.EAGER)
   private Cliente cliente;
+  
+  public Mensalidade(){
+    status = StatusMensalidade.PENDENTE;
+  }
 
   public Date getDataVencimento() {
     return dataVencimento;

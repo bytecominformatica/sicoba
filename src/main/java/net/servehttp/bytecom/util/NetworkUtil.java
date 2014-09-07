@@ -33,7 +33,7 @@ public enum NetworkUtil {
 		boolean pingSucess = false;
 		try {
 			InetAddress ipAdress = InetAddress.getByName(ip);
-			pingSucess = ipAdress.isReachable(50);
+			pingSucess = ipAdress.isReachable(5000);
 		} catch (UnknownHostException ex) {
 			Logger.getLogger(NetworkUtil.class.getName()).log(Level.SEVERE,
 					null, ex);
