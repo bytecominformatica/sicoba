@@ -27,7 +27,7 @@ public class LiquibaseEJB {
   private static final String STAGE = "development";
   private static final String CHANGELOG_FILE = "net/servehttp/bytecom/db/changelog.xml";
   
-  @Resource
+  @Resource(lookup="java:/bytecomDS")
   private DataSource ds;
   
   @PostConstruct
