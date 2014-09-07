@@ -76,8 +76,11 @@
 
 		var wsocket;
 		function connect() {
-		   wsocket = new WebSocket("ws://10.10.0.1:8080/pingtest");
-		   wsocket.onmessage = onMessage;
+			var ip = location.host;
+			if (wsocket = new WebSocket("ws://" + ip + "/pingtest") ){
+			 wsocket.onmessage = onMessage;
+			
+			}
 		}
 
 		function onMessage(evt) {
