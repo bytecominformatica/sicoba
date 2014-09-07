@@ -2,15 +2,14 @@ package net.servehttp.bytecom.ejb;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.PontoTransmissaoJPA;
-import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
 import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissaoPojo;
 import net.servehttp.bytecom.util.NetworkUtil;
 import net.servehttp.bytecom.web.websocket.PingTestEndpoint;
@@ -20,17 +19,32 @@ import net.servehttp.bytecom.web.websocket.PingTestEndpoint;
 public class PingTestController implements Serializable {
 
   private static final long serialVersionUID = 9080885798882188070L;
+  private static final Logger LOGGER = Logger.getLogger(PingTestController.class.getName());
   public static List<PontoTransmissaoPojo> PONTOS;
+  private static final int SLEEP_MINUTES = 1;
   @Inject
   private PontoTransmissaoJPA pontoTransmissaoJPA;
 
   @PostConstruct
   public void init() {
     PONTOS = pontoTransmissaoJPA.buscarTodosPontoTransmissaoDetachERecebeDeNull();
-    pingAll();
+
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        while (true) {
+          pingAll();
+          try {
+            Thread.sleep(1000 * 60 * SLEEP_MINUTES);
+          } catch (InterruptedException e) {
+            LOGGER.severe(e.getMessage());
+          }
+        }
+
+      }
+    }).start();
   }
 
-  @Schedule(hour = "*", minute = "*", second = "*/60", persistent = false)
   public void pingAll() {
     for (PontoTransmissaoPojo p : PONTOS) {
       verificarPontosOnline(p);
