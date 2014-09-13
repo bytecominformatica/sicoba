@@ -57,10 +57,6 @@
 	  <param-value>pt_BR</param-value>
 	</context-param>
 	
-	<!-- SESSION -->
-	<session-config>
-	  <session-timeout>20</session-timeout>
-	</session-config>
 	
 	<!-- PAGES -->
 	<welcome-file-list>

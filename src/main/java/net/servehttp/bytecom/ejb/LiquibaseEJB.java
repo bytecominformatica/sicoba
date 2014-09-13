@@ -3,6 +3,7 @@ package net.servehttp.bytecom.ejb;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ import liquibase.resource.ResourceAccessor;
 public class LiquibaseEJB {
   private static final String STAGE = "development";
   private static final String CHANGELOG_FILE = "net/servehttp/bytecom/db/changelog.xml";
+  private static final Logger LOGGER = Logger.getLogger(LiquibaseEJB.class.getName());
   
   @Resource(lookup="java:/bytecomDS")
   private DataSource ds;
@@ -40,7 +42,7 @@ public class LiquibaseEJB {
       Liquibase liquiBase = new Liquibase(CHANGELOG_FILE, resourceAccessor, db);
       liquiBase.update(STAGE);
     } catch (SQLException | LiquibaseException e) {
-      // TODO: handle exception
+      LOGGER.severe(e.getMessage());
     }
   }
 
