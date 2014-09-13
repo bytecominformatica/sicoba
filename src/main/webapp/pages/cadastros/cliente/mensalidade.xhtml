@@ -118,57 +118,59 @@
 				</form>
 				
 				<form jsf:id="formMensalidades">
-					<h:dataTable value="#{mensalidadeController.cliente.mensalidades}"
-						var="m" styleClass="table table-hover"
-						headerClass="tableColumnsHeader">
-						
-						<h:column>
-							<f:facet name="header">#{bundle.vencimento}</f:facet>
-							<h:outputText value="#{m.dataVencimento}" >
-								<f:convertDateTime locale="pt" pattern="dd/MM/yyyy"/>
-							</h:outputText>
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">#{bundle.valor}</f:facet>
-							<h:outputText value="#{m.valor}" >
-								<f:convertNumber minFractionDigits="2"/>
-							</h:outputText>
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">#{bundle.desconto}</f:facet>
-							<h:outputText value="#{m.desconto}" >
-								<f:convertNumber minFractionDigits="2"/>
-							</h:outputText>
+					<div class="table-responsive">
+						<h:dataTable value="#{mensalidadeController.cliente.mensalidades}"
+							var="m" styleClass="table table-hover"
+							headerClass="tableColumnsHeader">
 							
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">#{bundle.valorPago}</f:facet>
-							<h:outputText value="#{m.valorPago}" >
-								<f:convertNumber minFractionDigits="2"/>
-							</h:outputText>
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">#{bundle.boleto}</f:facet>
-							#{m.numeroBoleto}
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">#{bundle.status}</f:facet>
-							<span class="label #{m.status == 'PENDENTE' ? 'label-warning' : m.status == 'PAGO_NO_BOLETO' || m.status == 'BAIXA_MANUAL' ? 'label-success' : ''}">#{m.status}</span>
+							<h:column>
+								<f:facet name="header">#{bundle.vencimento}</f:facet>
+								<h:outputText value="#{m.dataVencimento}" >
+									<f:convertDateTime locale="pt" pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</h:column>
 							
-						</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.actions}</f:facet>
-								<button jsf:id="btnEdit" class="btn btn-primary link-group">
-									<span class="glyphicon glyphicon-edit" />
-									<f:setPropertyActionListener target="#{mensalidadeController.mensalidade}" value="#{m}"/>
-								</button>
-						</h:column>
-					</h:dataTable>
+							<h:column>
+								<f:facet name="header">#{bundle.valor}</f:facet>
+								<h:outputText value="#{m.valor}" >
+									<f:convertNumber minFractionDigits="2"/>
+								</h:outputText>
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">#{bundle.desconto}</f:facet>
+								<h:outputText value="#{m.desconto}" >
+									<f:convertNumber minFractionDigits="2"/>
+								</h:outputText>
+								
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">#{bundle.valorPago}</f:facet>
+								<h:outputText value="#{m.valorPago}" >
+									<f:convertNumber minFractionDigits="2"/>
+								</h:outputText>
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">#{bundle.boleto}</f:facet>
+								#{m.numeroBoleto}
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">#{bundle.status}</f:facet>
+								<span class="label #{m.status == 'PENDENTE' ? 'label-warning' : m.status == 'PAGO_NO_BOLETO' || m.status == 'BAIXA_MANUAL' ? 'label-success' : ''}">#{m.status}</span>
+								
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.actions}</f:facet>
+									<button jsf:id="btnEdit" class="btn btn-primary link-group">
+										<span class="glyphicon glyphicon-edit" />
+										<f:setPropertyActionListener target="#{mensalidadeController.mensalidade}" value="#{m}"/>
+									</button>
+							</h:column>
+						</h:dataTable>
+					</div>
 				</form>
 
 			</div>

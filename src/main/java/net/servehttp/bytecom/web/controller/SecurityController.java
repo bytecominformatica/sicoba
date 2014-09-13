@@ -37,7 +37,6 @@ public class SecurityController implements Serializable {
 
   private String username;
   private String password;
-  private boolean remember;
   private Subject currentUser = SecurityUtils.getSubject();
 
   @Inject
@@ -49,9 +48,9 @@ public class SecurityController implements Serializable {
   @Inject
   private UserAccount userAccount;
   private String error;
-  
+
   @PostConstruct
-  public void carregar(){
+  public void carregar() {
     if (currentUser.isAuthenticated()) {
       LOGGER.info("[" + new Date() + "] - " + "USUÁRIO JÁ ESTA LOGADO");
       webUtil.redirect(HOME_URL);
@@ -62,10 +61,10 @@ public class SecurityController implements Serializable {
     error = null;
     if (!currentUser.isAuthenticated()) {
       try {
-        currentUser.login(new UsernamePasswordToken(username, password, remember));
-         userAccount = accountBussiness.findUserAccountByUsername(username);
-         currentUser.getSession().setAttribute("currentUser", userAccount);
-         webUtil.redirect(HOME_URL);
+        currentUser.login(new UsernamePasswordToken(username, password));
+        userAccount = accountBussiness.findUserAccountByUsername(username);
+        currentUser.getSession().setAttribute("currentUser", userAccount);
+        webUtil.redirect(HOME_URL);
       } catch (AuthenticationException e) {
         error = "CREDENCIAIS INVÁLIDAS";
         LOGGER.info("[" + new Date() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");
