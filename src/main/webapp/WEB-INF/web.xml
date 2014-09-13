@@ -4,21 +4,10 @@
 	
 	<!-- LIQUIBASE -->
 	<context-param>
-	  <param-name>liquibase.changelog</param-name>
-	  <param-value>net/servehttp/bytecom/db/changelog.xml</param-value>
-	</context-param>
-	<context-param>
-	  <param-name>liquibase.datasource</param-name>
-	  <param-value>java:/bytecomDS</param-value>
-	</context-param>
-	<context-param>
 	  <param-name>liquibase.onerror.fail</param-name>
 	  <param-value>true</param-value>
 	</context-param>
-	<listener>
-	  <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
-	</listener>
-	
+
 	<!-- JSF -->
 	<servlet>
 	  <servlet-name>Faces Servlet</servlet-name>
@@ -37,7 +26,12 @@
 	   <env-entry-name>jsf/ClientSideSecretKey</env-entry-name>
 	   <env-entry-type>java.lang.String</env-entry-type>
 	   <env-entry-value>am9kZXRlcHV0b2hhY2tlcg==</env-entry-value>
-	</env-entry>  
+	</env-entry> 
+	
+	<error-page>
+	    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+	    <location>/login.xhtml</location>
+	</error-page> 
 	
 	<!-- PREFERENCES -->
 	<context-param>
@@ -63,10 +57,6 @@
 	  <param-value>pt_BR</param-value>
 	</context-param>
 	
-	<!-- SESSION -->
-	<session-config>
-	  <session-timeout>20</session-timeout>
-	</session-config>
 	
 	<!-- PAGES -->
 	<welcome-file-list>
