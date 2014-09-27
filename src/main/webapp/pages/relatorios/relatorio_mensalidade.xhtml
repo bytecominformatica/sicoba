@@ -10,39 +10,33 @@
 	<ui:define name="content">
 		<div class="panel-body">
 		
-		                    <div class="row">
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-aqua">
-                                <div class="inner">
-                                    <h3>
-                                        <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoPrevistoDoMes}
-                                    </h3>
-                                    <p>
-                                        Faturamento previsto do mês
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                            </div>
-                        </div><!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-green">
-                                <div class="inner">
-                                    <h3>
-                                        <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoDoMes}
-                                    </h3>
-                                    <p>
-                                        Faturamento Atual do mês
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                            </div>
-                        </div><!-- ./col -->
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>
+                            <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoPrevistoDoMes}
+                        </h3>
+                        <p>
+                            Faturamento previsto do mês
+                        </p>
+                    </div>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>
+                            <sup style="font-size: 20px">R$</sup>#{dashboardController.faturamentoDoMes}
+                        </h3>
+                        <p>
+                            Faturamento Atual do mês
+                        </p>
+                    </div>
+                </div>
+	        </div><!-- ./col -->
 		</div>
 			<form jsf:id="formPesquisa" class="form-horizontal">
 			
