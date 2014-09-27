@@ -77,7 +77,7 @@
 		var wsocket;
 		function connect() {
 			var ip = location.host;
-			if (wsocket = new WebSocket("ws://" + ip + "/pingtest") ){
+			if (wsocket = new WebSocket("ws://" + ip + "/sicoba/pingtest") ){
 			 wsocket.onmessage = onMessage;
 			
 			}

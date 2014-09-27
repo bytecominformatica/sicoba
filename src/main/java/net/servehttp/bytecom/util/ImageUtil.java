@@ -30,6 +30,8 @@ public class ImageUtil implements Serializable {
 
   private static final long serialVersionUID = 8974017859406844766L;
   private static final Logger LOGGER = Logger.getLogger(ImageUtil.class.getName());
+  private static final String CONTEXT = "/sicoba";
+  private static final String IMG_USERS_FOLDER = "/img/users/";
   private byte[] byteArray;
 
   public byte[] tratarImagem(Part file) {
@@ -84,11 +86,14 @@ public class ImageUtil implements Serializable {
    * </pre>
    */
   public String exibirImagem(byte[] bytesImagem, long id) {
+    if(bytesImagem == null){
+      return CONTEXT + IMG_USERS_FOLDER + "avatar_male.png";
+    }
     String path = null;
     try {
       FacesContext context = FacesContext.getCurrentInstance();
       ServletContext servletcontext = (ServletContext) context.getExternalContext().getContext();
-      String imageUsers = servletcontext.getRealPath("/img/users/");
+      String imageUsers = servletcontext.getRealPath(IMG_USERS_FOLDER);
       File dirImageUsers = new File(imageUsers);
 
       if (!dirImageUsers.exists()) {
@@ -101,7 +106,7 @@ public class ImageUtil implements Serializable {
       imageOutput.write(bytes, 0, bytes.length);
       imageOutput.flush();
       imageOutput.close();
-      path = "/img/users/" + id + "." + "png";
+      path = CONTEXT + IMG_USERS_FOLDER + id + "." + "png";
     } catch (IOException e) {
       LOGGER.severe(e.getMessage());
     }

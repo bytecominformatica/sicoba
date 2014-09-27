@@ -88,11 +88,7 @@ public class UserAccount extends EntityGeneric implements Serializable {
 
   public String getImageGerada() {
     if (imageGerada == null) {
-      if (img != null) {
         imageGerada = imageUtil.exibirImagem(img, id);
-      } else {
-        imageGerada = "/img/users/avatar_male.png";
-      }
     }
     return imageGerada;
   }
