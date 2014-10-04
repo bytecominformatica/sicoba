@@ -36,7 +36,7 @@ public class TarefaController {
     executar("/opt/script/./backup.sh");
     
     try {
-      Thread.sleep(10000);
+      Thread.sleep(1000 * 60 * 10);
     } catch (InterruptedException e) {
       LOGGER.log(Level.SEVERE, null, e);
     }
