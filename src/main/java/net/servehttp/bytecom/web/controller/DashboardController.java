@@ -12,7 +12,8 @@ import net.servehttp.bytecom.persistence.DashboadJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
-import net.servehttp.bytecom.util.StringUtil;
+
+import com.servehttp.bytecom.commons.StringUtil;
 
 /**
  * 
@@ -56,11 +57,11 @@ public class DashboardController implements Serializable {
   }
 
   public String getFaturamentoDoMes() {
-    return StringUtil.INSTANCE.formatCurrence(faturamentoDoMes);
+    return StringUtil.formatCurrence(faturamentoDoMes);
   }
 
   public String getFaturamentoPrevistoDoMes() {
-    return StringUtil.INSTANCE.formatCurrence(faturamentoPrevistoDoMes);
+    return StringUtil.formatCurrence(faturamentoPrevistoDoMes);
   }
 
   public List<Mensalidade> getListMensalidadesAtrasadas() {

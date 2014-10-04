@@ -62,7 +62,8 @@ public class SecurityController implements Serializable {
     if (!currentUser.isAuthenticated()) {
       try {
         currentUser.login(new UsernamePasswordToken(username, password));
-        userAccount = accountBussiness.findUserAccountByUsername(username);
+        userAccount = accountBussiness.buscarUsuarioPorUsername(username);
+        accountBussiness.criarImagemNaSessao(userAccount);
         currentUser.getSession().setAttribute("currentUser", userAccount);
         webUtil.redirect(HOME_URL);
       } catch (AuthenticationException e) {

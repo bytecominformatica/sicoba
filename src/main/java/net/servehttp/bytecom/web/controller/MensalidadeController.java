@@ -17,7 +17,8 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.util.AlertaUtil;
-import net.servehttp.bytecom.util.DateUtil;
+
+import com.servehttp.bytecom.commons.DateUtil;
 
 /**
  *
@@ -104,7 +105,7 @@ public class MensalidadeController implements Serializable {
   }
 
   private Mensalidade getNovaMensalidade() {
-    calendar = DateUtil.INSTANCE.getProximoMes();
+    calendar = DateUtil.getProximoMes();
     calendar.set(Calendar.DAY_OF_MONTH, cliente.getContrato().getVencimento());
     return business.getNovaMensalidade(cliente, calendar.getTime());
   }
