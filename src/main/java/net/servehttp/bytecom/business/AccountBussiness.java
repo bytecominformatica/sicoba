@@ -6,7 +6,6 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import net.servehttp.bytecom.persistence.UserJPA;
 import net.servehttp.bytecom.persistence.entity.security.Authentication;
@@ -42,13 +41,11 @@ public class AccountBussiness extends genericoBusiness implements Serializable {
     ServletContext servletcontext = (ServletContext) context.getExternalContext().getContext();
     String folderImages = servletcontext.getRealPath(IMG_USERS);
 
-    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
     String imagemGerada = ImageUtil.exibirImagem(user.getImg(), filename, folderImages);
     if (imagemGerada != null) {
-      user.setImageGerada(request.getContextPath() + imagemGerada);
+      user.setImageGerada(IMG_USERS + filename);
     } else {
-      user.setImageGerada(request.getContextPath() + IMG_USERS + IMG_DEFAULT);
+      user.setImageGerada(IMG_USERS + IMG_DEFAULT);
     }
   }
 
