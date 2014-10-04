@@ -9,7 +9,8 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
-import net.servehttp.bytecom.util.DateUtil;
+
+import com.servehttp.bytecom.commons.DateUtil;
 
 /**
  * 
@@ -41,7 +42,7 @@ public class ClienteJPA implements Serializable {
   public List<Cliente> buscaUltimosClientesAlterados() {
     return em
         .createQuery("select c from Cliente c where c.updatedAt > :date order by c.updatedAt desc",
-            Cliente.class).setParameter("date", DateUtil.INSTANCE.incrementaMesAtual(-2)).setMaxResults(20)
+            Cliente.class).setParameter("date", DateUtil.incrementaMesAtual(-2)).setMaxResults(20)
         .getResultList();
   }
 }

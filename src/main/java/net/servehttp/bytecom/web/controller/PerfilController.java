@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.web.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +15,8 @@ import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.qualifier.UsuarioLogado;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.HashUtil;
-import net.servehttp.bytecom.util.ImageUtil;
+
+import com.servehttp.bytecom.commons.ImageUtil;
 
 /**
  * 
@@ -35,8 +37,6 @@ public class PerfilController implements Serializable {
   private String password;
   private String confirmPassword;
   private Part file;
-  @Inject
-  private ImageUtil imageUtil;
 
   @PostConstruct
   public void load() {
@@ -45,8 +45,12 @@ public class PerfilController implements Serializable {
 
   public void carregarImagem() {
     if (file != null) {
-      userAccount.setImg(imageUtil.setThumbnail(imageUtil.tratarImagem(file), "png"));
-      userAccount.setImageGerada(null);
+      try {
+        userAccount.setImg(ImageUtil.setThumbnail(ImageUtil.tratarImagem(file.getInputStream()), "png"));
+        userAccount.setImageGerada(null);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 

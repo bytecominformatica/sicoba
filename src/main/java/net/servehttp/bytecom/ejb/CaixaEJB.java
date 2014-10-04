@@ -15,8 +15,9 @@ import net.servehttp.bytecom.persistence.entity.caixa.Registro;
 import net.servehttp.bytecom.persistence.entity.caixa.RegistroDetalhe;
 import net.servehttp.bytecom.persistence.entity.caixa.Trailer;
 import net.servehttp.bytecom.persistence.entity.caixa.TrailerLote;
-import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.web.controller.CaixaController;
+
+import com.servehttp.bytecom.commons.StringUtil;
 
 public class CaixaEJB {
 	private static final int HEADER = 0;
@@ -36,7 +37,7 @@ public class CaixaEJB {
 				String line = null;
 
 				while ((line = in.readLine()) != null) {
-					int tipoRegistro = StringUtil.INSTANCE.getInt(line, 7, 8);
+					int tipoRegistro = StringUtil.getInt(line, 7, 8);
 					switch (tipoRegistro) {
 					case HEADER:
 						header = preencheHeader(line, file);
@@ -110,8 +111,8 @@ public class CaixaEJB {
 	private Header preencheHeader(String line, Part file) {
 		Header h = new Header();
 		h.setNomeArquivo(file.getSubmittedFileName());
-		h.setDataGeracao(StringUtil.INSTANCE.getDataHora(line, 143, 157));
-		h.setSequencial(StringUtil.INSTANCE.getInt(line, 157, 163));
+		h.setDataGeracao(StringUtil.getDataHora(line, 143, 157));
+		h.setSequencial(StringUtil.getInt(line, 157, 163));
 
 		h.setHeaderLotes(new ArrayList<HeaderLote>());
 		return h;
@@ -120,8 +121,8 @@ public class CaixaEJB {
 	private HeaderLote preencheHeaderLote(String line, Header header) {
 		HeaderLote hl = new HeaderLote();
 		hl.setHeader(header);
-		hl.setNumeroRemessaRetorno(StringUtil.INSTANCE.getInt(line, 183, 191));
-		hl.setDataGravacaoRemessaRetorno(StringUtil.INSTANCE.getData(line, 191,
+		hl.setNumeroRemessaRetorno(StringUtil.getInt(line, 183, 191));
+		hl.setDataGravacaoRemessaRetorno(StringUtil.getData(line, 191,
 				199));
 
 		hl.setRegistros(new ArrayList<Registro>());
@@ -132,31 +133,31 @@ public class CaixaEJB {
 			BufferedReader in) throws IOException {
 		Registro r = new Registro();
 		r.setHeaderLote(headerLote);
-		r.setModalidadeNossoNumero(StringUtil.INSTANCE.getInt(line, 39, 41));
-		r.setNossoNumero(StringUtil.INSTANCE.getInt(line, 41, 56));
-		r.setVencimento(StringUtil.INSTANCE.getData(line, 73, 81));
-		r.setValorTitulo(StringUtil.INSTANCE.getDouble2Decimal(line, 81, 96));
-		r.setValorTarifa(StringUtil.INSTANCE.getDouble2Decimal(line, 198, 212));
+		r.setModalidadeNossoNumero(StringUtil.getInt(line, 39, 41));
+		r.setNossoNumero(StringUtil.getInt(line, 41, 56));
+		r.setVencimento(StringUtil.getData(line, 73, 81));
+		r.setValorTitulo(StringUtil.getDouble2Decimal(line, 81, 96));
+		r.setValorTarifa(StringUtil.getDouble2Decimal(line, 198, 212));
 
 		if ((line = in.readLine()) != null) {
-			int tipoDetalhe = StringUtil.INSTANCE.getInt(line, 15, 17);
+			int tipoDetalhe = StringUtil.getInt(line, 15, 17);
 
 			RegistroDetalhe rd = new RegistroDetalhe();
 			rd.setRegistro(r);
-			rd.setJurosMultasEncargos(StringUtil.INSTANCE.getDouble2Decimal(
+			rd.setJurosMultasEncargos(StringUtil.getDouble2Decimal(
 					line, 17, 32));
-			rd.setDesconto(StringUtil.INSTANCE.getDouble2Decimal(line, 32, 47));
-			rd.setAbatimento(StringUtil.INSTANCE
+			rd.setDesconto(StringUtil.getDouble2Decimal(line, 32, 47));
+			rd.setAbatimento(StringUtil
 					.getDouble2Decimal(line, 47, 62));
-			rd.setIof(StringUtil.INSTANCE.getDouble2Decimal(line, 62, 77));
-			rd.setValorPago(StringUtil.INSTANCE.getDouble2Decimal(line, 77, 92));
-			rd.setValorLiquido(StringUtil.INSTANCE.getDouble2Decimal(line, 92,
+			rd.setIof(StringUtil.getDouble2Decimal(line, 62, 77));
+			rd.setValorPago(StringUtil.getDouble2Decimal(line, 77, 92));
+			rd.setValorLiquido(StringUtil.getDouble2Decimal(line, 92,
 					107));
-			rd.setDataOcorrencia(StringUtil.INSTANCE.getData(line, 137, 145));
-			rd.setDataCredito(StringUtil.INSTANCE.getData(line, 145, 153));
+			rd.setDataOcorrencia(StringUtil.getData(line, 137, 145));
+			rd.setDataCredito(StringUtil.getData(line, 145, 153));
 
 			if (tipoDetalhe == DETALHE6) {
-				rd.setDataDebitoTarifa(StringUtil.INSTANCE.getData(line, 157,
+				rd.setDataDebitoTarifa(StringUtil.getData(line, 157,
 						165));
 			}
 			r.setRegistroDetalhe(rd);
@@ -168,15 +169,15 @@ public class CaixaEJB {
 	private TrailerLote preencheTrailerLote(String line, HeaderLote headerLote) {
 		TrailerLote tl = new TrailerLote();
 		tl.setHeaderLote(headerLote);
-		tl.setQuantidadeRegistroLote(StringUtil.INSTANCE.getInt(line, 17, 23));
+		tl.setQuantidadeRegistroLote(StringUtil.getInt(line, 17, 23));
 		return tl;
 	}
 
 	private Trailer preencheTrailer(String line, Header header) {
 		Trailer t = new Trailer();
 		t.setHeader(header);
-		t.setQuantidadeLotes(StringUtil.INSTANCE.getInt(line, 17, 23));
-		t.setQuantidadeRegistros(StringUtil.INSTANCE.getInt(line, 23, 29));
+		t.setQuantidadeLotes(StringUtil.getInt(line, 17, 23));
+		t.setQuantidadeRegistros(StringUtil.getInt(line, 23, 29));
 		return t;
 	}
 

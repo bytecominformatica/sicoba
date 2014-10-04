@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.web.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,9 +15,10 @@ import net.servehttp.bytecom.persistence.entity.security.Authentication;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.HashUtil;
-import net.servehttp.bytecom.util.ImageUtil;
-import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.util.Util;
+
+import com.servehttp.bytecom.commons.ImageUtil;
+import com.servehttp.bytecom.commons.StringUtil;
 
 /**
  * 
@@ -28,6 +30,7 @@ import net.servehttp.bytecom.util.Util;
 public class UserAccountController implements Serializable {
 
   private static final long serialVersionUID = -2081234112300283530L;
+
   private List<UserAccount> listUserAccount;
   private UserAccount userAccount = new UserAccount();
   private String username;
@@ -42,8 +45,6 @@ public class UserAccountController implements Serializable {
   private AccountBussiness accountBussiness;
   @Inject
   private Util util;
-  @Inject
-  private ImageUtil imageUtil;
 
   @PostConstruct
   public void load() {
@@ -72,7 +73,12 @@ public class UserAccountController implements Serializable {
 
     if (valida(userAccount)) {
       if (file != null) {
-        userAccount.setImg(imageUtil.setThumbnail(imageUtil.tratarImagem(file), EXTENSION));
+        try {
+          userAccount.setImg(ImageUtil.setThumbnail(ImageUtil.tratarImagem(file.getInputStream()),
+              EXTENSION));
+        } catch (IOException e) {
+          AlertaUtil.error(e.getMessage());
+        }
       }
       if (userAccount.getId() == 0) {
         Authentication auth = new Authentication();
@@ -91,9 +97,9 @@ public class UserAccountController implements Serializable {
     return page;
   }
 
-  public void resetPassword(){
+  public void resetPassword() {
     Authentication auth = accountBussiness.findAuthenticationByUserAccount(userAccount);
-    String senha = StringUtil.INSTANCE.gerarSenha(8);
+    String senha = StringUtil.gerarSenha(8);
     auth.setPassword(HashUtil.sha256ToHex(senha));
     accountBussiness.atualizar(auth);
     AlertaUtil.info("A senha do usuário " + auth.getUsername() + " foi alterada para " + senha);

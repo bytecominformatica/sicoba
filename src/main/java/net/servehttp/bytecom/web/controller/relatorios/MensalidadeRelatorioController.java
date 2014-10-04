@@ -11,8 +11,9 @@ import javax.inject.Named;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.relatorios.MensalidadeRelatorioJPA;
-import net.servehttp.bytecom.util.DateUtil;
-import net.servehttp.bytecom.util.StringUtil;
+
+import com.servehttp.bytecom.commons.DateUtil;
+import com.servehttp.bytecom.commons.StringUtil;
 
 
 @Named
@@ -37,8 +38,8 @@ public class MensalidadeRelatorioController implements Serializable {
   MensalidadeRelatorioJPA mensalidadeRelatorioJPA;
 
   public MensalidadeRelatorioController() {
-    dataInicio = DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime();
-    dataFim = DateUtil.INSTANCE.getUltimoDiaDoMes().getTime();
+    dataInicio = DateUtil.getPrimeiroDiaDoMes().getTime();
+    dataFim = DateUtil.getUltimoDiaDoMes().getTime();
   }
 
   public void consultar() {
@@ -85,19 +86,19 @@ public class MensalidadeRelatorioController implements Serializable {
   }
 
   public String getValorTotal() {
-    return StringUtil.INSTANCE.formatCurrence(valorTotal);
+    return StringUtil.formatCurrence(valorTotal);
   }
 
   public String getValorPagoTotal() {
-    return StringUtil.INSTANCE.formatCurrence(valorPagoTotal);
+    return StringUtil.formatCurrence(valorPagoTotal);
   }
 
   public String getTarifaTotal() {
-    return StringUtil.INSTANCE.formatCurrence(tarifaTotal);
+    return StringUtil.formatCurrence(tarifaTotal);
   }
 
   public String getDescontoTotal() {
-    return StringUtil.INSTANCE.formatCurrence(descontoTotal);
+    return StringUtil.formatCurrence(descontoTotal);
   }
 
   public StatusMensalidade getStatus() {

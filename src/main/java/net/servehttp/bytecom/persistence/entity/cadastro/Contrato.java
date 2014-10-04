@@ -14,8 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import net.servehttp.bytecom.util.DateUtil;
-
 @Entity
 @Table(name = "contrato")
 public class Contrato extends EntityGeneric implements Serializable {
@@ -57,14 +55,6 @@ public class Contrato extends EntityGeneric implements Serializable {
 
   public Date getDataInstalacao() {
     return dataInstalacao;
-  }
-
-  public String getDataInstalacaoFormatada() {
-    return DateUtil.INSTANCE.format(dataInstalacao);
-  }
-
-  public void setDataInstalacaoFormatada(String dataInstalacao) {
-    this.dataInstalacao = DateUtil.INSTANCE.parse(dataInstalacao, "MM/dd/yyyy");
   }
 
   public void setDataInstalacao(Date dataInstalacao) {

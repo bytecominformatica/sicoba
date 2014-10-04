@@ -12,10 +12,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.Email;
-
 import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
-import net.servehttp.bytecom.util.ImageUtil;
+
+import org.hibernate.validator.constraints.Email;
 
 /**
  * 
@@ -41,8 +40,6 @@ public class UserAccount extends EntityGeneric implements Serializable {
   @Lob
   private byte[] img;
 
-  @Transient
-  private ImageUtil imageUtil = new ImageUtil();
   @Transient
   private String imageGerada;
 
@@ -87,9 +84,6 @@ public class UserAccount extends EntityGeneric implements Serializable {
   }
 
   public String getImageGerada() {
-    if (imageGerada == null) {
-        imageGerada = imageUtil.exibirImagem(img, id);
-    }
     return imageGerada;
   }
 

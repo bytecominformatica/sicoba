@@ -11,7 +11,8 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
-import net.servehttp.bytecom.util.DateUtil;
+
+import com.servehttp.bytecom.commons.DateUtil;
 
 /**
  * 
@@ -30,20 +31,20 @@ public class DashboadJPA implements Serializable {
 
   public long getQuantidadeInstalacoesDoMes(){
     return em.createQuery("select count(c.id) from Contrato c where c.dataInstalacao >= :date", Long.class)
-        .setParameter("date", DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime()).getSingleResult();
+        .setParameter("date", DateUtil.getPrimeiroDiaDoMes().getTime()).getSingleResult();
   }
 
   public List<Mensalidade> getMensalidadesEmAtraso(){
     return em.createQuery("select m from Mensalidade m where m.status = :status and m.dataVencimento < :date order by m.dataVencimento desc", Mensalidade.class)
         .setParameter("status", StatusMensalidade.PENDENTE)
-        .setParameter("date", DateUtil.INSTANCE.getHoje())
+        .setParameter("date", DateUtil.getHoje())
         .getResultList();
   }
 
   public double getFaturamentoDoMes(){
     Double d = em.createQuery("select sum(m.valorPago) from Mensalidade m where m.dataOcorrencia between :inicio and :fim", Double.class)
-        .setParameter("inicio", DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime())
-        .setParameter("fim", DateUtil.INSTANCE.getUltimoDiaDoMes().getTime())
+        .setParameter("inicio", DateUtil.getPrimeiroDiaDoMes().getTime())
+        .setParameter("fim", DateUtil.getUltimoDiaDoMes().getTime())
         .getSingleResult();
      
     return d != null ? d : 0;
@@ -51,8 +52,8 @@ public class DashboadJPA implements Serializable {
 
   public double getFaturamentoPrevistoDoMes() {
     Double d = em.createQuery("select sum(m.valor) from Mensalidade m where m.dataVencimento between :inicio and :fim", Double.class)
-        .setParameter("inicio", DateUtil.INSTANCE.getPrimeiroDiaDoMes().getTime())
-        .setParameter("fim", DateUtil.INSTANCE.getUltimoDiaDoMes().getTime())
+        .setParameter("inicio", DateUtil.getPrimeiroDiaDoMes().getTime())
+        .setParameter("fim", DateUtil.getUltimoDiaDoMes().getTime())
         .getSingleResult();
     return d != null ? d : 0;
   }
