@@ -36,9 +36,6 @@ public class ContratoController implements Serializable {
 
   private Cliente cliente;
   private int clienteId;
-  private int planoId;
-  private int equipamentoId;
-  private int equipamentoWifiId;
   @Inject
   private Util util;
   @Inject
@@ -63,28 +60,26 @@ public class ContratoController implements Serializable {
     if (clienteId != null && !clienteId.isEmpty()) {
       setCliente(clientBusiness.findById(Integer.parseInt(clienteId)));
       if (getCliente().getContrato() == null) {
-        Contrato c = new Contrato();
-        c.setCliente(getCliente());
-        c.setDataInstalacao(new Date());
-        getCliente().setContrato(c);
-      }
-
-      if (getCliente().getContrato().getPlano() != null) {
-        planoId = getCliente().getContrato().getPlano().getId();
+        gerarNovoContrato();
       }
 
       Equipamento e = getCliente().getContrato().getEquipamento();
       if (e != null && !listEquipamentos.contains(e)) {
-        equipamentoId = e.getId();
         listEquipamentos.add(e);
       }
 
       e = getCliente().getContrato().getEquipamentoWifi();
       if (e != null && !listEquipamentosWifi.contains(e)) {
-        equipamentoWifiId = e.getId();
         listEquipamentosWifi.add(e);
       }
     }
+  }
+
+  private void gerarNovoContrato() {
+    Contrato c = new Contrato();
+    c.setCliente(getCliente());
+    c.setDataInstalacao(new Date());
+    getCliente().setContrato(c);
   }
 
   public List<Equipamento> getListEquipamentosWifi() {
@@ -93,53 +88,6 @@ public class ContratoController implements Serializable {
 
   public void setListEquipamentosWifi(List<Equipamento> listEquipamentosWifi) {
     this.listEquipamentosWifi = listEquipamentosWifi;
-  }
-
-  public int getPlanoId() {
-    return planoId;
-  }
-
-  public void setPlanoId(int planoId) {
-    this.planoId = planoId;
-    if (planoId > 0) {
-      getCliente().getContrato().setPlano(planoBusiness.findById(planoId));
-    }
-  }
-
-  public int getEquipamentoId() {
-    return equipamentoId;
-  }
-
-  public void setEquipamentoId(int equipamentoId) {
-    this.equipamentoId = equipamentoId;
-    getCliente().getContrato().setEquipamento(buscaNaListaEquipamento(equipamentoId));
-  }
-
-  public int getEquipamentoWifiId() {
-    return equipamentoWifiId;
-  }
-
-  public void setEquipamentoWifiId(int equipamentoWifiId) {
-    this.equipamentoWifiId = equipamentoWifiId;
-    getCliente().getContrato().setEquipamentoWifi(buscaNaListaWifi(equipamentoWifiId));
-  }
-
-  private Equipamento buscaNaListaWifi(int id) {
-    for (Equipamento e : listEquipamentosWifi) {
-      if (e.getId() == id) {
-        return e;
-      }
-    }
-    return null;
-  }
-
-  private Equipamento buscaNaListaEquipamento(int id) {
-    for (Equipamento e : listEquipamentos) {
-      if (e.getId() == id) {
-        return e;
-      }
-    }
-    return null;
   }
 
   public List<Equipamento> getListEquipamentos() {
@@ -184,7 +132,7 @@ public class ContratoController implements Serializable {
 
   public void remover() {
     contratoBusiness.remover(cliente.getContrato());
-    cliente.setContrato(new Contrato());
+    gerarNovoContrato();
     load();
     AlertaUtil.info("Contrato removido com sucesso!");
   }
