@@ -4,93 +4,88 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
+
 @Entity
 @Table(name = "endereco")
 @NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e")
-public class Endereco implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Endereco extends EntityGeneric implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String cep;
-	@NotNull(message="logradouro é obrigatório")
-	private String logradouro;
-	private String numero;
-	private String complemento;
-	
-	@NotNull(message="bairro é obrigatório")
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Bairro bairro;
+  private static final long serialVersionUID = -1834900327044240105L;
+  private String cep;
+  @NotNull(message = "logradouro é obrigatório")
+  private String logradouro;
+  private String numero;
+  private String complemento;
 
-	public int getId() {
-		return this.id;
-	}
+  @NotNull(message = "bairro é obrigatório")
+  @ManyToOne(fetch = FetchType.EAGER)
+  private Bairro bairro;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public int getId() {
+    return this.id;
+  }
 
-	public String getComplemento() {
-		return this.complemento;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
+  public String getComplemento() {
+    return this.complemento;
+  }
 
-	public String getLogradouro() {
-		return this.logradouro;
-	}
+  public void setComplemento(String complemento) {
+    this.complemento = complemento;
+  }
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
+  public String getLogradouro() {
+    return this.logradouro;
+  }
 
-	public String getNumero() {
-		return this.numero;
-	}
+  public void setLogradouro(String logradouro) {
+    this.logradouro = logradouro;
+  }
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+  public String getNumero() {
+    return this.numero;
+  }
 
-	public Bairro getBairro() {
-		return this.bairro;
-	}
+  public void setNumero(String numero) {
+    this.numero = numero;
+  }
 
-	public void setBairro(Bairro bairro) {
-		this.bairro = bairro;
-	}
+  public Bairro getBairro() {
+    return this.bairro;
+  }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(logradouro).append(", ").append(numero);
-		if (complemento != null && !complemento.isEmpty()) {
-			sb.append(", ").append(complemento);
-		}
-		if (bairro != null) {
-			sb.append(", ").append(bairro.getNome()).append(", ")
-					.append(bairro.getCidade()).append(" - ")
-					.append(bairro.getCidade().getEstado().getUf());
-		}
-		return sb.toString();
-	}
+  public void setBairro(Bairro bairro) {
+    this.bairro = bairro;
+  }
 
-    public String getCep() {
-        return cep;
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(logradouro).append(", ").append(numero);
+    if (complemento != null && !complemento.isEmpty()) {
+      sb.append(", ").append(complemento);
     }
-
-    public void setCep(String cep) {
-        this.cep = cep;
+    if (bairro != null) {
+      sb.append(", ").append(bairro.getNome()).append(", ").append(bairro.getCidade())
+          .append(" - ").append(bairro.getCidade().getEstado().getUf());
     }
+    return sb.toString();
+  }
+
+  public String getCep() {
+    return cep;
+  }
+
+  public void setCep(String cep) {
+    this.cep = cep;
+  }
 }
