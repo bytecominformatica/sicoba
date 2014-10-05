@@ -54,7 +54,14 @@ public class ClienteController implements Serializable {
     String clienteId = util.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
+      selecionaCidade();
       atualizaBairros();
+    }
+  }
+
+  private void selecionaCidade() {
+    if(cliente.getEndereco().getBairro() != null){
+      cidade = cliente.getEndereco().getBairro().getCidade();
     }
   }
 
@@ -112,6 +119,7 @@ public class ClienteController implements Serializable {
       AlertaUtil.error("O cliente não pode ser removido pois possui contrato");
     } else {
       clientBussiness.remover(cliente);
+      selecionaCidade();
       AlertaUtil.info("Cliente removido com sucesso!");
       page = "list";
     }
