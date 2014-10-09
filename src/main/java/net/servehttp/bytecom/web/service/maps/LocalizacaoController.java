@@ -9,34 +9,33 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-
-import com.google.gson.Gson;
 
 import net.servehttp.bytecom.business.ClientBussiness;
+import net.servehttp.bytecom.business.ClienteGeorefereciaBussiness;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
+import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
-import net.servehttp.bytecom.web.controller.ClienteController;
 
 @Named
 @ViewScoped
 public class LocalizacaoController implements Serializable {
 
   private static final long serialVersionUID = -6695262369077987911L;
+  
   private  String geocode_url = "https://maps.googleapis.com/maps/api/geocode/xml";
   private ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
   private List<Cliente> listClientes;
   private int cidadeId;
   private int bairroId;
+  private String clienteId;
   private Cliente cliente = new Cliente();
   
   @Inject
   private ClientBussiness clientBussiness;
+  @Inject 
+  private ClienteGeorefereciaBussiness clienteGeoBussiness;
   @Inject
   private Util util;
   
@@ -47,7 +46,7 @@ public class LocalizacaoController implements Serializable {
   }
   
   private void getParameters(){
-    String clienteId = util.getParameters("id");
+    clienteId = util.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
@@ -60,8 +59,19 @@ public class LocalizacaoController implements Serializable {
     String path;
     try {
       path = geocode_url + '?'+"address="+URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
-      XMLProcessor xmlPrc = new XMLProcessor();
-      xmlPrc.xmlRequest(path);
+      //XMLProcessor xmlPrc = new XMLProcessor();
+      //xmlPrc.xmlRequest(path);
+      double latitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[0]);
+      double longitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[1]);
+      //clienteGeo.setCliente(getCliente());
+      clienteGeo.setCliente(getCliente());
+      clienteGeo.setLatitude(latitude);
+      clienteGeo.setLongitude(longitude);
+     
+      clienteGeoBussiness.salvar(clienteGeo);
+      AlertaUtil.info("Gravado com sucesso!");
+      
+      
     } catch (UnsupportedEncodingException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
