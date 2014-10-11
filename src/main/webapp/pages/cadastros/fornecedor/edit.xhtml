@@ -37,20 +37,18 @@
 				</h:inputText>
 
 				<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
-				<h:selectOneMenu id="cidade" value="#{fornecedorController.cidadeId}" styleClass="form-control"
-					required="true">
+				<h:selectOneMenu id="cidade" value="#{fornecedorController.cidade}" styleClass="form-control"
+					required="true" converter="entityConverter">
 					<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-					<f:selectItems value="#{fornecedorController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"
-						itemValue="#{cidade.id}" />
+					<f:selectItems value="#{fornecedorController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"/>
 					<f:ajax listener="#{fornecedorController.atualizaBairros}" render="bairro" />
 				</h:selectOneMenu>
 
 				<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
-				<h:selectOneMenu id="bairro" value="#{fornecedorController.bairroId}" styleClass="form-control"
-					required="true">
+				<h:selectOneMenu id="bairro" value="#{fornecedorController.fornecedor.endereco.bairro}" styleClass="form-control"
+					required="true" converter="entityConverter">
 					<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-					<f:selectItems value="#{fornecedorController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"
-						itemValue="#{bairro.id}" />
+					<f:selectItems value="#{fornecedorController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"/>
 				</h:selectOneMenu>
 
 				<label jsf:for="logradouro" class="control-label">#{bundle.logradouro}</label>
@@ -66,7 +64,7 @@
 				<div class="modal-footer">
 					<button jsf:id="btSalvar" jsf:action="#{fornecedorController.salvar()}"
 						class="btn btn-primary" type="submit">
-						<span class="glyphicon glyphicon-floppy-save" /> #{bundle.save}
+						<span class="glyphicon glyphicon-floppy-save" /> #{fornecedorController.fornecedor.id == 0 ? bundle.save : bundle.update}
 					</button>
 					<button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
 						class="btn btn-primary">

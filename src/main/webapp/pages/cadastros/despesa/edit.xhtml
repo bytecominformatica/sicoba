@@ -4,7 +4,7 @@
   xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
   xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
-	<f:viewParam name="id" value="#{despesaController.despesaSelecionada}" converter="#{despesaConverter}"
+	<f:viewParam name="id" value="#{despesaController.despesa}" converter="entityConverter"
 		converterMessage="Registro não encontrado."/>
 </f:metadata>
 <ui:composition template="/layout.xhtml">
@@ -18,29 +18,29 @@
         <form jsf:id="form" class="form-horizontal">
 
           <label jsf:for="descricao" class="control-label">#{bundle.descricao}</label> 
-          <input jsf:id="descricao" type="text" jsf:value="#{despesaController.despesaSelecionada.descricao}"
+          <input jsf:id="descricao" type="text" jsf:value="#{despesaController.despesa.descricao}"
             class="form-control" required="required" autofocus="autofocus"/> 
           
           <label jsf:for="fornecedor" class="control-label">#{bundle.fornecedor}</label>
-          <h:selectOneMenu id="fornecedor" value="#{despesaController.fornecedorId}"
+          <h:selectOneMenu id="fornecedor" value="#{despesaController.despesa}" converter="entityConverter"
             styleClass="form-control" required="true">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItems value="#{despesaController.listFornecedor}" var="fornecedor"
-              itemLabel="#{fornecedor.nome}" itemValue="#{fornecedor.id}"/>
+              itemLabel="#{fornecedor.nome}"/>
           </h:selectOneMenu>
 
           <label jsf:for="valorDespesa" class="control-label">#{bundle.valor}</label> 
           <input jsf:id="valorDespesa" type="number" step="any" class="form-control"
-            jsf:value="#{despesaController.despesaSelecionada.valor}" required="required"/> 
+            jsf:value="#{despesaController.despesa.valor}" required="required"/> 
             
           <label jsf:for="dataVencimento" class="control-label">#{bundle.vencimento}</label> 
           <input jsf:id="dataVencimento" type="date" required="required"
-            jsf:value="#{despesaController.despesaSelecionada.data}" class="form-control">
+            jsf:value="#{despesaController.despesa.data}" class="form-control">
             <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00" />
           </input> 
           
           <label jsf:for="status" class="control-label">#{bundle.status}</label>
-          <h:selectOneMenu id="status" value="#{despesaController.despesaSelecionada.status}"
+          <h:selectOneMenu id="status" value="#{despesaController.despesa.status}"
             styleClass="form-control" required="true"
             requiredMessage="#{bundle.status} obrigatório">
             <f:selectItem itemLabel="#{bundle.aberto}" itemValue="false" />
@@ -50,7 +50,7 @@
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary"
               jsf:action="#{despesaController.atualizar()}">
-              <span class="glyphicon glyphicon-floppy-save" /> #{bundle.save}
+              <span class="glyphicon glyphicon-floppy-save" /> #{despesaController.despesa.id == 0 ? bundle.save : bundle.update}
             </button>
 
             <button class="btn btn-primary" jsf:outcome="list" style="margin-left: 5px;">
