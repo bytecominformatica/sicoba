@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.web.service.maps;
+package net.servehttp.bytecom.web.service.maps.controller;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -10,14 +10,22 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.codehaus.jettison.json.JSONException;
+
 import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.ClienteGeorefereciaBussiness;
-import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
-
+import net.servehttp.bytecom.web.service.maps.JSONProcessor;
+import net.servehttp.bytecom.web.service.maps.XMLProcessor;
+/**
+ * 
+ * @author Felipe W. M. Martins <br>
+ *         felipewmartins@gmail.com
+ *
+ */
 @Named
 @ViewScoped
 public class LocalizacaoController implements Serializable {
@@ -29,6 +37,7 @@ public class LocalizacaoController implements Serializable {
   private List<Cliente> listClientes;
   private int cidadeId;
   private int bairroId;
+  private String json;
   private String clienteId;
   private Cliente cliente = new Cliente();
   
@@ -51,7 +60,6 @@ public class LocalizacaoController implements Serializable {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
       bairroId = cliente.getEndereco().getBairro().getId();
-      //atualizaBairros();
     }
   }
   
@@ -59,11 +67,9 @@ public class LocalizacaoController implements Serializable {
     String path;
     try {
       path = geocode_url + '?'+"address="+URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
-      //XMLProcessor xmlPrc = new XMLProcessor();
-      //xmlPrc.xmlRequest(path);
+      
       double latitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[0]);
       double longitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[1]);
-      //clienteGeo.setCliente(getCliente());
       clienteGeo.setCliente(getCliente());
       clienteGeo.setLatitude(latitude);
       clienteGeo.setLongitude(longitude);
@@ -78,6 +84,18 @@ public class LocalizacaoController implements Serializable {
     }
     
     
+  }
+  
+  public String listarClientesNoMapa(){
+    try {
+       json = JSONProcessor.processaJson(clienteGeo);
+       System.out.println(json);
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return json;
+   
   }
 
   public Cliente getCliente() {
@@ -94,6 +112,22 @@ public class LocalizacaoController implements Serializable {
 
   public void setListClientes(List<Cliente> listClientes) {
     this.listClientes = listClientes;
+  }
+
+  public int getCidadeId() {
+    return cidadeId;
+  }
+
+  public void setCidadeId(int cidadeId) {
+    this.cidadeId = cidadeId;
+  }
+
+  public int getBairroId() {
+    return bairroId;
+  }
+
+  public void setBairroId(int bairroId) {
+    this.bairroId = bairroId;
   }
   
   
