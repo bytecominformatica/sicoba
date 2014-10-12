@@ -1,7 +1,5 @@
 package net.servehttp.bytecom.persistence.entity.maps;
 
-import java.math.BigDecimal;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,15 +22,15 @@ import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
 public class ClienteGeoReferencia extends EntityGeneric {
 
   private static final long serialVersionUID = -7721922565148704991L;
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
   @JoinColumn(name = "cliente_id")
   private Cliente cliente;
   
   @Column(name = "lat")
-  private BigDecimal latitude;
+  private Double latitude;
   
   @Column(name = "lng")
-  private BigDecimal longitude;
+  private Double longitude;
 
   public Cliente getCliente() {
     return cliente;
@@ -42,22 +40,21 @@ public class ClienteGeoReferencia extends EntityGeneric {
     this.cliente = cliente;
   }
 
-  public BigDecimal getLatitude() {
+  public Double getLatitude() {
     return latitude;
   }
 
-  public void setLatitude(BigDecimal latitude) {
+  public void setLatitude(Double latitude) {
     this.latitude = latitude;
   }
 
-  public BigDecimal getLongitude() {
+  public Double getLongitude() {
     return longitude;
   }
 
-  public void setLongitude(BigDecimal longitude) {
+  public void setLongitude(Double longitude) {
     this.longitude = longitude;
   }
-  
   
 
 }
