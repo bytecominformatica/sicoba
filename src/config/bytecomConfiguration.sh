@@ -11,7 +11,7 @@ mkdir -p $DIRETORIO_INSTALACAO
 echo "DIGITE SUA SENHA PARA UTILIZAÇÃO DO COMANDO SUDO "
 sudo chmod 777 /tmp
 
-WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-8.1.0.Final;
+WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-8.2.0.Final;
 
 
 ######################### CONFIGURANDO BANCO ###########################
@@ -37,15 +37,15 @@ sudo echo "export WILDFLY_HOME=$WILDFLY_DIR" > $WF_FILE;
 ######################### WILDFLY SERVER ###############################
  
 cd /tmp
-WILDFLY_ZIP=wildfly-8.1.0.Final.zip;
+WILDFLY_ZIP=wildfly-8.2.0.Final.zip;
  
 if ! [ -d "$WILDFLY_DIR" ]; then
 	if ! [ -f "$WILDFLY_ZIP" ]; then
 		echo "DOWNLOADING WILDFLY 8 FINAL...";
-		wget http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip;
+		wget http://download.jboss.org/wildfly/8.2.0.Final/wildfly-8.2.0.Final.zip;
 	fi;
 	echo "EXTRACTING $WILDFLY_ZIP";
-	unzip wildfly-8.1.0.Final.zip -d $DIRETORIO_INSTALACAO;	
+	unzip wildfly-8.2.0.Final.zip -d $DIRETORIO_INSTALACAO;	
 fi;
 
 #################### WILDFLY SERVER CONFIGURATION ######################
