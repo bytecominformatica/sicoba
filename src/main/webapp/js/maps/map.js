@@ -11,6 +11,13 @@ function initialize() {
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
+  
+  setMarkers(map,positions);
+  
+}
+
+function setMarkers(map,jsonObj){
+	
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
