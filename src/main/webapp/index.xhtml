@@ -77,7 +77,7 @@
 							 value="#{dashboardController.listMensalidadesAtrasadas}" var="m">
 								<h:column>
 									<f:facet name="header">#{bundle.cliente}</f:facet>
-									<a href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{m.cliente.id}">#{m.cliente.nome}</a>
+									<a href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{m.cliente.id}" style="color: #{m.cliente.status == 'ATIVO' ? 'green' : m.cliente.status == 'INATIVO' ? 'orange' : 'red'};">#{m.cliente.nome}</a>
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.valor}</f:facet>
