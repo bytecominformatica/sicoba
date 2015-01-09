@@ -111,6 +111,10 @@
 									<f:facet name="header">#{bundle.ip}</f:facet>
 									<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
 								</h:column>
+								<h:column>
+									<f:facet name="header">#{bundle.mensalidade}</f:facet>
+									#{empty c.mensalidades || c.mensalidades == null ? 'SEM MENSALIDADES' : 'OK'}
+								</h:column>
 							</h:dataTable>
 							
 						</div>
