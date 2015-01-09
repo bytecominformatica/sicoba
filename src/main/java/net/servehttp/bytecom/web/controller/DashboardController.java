@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.DashboadJPA;
-import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 
@@ -26,8 +25,6 @@ public class DashboardController implements Serializable {
   private static final long serialVersionUID = 8827281306259995250L;
 
   @Inject
-  private GenericoJPA genericoJPA;
-  @Inject
   private DashboadJPA dashboadJPA;
   private long quantidadeInstalacoes;
   private double faturamentoDoMes;
@@ -39,7 +36,7 @@ public class DashboardController implements Serializable {
 
   @PostConstruct
   public void load() {
-    listClientesInstalados = genericoJPA.buscarTodos(Cliente.class, false, "createdAt", 10);
+    listClientesInstalados = dashboadJPA.buscarTodosClienteInstaladosRecente();
     quantidadeInstalacoes = dashboadJPA.getQuantidadeInstalacoesDoMes();
     faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
     faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();

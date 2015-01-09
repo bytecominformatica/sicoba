@@ -19,9 +19,6 @@ import com.servehttp.bytecom.commons.DateUtil;
 @Transactional
 public class ClienteJPA implements Serializable {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1857140370479772238L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
@@ -37,7 +34,7 @@ public class ClienteJPA implements Serializable {
     TypedQuery<Cliente> query =
         em.createQuery(jpql, Cliente.class).setParameter("pesquisa", "%" + pesquisa + "%");
     return query.getResultList();
-  }  
+  }
 
   public List<Cliente> buscaUltimosClientesAlterados() {
     return em
