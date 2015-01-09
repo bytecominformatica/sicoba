@@ -107,6 +107,10 @@
 									<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
 									#{c.contrato.dataInstalacao}
 								</h:column>
+								<h:column>
+									<f:facet name="header">#{bundle.ip}</f:facet>
+									<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
+								</h:column>
 							</h:dataTable>
 							
 						</div>
