@@ -68,7 +68,7 @@ public class ClienteController implements Serializable {
 
   public void consultar() {
     if (pesquisa != null && pesquisa.length() > 2) {
-      listClientes = clientBussiness.findClientByNamePhoneEmail(pesquisa);
+      listClientes = clientBussiness.findClientByNamePhoneEmailIp(pesquisa);
     } else {
       AlertaUtil.error("pesquisa por nome tem que possuir pelo menos 3 caracteres.");
     }
