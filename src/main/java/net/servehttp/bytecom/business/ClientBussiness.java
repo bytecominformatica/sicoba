@@ -23,8 +23,8 @@ public class ClientBussiness extends genericoBusiness implements Serializable {
     return genericoJPA.findById(Cliente.class, id);
   }
 
-  public List<Cliente> findClientByNamePhoneEmail(String pesquisa) {
-    return clienteJPA.buscaClientesPorNomeFoneEmail(pesquisa);
+  public List<Cliente> findClientByNamePhoneEmailIp(String pesquisa) {
+    return clienteJPA.buscaClientesPorNomeFoneEmailIp(pesquisa);
   }
   
   public boolean rgAvaliable(Cliente c){

@@ -15,7 +15,7 @@
 			<br/>
 				<form jsf:id="formPesquisa" class="form-horizontal">
 				    <div class="input-group">
-						<input jsf:value="#{clienteController.pesquisa}" type="text" name="pesquisa" class="form-control" placeholder="Nome, Fone ou Email" jsf:id="pesquisa" autofocus="autofocus"/>
+						<input jsf:value="#{clienteController.pesquisa}" type="text" name="pesquisa" class="form-control" placeholder="Nome, Ip, Fone ou Email" jsf:id="pesquisa" autofocus="autofocus"/>
 				      <span class="input-group-btn">
 						<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
 							<span class="glyphicon glyphicon-search" />
@@ -53,9 +53,7 @@
 
 						<h:column>
 							<f:facet name="header">#{bundle.ip}</f:facet>
-							<h:link outcome="acesso" value="#{c.acesso.ip}">
-								<f:param value="#{c.id}" name="clienteId"></f:param>
-							</h:link>
+							<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
 						</h:column>
 						
 						<h:column>
