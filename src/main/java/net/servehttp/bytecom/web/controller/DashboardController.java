@@ -42,7 +42,7 @@ public class DashboardController implements Serializable {
     faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
     listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();
     listClientesInativos = dashboadJPA.getClientesInativos();
-//    listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
+    listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
   }
 
   public List<Cliente> getListClientesInstalados() {

@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.persistence;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -73,5 +74,14 @@ public class DashboadJPA implements Serializable {
   public List<Cliente> getClientesInativos() {
     return em.createQuery("select c from Cliente c where c.status = :status", Cliente.class)
         .setParameter("status", StatusCliente.INATIVO).getResultList();
+  }
+
+
+  public List<Cliente> getClientesSemMensalidade() {
+    return em.createQuery("select c from Cliente c where (c.status = :status1 or c.status = :status2) and c.id not in(select DISTINCT(m.cliente.id) from Mensalidade m where m.dataVencimento > :hoje)", Cliente.class)
+        .setParameter("status1", StatusCliente.ATIVO)
+        .setParameter("status2", StatusCliente.INATIVO)
+        .setParameter("hoje", new Date())
+        .getResultList();
   }
 }
