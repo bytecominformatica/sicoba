@@ -5,11 +5,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.QCliente;
 
+import com.mysema.query.jpa.impl.JPAQuery;
 import com.servehttp.bytecom.commons.DateUtil;
 
 /**
@@ -28,14 +29,15 @@ public class ClienteJPA implements Serializable {
   }
 
   public List<Cliente> buscaClientesPorNomeFoneEmailIp(String pesquisa) {
-    String jpql =
-        "select c from Cliente c where c.nome like :pesquisaLike or c.foneTitular = :pesquisa or c.foneContato = :pesquisa or c.email = :pesquisa order by c.nome";
-
-    TypedQuery<Cliente> query =
-        em.createQuery(jpql, Cliente.class)
-        .setParameter("pesquisaLike", "%" + pesquisa + "%")
-        .setParameter("pesquisa", pesquisa);
-    return query.getResultList();
+    QCliente c = QCliente.cliente;
+    return new JPAQuery(em)
+        .from(c)
+        .where(
+            c.nome.like("%" + pesquisa + "%").or(
+                c.foneTitular.eq(pesquisa).or(
+                    c.foneContato.eq(pesquisa)
+                        .or(c.email.eq(pesquisa).or(c.acesso.ip.eq(pesquisa))))))
+        .orderBy(c.nome.asc()).list(c);
   }
 
   public List<Cliente> buscaUltimosClientesAlterados() {
