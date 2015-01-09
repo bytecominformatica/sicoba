@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.web.controller;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -30,8 +31,7 @@ public class ClienteController implements Serializable {
   private Cliente cliente = new Cliente();
   private List<Cidade> listCidades;
   private List<Bairro> listBairros;
-  private int cidadeId;
-  private int bairroId;
+  private Cidade cidade;
   private String page;
   private String pesquisa;
 
@@ -55,9 +55,14 @@ public class ClienteController implements Serializable {
     String clienteId = util.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
-      cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
-      bairroId = cliente.getEndereco().getBairro().getId();
+      selecionaCidade();
       atualizaBairros();
+    }
+  }
+
+  private void selecionaCidade() {
+    if (cliente.getEndereco().getBairro() != null) {
+      cidade = cliente.getEndereco().getBairro().getCidade();
     }
   }
 
@@ -70,17 +75,17 @@ public class ClienteController implements Serializable {
   }
 
   public void atualizaBairros() {
-    for (Cidade c : listCidades) {
-      if (c.getId() == cidadeId) {
-        listBairros = c.getBairros();
-      }
+    if (cidade != null) {
+      listBairros = cidade.getBairros();
+    } else if (listBairros != null) {
+      listBairros.clear();
     }
   }
 
   public void salvar() {
     if (isClienteValido(cliente)) {
-      cliente.getEndereco().setBairro(addressBussiness.findById(bairroId));
       if (cliente.getId() == 0) {
+        cliente.setCreatedAt(Calendar.getInstance());
         clientBussiness.salvar(cliente);
         AlertaUtil.info("Cliente adicionado com sucesso!");
       } else {
@@ -92,7 +97,6 @@ public class ClienteController implements Serializable {
       }
     }
   }
-
 
   private boolean isClienteValido(Cliente cliente) {
     boolean valido = true;
@@ -117,6 +121,7 @@ public class ClienteController implements Serializable {
       AlertaUtil.error("O cliente não pode ser removido pois possui contrato");
     } else {
       clientBussiness.remover(cliente);
+      selecionaCidade();
       AlertaUtil.info("Cliente removido com sucesso!");
       page = "list";
     }
@@ -124,16 +129,15 @@ public class ClienteController implements Serializable {
   }
 
   public void buscarEndereco() {
-    cidadeId = bairroId = 0;
+    cidade = null;
     cliente.getEndereco().setLogradouro(null);
     EnderecoPojo ep = addressBussiness.findAddressByCep(cliente.getEndereco().getCep());
     cliente.getEndereco().setBairro(addressBussiness.getNeighborhood(ep));
     listCidades = addressBussiness.findCities();
 
     if (cliente.getEndereco().getBairro() != null) {
-      cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
+      cidade = cliente.getEndereco().getBairro().getCidade();
       atualizaBairros();
-      bairroId = cliente.getEndereco().getBairro().getId();
       cliente.getEndereco().setLogradouro(ep.getLogradouro());
     }
   }
@@ -152,22 +156,6 @@ public class ClienteController implements Serializable {
 
   public void setListBairros(List<Bairro> listBairros) {
     this.listBairros = listBairros;
-  }
-
-  public int getCidadeId() {
-    return cidadeId;
-  }
-
-  public void setCidadeId(int cidadeId) {
-    this.cidadeId = cidadeId;
-  }
-
-  public int getBairroId() {
-    return bairroId;
-  }
-
-  public void setBairroId(int bairroId) {
-    this.bairroId = bairroId;
   }
 
   public List<Cliente> getListClientes() {
@@ -192,6 +180,14 @@ public class ClienteController implements Serializable {
 
   public void setPesquisa(String pesquisa) {
     this.pesquisa = pesquisa;
+  }
+
+  public Cidade getCidade() {
+    return cidade;
+  }
+
+  public void setCidade(Cidade cidade) {
+    this.cidade = cidade;
   }
 
 }

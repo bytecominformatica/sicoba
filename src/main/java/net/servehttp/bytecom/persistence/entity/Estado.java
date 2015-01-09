@@ -1,86 +1,86 @@
 package net.servehttp.bytecom.persistence.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
+
 import java.util.List;
 
 
 @Entity
-@Table(name="estado")
-@NamedQuery(name="Estado.findAll", query="SELECT e FROM Estado e")
-public class Estado implements Serializable {
-	private static final long serialVersionUID = 1L;
+@Table(name = "estado")
+@NamedQuery(name = "Estado.findAll", query = "SELECT e FROM Estado e")
+public class Estado extends EntityGeneric implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+  private static final long serialVersionUID = -6261865881321268540L;
 
-	private String nome;
+  private String nome;
 
-	private String uf;
+  private String uf;
 
-	@OneToMany(mappedBy="estado", fetch=FetchType.EAGER)
-	private List<Cidade> cidades;
+  @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER)
+  private List<Cidade> cidades;
 
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="pais_id")
-	private Pais pais;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "pais_id")
+  private Pais pais;
 
-	public Estado() {
-	}
+  public Estado() {}
 
-	public int getId() {
-		return this.id;
-	}
+  public int getId() {
+    return this.id;
+  }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public String getNome() {
-		return this.nome;
-	}
+  public String getNome() {
+    return this.nome;
+  }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-	public String getUf() {
-		return this.uf;
-	}
+  public String getUf() {
+    return this.uf;
+  }
 
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
+  public void setUf(String uf) {
+    this.uf = uf;
+  }
 
-	public List<Cidade> getCidades() {
-		return this.cidades;
-	}
+  public List<Cidade> getCidades() {
+    return this.cidades;
+  }
 
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
+  public void setCidades(List<Cidade> cidades) {
+    this.cidades = cidades;
+  }
 
-	public Cidade addCidade(Cidade cidade) {
-		getCidades().add(cidade);
-		cidade.setEstado(this);
+  public Cidade addCidade(Cidade cidade) {
+    getCidades().add(cidade);
+    cidade.setEstado(this);
 
-		return cidade;
-	}
+    return cidade;
+  }
 
-	public Cidade removeCidade(Cidade cidade) {
-		getCidades().remove(cidade);
-		cidade.setEstado(null);
+  public Cidade removeCidade(Cidade cidade) {
+    getCidades().remove(cidade);
+    cidade.setEstado(null);
 
-		return cidade;
-	}
+    return cidade;
+  }
 
-	public Pais getPais() {
-		return pais;
-	}
+  public Pais getPais() {
+    return pais;
+  }
 
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
+  public void setPais(Pais pais) {
+    this.pais = pais;
+  }
 
 }

@@ -16,12 +16,11 @@
           <input jsf:id="cliente" type="text" class="form-control"  readonly="readonly" autofocus="autofocus"
           jsf:value="#{contratoController.cliente.nome}"/> 
           
-          <label jsf:for="plano" class="control-label">#{bundle.plano}</label> 
-          <h:selectOneMenu id="plano" value="#{contratoController.planoId}"
+          <label jsf:for="plano" class="control-label">#{bundle.plano}</label>
+          <h:selectOneMenu id="plano" value="#{contratoController.cliente.contrato.plano}" converter="entityConverter"
             styleClass="form-control" required="true">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-            <f:selectItems value="#{contratoController.listPlanos}" var="plano" itemLabel="#{plano.nome}" 
-            itemValue="#{plano.id}"/>
+            <f:selectItems value="#{contratoController.listPlanos}" var="plano" itemLabel="#{plano.nome}"/>
           </h:selectOneMenu>
 
           <label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label> 
@@ -40,20 +39,19 @@
           </input>
 
           <label jsf:for="equipamento" class="control-label">#{bundle.equipamento}</label>
-          <h:selectOneMenu id="equipamento" value="#{contratoController.equipamentoId}"
+          <h:selectOneMenu id="equipamento" value="#{contratoController.cliente.contrato.equipamento}" converter="entityConverter"
             styleClass="form-control">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItems value="#{contratoController.listEquipamentos}" var="equipamento"
-              itemLabel="#{equipamento.modelo} - #{equipamento.mac}" itemValue="#{equipamento.id}"/>
+              itemLabel="#{equipamento.modelo} - #{equipamento.mac}"/>
           </h:selectOneMenu>
 
           <label jsf:for="equipamentoWifi" class="control-label">#{bundle.equipamentoWifi}</label>
-          <h:selectOneMenu id="equipamentoWifi" value="#{contratoController.equipamentoWifiId}"
+          <h:selectOneMenu id="equipamentoWifi" value="#{contratoController.cliente.contrato.equipamentoWifi}" converter="entityConverter"
             styleClass="form-control">
             <f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
             <f:selectItems value="#{contratoController.listEquipamentosWifi}" var="equipamentoWifi"
-              itemLabel="#{equipamentoWifi.modelo} - #{equipamentoWifi.mac}"
-              itemValue="#{equipamentoWifi.id}"/>
+              itemLabel="#{equipamentoWifi.modelo} - #{equipamentoWifi.mac}"/>
           </h:selectOneMenu>
 
           <div class="modal-footer">

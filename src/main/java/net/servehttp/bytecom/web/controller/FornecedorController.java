@@ -29,44 +29,42 @@ public class FornecedorController implements Serializable {
 
   private static final long serialVersionUID = 5557798779948742363L;
   private List<Fornecedor> listFornecedor;
-  private Fornecedor fornecedor = new Fornecedor();
+  @Inject
+  private Fornecedor fornecedor;
   private List<Cidade> listCidades;
   private List<Bairro> listBairros;
   private List<Despesa> listDespesa;
-  private int cidadeId;
-  private int bairroId;
-  private Fornecedor fornecedorSelecionado;
-
-  
+  private Cidade cidade;
   @Inject
   private AddressBussiness addressBussiness;
   @Inject
   private Util util;
   @Inject
   private GenericoJPA genericoJPA;
-  
+
   @PostConstruct
-  public void load(){
+  public void load() {
     listFornecedor = genericoJPA.buscarTodos(Fornecedor.class);
-    setListDespesa(genericoJPA.buscarTodos(Despesa.class));
-    setListCidades(genericoJPA.buscarTodos(Cidade.class));
+    listDespesa = genericoJPA.buscarTodos(Despesa.class);
+    listCidades = genericoJPA.buscarTodos(Cidade.class);
     getParameters();
   }
-  
-  public String salvar(){
+
+  public String salvar() {
     String page = null;
-    if(valida(fornecedor)){
-      fornecedor.getEndereco().setBairro(genericoJPA.findById(Bairro.class, bairroId));
-      if(fornecedor.getId() == 0){
+    if (valida(fornecedor)) {
+      if (fornecedor.getId() == 0) {
         genericoJPA.salvar(fornecedor);
         AlertaUtil.info("Fornecedor gravado com sucesso!");
-      }else{
+      } else {
         genericoJPA.atualizar(fornecedor);
         AlertaUtil.info("Fornecedor atualizado com sucesso!");
       }
       page = "list";
-    }return page;
+    }
+    return page;
   }
+
   /**
    * <pre>
    * Verifica se existe alguma despesa relacionada ao fornecedor. 
@@ -75,78 +73,77 @@ public class FornecedorController implements Serializable {
    * @return retorno
    * </pre>
    */
-  private boolean existeDespesaRelacionada(Fornecedor fornecedor){
+  private boolean existeDespesaRelacionada(Fornecedor fornecedor) {
     boolean retorno = true;
-    for(Despesa d : listDespesa){
-      if(d.getFornecedor().getId() == fornecedor.getId()){
-        AlertaUtil.error("Existem despesas relacionadas a esse fornecedor. Não poderá ser excluído!");
+    for (Despesa d : listDespesa) {
+      if (d.getFornecedor().getId() == fornecedor.getId()) {
+        AlertaUtil
+            .error("Existem despesas relacionadas a esse fornecedor. Não poderá ser excluído!");
         retorno = false;
       }
     }
-   return retorno; 
+    return retorno;
   }
-  
-  public String remover(){
+
+  public String remover() {
     String page = null;
-    if(existeDespesaRelacionada(fornecedor)){
+    if (existeDespesaRelacionada(fornecedor)) {
       genericoJPA.remover(fornecedor);
       AlertaUtil.info("Removido com sucesso!");
-    }  
+    }
     page = "list";
-    
+
     return page;
   }
-  
-  private void getParameters(){
+
+  private void getParameters() {
     String fornecedorId = util.getParameters("id");
-    if(fornecedorId != null && !fornecedorId.isEmpty()){
+    if (fornecedorId != null && !fornecedorId.isEmpty()) {
       fornecedor = genericoJPA.findById(Fornecedor.class, Integer.parseInt(fornecedorId));
-      cidadeId = fornecedor.getEndereco().getBairro().getCidade().getId();
-      bairroId = fornecedor.getEndereco().getBairro().getId();
+      cidade = fornecedor.getEndereco().getBairro().getCidade();
       atualizaBairros();
     }
   }
-  
-  
-  private boolean valida(Fornecedor fornecedor){
+
+  private boolean valida(Fornecedor fornecedor) {
     boolean result = true;
-    List<Fornecedor> fornecedores = genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
-    if(!genericoJPA.buscarTodos("nome",fornecedor.getNome(),Fornecedor.class).isEmpty()){
+    List<Fornecedor> fornecedores =
+        genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
+    if (!genericoJPA.buscarTodos("nome", fornecedor.getNome(), Fornecedor.class).isEmpty()) {
       result = false;
       AlertaUtil.error("Nome Inválido");
     }
-   
-      fornecedores = genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
-      if(!fornecedores.isEmpty() && fornecedores.get(0).getId() != fornecedor.getId()){
-        AlertaUtil.error("CPF/CNPJ já Cadastrado");
-        result = false;
-      }
+
+    fornecedores = genericoJPA.buscarTodos("cpfCnpj", fornecedor.getCpfCnpj(), Fornecedor.class);
+    if (!fornecedores.isEmpty() && fornecedores.get(0).getId() != fornecedor.getId()) {
+      AlertaUtil.error("CPF/CNPJ já Cadastrado");
+      result = false;
+    }
     return result;
   }
-  
-  public void limpar(){
-    fornecedorSelecionado = null;
+
+  public void limpar() {
+    fornecedor = null;
   }
-  
+
   public void atualizaBairros() {
-    for (Cidade c : listCidades) {
-      if (c.getId() == cidadeId) {
-        listBairros = c.getBairros();
-      }
+    if (cidade != null) {
+      listBairros = cidade.getBairros();
+    } else if (listBairros != null) {
+      listBairros.clear();
     }
   }
 
   public void buscarEndereco() {
-    cidadeId = bairroId = 0;
+    cidade = null;
     fornecedor.getEndereco().setLogradouro(null);
     EnderecoPojo ep = addressBussiness.findAddressByCep(fornecedor.getEndereco().getCep());
     fornecedor.getEndereco().setBairro(addressBussiness.getNeighborhood(ep));
     listCidades = genericoJPA.buscarTodos(Cidade.class);
 
     if (fornecedor.getEndereco().getBairro() != null) {
-      cidadeId = fornecedor.getEndereco().getBairro().getCidade().getId();
+      cidade = fornecedor.getEndereco().getBairro().getCidade();
       atualizaBairros();
-      bairroId = fornecedor.getEndereco().getBairro().getId();
       fornecedor.getEndereco().setLogradouro(ep.getLogradouro());
     }
 
@@ -192,28 +189,12 @@ public class FornecedorController implements Serializable {
     this.listDespesa = listDespesa;
   }
 
-  public int getCidadeId() {
-    return cidadeId;
+  public Cidade getCidade() {
+    return cidade;
   }
 
-  public void setCidadeId(int cidadeId) {
-    this.cidadeId = cidadeId;
-  }
-
-  public int getBairroId() {
-    return bairroId;
-  }
-
-  public void setBairroId(int bairroId) {
-    this.bairroId = bairroId;
-  }
-
-  public Fornecedor getFornecedorSelecionado() {
-    return fornecedorSelecionado;
-  }
-
-  public void setFornecedorSelecionado(Fornecedor fornecedorSelecionado) {
-    this.fornecedorSelecionado = fornecedorSelecionado;
+  public void setCidade(Cidade cidade) {
+    this.cidade = cidade;
   }
 
 }

@@ -21,10 +21,8 @@ public class DespesaController implements Serializable {
   private static final long serialVersionUID = -5303584227915363975L;
   private List<Despesa> listDespesa;
   private List<Fornecedor> listFornecedor;
-  private int fornecedorId;
-  private Despesa despesaSelecionada;
-  private Despesa novaDespesa = new Despesa();
-
+  @Inject
+  private Despesa despesa;
   @Inject
   private Util util;
   @Inject
@@ -33,37 +31,33 @@ public class DespesaController implements Serializable {
   @PostConstruct
   public void load() {
     listDespesa = genericoJPA.buscarTodos(Despesa.class);
-    setListFornecedor(genericoJPA.buscarTodos(Fornecedor.class));
+    listFornecedor = genericoJPA.buscarTodos(Fornecedor.class);
     limpar();
     getParameters();
   }
 
   public String salvar() {
     String page = null;
-    if (valida(novaDespesa)) {
-      novaDespesa.setFornecedor(genericoJPA.findById(Fornecedor.class, fornecedorId));
-      genericoJPA.salvar(novaDespesa);
+    if (valida(despesa)) {
+      genericoJPA.salvar(despesa);
       AlertaUtil.info("Despesa gravada com sucesso!");
       load();
-      novaDespesa = new Despesa();
+      despesa = new Despesa();
       page = "list";
     }
     return page;
   }
 
   public void atualizar() {
-    genericoJPA.atualizar(despesaSelecionada);
+    genericoJPA.atualizar(despesa);
     load();
   }
 
   public String remover() {
-    String page = null;
-    genericoJPA.remover(despesaSelecionada);
+    genericoJPA.remover(despesa);
     load();
     AlertaUtil.info("Removido com sucesso!");
-    page = "list";
-
-    return page;
+    return "list";
   }
 
   private boolean valida(Despesa despesa) {
@@ -76,15 +70,14 @@ public class DespesaController implements Serializable {
   }
 
   private void limpar() {
-    despesaSelecionada = null;
+    setDespesa(new Despesa());
   }
 
   private void getParameters() {
     String despesaId = util.getParameters("despesaId");
     if (despesaId != null && !despesaId.isEmpty()) {
-      despesaSelecionada = genericoJPA.findById(Despesa.class, Integer.parseInt(despesaId));
+      setDespesa(genericoJPA.findById(Despesa.class, Integer.parseInt(despesaId)));
     }
-
   }
 
   public List<Despesa> getListDespesa() {
@@ -95,22 +88,6 @@ public class DespesaController implements Serializable {
     this.listDespesa = listDespesa;
   }
 
-  public Despesa getDespesaSelecionada() {
-    return despesaSelecionada;
-  }
-
-  public void setDespesaSelecionada(Despesa despesaSelecionada) {
-    this.despesaSelecionada = despesaSelecionada;
-  }
-
-  public Despesa getNovaDespesa() {
-    return novaDespesa;
-  }
-
-  public void setNovaDespesa(Despesa novaDespesa) {
-    this.novaDespesa = novaDespesa;
-  }
-
   public List<Fornecedor> getListFornecedor() {
     return listFornecedor;
   }
@@ -119,14 +96,12 @@ public class DespesaController implements Serializable {
     this.listFornecedor = listFornecedor;
   }
 
-  public int getFornecedorId() {
-    return fornecedorId;
+  public Despesa getDespesa() {
+    return despesa;
   }
 
-  public void setFornecedorId(int fornecedorId) {
-    this.fornecedorId = fornecedorId;
+  public void setDespesa(Despesa despesa) {
+    this.despesa = despesa;
   }
-
-
 
 }

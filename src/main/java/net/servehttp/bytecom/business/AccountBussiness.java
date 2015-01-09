@@ -30,11 +30,11 @@ public class AccountBussiness extends genericoBusiness implements Serializable {
     return userJPA.emailAvaliable(userAccount);
   }
 
-  public UserAccount buscarUsuarioPorUsername(String username) {
+  public UserAccount findUserAccountByUsername(String username) {
     return userJPA.findUserAccountByUsername(username);
   }
 
-  public void criarImagemNaSessao(UserAccount user) {
+  public void createPictureInSession(UserAccount user) {
     String filename = user.getId() + ".png";
 
     FacesContext context = FacesContext.getCurrentInstance();

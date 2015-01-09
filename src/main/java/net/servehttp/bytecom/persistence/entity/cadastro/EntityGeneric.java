@@ -50,4 +50,39 @@ public abstract class EntityGeneric implements Serializable {
   public void setUpdatedAt(Calendar updatedAt) {
     this.updatedAt = updatedAt;
   }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+    result = prime * result + id;
+    result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    EntityGeneric other = (EntityGeneric) obj;
+    if (createdAt == null) {
+      if (other.createdAt != null)
+        return false;
+    } else if (!createdAt.equals(other.createdAt))
+      return false;
+    if (id != other.id)
+      return false;
+    if (updatedAt == null) {
+      if (other.updatedAt != null)
+        return false;
+    } else if (!updatedAt.equals(other.updatedAt))
+      return false;
+    return true;
+  }
+
 }
