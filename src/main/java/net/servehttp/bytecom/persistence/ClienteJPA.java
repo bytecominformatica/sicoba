@@ -29,7 +29,7 @@ public class ClienteJPA implements Serializable {
 
   public List<Cliente> buscaClientesPorNomeFoneEmailIp(String pesquisa) {
     String jpql =
-        "select c from Cliente c where c.nome like :pesquisaLike or c.foneTitular = :pesquisa or c.foneContato = :pesquisa or c.email = :pesquisa or c.acesso.ip = :pesquisa order by c.nome";
+        "select c from Cliente c where c.nome like :pesquisaLike or c.foneTitular = :pesquisa or c.foneContato = :pesquisa or c.email = :pesquisa order by c.nome";
 
     TypedQuery<Cliente> query =
         em.createQuery(jpql, Cliente.class)

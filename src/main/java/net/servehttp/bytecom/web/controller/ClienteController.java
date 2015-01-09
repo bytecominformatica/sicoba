@@ -14,6 +14,7 @@ import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
@@ -89,6 +90,9 @@ public class ClienteController implements Serializable {
         clientBussiness.salvar(cliente);
         AlertaUtil.info("Cliente adicionado com sucesso!");
       } else {
+        if (cliente.getStatus().equals(StatusCliente.CANCELADO)) {
+          cliente.setAcesso(null);
+        }
         clientBussiness.atualizar(cliente);
         AlertaUtil.info("Cliente atualizado com sucesso!");
       }
