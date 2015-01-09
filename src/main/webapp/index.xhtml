@@ -87,6 +87,10 @@
 									<f:facet name="header">#{bundle.vencimento}</f:facet>
 									#{m.dataVencimento}
 								</h:column>
+								<h:column>
+									<f:facet name="header">#{bundle.ip}</f:facet>
+									<a href="http://#{m.cliente.acesso.ip}" target="_blank">#{m.cliente.acesso.ip}</a>
+								</h:column>
 							</h:dataTable>
 							
 						</div>
