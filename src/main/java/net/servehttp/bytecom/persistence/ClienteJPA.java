@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.persistence;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,13 +24,13 @@ public class ClienteJPA implements Serializable {
   private static final long serialVersionUID = 1857140370479772238L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
+  private QCliente c = QCliente.cliente;
 
   public void setEntityManager(EntityManager em) {
     this.em = em;
   }
 
   public List<Cliente> buscaClientesPorNomeFoneEmailIp(String pesquisa) {
-    QCliente c = QCliente.cliente;
     return new JPAQuery(em)
         .from(c)
         .where(
@@ -41,9 +42,8 @@ public class ClienteJPA implements Serializable {
   }
 
   public List<Cliente> buscaUltimosClientesAlterados() {
-    return em
-        .createQuery("select c from Cliente c where c.updatedAt > :date order by c.updatedAt desc",
-            Cliente.class).setParameter("date", DateUtil.incrementaMesAtual(-2)).setMaxResults(20)
-        .getResultList();
+    Calendar data = DateUtil.incrementaMesAtual(-2);
+    return new JPAQuery(em).from(c).where(c.updatedAt.gt(data)).orderBy(c.updatedAt.desc())
+        .limit(20).list(c);
   }
 }
