@@ -19,21 +19,19 @@
 				</h:inputText>
 				
 					<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
-					<h:selectOneMenu id="cidade" value="#{clienteController.cidadeId}" styleClass="form-control"
-						required="true" readonly="true">
-						<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-						<f:selectItems value="#{clienteController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"
-								itemValue="#{cidade.id}" />
-						<f:ajax listener="#{clienteController.atualizaBairros}" render="bairro" />
-					</h:selectOneMenu>
+							<h:selectOneMenu id="cidade" value="#{clienteController.cidade}" styleClass="form-control"
+								required="true"  converter="entityConverter">
+								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+								<f:selectItems value="#{clienteController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"/>
+								<f:ajax listener="#{clienteController.atualizaBairros}" render="bairro" />
+							</h:selectOneMenu>
 
-					<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
-					<h:selectOneMenu id="bairro" value="#{clienteController.bairroId}" styleClass="form-control"
-						required="true" readonly="true">
-						<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-						<f:selectItems value="#{clienteController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"
-							itemValue="#{bairro.id}" />
-					</h:selectOneMenu>
+							<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
+							<h:selectOneMenu id="bairro" value="#{clienteController.cliente.endereco.bairro}" styleClass="form-control"
+								required="true" converter="entityConverter">
+								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+								<f:selectItems value="#{clienteController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"/>
+							</h:selectOneMenu>
 
 					<label jsf:for="logradouro" class="control-label">#{bundle.logradouro}</label>
 					<input jsf:id="logradouro" type="text" jsf:value="#{clienteController.cliente.endereco.logradouro}" class="form-control" readonly="true" />

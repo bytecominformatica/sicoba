@@ -3,12 +3,15 @@ package net.servehttp.bytecom.persistence;
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.security.Authentication;
+import net.servehttp.bytecom.persistence.entity.security.QAuthentication;
+import net.servehttp.bytecom.persistence.entity.security.QUserAccount;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
+
+import com.mysema.query.jpa.impl.JPAQuery;
 
 /**
  * 
@@ -31,41 +34,32 @@ public class UserJPA implements Serializable {
   }
 
   public boolean loginAvaliable(Authentication authentication) {
-    Authentication a;
-    try {
-      a =
-          em.createQuery("select a from Authentication a where a.username = :username",
-              Authentication.class).setParameter("username", authentication.getUsername())
-              .getSingleResult();
-    } catch (NoResultException e) {
-      a = null;
-    }
+    QAuthentication au = QAuthentication.authentication;
+    Authentication a =
+        new JPAQuery(em).from(au).where(au.username.eq(authentication.getUsername()))
+            .uniqueResult(au);
     return a == null || a.getId() == authentication.getId();
   }
 
   private UserAccount findUserAccountByEmail(String email) {
-    try {
-      return em
-          .createQuery("select u from UserAccount u where u.email = :email", UserAccount.class)
-          .setParameter("email", email).getSingleResult();
-    } catch (NoResultException e) {
-      return null;
-    }
+    QUserAccount ua = QUserAccount.userAccount;
+    return new JPAQuery(em).from(ua).where(ua.email.eq(email)).uniqueResult(ua);
   }
 
   public UserAccount findUserAccountByUsername(String username) {
-    try {
-      return em
-          .createQuery("select a.userAccount from Authentication a where a.username = :username",
-              UserAccount.class).setParameter("username", username).getSingleResult();
-    } catch (NoResultException e) {
+    QAuthentication a = QAuthentication.authentication;
+    Authentication authentication =
+        new JPAQuery(em).from(a).where(a.username.eq(username)).uniqueResult(a);
+    if (authentication != null) {
+      return authentication.getUserAccount();
+    } else {
       return null;
     }
   }
 
   public Authentication findAuthenticationByUserAccount(UserAccount userAccount) {
-    return em.createQuery("select a from Authentication a where a.userAccount.id = :id",
-            Authentication.class).setParameter("id", userAccount.getId()).getSingleResult();
+    QAuthentication a = QAuthentication.authentication;
+    return new JPAQuery(em).from(a).where(a.userAccount.id.eq(userAccount.getId())).uniqueResult(a);
   }
 
 }
