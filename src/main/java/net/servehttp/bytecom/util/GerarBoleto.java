@@ -46,16 +46,16 @@ public class GerarBoleto implements Serializable {
   private static final int EMITENTE_BENEFICIARIO = 4;
   private static final long serialVersionUID = 2996334986455478857L;
 
-  public static byte[] criarCarneCaixa(List<Mensalidade> mensalidades) {
+  public static byte[] criarCarneCaixa(List<Mensalidade> mensalidades, net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
     if (mensalidades != null && !mensalidades.isEmpty()) {
       List<Boleto> boletos = new ArrayList<>();
 
       mensalidades.forEach(m -> {
-        Cedente cedente = getCedente();
+        Cedente cedente = getCedente(c);
 
         Sacado sacado = getSacado(m.getCliente());
 
-        Titulo titulo = getTitulo(m, cedente, sacado);
+        Titulo titulo = getTitulo(m, cedente, sacado, c);
 
         Boleto boleto = getBoleto(m, titulo);
 
@@ -70,7 +70,6 @@ public class GerarBoleto implements Serializable {
       return boletosPorPagina;
     }
     return null;
-
   }
 
   private static Boleto getBoleto(Mensalidade m, Titulo titulo) {
@@ -97,7 +96,7 @@ public class GerarBoleto implements Serializable {
     return boleto;
   }
 
-  private static Titulo getTitulo(Mensalidade m, Cedente cedente, Sacado sacado) {
+  private static Titulo getTitulo(Mensalidade m, Cedente cedente, Sacado sacado, net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
     /*
      * INFORMANDO OS DADOS SOBRE O TÍTULO.
      */
@@ -105,22 +104,18 @@ public class GerarBoleto implements Serializable {
     // Informando dados sobre a conta bancária do título.
     ContaBancaria contaBancaria =
         new ContaBancaria(BancosSuportados.CAIXA_ECONOMICA_FEDERAL.create());
-    contaBancaria.setNumeroDaConta(new NumeroDaConta(484924, "8"));
+    contaBancaria.setNumeroDaConta(new NumeroDaConta(c.getCodigo(), String.valueOf(c.getDigitoVerificador())));
     contaBancaria.setCarteira(new Carteira(2, TipoDeCobranca.SEM_REGISTRO));
-    contaBancaria.setAgencia(new Agencia(1089, "1"));
+    contaBancaria.setAgencia(new Agencia(c.getNumeroAgencia(), String.valueOf(c.getDigitoAgencia())));
 
     ParametrosBancariosMap map = new ParametrosBancariosMap();
-    map.adicione("CodigoOperacao", 1);
+    map.adicione("CodigoOperacao", c.getCodigoOperacao());
 
     Titulo titulo = new Titulo(contaBancaria, sacado, cedente, map);
 
     titulo.setNumeroDoDocumento(String.format("%d/%d", m.getCliente().getId(), m.getId()));
-    // titulo.setNossoNumero(String.format("%015d", m.getId()));
-    // titulo.setDigitoDoNossoNumero(calcularDigitoDoNossoNumero(contaBancaria.getCarteira()
-
-    // titulo.setNumeroDoDocumento("42/011");
-    titulo.setNossoNumero("000000000000312");
-
+    
+    titulo.setNossoNumero(String.format("%015d", m.getNumeroBoleto() != null ? m.getNumeroBoleto() : m.getId()));
     titulo.setDigitoDoNossoNumero(calcularDigitoDoNossoNumero(contaBancaria.getCarteira()
         .getCodigo(), titulo.getNossoNumero()));
     titulo.setValor(BigDecimal.valueOf(m.getValor()));
@@ -153,11 +148,11 @@ public class GerarBoleto implements Serializable {
     return sacado;
   }
 
-  private static Cedente getCedente() {
+  private static Cedente getCedente(net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
     /*
      * INFORMANDO DADOS SOBRE O CEDENTE.
      */
-    Cedente cedente = new Cedente("CLAUDIO CARNEIRO LUZ", "052.749.623-51");
+    Cedente cedente = new Cedente(c.getNome(), c.getCpfCnpj());
     return cedente;
   }
 

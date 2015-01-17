@@ -1,7 +1,6 @@
 package net.servehttp.bytecom.persistence.entity.security;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,22 +45,6 @@ public class AccessGroup extends EntityGeneric implements Serializable {
 
   public void setUserDefault(boolean userDefault) {
     this.userDefault = userDefault;
-  }
-
-  public Calendar getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Calendar createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public Calendar getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Calendar updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   @Override

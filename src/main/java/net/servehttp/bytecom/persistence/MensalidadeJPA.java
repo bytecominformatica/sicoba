@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.QMensalidade;
+import net.servehttp.bytecom.persistence.entity.financeiro.Cedente;
+import net.servehttp.bytecom.persistence.entity.financeiro.QCedente;
 
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
@@ -38,5 +40,10 @@ public class MensalidadeJPA {
   public List<Mensalidade> buscarMensalidadesPorBoletos(int numeroBoletoInicio, int numeroBoletoFim) {
     return new JPAQuery(em).from(m)
         .where(m.numeroBoleto.between(numeroBoletoInicio, numeroBoletoFim)).list(m);
+  }
+
+  public Cedente buscarCedente() {
+    QCedente c = QCedente.cedente;
+    return new JPAQuery(em).from(c).uniqueResult(c);
   }
 }

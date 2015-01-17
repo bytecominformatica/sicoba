@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import net.servehttp.bytecom.persistence.MensalidadeJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.financeiro.Cedente;
 import net.servehttp.bytecom.util.GerarBoleto;
 
 public class MensalidadeBussiness extends genericoBusiness implements Serializable {
@@ -31,9 +32,13 @@ public class MensalidadeBussiness extends genericoBusiness implements Serializab
   }
 
   public byte[] gerarCarne(List<Mensalidade> mensalidades) {
-    return GerarBoleto.criarCarneCaixa(mensalidades);
+    return GerarBoleto.criarCarneCaixa(mensalidades, buscarCedente());
   }
   
+  private Cedente buscarCedente() {
+    return mensalidadeJPA.buscarCedente();
+  }
+
   public void remover(Mensalidade m) {
     mensalidadeJPA.remover(m);
   }
