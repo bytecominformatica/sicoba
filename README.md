@@ -22,7 +22,7 @@ Technologies In Use
 
 JDK 8
 
-Wildfly 8.1.0 Final
+Wildfly 8.2.0 Final
 
 JPA 2.1
 

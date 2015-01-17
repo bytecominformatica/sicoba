@@ -64,9 +64,11 @@ public class GerarBoleto implements Serializable {
         boletos.add(boleto);
       });
 
-      URL resource = GerarBoleto.class.getClassLoader()
-      .getResource("template/BoletoCarne3PorPagina.pdf");
+      URL resource =
+          GerarBoleto.class.getClassLoader().getResource("/template/BoletoCarne3PorPagina.pdf");
+
       System.out.println("RECURSO " + resource);
+
       File templatePersonalizado =
           new File(GerarBoleto.class.getClassLoader()
               .getResource("template/BoletoCarne3PorPagina.pdf").getFile());
