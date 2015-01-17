@@ -121,16 +121,20 @@
 			path="net/servehttp/bytecom/db/changelog/20140830-19-clairtonluz.sql"
 			stripComments="true" />
 	</changeSet>
-	
+
 	<changeSet id="20" author="felipewmartins">
 		<sqlFile
 			path="net/servehttp/bytecom/db/changelog/20140907-20-felipewmartins.sql"
 			stripComments="true" />
 	</changeSet>
-	
+
 	<changeSet id="21" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/21-clairtonluz.sql"
+		<sqlFile path="net/servehttp/bytecom/db/changelog/21-clairtonluz.sql"
+			stripComments="true" />
+	</changeSet>
+
+	<changeSet id="22" author="clairtonluz">
+		<sqlFile path="net/servehttp/bytecom/db/changelog/22-clairtonluz.sql"
 			stripComments="true" />
 	</changeSet>
 

@@ -34,6 +34,7 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   private double valorPago;
   private double desconto;
   private double tarifa;
+  private String parcela;
   @Enumerated
   private StatusMensalidade status;
   @Column(name = "numero_boleto")
@@ -117,6 +118,14 @@ public class Mensalidade extends EntityGeneric implements Serializable {
 
   public void setDesconto(double desconto) {
     this.desconto = desconto;
+  }
+
+  public String getParcela() {
+    return parcela;
+  }
+
+  public void setParcela(String parcela) {
+    this.parcela = parcela;
   }
 
 

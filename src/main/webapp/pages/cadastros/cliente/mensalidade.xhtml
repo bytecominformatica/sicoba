@@ -20,6 +20,10 @@
 				<form jsf:id="form" class="form-horizontal">
 					<div class="modal-header">
 						<div align="center">
+							<button jsf:id="boletos" jsf:actionListener="#{mensalidadeController.gerarBoletosPDF()}"
+				                class="btn btn-primary" type="submit">
+				                <span class="glyphicon glyphicon-barcode" /> #{bundle.imprimirBoletos}
+			              	</button>
 							<button jsf:id="btNovo" jsf:actionListener="#{mensalidadeController.novaMensalidade()}"
 				                class="btn btn-primary" type="submit">
 				                <span class="glyphicon glyphicon-plus" /> #{bundle.new}
@@ -124,6 +128,11 @@
 							headerClass="tableColumnsHeader">
 							
 							<h:column>
+								<f:facet name="header">#{bundle.id}</f:facet>
+								<h:outputText value="#{m.id}" />
+							</h:column>
+							
+							<h:column>
 								<f:facet name="header">#{bundle.vencimento}</f:facet>
 								<h:outputText value="#{m.dataVencimento}" >
 									<f:convertDateTime locale="pt" pattern="dd/MM/yyyy"/>
@@ -160,11 +169,10 @@
 							<h:column>
 								<f:facet name="header">#{bundle.status}</f:facet>
 								<span class="label #{m.status == 'PENDENTE' ? 'label-warning' : m.status == 'PAGO_NO_BOLETO' || m.status == 'BAIXA_MANUAL' ? 'label-success' : ''}">#{m.status}</span>
-								
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.actions}</f:facet>
-									<button jsf:id="btnEdit" class="btn btn-primary link-group">
+									<button jsf:id="btnEdit" class="btn btn-primary link-group" rendered="#{m.status == 'PAGO_NO_BOLETO' ? 'false' : 'true'}">
 										<span class="glyphicon glyphicon-edit" />
 										<f:setPropertyActionListener target="#{mensalidadeController.mensalidade}" value="#{m}"/>
 									</button>

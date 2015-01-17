@@ -36,6 +36,7 @@ public class MensalidadeJPA {
   }
 
   public List<Mensalidade> buscarMensalidadesPorBoletos(int numeroBoletoInicio, int numeroBoletoFim) {
-    return new JPAQuery(em).from(m).where(m.numeroBoleto.between(numeroBoletoInicio, numeroBoletoFim)).list(m);
+    return new JPAQuery(em).from(m)
+        .where(m.numeroBoleto.between(numeroBoletoInicio, numeroBoletoFim)).list(m);
   }
 }

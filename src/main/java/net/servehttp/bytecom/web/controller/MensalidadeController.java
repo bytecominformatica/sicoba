@@ -1,15 +1,22 @@
 package net.servehttp.bytecom.web.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
 
 import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.MensalidadeBussiness;
@@ -50,8 +57,39 @@ public class MensalidadeController implements Serializable {
         mensalidade = getNovaMensalidade();
         dataInicio = mensalidade.getDataVencimento();
       }
+    } else {
+      cliente = new Cliente();
+      AlertaUtil.error("nenhum cliente selecionado");
     }
   }
+
+  public void gerarBoletosPDF() throws IOException {
+    byte[] pdfData = business.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
+
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    ExternalContext externalContext = facesContext.getExternalContext();
+    HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
+
+    response.reset();
+    response.setContentType("application/pdf");
+    response.setHeader("Content-disposition",
+        String.format("attachment; filename=\"%s.pdf\"", cliente.getNome()));
+
+    OutputStream output = response.getOutputStream();
+    output.write(pdfData);
+    output.close();
+
+    facesContext.responseComplete();
+  }
+
+  private List<Mensalidade> getBoletosEmAberto(List<Mensalidade> list) {
+    if (list != null) {
+      return list.stream().filter(m -> m.getStatus() == StatusMensalidade.PENDENTE)
+          .collect(Collectors.toCollection(ArrayList::new));
+    }
+    return null;
+  }
+
 
   private void ordernarMensalidades() {
     Collections.sort(cliente.getMensalidades(), new Comparator<Mensalidade>() {
@@ -104,7 +142,7 @@ public class MensalidadeController implements Serializable {
     business.salvar(m);
   }
 
-  private Mensalidade getNovaMensalidade() {
+  public Mensalidade getNovaMensalidade() {
     calendar = DateUtil.getProximoMes();
     calendar.set(Calendar.DAY_OF_MONTH, cliente.getContrato().getVencimento());
     return business.getNovaMensalidade(cliente, calendar.getTime());
