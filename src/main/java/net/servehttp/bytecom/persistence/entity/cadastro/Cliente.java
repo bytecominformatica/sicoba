@@ -42,7 +42,7 @@ public class Cliente extends EntityGeneric implements Serializable {
   @Column(name = "cpf_cnpj")
   @CpfCnpj
   private String cpfCnpj;
-  @Past(message="Data de Nascimento Inválida")
+  @Past(message = "Data de Nascimento Inválida")
   @Column(name = "dt_nascimento")
   private Date dataNascimento;
   @Email(message = "Email inválido")
@@ -56,11 +56,14 @@ public class Cliente extends EntityGeneric implements Serializable {
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "endereco_id")
   private Endereco endereco;
-  @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL,
+      orphanRemoval = true)
   private Acesso acesso;
-  @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL,
+      orphanRemoval = true)
   private Contrato contrato;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.EAGER)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.EAGER,
+      orphanRemoval = true)
   private List<Mensalidade> mensalidades;
 
   @Transient

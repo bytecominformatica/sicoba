@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import net.servehttp.bytecom.persistence.MensalidadeJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.financeiro.Cedente;
+import net.servehttp.bytecom.util.GerarBoleto;
 
 public class MensalidadeBussiness extends genericoBusiness implements Serializable {
 
@@ -28,11 +30,24 @@ public class MensalidadeBussiness extends genericoBusiness implements Serializab
 
     return m;
   }
-  
+
+  public byte[] gerarCarne(List<Mensalidade> mensalidades) {
+    Cedente cedente = buscarCedente();
+    if (cedente == null) {
+      throw new IllegalArgumentException("NÃO EXISTEM NENHUM CEDENTE CADASTRADO");
+    } else {
+      return GerarBoleto.criarCarneCaixa(mensalidades, cedente);
+    }
+  }
+
+  private Cedente buscarCedente() {
+    return mensalidadeJPA.buscarCedente();
+  }
+
   public void remover(Mensalidade m) {
     mensalidadeJPA.remover(m);
   }
-  
+
   public List<Mensalidade> buscarMensalidadesPorBoleto(int inicio, int fim) {
     return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);
   }

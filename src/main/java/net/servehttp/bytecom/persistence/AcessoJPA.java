@@ -3,11 +3,13 @@ package net.servehttp.bytecom.persistence;
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
+import net.servehttp.bytecom.persistence.entity.cadastro.QAcesso;
+
+import com.mysema.query.jpa.impl.JPAQuery;
 
 /**
  * 
@@ -19,7 +21,8 @@ public class AcessoJPA implements Serializable {
   private static final long serialVersionUID = -5261815050659537292L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
-
+  private QAcesso a = QAcesso.acesso;
+  
   public void setEntityManager(EntityManager em) {
     this.em = em;
   }
@@ -28,14 +31,11 @@ public class AcessoJPA implements Serializable {
     String rede = "10.10.0.";
     String ipLivre = null;
     for (int i = 10; i <= 250; i++) {
-      try {
-        em.createQuery("select a from Acesso a where a.ip = :ip", Acesso.class)
-                .setParameter("ip", rede + i).getSingleResult();
-      } catch (NoResultException e) {
+      Acesso result = new JPAQuery(em).from(a).where(a.ip.eq(rede + i)).uniqueResult(a);
+      if(result == null) {
         ipLivre = rede + i;
         break;
       }
-
     }
 
     return ipLivre;

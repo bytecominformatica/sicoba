@@ -6,7 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import com.mysema.query.jpa.impl.JPAQuery;
+
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
+import net.servehttp.bytecom.persistence.entity.cadastro.QPlano;
 
 /**
  *
@@ -15,15 +18,15 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 @Transactional
 public class PlanoJPA {
 
-    @PersistenceContext(unitName = "bytecom-pu")
-    private EntityManager em;
+  private QPlano p = QPlano.plano;
+  @PersistenceContext(unitName = "bytecom-pu")
+  private EntityManager em;
 
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+  public void setEntityManager(EntityManager em) {
+    this.em = em;
+  }
 
-    public List<Plano> buscarPlanoPorNome(String pesquisa) {
-        return em.createQuery("select p from Plano p where p.nome like :nome", Plano.class)
-                .setParameter("nome", pesquisa + "%").getResultList();
-    }
+  public List<Plano> buscarPlanoPorNome(String pesquisa) {
+    return new JPAQuery(em).from(p).where(p.nome.like("pesquisa" + "%")).list(p);
+  }
 }

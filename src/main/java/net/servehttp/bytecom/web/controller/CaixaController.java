@@ -11,6 +11,7 @@ import javax.servlet.http.Part;
 import net.servehttp.bytecom.ejb.CaixaEJB;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
 import net.servehttp.bytecom.persistence.entity.caixa.HeaderLote;
@@ -33,6 +34,8 @@ public class CaixaController implements Serializable {
   private GenericoJPA genericoJPA;
   @Inject
   private CaixaEJB caixaEJB;
+  @Inject
+  private ServidorController servidorController;
 
   public CaixaController() {}
 
@@ -42,6 +45,9 @@ public class CaixaController implements Serializable {
       try {
         header = caixaEJB.tratarArquivo(file);
         if (notExists(header)) {
+          
+          boolean clienteAtivado = false;
+         
           for (HeaderLote hl : header.getHeaderLotes()) {
             for (Registro r : hl.getRegistros()) {
               Mensalidade m =
@@ -54,10 +60,20 @@ public class CaixaController implements Serializable {
                 m.setTarifa(r.getValorTarifa());
                 m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
                 genericoJPA.atualizar(m);
+                
+                if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
+                  m.getCliente().setStatus(StatusCliente.ATIVO);
+                  genericoJPA.atualizar(m.getCliente());
+                  clienteAtivado = true;
+                }
+                
               }
             }
           }
           genericoJPA.salvar(header);
+          if (clienteAtivado) {
+            servidorController.atualizarAcesso();
+          }
           AlertaUtil.info("Arquivo enviado com sucesso!");
         }
       } catch (IllegalArgumentException e) {

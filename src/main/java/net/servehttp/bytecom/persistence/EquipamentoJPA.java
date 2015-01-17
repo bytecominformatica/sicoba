@@ -18,9 +18,6 @@ import net.servehttp.bytecom.persistence.entity.cadastro.TipoEquipamento;
 @Transactional
 public class EquipamentoJPA implements Serializable {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 7528131197866761853L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;

@@ -10,9 +10,13 @@ import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
+import net.servehttp.bytecom.persistence.entity.cadastro.QCliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.QContrato;
+import net.servehttp.bytecom.persistence.entity.cadastro.QMensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 
+import com.mysema.query.jpa.impl.JPAQuery;
 import com.servehttp.bytecom.commons.DateUtil;
 
 /**
@@ -32,24 +36,23 @@ public class DashboadJPA implements Serializable {
 
 
   public List<Cliente> buscarTodosClienteInstaladosRecente() {
-    String jpql = "select c from Cliente c order by c.contrato.dataInstalacao desc";
-    return em.createQuery(jpql, Cliente.class).setMaxResults(10).getResultList();
+    QCliente c = QCliente.cliente;
+    return new JPAQuery(em).from(c).orderBy(c.contrato.dataInstalacao.desc()).limit(10).list(c);
   }
 
 
   public long getQuantidadeInstalacoesDoMes() {
-    return em
-        .createQuery("select count(c.id) from Contrato c where c.dataInstalacao >= :date",
-            Long.class).setParameter("date", DateUtil.getPrimeiroDiaDoMes().getTime())
-        .getSingleResult();
+    QContrato c = QContrato.contrato;
+    Date data = DateUtil.getPrimeiroDiaDoMes().getTime();
+    return new JPAQuery(em).from(c).where(c.dataInstalacao.goe(data)).count();
   }
 
   public List<Mensalidade> getMensalidadesEmAtraso() {
-    return em
-        .createQuery(
-            "select m from Mensalidade m where m.status = :status and m.dataVencimento < :date order by m.dataVencimento desc",
-            Mensalidade.class).setParameter("status", StatusMensalidade.PENDENTE)
-        .setParameter("date", DateUtil.getHoje()).getResultList();
+    QMensalidade m = QMensalidade.mensalidade;
+    Date data = DateUtil.getHoje();
+    return new JPAQuery(em).from(m)
+        .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(data)))
+        .orderBy(m.dataVencimento.desc()).list(m);
   }
 
   public double getFaturamentoDoMes() {
@@ -72,16 +75,16 @@ public class DashboadJPA implements Serializable {
   }
 
   public List<Cliente> getClientesInativos() {
-    return em.createQuery("select c from Cliente c where c.status = :status", Cliente.class)
-        .setParameter("status", StatusCliente.INATIVO).getResultList();
+    QCliente c = QCliente.cliente;
+    return new JPAQuery(em).from(c).where(c.status.eq(StatusCliente.INATIVO)).orderBy(c.nome.asc()).list(c);
   }
 
-
   public List<Cliente> getClientesSemMensalidade() {
-    return em.createQuery("select c from Cliente c where (c.status = :status1 or c.status = :status2) and c.id not in(select DISTINCT(m.cliente.id) from Mensalidade m where m.dataVencimento > :hoje)", Cliente.class)
-        .setParameter("status1", StatusCliente.ATIVO)
-        .setParameter("status2", StatusCliente.INATIVO)
-        .setParameter("hoje", new Date())
+    return em
+        .createQuery(
+            "select c from Cliente c where (c.status = :status1 or c.status = :status2) and c.id not in(select DISTINCT(m.cliente.id) from Mensalidade m where m.dataVencimento > :hoje)",
+            Cliente.class).setParameter("status1", StatusCliente.ATIVO)
+        .setParameter("status2", StatusCliente.INATIVO).setParameter("hoje", new Date())
         .getResultList();
   }
 }

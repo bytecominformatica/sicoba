@@ -29,6 +29,7 @@
 		<class>net.servehttp.bytecom.persistence.entity.security.AccessGroup</class>
 		<class>net.servehttp.bytecom.persistence.entity.security.Authentication</class>
 		<class>net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia</class>
+		<class>net.servehttp.bytecom.persistence.entity.financeiro.Cedente</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />
