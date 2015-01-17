@@ -192,18 +192,18 @@ public class GerarBoleto implements Serializable {
     document.open();
 
     PdfContentByte cb = writer.getDirectContent();
+    float documentHeight = cb.getPdfDocument().getPageSize().getHeight();
     float positionAnterior = 0;
 
     // Para cada arquivo da lista, cria-se um PdfReader, responsável por ler o arquivo PDF e
     // recuperar informações dele.
+    
     for (byte[] pdfFile : pdfFilesAsByteArray) {
 
       PdfReader reader = new PdfReader(pdfFile);
 
       // Faz o processo de mesclagem por página do arquivo, começando pela de número 1.
       for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-
-        float documentHeight = cb.getPdfDocument().getPageSize().getHeight();
 
         // Importa a página do PDF de origem
         PdfImportedPage page = writer.getImportedPage(reader, i);
@@ -221,7 +221,6 @@ public class GerarBoleto implements Serializable {
 
         // Adiciona a página ao PDF destino
         cb.addTemplate(page, 0, pagePosition);
-
         positionAnterior += page.getHeight();
       }
     }
