@@ -20,7 +20,7 @@ Main Contributors
 Technologies In Use
 -------------------
 
-JDK 7
+JDK 8
 
 Wildfly 8.1.0 Final
 

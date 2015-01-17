@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,10 +64,14 @@ public class GerarBoleto implements Serializable {
         boletos.add(boleto);
       });
 
+      URL resource = GerarBoleto.class.getClassLoader()
+      .getResource("template/BoletoCarne3PorPagina.pdf");
+      System.out.println("RECURSO " + resource);
       File templatePersonalizado =
-          new File(GerarBoleto.class.getResource("BoletoCarne3PorPagina.pdf").getFile());
+          new File(GerarBoleto.class.getClassLoader()
+              .getResource("template/BoletoCarne3PorPagina.pdf").getFile());
 
-      byte[] boletosPorPagina = groupInPages(boletos, "Carne3PorPagina.pdf", templatePersonalizado);
+      byte[] boletosPorPagina = groupInPages(boletos, templatePersonalizado);
 
       return boletosPorPagina;
     }
@@ -161,8 +166,7 @@ public class GerarBoleto implements Serializable {
     return cedente;
   }
 
-  private static byte[] groupInPages(List<Boleto> boletos, String filePath,
-      File templatePersonalizado) {
+  private static byte[] groupInPages(List<Boleto> boletos, File templatePersonalizado) {
 
     byte[] arq = null;
     BoletoViewer boletoViewer = new BoletoViewer(boletos.get(0));
