@@ -139,7 +139,10 @@ public class GerarBoleto implements Serializable {
 
     // Informando o endereço do sacado.
     Endereco enderecoSac = new Endereco();
-    enderecoSac.setUF(UnidadeFederativa.CE);
+
+    String uf = cliente.getEndereco().getBairro().getCidade().getEstado().getUf();
+    enderecoSac.setUF(UnidadeFederativa.valueOf(uf));
+
     enderecoSac
         .setLocalidade(cliente.getEndereco().getBairro().getCidade().getNome().toUpperCase());
     enderecoSac.setCep(new CEP(cliente.getEndereco().getCep()));
