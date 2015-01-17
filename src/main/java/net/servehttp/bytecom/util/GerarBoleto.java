@@ -80,10 +80,10 @@ public class GerarBoleto implements Serializable {
     Boleto boleto = new Boleto(titulo);
 
     boleto.setLocalPagamento("PREFERENCIALMENTE NAS CASAS LOTÉRICAS ATÉ O VALOR LIMITE");
-    boleto.setInstrucao1(String.format("MULTA DE R$: %f APÓS : %s",
+    boleto.setInstrucao1(String.format("MULTA DE R$: %s APÓS : %s",
         StringUtil.formatCurrence(m.getValor() * TAXA_MULTA),
         DateUtil.format(m.getDataVencimento())));
-    boleto.setInstrucao2(String.format("JUROS DE R$: %f AO DIA",
+    boleto.setInstrucao2(String.format("JUROS DE R$: %s AO DIA",
         StringUtil.formatCurrence(m.getValor() * TAXA_JUROS_AO_DIA)));
     boleto.setInstrucao4("NÃO RECEBER APOS 30 DIAS DO VENCIMENTO");
     if (m.getParcela() != null && !m.getParcela().isEmpty()) {
