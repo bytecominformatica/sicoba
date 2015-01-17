@@ -32,9 +32,14 @@ public class MensalidadeBussiness extends genericoBusiness implements Serializab
   }
 
   public byte[] gerarCarne(List<Mensalidade> mensalidades) {
-    return GerarBoleto.criarCarneCaixa(mensalidades, buscarCedente());
+    Cedente cedente = buscarCedente();
+    if (cedente == null) {
+      throw new IllegalArgumentException("NÃO EXISTEM NENHUM CEDENTE CADASTRADO");
+    } else {
+      return GerarBoleto.criarCarneCaixa(mensalidades, cedente);
+    }
   }
-  
+
   private Cedente buscarCedente() {
     return mensalidadeJPA.buscarCedente();
   }
@@ -42,7 +47,7 @@ public class MensalidadeBussiness extends genericoBusiness implements Serializab
   public void remover(Mensalidade m) {
     mensalidadeJPA.remover(m);
   }
-  
+
   public List<Mensalidade> buscarMensalidadesPorBoleto(int inicio, int fim) {
     return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);
   }
