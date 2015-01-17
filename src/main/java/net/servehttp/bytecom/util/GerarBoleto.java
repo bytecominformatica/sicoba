@@ -46,7 +46,8 @@ public class GerarBoleto implements Serializable {
   private static final int EMITENTE_BENEFICIARIO = 4;
   private static final long serialVersionUID = 2996334986455478857L;
 
-  public static byte[] criarCarneCaixa(List<Mensalidade> mensalidades, net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
+  public static byte[] criarCarneCaixa(List<Mensalidade> mensalidades,
+      net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
     if (mensalidades != null && !mensalidades.isEmpty()) {
       List<Boleto> boletos = new ArrayList<>();
 
@@ -96,7 +97,8 @@ public class GerarBoleto implements Serializable {
     return boleto;
   }
 
-  private static Titulo getTitulo(Mensalidade m, Cedente cedente, Sacado sacado, net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
+  private static Titulo getTitulo(Mensalidade m, Cedente cedente, Sacado sacado,
+      net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
     /*
      * INFORMANDO OS DADOS SOBRE O TÍTULO.
      */
@@ -104,9 +106,11 @@ public class GerarBoleto implements Serializable {
     // Informando dados sobre a conta bancária do título.
     ContaBancaria contaBancaria =
         new ContaBancaria(BancosSuportados.CAIXA_ECONOMICA_FEDERAL.create());
-    contaBancaria.setNumeroDaConta(new NumeroDaConta(c.getCodigo(), String.valueOf(c.getDigitoVerificador())));
+    contaBancaria.setNumeroDaConta(new NumeroDaConta(c.getCodigo(), String.valueOf(c
+        .getDigitoVerificador())));
     contaBancaria.setCarteira(new Carteira(2, TipoDeCobranca.SEM_REGISTRO));
-    contaBancaria.setAgencia(new Agencia(c.getNumeroAgencia(), String.valueOf(c.getDigitoAgencia())));
+    contaBancaria
+        .setAgencia(new Agencia(c.getNumeroAgencia(), String.valueOf(c.getDigitoAgencia())));
 
     ParametrosBancariosMap map = new ParametrosBancariosMap();
     map.adicione("CodigoOperacao", c.getCodigoOperacao());
@@ -114,8 +118,9 @@ public class GerarBoleto implements Serializable {
     Titulo titulo = new Titulo(contaBancaria, sacado, cedente, map);
 
     titulo.setNumeroDoDocumento(String.format("%d/%d", m.getCliente().getId(), m.getId()));
-    
-    titulo.setNossoNumero(String.format("%015d", m.getNumeroBoleto() != null ? m.getNumeroBoleto() : m.getId()));
+
+    titulo.setNossoNumero(String.format("%015d", m.getNumeroBoleto() != null ? m.getNumeroBoleto()
+        : m.getId()));
     titulo.setDigitoDoNossoNumero(calcularDigitoDoNossoNumero(contaBancaria.getCarteira()
         .getCodigo(), titulo.getNossoNumero()));
     titulo.setValor(BigDecimal.valueOf(m.getValor()));
@@ -193,11 +198,11 @@ public class GerarBoleto implements Serializable {
 
     PdfContentByte cb = writer.getDirectContent();
     float documentHeight = cb.getPdfDocument().getPageSize().getHeight();
-    float positionAnterior = 0;
+    float positionAnterior = -1;
 
     // Para cada arquivo da lista, cria-se um PdfReader, responsável por ler o arquivo PDF e
     // recuperar informações dele.
-    
+
     for (byte[] pdfFile : pdfFilesAsByteArray) {
 
       PdfReader reader = new PdfReader(pdfFile);
@@ -207,21 +212,24 @@ public class GerarBoleto implements Serializable {
 
         // Importa a página do PDF de origem
         PdfImportedPage page = writer.getImportedPage(reader, i);
+        if (positionAnterior == -1) {
+          positionAnterior = documentHeight - page.getHeight();
+        }
         float pagePosition = positionAnterior;
 
         /*
          * Se a altura restante no documento de destino form menor que a altura do documento,
          * cria-se uma nova página no documento de destino.
          */
-        if ((documentHeight - positionAnterior) <= page.getHeight()) {
+        if (pagePosition < 0) {
           document.newPage();
-          pagePosition = 0;
-          positionAnterior = 0;
+          positionAnterior = documentHeight - page.getHeight();;
+          pagePosition = positionAnterior;
         }
 
         // Adiciona a página ao PDF destino
         cb.addTemplate(page, 0, pagePosition);
-        positionAnterior += page.getHeight();
+        positionAnterior -= page.getHeight();
       }
     }
 

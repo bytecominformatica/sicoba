@@ -111,7 +111,6 @@ public class MensalidadeController implements Serializable {
       mensalidade.setValorPago(0);
       mensalidade.setDataOcorrencia(null);
     }
-
   }
 
   public void gerarBoletos() {
@@ -129,7 +128,6 @@ public class MensalidadeController implements Serializable {
           gravarBoleto(c, i);
           c.add(Calendar.MONTH, 1);
         }
-
       }
       AlertaUtil.info("Boletos gerados com sucesso!");
     }
