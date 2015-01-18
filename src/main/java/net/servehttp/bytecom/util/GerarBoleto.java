@@ -2,10 +2,12 @@ package net.servehttp.bytecom.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.servehttp.bytecom.commons.DateUtil;
 import com.servehttp.bytecom.commons.StringUtil;
 
-public class GerarBoleto implements Serializable {
+public abstract class GerarBoleto implements Serializable {
 
   private static final double TAXA_JUROS_AO_DIA = 0.006677;
   private static final double TAXA_MULTA = 0.05;
@@ -64,20 +66,38 @@ public class GerarBoleto implements Serializable {
         boletos.add(boleto);
       });
 
-      URL resource =
-          GerarBoleto.class.getClassLoader().getResource("/template/BoletoCarne3PorPagina.pdf");
-
-      System.out.println("RECURSO " + resource);
-
-      File templatePersonalizado =
-          new File(GerarBoleto.class.getClassLoader()
-              .getResource("template/BoletoCarne3PorPagina.pdf").getFile());
+      File templatePersonalizado = getTemplate();
 
       byte[] boletosPorPagina = groupInPages(boletos, templatePersonalizado);
 
       return boletosPorPagina;
     }
     return null;
+  }
+
+  private static File getTemplate() {
+    File templatePersonalizado = new File("template.pdf");
+    if (!templatePersonalizado.exists()) {
+      try (InputStream resource =
+          GerarBoleto.class.getClassLoader().getResourceAsStream(
+              "/template/BoletoCarne3PorPagina.pdf")) {
+
+        try (OutputStream outputStream = new FileOutputStream(templatePersonalizado)) {
+
+          // write the inputStream to a FileOutputStream
+          int read = 0;
+          byte[] bytes = new byte[1024];
+
+          while ((read = resource.read(bytes)) != -1) {
+            outputStream.write(bytes, 0, read);
+          }
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return templatePersonalizado;
   }
 
   private static Boleto getBoleto(Mensalidade m, Titulo titulo) {
