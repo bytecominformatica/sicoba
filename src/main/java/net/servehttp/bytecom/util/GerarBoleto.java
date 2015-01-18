@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,18 +67,28 @@ public class GerarBoleto implements Serializable {
         boletos.add(boleto);
       });
 
-      URL resource =
-          GerarBoleto.class.getClassLoader().getResource("/template/BoletoCarne3PorPagina.pdf");
 
-      System.out.println("RECURSO " + resource);
+      URI uri;
+      File templatePersonalizado = null;
+      try {
+        uri =
+            GerarBoleto.class.getClassLoader().getResource("/template/BoletoCarne3PorPagina.pdf")
+                .toURI();
+        System.out.println("RECURSO URI " + uri);
+        System.out.println("RECURSO URL " + uri.toURL());
+        System.out.println("RECURSO file " + uri.toURL().getFile());
+        templatePersonalizado = new File(uri.toURL().getFile());
+      } catch (URISyntaxException | MalformedURLException e) {
+        e.printStackTrace();
+      }
 
-      File templatePersonalizado =
-          new File(GerarBoleto.class.getClassLoader()
-              .getResource("template/BoletoCarne3PorPagina.pdf").getFile());
 
-      byte[] boletosPorPagina = groupInPages(boletos, templatePersonalizado);
-
-      return boletosPorPagina;
+      if (templatePersonalizado != null) {
+        byte[] boletosPorPagina = groupInPages(boletos, templatePersonalizado);
+        return boletosPorPagina;
+      } else {
+        System.out.println("boletos null");
+      }
     }
     return null;
   }
