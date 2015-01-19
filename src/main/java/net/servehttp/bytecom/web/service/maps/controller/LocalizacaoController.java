@@ -10,10 +10,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.codehaus.jettison.json.JSONException;
-
 import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.ClienteGeorefereciaBussiness;
+import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
 import net.servehttp.bytecom.util.AlertaUtil;
@@ -35,6 +34,7 @@ public class LocalizacaoController implements Serializable {
   private  String geocode_url = "https://maps.googleapis.com/maps/api/geocode/xml";
   private ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
   private List<Cliente> listClientes;
+  private List<ClienteGeoReferencia> listClientesGeorefs;
   private int cidadeId;
   private int bairroId;
   private String json;
@@ -47,10 +47,13 @@ public class LocalizacaoController implements Serializable {
   private ClienteGeorefereciaBussiness clienteGeoBussiness;
   @Inject
   private Util util;
+  @Inject
+  private GenericoJPA genericoJPA;
   
   @PostConstruct
   public void load(){
     listClientes = clientBussiness.buscaUltimosClientesAlterados();
+    listClientesGeorefs = genericoJPA.buscarTodos(ClienteGeoReferencia.class);
     getParameters();
   }
   
@@ -66,7 +69,9 @@ public class LocalizacaoController implements Serializable {
   public void geocodificar(){
     String path;
     try {
-      path = geocode_url + '?'+"address="+URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
+      path = geocode_url + '?'+"address="+URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8")+','
+          +URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','
+          +URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
       
       double latitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[0]);
       double longitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[1]);
@@ -87,13 +92,8 @@ public class LocalizacaoController implements Serializable {
   }
   
   public String listarClientesNoMapa(){
-    try {
-       json = JSONProcessor.processaJson(clienteGeo);
-       System.out.println(json);
-    } catch (JSONException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    json = JSONProcessor.processaJson(listClientesGeorefs);
+     System.out.println(json);
     return json;
    
   }
