@@ -4,33 +4,63 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
-	<ui:composition template="/layout.xhtml">
-		<ui:define name="title">#{bundle.cliente}</ui:define>
-		<ui:define name="subtitle">#{bundle.listagem}</ui:define>
-		<ui:define name="submenu">
-			<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
-		</ui:define>
-		<ui:define name="content">
-			<div class="panel-header">
-			<br/>
-				<form jsf:id="formPesquisa" class="form-horizontal">
-				    <div class="input-group">
-						<input jsf:value="#{clienteController.pesquisa}" type="text" name="pesquisa" class="form-control" placeholder="Nome, Ip, Fone ou Email" jsf:id="pesquisa" autofocus="autofocus"/>
-				      <span class="input-group-btn">
-						<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
+<ui:composition template="/layout.xhtml">
+	<ui:define name="title">#{bundle.cliente}</ui:define>
+	<ui:define name="subtitle">#{bundle.listagem}</ui:define>
+	<ui:define name="submenu">
+		<ui:include src="../submenu_cadastro.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="content">
+		<div class="panel-header">
+			<br />
+			<form jsf:id="formPesquisa" class="form-vertical">
+				<div class="col-lg-12" align="center">
+
+					<div class="col-lg-2">
+						<div class="input-group">
+							<input jsf:value="#{clienteController.nome}" type="text"
+								name="nome" class="form-control" placeholder="Nome"
+								jsf:id="nome" autofocus="autofocus" />
+						</div>
+					</div>
+
+					<div class="col-lg-2">
+						<div class="input-group">
+							<input jsf:value="#{clienteController.ip}" type="text" name="ip"
+								class="form-control" placeholder="IP" jsf:id="ip" />
+						</div>
+					</div>
+
+					<div class="col-lg-2">
+						<div class="input-group">
+							<h:selectOneMenu id="status" value="#{clienteController.status}"
+								styleClass="form-control">
+								<f:selectItem itemLabel="#{bundle.todos}"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="#{bundle.ativo}" itemValue="ATIVO" />
+								<f:selectItem itemLabel="#{bundle.inativo}" itemValue="INATIVO" />
+								<f:selectItem itemLabel="#{bundle.cancelado}"
+									itemValue="CANCELADO" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+
+					<div class="col-lg-2">
+						<button type="submit" class="btn btn-primary"
+							jsf:actionListener="#{clienteController.consultar()}">
 							<span class="glyphicon glyphicon-search" />
 						</button>
-				      </span>
-				    </div><!-- /input-group -->
-				</form>
-			</div>
-			<div class="panel-body">
+					</div>
+				</div>
 
-				<form jsf:id="form">
+			</form>
+		</div>
+		<div class="panel-body">
+
+			<form jsf:id="form">
 				<div class="table-responsive">
-					<h:dataTable value="#{clienteController.listClientes}"
-						var="c" styleClass="table table-hover"
-						headerClass="tableColumnsHeader">
+					<h:dataTable value="#{clienteController.listClientes}" var="c"
+						styleClass="table table-hover" headerClass="tableColumnsHeader">
 						<f:facet name="header">
 							<div align="center">
 								<h:link outcome="edit" styleClass="btn btn-primary">
@@ -38,6 +68,10 @@
 								</h:link>
 							</div>
 						</f:facet>
+						<h:column style="width: 5%; text-align: center;">
+							<f:facet name="header">#{bundle.id}</f:facet>
+							#{c.id}
+						</h:column>
 						<h:column style="width: 5%;">
 							<f:facet name="header">#{bundle.status}</f:facet>
 							<div align="center">
@@ -55,25 +89,27 @@
 							<f:facet name="header">#{bundle.ip}</f:facet>
 							<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
 						</h:column>
-						
+
 						<h:column>
 							<f:facet name="header">#{bundle.actions}</f:facet>
 							<h:panelGrid columns="2" style="text-align:center;">
-								<button jsf:id="btnEdit" class="btn btn-primary" jsf:outcome="edit">
+								<button jsf:id="btnEdit" class="btn btn-primary"
+									jsf:outcome="edit">
 									<span class="glyphicon glyphicon-edit" />
 									<f:param value="#{c.id}" name="id"></f:param>
 								</button>
 
-								<button jsf:id="btnRemove" class="btn btn-danger" jsf:outcome="remove" style="margin-left: 5px;">
+								<button jsf:id="btnRemove" class="btn btn-danger"
+									jsf:outcome="remove" style="margin-left: 5px;">
 									<span class="glyphicon glyphicon-remove" />
 									<f:param value="#{c.id}" name="id"></f:param>
 								</button>
 							</h:panelGrid>
 						</h:column>
 					</h:dataTable>
-					</div>
-				</form>
-			</div>
-		</ui:define>
-	</ui:composition>
+				</div>
+			</form>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>
