@@ -4,32 +4,28 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
-<f:metadata>
-	<f:viewParam name="id"
-		value="#{equipamentoController.equipamento}"
-		converter="#{equipamentoConverter}"
-		converterMessage="Registro não encontrado" />
-</f:metadata>
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.equipamento}</ui:define>
 	<ui:define name="subtitle">#{bundle.edit}</ui:define>
 	<ui:define name="submenu">
-		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
+		<ui:include src="../submenu_cadastro.xhtml"></ui:include>
 	</ui:define>
 	<ui:define name="content">
-			<div class="panel-body">
+		<div class="panel-body">
 
 			<form jsf:id="form" class="form-horizontal">
 
 				<label jsf:for="marca" class="control-label">#{bundle.marca}</label>
 				<input jsf:id="marca" type="text" class="form-control uppercase"
 					autofocus="autofocus" required="required"
-					jsf:value="#{equipamentoController.equipamento.marca}" /> 
-				<label jsf:for="modelo" class="control-label">#{bundle.modelo}</label> 
-				<input jsf:id="modelo" type="text" class="form-control uppercase" required="required"
-					jsf:value="#{equipamentoController.equipamento.modelo}" /> 
-				<label jsf:for="mac" class="control-label">#{bundle.mac}</label> 
-				<input jsf:id="mac" type="text" class="form-control uppercase" required="required"
+					jsf:value="#{equipamentoController.equipamento.marca}" /> <label
+					jsf:for="modelo" class="control-label">#{bundle.modelo}</label> <input
+					jsf:id="modelo" type="text" class="form-control uppercase"
+					required="required"
+					jsf:value="#{equipamentoController.equipamento.modelo}" /> <label
+					jsf:for="mac" class="control-label">#{bundle.mac}</label> <input
+					jsf:id="mac" type="text" class="form-control uppercase"
+					required="required"
 					jsf:value="#{equipamentoController.equipamento.mac}" maxlength="17"
 					pattern="^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$" />
 
@@ -38,13 +34,17 @@
 					jsf:value="#{equipamentoController.equipamento.descricao}" />
 
 				<label jsf:for="tipo" class="control-label">#{bundle.tipo}</label>
-				<h:selectOneMenu id="tipo" value="#{equipamentoController.equipamento.tipo}" styleClass="form-control">
+				<h:selectOneMenu id="tipo"
+					value="#{equipamentoController.equipamento.tipo}"
+					styleClass="form-control">
 					<f:selectItem itemLabel="INSTALAÇÃO" itemValue="INSTALACAO" />
 					<f:selectItem itemLabel="WIFI" itemValue="WIFI" />
 				</h:selectOneMenu>
 
 				<label jsf:for="status" class="control-label">#{bundle.status}</label>
-				<h:selectOneMenu id="status" value="#{equipamentoController.equipamento.status}" styleClass="form-control">
+				<h:selectOneMenu id="status"
+					value="#{equipamentoController.equipamento.status}"
+					styleClass="form-control">
 					<f:selectItem itemLabel="OK" itemValue="OK" />
 					<f:selectItem itemLabel="DEFEITO" itemValue="DEFEITO" />
 				</h:selectOneMenu>
@@ -54,10 +54,11 @@
 						jsf:action="#{equipamentoController.salvar()}"
 						class="btn btn-primary" type="submit">
 						<span class="glyphicon glyphicon-floppy-save" />
-						#{bundle.save}
+						#{equipamentoController.equipamento.id == 0 ? bundle.save :
+						bundle.update}
 					</button>
 					<button jsf:id="btVoltar" jsf:outcome="list"
-						style="margin-left: 5px;" class="btn btn-primary">
+						class="btn btn-primary">
 						<span class="glyphicon glyphicon-circle-arrow-left" />
 						#{bundle.back}
 					</button>

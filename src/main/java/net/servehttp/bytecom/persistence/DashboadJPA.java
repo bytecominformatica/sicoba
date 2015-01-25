@@ -1,6 +1,8 @@
 package net.servehttp.bytecom.persistence;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.QMensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 
+import com.mysema.query.jpa.JPASubQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.servehttp.bytecom.commons.DateUtil;
 
@@ -29,6 +32,13 @@ public class DashboadJPA implements Serializable {
   private static final long serialVersionUID = 4057406973170798760L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
+  private Date from;
+  private Date to;
+
+  public DashboadJPA() {
+    from = DateUtil.getPrimeiroDiaDoMes().getTime();
+    to = DateUtil.getUltimoDiaDoMes().getTime();
+  }
 
   public void setEntityManager(EntityManager em) {
     this.em = em;
@@ -52,39 +62,42 @@ public class DashboadJPA implements Serializable {
     Date data = DateUtil.getHoje();
     return new JPAQuery(em).from(m)
         .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(data)))
-        .orderBy(m.dataVencimento.desc()).list(m);
+        .orderBy(m.dataVencimento.asc()).list(m);
   }
 
   public double getFaturamentoDoMes() {
+    QMensalidade m = QMensalidade.mensalidade;
     Double d =
-        em.createQuery(
-            "select sum(m.valorPago) from Mensalidade m where m.dataOcorrencia between :inicio and :fim",
-            Double.class).setParameter("inicio", DateUtil.getPrimeiroDiaDoMes().getTime())
-            .setParameter("fim", DateUtil.getUltimoDiaDoMes().getTime()).getSingleResult();
-
+        new JPAQuery(em).from(m).where(m.dataOcorrencia.between(from, to))
+            .uniqueResult(m.valorPago.sum());
     return d != null ? d : 0;
   }
 
   public double getFaturamentoPrevistoDoMes() {
+    QMensalidade m = QMensalidade.mensalidade;
     Double d =
-        em.createQuery(
-            "select sum(m.valor) from Mensalidade m where m.dataVencimento between :inicio and :fim",
-            Double.class).setParameter("inicio", DateUtil.getPrimeiroDiaDoMes().getTime())
-            .setParameter("fim", DateUtil.getUltimoDiaDoMes().getTime()).getSingleResult();
+        new JPAQuery(em).from(m).where(m.dataVencimento.between(from, to))
+            .uniqueResult(m.valor.sum());
     return d != null ? d : 0;
   }
 
   public List<Cliente> getClientesInativos() {
     QCliente c = QCliente.cliente;
-    return new JPAQuery(em).from(c).where(c.status.eq(StatusCliente.INATIVO)).orderBy(c.nome.asc()).list(c);
+    return new JPAQuery(em).from(c).where(c.status.eq(StatusCliente.INATIVO)).orderBy(c.nome.asc())
+        .list(c);
   }
 
   public List<Cliente> getClientesSemMensalidade() {
-    return em
-        .createQuery(
-            "select c from Cliente c where (c.status = :status1 or c.status = :status2) and c.id not in(select DISTINCT(m.cliente.id) from Mensalidade m where m.dataVencimento > :hoje)",
-            Cliente.class).setParameter("status1", StatusCliente.ATIVO)
-        .setParameter("status2", StatusCliente.INATIVO).setParameter("hoje", new Date())
-        .getResultList();
+    QCliente c = QCliente.cliente;
+    QMensalidade m = QMensalidade.mensalidade;
+    Date data =
+        Date.from(LocalDate.now().plusMonths(1).atStartOfDay().atZone(ZoneId.systemDefault())
+            .toInstant());
+    return new JPAQuery(em)
+        .from(c)
+        .where(
+            (c.status.eq(StatusCliente.ATIVO).or(c.status.eq(StatusCliente.INATIVO)).and(c.id
+                .notIn(new JPASubQuery().from(m).distinct().where(m.dataVencimento.gt(data))
+                    .list(m.cliente.id))))).list(c);
   }
 }

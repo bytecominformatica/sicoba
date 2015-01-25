@@ -34,7 +34,8 @@ public class ClienteController implements Serializable {
   private List<Bairro> listBairros;
   private Cidade cidade;
   private String page;
-  private String pesquisa;
+  private String nome;
+  private String ip;
 
   @Inject
   private ServidorController servidorController;
@@ -44,6 +45,7 @@ public class ClienteController implements Serializable {
   private AddressBussiness addressBussiness;
   @Inject
   private Util util;
+  private StatusCliente status;
 
   @PostConstruct
   public void load() {
@@ -68,11 +70,7 @@ public class ClienteController implements Serializable {
   }
 
   public void consultar() {
-    if (pesquisa != null && pesquisa.length() > 2) {
-      listClientes = clientBussiness.findClientByNamePhoneEmailIp(pesquisa);
-    } else {
-      AlertaUtil.error("pesquisa por nome tem que possuir pelo menos 3 caracteres.");
-    }
+    listClientes = clientBussiness.buscarTodosClientePorNomeIp(nome, ip, getStatus());
   }
 
   public void atualizaBairros() {
@@ -178,20 +176,36 @@ public class ClienteController implements Serializable {
     this.cliente = cliente;
   }
 
-  public String getPesquisa() {
-    return pesquisa;
-  }
-
-  public void setPesquisa(String pesquisa) {
-    this.pesquisa = pesquisa;
-  }
-
   public Cidade getCidade() {
     return cidade;
   }
 
   public void setCidade(Cidade cidade) {
     this.cidade = cidade;
+  }
+
+  public String getIp() {
+    return ip;
+  }
+
+  public void setIp(String ip) {
+    this.ip = ip;
+  }
+
+  public String getNome() {
+    return nome;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  public StatusCliente getStatus() {
+    return status;
+  }
+
+  public void setStatus(StatusCliente status) {
+    this.status = status;
   }
 
 }

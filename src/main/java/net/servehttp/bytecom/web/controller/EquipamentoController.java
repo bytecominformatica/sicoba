@@ -8,9 +8,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.persistence.EquipamentoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.Util;
 
 /**
  * 
@@ -23,13 +25,25 @@ public class EquipamentoController implements Serializable {
   private static final long serialVersionUID = 8291411734476446041L;
   private List<Equipamento> listEquipamentos;
   private Equipamento equipamento = new Equipamento();
-  private String equipamentoId;
+  @Inject
+  private EquipamentoJPA jpa;
   @Inject
   private GenericoJPA genericoJPA;
+  @Inject
+  private Util util;
 
   @PostConstruct
   public void load() {
-    listEquipamentos = genericoJPA.buscarTodos(Equipamento.class);
+    listEquipamentos = jpa.buscarTodosEquipamento();
+    getParameters();
+  }
+
+
+  private void getParameters() {
+    String id = util.getParameters("id");
+    if (id != null && !id.isEmpty()) {
+      equipamento = jpa.buscarPorId(Integer.valueOf(id));
+    }
   }
 
   public List<Equipamento> getListEquipamentos() {
@@ -59,8 +73,8 @@ public class EquipamentoController implements Serializable {
 
   public boolean isValido(Equipamento e) {
     boolean valido = true;
-    List<Equipamento> equipamentos = genericoJPA.buscarTodos("mac", e.getMac(), Equipamento.class);
-    if (!equipamentos.isEmpty() && equipamentos.get(0).getId() != e.getId()) {
+    Equipamento equipamentoEncontrado = jpa.buscarEquipamentoPorMac(e.getMac());
+    if (equipamentoEncontrado != null && equipamentoEncontrado.getId() != e.getId()) {
       AlertaUtil.error("MAC já Cadastrado");
       valido = false;
     }
@@ -72,14 +86,6 @@ public class EquipamentoController implements Serializable {
     load();
     AlertaUtil.info("Equipamento removido com sucesso!");
     return "list";
-  }
-
-  public String getEquipamentoId() {
-    return equipamentoId;
-  }
-
-  public void setEquipamentoId(String equipamentoId) {
-    this.equipamentoId = equipamentoId;
   }
 
   public Equipamento getEquipamento() {

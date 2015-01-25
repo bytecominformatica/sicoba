@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.ClienteJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
+import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
 
 public class ClientBussiness extends genericoBusiness implements Serializable {
 
@@ -23,8 +24,8 @@ public class ClientBussiness extends genericoBusiness implements Serializable {
     return genericoJPA.findById(Cliente.class, id);
   }
 
-  public List<Cliente> findClientByNamePhoneEmailIp(String pesquisa) {
-    return clienteJPA.buscaClientesPorNomeFoneEmailIp(pesquisa);
+  public List<Cliente> buscarTodosClientePorNomeIp(String nome, String ip, StatusCliente status) {
+    return clienteJPA.buscarTodosClientePorNomeIp(nome, ip, status);
   }
   
   public boolean rgAvaliable(Cliente c){
