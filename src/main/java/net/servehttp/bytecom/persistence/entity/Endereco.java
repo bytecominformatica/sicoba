@@ -17,6 +17,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
 public class Endereco extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -1834900327044240105L;
+  @NotNull(message = "cep é obrigatório")
   private String cep;
   @NotNull(message = "logradouro é obrigatório")
   private String logradouro;
