@@ -64,7 +64,7 @@ public enum XMLProcessor {
       
       for (int i = 0, n = nodes.getLength(); i < n; i++) {
         // CODIGO COMMENTADO POR QUEBRAR NA MUDANÇA PARA JAVA 8
-//        latlng[0] = nodes.item(i).getTextContent();
+        latlng[0] = nodes.item(i).getTextContent();
       }
 
     } catch (XPathExpressionException e) {
@@ -76,7 +76,7 @@ public enum XMLProcessor {
       NodeList nodes = (NodeList) xpath.evaluate(LNG, doc, XPathConstants.NODE);
       
       for(int i = 0, n = nodes.getLength(); i < n; i++){
-//        latlng[1] = nodes.item(i).getTextContent();
+        latlng[1] = nodes.item(i).getTextContent();
         
       }
     } catch (XPathExpressionException e) {

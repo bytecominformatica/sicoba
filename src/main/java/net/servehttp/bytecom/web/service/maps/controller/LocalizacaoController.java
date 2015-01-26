@@ -12,12 +12,10 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.ClienteGeorefereciaBussiness;
-import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
-import net.servehttp.bytecom.web.service.maps.JSONProcessor;
 import net.servehttp.bytecom.web.service.maps.XMLProcessor;
 /**
  * 
@@ -31,13 +29,11 @@ public class LocalizacaoController implements Serializable {
 
   private static final long serialVersionUID = -6695262369077987911L;
   
-  private  String geocode_url = "https://maps.googleapis.com/maps/api/geocode/xml";
+  private String geocode_url = "https://maps.googleapis.com/maps/api/geocode/xml";
   private ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
   private List<Cliente> listClientes;
-  private List<ClienteGeoReferencia> listClientesGeorefs;
   private int cidadeId;
   private int bairroId;
-  private String json;
   private String clienteId;
   private Cliente cliente = new Cliente();
   
@@ -47,13 +43,10 @@ public class LocalizacaoController implements Serializable {
   private ClienteGeorefereciaBussiness clienteGeoBussiness;
   @Inject
   private Util util;
-  @Inject
-  private GenericoJPA genericoJPA;
   
   @PostConstruct
   public void load(){
     listClientes = clientBussiness.buscaUltimosClientesAlterados();
-    listClientesGeorefs = genericoJPA.buscarTodos(ClienteGeoReferencia.class);
     getParameters();
   }
   
@@ -89,13 +82,6 @@ public class LocalizacaoController implements Serializable {
     }
     
     
-  }
-  
-  public String listarClientesNoMapa(){
-    json = JSONProcessor.processaJson(listClientesGeorefs);
-     System.out.println(json);
-    return json;
-   
   }
 
   public Cliente getCliente() {
