@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +41,6 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfImportedPage;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfWriter;
-import com.servehttp.bytecom.commons.DateUtil;
 import com.servehttp.bytecom.commons.StringUtil;
 
 public abstract class GerarBoleto implements Serializable {
@@ -48,6 +49,7 @@ public abstract class GerarBoleto implements Serializable {
   private static final double TAXA_MULTA = 0.05;
   private static final int EMITENTE_BENEFICIARIO = 4;
   private static final long serialVersionUID = 2996334986455478857L;
+  private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public static byte[] criarCarneCaixa(List<Mensalidade> mensalidades,
       net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
@@ -109,7 +111,7 @@ public abstract class GerarBoleto implements Serializable {
     boleto.setLocalPagamento("PREFERENCIALMENTE NAS CASAS LOTÉRICAS ATÉ O VALOR LIMITE");
     boleto.setInstrucao1(String.format("MULTA DE R$: %s APÓS : %s",
         StringUtil.formatCurrence(m.getValor() * TAXA_MULTA),
-        DateUtil.format(m.getDataVencimento())));
+        m.getDataVencimento().format(formatter)));
     boleto.setInstrucao2(String.format("JUROS DE R$: %s AO DIA",
         StringUtil.formatCurrence(m.getValor() * TAXA_JUROS_AO_DIA)));
     boleto.setInstrucao4("NÃO RECEBER APOS 30 DIAS DO VENCIMENTO");
@@ -152,7 +154,7 @@ public abstract class GerarBoleto implements Serializable {
         .getCodigo(), titulo.getNossoNumero()));
     titulo.setValor(BigDecimal.valueOf(m.getValor()));
     titulo.setDataDoDocumento(new Date());
-    titulo.setDataDoVencimento(m.getDataVencimento());
+    titulo.setDataDoVencimento(Date.from(m.getDataVencimento().atStartOfDay(ZoneId.systemDefault()).toInstant()));
     titulo.setTipoDeDocumento(TipoDeTitulo.DM_DUPLICATA_MERCANTIL);
     titulo.setAceite(Aceite.N);
     return titulo;

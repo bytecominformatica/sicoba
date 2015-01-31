@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.web.controller.relatorios;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -12,7 +12,6 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.relatorios.MensalidadeRelatorioJPA;
 
-import com.servehttp.bytecom.commons.DateUtil;
 import com.servehttp.bytecom.commons.StringUtil;
 
 
@@ -21,8 +20,8 @@ import com.servehttp.bytecom.commons.StringUtil;
 public class MensalidadeRelatorioController implements Serializable {
 
   private static final long serialVersionUID = -7284911722827189143L;
-  private Date dataInicio;
-  private Date dataFim;
+  private LocalDate dataInicio;
+  private LocalDate dataFim;
   private StatusMensalidade status;
   private boolean pesquisarPorDataOcorrencia = true;
 
@@ -38,8 +37,9 @@ public class MensalidadeRelatorioController implements Serializable {
   MensalidadeRelatorioJPA mensalidadeRelatorioJPA;
 
   public MensalidadeRelatorioController() {
-    dataInicio = DateUtil.getPrimeiroDiaDoMes().getTime();
-    dataFim = DateUtil.getUltimoDiaDoMes().getTime();
+    dataInicio = LocalDate.now().withDayOfMonth(1);
+    dataFim = LocalDate.now();
+    dataFim = dataFim.withDayOfMonth(dataFim.lengthOfMonth());
   }
 
   public void consultar() {
@@ -61,19 +61,19 @@ public class MensalidadeRelatorioController implements Serializable {
 
   }
 
-  public Date getDataInicio() {
+  public LocalDate getDataInicio() {
     return dataInicio;
   }
 
-  public void setDataInicio(Date dataInicio) {
+  public void setDataInicio(LocalDate dataInicio) {
     this.dataInicio = dataInicio;
   }
 
-  public Date getDataFim() {
+  public LocalDate getDataFim() {
     return dataFim;
   }
 
-  public void setDataFim(Date dataFim) {
+  public void setDataFim(LocalDate dataFim) {
     this.dataFim = dataFim;
   }
 

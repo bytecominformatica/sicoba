@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.business;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ public class MensalidadeBussiness extends genericoBusiness implements Serializab
   @Inject
   private MensalidadeJPA mensalidadeJPA;
 
-  public Mensalidade getNovaMensalidade(Cliente cliente, Date vencimento) {
+  public Mensalidade getNovaMensalidade(Cliente cliente, LocalDate vencimento) {
     Mensalidade m = new Mensalidade();
     m.setDataVencimento(vencimento);
     double valorMensalidade = cliente.getContrato().getPlano().getValorMensalidade();

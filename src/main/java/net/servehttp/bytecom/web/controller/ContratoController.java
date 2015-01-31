@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.web.controller;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -78,7 +78,7 @@ public class ContratoController implements Serializable {
   private void gerarNovoContrato() {
     Contrato c = new Contrato();
     c.setCliente(getCliente());
-    c.setDataInstalacao(new Date());
+    c.setDataInstalacao(LocalDate.now());
     getCliente().setContrato(c);
   }
 

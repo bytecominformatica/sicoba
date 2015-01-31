@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.web.controller;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -84,7 +84,7 @@ public class ClienteController implements Serializable {
   public void salvar() {
     if (isClienteValido(cliente)) {
       if (cliente.getId() == 0) {
-        cliente.setCreatedAt(Calendar.getInstance());
+        cliente.setCreatedAt(LocalDateTime.now());
         clientBussiness.salvar(cliente);
         AlertaUtil.info("Cliente adicionado com sucesso!");
       } else {

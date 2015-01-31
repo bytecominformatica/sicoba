@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.persistence.relatorios;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,7 +19,7 @@ public class MensalidadeRelatorioJPA implements Serializable {
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
 
-  public List<Mensalidade> buscarPorDataStatus(Date inicio, Date fim, StatusMensalidade status, boolean buscarPorDataOcorrencia) {
+  public List<Mensalidade> buscarPorDataStatus(LocalDate inicio, LocalDate fim, StatusMensalidade status, boolean buscarPorDataOcorrencia) {
 
     String jpql;
     if(buscarPorDataOcorrencia){
