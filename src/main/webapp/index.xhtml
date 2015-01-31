@@ -65,91 +65,133 @@
 
 			<div id="dashboard_tabs" class="col-xs-12 col-sm-10">
 
-				<div id="ow-marketplace" class="col-sm-12 col-md-6">
 
-					<h4 class="page-header">MENSALIDADES EM ATRASO</h4>
-					<h:dataTable
-						styleClass="table m-table table-bordered table-hover table-heading"
-						value="#{dashboardController.listMensalidadesAtrasadas}" var="m">
-						<h:column>
-							<f:facet name="header">#{bundle.cliente}</f:facet>
-							<a
-								href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{m.cliente.id}"
-								style="color: #{m.cliente.status == 'ATIVO' ? 'green' : m.cliente.status == 'INATIVO' ? 'orange' : 'red'};">#{m.cliente.nome}</a>
-						</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.valor}</f:facet>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#mensalidadesEmAtraso" aria-controls="mensalidadesEmAtraso" role="tab" data-toggle="tab">
+							Mensalidades Em Atraso
+							<span class="label label-warning">#{dashboardController.listMensalidadesAtrasadas.size()}</span>
+						</a>
+					</li>
+					
+					<li role="presentation">
+						<a href="#clientesSemMensalidade" aria-controls="clientesSemMensalidade" role="tab" data-toggle="tab">
+							Clientes Sem Mensalidade
+							<span class="label label-danger">#{dashboardController.listClientesSemMensalidades.size()}</span>
+						</a>
+					</li>
+					
+					<li role="presentation">
+						<a href="#ultimasInstalacoes" aria-controls="ultimasInstalacoes" role="tab" data-toggle="tab">
+							Ultimas	Instalações
+							<span class="label label-success">#{dashboardController.listClientesInstalados.size()}</span>
+						</a>
+					</li>
+					
+					<li role="presentation">
+						<a href="#clientesInativos" aria-controls="clientesInativos" role="tab" data-toggle="tab">
+							Cliente Inativos
+							<span class="label label-success">#{dashboardController.listClientesInativos.size()}</span>
+						</a>
+					</li>
+					
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					
+					<div role="tabpanel" class="tab-pane active col-sm-12 col-md-12"
+						id="mensalidadesEmAtraso">
+							<h:dataTable
+								styleClass="table m-table table-bordered table-hover table-heading"
+								value="#{dashboardController.listMensalidadesAtrasadas}" var="m">
+								<h:column>
+									<f:facet name="header">#{bundle.cliente}</f:facet>
+									<a
+										href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{m.cliente.id}"
+										style="color: #{m.cliente.status == 'ATIVO' ? 'green' : m.cliente.status == 'INATIVO' ? 'orange' : 'red'};">#{m.cliente.nome}</a>
+								</h:column>
+								<h:column>
+									<f:facet name="header">#{bundle.valor}</f:facet>
 									#{m.valor}
 								</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.vencimento}</f:facet>
+								<h:column>
+									<f:facet name="header">#{bundle.vencimento}</f:facet>
 									#{m.dataVencimento}
 								</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.ip}</f:facet>
-							<a href="http://#{m.cliente.acesso.ip}" target="_blank">#{m.cliente.acesso.ip}</a>
-						</h:column>
-					</h:dataTable>
-				</div>
-
-				<div id="clientesSemMensalidade" class="col-sm-12 col-md-6">
-
-					<h4 class="page-header">CLIENTES SEM MENSALIDADES</h4>
-					<h:dataTable
-						styleClass="table m-table table-bordered table-hover table-heading"
-						value="#{dashboardController.listClientesSemMensalidades}" var="c">
-						<h:column>
-							<f:facet name="header">#{bundle.nome}</f:facet>
-							<a
-								href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
-						</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
-							#{c.contrato.dataInstalacao}
-						</h:column>
-					</h:dataTable>
-				</div>
-				
-				<div id="ultimasInstalacoes" class="col-sm-12 col-md-6">
-
-					<h4 class="page-header">ULTIMAS INSTALAÇÕES</h4>
-					<h:dataTable
-						styleClass="table m-table table-bordered table-hover table-heading"
-						value="#{dashboardController.listClientesInstalados}" var="c">
-						<h:column>
-							<f:facet name="header">#{bundle.nome}</f:facet>
-							<a
-								href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
-						</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
+								<h:column>
+									<f:facet name="header">#{bundle.ip}</f:facet>
+									<a href="http://#{m.cliente.acesso.ip}" target="_blank">#{m.cliente.acesso.ip}</a>
+								</h:column>
+							</h:dataTable>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+						id="clientesSemMensalidade">
+						<h:dataTable
+							styleClass="table m-table table-bordered table-hover table-heading"
+							value="#{dashboardController.listClientesSemMensalidades}"
+							var="c">
+							<h:column>
+								<f:facet name="header">#{bundle.nome}</f:facet>
+								<a
+									href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
+								#{c.contrato.dataInstalacao}
+							</h:column>
+						</h:dataTable>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+						id="ultimasInstalacoes">
+						<h:dataTable
+							styleClass="table m-table table-bordered table-hover table-heading"
+							value="#{dashboardController.listClientesInstalados}" var="c">
+							<h:column>
+								<f:facet name="header">#{bundle.nome}</f:facet>
+								<a
+									href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
 									#{c.contrato.dataInstalacao}
 								</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.ip}</f:facet>
-							<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
-						</h:column>
-						<h:column>
-							<f:facet name="header">#{bundle.mensalidade}</f:facet>
+							<h:column>
+								<f:facet name="header">#{bundle.ip}</f:facet>
+								<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{bundle.mensalidade}</f:facet>
 									#{empty c.mensalidades || c.mensalidades == null ? 'SEM MENSALIDADES' : 'OK'}
 								</h:column>
-					</h:dataTable>
+						</h:dataTable>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+						id="clientesInativos">
+						<h:dataTable
+							styleClass="table m-table table-bordered table-hover table-heading"
+							value="#{dashboardController.listClientesInativos}" var="c">
+							<h:column>
+								<f:facet name="header">#{bundle.nome}</f:facet>
+								<a
+									href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
+							</h:column>
+						</h:dataTable>
+					</div>
 				</div>
-				
-				<div id="clientesinativos" class="col-sm-12 col-md-6">
-					<h4 class="page-header">CLIENTES INATIVOS</h4>
-					<h:dataTable
-						styleClass="table m-table table-bordered table-hover table-heading"
-						value="#{dashboardController.listClientesInativos}" var="c">
-						<h:column>
-							<f:facet name="header">#{bundle.nome}</f:facet>
-							<a
-								href="#{request.contextPath}/pages/cadastros/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
-						</h:column>
-					</h:dataTable>
-				</div>
-				
-				
+
+
+
+
+
+
+
+
+
 
 			</div>
 			<!--End Dashboard Tab 1-->
