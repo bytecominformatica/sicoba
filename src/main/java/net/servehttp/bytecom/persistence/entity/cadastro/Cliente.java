@@ -44,7 +44,6 @@ public class Cliente extends EntityGeneric implements Serializable {
   @Column(name = "cpf_cnpj")
   @CpfCnpj
   private String cpfCnpj;
-  @Past(message = "Data de Nascimento Inválida")
   @Column(name = "dt_nascimento")
   @Convert(converter = LocalDatePersistenceConverter.class)
   private LocalDate dataNascimento;

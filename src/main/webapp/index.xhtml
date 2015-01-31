@@ -118,7 +118,9 @@
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.vencimento}</f:facet>
-									#{m.dataVencimento}
+									<h:outputText value="#{m.dataVencimento}" >
+										<f:converter converterId="localDateConverter"  />
+									</h:outputText>
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.ip}</f:facet>
@@ -140,7 +142,9 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
-								#{c.contrato.dataInstalacao}
+								<h:outputText value="#{c.contrato.dataInstalacao}" >
+									<f:converter converterId="localDateConverter"  />
+								</h:outputText>
 							</h:column>
 						</h:dataTable>
 					</div>
@@ -157,8 +161,10 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
-									#{c.contrato.dataInstalacao}
-								</h:column>
+								<h:outputText value="#{c.contrato.dataInstalacao}" >
+									<f:converter converterId="localDateConverter"  />
+								</h:outputText>
+							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.ip}</f:facet>
 								<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>

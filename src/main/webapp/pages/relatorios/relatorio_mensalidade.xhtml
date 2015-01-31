@@ -112,11 +112,13 @@
 					<h:column>
 						<f:facet name="header">#{bundle.vencimento}</f:facet>
 						<h:outputText value="#{m.dataVencimento}" >
+							<f:converter converterId="localDateConverter"  />
 						</h:outputText>
 					</h:column>
 					<h:column>
 						<f:facet name="header">#{bundle.dataOcorrencia}</f:facet>
 						<h:outputText value="#{m.dataOcorrencia}" >
+							<f:converter converterId="localDateConverter"  />
 						</h:outputText>
 					</h:column>
 					
