@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import net.servehttp.bytecom.converter.LocalDatePersistenceConverter;
+import net.servehttp.bytecom.converter.date.LocalDatePersistenceConverter;
 import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
 
 @Entity

@@ -17,8 +17,8 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
-import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 

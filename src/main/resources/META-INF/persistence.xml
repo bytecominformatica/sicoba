@@ -30,8 +30,8 @@
 		<class>net.servehttp.bytecom.persistence.entity.security.Authentication</class>
 		<class>net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia</class>
 		<class>net.servehttp.bytecom.persistence.entity.financeiro.Cedente</class>
-		<class>net.servehttp.bytecom.converter.LocalDatePersistenceConverter</class>
-		<class>net.servehttp.bytecom.converter.LocalDateTimePersistenceConverter</class>
+		<class>net.servehttp.bytecom.converter.date.LocalDatePersistenceConverter</class>
+		<class>net.servehttp.bytecom.converter.date.LocalDateTimePersistenceConverter</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />

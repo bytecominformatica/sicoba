@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.converter;
+package net.servehttp.bytecom.converter.date;
 
 import java.sql.Date;
 import java.time.LocalDate;

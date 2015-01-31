@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.util;
+package net.servehttp.bytecom.util.web;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;

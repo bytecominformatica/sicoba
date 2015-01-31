@@ -16,8 +16,8 @@ import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.ClienteGeorefereciaBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
-import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.web.service.maps.JSONProcessor;
 import net.servehttp.bytecom.web.service.maps.XMLProcessor;
 

@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.converter;
+package net.servehttp.bytecom.converter.jpa;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;

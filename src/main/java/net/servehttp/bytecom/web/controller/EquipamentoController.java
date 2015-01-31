@@ -11,8 +11,8 @@ import javax.inject.Named;
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
-import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 

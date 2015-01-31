@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import net.servehttp.bytecom.converter.LocalDatePersistenceConverter;
+import net.servehttp.bytecom.converter.date.LocalDatePersistenceConverter;
 
 @Entity
 @Table(name = "contrato")

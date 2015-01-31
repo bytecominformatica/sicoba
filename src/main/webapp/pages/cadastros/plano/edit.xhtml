@@ -3,7 +3,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
-	<f:viewParam name="id" value="#{planoController.plano}" converter="#{planoConverter}"
+	<f:viewParam name="id" value="#{planoController.plano}" converter="entityConverter"
 		converterMessage="Registro não encontrado." />
 </f:metadata>
 <ui:composition template="/layout.xhtml">

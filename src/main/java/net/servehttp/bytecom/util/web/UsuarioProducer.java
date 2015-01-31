@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.util;
+package net.servehttp.bytecom.util.web;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -12,7 +12,7 @@ import org.apache.shiro.subject.Subject;
 /**
  * @author Clairton Luz
  */
-public class ProducesUtil {
+public class UsuarioProducer {
 
   @Produces
   @Named

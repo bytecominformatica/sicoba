@@ -1,7 +1,6 @@
-package net.servehttp.bytecom.converter;
+package net.servehttp.bytecom.converter.date;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.faces.component.UIComponent;
@@ -9,14 +8,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(value = "localDateTimeConverter", forClass = LocalDate.class)
-public class LocalDateTimeConverter implements Converter {
+@FacesConverter(value = "localDateConverter", forClass = LocalDate.class)
+public class LocalDateConverter implements Converter {
 
-  private static final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+  private static final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
     if (value != null) {
-      return LocalDateTime.parse(value, pattern);
+      return LocalDate.parse(value, pattern);
     }
     return null;
   }
@@ -24,7 +23,7 @@ public class LocalDateTimeConverter implements Converter {
   public String getAsString(FacesContext ctx, UIComponent component, Object value) {
 
     if (value != null && !"".equals(value)) {
-      LocalDateTime data = (LocalDateTime) value;
+      LocalDate data = (LocalDate) value;
       if (data != null) {
         return data.format(pattern);
       }

@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.util;
+package net.servehttp.bytecom.util.web;
 
 import java.io.IOException;
 import java.io.Serializable;

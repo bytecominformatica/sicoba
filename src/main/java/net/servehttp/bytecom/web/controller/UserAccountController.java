@@ -13,9 +13,9 @@ import javax.servlet.http.Part;
 import net.servehttp.bytecom.business.AccountBussiness;
 import net.servehttp.bytecom.persistence.entity.security.Authentication;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
-import net.servehttp.bytecom.util.AlertaUtil;
-import net.servehttp.bytecom.util.HashUtil;
 import net.servehttp.bytecom.util.Util;
+import net.servehttp.bytecom.util.seguranca.HashUtil;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 import com.servehttp.bytecom.commons.ImageUtil;
 import com.servehttp.bytecom.commons.StringUtil;
