@@ -1,18 +1,19 @@
 package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import net.servehttp.bytecom.converter.LocalDatePersistenceConverter;
 
 @Entity
 @Table(name = "contrato")
@@ -23,8 +24,8 @@ public class Contrato extends EntityGeneric implements Serializable {
   private short vencimento;
   @Column(name = "data_instalacao")
   @NotNull(message = "data de instalação é obrigatório")
-  @Temporal(TemporalType.DATE)
-  private Date dataInstalacao;
+  @Convert(converter = LocalDatePersistenceConverter.class)
+  private LocalDate dataInstalacao;
 
 
   @JoinColumn(name = "equipamento_wifi_id", referencedColumnName = "id")
@@ -53,11 +54,11 @@ public class Contrato extends EntityGeneric implements Serializable {
     this.vencimento = vencimento;
   }
 
-  public Date getDataInstalacao() {
+  public LocalDate getDataInstalacao() {
     return dataInstalacao;
   }
 
-  public void setDataInstalacao(Date dataInstalacao) {
+  public void setDataInstalacao(LocalDate dataInstalacao) {
     this.dataInstalacao = dataInstalacao;
   }
 

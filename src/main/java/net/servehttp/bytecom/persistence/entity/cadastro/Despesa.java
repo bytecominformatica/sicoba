@@ -1,13 +1,16 @@
 package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import net.servehttp.bytecom.converter.LocalDatePersistenceConverter;
 
 /**
  * 
@@ -24,7 +27,8 @@ public class Despesa extends EntityGeneric implements Serializable {
   @JoinColumn(name = "fornecedor_id")
   private Fornecedor fornecedor;
   private double valor;
-  private Date data;
+  @Convert(converter = LocalDatePersistenceConverter.class)
+  private LocalDate data;
   private char status;
 
   public String getDescricao() {
@@ -51,11 +55,11 @@ public class Despesa extends EntityGeneric implements Serializable {
     this.valor = valor;
   }
 
-  public Date getData() {
+  public LocalDate getData() {
     return data;
   }
 
-  public void setData(Date data) {
+  public void setData(LocalDate data) {
     this.data = data;
   }
 

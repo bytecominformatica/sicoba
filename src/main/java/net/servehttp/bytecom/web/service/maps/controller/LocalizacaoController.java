@@ -20,6 +20,7 @@ import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
 import net.servehttp.bytecom.web.service.maps.JSONProcessor;
 import net.servehttp.bytecom.web.service.maps.XMLProcessor;
+
 /**
  * 
  * @author Felipe W. M. Martins <br>
@@ -31,8 +32,8 @@ import net.servehttp.bytecom.web.service.maps.XMLProcessor;
 public class LocalizacaoController implements Serializable {
 
   private static final long serialVersionUID = -6695262369077987911L;
-  
-  private  String geocode_url = "https://maps.googleapis.com/maps/api/geocode/xml";
+
+  private String geocode_url = "https://maps.googleapis.com/maps/api/geocode/xml";
   private ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
   private List<Cliente> listClientes;
   private int cidadeId;
@@ -40,21 +41,21 @@ public class LocalizacaoController implements Serializable {
   private String json;
   private String clienteId;
   private Cliente cliente = new Cliente();
-  
+
   @Inject
   private ClientBussiness clientBussiness;
-  @Inject 
+  @Inject
   private ClienteGeorefereciaBussiness clienteGeoBussiness;
   @Inject
   private Util util;
-  
+
   @PostConstruct
-  public void load(){
+  public void load() {
     listClientes = clientBussiness.buscaUltimosClientesAlterados();
     getParameters();
   }
-  
-  private void getParameters(){
+
+  private void getParameters() {
     clienteId = util.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
@@ -62,40 +63,43 @@ public class LocalizacaoController implements Serializable {
       bairroId = cliente.getEndereco().getBairro().getId();
     }
   }
-  
-  public void geocodificar(){
+
+  public void geocodificar() {
     String path;
     try {
-      path = geocode_url + '?'+"address="+URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','+URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
-      
+      path =
+          geocode_url + '?' + "address="
+              + URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8") + ','
+              + URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8") + ','
+              + URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")
+              + "&sensor=false";
+
       double latitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[0]);
       double longitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[1]);
       clienteGeo.setCliente(getCliente());
       clienteGeo.setLatitude(latitude);
       clienteGeo.setLongitude(longitude);
-     
+
       clienteGeoBussiness.salvar(clienteGeo);
       AlertaUtil.info("Gravado com sucesso!");
-      
-      
+
+
     } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
-    
+
+
   }
-  
-  public String listarClientesNoMapa(){
+
+  public String listarClientesNoMapa() {
     try {
-       json = JSONProcessor.processaJson(clienteGeo);
-       System.out.println(json);
+      json = JSONProcessor.processaJson(clienteGeo);
+      System.out.println(json);
     } catch (JSONException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return json;
-   
+
   }
 
   public Cliente getCliente() {
@@ -129,8 +133,7 @@ public class LocalizacaoController implements Serializable {
   public void setBairroId(int bairroId) {
     this.bairroId = bairroId;
   }
-  
-  
- 
-  
+
+
+
 }

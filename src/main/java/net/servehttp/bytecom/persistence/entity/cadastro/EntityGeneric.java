@@ -1,15 +1,16 @@
 package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import net.servehttp.bytecom.converter.LocalDateTimePersistenceConverter;
 
 @MappedSuperclass
 public abstract class EntityGeneric implements Serializable {
@@ -20,12 +21,12 @@ public abstract class EntityGeneric implements Serializable {
   protected int id;
 
   @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  protected Calendar createdAt;
+  @Convert(converter = LocalDateTimePersistenceConverter.class)
+  protected LocalDateTime createdAt;
 
   @Column(name = "updated_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  protected Calendar updatedAt;
+  @Convert(converter = LocalDateTimePersistenceConverter.class)
+  protected LocalDateTime updatedAt;
 
   public int getId() {
     return id;
@@ -34,20 +35,20 @@ public abstract class EntityGeneric implements Serializable {
   public void setId(int id) {
     this.id = id;
   }
-
-  public Calendar getCreatedAt() {
+  
+  public LocalDateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(Calendar createdAt) {
+  public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public Calendar getUpdatedAt() {
+  public LocalDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(Calendar updatedAt) {
+  public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 

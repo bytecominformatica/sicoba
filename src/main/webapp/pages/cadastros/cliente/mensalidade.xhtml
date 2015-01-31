@@ -203,7 +203,7 @@
 								jsf:value="#{mensalidadeController.descontoGeracao}" />
 					        
 					        <div class="modal-footer">
-				              <button jsf:id="btGerar" jsf:actionListener="#{mensalidadeController.gerarBoletos()}"
+				              <button jsf:id="btGerar" jsf:actionListener="#{mensalidadeController.cadastrarBoletosCaixa()}"
 				                class="btn btn-primary" type="submit">
 				                <span class="glyphicon glyphicon-cog" /> #{bundle.gerar}
 				              </button>
@@ -211,8 +211,33 @@
 						</form>
 					</div>
 					
-					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
-						id="boletos">
+					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12" id="boletos">
+						<form jsf:id="formGerarBoletos">
+							<label jsf:for="quantidade" class="control-label">#{bundle.quantidade}</label>
+							<input jsf:id="quantidade" type="number" class="form-control" required="required" min="1"
+								jsf:value="#{mensalidadeController.quantidade}"/>
+								
+							<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
+					        <input jsf:id="dataInicio" type="text" maxlength="10" required="required" pattern="#{bundle.datePattern}"
+					            jsf:value="#{mensalidadeController.dataInicio}" class="form-control">
+					            <f:converter converterId="localDateConverter"  />
+					        </input>
+					        
+							<label jsf:for="valor" class="control-label">#{bundle.valor}</label>
+							<input jsf:id="valor" type="number" step="any" class="form-control"
+								jsf:value="#{mensalidadeController.valor}" />
+
+							<label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
+							<input jsf:id="desconto" type="number" step="any" class="form-control"
+								jsf:value="#{mensalidadeController.descontoGeracao}" />
+					        
+					        <div class="modal-footer">
+				              <button jsf:id="btGerar" jsf:actionListener="#{mensalidadeController.gerarBoletos()}"
+				                class="btn btn-primary" type="submit">
+				                <span class="glyphicon glyphicon-cog" /> #{bundle.gerar}
+				              </button>
+				            </div>
+						</form>
 					</div>
 					
 				</div>

@@ -13,6 +13,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
 /**
  * 
  * @author Felipe W. M Martins
@@ -23,21 +24,20 @@ public enum XMLProcessor {
   private static String LAT = "/GeocodeResponse//location/lat";
   private static String LNG = "/GeocodeResponse//location/lng";
   private String[] latlng = new String[2];
-  
+
   XPathFactory factory = XPathFactory.newInstance();
 
   XPath xpath = factory.newXPath();
-  
+
   /**
    * 
    * @param uri
    * @return array de lat e long, respectivamente.
    */
-  public String[] xmlRequest(String uri){
+  public String[] xmlRequest(String uri) {
     try {
       URL url = new URL(uri);
-      HttpsURLConnection connection =
-          (HttpsURLConnection) url.openConnection();
+      HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
       connection.setRequestMethod("GET");
       connection.setRequestProperty("Accept", "application/xml");
 
@@ -47,43 +47,43 @@ public enum XMLProcessor {
       DocumentBuilder db = dbf.newDocumentBuilder();
       Document doc = db.parse(xml);
       xmlParser(doc);
-      
+
     } catch (Exception e) {
-      e.printStackTrace();// TODO: handle exception
+      e.printStackTrace();
     }
     return latlng;
   }
+
   /**
    * 
    * @param doc
    * @return array de latitude e longitude nas posições 0 e 1 respectivamente.
    */
-  private String[] xmlParser(Document doc){
+  private String[] xmlParser(Document doc) {
     try {
       NodeList nodes = (NodeList) xpath.evaluate(LAT, doc, XPathConstants.NODE);
-      
+
       for (int i = 0, n = nodes.getLength(); i < n; i++) {
         // CODIGO COMMENTADO POR QUEBRAR NA MUDANÇA PARA JAVA 8
-//        latlng[0] = nodes.item(i).getTextContent();
+        // latlng[0] = nodes.item(i).getTextContent();
       }
 
     } catch (XPathExpressionException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
+
     try {
       NodeList nodes = (NodeList) xpath.evaluate(LNG, doc, XPathConstants.NODE);
-      
-      for(int i = 0, n = nodes.getLength(); i < n; i++){
-//        latlng[1] = nodes.item(i).getTextContent();
-        
+
+      for (int i = 0, n = nodes.getLength(); i < n; i++) {
+        // latlng[1] = nodes.item(i).getTextContent();
+
       }
     } catch (XPathExpressionException e) {
-      e.printStackTrace();// TODO: handle exception
+      e.printStackTrace();
     }
     return latlng;
-    
+
 
   }
 }

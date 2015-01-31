@@ -1,11 +1,12 @@
 package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -19,6 +20,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import net.servehttp.bytecom.annotation.CpfCnpj;
+import net.servehttp.bytecom.converter.LocalDatePersistenceConverter;
 import net.servehttp.bytecom.persistence.entity.Endereco;
 
 import org.hibernate.validator.constraints.Email;
@@ -44,9 +46,11 @@ public class Cliente extends EntityGeneric implements Serializable {
   private String cpfCnpj;
   @Past(message = "Data de Nascimento Inválida")
   @Column(name = "dt_nascimento")
-  private Date dataNascimento;
+  @Convert(converter = LocalDatePersistenceConverter.class)
+  private LocalDate dataNascimento;
   @Email(message = "Email inválido")
   private String email;
+  @NotNull(message = "Fone titular é obrigatório")
   @Column(name = "fone_titular")
   private String foneTitular;
   private String contato;
@@ -169,11 +173,11 @@ public class Cliente extends EntityGeneric implements Serializable {
     this.cpfCnpj = cpfCnpj != null && cpfCnpj.isEmpty() ? null : cpfCnpj;
   }
 
-  public Date getDataNascimento() {
+  public LocalDate getDataNascimento() {
     return dataNascimento;
   }
 
-  public void setDataNascimento(Date dataNascimento) {
+  public void setDataNascimento(LocalDate dataNascimento) {
     this.dataNascimento = dataNascimento;
   }
 

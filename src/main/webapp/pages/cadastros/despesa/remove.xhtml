@@ -6,7 +6,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">  
 <f:metadata>
-	<f:viewParam name="id" value="#{despesaController.despesaSelecionada}"
+	<f:viewParam name="id" value="#{despesaController.despesa}"
 		converter="#{despesaConverter}"
 		converterMessage="Registro não encontrado." />
 </f:metadata>
@@ -20,7 +20,7 @@
 			<div class="panel-body">
 				<div class="modal-body">
 					#{bundle.messageRemoveConfirm}<b>
-						#{despesaController.despesaSelecionada.descricao}</b>?
+						#{despesaController.despesa.descricao}</b>?
 				</div>
 				<div class="modal-footer">
 					<h:form id="removeForm">

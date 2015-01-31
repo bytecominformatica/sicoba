@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.web.controller;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -52,7 +52,7 @@ public class SecurityController implements Serializable {
   @PostConstruct
   public void carregar() {
     if (currentUser.isAuthenticated()) {
-      LOGGER.info("[" + new Date() + "] - " + "USUÁRIO JÁ ESTA LOGADO");
+      LOGGER.info("[" + LocalDateTime.now() + "] - " + "USUÁRIO JÁ ESTA LOGADO");
       webUtil.redirect(HOME_URL);
     }
   }
@@ -68,7 +68,7 @@ public class SecurityController implements Serializable {
         webUtil.redirect(HOME_URL);
       } catch (AuthenticationException e) {
         error = "CREDENCIAIS INVÁLIDAS";
-        LOGGER.info("[" + new Date() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");
+        LOGGER.info("[" + LocalDateTime.now() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");
         sendAlert();
       }
     }

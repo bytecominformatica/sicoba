@@ -2,8 +2,6 @@ package net.servehttp.bytecom.persistence;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,7 +18,6 @@ import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 
 import com.mysema.query.jpa.JPASubQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
-import com.servehttp.bytecom.commons.DateUtil;
 
 /**
  * 
@@ -32,12 +29,12 @@ public class DashboadJPA implements Serializable {
   private static final long serialVersionUID = 4057406973170798760L;
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
-  private Date from;
-  private Date to;
+  private LocalDate from;
+  private LocalDate to;
 
   public DashboadJPA() {
-    from = DateUtil.getPrimeiroDiaDoMes().getTime();
-    to = DateUtil.getUltimoDiaDoMes().getTime();
+    from = LocalDate.now().withDayOfMonth(1);
+    to = LocalDate.now().withDayOfMonth(1);
   }
 
   public void setEntityManager(EntityManager em) {
@@ -53,15 +50,15 @@ public class DashboadJPA implements Serializable {
 
   public long getQuantidadeInstalacoesDoMes() {
     QContrato c = QContrato.contrato;
-    Date data = DateUtil.getPrimeiroDiaDoMes().getTime();
+    LocalDate data = LocalDate.now().withDayOfMonth(1);
+    // Date data = DateUtil.getPrimeiroDiaDoMes().getTime();
     return new JPAQuery(em).from(c).where(c.dataInstalacao.goe(data)).count();
   }
 
   public List<Mensalidade> getMensalidadesEmAtraso() {
     QMensalidade m = QMensalidade.mensalidade;
-    Date data = DateUtil.getHoje();
     return new JPAQuery(em).from(m)
-        .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(data)))
+        .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(LocalDate.now())))
         .orderBy(m.dataVencimento.asc()).list(m);
   }
 
@@ -90,9 +87,7 @@ public class DashboadJPA implements Serializable {
   public List<Cliente> getClientesSemMensalidade() {
     QCliente c = QCliente.cliente;
     QMensalidade m = QMensalidade.mensalidade;
-    Date data =
-        Date.from(LocalDate.now().plusMonths(1).atStartOfDay().atZone(ZoneId.systemDefault())
-            .toInstant());
+    LocalDate data = LocalDate.now().plusMonths(1);
     return new JPAQuery(em)
         .from(c)
         .where(

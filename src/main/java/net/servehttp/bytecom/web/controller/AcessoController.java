@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.web.controller;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -48,7 +48,7 @@ public class AcessoController implements Serializable {
   private void getNovoAcesso() {
     cliente.setAcesso(new Acesso());
     cliente.getAcesso().setCliente(cliente);
-    
+
     String ipLivre = acessoBusiness.getIpLivre();
     cliente.getAcesso().setIp(ipLivre);
     cliente.getAcesso().setMascara(MASK);
@@ -68,7 +68,7 @@ public class AcessoController implements Serializable {
         acessoBusiness.salvar(cliente.getAcesso());
         AlertaUtil.info("Acesso adicionado com sucesso!");
       } else {
-        cliente.setUpdatedAt(Calendar.getInstance());
+        cliente.setUpdatedAt(LocalDateTime.now());
         acessoBusiness.atualizar(cliente);
         AlertaUtil.info("Acesso atualizado com sucesso!");
       }
