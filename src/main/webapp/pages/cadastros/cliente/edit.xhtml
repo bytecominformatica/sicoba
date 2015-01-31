@@ -61,13 +61,14 @@
 				<label jsf:for="cpfCnpj" class="control-label">#{bundle.cpfCnpj}</label>
 				<input jsf:id="cpfCnpj" type="text"
 					jsf:value="#{clienteController.cliente.cpfCnpj}"
-					class="form-control" /> <label jsf:for="datNascimento"
-					class="control-label">#{bundle.dataNascimento}</label> <input
-					jsf:id="datNascimento" type="date"
-					jsf:value="#{clienteController.cliente.dataNascimento}"
-					class="form-control">
-				<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00" />
-				</input> <label jsf:for="fone" class="control-label">#{bundle.fone}</label>
+					class="form-control" /> 
+					
+				<label jsf:for="datNascimento" class="control-label">#{bundle.dataNascimento}</label> 
+				<input jsf:id="datNascimento" type="date" jsf:value="#{clienteController.cliente.dataNascimento}" class="form-control" pattern="#{bundle.datePattern}">
+		            <f:converter converterId="localDateConverter"  />
+				</input> 
+				
+				<label jsf:for="fone" class="control-label">#{bundle.fone}</label>
 				<input jsf:id="fone" type="tel"
 					jsf:value="#{clienteController.cliente.foneTitular}"
 					class="form-control" /> <label jsf:for="contato"

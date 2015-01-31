@@ -2,6 +2,7 @@ package net.servehttp.bytecom.converter;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -17,6 +18,6 @@ public class LocalDateTimePersistenceConverter implements
 
   @Override
   public LocalDateTime convertToEntityAttribute(Timestamp dbData) {
-    return dbData.toLocalDateTime();
+    return Optional.ofNullable(dbData).map(Timestamp::toLocalDateTime).orElse(null);
   }
 }

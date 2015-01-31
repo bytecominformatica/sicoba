@@ -83,8 +83,8 @@
 		
 								<label jsf:for="ocorrencia" class="control-label">#{bundle.dataOcorrencia}</label>
 						        <input jsf:id="ocorrencia" type="date"
-						            jsf:value="#{mensalidadeController.mensalidade.dataOcorrencia}" class="form-control">
-						            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00"/>
+						            jsf:value="#{mensalidadeController.mensalidade.dataOcorrencia}" class="form-control" pattern="#{bundle.datePattern}">
+					            	<f:converter converterId="localDateConverter"  />
 						        </input>
 							</div>
 		
@@ -94,8 +94,8 @@
 		
 							<label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label>
 					        <input jsf:id="vencimento" type="date" required="required"
-					            jsf:value="#{mensalidadeController.mensalidade.dataVencimento}" class="form-control">
-					            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00"/>
+					            jsf:value="#{mensalidadeController.mensalidade.dataVencimento}" class="form-control" pattern="#{bundle.datePattern}">
+					            <f:converter converterId="localDateConverter"  />
 					        </input>
 		
 							<label jsf:for="numeroBoleto" class="control-label">#{bundle.boleto}</label>
@@ -134,7 +134,6 @@
 									<h:column>
 										<f:facet name="header">#{bundle.vencimento}</f:facet>
 										<h:outputText value="#{m.dataVencimento}" >
-											<f:convertDateTime locale="pt" pattern="dd/MM/yyyy"/>
 										</h:outputText>
 									</h:column>
 									
@@ -193,9 +192,9 @@
 								jsf:value="#{mensalidadeController.numeroBoletoFim}"/>
 								
 							<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
-					        <input jsf:id="dataInicio" type="date" required="required"
-					            jsf:value="#{mensalidadeController.dataInicio}" class="form-control">
-					            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-03:00"/>
+					        <input jsf:id="dataInicio" type="text" required="required"
+					            jsf:value="#{mensalidadeController.dataInicio}" class="form-control" pattern="#{bundle.datePattern}">
+					            <f:converter converterId="localDateConverter"  />
 					        </input>
 					        
 							<label jsf:for="descontoGeracao" class="control-label">#{bundle.desconto}</label>
@@ -218,8 +217,8 @@
 								jsf:value="#{mensalidadeController.quantidade}"/>
 								
 							<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
-					        <input jsf:id="dataInicio" type="text" maxlength="10" required="required" pattern="#{bundle.datePattern}"
-					            jsf:value="#{mensalidadeController.dataInicio}" class="form-control">
+					        <input jsf:id="dataInicio" type="text" maxlength="10" required="required"
+					            jsf:value="#{mensalidadeController.dataInicio}" class="form-control" pattern="#{bundle.datePattern}">
 					            <f:converter converterId="localDateConverter"  />
 					        </input>
 					        

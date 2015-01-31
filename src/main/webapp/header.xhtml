@@ -223,8 +223,9 @@
                             <p>
                                 #{userAccount.firstName} #{userAccount.lastName}
                                 
-                                <small>Member since <h:outputText value="#{userAccount.createdAt}">
-                                	<f:convertDateTime pattern="dd/MM/yyyy"/>
+                                <small>Member since 
+                                <h:outputText value="#{userAccount.createdAt}">
+						            <f:converter converterId="localDateTimeConverter"  />
                                 </h:outputText>
                                  </small>
                             </p>
