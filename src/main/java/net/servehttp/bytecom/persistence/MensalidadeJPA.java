@@ -2,8 +2,8 @@ package net.servehttp.bytecom.persistence;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
@@ -21,7 +21,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 @Transactional
 public class MensalidadeJPA {
 
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
   private QMensalidade m = QMensalidade.mensalidade;
 

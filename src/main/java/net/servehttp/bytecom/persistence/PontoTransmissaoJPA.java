@@ -3,8 +3,8 @@ package net.servehttp.bytecom.persistence;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.pingtest.PontoTransmissao;
@@ -20,7 +20,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 public class PontoTransmissaoJPA implements Serializable {
 
   private static final long serialVersionUID = 5006498719314183836L;
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
   private QPontoTransmissao p = QPontoTransmissao.pontoTransmissao;
 

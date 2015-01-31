@@ -3,16 +3,16 @@ package net.servehttp.bytecom.persistence;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import com.mysema.query.jpa.impl.JPAQuery;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.persistence.entity.cadastro.QEquipamento;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusEquipamento;
 import net.servehttp.bytecom.persistence.entity.cadastro.TipoEquipamento;
+
+import com.mysema.query.jpa.impl.JPAQuery;
 
 /**
  * 
@@ -22,7 +22,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.TipoEquipamento;
 public class EquipamentoJPA implements Serializable {
 
   private static final long serialVersionUID = 7528131197866761853L;
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
   private QEquipamento e = QEquipamento.equipamento;
 

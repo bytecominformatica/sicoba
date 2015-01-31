@@ -2,14 +2,14 @@ package net.servehttp.bytecom.persistence;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import com.mysema.query.jpa.impl.JPAQuery;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 import net.servehttp.bytecom.persistence.entity.cadastro.QPlano;
+
+import com.mysema.query.jpa.impl.JPAQuery;
 
 /**
  *
@@ -19,7 +19,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.QPlano;
 public class PlanoJPA {
 
   private QPlano p = QPlano.plano;
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
 
   public void setEntityManager(EntityManager em) {

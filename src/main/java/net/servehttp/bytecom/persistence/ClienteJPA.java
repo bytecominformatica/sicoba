@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
@@ -23,7 +23,7 @@ import com.mysema.query.types.expr.BooleanExpression;
 public class ClienteJPA implements Serializable {
 
   private static final long serialVersionUID = 1857140370479772238L;
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
   private QCliente c = QCliente.cliente;
 

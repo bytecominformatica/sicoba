@@ -2,8 +2,8 @@ package net.servehttp.bytecom.persistence;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
@@ -16,7 +16,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
 public class ContratoJPA implements Serializable {
 
   private static final long serialVersionUID = -2556507568580609030L;
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
 
   public void setEntityManager(EntityManager em) {
