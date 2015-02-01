@@ -2,7 +2,6 @@ package net.servehttp.bytecom.web.service.maps;
 
 import java.io.InputStream;
 import java.net.URL;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,7 +9,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -65,7 +63,7 @@ public enum XMLProcessor {
 
       for (int i = 0, n = nodes.getLength(); i < n; i++) {
         // CODIGO COMMENTADO POR QUEBRAR NA MUDANÇA PARA JAVA 8
-        // latlng[0] = nodes.item(i).getTextContent();
+        latlng[0] = nodes.item(i).getTextContent();
       }
 
     } catch (XPathExpressionException e) {
@@ -76,7 +74,7 @@ public enum XMLProcessor {
       NodeList nodes = (NodeList) xpath.evaluate(LNG, doc, XPathConstants.NODE);
 
       for (int i = 0, n = nodes.getLength(); i < n; i++) {
-        // latlng[1] = nodes.item(i).getTextContent();
+        latlng[1] = nodes.item(i).getTextContent();
 
       }
     } catch (XPathExpressionException e) {
