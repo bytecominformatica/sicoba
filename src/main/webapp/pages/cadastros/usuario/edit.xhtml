@@ -38,7 +38,7 @@
 						jsf:value="#{userAccountController.userAccount.lastName}" />
 						
 					<label jsf:for="email" class="control-label">#{bundle.email}</label>
-					<input jsf:id="email" type="text" class="form-control"
+					<input jsf:id="email" type="email" class="form-control" required="required"
 						jsf:value="#{userAccountController.userAccount.email}" />
 
 					<div style="display: #{userAccountController.userAccount.id == 0 ?  'inline' : 'none'}">

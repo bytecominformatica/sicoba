@@ -37,7 +37,6 @@ public class PlanoController implements Serializable {
   }
 
   private void getParameters() {
-    System.out.println("TTTT");
     String planoId = util.getParameters("id");
     if (planoId != null && !planoId.isEmpty()) {
       setPlano(planoBussiness.findById(Integer.parseInt(planoId)));
@@ -57,7 +56,7 @@ public class PlanoController implements Serializable {
     if (planoBussiness.planAvaliable(getPlano())) {
       if (getPlano().getId() == 0) {
         planoBussiness.salvar(getPlano());
-        AlertaUtil.info("Plano adicionado com sucesso!");
+        AlertaUtil.info("Salvo com sucesso!");
       } else {
         planoBussiness.atualizar(getPlano());
         AlertaUtil.info("Atualizado com sucesso!");

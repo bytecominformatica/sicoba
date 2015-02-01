@@ -18,7 +18,6 @@
 		<class>net.servehttp.bytecom.persistence.entity.Pais</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Plano</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Despesa</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Tecnico</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Header</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Trailer</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.HeaderLote</class>

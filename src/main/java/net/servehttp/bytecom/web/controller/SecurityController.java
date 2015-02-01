@@ -33,7 +33,7 @@ public class SecurityController implements Serializable {
   private static final long serialVersionUID = -4657746545855537894L;
   private static final Logger LOGGER = Logger.getLogger(SecurityController.class.getSimpleName());
   private static final String destinatario = "clairton.c.l@gmail.com";
-  private static final String HOME_URL = "index.xhtml";
+  private static final String HOME_URL = "/index.xhtml";
 
   private String username;
   private String password;
