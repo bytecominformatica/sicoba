@@ -1,51 +1,45 @@
-package net.servehttp.bytecom.persistence.entity.financeiro;
+package net.servehttp.bytecom.persistence.entity.financeiro.boleto;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
+
+import net.servehttp.bytecom.persistence.entity.cadastro.EntityGeneric;
 
 @Entity
 @Table(name = "cedente")
-public class Cedente implements Serializable {
+public class Cedente extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -2529079451437071047L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private String nome;
 
   private int codigo;
-  
+
   @Column(name = "digito_verificador")
   private int digitoVerificador;
-  
+
   @Column(name = "codigo_operacao")
   private int codigoOperacao;
 
   @Column(name = "cpf_cnpj")
   private String cpfCnpj;
 
-  @Column(name = "digito_agencia")
-  private int digitoAgencia;
-
-  @Column(name = "digito_conta")
-  private int digitoConta;
-
-  private String nome;
-
   @Column(name = "numero_agencia")
   private int numeroAgencia;
+
+  @Column(name = "digito_agencia")
+  private int digitoAgencia;
 
   @Column(name = "numero_conta")
   private int numeroConta;
 
-  public Cedente() {}
+  @Column(name = "digito_conta")
+  private int digitoConta;
 
-  public int getId() {
-    return this.id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
+  public Cedente() {
+    createdAt = LocalDateTime.now();
   }
 
   public int getCodigoOperacao() {

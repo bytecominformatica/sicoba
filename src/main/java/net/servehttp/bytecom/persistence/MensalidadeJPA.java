@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.QMensalidade;
-import net.servehttp.bytecom.persistence.entity.financeiro.Cedente;
-import net.servehttp.bytecom.persistence.entity.financeiro.QCedente;
+import net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente;
+import net.servehttp.bytecom.persistence.entity.financeiro.boleto.QCedente;
 
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;

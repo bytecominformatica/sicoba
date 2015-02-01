@@ -148,4 +148,9 @@
 			stripComments="true" />
 	</changeSet>
 
+	<changeSet id="25" author="clairtonluz">
+		<sqlFile path="net/servehttp/bytecom/db/changelog/25-clairtonluz.sql"
+			stripComments="true" />
+	</changeSet>
+
 </databaseChangeLog>

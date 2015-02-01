@@ -28,7 +28,7 @@
 		<class>net.servehttp.bytecom.persistence.entity.security.AccessGroup</class>
 		<class>net.servehttp.bytecom.persistence.entity.security.Authentication</class>
 		<class>net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia</class>
-		<class>net.servehttp.bytecom.persistence.entity.financeiro.Cedente</class>
+		<class>net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente</class>
 		<class>net.servehttp.bytecom.converter.date.LocalDatePersistenceConverter</class>
 		<class>net.servehttp.bytecom.converter.date.LocalDateTimePersistenceConverter</class>
 
