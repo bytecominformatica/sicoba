@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.web.controller;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,7 +15,7 @@ public class ServidorController {
 
   public void atualizarAcesso() {
     StringBuilder sb = new StringBuilder();
-    sb.append("[").append(new Date()).append("] ATUALIZANDO ACESSO DOS CLIENTES");
+    sb.append("[").append(LocalDateTime.now()).append("] ATUALIZANDO ACESSO DOS CLIENTES");
     LOGGER.info(sb.toString());
 
     executar("/opt/script/./SICOBA.sh start");

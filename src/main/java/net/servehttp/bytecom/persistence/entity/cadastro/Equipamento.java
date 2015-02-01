@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.persistence.entity.cadastro;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -39,7 +39,7 @@ public class Equipamento extends EntityGeneric implements Serializable {
     this.setId(id);
   }
 
-  public Equipamento(Integer id, String marca, String modelo, String mac, Calendar updatedAt) {
+  public Equipamento(Integer id, String marca, String modelo, String mac, LocalDateTime updatedAt) {
     this.setId(id);
     this.marca = marca;
     this.modelo = modelo;

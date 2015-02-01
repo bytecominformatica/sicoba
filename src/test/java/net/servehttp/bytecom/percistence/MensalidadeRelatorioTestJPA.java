@@ -1,6 +1,6 @@
 package net.servehttp.bytecom.percistence;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
 
@@ -11,8 +11,6 @@ import net.servehttp.bytecom.persistence.relatorios.MensalidadeRelatorioJPA;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.servehttp.bytecom.commons.DateUtil;
 
 public class MensalidadeRelatorioTestJPA {
   private static EntityManager em;
@@ -27,16 +25,16 @@ public class MensalidadeRelatorioTestJPA {
 
   @Test
   public void deveriaBuscasMensalidadesPorStatusEDataOcorrencia() {
-    Date inicio = DateUtil.getHoje();
-    Date fim = DateUtil.getHoje();
+    LocalDate inicio = LocalDate.now();
+    LocalDate fim = LocalDate.now();
     boolean buscarPorDataOcorrencia = true;
     mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, StatusMensalidade.PAGO_NO_BOLETO, buscarPorDataOcorrencia);
   }
 
   @Test
   public void deveriaBuscasMensalidadesPorStatusEDataVencimento() {
-    Date inicio = DateUtil.getHoje();
-    Date fim = DateUtil.getHoje();
+    LocalDate inicio = LocalDate.now();
+    LocalDate fim = LocalDate.now();
     boolean buscarPorDataOcorrencia = false;
     mensalidadeRelatorioJPA.buscarPorDataStatus(inicio, fim, StatusMensalidade.PAGO_NO_BOLETO, buscarPorDataOcorrencia);
   }

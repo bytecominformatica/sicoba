@@ -2,17 +2,18 @@ package net.servehttp.bytecom.persistence.entity.cadastro;
 
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import net.servehttp.bytecom.converter.LocalDatePersistenceConverter;
 
 /**
  *
@@ -24,11 +25,11 @@ public class Mensalidade extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -8955481650524371350L;
   @Column(name = "data_vencimento")
-  @Temporal(TemporalType.DATE)
-  private Date dataVencimento;
+  @Convert(converter = LocalDatePersistenceConverter.class)
+  private LocalDate dataVencimento;
   @Column(name = "data_ocorrencia")
-  @Temporal(TemporalType.DATE)
-  private Date dataOcorrencia;
+  @Convert(converter = LocalDatePersistenceConverter.class)
+  private LocalDate dataOcorrencia;
   private double valor;
   @Column(name = "valor_pago")
   private double valorPago;
@@ -48,11 +49,11 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     status = StatusMensalidade.PENDENTE;
   }
 
-  public Date getDataVencimento() {
+  public LocalDate getDataVencimento() {
     return dataVencimento;
   }
 
-  public void setDataVencimento(Date dataVencimento) {
+  public void setDataVencimento(LocalDate dataVencimento) {
     this.dataVencimento = dataVencimento;
   }
 
@@ -104,11 +105,11 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     this.tarifa = tarifa;
   }
 
-  public Date getDataOcorrencia() {
+  public LocalDate getDataOcorrencia() {
     return dataOcorrencia;
   }
 
-  public void setDataOcorrencia(Date dataOcorrencia) {
+  public void setDataOcorrencia(LocalDate dataOcorrencia) {
     this.dataOcorrencia = dataOcorrencia;
   }
 

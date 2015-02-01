@@ -15,7 +15,7 @@
 			<br/>
 				<form jsf:id="formPesquisa" class="form-horizontal">
 				    <div class="input-group">
-						<input jsf:value="#{clienteController.pesquisa}" type="text" name="pesquisa" class="form-control" placeholder="Nome, Fone ou Email" jsf:id="pesquisa" autofocus="autofocus"/>
+						<input jsf:value="#{clienteController.nome}" type="text" name="nome" class="form-control" placeholder="Nome" jsf:id="nome" autofocus="autofocus"/>
 				      <span class="input-group-btn">
 						<button type="submit" class="btn btn-primary" jsf:actionListener="#{clienteController.consultar()}">
 							<span class="glyphicon glyphicon-search" />
