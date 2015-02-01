@@ -2,8 +2,8 @@ package net.servehttp.bytecom.persistence;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.security.Authentication;
@@ -21,7 +21,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 public class UserJPA implements Serializable {
 
   private static final long serialVersionUID = -1412149982160690889L;
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
 
   public void setEntityManager(EntityManager em) {

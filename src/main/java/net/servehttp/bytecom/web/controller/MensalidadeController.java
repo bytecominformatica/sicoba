@@ -22,7 +22,7 @@ import net.servehttp.bytecom.business.MensalidadeBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
-import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  *
@@ -39,7 +39,6 @@ public class MensalidadeController implements Serializable {
   private int quantidade;
   private int numeroBoletoInicio;
   private int numeroBoletoFim;
-  private double valor;
   private double descontoGeracao;
   private LocalDate dataInicio;
 
@@ -245,13 +244,4 @@ public class MensalidadeController implements Serializable {
   public void setQuantidade(int quantidade) {
     this.quantidade = quantidade;
   }
-
-  public double getValor() {
-    return valor;
-  }
-
-  public void setValor(double valor) {
-    this.valor = valor;
-  }
-
 }

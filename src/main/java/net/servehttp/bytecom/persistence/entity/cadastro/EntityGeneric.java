@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import net.servehttp.bytecom.converter.LocalDateTimePersistenceConverter;
+import net.servehttp.bytecom.converter.date.LocalDateTimePersistenceConverter;
 
 @MappedSuperclass
 public abstract class EntityGeneric implements Serializable {

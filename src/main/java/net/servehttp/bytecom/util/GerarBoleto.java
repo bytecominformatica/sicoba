@@ -52,7 +52,7 @@ public abstract class GerarBoleto implements Serializable {
   private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public static byte[] criarCarneCaixa(List<Mensalidade> mensalidades,
-      net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
+      net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente c) {
     if (mensalidades != null && !mensalidades.isEmpty()) {
       List<Boleto> boletos = new ArrayList<>();
 
@@ -127,7 +127,7 @@ public abstract class GerarBoleto implements Serializable {
   }
 
   private static Titulo getTitulo(Mensalidade m, Cedente cedente, Sacado sacado,
-      net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
+      net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente c) {
     /*
      * INFORMANDO OS DADOS SOBRE O TÍTULO.
      */
@@ -182,7 +182,7 @@ public abstract class GerarBoleto implements Serializable {
     return sacado;
   }
 
-  private static Cedente getCedente(net.servehttp.bytecom.persistence.entity.financeiro.Cedente c) {
+  private static Cedente getCedente(net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente c) {
     /*
      * INFORMANDO DADOS SOBRE O CEDENTE.
      */

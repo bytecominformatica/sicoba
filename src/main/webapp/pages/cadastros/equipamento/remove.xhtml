@@ -5,7 +5,7 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
 	<f:viewParam name="id" value="#{equipamentoController.equipamento}"
-		converter="#{equipamentoConverter}"
+		converter="#{entityConverter}"
 		converterMessage="Registro não encontrado." />
 </f:metadata>
 <ui:composition template="/layout.xhtml">

@@ -10,8 +10,8 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.business.PlanoBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
-import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 
@@ -37,7 +37,7 @@ public class PlanoController implements Serializable {
   }
 
   private void getParameters() {
-    String planoId = util.getParameters("planoId");
+    String planoId = util.getParameters("id");
     if (planoId != null && !planoId.isEmpty()) {
       setPlano(planoBussiness.findById(Integer.parseInt(planoId)));
     }
@@ -56,7 +56,7 @@ public class PlanoController implements Serializable {
     if (planoBussiness.planAvaliable(getPlano())) {
       if (getPlano().getId() == 0) {
         planoBussiness.salvar(getPlano());
-        AlertaUtil.info("Plano adicionado com sucesso!");
+        AlertaUtil.info("Salvo com sucesso!");
       } else {
         planoBussiness.atualizar(getPlano());
         AlertaUtil.info("Atualizado com sucesso!");

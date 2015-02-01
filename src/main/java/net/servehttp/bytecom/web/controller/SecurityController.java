@@ -14,7 +14,7 @@ import net.servehttp.bytecom.business.AccountBussiness;
 import net.servehttp.bytecom.ejb.MailEJB;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 import net.servehttp.bytecom.util.NetworkUtil;
-import net.servehttp.bytecom.util.WebUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -76,7 +76,6 @@ public class SecurityController implements Serializable {
 
   public void logout() {
     SecurityUtils.getSubject().logout();
-    webUtil.redirect(HOME_URL);
   }
 
   private void sendAlert() {

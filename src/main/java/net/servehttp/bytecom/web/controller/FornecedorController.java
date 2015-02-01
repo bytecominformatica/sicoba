@@ -15,8 +15,8 @@ import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.Despesa;
 import net.servehttp.bytecom.persistence.entity.cadastro.Fornecedor;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
-import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 

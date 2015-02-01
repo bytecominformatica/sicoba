@@ -16,11 +16,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import net.servehttp.bytecom.annotation.CpfCnpj;
-import net.servehttp.bytecom.converter.LocalDatePersistenceConverter;
+import net.servehttp.bytecom.converter.date.LocalDatePersistenceConverter;
 import net.servehttp.bytecom.persistence.entity.Endereco;
 
 import org.hibernate.validator.constraints.Email;

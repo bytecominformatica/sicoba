@@ -32,8 +32,8 @@
 					</li>
 
 					<li role="presentation">
-						<a href="#boletos" aria-controls="boletos" role="tab" data-toggle="tab">
-							Gerar Boletos
+						<a href="#gerarMensalidades" aria-controls="gerarMensalidades" role="tab" data-toggle="tab">
+							Gerar Mensalidades
 						</a>
 					</li>
 					
@@ -210,8 +210,8 @@
 						</form>
 					</div>
 					
-					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12" id="boletos">
-						<form jsf:id="formGerarBoletos">
+					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12" id="gerarMensalidades">
+						<form jsf:id="formGerarMensalidades">
 							<label jsf:for="quantidade" class="control-label">#{bundle.quantidade}</label>
 							<input jsf:id="quantidade" type="number" class="form-control" required="required" min="1"
 								jsf:value="#{mensalidadeController.quantidade}"/>
@@ -219,12 +219,12 @@
 							<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
 					        <input jsf:id="dataInicio" type="text" maxlength="10" required="required"
 					            jsf:value="#{mensalidadeController.dataInicio}" class="form-control" pattern="#{bundle.datePattern}">
-					            <f:converter converterId="localDateConverter"  />
+					            <f:converter converterId="localDateConverter"/>
 					        </input>
 					        
 							<label jsf:for="valor" class="control-label">#{bundle.valor}</label>
 							<input jsf:id="valor" type="number" step="any" class="form-control"
-								jsf:value="#{mensalidadeController.valor}" />
+								jsf:value="#{mensalidadeController.mensalidade.valor}" />
 
 							<label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
 							<input jsf:id="desconto" type="number" step="any" class="form-control"

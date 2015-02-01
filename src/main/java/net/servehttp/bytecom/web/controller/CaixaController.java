@@ -16,7 +16,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.entity.caixa.Header;
 import net.servehttp.bytecom.persistence.entity.caixa.HeaderLote;
 import net.servehttp.bytecom.persistence.entity.caixa.Registro;
-import net.servehttp.bytecom.util.AlertaUtil;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 

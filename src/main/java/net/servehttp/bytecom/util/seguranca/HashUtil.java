@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.util;
+package net.servehttp.bytecom.util.seguranca;
 
 import org.apache.shiro.crypto.hash.Sha256Hash;
 

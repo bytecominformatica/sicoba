@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
@@ -27,7 +27,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 public class DashboadJPA implements Serializable {
 
   private static final long serialVersionUID = 4057406973170798760L;
-  @PersistenceContext(unitName = "bytecom-pu")
+  @Inject
   private EntityManager em;
   private LocalDate from;
   private LocalDate to;
