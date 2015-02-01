@@ -10,15 +10,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.codehaus.jettison.json.JSONException;
-
 import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.ClienteGeorefereciaBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
 import net.servehttp.bytecom.util.AlertaUtil;
 import net.servehttp.bytecom.util.Util;
-import net.servehttp.bytecom.web.service.maps.JSONProcessor;
 import net.servehttp.bytecom.web.service.maps.XMLProcessor;
 
 /**
@@ -38,7 +35,6 @@ public class LocalizacaoController implements Serializable {
   private List<Cliente> listClientes;
   private int cidadeId;
   private int bairroId;
-  private String json;
   private String clienteId;
   private Cliente cliente = new Cliente();
 
@@ -67,12 +63,9 @@ public class LocalizacaoController implements Serializable {
   public void geocodificar() {
     String path;
     try {
-      path =
-          geocode_url + '?' + "address="
-              + URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8") + ','
-              + URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8") + ','
-              + URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")
-              + "&sensor=false";
+      path = geocode_url + '?'+"address="+URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8")+','
+          +URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','
+          +URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
 
       double latitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[0]);
       double longitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[1]);
@@ -88,17 +81,6 @@ public class LocalizacaoController implements Serializable {
       e.printStackTrace();
     }
 
-
-  }
-
-  public String listarClientesNoMapa() {
-    try {
-      json = JSONProcessor.processaJson(clienteGeo);
-      System.out.println(json);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    return json;
 
   }
 
