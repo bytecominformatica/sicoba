@@ -37,7 +37,8 @@ public class PlanoController implements Serializable {
   }
 
   private void getParameters() {
-    String planoId = util.getParameters("planoId");
+    System.out.println("TTTT");
+    String planoId = util.getParameters("id");
     if (planoId != null && !planoId.isEmpty()) {
       setPlano(planoBussiness.findById(Integer.parseInt(planoId)));
     }
