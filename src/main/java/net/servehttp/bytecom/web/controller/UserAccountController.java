@@ -42,13 +42,13 @@ public class UserAccountController implements Serializable {
   private Part file;
 
   @Inject
-  private AccountBussiness accountBussiness;
+  private AccountBussiness business;
   @Inject
   private Util util;
 
   @PostConstruct
   public void load() {
-    listUserAccount = accountBussiness.findUsersAccounts();
+    listUserAccount = business.findUsersAccounts();
     getParameters();
 
   }
@@ -56,7 +56,7 @@ public class UserAccountController implements Serializable {
   private boolean valida(UserAccount userAccount) {
     boolean result = true;
 
-    if (!accountBussiness.emailAvaliable(userAccount)) {
+    if (!business.emailAvaliable(userAccount)) {
       AlertaUtil.error("Email já cadastrado!");
       result = false;
     }
@@ -85,10 +85,10 @@ public class UserAccountController implements Serializable {
         auth.setUsername(username);
         auth.setPassword(HashUtil.sha256ToHex(password));
         auth.setUserAccount(userAccount);
-        accountBussiness.salvar(auth);
+        business.salvar(auth);
         AlertaUtil.info("Usuário gravado com sucesso!");
       } else {
-        accountBussiness.atualizar(userAccount);
+        business.atualizar(userAccount);
         AlertaUtil.info("Usuário atualizado com sucesso!");
       }
       page = "list";
@@ -98,23 +98,23 @@ public class UserAccountController implements Serializable {
   }
 
   public void resetPassword() {
-    Authentication auth = accountBussiness.findAuthenticationByUserAccount(userAccount);
+    Authentication auth = business.findAuthenticationByUserAccount(userAccount);
     String senha = StringUtil.gerarSenha(8);
     auth.setPassword(HashUtil.sha256ToHex(senha));
-    accountBussiness.atualizar(auth);
+    business.atualizar(auth);
     AlertaUtil.info("A senha do usuário " + auth.getUsername() + " foi alterada para " + senha);
   }
 
   private void getParameters() {
     String userAccountId = util.getParameters("id");
     if (userAccountId != null && !userAccountId.isEmpty()) {
-      userAccount = accountBussiness.findUserAccountById(Integer.parseInt(userAccountId));
+      userAccount = business.findUserAccountById(Integer.parseInt(userAccountId));
     }
   }
 
   public String remover() {
     page = null;
-    accountBussiness.remover(userAccount);
+    business.remover(userAccount);
     page = "list";
     return page;
   }

@@ -5,11 +5,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
-<f:metadata>
-	<f:viewParam name="id" value="#{usuarioController.usuario}"
-		converter="#{usuarioConverter}"
-		converterMessage="Registro não encontrado." />
-</f:metadata>
+
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.user}</ui:define>
 	<ui:define name="subtitle">#{bundle.remove}</ui:define>
@@ -20,7 +16,7 @@
 			<div class="panel-body">
 				<div class="modal-body">
 					#{bundle.messageRemoveConfirm}<b>
-						#{usuarioController.usuario.login}</b>?
+						#{userAccountController.userAccount.firstName}</b>?
 				</div>
 				<div class="modal-footer">
 					<form jsf:id="removeForm">
@@ -29,7 +25,7 @@
 							#{bundle.no}
 						</button>
 						
-						<button jsf:id="btDelete" jsf:action="#{usuarioController.remover()}"
+						<button jsf:id="btDelete" jsf:action="#{userAccountController.remover()}"
                           class="btn btn-danger" type="submit">
                            #{bundle.yes}
                         </button>

@@ -7,11 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import com.mysema.query.jpa.impl.JPAQuery;
-
-import net.servehttp.bytecom.persistence.entity.cadastro.QCliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
 import net.servehttp.bytecom.persistence.entity.maps.QClienteGeoReferencia;
+
+import com.mysema.query.jpa.impl.JPAQuery;
 
 /**
  * 
@@ -25,7 +24,6 @@ public class ClienteGeoReferenciaJPA implements Serializable {
   @PersistenceContext(unitName = "bytecom-pu")
   private EntityManager em;
   private QClienteGeoReferencia cg = QClienteGeoReferencia.clienteGeoReferencia;
-  private QCliente c = QCliente.cliente;
   
   public void setEntityManager(EntityManager em) {
     this.em = em;

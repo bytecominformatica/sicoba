@@ -10,14 +10,11 @@
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Cliente</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Contrato</class>
 		<class>net.servehttp.bytecom.persistence.entity.Endereco</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Empresa</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Equipamento</class>
 		<class>net.servehttp.bytecom.persistence.entity.Estado</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Fornecedor</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade</class>
 		<class>net.servehttp.bytecom.persistence.entity.Pais</class>
 		<class>net.servehttp.bytecom.persistence.entity.cadastro.Plano</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Despesa</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Header</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.Trailer</class>
 		<class>net.servehttp.bytecom.persistence.entity.caixa.HeaderLote</class>

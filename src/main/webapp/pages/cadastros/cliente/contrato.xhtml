@@ -33,10 +33,11 @@
           </h:selectOneMenu>
 
           <label jsf:for="dataInstalacao" class="control-label">#{bundle.dataInstalacao}</label>
-          <input jsf:id="dataInstalacao" type="date"
-            jsf:value="#{contratoController.cliente.contrato.dataInstalacao}" class="form-control">
-            <f:converter converterId="localDateConverter"  />
-          </input>
+          <input jsf:id="dataInstalacao"
+            jsf:value="#{contratoController.cliente.contrato.dataInstalacao}" type="text" maxlength="10" 
+            class="form-control" pattern="#{bundle.datePattern}">
+	            <f:converter converterId="localDateConverter"  />
+	        </input>
 
           <label jsf:for="equipamento" class="control-label">#{bundle.equipamento}</label>
           <h:selectOneMenu id="equipamento" value="#{contratoController.cliente.contrato.equipamento}" converter="entityConverter"

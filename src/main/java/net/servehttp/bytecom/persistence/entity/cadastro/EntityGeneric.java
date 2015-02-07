@@ -27,6 +27,10 @@ public abstract class EntityGeneric implements Serializable {
   @Column(name = "updated_at")
   @Convert(converter = LocalDateTimePersistenceConverter.class)
   protected LocalDateTime updatedAt;
+  
+  public EntityGeneric() {
+    createdAt = LocalDateTime.now();
+  }
 
   public int getId() {
     return id;

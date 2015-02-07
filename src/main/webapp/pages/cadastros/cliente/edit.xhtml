@@ -64,9 +64,9 @@
 					class="form-control" /> 
 					
 				<label jsf:for="datNascimento" class="control-label">#{bundle.dataNascimento}</label> 
-				<input jsf:id="datNascimento" type="date" jsf:value="#{clienteController.cliente.dataNascimento}" class="form-control" pattern="#{bundle.datePattern}">
+				<input jsf:id="datNascimento" jsf:value="#{clienteController.cliente.dataNascimento}" type="text" maxlength="10" class="form-control" pattern="#{bundle.datePattern}">
 		            <f:converter converterId="localDateConverter"  />
-				</input> 
+		        </input>
 				
 				<label jsf:for="fone" class="control-label">#{bundle.fone}</label>
 				<input jsf:id="fone" type="tel"

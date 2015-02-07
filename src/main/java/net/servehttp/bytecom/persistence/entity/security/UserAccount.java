@@ -3,6 +3,7 @@ package net.servehttp.bytecom.persistence.entity.security;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -26,13 +27,13 @@ import org.hibernate.validator.constraints.Email;
 public class UserAccount extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -7710346689149270175L;
-  @Email(message="Email inválido")
+  @Email(message = "Email inválido")
   private String email;
   @Column(name = "first_name")
   private String firstName;
   @Column(name = "last_name")
   private String lastName;
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id",
       referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "group_id",
       referencedColumnName = "id"))
