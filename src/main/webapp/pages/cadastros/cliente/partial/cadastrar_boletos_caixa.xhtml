@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+<form jsf:id="formBoletos">
+	<label jsf:for="numeroBoletoInicio" class="control-label">#{bundle.boletoInicio}</label>
+	<input jsf:id="numeroBoletoInicio" type="number" class="form-control" required="required"
+		jsf:value="#{mensalidadeController.numeroBoletoInicio}"/>
+	
+	<label jsf:for="numeroBoletoFim" class="control-label">#{bundle.boletoFim}</label>
+	<input jsf:id="numeroBoletoFim" type="number" class="form-control" required="required"
+		jsf:value="#{mensalidadeController.numeroBoletoFim}"/>
+		
+	<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
+       <input jsf:id="dataInicio" required="required"
+           jsf:value="#{mensalidadeController.dataInicio}" type="text" maxlength="10" class="form-control" pattern="#{bundle.datePattern}">
+           <f:converter converterId="localDateConverter"  />
+       </input>
+       
+	<label jsf:for="descontoGeracao" class="control-label">#{bundle.desconto}</label>
+	<input jsf:id="descontoGeracao" type="number" step="any" class="form-control"
+		jsf:value="#{mensalidadeController.descontoGeracao}" />
+       
+       <div class="modal-footer">
+            <button jsf:id="btGerar" jsf:actionListener="#{mensalidadeController.cadastrarBoletosCaixa()}"
+              class="btn btn-primary" type="submit">
+              <span class="glyphicon glyphicon-cog" /> #{bundle.gerar}
+            </button>
+          </div>
+</form>
+</html>
