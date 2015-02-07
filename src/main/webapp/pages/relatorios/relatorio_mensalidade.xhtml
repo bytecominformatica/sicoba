@@ -46,14 +46,15 @@
                     </label>
                 </div>
 				<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
-				<input jsf:id="dataInicio" jsf:value="#{mensalidadeRelatorioController.dataInicio}" type="date" class="form-control" required="required" pattern="#{bundle.datePattern}">
+				<input jsf:id="dataInicio" jsf:value="#{mensalidadeRelatorioController.dataInicio}" required="required" type="text" maxlength="10" class="form-control" pattern="#{bundle.datePattern}">
 		            <f:converter converterId="localDateConverter"  />
-				</input>
+		        </input>
 
 				<label jsf:for="dataFim" class="control-label">#{bundle.dataFim}</label>
-				<input jsf:id="dataFim" jsf:value="#{mensalidadeRelatorioController.dataFim}" type="date" class="form-control" required="required" pattern="#{bundle.datePattern}">
+				<input jsf:id="dataFim" jsf:value="#{mensalidadeRelatorioController.dataFim}" required="required" type="text" maxlength="10" class="form-control" pattern="#{bundle.datePattern}">
 		            <f:converter converterId="localDateConverter"  />
-				</input>
+		        </input>
+		        
 				<label jsf:for="status" class="control-label">#{bundle.status}</label>
 				<h:selectOneMenu id="status" value="#{mensalidadeRelatorioController.status}"
 					styleClass="form-control">
