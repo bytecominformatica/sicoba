@@ -41,8 +41,6 @@ public class SecurityController implements Serializable {
 
   @Inject
   private AccountBussiness accountBussiness;
-  @Inject
-  private WebUtil webUtil;
   @EJB
   private MailEJB mail;
   @Inject
@@ -53,7 +51,7 @@ public class SecurityController implements Serializable {
   public void carregar() {
     if (currentUser.isAuthenticated()) {
       LOGGER.info("[" + LocalDateTime.now() + "] - " + "USUÁRIO JÁ ESTA LOGADO");
-      webUtil.redirect(HOME_URL);
+      WebUtil.redirect(HOME_URL);
     }
   }
 
@@ -65,7 +63,7 @@ public class SecurityController implements Serializable {
         userAccount = accountBussiness.findUserAccountByUsername(username);
         accountBussiness.createPictureInSession(userAccount);
         currentUser.getSession().setAttribute("currentUser", userAccount);
-        webUtil.redirect(HOME_URL);
+        WebUtil.redirect(HOME_URL);
       } catch (AuthenticationException e) {
         error = "CREDENCIAIS INVÁLIDAS";
         LOGGER.info("[" + LocalDateTime.now() + "] - " + "[" + username + "] - " + "ACESSO NEGADO");

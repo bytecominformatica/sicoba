@@ -1,28 +1,20 @@
-package net.servehttp.bytecom.web.controller;
+package net.servehttp.bytecom.web.controller.comercial;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
 
 import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.MensalidadeBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
-import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
 import net.servehttp.bytecom.util.web.AlertaUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  *
@@ -30,13 +22,12 @@ import net.servehttp.bytecom.util.web.AlertaUtil;
  */
 @Named
 @ViewScoped
-public class MensalidadeController implements Serializable {
+public class CadastrarBoletosController implements Serializable {
 
-  private static final long serialVersionUID = -866830816286480241L;
+  private static final long serialVersionUID = -5517379889465547854L;
   private Mensalidade mensalidade;
   private Cliente cliente;
   private int clienteId;
-  private int quantidade;
   private int numeroBoletoInicio;
   private int numeroBoletoFim;
   private double descontoGeracao;
@@ -47,72 +38,22 @@ public class MensalidadeController implements Serializable {
   @Inject
   private ClientBussiness clientBussiness;
 
-  public void load() {
-    if (clienteId > 0) {
-      cliente = clientBussiness.findById(clienteId);
-      ordernarMensalidades();
+  @PostConstruct
+  public void init() {
+    getParameters();
+    if (cliente != null) {
       if (mensalidade == null) {
         mensalidade = getNovaMensalidade();
         dataInicio = mensalidade.getDataVencimento();
       }
-    } else {
-      cliente = new Cliente();
-      AlertaUtil.error("nenhum cliente selecionado");
     }
   }
 
-  public void gerarBoletosPDF() throws IOException {
-    byte[] pdfData = business.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
-
-    FacesContext facesContext = FacesContext.getCurrentInstance();
-    ExternalContext externalContext = facesContext.getExternalContext();
-    HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
-
-    response.reset();
-    response.setContentType("application/pdf");
-    response.setHeader("Content-disposition",
-        String.format("attachment; filename=\"%s.pdf\"", cliente.getNome()));
-
-    OutputStream output = response.getOutputStream();
-    output.write(pdfData);
-    output.close();
-
-    facesContext.responseComplete();
-  }
-
-  private List<Mensalidade> getBoletosEmAberto(List<Mensalidade> list) {
-    if (list != null) {
-      return list.stream().filter(m -> m.getStatus() == StatusMensalidade.PENDENTE)
-          .collect(Collectors.toCollection(ArrayList::new));
+  private void getParameters() {
+    String clienteId = WebUtil.getParameters("clienteId");
+    if (clienteId != null && !clienteId.isEmpty()) {
+      cliente = clientBussiness.findById(Integer.parseInt(clienteId));
     }
-    return null;
-  }
-
-
-  private void ordernarMensalidades() {
-    Collections.sort(cliente.getMensalidades(), new Comparator<Mensalidade>() {
-      public int compare(Mensalidade m1, Mensalidade m2) {
-        return m1.getDataVencimento().compareTo(m2.getDataVencimento());
-      }
-    });
-  }
-
-  public void prepararBaixaMensalidade() {
-    if (mensalidade.getStatus() == StatusMensalidade.BAIXA_MANUAL) {
-      if (mensalidade.getValorPago() == 0) {
-        mensalidade.setValorPago(mensalidade.getValor() - mensalidade.getDesconto());
-      }
-      if (mensalidade.getDataOcorrencia() == null) {
-        mensalidade.setDataOcorrencia(LocalDate.now());
-      }
-    } else if (mensalidade.getStatus() == StatusMensalidade.PENDENTE) {
-      mensalidade.setValorPago(0);
-      mensalidade.setDataOcorrencia(null);
-    }
-  }
-
-  public void gerarBoletos() {
-    System.out.println("DATA = " + dataInicio);
   }
 
   public void cadastrarBoletosCaixa() {
@@ -159,26 +100,6 @@ public class MensalidadeController implements Serializable {
       AlertaUtil.error(sb.toString());
     }
     return validos;
-  }
-
-  public void salvar() {
-    if (mensalidade.getId() == 0) {
-      business.salvar(mensalidade);
-      AlertaUtil.info("Mensalidade adicionada com sucesso!");
-    } else {
-      business.atualizar(mensalidade);
-      AlertaUtil.info("Mensalidade atualizado com sucesso!");
-    }
-    mensalidade = getNovaMensalidade();
-    load();
-  }
-
-  public String remover(Mensalidade m) {
-    business.remover(m);
-    mensalidade = getNovaMensalidade();
-    load();
-    AlertaUtil.info("Mensalidade removido com sucesso!");
-    return null;
   }
 
   public Cliente getCliente() {
@@ -235,13 +156,5 @@ public class MensalidadeController implements Serializable {
 
   public void setDescontoGeracao(double descontoGeracao) {
     this.descontoGeracao = descontoGeracao;
-  }
-
-  public int getQuantidade() {
-    return quantidade;
-  }
-
-  public void setQuantidade(int quantidade) {
-    this.quantidade = quantidade;
   }
 }

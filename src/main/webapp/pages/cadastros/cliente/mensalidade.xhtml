@@ -4,60 +4,51 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-<f:metadata>
-	<f:viewParam name="clienteId" value="#{mensalidadeController.clienteId}"/>
-	<f:event listener="#{mensalidadeController.load()}" type="preRenderView"/>
-</f:metadata>
 <ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.mensalidade}</ui:define>
 	<ui:define name="subtitle">#{bundle.edit}</ui:define>
 	<ui:define name="submenu">
-		<ui:include src="../submenu_cadastro.xhtml"></ui:include>                	
+		<ui:include src="../submenu_cadastro.xhtml"></ui:include>
 	</ui:define>
-	
-	<ui:define name="content">
-			<div class="panel-body">
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active">
-						<a href="#mensalidades" aria-controls="mensalidades" role="tab" data-toggle="tab">
-							Mensalidades
-							<span class="label label-sucess">#{mensalidadeController.cliente.mensalidades.size()}</span>
-						</a>
-					</li>
-					
-					<li role="presentation">
-						<a href="#boletosCaixa" aria-controls="boletosCaixa" role="tab" data-toggle="tab">
-							Cadastrar Boletos Caixa
-						</a>
-					</li>
 
-					<li role="presentation">
-						<a href="#gerarMensalidades" aria-controls="gerarMensalidades" role="tab" data-toggle="tab">
-							Gerar Mensalidades
-						</a>
-					</li>
-					
-				</ul>
-				
-				<div class="tab-content">
-					
-					<div role="tabpanel" class="tab-pane active col-sm-12 col-md-12"
-						id="mensalidades">
-						<ui:include src="partial/mensalidade_edit.xhtml"></ui:include>   
-					</div>
-					
-					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
-						id="boletosCaixa">
-						<ui:include src="partial/cadastrar_boletos_caixa.xhtml"></ui:include>   
-					</div>
-					
-					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12" id="gerarMensalidades">
-						<ui:include src="partial/gerar_mensalidades.xhtml"></ui:include>   
-					</div>
-					
+	<ui:define name="content">
+		<div class="panel-body">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#mensalidades"
+					aria-controls="mensalidades" role="tab" data-toggle="tab">
+						Mensalidades <span class="label label-info">#{mensalidadeController.cliente.mensalidades.size()}</span>
+				</a></li>
+
+				<li role="presentation"><a href="#boletosCaixa"
+					aria-controls="boletosCaixa" role="tab" data-toggle="tab">
+						Cadastrar Boletos Caixa </a></li>
+
+				<li role="presentation"><a href="#gerarMensalidades"
+					aria-controls="gerarMensalidades" role="tab" data-toggle="tab">
+						Gerar Mensalidades </a></li>
+
+			</ul>
+
+			<div class="tab-content">
+
+				<div role="tabpanel" class="tab-pane active col-sm-12 col-md-12"
+					id="mensalidades">
+					<ui:include src="partial/mensalidade_edit.xhtml"></ui:include>
 				</div>
-				
+
+				<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+					id="boletosCaixa">
+					<ui:include src="partial/cadastrar_boletos_caixa.xhtml"></ui:include>
+				</div>
+
+				<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+					id="gerarMensalidades">
+					<ui:include src="partial/gerar_mensalidades.xhtml"></ui:include>
+				</div>
+
 			</div>
+
+		</div>
 	</ui:define>
 </ui:composition>
 </html>

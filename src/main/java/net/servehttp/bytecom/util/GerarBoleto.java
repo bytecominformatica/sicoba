@@ -45,11 +45,11 @@ import com.servehttp.bytecom.commons.StringUtil;
 
 public abstract class GerarBoleto implements Serializable {
 
-  private static final double TAXA_JUROS_AO_DIA = 0.006677;
-  private static final double TAXA_MULTA = 0.05;
+  // private static final double TAXA_JUROS_AO_DIA = 0.006677;
+  // private static final double TAXA_MULTA = 0.05;
   private static final int EMITENTE_BENEFICIARIO = 4;
   private static final long serialVersionUID = 2996334986455478857L;
-  private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public static byte[] criarCarneCaixa(List<Mensalidade> mensalidades,
       net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente c) {
@@ -63,7 +63,7 @@ public abstract class GerarBoleto implements Serializable {
 
         Titulo titulo = getTitulo(m, cedente, sacado, c);
 
-        Boleto boleto = getBoleto(m, titulo);
+        Boleto boleto = getBoleto(m, titulo, c);
 
         boletos.add(boleto);
       });
@@ -102,19 +102,24 @@ public abstract class GerarBoleto implements Serializable {
     return templatePersonalizado;
   }
 
-  private static Boleto getBoleto(Mensalidade m, Titulo titulo) {
+  private static Boleto getBoleto(Mensalidade m, Titulo titulo,
+      net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente cedente) {
     /*
      * INFORMANDO OS DADOS SOBRE O BOLETO.
      */
     Boleto boleto = new Boleto(titulo);
 
     boleto.setLocalPagamento("PREFERENCIALMENTE NAS CASAS LOTÉRICAS ATÉ O VALOR LIMITE");
-    boleto.setInstrucao1(String.format("MULTA DE R$: %s APÓS : %s",
-        StringUtil.formatCurrence(m.getValor() * TAXA_MULTA),
-        m.getDataVencimento().format(formatter)));
+    boleto.setInstrucao1(String.format("MULTA DE R$: %s APÓS : %s", StringUtil.formatCurrence(m
+        .getValor() * (cedente.getMulta() / 100)), m.getDataVencimento().format(FORMATTER)));
     boleto.setInstrucao2(String.format("JUROS DE R$: %s AO DIA",
-        StringUtil.formatCurrence(m.getValor() * TAXA_JUROS_AO_DIA)));
-    boleto.setInstrucao4("NÃO RECEBER APOS 30 DIAS DO VENCIMENTO");
+        StringUtil.formatCurrence(m.getValor() * (cedente.getJuros() / 100))));
+
+    if (m.getDesconto() > 0) {
+      boleto.setInstrucao3(String.format("SE PAGO ATÉ %s, DESCONTO DE %s ", m.getDataVencimento()
+          .format(FORMATTER), StringUtil.formatCurrence(m.getDesconto())));
+    }
+    boleto.setInstrucao4("NÃO RECEBER APOS 60 DIAS DO VENCIMENTO");
     if (m.getParcela() != null && !m.getParcela().isEmpty()) {
       boleto.setInstrucao6("PARCELA " + m.getParcela());
     }
@@ -154,7 +159,8 @@ public abstract class GerarBoleto implements Serializable {
         .getCodigo(), titulo.getNossoNumero()));
     titulo.setValor(BigDecimal.valueOf(m.getValor()));
     titulo.setDataDoDocumento(new Date());
-    titulo.setDataDoVencimento(Date.from(m.getDataVencimento().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    titulo.setDataDoVencimento(Date.from(m.getDataVencimento().atStartOfDay(ZoneId.systemDefault())
+        .toInstant()));
     titulo.setTipoDeDocumento(TipoDeTitulo.DM_DUPLICATA_MERCANTIL);
     titulo.setAceite(Aceite.N);
     return titulo;
@@ -182,7 +188,8 @@ public abstract class GerarBoleto implements Serializable {
     return sacado;
   }
 
-  private static Cedente getCedente(net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente c) {
+  private static Cedente getCedente(
+      net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente c) {
     /*
      * INFORMANDO DADOS SOBRE O CEDENTE.
      */

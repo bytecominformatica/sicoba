@@ -17,8 +17,8 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
-import net.servehttp.bytecom.util.Util;
 import net.servehttp.bytecom.util.web.AlertaUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
@@ -37,8 +37,6 @@ public class ContratoController implements Serializable {
   private Cliente cliente;
   private int clienteId;
   @Inject
-  private Util util;
-  @Inject
   private PlanoBussiness planoBusiness;
   @Inject
   private EquipamentoBussiness equipamentoBusiness;
@@ -56,7 +54,7 @@ public class ContratoController implements Serializable {
   }
 
   private void getParameters() {
-    String clienteId = util.getParameters("clienteId");
+    String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
       setCliente(clientBusiness.findById(Integer.parseInt(clienteId)));
       if (getCliente().getContrato() == null) {

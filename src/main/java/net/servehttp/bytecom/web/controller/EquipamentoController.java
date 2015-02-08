@@ -11,8 +11,8 @@ import javax.inject.Named;
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
 import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
-import net.servehttp.bytecom.util.Util;
 import net.servehttp.bytecom.util.web.AlertaUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
@@ -29,8 +29,6 @@ public class EquipamentoController implements Serializable {
   private EquipamentoJPA jpa;
   @Inject
   private GenericoJPA genericoJPA;
-  @Inject
-  private Util util;
 
   @PostConstruct
   public void load() {
@@ -40,7 +38,7 @@ public class EquipamentoController implements Serializable {
 
 
   private void getParameters() {
-    String id = util.getParameters("id");
+    String id = WebUtil.getParameters("id");
     if (id != null && !id.isEmpty()) {
       equipamento = jpa.buscarPorId(Integer.valueOf(id));
     }

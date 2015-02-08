@@ -10,8 +10,8 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.business.PlanoBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
-import net.servehttp.bytecom.util.Util;
 import net.servehttp.bytecom.util.web.AlertaUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
@@ -26,8 +26,6 @@ public class PlanoController implements Serializable {
   @Inject
   private Plano plano;
   @Inject
-  private Util util;
-  @Inject
   private PlanoBussiness planoBussiness;
 
   @PostConstruct
@@ -37,7 +35,7 @@ public class PlanoController implements Serializable {
   }
 
   private void getParameters() {
-    String planoId = util.getParameters("id");
+    String planoId = WebUtil.getParameters("id");
     if (planoId != null && !planoId.isEmpty()) {
       setPlano(planoBussiness.findById(Integer.parseInt(planoId)));
     }

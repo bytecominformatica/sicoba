@@ -12,7 +12,7 @@ import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.MensalidadeBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
-import net.servehttp.bytecom.util.Util;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  *
@@ -33,20 +33,20 @@ public class GerarMensalidadeController implements Serializable {
   private MensalidadeBussiness business;
   @Inject
   private ClientBussiness clientBussiness;
-  @Inject
-  private Util util;
 
   @PostConstruct
   public void init() {
     getParameters();
-    if (mensalidade == null) {
-      mensalidade = getNovaMensalidade();
-      dataInicio = mensalidade.getDataVencimento();
+    if (cliente != null) {
+      if (mensalidade == null) {
+        mensalidade = getNovaMensalidade();
+        dataInicio = mensalidade.getDataVencimento();
+      }
     }
   }
 
   private void getParameters() {
-    String clienteId = util.getParameters("clienteId");
+    String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
     }

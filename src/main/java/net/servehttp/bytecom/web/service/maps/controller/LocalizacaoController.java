@@ -14,8 +14,8 @@ import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.ClienteGeorefereciaBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia;
-import net.servehttp.bytecom.util.Util;
 import net.servehttp.bytecom.util.web.AlertaUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 import net.servehttp.bytecom.web.service.maps.XMLProcessor;
 
 /**
@@ -42,8 +42,6 @@ public class LocalizacaoController implements Serializable {
   private ClientBussiness clientBussiness;
   @Inject
   private ClienteGeorefereciaBussiness clienteGeoBussiness;
-  @Inject
-  private Util util;
 
   @PostConstruct
   public void load() {
@@ -52,7 +50,7 @@ public class LocalizacaoController implements Serializable {
   }
 
   private void getParameters() {
-    clienteId = util.getParameters("id");
+    clienteId = WebUtil.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();

@@ -13,9 +13,9 @@ import javax.servlet.http.Part;
 import net.servehttp.bytecom.business.AccountBussiness;
 import net.servehttp.bytecom.persistence.entity.security.Authentication;
 import net.servehttp.bytecom.persistence.entity.security.UserAccount;
-import net.servehttp.bytecom.util.Util;
 import net.servehttp.bytecom.util.seguranca.HashUtil;
 import net.servehttp.bytecom.util.web.AlertaUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 import com.servehttp.bytecom.commons.ImageUtil;
 import com.servehttp.bytecom.commons.StringUtil;
@@ -43,8 +43,6 @@ public class UserAccountController implements Serializable {
 
   @Inject
   private AccountBussiness business;
-  @Inject
-  private Util util;
 
   @PostConstruct
   public void load() {
@@ -106,7 +104,7 @@ public class UserAccountController implements Serializable {
   }
 
   private void getParameters() {
-    String userAccountId = util.getParameters("id");
+    String userAccountId = WebUtil.getParameters("id");
     if (userAccountId != null && !userAccountId.isEmpty()) {
       userAccount = business.findUserAccountById(Integer.parseInt(userAccountId));
     }

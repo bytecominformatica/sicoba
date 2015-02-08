@@ -16,8 +16,8 @@ import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
-import net.servehttp.bytecom.util.Util;
 import net.servehttp.bytecom.util.web.AlertaUtil;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
@@ -43,8 +43,6 @@ public class ClienteController implements Serializable {
   private ClientBussiness clientBussiness;
   @Inject
   private AddressBussiness addressBussiness;
-  @Inject
-  private Util util;
   private StatusCliente status;
 
   @PostConstruct
@@ -55,7 +53,7 @@ public class ClienteController implements Serializable {
   }
 
   private void getParameters() {
-    String clienteId = util.getParameters("id");
+    String clienteId = WebUtil.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.findById(Integer.parseInt(clienteId));
       selecionaCidade();

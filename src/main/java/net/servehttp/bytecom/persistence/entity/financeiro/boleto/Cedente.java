@@ -38,6 +38,12 @@ public class Cedente extends EntityGeneric implements Serializable {
   @Column(name = "digito_conta")
   private int digitoConta;
 
+  private int prazo;
+
+  private double multa;
+
+  private double juros;
+
   public Cedente() {
     createdAt = LocalDateTime.now();
   }
@@ -112,6 +118,30 @@ public class Cedente extends EntityGeneric implements Serializable {
 
   public void setDigitoVerificador(int digitoVerificador) {
     this.digitoVerificador = digitoVerificador;
+  }
+
+  public int getPrazo() {
+    return prazo;
+  }
+
+  public void setPrazo(int prazo) {
+    this.prazo = prazo;
+  }
+
+  public double getMulta() {
+    return multa;
+  }
+
+  public void setMulta(double multa) {
+    this.multa = multa;
+  }
+
+  public double getJuros() {
+    return juros;
+  }
+
+  public void setJuros(double juros) {
+    this.juros = juros;
   }
 
 }
