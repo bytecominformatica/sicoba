@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import net.servehttp.bytecom.persistence.ContratoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
 
-public class ContratoBusiness extends genericoBusiness implements Serializable {
+public class ContratoBusiness implements Serializable {
 
   private static final long serialVersionUID = 8705835474790847188L;
   @Inject
@@ -17,8 +17,16 @@ public class ContratoBusiness extends genericoBusiness implements Serializable {
     contratoJPA.remover(c);
   }
 
-  public Contrato findById(int id) {
-    return genericoJPA.findById(Contrato.class, id);
+  public Contrato buscarPorId(int id) {
+    return contratoJPA.buscarPorId(Contrato.class, id);
+  }
+
+  public <T> T salvar(T t) {
+    return salvar(t);
+  }
+
+  public <T> T atualizar(T t) {
+    return atualizar(t);
   }
 
 }

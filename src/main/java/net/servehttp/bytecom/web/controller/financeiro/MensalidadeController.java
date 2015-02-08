@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.web.controller.comercial;
+package net.servehttp.bytecom.web.controller.financeiro;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -56,7 +56,7 @@ public class MensalidadeController implements Serializable {
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.findById(Integer.parseInt(clienteId));
+      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
     }
   }
 

@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.EquipamentoJPA;
-import net.servehttp.bytecom.persistence.GenericoJPA;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
@@ -27,8 +26,6 @@ public class EquipamentoController implements Serializable {
   private Equipamento equipamento = new Equipamento();
   @Inject
   private EquipamentoJPA jpa;
-  @Inject
-  private GenericoJPA genericoJPA;
 
   @PostConstruct
   public void load() {
@@ -56,10 +53,10 @@ public class EquipamentoController implements Serializable {
     String page = null;
     if (isValido(equipamento)) {
       if (equipamento.getId() == 0) {
-        genericoJPA.salvar(equipamento);
+        jpa.salvar(equipamento);
         AlertaUtil.info("Equipamento adicionado com sucesso!");
       } else {
-        genericoJPA.atualizar(equipamento);
+        jpa.atualizar(equipamento);
         AlertaUtil.info("Equipamento atualizado com sucesso!");
 
       }
@@ -80,7 +77,7 @@ public class EquipamentoController implements Serializable {
   }
 
   public String remover() {
-    genericoJPA.remover(equipamento);
+    jpa.remover(equipamento);
     load();
     AlertaUtil.info("Equipamento removido com sucesso!");
     return "list";

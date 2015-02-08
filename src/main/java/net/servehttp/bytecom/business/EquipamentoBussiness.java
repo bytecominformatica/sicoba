@@ -10,7 +10,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusEquipamento;
 import net.servehttp.bytecom.persistence.entity.cadastro.TipoEquipamento;
 
-public class EquipamentoBussiness extends genericoBusiness implements Serializable {
+public class EquipamentoBussiness implements Serializable {
 
   private static final long serialVersionUID = 8705835474790847188L;
   @Inject
@@ -20,8 +20,8 @@ public class EquipamentoBussiness extends genericoBusiness implements Serializab
     equipamentoJPA.remover(e);
   }
 
-  public Equipamento findById(int id) {
-    return genericoJPA.findById(Equipamento.class, id);
+  public Equipamento buscarPorId(int id) {
+    return equipamentoJPA.buscarPorId(Equipamento.class, id);
   }
 
   public List<Equipamento> buscarEquipamentosInstalacaoNaoUtilizados() {

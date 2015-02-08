@@ -38,7 +38,7 @@ public class AcessoController implements Serializable {
 
   public void load() {
     if (clienteId > 0 && cliente == null) {
-      cliente = clientBusiness.findById(clienteId);
+      cliente = clientBusiness.buscarPorId(clienteId);
     }
     if ((cliente.getAcesso()) == null) {
       getNovoAcesso();

@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.web.controller.comercial;
+package net.servehttp.bytecom.web.controller.financeiro;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -48,7 +48,7 @@ public class GerarMensalidadeController implements Serializable {
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.findById(Integer.parseInt(clienteId));
+      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
     }
   }
 

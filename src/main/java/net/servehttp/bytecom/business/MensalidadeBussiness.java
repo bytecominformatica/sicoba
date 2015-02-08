@@ -12,7 +12,7 @@ import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente;
 import net.servehttp.bytecom.util.GerarBoleto;
 
-public class MensalidadeBussiness extends genericoBusiness implements Serializable {
+public class MensalidadeBussiness implements Serializable {
 
   private static final long serialVersionUID = 8705835474790847188L;
   @Inject
@@ -50,6 +50,14 @@ public class MensalidadeBussiness extends genericoBusiness implements Serializab
 
   public List<Mensalidade> buscarMensalidadesPorBoleto(int inicio, int fim) {
     return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);
+  }
+
+  public <T> T salvar(T t) {
+    return salvar(t);
+  }
+
+  public <T> T atualizar(T t) {
+    return atualizar(t);
   }
 
 }

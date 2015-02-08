@@ -43,7 +43,7 @@ public class GenericoJPATest {
 
   @Test
   public void deveriaDeveriaBuscarPorId() {
-    genericoJPA.findById(Plano.class, 1);
+    genericoJPA.buscarPorId(Plano.class, 1);
   }
 
   @AfterClass

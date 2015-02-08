@@ -13,7 +13,7 @@ import net.servehttp.bytecom.persistence.entity.security.UserAccount;
 
 import com.servehttp.bytecom.commons.ImageUtil;
 
-public class AccountBussiness extends genericoBusiness implements Serializable {
+public class AccountBussiness implements Serializable {
 
   private static final String IMG_USERS = "/img/users/";
   private static final long serialVersionUID = -8296012997453708684L;
@@ -23,7 +23,7 @@ public class AccountBussiness extends genericoBusiness implements Serializable {
   private UserJPA userJPA;
 
   public List<UserAccount> findUsersAccounts() {
-    return genericoJPA.buscarTodos(UserAccount.class);
+    return userJPA.buscarTodosUserAccount();
   }
 
   public boolean emailAvaliable(UserAccount userAccount) {
@@ -50,11 +50,23 @@ public class AccountBussiness extends genericoBusiness implements Serializable {
   }
 
   public UserAccount findUserAccountById(int id) {
-    return genericoJPA.findById(UserAccount.class, id);
+    return userJPA.buscarPorId(UserAccount.class, id);
   }
 
   public Authentication findAuthenticationByUserAccount(UserAccount userAccount) {
     return userJPA.findAuthenticationByUserAccount(userAccount);
+  }
+
+  public <T> T salvar(T t) {
+    return salvar(t);
+  }
+
+  public <T> T atualizar(T t) {
+    return atualizar(t);
+  }
+
+  public void remover(UserAccount userAccount) {
+    userJPA.remover(userAccount);
   }
 
 }

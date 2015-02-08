@@ -1,9 +1,7 @@
 package net.servehttp.bytecom.persistence;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -19,11 +17,9 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class EquipamentoJPA implements Serializable {
+public class EquipamentoJPA extends GenericoJPA {
 
   private static final long serialVersionUID = 7528131197866761853L;
-  @Inject
-  private EntityManager em;
   private QEquipamento e = QEquipamento.equipamento;
 
   public void setEntityManager(EntityManager em) {

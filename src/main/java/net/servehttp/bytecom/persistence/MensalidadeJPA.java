@@ -2,7 +2,6 @@ package net.servehttp.bytecom.persistence;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -19,10 +18,9 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class MensalidadeJPA {
+public class MensalidadeJPA extends GenericoJPA {
 
-  @Inject
-  private EntityManager em;
+  private static final long serialVersionUID = -5750421956273634462L;
   private QMensalidade m = QMensalidade.mensalidade;
 
   public void remover(Mensalidade mensalidade) {
@@ -45,5 +43,13 @@ public class MensalidadeJPA {
   public Cedente buscarCedente() {
     QCedente c = QCedente.cedente;
     return new JPAQuery(em).from(c).uniqueResult(c);
+  }
+
+  public Mensalidade buscarPorId(int id) {
+    return super.buscarPorId(Mensalidade.class, id);
+  }
+
+  public Mensalidade buscarMensalidadePorNumeroBoleto(int numeroBoleto) {
+    return new JPAQuery(em).from(m).where(m.numeroBoleto.eq(numeroBoleto)).uniqueResult(m);
   }
 }

@@ -37,7 +37,7 @@ public class PlanoController implements Serializable {
   private void getParameters() {
     String planoId = WebUtil.getParameters("id");
     if (planoId != null && !planoId.isEmpty()) {
-      setPlano(planoBussiness.findById(Integer.parseInt(planoId)));
+      setPlano(planoBussiness.buscarPorId(Integer.parseInt(planoId)));
     }
   }
 
@@ -71,8 +71,8 @@ public class PlanoController implements Serializable {
 
   public String remover() {
     String page = null;
-    if (planoBussiness.planWithoutUse(getPlano())) {
-      planoBussiness.remover(getPlano());
+    if (planoBussiness.planWithoutUse(plano)) {
+      planoBussiness.remover(plano);
       load();
       AlertaUtil.info("Removido com sucesso!");
       page = "list";

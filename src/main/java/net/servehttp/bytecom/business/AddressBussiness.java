@@ -3,38 +3,43 @@ package net.servehttp.bytecom.business;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.Estado;
+import net.servehttp.bytecom.persistence.entity.cadastro.EnderecoJPA;
 import net.servehttp.bytecom.pojo.EnderecoPojo;
 
 import com.google.gson.Gson;
 
-public class AddressBussiness extends genericoBusiness implements Serializable {
+public class AddressBussiness implements Serializable {
 
   private static final long serialVersionUID = -8296012997453708684L;
 
+  @Inject
+  private EnderecoJPA enderecoJPA;
+  
   public List<Cidade> findCities() {
-    return genericoJPA.buscarTodos(Cidade.class, true, "nome", 200);
+    return enderecoJPA.buscarTodos(Cidade.class, true, "nome", 200);
   }
 
-  public Bairro findById(int bairroId) {
-    return genericoJPA.findById(Bairro.class, bairroId);
+  public Bairro buscarPorId(int bairroId) {
+    return enderecoJPA.buscarPorId(Bairro.class, bairroId);
   }
 
   public Bairro findNeighborhoodByName(String name) {
-    return genericoJPA.buscarUm("nome", name, Bairro.class);
+    return enderecoJPA.buscarUm("nome", name, Bairro.class);
   }
 
   public Cidade findCityByName(String name) {
-    return genericoJPA.buscarUm("nome", name, Cidade.class);
+    return enderecoJPA.buscarUm("nome", name, Cidade.class);
   }
 
   public Estado findStateByName(String name) {
-    return genericoJPA.buscarUm("nome", name, Estado.class);
+    return enderecoJPA.buscarUm("nome", name, Estado.class);
   }
 
   public EnderecoPojo findAddressByCep(String cep) {
@@ -75,19 +80,19 @@ public class AddressBussiness extends genericoBusiness implements Serializable {
           neighborhood = new Bairro();
           neighborhood.setNome(enderecoPojo.getBairro());
           neighborhood.setCidade(city);
-          salvar(neighborhood);
+          enderecoJPA.salvar(neighborhood);
         } else {
           Estado state = findStateByName(enderecoPojo.getUf());
           if (state != null) {
             Cidade c = new Cidade();
             c.setEstado(state);
             c.setNome(enderecoPojo.getLocalidade());
-            salvar(c);
+            enderecoJPA.salvar(c);
 
             neighborhood = new Bairro();
             neighborhood.setNome(enderecoPojo.getBairro());
             neighborhood.setCidade(c);
-            salvar(neighborhood);
+            enderecoJPA.salvar(neighborhood);
           }
         }
       }

@@ -52,7 +52,7 @@ public class LocalizacaoController implements Serializable {
   private void getParameters() {
     clienteId = WebUtil.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.findById(Integer.parseInt(clienteId));
+      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
       bairroId = cliente.getEndereco().getBairro().getId();
     }

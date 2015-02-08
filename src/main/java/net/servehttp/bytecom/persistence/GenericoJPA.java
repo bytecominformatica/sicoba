@@ -19,13 +19,13 @@ public class GenericoJPA implements Serializable {
 
   private static final long serialVersionUID = -5183726686123081862L;
   @Inject
-  private EntityManager em;
+  protected EntityManager em;
 
   public void setEntityManager(EntityManager em) {
     this.em = em;
   }
 
-  public <T> T findById(Class<T> klass, int id) {
+  public <T> T buscarPorId(Class<T> klass, int id) {
     return (T) em.find(klass, id);
   }
 

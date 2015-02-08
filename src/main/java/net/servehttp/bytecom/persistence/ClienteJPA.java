@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -20,11 +19,9 @@ import com.mysema.query.types.expr.BooleanExpression;
  * @author clairton
  */
 @Transactional
-public class ClienteJPA implements Serializable {
+public class ClienteJPA extends GenericoJPA implements Serializable {
 
   private static final long serialVersionUID = 1857140370479772238L;
-  @Inject
-  private EntityManager em;
   private QCliente c = QCliente.cliente;
 
   public void setEntityManager(EntityManager em) {

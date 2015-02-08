@@ -1,10 +1,8 @@
 package net.servehttp.bytecom.persistence;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -24,11 +22,9 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class DashboadJPA implements Serializable {
+public class DashboadJPA extends GenericoJPA {
 
   private static final long serialVersionUID = 4057406973170798760L;
-  @Inject
-  private EntityManager em;
   private LocalDate from;
   private LocalDate to;
 

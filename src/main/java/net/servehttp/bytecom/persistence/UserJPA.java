@@ -1,8 +1,7 @@
 package net.servehttp.bytecom.persistence;
 
-import java.io.Serializable;
+import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -18,11 +17,9 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class UserJPA implements Serializable {
+public class UserJPA extends GenericoJPA {
 
   private static final long serialVersionUID = -1412149982160690889L;
-  @Inject
-  private EntityManager em;
 
   public void setEntityManager(EntityManager em) {
     this.em = em;
@@ -60,6 +57,11 @@ public class UserJPA implements Serializable {
   public Authentication findAuthenticationByUserAccount(UserAccount userAccount) {
     QAuthentication a = QAuthentication.authentication;
     return new JPAQuery(em).from(a).where(a.userAccount.id.eq(userAccount.getId())).uniqueResult(a);
+  }
+
+  public List<UserAccount> buscarTodosUserAccount() {
+    QUserAccount ua = QUserAccount.userAccount;
+    return new JPAQuery(em).from(ua).list(ua);
   }
 
 }

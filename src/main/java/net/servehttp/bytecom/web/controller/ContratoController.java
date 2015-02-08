@@ -56,7 +56,7 @@ public class ContratoController implements Serializable {
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      setCliente(clientBusiness.findById(Integer.parseInt(clienteId)));
+      setCliente(clientBusiness.buscarPorId(Integer.parseInt(clienteId)));
       if (getCliente().getContrato() == null) {
         gerarNovoContrato();
       }
