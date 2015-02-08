@@ -20,18 +20,18 @@ public class AccountBussiness implements Serializable {
   private static final String IMG_DEFAULT = "avatar_male.png";
 
   @Inject
-  private UserJPA userJPA;
+  private UserJPA jpa;
 
   public List<UserAccount> findUsersAccounts() {
-    return userJPA.buscarTodosUserAccount();
+    return jpa.buscarTodosUserAccount();
   }
 
   public boolean emailAvaliable(UserAccount userAccount) {
-    return userJPA.emailAvaliable(userAccount);
+    return jpa.emailAvaliable(userAccount);
   }
 
   public UserAccount findUserAccountByUsername(String username) {
-    return userJPA.findUserAccountByUsername(username);
+    return jpa.findUserAccountByUsername(username);
   }
 
   public void createPictureInSession(UserAccount user) {
@@ -50,23 +50,23 @@ public class AccountBussiness implements Serializable {
   }
 
   public UserAccount findUserAccountById(int id) {
-    return userJPA.buscarPorId(UserAccount.class, id);
+    return jpa.buscarPorId(UserAccount.class, id);
   }
 
   public Authentication findAuthenticationByUserAccount(UserAccount userAccount) {
-    return userJPA.findAuthenticationByUserAccount(userAccount);
+    return jpa.findAuthenticationByUserAccount(userAccount);
   }
 
   public <T> T salvar(T t) {
-    return salvar(t);
+    return jpa.salvar(t);
   }
 
   public <T> T atualizar(T t) {
-    return atualizar(t);
+    return jpa.atualizar(t);
   }
 
   public void remover(UserAccount userAccount) {
-    userJPA.remover(userAccount);
+    jpa.remover(userAccount);
   }
 
 }

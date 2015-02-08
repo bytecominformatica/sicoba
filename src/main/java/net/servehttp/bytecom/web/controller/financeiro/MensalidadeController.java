@@ -43,6 +43,7 @@ public class MensalidadeController implements Serializable {
   public void init() {
     getParameters();
     if (cliente != null) {
+      cliente = clientBussiness.buscarPorId(cliente.getId());
       ordernarMensalidades();
       if (mensalidade == null) {
         mensalidade = getNovaMensalidade();
@@ -58,11 +59,23 @@ public class MensalidadeController implements Serializable {
     if (clienteId != null && !clienteId.isEmpty()) {
       cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
     }
+
   }
 
   public void gerarBoletosPDF() throws IOException {
-    byte[] pdfData = business.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
-    WebUtil.downloadPDF(pdfData, cliente.getNome());
+    if (clientePossuiTodosOsDadosNecessarios(cliente)) {
+      byte[] pdfData = business.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
+      WebUtil.downloadPDF(pdfData, cliente.getNome());
+    }
+  }
+
+  private boolean clientePossuiTodosOsDadosNecessarios(Cliente c) {
+    boolean possui = true;
+    if (c.getCpfCnpj() == null) {
+      possui = false;
+      AlertaUtil.error("Cpf ou Cnpj obrigatório");
+    }
+    return possui;
   }
 
   private List<Mensalidade> getBoletosEmAberto(List<Mensalidade> list) {

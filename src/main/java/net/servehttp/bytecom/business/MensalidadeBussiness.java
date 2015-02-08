@@ -53,11 +53,11 @@ public class MensalidadeBussiness implements Serializable {
   }
 
   public <T> T salvar(T t) {
-    return salvar(t);
+    return mensalidadeJPA.salvar(t);
   }
 
   public <T> T atualizar(T t) {
-    return atualizar(t);
+    return mensalidadeJPA.atualizar(t);
   }
 
 }

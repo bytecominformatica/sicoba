@@ -22,11 +22,11 @@ public class ContratoBusiness implements Serializable {
   }
 
   public <T> T salvar(T t) {
-    return salvar(t);
+    return contratoJPA.salvar(t);
   }
 
   public <T> T atualizar(T t) {
-    return atualizar(t);
+    return contratoJPA.atualizar(t);
   }
 
 }

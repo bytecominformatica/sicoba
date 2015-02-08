@@ -33,11 +33,11 @@ public class PlanoBussiness implements Serializable {
   }
 
   public <T> T salvar(T t) {
-    return salvar(t);
+    return planoJPA.salvar(t);
   }
 
   public <T> T atualizar(T t) {
-    return atualizar(t);
+    return planoJPA.atualizar(t);
   }
 
   public void remover(Plano plano) {

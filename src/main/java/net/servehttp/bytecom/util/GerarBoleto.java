@@ -118,14 +118,19 @@ public abstract class GerarBoleto implements Serializable {
     if (m.getDesconto() > 0) {
       boleto.setInstrucao3(String.format("SE PAGO ATÉ %s, DESCONTO DE %s ", m.getDataVencimento()
           .format(FORMATTER), StringUtil.formatCurrence(m.getDesconto())));
+    } else {
+      boleto.setInstrucao3("");
     }
     boleto.setInstrucao4("NÃO RECEBER APOS 60 DIAS DO VENCIMENTO");
+    
     if (m.getParcela() != null && !m.getParcela().isEmpty()) {
       boleto.setInstrucao6("PARCELA " + m.getParcela());
     }
+    
     String nossoNumeroPadraoCEF =
         String.format("%d%d/%s-%s", titulo.getContaBancaria().getCarteira().getCodigo(),
             EMITENTE_BENEFICIARIO, titulo.getNossoNumero(), titulo.getDigitoDoNossoNumero());
+    
     boleto.addTextosExtras("txtFcNossoNumero", nossoNumeroPadraoCEF);
     boleto.addTextosExtras("txtRsNossoNumero", nossoNumeroPadraoCEF);
     return boleto;

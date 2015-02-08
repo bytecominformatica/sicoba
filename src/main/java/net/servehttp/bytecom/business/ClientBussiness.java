@@ -44,11 +44,11 @@ public class ClientBussiness implements Serializable {
   }
 
   public <T> T salvar(T t) {
-    return salvar(t);
+    return clienteJPA.salvar(t);
   }
 
   public <T> T atualizar(T t) {
-    return atualizar(t);
+    return clienteJPA.atualizar(t);
   }
 
   public void remover(Cliente cliente) {
