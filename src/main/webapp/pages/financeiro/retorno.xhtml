@@ -10,13 +10,13 @@
 	<ui:define name="content">
 		<div class="panel-body">
 			<form jsf:id="form" enctype="multipart/form-data" class="form-horizontal">
-				<input type="file" jsf:id="file" jsf:value="#{caixaController.file}" class="form-control">
+				<input type="file" jsf:id="file" jsf:value="#{retornoController.file}" class="form-control">
 					<i class="glyphicon glyphicon-plus"></i>
 	            	<span>Add files...</span>
 				</input>
 				
 				<div class="panel-footer">
-					<button type="submit" jsf:actionListener="#{caixaController.upload}" class="btn btn-primary">
+					<button type="submit" jsf:actionListener="#{retornoController.upload}" class="btn btn-primary">
 						<i class="fa fa-upload"></i>
 						Upload
 					</button>
