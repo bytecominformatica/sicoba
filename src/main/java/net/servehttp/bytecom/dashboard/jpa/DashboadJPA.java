@@ -31,7 +31,9 @@ public class DashboadJPA extends GenericoJPA {
 
   public DashboadJPA() {
     from = LocalDate.now().withDayOfMonth(1);
-    to = LocalDate.now().withDayOfMonth(1);
+    to = LocalDate.now();
+    to = to.withDayOfMonth(to.lengthOfMonth());
+        
   }
 
   public void setEntityManager(EntityManager em) {
@@ -48,7 +50,6 @@ public class DashboadJPA extends GenericoJPA {
   public long getQuantidadeInstalacoesDoMes() {
     QContrato c = QContrato.contrato;
     LocalDate data = LocalDate.now().withDayOfMonth(1);
-    // Date data = DateUtil.getPrimeiroDiaDoMes().getTime();
     return new JPAQuery(em).from(c).where(c.dataInstalacao.goe(data)).count();
   }
 
