@@ -65,24 +65,30 @@
 					
 				<label jsf:for="datNascimento" class="control-label">#{bundle.dataNascimento}</label> 
 				<input jsf:id="datNascimento" jsf:value="#{clienteController.cliente.dataNascimento}" type="text" maxlength="10" class="form-control" pattern="#{bundle.datePattern}">
-		            <f:converter converterId="localDateConverter"  />
+		            <f:converter converterId="localDateConverter"/>
 		        </input>
 				
 				<label jsf:for="fone" class="control-label">#{bundle.fone}</label>
-				<input jsf:id="fone" type="tel"
-					jsf:value="#{clienteController.cliente.foneTitular}"
-					class="form-control" /> <label jsf:for="contato"
-					class="control-label">#{bundle.contato}</label> <input
-					jsf:id="contato" type="text"
+				<input jsf:id="fone" type="tel" class="form-control" required="required"
+					jsf:value="#{clienteController.cliente.foneTitular}"/> 
+				
+				<label jsf:for="contato"
+					class="control-label">#{bundle.contato}</label> 
+				<input jsf:id="contato" type="text"
 					jsf:value="#{clienteController.cliente.contato}"
-					class="form-control uppercase" /> <label jsf:for="foneContato"
-					class="control-label">#{bundle.foneContato}</label> <input
-					jsf:id="foneContato" type="tel"
+					class="form-control uppercase" /> 
+				
+				<label jsf:for="foneContato" class="control-label">#{bundle.foneContato}</label> 
+				<input jsf:id="foneContato" type="tel"
 					jsf:value="#{clienteController.cliente.foneContato}"
-					class="form-control" /> <label jsf:for="email"
-					class="control-label">#{bundle.email}</label> <input jsf:id="email"
+					class="form-control" /> 
+				
+				<label jsf:for="email"
+					class="control-label">#{bundle.email}</label> 
+				<input jsf:id="email"
 					type="email" jsf:value="#{clienteController.cliente.email}"
 					class="form-control" /> <label jsf:for="cep" class="control-label">#{bundle.cep}</label>
+				
 				<h:inputText id="cep"
 					value="#{clienteController.cliente.endereco.cep}"
 					styleClass="form-control">

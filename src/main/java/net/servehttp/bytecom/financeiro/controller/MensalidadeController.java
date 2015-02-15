@@ -75,6 +75,12 @@ public class MensalidadeController implements Serializable {
       possui = false;
       AlertaUtil.error("Cpf ou Cnpj obrigatório");
     }
+    
+    List<Mensalidade> list = getBoletosEmAberto(cliente.getMensalidades());
+    if(list == null || list.isEmpty()) {
+      possui = false;
+      AlertaUtil.error("Cliente nao possui nenhuma mensalidade em aberto.");
+    }
     return possui;
   }
 

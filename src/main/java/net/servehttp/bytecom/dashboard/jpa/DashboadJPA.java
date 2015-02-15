@@ -50,7 +50,6 @@ public class DashboadJPA extends GenericoJPA {
   public long getQuantidadeInstalacoesDoMes() {
     QContrato c = QContrato.contrato;
     LocalDate data = LocalDate.now().withDayOfMonth(1);
-    // Date data = DateUtil.getPrimeiroDiaDoMes().getTime();
     return new JPAQuery(em).from(c).where(c.dataInstalacao.goe(data)).count();
   }
 
@@ -74,7 +73,6 @@ public class DashboadJPA extends GenericoJPA {
     Double d =
         new JPAQuery(em).from(m).where(m.dataVencimento.between(from, to))
             .uniqueResult(m.valor.sum());
-    System.out.println("AA " + d);
     return d != null ? d : 0;
   }
 

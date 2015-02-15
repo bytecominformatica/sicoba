@@ -40,7 +40,6 @@ public class DashboardController implements Serializable {
     quantidadeInstalacoes = dashboadJPA.getQuantidadeInstalacoesDoMes();
     faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
     faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
-    System.out.println("FATURAMENTO = " + faturamentoPrevistoDoMes);
     listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();
     listClientesInativos = dashboadJPA.getClientesInativos();
     listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
