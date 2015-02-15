@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.business;
+package net.servehttp.bytecom.comercial.service;
 
 import java.io.Serializable;
 import java.util.List;

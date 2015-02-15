@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.business.AddressBussiness;
-import net.servehttp.bytecom.business.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.ClientBussiness;
 import net.servehttp.bytecom.persistence.entity.Bairro;
 import net.servehttp.bytecom.persistence.entity.Cidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;

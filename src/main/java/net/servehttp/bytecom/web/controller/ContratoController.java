@@ -9,10 +9,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.business.ClientBussiness;
 import net.servehttp.bytecom.business.ContratoBusiness;
 import net.servehttp.bytecom.business.EquipamentoBussiness;
-import net.servehttp.bytecom.business.PlanoBussiness;
+import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.PlanoBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;
 import net.servehttp.bytecom.persistence.entity.cadastro.Equipamento;

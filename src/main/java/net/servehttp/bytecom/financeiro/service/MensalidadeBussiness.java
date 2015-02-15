@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.business;
+package net.servehttp.bytecom.financeiro.service;
 
 import java.io.Serializable;
 import java.time.LocalDate;

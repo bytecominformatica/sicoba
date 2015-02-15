@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.business.AcessoBussiness;
-import net.servehttp.bytecom.business.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.ClientBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Acesso;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Contrato;

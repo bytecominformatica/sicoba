@@ -14,8 +14,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.business.ClientBussiness;
-import net.servehttp.bytecom.business.MensalidadeBussiness;
+import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.financeiro.service.MensalidadeBussiness;
 import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
 import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
 import net.servehttp.bytecom.persistence.entity.cadastro.StatusMensalidade;
