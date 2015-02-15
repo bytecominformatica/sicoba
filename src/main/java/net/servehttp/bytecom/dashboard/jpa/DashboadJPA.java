@@ -31,7 +31,9 @@ public class DashboadJPA extends GenericoJPA {
 
   public DashboadJPA() {
     from = LocalDate.now().withDayOfMonth(1);
-    to = LocalDate.now().withDayOfMonth(1);
+    to = LocalDate.now();
+    to = to.withDayOfMonth(to.lengthOfMonth());
+        
   }
 
   public void setEntityManager(EntityManager em) {
@@ -72,6 +74,7 @@ public class DashboadJPA extends GenericoJPA {
     Double d =
         new JPAQuery(em).from(m).where(m.dataVencimento.between(from, to))
             .uniqueResult(m.valor.sum());
+    System.out.println("AA " + d);
     return d != null ? d : 0;
   }
 
