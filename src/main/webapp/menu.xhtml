@@ -30,7 +30,7 @@
                      <i class="fa fa-dashboard"></i> <span>#{bundle.dashboard}</span>
                  </a>
              </li>
-             <li class="treeview">
+             <li class="treeview #{util.active(view.viewId, 'comercial')}">
                  <a href="#">
                      <i class="fa fa-group"></i>
                      <span>#{bundle.comercial}</span>
@@ -41,7 +41,7 @@
                  	<li><a href="#{request.contextPath}/pages/comercial/plano/list.xhtml"><i class="fa fa-cloud"></i> #{bundle.plano}</a></li>
                  </ul>
              </li>
-             <li class="treeview">
+             <li class="treeview #{util.active(view.viewId, 'financeiro')}">
                  <a href="#">
                      <i class="fa fa-usd"></i>
                      <span>#{bundle.financeiro}</span>
@@ -52,7 +52,7 @@
 					<li><a href="#{request.contextPath}/pages/financeiro/relatorios/relatorio_mensalidade.xhtml"><i class="fa fa-files-o"></i> <span>#{bundle.relatorio}</span></a></li>
                  </ul>
              </li>
-             <li class="treeview">
+             <li class="treeview #{util.active(view.viewId, 'estoque')}">
                  <a href="#">
                      <i class="fa fa-dropbox"></i>
                      <span>#{bundle.estoque}</span>
@@ -62,7 +62,7 @@
                  	<li><a href="#{request.contextPath}/pages/estoque/equipamento/list.xhtml"><i class="fa fa-wrench"></i> #{bundle.equipamento}</a></li>
                  </ul>
              </li>
-             <li class="treeview">
+             <li class="treeview #{util.active(view.viewId, 'extra')}">
                  <a href="#">
                      <i class="fa fa-gift"></i>
                      <span>#{bundle.extra}</span>
@@ -73,7 +73,7 @@
                  	<li><a href="#{request.contextPath}/pages/extra/maps/list.xhtml"><i class="fa fa-map-marker"></i><span>#{bundle.refereciaClienteMapa}</span> </a></li>
                  </ul>
              </li>
-             <li class="treeview">
+             <li class="treeview #{util.active(view.viewId, 'administrador')}">
                  <a href="#">
                      <i class="fa fa-user-secret"></i>
                      <span>#{bundle.admin}</span>

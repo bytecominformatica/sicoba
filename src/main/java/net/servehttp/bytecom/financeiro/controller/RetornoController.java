@@ -25,7 +25,7 @@ import net.servehttp.bytecom.util.web.AlertaUtil;
  */
 @Named
 @RequestScoped
-public class CaixaController implements Serializable {
+public class RetornoController implements Serializable {
 
   private static final long serialVersionUID = -3249445210310419657L;
 
@@ -37,7 +37,7 @@ public class CaixaController implements Serializable {
 
   private MensalidadeJPA mensalidadeJPA;
 
-  public CaixaController() {}
+  public RetornoController() {}
 
   public void upload() {
     if (file != null) {

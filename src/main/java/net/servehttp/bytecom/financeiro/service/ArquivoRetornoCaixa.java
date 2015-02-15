@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.Part;
 
-import net.servehttp.bytecom.financeiro.controller.CaixaController;
+import net.servehttp.bytecom.financeiro.controller.RetornoController;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Header;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.HeaderLote;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Registro;
@@ -58,7 +58,7 @@ public class ArquivoRetornoCaixa {
         }
 
       } catch (IOException e) {
-        Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, e);
+        Logger.getLogger(RetornoController.class.getName()).log(Level.SEVERE, null, e);
       }
     }
 
