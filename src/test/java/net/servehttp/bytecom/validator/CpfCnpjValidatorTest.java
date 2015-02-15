@@ -1,5 +1,7 @@
 package net.servehttp.bytecom.validator;
 
+import net.servehttp.bytecom.util.validator.CpfCnpjValidator;
+
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -6,11 +6,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.persistence.MensalidadeJPA;
-import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
-import net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade;
-import net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente;
-import net.servehttp.bytecom.util.GerarBoleto;
+import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
+import net.servehttp.bytecom.financeiro.jpa.MensalidadeJPA;
+import net.servehttp.bytecom.financeiro.jpa.entity.Cedente;
+import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
 
 public class MensalidadeBussiness implements Serializable {
 

@@ -3,8 +3,8 @@ package net.servehttp.bytecom.util.web;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.persistence.entity.security.UserAccount;
-import net.servehttp.bytecom.qualifier.UsuarioLogado;
+import net.servehttp.bytecom.administrador.jpa.entity.UserAccount;
+import net.servehttp.bytecom.util.qualifier.UsuarioLogado;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

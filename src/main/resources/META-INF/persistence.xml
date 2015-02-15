@@ -4,30 +4,30 @@
 
 	<persistence-unit name="teste-pu" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Acesso</class>
-		<class>net.servehttp.bytecom.persistence.entity.Bairro</class>
-		<class>net.servehttp.bytecom.persistence.entity.Cidade</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Cliente</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Contrato</class>
-		<class>net.servehttp.bytecom.persistence.entity.Endereco</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Equipamento</class>
-		<class>net.servehttp.bytecom.persistence.entity.Estado</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Mensalidade</class>
-		<class>net.servehttp.bytecom.persistence.entity.Pais</class>
-		<class>net.servehttp.bytecom.persistence.entity.cadastro.Plano</class>
-		<class>net.servehttp.bytecom.persistence.entity.caixa.Header</class>
-		<class>net.servehttp.bytecom.persistence.entity.caixa.Trailer</class>
-		<class>net.servehttp.bytecom.persistence.entity.caixa.HeaderLote</class>
-		<class>net.servehttp.bytecom.persistence.entity.caixa.Registro</class>
-		<class>net.servehttp.bytecom.persistence.entity.caixa.RegistroDetalhe</class>
-		<class>net.servehttp.bytecom.persistence.entity.caixa.TrailerLote</class>
-		<class>net.servehttp.bytecom.persistence.entity.security.UserAccount</class>
-		<class>net.servehttp.bytecom.persistence.entity.security.AccessGroup</class>
-		<class>net.servehttp.bytecom.persistence.entity.security.Authentication</class>
-		<class>net.servehttp.bytecom.persistence.entity.maps.ClienteGeoReferencia</class>
-		<class>net.servehttp.bytecom.persistence.entity.financeiro.boleto.Cedente</class>
-		<class>net.servehttp.bytecom.converter.date.LocalDatePersistenceConverter</class>
-		<class>net.servehttp.bytecom.converter.date.LocalDateTimePersistenceConverter</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Acesso</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Bairro</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Cidade</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Cliente</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Contrato</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Endereco</class>
+		<class>net.servehttp.bytecom.estoque.jpa.entity.Equipamento</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Estado</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Pais</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Plano</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Header</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Trailer</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.HeaderLote</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Registro</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.RegistroDetalhe</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.TrailerLote</class>
+		<class>net.servehttp.bytecom.administrador.jpa.entity.UserAccount</class>
+		<class>net.servehttp.bytecom.administrador.jpa.entity.AccessGroup</class>
+		<class>net.servehttp.bytecom.administrador.jpa.entity.Authentication</class>
+		<class>net.servehttp.bytecom.extra.jpa.entity.ClienteGeoReferencia</class>
+		<class>net.servehttp.bytecom.financeiro.jpa.entity.Cedente</class>
+		<class>net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter</class>
+		<class>net.servehttp.bytecom.util.converter.date.LocalDateTimePersistenceConverter</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />

@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.persistence.ClienteJPA;
-import net.servehttp.bytecom.persistence.entity.cadastro.Cliente;
-import net.servehttp.bytecom.persistence.entity.cadastro.StatusCliente;
+import net.servehttp.bytecom.comercial.jpa.ClienteJPA;
+import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
+import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
 
 public class ClientBussiness implements Serializable {
 
