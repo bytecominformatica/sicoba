@@ -11,12 +11,12 @@
 			<button jsf:id="boletos" jsf:actionListener="#{mensalidadeController.gerarBoletosPDF()}"
                 class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-barcode" /> #{bundle.boletos}
-             	</button>
+           	</button>
 			<button jsf:id="btNovo" jsf:actionListener="#{mensalidadeController.getNovaMensalidade()}"
                 class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-plus" /> #{bundle.new}
-             	</button>
-            	</div>
+           	</button>
+       	</div>
 	</div>
 
 	<label jsf:for="cliente" class="control-label">#{bundle.cliente}</label>
@@ -38,6 +38,10 @@
 		jsf:value="#{mensalidadeController.mensalidade.valor}"
 		required="required" />
 
+	<label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
+	<input jsf:id="desconto" type="number" step="any" class="form-control"
+		jsf:value="#{mensalidadeController.mensalidade.desconto}" />
+
 	<div jsf:id="valorPagoDisplay" style="display: #{mensalidadeController.mensalidade.status == 'BAIXA_MANUAL' ?  'inline' : 'none'}">
 		<label jsf:for="valorPago" class="control-label" >#{bundle.valorPago}</label>
 		<input jsf:id="valorPago" type="number" step="any" class="form-control"
@@ -48,11 +52,7 @@
             <f:converter converterId="localDateConverter"  />
         </input>
 	</div>
-
-	<label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
-	<input jsf:id="desconto" type="number" step="any" class="form-control"
-		jsf:value="#{mensalidadeController.mensalidade.desconto}" />
-
+	
 	<label jsf:for="vencimento" class="control-label">#{bundle.vencimento}</label>
        <input jsf:id="vencimento" required="required"
            jsf:value="#{mensalidadeController.mensalidade.dataVencimento}" type="text" maxlength="10" class="form-control" pattern="#{bundle.datePattern}">
