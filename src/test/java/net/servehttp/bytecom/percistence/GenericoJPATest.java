@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import net.servehttp.bytecom.comercial.jpa.entity.Plano;
+import net.servehttp.bytecom.extra.jpa.GenericoJPA;
 import net.servehttp.bytecom.facede.CreateEntityManager;
-import net.servehttp.bytecom.persistence.GenericoJPA;
-import net.servehttp.bytecom.persistence.entity.cadastro.Plano;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -43,7 +43,7 @@ public class GenericoJPATest {
 
   @Test
   public void deveriaDeveriaBuscarPorId() {
-    genericoJPA.findById(Plano.class, 1);
+    genericoJPA.buscarPorId(Plano.class, 1);
   }
 
   @AfterClass
