@@ -7,7 +7,7 @@ import javax.inject.Named;
 @RequestScoped
 public class Util {
 
-	public String removePage(String path) {
-		return path.substring(0, path.lastIndexOf('/'));
-	}
+  public String active(String path, String menu) {
+    return path.contains(menu) ? "active" : "";
+  }
 }

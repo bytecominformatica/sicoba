@@ -121,7 +121,7 @@ public abstract class GerarBoleto implements Serializable {
     } else {
       boleto.setInstrucao3("");
     }
-    boleto.setInstrucao4("NÃO RECEBER APOS 60 DIAS DO VENCIMENTO");
+    boleto.setInstrucao4(String.format("NÃO RECEBER APÓS %d DIAS DO VENCIMENTO", cedente.getPrazo()));
     
     if (m.getParcela() != null && !m.getParcela().isEmpty()) {
       boleto.setInstrucao6("PARCELA " + m.getParcela());
