@@ -59,15 +59,15 @@ sleep 10
 
 ######################### ADD MODULOS #################################
 
-MYSQLDRIVER=/tmp/mysql-connector-java-5.1.29.jar;
+MYSQLDRIVER=/tmp/mysql-connector-java-5.1.34.jar;
 if ! [ -f $MYSQLDRIVER ]; then
 
-	echo "DOWNLOADING MYSQL DRIVER 5.1.29";
-	wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar;
+	echo "DOWNLOADING MYSQL DRIVER 5.1.34";
+	wget http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar;
 	
 fi;
 
-$WILDFLY_DIR/bin/./jboss-cli.sh --connect --command='module add --name=com.mysql --resources=/tmp/mysql-connector-java-5.1.29.jar --dependencies=javax.api' 
+$WILDFLY_DIR/bin/./jboss-cli.sh --connect --command='module add --name=com.mysql --resources=/tmp/mysql-connector-java-5.1.34.jar --dependencies=javax.api' 
 
 
 ######################### POOL MYSQL #################################
