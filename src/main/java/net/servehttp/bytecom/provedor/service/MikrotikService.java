@@ -3,6 +3,7 @@ package net.servehttp.bytecom.provedor.service;
 import java.util.List;
 import java.util.Map;
 
+import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import me.legrange.mikrotik.ApiConnection;
 import me.legrange.mikrotik.MikrotikApiException;
 
@@ -21,25 +22,20 @@ public class MikrotikService {
     this.senha = senha;
   }
 
-  public static void main(String... strings) {
-    MikrotikService mk = new MikrotikService("192.168.66.1", 8728, "admin", "cecinfo10");
-    List<Map<String, String>> result = mk.execute("/ppp/profile/print");
-    result.forEach(r -> {
-      System.out.printf("Name = %s%n", r.get("name"));
-    });
+  public MikrotikService(Mikrotik mikrotik) {
+    super();
+    this.host = mikrotik.getHost();
+    this.porta = mikrotik.getPorta();
+    this.usuario = mikrotik.getUsuario();
+    this.senha = mikrotik.getSenha();
   }
 
-  private List<Map<String, String>> execute(String commando) {
-    try {
-      ApiConnection con = ApiConnection.connect(host, porta);
-      con.login(usuario, senha);
-      List<Map<String, String>> result = con.execute(commando);
-      con.disconnect();
-      return result;
-    } catch (MikrotikApiException | InterruptedException e) {
-      e.printStackTrace();
-      return null;
-    }
+  public List<Map<String, String>> execute(String commando) throws MikrotikApiException, InterruptedException {
+    ApiConnection con = ApiConnection.connect(host, porta);
+    con.login(usuario, senha);
+    List<Map<String, String>> result = con.execute(commando);
+    con.disconnect();
+    return result;
   }
 
 

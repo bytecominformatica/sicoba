@@ -52,6 +52,7 @@
 					<li><a href="#{request.contextPath}/pages/financeiro/relatorios/relatorio_mensalidade.xhtml"><i class="fa fa-files-o"></i> <span>#{bundle.relatorio}</span></a></li>
                  </ul>
              </li>
+             
              <li class="treeview #{util.active(view.viewId, 'estoque')}">
                  <a href="#">
                      <i class="fa fa-dropbox"></i>
@@ -62,6 +63,18 @@
                  	<li><a href="#{request.contextPath}/pages/estoque/equipamento/list.xhtml"><i class="fa fa-wrench"></i> #{bundle.equipamento}</a></li>
                  </ul>
              </li>
+             
+             <li class="treeview #{util.active(view.viewId, 'provedor')}">
+                 <a href="#">
+                     <i class="fa fa-linux"></i>
+                     <span>#{bundle.provedor}</span>
+                     <i class="fa fa-angle-left pull-right"></i>
+                 </a>
+                 <ul class="treeview-menu">
+                 	<li><a href="#{request.contextPath}/pages/provedor/mikrotik.xhtml"><i class="fa fa-maxcdn"></i> #{bundle.mikrotik}</a></li>
+                 </ul>
+             </li>
+             
              <li class="treeview #{util.active(view.viewId, 'extra')}">
                  <a href="#">
                      <i class="fa fa-gift"></i>
