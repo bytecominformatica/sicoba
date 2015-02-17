@@ -163,4 +163,14 @@
 			stripComments="true" />
 	</changeSet>
 
+	<changeSet id="28" author="clairtonluz">
+		<sqlFile path="net/servehttp/bytecom/db/changelog/28-clairtonluz.sql"
+			stripComments="true" />
+	</changeSet>
+
+	<changeSet id="29" author="clairtonluz">
+		<sqlFile path="net/servehttp/bytecom/db/changelog/29-clairtonluz.sql"
+			stripComments="true" />
+	</changeSet>
+
 </databaseChangeLog>
