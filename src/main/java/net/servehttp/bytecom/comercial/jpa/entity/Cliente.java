@@ -59,12 +59,18 @@ public class Cliente extends EntityGeneric implements Serializable {
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "endereco_id")
   private Endereco endereco;
+  
   @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL,
       orphanRemoval = true)
   private Acesso acesso;
+
+  @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Conexao conexao;
+
   @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL,
       orphanRemoval = true)
   private Contrato contrato;
+
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.EAGER,
       orphanRemoval = true)
   private List<Mensalidade> mensalidades;
@@ -186,6 +192,14 @@ public class Cliente extends EntityGeneric implements Serializable {
 
   public void setStatus(StatusCliente status) {
     this.status = status;
+  }
+
+  public Conexao getConexao() {
+    return conexao;
+  }
+
+  public void setConexao(Conexao conexao) {
+    this.conexao = conexao;
   }
 
 }

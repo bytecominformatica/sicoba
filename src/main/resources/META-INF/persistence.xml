@@ -29,6 +29,7 @@
 		<class>net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter</class>
 		<class>net.servehttp.bytecom.util.converter.date.LocalDateTimePersistenceConverter</class>
 		<class>net.servehttp.bytecom.provedor.jpa.entity.Mikrotik</class>
+		<class>net.servehttp.bytecom.comercial.jpa.entity.Conexao</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />

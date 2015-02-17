@@ -22,8 +22,8 @@ public class GenericoController implements Serializable {
   private LogService log;
 
   protected void log(Exception e) {
-    AlertaUtil.error(String.format("Error: %s%nCausa: %s", e.getMessage(), e.getCause()));
-    enviarLogError(e);
+    AlertaUtil.error(e.getMessage());
+    // enviarLogError(e);
   }
 
   private void enviarLogError(Exception e) {

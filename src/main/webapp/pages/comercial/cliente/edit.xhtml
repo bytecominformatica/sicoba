@@ -15,20 +15,23 @@
 	<ui:define name="content">
 		<div class="panel-body">
 			<div class="modal-header" align="center">
-				<form jsf:id="formActions"
-					rendered="#{clienteController.cliente.id != 0}">
+				<form jsf:id="formActions" jsf:rendered="#{clienteController.cliente.id != 0}">
 					<button jsf:id="btnContrato" class="btn btn-primary link-group"
 						jsf:outcome="contrato">
 						<span class="glyphicon glyphicon-file" /> Contrato
 						<f:param value="#{clienteController.cliente.id}" name="clienteId"></f:param>
 					</button>
 
-					<div jsf:id="display"
-						style="display: #{clienteController.cliente.contrato != null ?  'inline' : 'none'}">
+					<div jsf:id="display" jsf:rendered="#{clienteController.cliente.contrato != null}">
 						<button jsf:id="btnAcesso" class="btn btn-primary link-group"
 							jsf:outcome="acesso">
 							<span class="glyphicon glyphicon-cloud" /> Acesso
 							<f:param value="#{clienteController.cliente.id}" name="clienteId"></f:param>
+						</button>
+						<button class="btn btn-primary link-group"
+							jsf:outcome="conexao">
+							<span class="glyphicon glyphicon-cloud" /> Conexao
+							<f:param value="#{clienteController.cliente.id}" name="id"></f:param>
 						</button>
 						<button jsf:id="btnMensalidade" class="btn btn-primary link-group"
 							jsf:outcome="mensalidade">
@@ -36,7 +39,6 @@
 							<f:param value="#{clienteController.cliente.id}" name="clienteId"></f:param>
 						</button>
 					</div>
-
 				</form>
 			</div>
 			<form jsf:id="form" class="form-horizontal">

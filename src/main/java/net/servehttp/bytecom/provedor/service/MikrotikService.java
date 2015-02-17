@@ -1,42 +1,56 @@
 package net.servehttp.bytecom.provedor.service;
 
+import java.io.Serializable;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 
-import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import me.legrange.mikrotik.ApiConnection;
-import me.legrange.mikrotik.MikrotikApiException;
+import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
+import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
+import net.servehttp.bytecom.util.NetworkUtil;
 
-public class MikrotikService {
+public class MikrotikService implements Serializable {
 
-  private String host;
-  private int porta;
-  private String usuario;
-  private String senha;
+  private static final long serialVersionUID = -242422545387720478L;
 
-  public MikrotikService(String host, int porta, String usuario, String senha) {
-    super();
-    this.host = host;
-    this.porta = porta;
-    this.usuario = usuario;
-    this.senha = senha;
+  public List<Map<String, String>> getClienteOnline(Mikrotik mk) throws Exception {
+    return execute(mk, "/ppp/active/print");
   }
 
-  public MikrotikService(Mikrotik mikrotik) {
-    super();
-    this.host = mikrotik.getHost();
-    this.porta = mikrotik.getPorta();
-    this.usuario = mikrotik.getUsuario();
-    this.senha = mikrotik.getSenha();
+  public void addConexao(Conexao conexao) throws Exception {
+    execute(
+        conexao.getMikrotik(),
+        String.format("/ppp/secret/add name=%s password=%s profile=%s service=pppoe",
+            conexao.getNome(), conexao.getSenha(), "ilimitada"));
   }
 
-  public List<Map<String, String>> execute(String commando) throws MikrotikApiException, InterruptedException {
-    ApiConnection con = ApiConnection.connect(host, porta);
-    con.login(usuario, senha);
+  public void atualizarConexao(Conexao conexao) throws Exception {
+    execute(
+        conexao.getMikrotik(),
+        String.format("/ppp/secret/set .id=%s password=%s profile=%s service=pppoe",
+            conexao.getNome(), conexao.getSenha(), "ilimitada"));
+  }
+
+  public void removeConexao(Conexao conexao) throws Exception {
+    execute(conexao.getMikrotik(), String.format("/ppp/secret/remove .id=%s", conexao.getNome()));
+  }
+
+  private List<Map<String, String>> execute(Mikrotik mk, String commando) throws Exception {
+    ApiConnection con = connect(mk);
+    con.login(mk.getUsuario(), mk.getSenha());
     List<Map<String, String>> result = con.execute(commando);
     con.disconnect();
     return result;
   }
 
+  private ApiConnection connect(Mikrotik mk) throws Exception {
+    if (NetworkUtil.INSTANCE.ping(mk.getHost())) {
+      return ApiConnection.connect(mk.getHost(), mk.getPorta());
+    } else {
+      throw new UnknownHostException(String.format("Mikrotik: %s:%d não disponível", mk.getHost(),
+          mk.getPorta()));
+    }
+  }
 
 }
