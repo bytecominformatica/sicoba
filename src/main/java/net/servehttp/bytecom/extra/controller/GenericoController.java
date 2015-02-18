@@ -1,11 +1,14 @@
 package net.servehttp.bytecom.extra.controller;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.extra.service.LogService;
+import net.servehttp.bytecom.util.MensagemException;
 import net.servehttp.bytecom.util.ejb.MailEJB;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
@@ -23,7 +26,10 @@ public class GenericoController implements Serializable {
 
   protected void log(Exception e) {
     AlertaUtil.error(e.getMessage());
-    // enviarLogError(e);
+    if (!(e instanceof MensagemException)) {
+      Logger.getLogger(GenericoController.class.getName()).log(Level.SEVERE, null, e);
+      // enviarLogError(e);
+    }
   }
 
   private void enviarLogError(Exception e) {
