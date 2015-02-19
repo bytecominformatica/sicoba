@@ -13,9 +13,12 @@
 				<label jsf:for="cliente" class="control-label" >#{bundle.cliente}</label>
 				<input jsf:id="cliente" type="text" class="form-control" jsf:value="#{conexaoController.cliente.nome}" disabled="disabled"/>
 
+				<label class="control-label" >#{bundle.plano}</label>
+				<input type="text" class="form-control" jsf:value="#{conexaoController.cliente.contrato.plano.nome}" disabled="disabled"/>
+
 				<label jsf:for="mikrotik" class="control-label">#{bundle.mikrotik}</label>
 				<h:selectOneMenu id="mikrotik" value="#{conexaoController.cliente.conexao.mikrotik}" converter="entityConverter"
-					styleClass="form-control" required="true">
+					styleClass="form-control" required="true" requiredMessage="Selecione um mikrotik">
 					<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
 					<f:selectItems value="#{conexaoController.listMikrotik}" var="mk" itemLabel="#{mk.nome} - #{mk.host}"/>
 				</h:selectOneMenu>
@@ -23,6 +26,7 @@
 				<label jsf:for="nome" class="control-label" >#{bundle.nome}</label>
 				<input jsf:rendered="#{!(conexaoController.cliente.conexao.id > 0)}" jsf:id="nome" type="text" class="form-control" jsf:value="#{conexaoController.cliente.conexao.nome}" autofocus="autofocus" required="required"/>
 				<input jsf:rendered="#{conexaoController.cliente.conexao.id > 0}" type="text" class="form-control" jsf:value="#{conexaoController.cliente.conexao.nome}" disabled="disabled"/>
+
 
 				<label jsf:for="senha" class="control-label" >#{bundle.senha}</label>
 				<input jsf:id="senha" type="text" class="form-control" jsf:value="#{conexaoController.cliente.conexao.senha}" required="required"/>

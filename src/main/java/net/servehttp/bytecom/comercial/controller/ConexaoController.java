@@ -14,7 +14,7 @@ import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
 import net.servehttp.bytecom.extra.controller.GenericoController;
 import net.servehttp.bytecom.provedor.jpa.MikrotikJPA;
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
-import net.servehttp.bytecom.provedor.service.MikrotikService;
+import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -37,7 +37,7 @@ public class ConexaoController extends GenericoController {
   @Inject
   private MikrotikJPA mikrotikJPA;
   @Inject
-  private MikrotikService mikrotikService;
+  private MikrotikPPP mikrotikPPP;
   private Mikrotik mikrotik;
 
   private List<Mikrotik> listMikrotik;
@@ -70,11 +70,11 @@ public class ConexaoController extends GenericoController {
     try {
       if (valido()) {
         if (cliente.getConexao().getId() > 0) {
-          mikrotikService.atualizarConexao(cliente.getConexao());
+          mikrotikPPP.updateSecret(cliente.getConexao());
           jpa.atualizar(cliente.getConexao());
           AlertaUtil.info("Atualizado com sucesso!");
         } else {
-          mikrotikService.addConexao(cliente.getConexao());
+          mikrotikPPP.addSecret(cliente.getConexao());
           jpa.salvar(cliente.getConexao());
           AlertaUtil.info("Salvo com sucesso!");
         }
@@ -95,7 +95,7 @@ public class ConexaoController extends GenericoController {
 
   public void remover() {
     try {
-      mikrotikService.removeConexao(cliente.getConexao());
+      mikrotikPPP.removeSecret(cliente.getConexao());
       cliente.setConexao(null);
       clienteJPA.atualizar(cliente);
       novaConexao();
