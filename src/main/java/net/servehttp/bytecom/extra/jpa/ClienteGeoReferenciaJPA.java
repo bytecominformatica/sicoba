@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.extra.jpa;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,18 +17,18 @@ import com.mysema.query.jpa.impl.JPAQuery;
  *
  */
 @Transactional
-public class ClienteGeoReferenciaJPA extends GenericoJPA {
+public class ClienteGeoReferenciaJPA extends GenericoJPA implements Serializable {
 
   private static final long serialVersionUID = 7468802847947425443L;
-  private QClienteGeoReferencia cg = QClienteGeoReferencia.clienteGeoReferencia;
+  //private QClienteGeoReferencia cg = QClienteGeoReferencia.clienteGeoReferencia;
   
   public void setEntityManager(EntityManager em) {
     this.em = em;
   }
   
   public List<ClienteGeoReferencia> buscaClientesGeo(){
-    return new JPAQuery(em)
-              .from(cg).list(cg);
+    List<ClienteGeoReferencia> listClientes = buscarTodos(ClienteGeoReferencia.class);
+    return listClientes;
   }
   
   
