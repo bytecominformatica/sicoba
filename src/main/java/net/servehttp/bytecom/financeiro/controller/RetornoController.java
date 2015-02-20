@@ -35,6 +35,7 @@ public class RetornoController implements Serializable {
   @Inject
   private ServidorController servidorController;
 
+  @Inject
   private MensalidadeJPA mensalidadeJPA;
 
   public RetornoController() {}

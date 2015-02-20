@@ -2,6 +2,7 @@ package net.servehttp.bytecom.financeiro.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -28,44 +29,49 @@ public class ArquivoRetornoCaixa {
   private static final int TRAILER = 9;
 
   public Header tratarArquivo(Part file) {
-    Header header = null;
-    HeaderLote headerLote = null;
+    Header h = null;
     if (isArquivoRetorno(file)) {
       try {
-        BufferedReader in = new BufferedReader(new InputStreamReader(file.getInputStream()));
-        String line = null;
-
-        while ((line = in.readLine()) != null) {
-          int tipoRegistro = StringUtil.getInt(line, 7, 8);
-          switch (tipoRegistro) {
-            case HEADER:
-              header = preencheHeader(line, file);
-              break;
-            case HEADER_LOTE:
-              headerLote = preencheHeaderLote(line, header);
-              break;
-            case REGISTRO:
-              headerLote.getRegistros().add(preencheRegistro(line, headerLote, in));
-              break;
-            case TRAILER_LOTE:
-              headerLote.setTrailerLote(preencheTrailerLote(line, headerLote));
-              header.getHeaderLotes().add(headerLote);
-              break;
-            case TRAILER:
-              header.setTrailer(preencheTrailer(line, header));
-              break;
-          }
-        }
-
+        h = lerArquivoRetornoCaixa(file.getInputStream(), file.getSubmittedFileName());
       } catch (IOException e) {
         Logger.getLogger(RetornoController.class.getName()).log(Level.SEVERE, null, e);
+      }
+    }
+    return h;
+  }
+
+
+  public Header lerArquivoRetornoCaixa(InputStream input, String fileName) throws IOException {
+    Header header = null;
+    HeaderLote headerLote = null;
+    BufferedReader in = new BufferedReader(new InputStreamReader(input));
+    String line = null;
+
+    while ((line = in.readLine()) != null) {
+      int tipoRegistro = StringUtil.getInt(line, 7, 8);
+      switch (tipoRegistro) {
+        case HEADER:
+          header = preencheHeader(line, fileName);
+          break;
+        case HEADER_LOTE:
+          headerLote = preencheHeaderLote(line, header);
+          break;
+        case REGISTRO:
+          headerLote.getRegistros().add(preencheRegistro(line, headerLote, in));
+          break;
+        case TRAILER_LOTE:
+          headerLote.setTrailerLote(preencheTrailerLote(line, headerLote));
+          header.getHeaderLotes().add(headerLote);
+          break;
+        case TRAILER:
+          header.setTrailer(preencheTrailer(line, header));
+          break;
       }
     }
 
     if (isCorrompido(header)) {
       header = null;
-      throw new IllegalArgumentException("O ARQUIVO DE RETORNO " + file.getSubmittedFileName()
-          + " ESTÁ CORROMPIDO!");
+      throw new IllegalArgumentException("O ARQUIVO DE RETORNO " + fileName + " ESTÁ CORROMPIDO!");
     }
 
     return header;
@@ -104,9 +110,9 @@ public class ArquivoRetornoCaixa {
     return corrompido;
   }
 
-  private Header preencheHeader(String line, Part file) {
+  private Header preencheHeader(String line, String fileName) {
     Header h = new Header();
-    h.setNomeArquivo(file.getSubmittedFileName());
+    h.setNomeArquivo(fileName);
     h.setDataGeracao(StringUtil.getDataHora(line, 143, 157));
     h.setSequencial(StringUtil.getInt(line, 157, 163));
 
