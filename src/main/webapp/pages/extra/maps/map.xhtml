@@ -24,22 +24,59 @@
 	    	  }
 	    	  var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-	    	  // To add the marker to the map, use the 'map' property
-	    	  var marker = new google.maps.Marker({
+	    	  
+	    	  new google.maps.Marker({
 	    	      position: myLatlng,
 	    	      map: map,
-	    	      title:"Bytecom"
+	    	      title:"Bytecom",
+	    	      icon: '../../../img/torre.png'
 	    	  });
 
-	    	  $.getJSON( "http://localhost:8080/sicoba/rest/maps/clientesGeo", function( data ) {
+	    	  $.getJSON( "http://" + location.host + "/sicoba/rest/maps/clientesGeo", function( data ) {
 	    		  var items = [];
 	    		  $.each( data, function( key, val ) {
-	    			  new google.maps.Marker({
-	    	    	      position: new google.maps.LatLng(val.latitude, val.longitude),
-	    	    	      map: map,
-	    	    	      title:val.cliente.nome
-	    	    	  });
-	    		  });
+		    		  var cliente = val.cliente;
+	    			  var contentString = 
+	    		    	  '<div id="content">'+
+	    			          '<div id="siteNotice">'+
+	    			          '</div>'+
+	    			          
+	    			          '<h4 id="firstHeading" class="firstHeading">'+
+	    			          cliente.nome +
+	    			          '</h4>'+
+	    			          
+	    			          '<div id="bodyContent">'+
+	    				          '<label class="control-label">Endereço:</label> ' + 
+	    				          cliente.endereco.logradouro + ', ' +
+	    				          cliente.endereco.numero + ', ' +
+	    				          cliente.endereco.bairro.nome + ', ' +
+	    				          cliente.endereco.bairro.cidade.nome + ', ' +
+	    				          cliente.endereco.bairro.cidade.estado.uf + ', ' +
+	    				          cliente.endereco.bairro.cidade.estado.pais.nome +
+	    				          '<br/><label class="control-label">Fone:</label> ' + 
+	    				          cliente.foneTitular +
+	    				          '<br/><label class="control-label">Fone '+ cliente.contato+': </label> ' + 
+	    				          cliente.foneContato +
+	    			          '</div>'+
+	    			          
+	    		          '</div>';
+
+		    		      var infowindow = new google.maps.InfoWindow({
+		    		          content: contentString
+		    		      });
+	
+			    		  
+		    			  var marker = new google.maps.Marker({
+		    	    	      position: new google.maps.LatLng(val.latitude, val.longitude),
+		    	    	      map: map,
+		    	    	      title:val.cliente.nome,
+		    	    	      icon: '../../../img/'+ val.cliente.status +'.png'
+		    	    	  });
+
+		    			  google.maps.event.addListener(marker, 'click', function() {
+		  	    		    infowindow.open(map,marker);
+		  	    		  });
+		    		  });
     		  });
 
 	      }
