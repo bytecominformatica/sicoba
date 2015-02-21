@@ -65,6 +65,7 @@ public class LocalizacaoController implements Serializable {
           +URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','
           +URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
 
+      System.out.println("PATH = " + path);
       double latitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[0]);
       double longitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[1]);
       clienteGeo.setCliente(getCliente());

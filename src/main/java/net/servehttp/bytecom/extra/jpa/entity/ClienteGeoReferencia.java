@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
@@ -19,6 +21,7 @@ import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
  *
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "cliente_georeferencia")
 public class ClienteGeoReferencia extends EntityGeneric implements Serializable {

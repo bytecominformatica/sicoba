@@ -9,11 +9,6 @@
 	</context-param>
 	
 	<!-- RESTeasy -->
-	<!-- <context-param>
-		<param-name>resteasy.scan</param-name>
-		<param-value>true</param-value>
-	</context-param>-->
-	
 	<listener>
         <listener-class>
             org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
@@ -25,28 +20,24 @@
         <servlet-class>
             org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
         </servlet-class>
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>net.servehttp.bytecom.extra.rest.RegisterServices</param-value>
-        </init-param>
- 
     </servlet>
+ 
+ 	<servlet-mapping>
+		<servlet-name>Resteasy</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+ 
  
     <context-param>
       <param-name>resteasy.servlet.mapping.prefix</param-name>
       <param-value>/rest</param-value>
    </context-param>
-    
-    <context-param>  
-     <param-name>resteasy.injector.factory</param-name>  
-     <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>  
+   
+    <context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
 	</context-param>
- 
-	<servlet-mapping>
-		<servlet-name>Resteasy</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
-	</servlet-mapping>
-
+	
 	<!-- JSF -->
 	<servlet>
 	  <servlet-name>Faces Servlet</servlet-name>
