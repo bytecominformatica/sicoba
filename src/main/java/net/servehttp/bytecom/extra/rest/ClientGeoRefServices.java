@@ -6,21 +6,22 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import net.servehttp.bytecom.extra.jpa.entity.ClienteGeoReferencia;
 import net.servehttp.bytecom.extra.service.ClienteGeorefereciaBussiness;
 
 @Path("maps")
+@Produces(MediaType.APPLICATION_JSON)
 public class ClientGeoRefServices {
 
   @Inject
-  ClienteGeorefereciaBussiness clienteGeoBusssiness;
+  private ClienteGeorefereciaBussiness clienteGeoBusssiness;
   
   private List<ClienteGeoReferencia> listClientes;
   
   @GET
   @Path("clientesGeo")
-  @Produces("application/json")
   public List<ClienteGeoReferencia> listarClientes(){
     listClientes = clienteGeoBusssiness.buscar();
     return listClientes;

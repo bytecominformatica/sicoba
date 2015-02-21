@@ -5,9 +5,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "conexao")
 public class Conexao extends net.servehttp.bytecom.extra.jpa.entity.EntityGeneric {
@@ -16,6 +22,7 @@ public class Conexao extends net.servehttp.bytecom.extra.jpa.entity.EntityGeneri
 
   @OneToOne
   @JoinColumn(name = "cliente_id")
+  @XmlTransient
   private Cliente cliente;
 
   @ManyToOne

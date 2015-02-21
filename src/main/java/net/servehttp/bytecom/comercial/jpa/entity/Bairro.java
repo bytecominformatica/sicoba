@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
@@ -13,7 +12,6 @@ import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
 
 @Entity
 @Table(name = "bairro")
-@NamedQuery(name = "Bairro.findAll", query = "SELECT b FROM Bairro b")
 public class Bairro extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = 4219357783343963670L;
