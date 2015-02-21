@@ -55,7 +55,28 @@ public class LocalizacaoController implements Serializable {
     }
   }
 
+  public void geocodificarTodos() {
+    int i = 0;
+    List<Cliente> clientes = jpa.buscarTodos(Cliente.class);
+    for (Cliente c : clientes) {
+      if (geocodificar(c)) {
+        i++;
+      }
+    }
+    AlertaUtil.info(String.format("Clientes referênciados: %d Clientes não referênciados: %s", i,
+        clientes.size() - i));
+  }
+
   public void geocodificar() {
+    if (geocodificar(cliente)) {
+      AlertaUtil.info("Gravado com sucesso");
+    } else {
+      AlertaUtil.warn("Localização não encontrada");
+    }
+  }
+
+  public boolean geocodificar(Cliente cliente) {
+    boolean sucesso;
     Location location = GoogleMaps.getLocation(cliente.getEndereco());
     if (location != null) {
       ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
@@ -71,11 +92,12 @@ public class LocalizacaoController implements Serializable {
         geoReferenciaAntiga.setLongitude(clienteGeo.getLongitude());
         jpa.atualizar(geoReferenciaAntiga);
       }
-      AlertaUtil.info("Gravado com sucesso");
-    } else {
-      AlertaUtil.warn("Localização não encontrada");
+      sucesso = true;
 
+    } else {
+      sucesso = false;
     }
+    return sucesso;
   }
 
   public Cliente getCliente() {
