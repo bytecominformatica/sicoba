@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 
@@ -29,6 +30,7 @@ public class ClienteGeoReferencia extends EntityGeneric implements Serializable 
   private static final long serialVersionUID = -7721922565148704991L;
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
   @JoinColumn(name = "cliente_id")
+  @XmlTransient
   private Cliente cliente;
   
   @Column(name = "lat")

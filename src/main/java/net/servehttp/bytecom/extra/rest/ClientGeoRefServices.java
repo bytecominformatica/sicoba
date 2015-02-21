@@ -23,9 +23,7 @@ public class ClientGeoRefServices {
   @GET
   @Path("clientesGeo")
   public List<ClienteGeoReferencia> listarClientes(){
-    System.out.println("BBBBBBBB");
     listClientes = clienteGeoBusssiness.buscar();
-    System.out.println("aaaaaa" + listClientes.size());
     return listClientes;
   }
   
