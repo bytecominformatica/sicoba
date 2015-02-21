@@ -2,10 +2,12 @@ package net.servehttp.bytecom.extra.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import net.servehttp.bytecom.comercial.jpa.entity.Bairro;
 import net.servehttp.bytecom.comercial.jpa.entity.Endereco;
 import net.servehttp.bytecom.extra.pojo.Location;
 
@@ -16,9 +18,12 @@ public abstract class GoogleMaps {
 
   private static String getPathMap(Endereco endereco) {
     try {
-      return String.format(GEOCODE_URL, URLEncoder.encode(endereco.getLogradouro(), "UTF-8"),
-          URLEncoder.encode(endereco.getNumero(), "UTF-8"),
-          URLEncoder.encode(endereco.getBairro().getNome(), "UTF-8"));
+      Optional<Endereco> ende = Optional.ofNullable(endereco);
+      return String
+          .format(GEOCODE_URL, 
+              URLEncoder.encode(ende.map(Endereco::getLogradouro).orElse(""), "UTF-8"), 
+              URLEncoder.encode(ende.map(Endereco::getNumero).orElse(""), "UTF-8"),
+              URLEncoder.encode(ende.map(Endereco::getBairro).map(Bairro::getNome).orElse(""), "UTF-8"));
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
       return null;

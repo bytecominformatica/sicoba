@@ -1,56 +1,73 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-	<ui:composition template="/layout.xhtml">
+<ui:composition template="/layout.xhtml">
 	<ui:define name="title">#{bundle.referenciarCliente}</ui:define>
 	<ui:define name="content">
 		<div class="panel-body">
 			<form jsf:id="form" class="form-horizontal">
-				<label jsf:for="nome" class="control-label">#{bundle.nome}</label>
-				<input jsf:id="nome" type="text" jsf:value="#{localizacaoController.cliente.nome}" class="form-control uppercase" 
-                             readonly="readonly"/>
-                <label jsf:for="cep" class="control-label">#{bundle.cep}</label>
-				<h:inputText id="cep" value="#{localizacaoController.cliente.endereco.cep}" readonly="true" styleClass="form-control">
-					<f:ajax event="blur" listener="#{clienteController.buscarEndereco()}" render=":form:logradouro :form:cidade :form:bairro" onevent="setFocus('form:numero')" />
+				<label jsf:for="nome" class="control-label">#{bundle.nome}</label> <input
+					jsf:id="nome" type="text"
+					jsf:value="#{localizacaoController.cliente.nome}"
+					class="form-control uppercase" readonly="readonly" /> <label
+					jsf:for="cep" class="control-label">#{bundle.cep}</label>
+				<h:inputText id="cep"
+					value="#{localizacaoController.cliente.endereco.cep}"
+					readonly="true" styleClass="form-control">
+					<f:ajax event="blur"
+						listener="#{clienteController.buscarEndereco()}"
+						render=":form:logradouro :form:cidade :form:bairro"
+						onevent="setFocus('form:numero')" />
 				</h:inputText>
-				
-					<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
-							<h:selectOneMenu id="cidade" value="#{clienteController.cidade}" styleClass="form-control"
-								required="true"  converter="entityConverter">
-								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-								<f:selectItems value="#{clienteController.listCidades}" var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}"/>
-								<f:ajax listener="#{clienteController.atualizaBairros}" render="bairro" />
-							</h:selectOneMenu>
 
-							<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
-							<h:selectOneMenu id="bairro" value="#{clienteController.cliente.endereco.bairro}" styleClass="form-control"
-								required="true" converter="entityConverter">
-								<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-								<f:selectItems value="#{clienteController.listBairros}" var="bairro" itemLabel="#{bairro.nome}"/>
-							</h:selectOneMenu>
+				<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
+				<h:selectOneMenu id="cidade" value="#{clienteController.cidade}"
+					styleClass="form-control" required="true"
+					converter="entityConverter">
+					<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+					<f:selectItems value="#{clienteController.listCidades}"
+						var="cidade" itemLabel="#{cidade.nome} - #{cidade.estado.uf}" />
+					<f:ajax listener="#{clienteController.atualizaBairros}"
+						render="bairro" />
+				</h:selectOneMenu>
 
-					<label jsf:for="logradouro" class="control-label">#{bundle.logradouro}</label>
-					<input jsf:id="logradouro" type="text" jsf:value="#{clienteController.cliente.endereco.logradouro}" class="form-control" readonly="true" />
+				<label jsf:for="bairro" class="control-label">#{bundle.bairro}</label>
+				<h:selectOneMenu id="bairro"
+					value="#{clienteController.cliente.endereco.bairro}"
+					styleClass="form-control" required="true"
+					converter="entityConverter">
+					<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
+					<f:selectItems value="#{clienteController.listBairros}"
+						var="bairro" itemLabel="#{bairro.nome}" />
+				</h:selectOneMenu>
 
-					<label jsf:for="numero" class="control-label">#{bundle.numero}</label>
-					<input jsf:id="numero" type="number" jsf:value="#{clienteController.cliente.endereco.numero}" class="form-control" readonly="true"/>
-							
-					<div class="modal-footer">
-                    	<button jsf:id="btSalvar" jsf:actionListener="#{localizacaoController.geocodificar()}"
-                        	class="btn btn-primary" type="submit">
-                            <span class="glyphicon glyphicon-floppy-save" /> #{bundle.georef}
-                        </button>
-                        <button jsf:id="btVoltar" jsf:outcome="list" style="margin-left: 5px;"
-                        	class="btn btn-primary">
-                            <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
-                        </button>
-  					</div>
+				<label jsf:for="logradouro" class="control-label">#{bundle.logradouro}</label>
+				<input jsf:id="logradouro" type="text"
+					jsf:value="#{clienteController.cliente.endereco.logradouro}"
+					class="form-control" readonly="true" /> <label jsf:for="numero"
+					class="control-label">#{bundle.numero}</label> <input
+					jsf:id="numero" type="number"
+					jsf:value="#{clienteController.cliente.endereco.numero}"
+					class="form-control" readonly="true" />
+
+				<div class="modal-footer">
+					<button jsf:id="btSalvar"
+						jsf:actionListener="#{localizacaoController.geocodificar()}"
+						class="btn btn-primary" type="submit">
+						<span class="glyphicon glyphicon-floppy-save" /> #{bundle.georef}
+					</button>
+					<button jsf:id="btVoltar" jsf:outcome="list"
+						style="margin-left: 5px;" class="btn btn-primary">
+						<span class="glyphicon glyphicon-circle-arrow-left" />
+						#{bundle.back}
+					</button>
+				</div>
 			</form>
 		</div>
 	</ui:define>
-	</ui:composition>
+</ui:composition>
 </html>
