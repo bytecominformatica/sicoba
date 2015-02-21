@@ -9,9 +9,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "acesso")
 public class Acesso extends EntityGeneric implements Serializable {
@@ -31,6 +37,7 @@ public class Acesso extends EntityGeneric implements Serializable {
 	@Size(min = 1, max = 20, message="MAC inválido 1-20")
 	@NotNull(message="MAC inválido")
 	private String mac;
+	@XmlTransient
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	@OneToOne
 	private Cliente cliente;

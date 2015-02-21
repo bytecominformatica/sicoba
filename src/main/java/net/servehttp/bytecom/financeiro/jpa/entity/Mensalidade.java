@@ -12,6 +12,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
@@ -21,6 +25,8 @@ import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
  *
  * @author clairton
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "mensalidade")
 public class Mensalidade extends EntityGeneric implements Serializable {
@@ -43,6 +49,7 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   @Column(name = "numero_boleto")
   private Integer numeroBoleto;
 
+  @XmlTransient
   @JoinColumn(name = "cliente_id")
   @ManyToOne(fetch = FetchType.EAGER)
   private Cliente cliente;
