@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
- 		
-	
-	<ui:composition template="/layout.xhtml">
-		<ui:define name="content">
-			<div id="map-canvas" style="height: 500px; width: 700px" onload="initialize(#{localizacaoController.listarClientesNoMapa()})">
-			
-			</div>
-		</ui:define>
-	</ui:composition>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<ui:composition template="/layout.xhtml">
+	<ui:define name="content">
+
+		<div id="map-canvas" style="height: 500px; width: 700px"
+			onload="initialize()"></div>
+
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQeWWcwyiqM226lNXNGrxp6u7hUoAWixI">
+    	</script>
+    	
+		<script type="text/javascript">
+	      function initialize() {
+	        var mapOptions = {
+	          center: { lat: -3.758027, lng: -38.652305},
+	          zoom: 15
+	        };
+	        var map = new google.maps.Map(document.getElementById('map-canvas'),
+	            mapOptions);
+	      }
+	      google.maps.event.addDomListener(window, 'load', initialize);
+	    </script>
+	</ui:define>
+</ui:composition>
 </html>
