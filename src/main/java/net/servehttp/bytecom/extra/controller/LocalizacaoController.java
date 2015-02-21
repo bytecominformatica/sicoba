@@ -1,8 +1,6 @@
 package net.servehttp.bytecom.extra.controller;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,9 +10,10 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.extra.jpa.ClienteGeoReferenciaJPA;
 import net.servehttp.bytecom.extra.jpa.entity.ClienteGeoReferencia;
-import net.servehttp.bytecom.extra.parser.XMLProcessor;
-import net.servehttp.bytecom.extra.service.ClienteGeorefereciaBussiness;
+import net.servehttp.bytecom.extra.pojo.Location;
+import net.servehttp.bytecom.extra.util.GoogleMaps;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -30,8 +29,6 @@ public class LocalizacaoController implements Serializable {
 
   private static final long serialVersionUID = -6695262369077987911L;
 
-  private String geocode_url = "https://maps.googleapis.com/maps/api/geocode/xml";
-  private ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
   private List<Cliente> listClientes;
   private int cidadeId;
   private int bairroId;
@@ -41,7 +38,7 @@ public class LocalizacaoController implements Serializable {
   @Inject
   private ClientBussiness clientBussiness;
   @Inject
-  private ClienteGeorefereciaBussiness clienteGeoBussiness;
+  private ClienteGeoReferenciaJPA jpa;
 
   @PostConstruct
   public void load() {
@@ -59,27 +56,26 @@ public class LocalizacaoController implements Serializable {
   }
 
   public void geocodificar() {
-    String path;
-    try {
-      path = geocode_url + '?'+"address="+URLEncoder.encode(cliente.getEndereco().getLogradouro(), "UTF-8")+','
-          +URLEncoder.encode(cliente.getEndereco().getNumero(), "UTF-8")+','
-          +URLEncoder.encode(cliente.getEndereco().getBairro().getNome(), "UTF-8")+"&sensor=false";
+    Location location = GoogleMaps.getLocation(cliente.getEndereco());
+    if (location != null) {
+      ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
+      clienteGeo.setCliente(cliente);
+      clienteGeo.setLatitude(location.getLat());
+      clienteGeo.setLongitude(location.getLng());
 
-      double latitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[0]);
-      double longitude = Double.parseDouble(XMLProcessor.INSTANCE.xmlRequest(path)[1]);
-      clienteGeo.setCliente(getCliente());
-      clienteGeo.setLatitude(latitude);
-      clienteGeo.setLongitude(longitude);
+      ClienteGeoReferencia geoReferenciaAntiga = jpa.buscarClienteGeoReferenciaPorCliente(cliente);
+      if (geoReferenciaAntiga == null) {
+        jpa.salvar(clienteGeo);
+      } else {
+        geoReferenciaAntiga.setLatitude(clienteGeo.getLatitude());
+        geoReferenciaAntiga.setLongitude(clienteGeo.getLongitude());
+        jpa.atualizar(geoReferenciaAntiga);
+      }
+      AlertaUtil.info("Gravado com sucesso");
+    } else {
+      AlertaUtil.warn("Localização não encontrada");
 
-      clienteGeoBussiness.salvar(clienteGeo);
-      AlertaUtil.info("Gravado com sucesso!");
-
-
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
     }
-
-
   }
 
   public Cliente getCliente() {
