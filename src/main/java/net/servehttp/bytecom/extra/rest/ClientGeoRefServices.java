@@ -8,28 +8,28 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import net.servehttp.bytecom.extra.jpa.ClienteGeoReferenciaJPA;
 import net.servehttp.bytecom.extra.jpa.entity.ClienteGeoReferencia;
-import net.servehttp.bytecom.extra.service.ClienteGeorefereciaBussiness;
 
 @Path("maps")
 @Produces(MediaType.APPLICATION_JSON)
 public class ClientGeoRefServices {
 
   @Inject
-  private ClienteGeorefereciaBussiness clienteGeoBusssiness;
-  
+  private ClienteGeoReferenciaJPA jpa;
+
   private List<ClienteGeoReferencia> listClientes;
-  
+
   @GET
   @Path("clientesGeo")
-  public List<ClienteGeoReferencia> listarClientes(){
-    listClientes = clienteGeoBusssiness.buscar();
+  public List<ClienteGeoReferencia> listarClientes() {
+    listClientes = jpa.buscarTodos(ClienteGeoReferencia.class);
     return listClientes;
   }
-  
+
   @GET
   @Path("merda")
-  public String teste(){
+  public String teste() {
     return "Merda";
   }
 
@@ -40,8 +40,5 @@ public class ClientGeoRefServices {
   public void setListClientes(List<ClienteGeoReferencia> listClientes) {
     this.listClientes = listClientes;
   }
-  
-  
-   
 
 }

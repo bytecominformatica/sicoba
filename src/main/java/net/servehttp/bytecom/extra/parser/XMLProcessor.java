@@ -35,6 +35,7 @@ public enum XMLProcessor {
   public String[] xmlRequest(String uri) {
     try {
       URL url = new URL(uri);
+      System.out.println(url);
       HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
       connection.setRequestMethod("GET");
       connection.setRequestProperty("Accept", "application/xml");
