@@ -31,7 +31,7 @@
 	    	      title:"Bytecom"
 	    	  });
 
-	    	  $.getJSON( "http://localhost:8080/sicoba/rest/maps/clientesGeo", function( data ) {
+	    	  $.getJSON( "http://" + location.host + "/sicoba/rest/maps/clientesGeo", function( data ) {
 	    		  var items = [];
 	    		  $.each( data, function( key, val ) {
 	    			  new google.maps.Marker({
