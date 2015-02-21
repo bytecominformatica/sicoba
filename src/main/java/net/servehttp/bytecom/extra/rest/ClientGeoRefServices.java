@@ -27,18 +27,4 @@ public class ClientGeoRefServices {
     return listClientes;
   }
 
-  @GET
-  @Path("merda")
-  public String teste() {
-    return "Merda";
-  }
-
-  public List<ClienteGeoReferencia> getListClientes() {
-    return listClientes;
-  }
-
-  public void setListClientes(List<ClienteGeoReferencia> listClientes) {
-    this.listClientes = listClientes;
-  }
-
 }
