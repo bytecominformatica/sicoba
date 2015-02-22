@@ -40,6 +40,8 @@ JUnit 4.8.2
 
 Liquibase 3.0.7
 
+JAX-RS
+
 
 --------------------------------------------
 Copyright (C) 2013-2014, Clairton Carneiro Luz
