@@ -48,12 +48,10 @@
 					class="form-control uppercase" required="required"
 					autofocus="autofocus" /> <label jsf:for="status"
 					class="control-label">#{bundle.status}</label>
-				<h:selectOneMenu id="status"
+				<h:selectOneMenu id="status" requiredMessage="Status Obrigatório"
 					value="#{clienteController.cliente.status}"
 					styleClass="form-control" required="true">
-					<f:selectItem itemLabel="#{bundle.ativo}" itemValue="ATIVO" />
-					<f:selectItem itemLabel="#{bundle.inativo}" itemValue="INATIVO" />
-					<f:selectItem itemLabel="#{bundle.cancelado}" itemValue="CANCELADO" />
+					<f:selectItems value="#{clienteController.cliente.status.values()}" />
 				</h:selectOneMenu>
 
 				<label jsf:for="rg" class="control-label">#{bundle.rg}</label> <input
