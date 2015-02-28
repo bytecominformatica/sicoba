@@ -13,7 +13,8 @@ public abstract class MikrotikService implements Serializable {
 
   private static final long serialVersionUID = -242422545387720478L;
 
-  protected List<Map<String, String>> execute(Mikrotik mk, String commando) throws Exception {
+  protected List<Map<String, String>> execute(Mikrotik mk, String commando, Object...parametros) throws Exception {
+    commando = String.format(commando, parametros);
     ApiConnection con = connect(mk);
     con.login(mk.getUsuario(), mk.getSenha());
     List<Map<String, String>> result = con.execute(commando);

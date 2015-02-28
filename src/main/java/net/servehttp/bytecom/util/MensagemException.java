@@ -8,4 +8,8 @@ public class MensagemException extends Exception {
     super(message);
   }
 
+  public MensagemException(String messageFormat, Object...objects) {
+    this(String.format(messageFormat, objects));
+  }
+
 }

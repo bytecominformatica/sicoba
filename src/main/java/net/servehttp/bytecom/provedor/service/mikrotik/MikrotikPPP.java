@@ -20,45 +20,32 @@ public class MikrotikPPP extends MikrotikService {
 
     if (!buscarProfilePorNome(conexao.getMikrotik(), profile).isEmpty()) {
       if (buscarSecretPorNome(conexao).isEmpty()) {
-        execute(
-            conexao.getMikrotik(),
-            String.format("/ppp/secret/add name=%s password=%s profile=%s service=pppoe",
-                conexao.getNome(), conexao.getSenha(), profile));
+        criarSecret(conexao, profile);
       } else {
-        execute(
-            conexao.getMikrotik(),
-            String.format("/ppp/secret/set .id=%s password=%s profile=%s service=pppoe",
-                conexao.getNome(), conexao.getSenha(), profile));
+        atualizarSecret(conexao, profile);
       }
     } else {
-      throw new MensagemException(String.format("Plano %s não encontrado no %s", profile, conexao
-          .getMikrotik().getNome()));
+      throw new MensagemException("Plano %s não encontrado no %s", profile, conexao.getMikrotik()
+          .getNome());
     }
   }
 
-  public void desconectar(Conexao conexao) throws Exception {
-    if (isActive(conexao)) {
-      execute(conexao.getMikrotik(), String.format("/ppp/active/remove numbers=0", conexao.getNome()));
-    }
+  private void criarSecret(Conexao conexao, String profile) throws Exception {
+    execute(conexao.getMikrotik(), "/ppp/secret/add name=%s password=%s profile=%s service=pppoe",
+        conexao.getNome(), conexao.getSenha(), profile);
   }
-  
-  public static void main(String[] args) throws Exception {
-    System.out.println("teste");
-    Conexao c = new Conexao();
-    c.setNome("clairton");
-    Mikrotik mk = new Mikrotik();
-    mk.setSenha("cecinfo10");
-    mk.setHost("192.168.88.1");
-    c.setMikrotik(mk);
-//    new MikrotikPPP().desconectar(c);
-    MikrotikPPP ppp = new MikrotikPPP();
-    List<Map<String, String>> res = ppp.execute(mk, "/file/print detail where name=conf.rsc");
-    System.out.println(res);
-    String text = res.get(0).get("contents");
-    for (String line : text.split("\r")) {
-    System.out.println(line);
+
+  private void atualizarSecret(Conexao conexao, String profile) throws Exception {
+    execute(conexao.getMikrotik(), "/ppp/secret/set .id=%s password=%s profile=%s service=pppoe",
+        conexao.getNome(), conexao.getSenha(), profile);
+  }
+
+  public void desconectar(Conexao conexao) throws Exception {
+    List<Map<String, String>> res =
+        execute(conexao.getMikrotik(), "/ppp/active/print where name=%s", conexao.getNome());
+    for (Map<String, String> r : res) {
+      execute(conexao.getMikrotik(), "/ppp/active/remove .id=%s", r.get(".id"));
     }
-    
   }
 
   public void removerSecret(Conexao conexao) throws Exception {
@@ -69,18 +56,16 @@ public class MikrotikPPP extends MikrotikService {
 
   public boolean isActive(Conexao conexao) throws Exception {
     List<Map<String, String>> result =
-        execute(conexao.getMikrotik(),
-            String.format("/ppp/active/print where name=%s", conexao.getNome()));
+        execute(conexao.getMikrotik(), "/ppp/active/print where name=%s", conexao.getNome());
     return !result.isEmpty();
   }
 
   public List<Map<String, String>> buscarProfilePorNome(Mikrotik mk, String nome) throws Exception {
-    return execute(mk, String.format("/ppp/profile/print where name=%s", nome));
+    return execute(mk, "/ppp/profile/print where name=%s", nome);
   }
 
   public List<Map<String, String>> buscarSecretPorNome(Conexao conexao) throws Exception {
-    return execute(conexao.getMikrotik(),
-        String.format("/ppp/secret/print where name=%s", conexao.getNome()));
+    return execute(conexao.getMikrotik(), "/ppp/secret/print where name=%s", conexao.getNome());
   }
 
 }

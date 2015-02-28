@@ -24,6 +24,7 @@ public class Mikrotik extends EntityGeneric implements Serializable {
 
   public Mikrotik() {
     this.usuario = "admin";
+    this.senha = "";
     this.porta = 8728;
   }
 
