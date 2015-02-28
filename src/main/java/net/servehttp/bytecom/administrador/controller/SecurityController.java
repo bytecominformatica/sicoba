@@ -23,7 +23,7 @@ import org.apache.shiro.subject.Subject;
 
 /**
  * 
- * @author Clairton Luz - clairton.c.l@gmail.com
+ * @author clairtonluz
  *
  */
 @Named
@@ -50,7 +50,6 @@ public class SecurityController implements Serializable {
   @PostConstruct
   public void carregar() {
     if (currentUser.isAuthenticated()) {
-      LOGGER.info("[" + LocalDateTime.now() + "] - " + "USUÁRIO JÁ ESTA LOGADO");
       WebUtil.redirect(HOME_URL);
     }
   }

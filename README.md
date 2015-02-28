@@ -46,4 +46,4 @@ JAX-RS
 
 
 --------------------------------------------
-Copyright (C) 2013-2014, Clairton Carneiro Luz
+Copyright (C) 2013-2015, Clairton Carneiro Luz
