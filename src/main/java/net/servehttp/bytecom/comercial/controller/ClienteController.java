@@ -22,21 +22,17 @@ import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
- * @author clairton
+ * @author clairtonluz
  */
 @Named
 @ViewScoped
 public class ClienteController implements Serializable {
 
   private static final long serialVersionUID = 8827281306259995250L;
-  private List<Cliente> listClientes;
   private Cliente cliente = new Cliente();
   private List<Cidade> listCidades;
   private List<Bairro> listBairros;
   private Cidade cidade;
-  private String page;
-  private String nome;
-  private String ip;
 
   @Inject
   private ServidorController servidorController;
@@ -44,11 +40,9 @@ public class ClienteController implements Serializable {
   private ClientBussiness clientBussiness;
   @Inject
   private AddressBussiness addressBussiness;
-  private StatusCliente status;
 
   @PostConstruct
   public void load() {
-    listClientes = clientBussiness.buscaUltimosClientesAlterados();
     setListCidades(addressBussiness.findCities());
     getParameters();
   }
@@ -66,10 +60,6 @@ public class ClienteController implements Serializable {
     if (cliente.getEndereco().getBairro() != null) {
       cidade = cliente.getEndereco().getBairro().getCidade();
     }
-  }
-
-  public void consultar() {
-    listClientes = clientBussiness.buscarTodosClientePorNomeIp(nome, ip, getStatus());
   }
 
   public void atualizaBairros() {
@@ -114,21 +104,6 @@ public class ClienteController implements Serializable {
     return valido;
   }
 
-  public String remover() {
-    page = null;
-    if (cliente.getAcesso() != null) {
-      AlertaUtil.warn("Cliente não pode ser removido pois possui acesso cadastrado");
-    } else if (cliente.getContrato() != null) {
-      AlertaUtil.error("O cliente não pode ser removido pois possui contrato");
-    } else {
-      clientBussiness.remover(cliente);
-      selecionaCidade();
-      AlertaUtil.info("Cliente removido com sucesso!");
-      page = "list";
-    }
-    return page;
-  }
-
   public void buscarEndereco() {
     cidade = null;
     cliente.getEndereco().setLogradouro(null);
@@ -159,14 +134,6 @@ public class ClienteController implements Serializable {
     this.listBairros = listBairros;
   }
 
-  public List<Cliente> getListClientes() {
-    return listClientes;
-  }
-
-  public void setListClientes(List<Cliente> listClientes) {
-    this.listClientes = listClientes;
-  }
-
   public Cliente getCliente() {
     return cliente;
   }
@@ -181,30 +148,6 @@ public class ClienteController implements Serializable {
 
   public void setCidade(Cidade cidade) {
     this.cidade = cidade;
-  }
-
-  public String getIp() {
-    return ip;
-  }
-
-  public void setIp(String ip) {
-    this.ip = ip;
-  }
-
-  public String getNome() {
-    return nome;
-  }
-
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
-
-  public StatusCliente getStatus() {
-    return status;
-  }
-
-  public void setStatus(StatusCliente status) {
-    this.status = status;
   }
 
 }

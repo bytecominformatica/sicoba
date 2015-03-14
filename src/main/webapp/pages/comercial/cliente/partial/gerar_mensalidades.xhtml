@@ -25,6 +25,7 @@
        
     <div class="modal-footer">
       <button jsf:id="btGerar" jsf:actionListener="#{gerarMensalidadeController.gerarBoletos()}"
+      	jsf:action="#{mensalidadeController.buscarCliente()}"
         class="btn btn-primary" type="submit">
         <span class="glyphicon glyphicon-cog" /> #{bundle.gerar}
       </button>	

@@ -21,7 +21,7 @@
 						<span class="glyphicon glyphicon-file" /> Contrato
 						<f:param value="#{clienteController.cliente.id}" name="clienteId"></f:param>
 					</button>
-
+ 
 					<div jsf:id="display" jsf:rendered="#{clienteController.cliente.contrato != null}">
 						<button jsf:id="btnAcesso" class="btn btn-primary link-group"
 							jsf:outcome="acesso">
@@ -42,12 +42,12 @@
 				</form>
 			</div>
 			<form jsf:id="form" class="form-horizontal">
-				<label jsf:for="nome" class="control-label">#{bundle.nome}</label> <input
-					jsf:id="nome" type="text"
-					jsf:value="#{clienteController.cliente.nome}"
-					class="form-control uppercase" required="required"
-					autofocus="autofocus" /> <label jsf:for="status"
-					class="control-label">#{bundle.status}</label>
+				
+				<label jsf:for="nome" class="control-label">#{bundle.nome}</label> 
+				<input jsf:id="nome" type="text" jsf:value="#{clienteController.cliente.nome}"
+					class="form-control uppercase" required="required" autofocus="autofocus" /> 
+					
+				<label jsf:for="status" class="control-label">#{bundle.status}</label>
 				<h:selectOneMenu id="status" requiredMessage="Status Obrigatório"
 					value="#{clienteController.cliente.status}"
 					styleClass="form-control" required="true">
@@ -139,7 +139,7 @@
 						<span class="glyphicon glyphicon-floppy-save" />
 						#{clienteController.cliente.id == 0 ? bundle.save : bundle.update}
 					</button>
-					<button jsf:id="btVoltar" jsf:outcome="list"
+					<button jsf:id="btVoltar" jsf:outcome="consulta"
 						style="margin-left: 5px;" class="btn btn-primary">
 						<span class="glyphicon glyphicon-circle-arrow-left" />
 						#{bundle.back}

@@ -80,6 +80,7 @@ public class Cliente extends EntityGeneric implements Serializable {
 
   public Cliente() {
     this.endereco = new Endereco();
+    this.status = StatusCliente.ATIVO;
   }
 
   public boolean isOnline() {
