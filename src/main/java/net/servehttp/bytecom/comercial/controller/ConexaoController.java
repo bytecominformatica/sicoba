@@ -15,6 +15,7 @@ import net.servehttp.bytecom.extra.controller.GenericoController;
 import net.servehttp.bytecom.provedor.jpa.MikrotikJPA;
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
+import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -114,7 +115,8 @@ public class ConexaoController extends GenericoController {
     } else {
       login = cliente.getNome() + cliente.getId();
     }
-
+    
+    login = StringUtil.removeCaracterEspecial(login);
     conexao.setNome(login);
     conexao.setSenha(login);
     cliente.setConexao(conexao);
