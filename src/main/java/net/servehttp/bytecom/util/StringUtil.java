@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.util;
 
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,11 +11,18 @@ import java.util.Random;
  * 
  * @author clairton
  */
-public abstract class StringUtil {
+public final class StringUtil {
 
   private static final DateTimeFormatter FORMATTER_DATA = DateTimeFormatter.ofPattern("ddMMyyyy");
   private static final DateTimeFormatter FORMATTER_DATA_HORA = DateTimeFormatter
       .ofPattern("ddMMyyyyHHmmss");
+
+
+  public static String removeCaracterEspecial(String str) {
+    str = Normalizer.normalize(str, Normalizer.Form.NFD);
+    str = str.replaceAll("[^\\p{ASCII}]", "");
+    return str;
+  }
 
 
   public static String gerarSenha(int tamanho) {

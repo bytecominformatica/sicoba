@@ -23,4 +23,11 @@ public class StringUtilTest {
       String actual = StringUtil.formatCurrence(1234.9314);
       Assert.assertEquals("1.234,93", actual);
   }
+
+  @Test
+    public void testRemoveCaracterEspecial() throws Exception {
+      String esperada = "aaaceeeiiiooouuuun";
+      String atual = StringUtil.removeCaracterEspecial("ãáâçẽéêĩíîõóôũúûüñ");
+      Assert.assertEquals(esperada, atual);
+    }
 }
