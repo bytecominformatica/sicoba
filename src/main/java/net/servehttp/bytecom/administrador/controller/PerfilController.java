@@ -12,11 +12,10 @@ import javax.servlet.http.Part;
 import net.servehttp.bytecom.administrador.jpa.entity.Authentication;
 import net.servehttp.bytecom.administrador.jpa.entity.UserAccount;
 import net.servehttp.bytecom.administrador.service.AccountBussiness;
+import net.servehttp.bytecom.util.ImageUtil;
 import net.servehttp.bytecom.util.qualifier.UsuarioLogado;
 import net.servehttp.bytecom.util.seguranca.HashUtil;
 import net.servehttp.bytecom.util.web.AlertaUtil;
-
-import com.servehttp.bytecom.commons.ImageUtil;
 
 /**
  * 

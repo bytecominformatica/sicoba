@@ -10,8 +10,7 @@ import javax.servlet.ServletContext;
 import net.servehttp.bytecom.administrador.jpa.UserJPA;
 import net.servehttp.bytecom.administrador.jpa.entity.Authentication;
 import net.servehttp.bytecom.administrador.jpa.entity.UserAccount;
-
-import com.servehttp.bytecom.commons.ImageUtil;
+import net.servehttp.bytecom.util.ImageUtil;
 
 public class AccountBussiness implements Serializable {
 

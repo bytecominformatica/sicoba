@@ -17,8 +17,7 @@ import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Registro;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.RegistroDetalhe;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Trailer;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.TrailerLote;
-
-import com.servehttp.bytecom.commons.StringUtil;
+import net.servehttp.bytecom.util.StringUtil;
 
 public class ArquivoRetornoCaixa {
   private static final int HEADER = 0;
