@@ -28,7 +28,7 @@ public class GenericoController implements Serializable {
     AlertaUtil.error(e.getMessage());
     if (!(e instanceof MensagemException)) {
       Logger.getLogger(GenericoController.class.getName()).log(Level.SEVERE, null, e);
-      // enviarLogError(e);
+      enviarLogError(e);
     }
   }
 

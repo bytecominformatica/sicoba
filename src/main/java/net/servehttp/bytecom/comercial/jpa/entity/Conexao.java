@@ -34,6 +34,10 @@ public class Conexao extends net.servehttp.bytecom.extra.jpa.entity.EntityGeneri
   private String senha;
 
   public Conexao() {}
+  
+  public String getProfile(){
+    return cliente.getStatus().getProfile(cliente);
+  }
 
   public String getNome() {
     return this.nome;

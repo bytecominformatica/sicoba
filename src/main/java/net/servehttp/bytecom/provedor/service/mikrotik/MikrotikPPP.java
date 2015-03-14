@@ -16,7 +16,7 @@ public class MikrotikPPP extends MikrotikService {
   }
 
   public void salvarSecret(Conexao conexao) throws Exception {
-    String profile = conexao.getCliente().getStatus().getProfile(conexao.getCliente());
+    String profile = conexao.getProfile();
 
     if (!buscarProfilePorNome(conexao.getMikrotik(), profile).isEmpty()) {
       if (buscarSecretPorNome(conexao).isEmpty()) {

@@ -17,6 +17,8 @@ import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
 import net.servehttp.bytecom.comercial.pojo.EnderecoPojo;
 import net.servehttp.bytecom.comercial.service.AddressBussiness;
 import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.extra.controller.GenericoController;
+import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -26,7 +28,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class ClienteController implements Serializable {
+public class ClienteController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = 8827281306259995250L;
   private Cliente cliente = new Cliente();
@@ -40,6 +42,8 @@ public class ClienteController implements Serializable {
   private ClientBussiness clientBussiness;
   @Inject
   private AddressBussiness addressBussiness;
+  @Inject
+  private MikrotikPPP mikrotikPPP;
 
   @PostConstruct
   public void load() {
@@ -71,21 +75,28 @@ public class ClienteController implements Serializable {
   }
 
   public void salvar() {
-    if (isClienteValido(cliente)) {
-      if (cliente.getId() == 0) {
-        cliente.setCreatedAt(LocalDateTime.now());
-        clientBussiness.salvar(cliente);
-        AlertaUtil.info("Cliente adicionado com sucesso!");
-      } else {
-        if (cliente.getStatus().equals(StatusCliente.CANCELADO)) {
-          cliente.setAcesso(null);
+    try {
+      if (isClienteValido(cliente)) {
+        if (cliente.getId() == 0) {
+          cliente.setCreatedAt(LocalDateTime.now());
+          clientBussiness.salvar(cliente);
+          AlertaUtil.info("Cliente adicionado com sucesso!");
+        } else {
+          if (cliente.getStatus().equals(StatusCliente.CANCELADO)) {
+            cliente.setAcesso(null);
+          }
+          clientBussiness.atualizar(cliente);
+          AlertaUtil.info("Cliente atualizado com sucesso!");
         }
-        clientBussiness.atualizar(cliente);
-        AlertaUtil.info("Cliente atualizado com sucesso!");
+        if (cliente.getAcesso() != null) {
+          servidorController.atualizarAcesso();
+        }
+        if (cliente.getConexao() != null) {
+          mikrotikPPP.salvarSecret(cliente.getConexao());
+        }
       }
-      if (cliente.getAcesso() != null) {
-        servidorController.atualizarAcesso();
-      }
+    } catch (Exception e) {
+      log(e);
     }
   }
 
