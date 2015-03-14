@@ -43,7 +43,7 @@ public class MensalidadeController implements Serializable {
   public void init() {
     getParameters();
     if (cliente != null) {
-      cliente = clientBussiness.buscarPorId(cliente.getId());
+      buscarCliente();
       ordernarMensalidades();
       if (mensalidade == null) {
         mensalidade = getNovaMensalidade();
@@ -52,6 +52,10 @@ public class MensalidadeController implements Serializable {
       cliente = new Cliente();
       AlertaUtil.error("nenhum cliente selecionado");
     }
+  }
+
+  public void buscarCliente() {
+    cliente = clientBussiness.buscarPorId(cliente.getId());
   }
 
   private void getParameters() {

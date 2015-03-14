@@ -11,8 +11,7 @@ import javax.inject.Named;
 import net.servehttp.bytecom.financeiro.jpa.MensalidadeRelatorioJPA;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
 import net.servehttp.bytecom.financeiro.jpa.entity.StatusMensalidade;
-
-import com.servehttp.bytecom.commons.StringUtil;
+import net.servehttp.bytecom.util.StringUtil;
 
 
 @Named

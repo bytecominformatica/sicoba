@@ -18,7 +18,7 @@
 
 					<div class="col-lg-2">
 						<div class="input-group">
-							<input jsf:value="#{clienteController.nome}" type="text"
+							<input jsf:value="#{clienteConsultaController.nome}" type="text"
 								name="nome" class="form-control" placeholder="Nome"
 								jsf:id="nome" autofocus="autofocus" />
 						</div>
@@ -26,28 +26,25 @@
 
 					<div class="col-lg-2">
 						<div class="input-group">
-							<input jsf:value="#{clienteController.ip}" type="text" name="ip"
+							<input jsf:value="#{clienteConsultaController.ip}" type="text" name="ip"
 								class="form-control" placeholder="IP" jsf:id="ip" />
 						</div>
 					</div>
 
 					<div class="col-lg-2">
 						<div class="input-group">
-							<h:selectOneMenu id="status" value="#{clienteController.status}"
+							<h:selectOneMenu id="status" value="#{clienteConsultaController.status}"
 								styleClass="form-control">
 								<f:selectItem itemLabel="#{bundle.todos}"
 									noSelectionOption="true" />
-								<f:selectItem itemLabel="#{bundle.ativo}" itemValue="ATIVO" />
-								<f:selectItem itemLabel="#{bundle.inativo}" itemValue="INATIVO" />
-								<f:selectItem itemLabel="#{bundle.cancelado}"
-									itemValue="CANCELADO" />
+								<f:selectItems value="#{clienteConsultaController.listStatus}"/>
 							</h:selectOneMenu>
 						</div>
 					</div>
 
 					<div class="col-lg-2">
 						<button type="submit" class="btn btn-primary"
-							jsf:actionListener="#{clienteController.consultar()}">
+							jsf:actionListener="#{clienteConsultaController.consultar()}">
 							<span class="glyphicon glyphicon-search" />
 						</button>
 					</div>
@@ -59,19 +56,25 @@
 
 			<form jsf:id="form">
 				<div class="table-responsive">
-					<h:dataTable value="#{clienteController.listClientes}" var="c"
+					<h:dataTable value="#{clienteConsultaController.listClientes}" var="c"
 						styleClass="table table-hover" headerClass="tableColumnsHeader">
 						<f:facet name="header">
 							<div align="center">
-								<h:link outcome="edit" styleClass="btn btn-primary">
+								<h:link outcome="cliente" styleClass="btn btn-primary">
 									<span class="glyphicon glyphicon-plus" /> #{bundle.new}
 								</h:link>
 							</div>
 						</f:facet>
+
+						<h:column style="width: 5%; text-align: center;">
+							#{clienteConsultaController.listClientes.indexOf(c) + 1}
+						</h:column>
+
 						<h:column style="width: 5%; text-align: center;">
 							<f:facet name="header">#{bundle.id}</f:facet>
 							#{c.id}
 						</h:column>
+
 						<h:column style="width: 5%;">
 							<f:facet name="header">#{bundle.status}</f:facet>
 							<div align="center">
@@ -80,7 +83,7 @@
 						</h:column>
 						<h:column>
 							<f:facet name="header">#{bundle.nome}</f:facet>
-							<h:link outcome="edit" value="#{c.nome}">
+							<h:link outcome="cliente" value="#{c.nome}">
 								<f:param value="#{c.id}" name="id"></f:param>
 							</h:link>
 						</h:column>
@@ -94,7 +97,7 @@
 							<f:facet name="header">#{bundle.actions}</f:facet>
 							<h:panelGrid columns="2" style="text-align:center;">
 								<button jsf:id="btnEdit" class="btn btn-primary"
-									jsf:outcome="edit">
+									jsf:outcome="cliente">
 									<span class="glyphicon glyphicon-edit" />
 									<f:param value="#{c.id}" name="id"></f:param>
 								</button>
