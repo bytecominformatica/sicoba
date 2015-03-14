@@ -70,11 +70,11 @@ public class ConexaoController extends GenericoController {
     try {
       if (valido()) {
         if (cliente.getConexao().getId() > 0) {
-          mikrotikPPP.updateSecret(cliente.getConexao());
+          mikrotikPPP.salvarSecret(cliente.getConexao());
           jpa.atualizar(cliente.getConexao());
           AlertaUtil.info("Atualizado com sucesso!");
         } else {
-          mikrotikPPP.addSecret(cliente.getConexao());
+          mikrotikPPP.salvarSecret(cliente.getConexao());
           jpa.salvar(cliente.getConexao());
           AlertaUtil.info("Salvo com sucesso!");
         }
@@ -95,7 +95,7 @@ public class ConexaoController extends GenericoController {
 
   public void remover() {
     try {
-      mikrotikPPP.removeSecret(cliente.getConexao());
+      mikrotikPPP.removerSecret(cliente.getConexao());
       cliente.setConexao(null);
       clienteJPA.atualizar(cliente);
       novaConexao();

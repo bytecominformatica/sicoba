@@ -24,7 +24,8 @@
 		jsf:value="#{cadastrarBoletosController.descontoGeracao}" />
        
        <div class="modal-footer">
-            <button jsf:id="btGerar" jsf:actionListener="#{cadastrarBoletosController.cadastrarBoletosCaixa()}"
+            <button jsf:id="btGerar" jsf:actionListener="#{cadastrarBoletosController.cadastrarBoletosCaixa()}" 
+            	jsf:action="#{mensalidadeController.buscarCliente()}"
               class="btn btn-primary" type="submit">
               <span class="glyphicon glyphicon-cog" /> #{bundle.gerar}
             </button>

@@ -32,7 +32,7 @@ public class ClienteJPA extends GenericoJPA implements Serializable {
   public List<Cliente> buscarTodosClientePorNomeIp(String nome, String ip, StatusCliente status) {
     BooleanExpression condicao = c.id.eq(c.id);
 
-    if (nome != null && !nome.isEmpty()) {
+    if (nome != null && !nome.trim().isEmpty()) {
       condicao = condicao.and(c.nome.like("%" + nome + "%"));
     }
 
