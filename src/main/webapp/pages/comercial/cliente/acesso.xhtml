@@ -45,7 +45,7 @@
 				class="btn btn-danger" style="margin-left: 5px; #{acessoController.cliente.acesso.id == 0 ?  'display: none' : ''}">
 				<span class="glyphicon glyphicon-remove" /> Remover
 	  		  </button>	
-              <button jsf:id="btVoltar" jsf:outcome="edit"
+              <button jsf:id="btVoltar" jsf:outcome="cliente"
                 class="btn btn-primary">
                 <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
 				<f:param value="#{acessoController.cliente.id}" name="id"></f:param>

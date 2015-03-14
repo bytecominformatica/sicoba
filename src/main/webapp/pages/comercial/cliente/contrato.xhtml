@@ -65,7 +65,7 @@
 				class="btn btn-danger" style="margin-left: 5px; #{contratoController.cliente.contrato.id == 0 ?  'display: none' : ''}">
 				<span class="glyphicon glyphicon-remove" /> Remover
 	  		  </button>
-              <button jsf:id="btVoltar" jsf:outcome="edit" style="margin-left: 5px;"
+              <button jsf:id="btVoltar" jsf:outcome="cliente" style="margin-left: 5px;"
                 class="btn btn-primary">
                 <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
 				<f:param value="#{contratoController.cliente.id}" name="id"></f:param>

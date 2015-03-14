@@ -16,6 +16,7 @@ import java.util.List;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
+import net.servehttp.bytecom.util.StringUtil;
 
 import org.jrimum.bopepo.BancosSuportados;
 import org.jrimum.bopepo.Boleto;
@@ -41,7 +42,6 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfImportedPage;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfWriter;
-import com.servehttp.bytecom.commons.StringUtil;
 
 public abstract class GerarBoleto implements Serializable {
 
