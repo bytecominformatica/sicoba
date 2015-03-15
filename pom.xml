@@ -133,6 +133,12 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+  			<groupId>com.squareup.retrofit</groupId>
+  			<artifactId>retrofit</artifactId>
+  			<version>1.9.0</version>
+		</dependency>
 
 
 		<!-- LIQUIBASE -->
