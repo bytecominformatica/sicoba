@@ -24,6 +24,7 @@ public class MikrotikPPP extends MikrotikService {
       } else {
         atualizarSecret(conexao, profile);
       }
+      desconectar(conexao);
     } else {
       throw new MensagemException("Plano %s não encontrado no %s", profile, conexao.getMikrotik()
           .getNome());
@@ -42,6 +43,7 @@ public class MikrotikPPP extends MikrotikService {
   
   public void removerSecret(Conexao conexao) throws Exception {
     if (!buscarSecretPorNome(conexao).isEmpty()) {
+      desconectar(conexao);
       execute(conexao.getMikrotik(), String.format("/ppp/secret/remove .id=%s", conexao.getNome()));
     }
   }
