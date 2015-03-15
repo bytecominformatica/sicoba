@@ -36,9 +36,9 @@ Hibernate
 
 JSF 2.2
 
-Bootstrap v3.1.1
+Bootstrap v3.3.2
 
-JUnit 4.8.2
+JUnit 4.11
 
 Liquibase 3.0.7
 
