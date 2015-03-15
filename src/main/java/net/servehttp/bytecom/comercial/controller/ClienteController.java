@@ -9,11 +9,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.administrador.controller.ServidorController;
 import net.servehttp.bytecom.comercial.jpa.entity.Bairro;
 import net.servehttp.bytecom.comercial.jpa.entity.Cidade;
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
 import net.servehttp.bytecom.comercial.pojo.EnderecoPojo;
 import net.servehttp.bytecom.comercial.service.AddressBussiness;
 import net.servehttp.bytecom.comercial.service.ClientBussiness;
@@ -36,8 +34,6 @@ public class ClienteController extends GenericoController implements Serializabl
   private List<Bairro> listBairros;
   private Cidade cidade;
 
-  @Inject
-  private ServidorController servidorController;
   @Inject
   private ClientBussiness clientBussiness;
   @Inject
@@ -82,17 +78,10 @@ public class ClienteController extends GenericoController implements Serializabl
           clientBussiness.salvar(cliente);
           AlertaUtil.info("Cliente adicionado com sucesso!");
         } else {
-          if (cliente.getStatus().equals(StatusCliente.CANCELADO)) {
-            cliente.setAcesso(null);
-          }
+          cliente.getStatus().atualizarConexao(cliente, mikrotikPPP);
           clientBussiness.atualizar(cliente);
+          cliente.getStatus().atualizarAcesso();
           AlertaUtil.info("Cliente atualizado com sucesso!");
-        }
-        if (cliente.getAcesso() != null) {
-          servidorController.atualizarAcesso();
-        }
-        if (cliente.getConexao() != null) {
-          mikrotikPPP.salvarSecret(cliente.getConexao());
         }
       }
     } catch (Exception e) {
