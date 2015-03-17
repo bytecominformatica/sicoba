@@ -37,28 +37,28 @@
 	    	  $.getJSON( "http://" + location.host + "/sicoba/rest/maps/clientesGeo", function( data ) {
 	    		  var items = [];
 	    		  $.each( data, function( key, val ) {
-		    		  var cliente = val.cliente;
+		    		  //var cliente = val.cliente;
 	    			  var contentString = 
 	    		    	  '<div id="content">'+
 	    			          '<div id="siteNotice">'+
 	    			          '</div>'+
 	    			          
 	    			          '<h4 id="firstHeading" class="firstHeading">'+
-	    			          cliente.nome +
+	    			          val.nome +
 	    			          '</h4>'+
 	    			          
 	    			          '<div id="bodyContent">'+
 	    				          '<label class="control-label">Endereço:</label> ' + 
-	    				          cliente.endereco.logradouro + ', ' +
-	    				          cliente.endereco.numero + ', ' +
-	    				          cliente.endereco.bairro.nome + ', ' +
-	    				          cliente.endereco.bairro.cidade.nome + ', ' +
-	    				          cliente.endereco.bairro.cidade.estado.uf + ', ' +
-	    				          cliente.endereco.bairro.cidade.estado.pais.nome +
+	    				          val.endereco.logradouro + ', ' +
+	    				          val.endereco.numero + ', ' +
+	    				          val.endereco.bairro.nome + ', ' +
+	    				          val.endereco.bairro.cidade.nome + ', ' +
+	    				          val.endereco.bairro.cidade.estado.uf + ', ' +
+	    				          val.endereco.bairro.cidade.estado.pais.nome +
 	    				          '<br/><label class="control-label">Fone:</label> ' + 
-	    				          cliente.foneTitular +
-	    				          '<br/><label class="control-label">Fone '+ cliente.contato+': </label> ' + 
-	    				          cliente.foneContato +
+	    				          val.foneTitular +
+	    				          '<br/><label class="control-label">Fone '+ val.contato+': </label> ' + 
+	    				          val.foneContato +
 	    			          '</div>'+
 	    			          
 	    		          '</div>';
@@ -71,8 +71,8 @@
 		    			  var marker = new google.maps.Marker({
 		    	    	      position: new google.maps.LatLng(val.latitude, val.longitude),
 		    	    	      map: map,
-		    	    	      title:val.cliente.nome,
-		    	    	      icon: '../../../img/'+ val.cliente.status +'.png'
+		    	    	      title:val.nome,
+		    	    	      icon: '../../../img/'+ val.status +'.png'
 		    	    	  });
 
 		    			  google.maps.event.addListener(marker, 'click', function() {
