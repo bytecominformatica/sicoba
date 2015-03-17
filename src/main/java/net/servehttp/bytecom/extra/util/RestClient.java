@@ -12,8 +12,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+@SuppressWarnings("deprecation")
 public abstract class RestClient {
 
+  @SuppressWarnings("resource")
   public static JSONObject get(String url) {
     StringBuilder sb = new StringBuilder();
     try {
@@ -36,6 +38,7 @@ public abstract class RestClient {
     return new JSONObject(sb.toString());
   }
 
+  @SuppressWarnings("resource")
   public static JSONArray getArray(String url) {
     StringBuilder sb = new StringBuilder();
     try {
