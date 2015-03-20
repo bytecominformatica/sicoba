@@ -133,6 +133,12 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+  			<groupId>com.squareup.retrofit</groupId>
+  			<artifactId>retrofit</artifactId>
+  			<version>1.9.0</version>
+		</dependency>
 
 
 		<!-- LIQUIBASE -->
@@ -176,14 +182,14 @@
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
-			<version>${querydsl.version}</version>
+			<version>3.6.2</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
-			<version>${querydsl.version}</version>
+			<version>3.6.2</version>
 		</dependency>
 
 		<dependency>
