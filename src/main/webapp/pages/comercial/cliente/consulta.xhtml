@@ -94,6 +94,11 @@
 						</h:column>
 
 						<h:column>
+							<f:facet name="header">#{bundle.ip}</f:facet>
+							<a href="http://#{clienteConsultaController.getIp(c.conexao)}" target="_blank">#{clienteConsultaController.getIp(c.conexao)}</a>
+						</h:column>
+
+						<h:column>
 							<f:facet name="header">#{bundle.actions}</f:facet>
 							<h:panelGrid columns="2" style="text-align:center;">
 								<button jsf:id="btnEdit" class="btn btn-primary"
