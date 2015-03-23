@@ -8,15 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "cidade")
 public class Cidade extends EntityGeneric implements Serializable {
@@ -24,7 +18,6 @@ public class Cidade extends EntityGeneric implements Serializable {
 
   private String nome;
 
-  @XmlTransient
   @OneToMany(mappedBy = "cidade", fetch = FetchType.EAGER)
   private List<Bairro> bairros;
 

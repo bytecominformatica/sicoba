@@ -12,17 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import net.servehttp.bytecom.estoque.jpa.entity.Equipamento;
 import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
 import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "contrato")
 public class Contrato extends EntityGeneric implements Serializable {
@@ -49,7 +43,6 @@ public class Contrato extends EntityGeneric implements Serializable {
   @NotNull(message = "plano é obrigatório")
   private Plano plano;
 
-  @XmlTransient
   @JoinColumn(name = "cliente_id", referencedColumnName = "id")
   @OneToOne(fetch = FetchType.EAGER)
   @NotNull(message = "cliente é obrigatório")

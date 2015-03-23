@@ -51,7 +51,7 @@
 				<h:selectOneMenu id="status" requiredMessage="Status Obrigatório"
 					value="#{clienteController.cliente.status}"
 					styleClass="form-control" required="true">
-					<f:selectItems value="#{clienteController.cliente.status.values()}" />
+					<f:selectItems value="#{clienteConsultaController.listStatus}" />
 				</h:selectOneMenu>
 
 				<label jsf:for="rg" class="control-label">#{bundle.rg}</label> <input

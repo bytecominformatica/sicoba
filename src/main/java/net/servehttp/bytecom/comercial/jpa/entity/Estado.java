@@ -1,19 +1,17 @@
 package net.servehttp.bytecom.comercial.jpa.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
 
-import java.util.List;
-
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "estado")
 public class Estado extends EntityGeneric implements Serializable {
@@ -24,7 +22,6 @@ public class Estado extends EntityGeneric implements Serializable {
 
   private String uf;
 
-  @XmlTransient
   @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER)
   private List<Cidade> cidades;
 
