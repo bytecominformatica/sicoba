@@ -33,7 +33,7 @@ public class DashboadJPA extends GenericoJPA {
     from = LocalDate.now().withDayOfMonth(1);
     to = LocalDate.now();
     to = to.withDayOfMonth(to.lengthOfMonth());
-        
+
   }
 
   public void setEntityManager(EntityManager em) {
@@ -85,12 +85,13 @@ public class DashboadJPA extends GenericoJPA {
   public List<Cliente> getClientesSemMensalidade() {
     QCliente c = QCliente.cliente;
     QMensalidade m = QMensalidade.mensalidade;
-    LocalDate data = LocalDate.now().plusMonths(1);
+    LocalDate data = LocalDate.now().plusMonths(2);
     return new JPAQuery(em)
         .from(c)
         .where(
             (c.status.eq(StatusCliente.ATIVO).or(c.status.eq(StatusCliente.INATIVO)).and(c.id
                 .notIn(new JPASubQuery().from(m).distinct().where(m.dataVencimento.gt(data))
-                    .list(m.cliente.id))))).list(c);
+                    .orderBy(m.cliente.contrato.dataInstalacao.asc()).list(m.cliente.id)))))
+        .list(c);
   }
 }
