@@ -30,7 +30,7 @@ public class MikrotikPPP extends MikrotikService {
           .getNome());
     }
   }
-
+  
   public String getIp(Conexao conexao) throws Exception {
     String ip = null;
     if (conexao != null) {
@@ -43,13 +43,13 @@ public class MikrotikPPP extends MikrotikService {
   }
 
   private void criarSecret(Conexao conexao, String profile) throws Exception {
-    execute(conexao.getMikrotik(), "/ppp/secret/add name=%s password=%s profile=%s service=pppoe",
-        conexao.getNome(), conexao.getSenha(), profile);
+    execute(conexao.getMikrotik(), "/ppp/secret/add name=%s password=%s profile=%s remote-address=%s service=pppoe",
+        conexao.getNome(), conexao.getSenha(), profile, conexao.getIp());
   }
 
   private void atualizarSecret(Conexao conexao, String profile) throws Exception {
-    execute(conexao.getMikrotik(), "/ppp/secret/set .id=%s password=%s profile=%s service=pppoe",
-        conexao.getNome(), conexao.getSenha(), profile);
+    execute(conexao.getMikrotik(), "/ppp/secret/set .id=%s password=%s profile=%s remote-address=%s service=pppoe",
+        conexao.getNome(), conexao.getSenha(), profile, conexao.getIp());
   }
 
   public void removerSecret(Conexao conexao) throws Exception {

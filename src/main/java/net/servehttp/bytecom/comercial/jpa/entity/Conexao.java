@@ -5,6 +5,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 
@@ -25,6 +27,10 @@ public class Conexao extends net.servehttp.bytecom.extra.jpa.entity.EntityGeneri
   private String nome;
 
   private String senha;
+
+  @Pattern(regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", message = "IP inválido")
+  @Size(min = 1, max = 50)
+  private String ip;
 
   public Conexao() {}
   
@@ -62,5 +68,13 @@ public class Conexao extends net.servehttp.bytecom.extra.jpa.entity.EntityGeneri
 
   public void setMikrotik(Mikrotik mikrotik) {
     this.mikrotik = mikrotik;
+  }
+
+  public String getIp() {
+    return ip;
+  }
+
+  public void setIp(String ip) {
+    this.ip = ip;
   }
 }

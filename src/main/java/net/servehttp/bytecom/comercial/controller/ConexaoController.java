@@ -119,6 +119,8 @@ public class ConexaoController extends GenericoController {
     login = StringUtil.removeCaracterEspecial(login);
     conexao.setNome(login);
     conexao.setSenha(login);
+    
+    conexao.setIp(jpa.getIpLivre());
     cliente.setConexao(conexao);
   }
 

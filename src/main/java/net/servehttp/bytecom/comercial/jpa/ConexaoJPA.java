@@ -1,10 +1,10 @@
 package net.servehttp.bytecom.comercial.jpa;
 
-import com.mysema.query.jpa.impl.JPAQuery;
-
 import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
 import net.servehttp.bytecom.comercial.jpa.entity.QConexao;
 import net.servehttp.bytecom.extra.jpa.GenericoJPA;
+
+import com.mysema.query.jpa.impl.JPAQuery;
 
 public class ConexaoJPA extends GenericoJPA {
 
@@ -18,6 +18,21 @@ public class ConexaoJPA extends GenericoJPA {
 
   public Conexao buscarConexaoPorNome(String nome) {
     return new JPAQuery(em).from(c).where(c.nome.eq(nome)).uniqueResult(c);
+  }
+  
+  public String getIpLivre() {
+    String rede = "10.77.3.";
+    String ipLivre = null;
+    for (int i = 10; i <= 250; i++) {
+      Conexao result = new JPAQuery(em).from(c).where(c.ip.eq(rede + i)).uniqueResult(c);
+      if (result == null) {
+        ipLivre = rede + i;
+        break;
+      }
+    }
+    System.out.println("IP = " + ipLivre);
+
+    return ipLivre;
   }
 
 }
