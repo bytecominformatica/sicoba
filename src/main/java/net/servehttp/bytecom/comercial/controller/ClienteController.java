@@ -14,7 +14,7 @@ import net.servehttp.bytecom.comercial.jpa.entity.Cidade;
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.comercial.pojo.EnderecoPojo;
 import net.servehttp.bytecom.comercial.service.AddressBussiness;
-import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.extra.controller.GenericoController;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
@@ -35,7 +35,7 @@ public class ClienteController extends GenericoController implements Serializabl
   private Cidade cidade;
 
   @Inject
-  private ClientBussiness clientBussiness;
+  private ClienteBussiness clientBussiness;
   @Inject
   private AddressBussiness addressBussiness;
   @Inject

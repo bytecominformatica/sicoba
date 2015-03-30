@@ -9,11 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
 import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
-import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.extra.controller.GenericoController;
-import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 
 /**
  * 
@@ -30,22 +28,15 @@ public class ClienteConsultaController extends GenericoController implements Ser
   private StatusCliente status;
 
   @Inject
-  private MikrotikPPP mikrotikPPP;
-  @Inject
-  private ClientBussiness clientBussiness;
+  private ClienteBussiness business;
 
   @PostConstruct
   public void load() {
-    listClientes = clientBussiness.buscaUltimosClientesAlterados();
+    listClientes = business.buscaUltimosClientesAlterados();
   }
-
-  public String getIp(Conexao c) {
-    try {
-      return mikrotikPPP.getIp(c);
-    } catch (Exception e) {
-      log(e);
-    }
-    return null;
+  
+  public void atualizarTodasConexoes() {
+//    business.atualizarTodasConexoes();
   }
 
   public StatusCliente[] getListStatus() {
@@ -53,7 +44,7 @@ public class ClienteConsultaController extends GenericoController implements Ser
   }
 
   public void consultar() {
-    listClientes = clientBussiness.buscarTodosClientePorNomeIp(nome, ip, status);
+    listClientes = business.buscarTodosClientePorNomeIp(nome, ip, status);
   }
 
   public List<Cliente> getListClientes() {

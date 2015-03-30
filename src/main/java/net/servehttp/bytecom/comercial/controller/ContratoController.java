@@ -12,7 +12,7 @@ import javax.inject.Named;
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.comercial.jpa.entity.Contrato;
 import net.servehttp.bytecom.comercial.jpa.entity.Plano;
-import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.comercial.service.ContratoBusiness;
 import net.servehttp.bytecom.comercial.service.PlanoBussiness;
 import net.servehttp.bytecom.estoque.jpa.entity.Equipamento;
@@ -41,7 +41,7 @@ public class ContratoController implements Serializable {
   @Inject
   private EquipamentoBussiness equipamentoBusiness;
   @Inject
-  private ClientBussiness clientBusiness;
+  private ClienteBussiness clientBusiness;
   @Inject
   private ContratoBusiness contratoBusiness;
 

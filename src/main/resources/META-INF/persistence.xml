@@ -4,7 +4,6 @@
 
 	<persistence-unit name="teste-pu" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Acesso</class>
 		<class>net.servehttp.bytecom.comercial.jpa.entity.Bairro</class>
 		<class>net.servehttp.bytecom.comercial.jpa.entity.Cidade</class>
 		<class>net.servehttp.bytecom.comercial.jpa.entity.Cliente</class>

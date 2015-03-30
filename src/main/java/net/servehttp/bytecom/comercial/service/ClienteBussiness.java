@@ -9,7 +9,7 @@ import net.servehttp.bytecom.comercial.jpa.ClienteJPA;
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
 
-public class ClientBussiness implements Serializable {
+public class ClienteBussiness implements Serializable {
 
   private static final long serialVersionUID = -8296012997453708684L;
 
@@ -54,5 +54,5 @@ public class ClientBussiness implements Serializable {
   public void remover(Cliente cliente) {
     clienteJPA.remover(cliente);
   }
-
+  
 }

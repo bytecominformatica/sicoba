@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.extra.jpa.ClienteGeoReferenciaJPA;
 import net.servehttp.bytecom.extra.jpa.entity.ClienteGeoReferencia;
 import net.servehttp.bytecom.extra.pojo.Location;
@@ -36,7 +36,7 @@ public class LocalizacaoController implements Serializable {
   private Cliente cliente = new Cliente();
 
   @Inject
-  private ClientBussiness clientBussiness;
+  private ClienteBussiness clientBussiness;
   @Inject
   private ClienteGeoReferenciaJPA jpa;
 

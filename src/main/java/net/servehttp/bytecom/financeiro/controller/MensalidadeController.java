@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.service.ClientBussiness;
+import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
 import net.servehttp.bytecom.financeiro.jpa.entity.StatusMensalidade;
 import net.servehttp.bytecom.financeiro.service.MensalidadeBussiness;
@@ -37,7 +37,7 @@ public class MensalidadeController implements Serializable {
   @Inject
   private MensalidadeBussiness business;
   @Inject
-  private ClientBussiness clientBussiness;
+  private ClienteBussiness clientBussiness;
 
   @PostConstruct
   public void init() {

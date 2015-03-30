@@ -30,8 +30,6 @@ public class ConexaoJPA extends GenericoJPA {
         break;
       }
     }
-    System.out.println("IP = " + ipLivre);
-
     return ipLivre;
   }
 

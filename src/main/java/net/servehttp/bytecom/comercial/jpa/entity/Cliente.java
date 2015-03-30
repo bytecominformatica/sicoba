@@ -60,10 +60,6 @@ public class Cliente extends EntityGeneric implements Serializable {
   @JoinColumn(name = "endereco_id")
   private Endereco endereco;
   
-  @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL,
-      orphanRemoval = true)
-  private Acesso acesso;
-
   @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
   private Conexao conexao;
 
@@ -121,14 +117,6 @@ public class Cliente extends EntityGeneric implements Serializable {
 
   public void setEmail(String email) {
     this.email = email != null && email.isEmpty() ? null : email;
-  }
-
-  public Acesso getAcesso() {
-    return acesso;
-  }
-
-  public void setAcesso(Acesso acesso) {
-    this.acesso = acesso;
   }
 
   public Contrato getContrato() {

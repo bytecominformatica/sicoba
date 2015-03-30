@@ -37,7 +37,7 @@ public class ClienteJPA extends GenericoJPA implements Serializable {
     }
 
     if (ip != null && !ip.isEmpty()) {
-      condicao = condicao.and(c.acesso.ip.eq(ip));
+      condicao = condicao.and(c.conexao.ip.eq(ip));
     }
 
     if (status != null) {

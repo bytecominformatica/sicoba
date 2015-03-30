@@ -26,18 +26,19 @@
 
 					<div class="col-lg-2">
 						<div class="input-group">
-							<input jsf:value="#{clienteConsultaController.ip}" type="text" name="ip"
-								class="form-control" placeholder="IP" jsf:id="ip" />
+							<input jsf:value="#{clienteConsultaController.ip}" type="text"
+								name="ip" class="form-control" placeholder="IP" jsf:id="ip" />
 						</div>
 					</div>
 
 					<div class="col-lg-2">
 						<div class="input-group">
-							<h:selectOneMenu id="status" value="#{clienteConsultaController.status}"
+							<h:selectOneMenu id="status"
+								value="#{clienteConsultaController.status}"
 								styleClass="form-control">
 								<f:selectItem itemLabel="#{bundle.todos}"
 									noSelectionOption="true" />
-								<f:selectItems value="#{clienteConsultaController.listStatus}"/>
+								<f:selectItems value="#{clienteConsultaController.listStatus}" />
 							</h:selectOneMenu>
 						</div>
 					</div>
@@ -56,8 +57,9 @@
 
 			<form jsf:id="form">
 				<div class="table-responsive">
-					<h:dataTable value="#{clienteConsultaController.listClientes}" var="c"
-						styleClass="table table-hover" headerClass="tableColumnsHeader">
+					<h:dataTable value="#{clienteConsultaController.listClientes}"
+						var="c" styleClass="table table-hover"
+						headerClass="tableColumnsHeader">
 						<f:facet name="header">
 							<div align="center">
 								<h:link outcome="cliente" styleClass="btn btn-primary">
@@ -90,12 +92,7 @@
 
 						<h:column>
 							<f:facet name="header">#{bundle.ip}</f:facet>
-							<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">#{bundle.ip}</f:facet>
-							<a href="http://#{clienteConsultaController.getIp(c.conexao)}" target="_blank">#{clienteConsultaController.getIp(c.conexao)}</a>
+							<a href="http://#{c.conexao.ip}" target="_blank">#{c.conexao.ip}</a>
 						</h:column>
 
 						<h:column>
