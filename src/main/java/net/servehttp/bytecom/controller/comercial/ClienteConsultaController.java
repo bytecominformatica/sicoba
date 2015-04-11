@@ -11,7 +11,7 @@ import javax.inject.Named;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
 
 /**
  * 
@@ -28,7 +28,7 @@ public class ClienteConsultaController extends GenericoController implements Ser
   private StatusCliente status;
 
   @Inject
-  private ClienteBussiness business;
+  private ClienteService business;
 
   @PostConstruct
   public void load() {

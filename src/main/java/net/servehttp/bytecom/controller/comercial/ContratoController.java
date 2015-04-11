@@ -13,10 +13,10 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
 import net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
-import net.servehttp.bytecom.service.comercial.ContratoBusiness;
-import net.servehttp.bytecom.service.comercial.PlanoBussiness;
-import net.servehttp.bytecom.service.estoque.EquipamentoBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.service.comercial.ContratoService;
+import net.servehttp.bytecom.service.comercial.PlanoService;
+import net.servehttp.bytecom.service.estoque.EquipamentoService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -37,13 +37,13 @@ public class ContratoController implements Serializable {
   private Cliente cliente;
   private int clienteId;
   @Inject
-  private PlanoBussiness planoBusiness;
+  private PlanoService planoBusiness;
   @Inject
-  private EquipamentoBussiness equipamentoBusiness;
+  private EquipamentoService equipamentoBusiness;
   @Inject
-  private ClienteBussiness clientBusiness;
+  private ClienteService clientBusiness;
   @Inject
-  private ContratoBusiness contratoBusiness;
+  private ContratoService contratoBusiness;
 
   @PostConstruct
   public void load() {

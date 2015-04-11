@@ -12,7 +12,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.service.provedor.MikrotikPPP;
 
-public class ClienteBussiness implements Serializable {
+public class ClienteService implements Serializable {
 
   private static final long serialVersionUID = -8296012997453708684L;
 

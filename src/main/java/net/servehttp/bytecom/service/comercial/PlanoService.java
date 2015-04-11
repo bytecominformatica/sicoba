@@ -9,7 +9,7 @@ import net.servehttp.bytecom.persistence.jpa.comercial.PlanoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
 
-public class PlanoBussiness implements Serializable {
+public class PlanoService implements Serializable {
 
   private static final long serialVersionUID = -8296012997453708684L;
   @Inject

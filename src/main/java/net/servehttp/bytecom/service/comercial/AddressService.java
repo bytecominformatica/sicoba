@@ -15,7 +15,7 @@ import net.servehttp.bytecom.pojo.comercial.EnderecoPojo;
 
 import com.google.gson.Gson;
 
-public class AddressBussiness implements Serializable {
+public class AddressService implements Serializable {
 
   private static final long serialVersionUID = -8296012997453708684L;
 

@@ -10,8 +10,8 @@ import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
-import net.servehttp.bytecom.service.financeiro.MensalidadeBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
@@ -30,9 +30,9 @@ public class GerarMensalidadeController implements Serializable {
   private LocalDate dataInicio;
 
   @Inject
-  private MensalidadeBussiness business;
+  private MensalidadeService business;
   @Inject
-  private ClienteBussiness clientBussiness;
+  private ClienteService clientBussiness;
 
   @PostConstruct
   public void init() {

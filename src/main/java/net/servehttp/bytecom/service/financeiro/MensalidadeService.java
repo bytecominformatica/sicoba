@@ -11,7 +11,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Cedente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
 
-public class MensalidadeBussiness implements Serializable {
+public class MensalidadeService implements Serializable {
 
   private static final long serialVersionUID = 8705835474790847188L;
   @Inject

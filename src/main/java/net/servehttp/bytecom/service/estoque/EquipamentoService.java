@@ -10,7 +10,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.estoque.StatusEquipamento;
 import net.servehttp.bytecom.persistence.jpa.entity.estoque.TipoEquipamento;
 import net.servehttp.bytecom.persistence.jpa.estoque.EquipamentoJPA;
 
-public class EquipamentoBussiness implements Serializable {
+public class EquipamentoService implements Serializable {
 
   private static final long serialVersionUID = 8705835474790847188L;
   @Inject

@@ -12,7 +12,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.extra.ClienteGeoReferencia;
 import net.servehttp.bytecom.persistence.jpa.extra.ClienteGeoReferenciaJPA;
 import net.servehttp.bytecom.pojo.extra.Location;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.util.extra.GoogleMaps;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
@@ -36,7 +36,7 @@ public class LocalizacaoController implements Serializable {
   private Cliente cliente = new Cliente();
 
   @Inject
-  private ClienteBussiness clientBussiness;
+  private ClienteService clientBussiness;
   @Inject
   private ClienteGeoReferenciaJPA jpa;
 

@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import net.servehttp.bytecom.persistence.jpa.comercial.ContratoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
 
-public class ContratoBusiness implements Serializable {
+public class ContratoService implements Serializable {
 
   private static final long serialVersionUID = 8705835474790847188L;
   @Inject

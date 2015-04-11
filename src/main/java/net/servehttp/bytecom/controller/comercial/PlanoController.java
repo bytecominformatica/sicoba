@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
-import net.servehttp.bytecom.service.comercial.PlanoBussiness;
+import net.servehttp.bytecom.service.comercial.PlanoService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -26,7 +26,7 @@ public class PlanoController implements Serializable {
   @Inject
   private Plano plano;
   @Inject
-  private PlanoBussiness planoBussiness;
+  private PlanoService planoBussiness;
 
   @PostConstruct
   public void load() {
