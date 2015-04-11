@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Plano;
-import net.servehttp.bytecom.extra.jpa.GenericoJPA;
 import net.servehttp.bytecom.facede.CreateEntityManager;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import org.junit.AfterClass;
 import org.junit.Assert;

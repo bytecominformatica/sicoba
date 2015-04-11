@@ -31,6 +31,9 @@
 				<label jsf:for="senha" class="control-label" >#{bundle.senha}</label>
 				<input jsf:id="senha" type="text" class="form-control" jsf:value="#{conexaoController.cliente.conexao.senha}" required="required"/>
 
+				<label jsf:for="ip" class="control-label">#{bundle.ip}</label>
+            	<input jsf:id="ip" type="text" class="form-control" jsf:value="#{conexaoController.cliente.conexao.ip}" required="required"/>
+                
 				<div class="modal-footer">
 					<button jsf:id="btAtualizar" jsf:action="#{conexaoController.salvar()}" class="btn btn-primary">
 						<span class="glyphicon glyphicon-floppy-save" /> #{conexaoController.cliente.conexao.id == 0 ? bundle.save : bundle.update}

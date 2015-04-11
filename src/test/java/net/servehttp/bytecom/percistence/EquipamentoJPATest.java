@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import net.servehttp.bytecom.estoque.jpa.EquipamentoJPA;
-import net.servehttp.bytecom.estoque.jpa.entity.Equipamento;
-import net.servehttp.bytecom.estoque.jpa.entity.StatusEquipamento;
-import net.servehttp.bytecom.estoque.jpa.entity.TipoEquipamento;
 import net.servehttp.bytecom.facede.CreateEntityManager;
+import net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento;
+import net.servehttp.bytecom.persistence.jpa.entity.estoque.StatusEquipamento;
+import net.servehttp.bytecom.persistence.jpa.entity.estoque.TipoEquipamento;
+import net.servehttp.bytecom.persistence.jpa.estoque.EquipamentoJPA;
 
 import org.junit.AfterClass;
 import org.junit.Assert;

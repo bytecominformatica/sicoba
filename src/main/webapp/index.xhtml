@@ -9,10 +9,8 @@
 	<ui:define name="subtitle">#{bundle.controlPanel}</ui:define>
 	<ui:define name="content">
 
-
 		<!-- Main content -->
 		<section class="content">
-
 
 			<!-- Small boxes (Stat box) -->
 
@@ -109,7 +107,7 @@
 								<h:column>
 									<f:facet name="header">#{bundle.cliente}</f:facet>
 									<a
-										href="#{request.contextPath}/pages/comercial/cliente/edit.xhtml?id=#{m.cliente.id}"
+										href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{m.cliente.id}"
 										style="color: #{m.cliente.status == 'ATIVO' ? 'green' : m.cliente.status == 'INATIVO' ? 'orange' : 'red'};">#{m.cliente.nome}</a>
 								</h:column>
 								<h:column>
@@ -124,7 +122,7 @@
 								</h:column>
 								<h:column>
 									<f:facet name="header">#{bundle.ip}</f:facet>
-									<a href="http://#{m.cliente.acesso.ip}" target="_blank">#{m.cliente.acesso.ip}</a>
+									<a href="http://#{m.cliente.conexao.ip}" target="_blank">#{m.cliente.conexao.ip}</a>
 								</h:column>
 							</h:dataTable>
 					</div>
@@ -138,7 +136,7 @@
 							<h:column>
 								<f:facet name="header">#{bundle.nome}</f:facet>
 								<a
-									href="#{request.contextPath}/pages/comercial/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
+									href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
@@ -157,7 +155,7 @@
 							<h:column>
 								<f:facet name="header">#{bundle.nome}</f:facet>
 								<a
-									href="#{request.contextPath}/pages/comercial/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
+									href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
@@ -167,7 +165,7 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.ip}</f:facet>
-								<a href="http://#{c.acesso.ip}" target="_blank">#{c.acesso.ip}</a>
+								<a href="http://#{c.conexao.ip}" target="_blank">#{c.conexao.ip}</a>
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.mensalidade}</f:facet>
@@ -184,7 +182,7 @@
 							<h:column>
 								<f:facet name="header">#{bundle.nome}</f:facet>
 								<a
-									href="#{request.contextPath}/pages/comercial/cliente/edit.xhtml?id=#{c.id}">#{c.nome}</a>
+									href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
 							</h:column>
 						</h:dataTable>
 					</div>
