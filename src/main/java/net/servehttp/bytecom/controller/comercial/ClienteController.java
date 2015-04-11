@@ -15,7 +15,7 @@ import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.comercial.pojo.EnderecoPojo;
 import net.servehttp.bytecom.comercial.service.AddressBussiness;
 import net.servehttp.bytecom.comercial.service.ClienteBussiness;
-import net.servehttp.bytecom.extra.controller.GenericoController;
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;

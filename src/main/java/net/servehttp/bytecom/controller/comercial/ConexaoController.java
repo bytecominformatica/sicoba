@@ -11,7 +11,7 @@ import net.servehttp.bytecom.comercial.jpa.ClienteJPA;
 import net.servehttp.bytecom.comercial.jpa.ConexaoJPA;
 import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
-import net.servehttp.bytecom.extra.controller.GenericoController;
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.provedor.jpa.MikrotikJPA;
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;

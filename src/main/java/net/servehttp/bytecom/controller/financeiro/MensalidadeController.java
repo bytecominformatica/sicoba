@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.financeiro.controller;
+package net.servehttp.bytecom.controller.financeiro;
 
 import java.io.IOException;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.estoque.controller;
+package net.servehttp.bytecom.controller.estoque;
 
 import java.io.Serializable;
 import java.util.List;

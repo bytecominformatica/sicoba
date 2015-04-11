@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.dashboard.controller;
+package net.servehttp.bytecom.controller.dashboard;
 
 import java.io.Serializable;
 import java.util.List;

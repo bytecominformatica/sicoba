@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.provedor.controller;
+package net.servehttp.bytecom.controller.provedor;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.extra.controller.GenericoController;
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.provedor.jpa.MikrotikJPA;
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import net.servehttp.bytecom.util.web.AlertaUtil;
