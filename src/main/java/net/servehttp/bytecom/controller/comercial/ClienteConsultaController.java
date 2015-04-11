@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.comercial.controller;
+package net.servehttp.bytecom.controller.comercial;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,9 +34,13 @@ public class ClienteConsultaController extends GenericoController implements Ser
   public void load() {
     listClientes = business.buscaUltimosClientesAlterados();
   }
-  
+
   public void atualizarTodasConexoes() {
-//    business.atualizarTodasConexoes();
+    try {
+      business.atualizarTodasConexoes();
+    } catch (Exception e) {
+      log(e);
+    }
   }
 
   public StatusCliente[] getListStatus() {

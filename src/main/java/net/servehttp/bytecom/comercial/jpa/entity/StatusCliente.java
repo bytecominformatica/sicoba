@@ -2,7 +2,6 @@ package net.servehttp.bytecom.comercial.jpa.entity;
 
 import java.util.Optional;
 
-import net.servehttp.bytecom.administrador.controller.ServidorController;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 
 public enum StatusCliente {
@@ -48,14 +47,9 @@ public enum StatusCliente {
     }
   };
 
-  private static final ServidorController SERVIDOR_CONTROLLER = new ServidorController();
 
   public abstract String getProfile(Cliente cliente);
 
   public abstract void atualizarConexao(Cliente cliente, MikrotikPPP mikrotikPPP) throws Exception;
-
-  public void atualizarAcesso() {
-    SERVIDOR_CONTROLLER.atualizarAcesso();
-  }
 
 }

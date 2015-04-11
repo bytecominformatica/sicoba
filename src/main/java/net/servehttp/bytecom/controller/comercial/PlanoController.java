@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.comercial.controller;
+package net.servehttp.bytecom.controller.comercial;
 
 import java.io.Serializable;
 import java.util.List;

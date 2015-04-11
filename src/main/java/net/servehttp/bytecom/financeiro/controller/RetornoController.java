@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
-import net.servehttp.bytecom.administrador.controller.ServidorController;
 import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
 import net.servehttp.bytecom.financeiro.jpa.MensalidadeJPA;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
@@ -17,6 +16,7 @@ import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Header;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.HeaderLote;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Registro;
 import net.servehttp.bytecom.financeiro.service.ArquivoRetornoCaixa;
+import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
@@ -33,7 +33,7 @@ public class RetornoController implements Serializable {
   @Inject
   private ArquivoRetornoCaixa caixaEJB;
   @Inject
-  private ServidorController servidorController;
+  private MikrotikPPP mikrotikPPP;
 
   @Inject
   private MensalidadeJPA mensalidadeJPA;
@@ -69,17 +69,14 @@ public class RetornoController implements Serializable {
 
                 if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
                   m.getCliente().setStatus(StatusCliente.ATIVO);
+                  mikrotikPPP.salvarSecret(m.getCliente().getConexao());
                   mensalidadeJPA.atualizar(m.getCliente());
-                  clienteAtivado = true;
                 }
 
               }
             }
           }
           mensalidadeJPA.salvar(header);
-          if (clienteAtivado) {
-            servidorController.atualizarAcesso();
-          }
           AlertaUtil.info("Arquivo enviado com sucesso!");
         }
       } catch (IllegalArgumentException e) {

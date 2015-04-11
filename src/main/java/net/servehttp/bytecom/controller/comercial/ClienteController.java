@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.comercial.controller;
+package net.servehttp.bytecom.controller.comercial;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -80,7 +80,6 @@ public class ClienteController extends GenericoController implements Serializabl
         } else {
           cliente.getStatus().atualizarConexao(cliente, mikrotikPPP);
           clientBussiness.atualizar(cliente);
-          cliente.getStatus().atualizarAcesso();
           AlertaUtil.info("Cliente atualizado com sucesso!");
         }
       }

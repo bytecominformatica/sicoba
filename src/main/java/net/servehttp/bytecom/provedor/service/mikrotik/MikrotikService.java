@@ -21,8 +21,14 @@ public abstract class MikrotikService implements Serializable {
     con.disconnect();
     return result;
   }
+  
+  protected List<Map<String, String>> executeManual(ApiConnection con, String commando, Object...parametros) throws Exception {
+    commando = String.format(commando, parametros);
+    List<Map<String, String>> result = con.execute(commando);
+    return result;
+  }
 
-  private ApiConnection connect(Mikrotik mk) throws Exception {
+  protected ApiConnection connect(Mikrotik mk) throws Exception {
     if (NetworkUtil.INSTANCE.ping(mk.getHost())) {
       return ApiConnection.connect(mk.getHost(), mk.getPorta());
     } else {

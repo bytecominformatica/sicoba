@@ -13,6 +13,7 @@
 	<ui:define name="content">
 		<div class="panel-header">
 			<br />
+			
 			<form jsf:id="formPesquisa" class="form-vertical">
 				<div class="col-lg-12" align="center">
 
@@ -66,6 +67,10 @@
 									<span class="glyphicon glyphicon-plus" /> #{bundle.new}
 								</h:link>
 							</div>
+							<div align="center">
+								<button class="btn btn-primary" jsf:actionListener="#{clienteConsultaController.atualizarTodasConexoes()}" >Atualizar conexoes</button>
+							</div>
+							
 						</f:facet>
 
 						<h:column style="width: 5%; text-align: center;">

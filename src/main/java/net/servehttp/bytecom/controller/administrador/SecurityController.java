@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.administrador.controller;
+package net.servehttp.bytecom.controller.administrador;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
