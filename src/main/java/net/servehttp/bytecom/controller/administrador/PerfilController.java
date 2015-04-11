@@ -31,7 +31,7 @@ public class PerfilController implements Serializable {
   @UsuarioLogado
   private UserAccount userAccount;
   @Inject
-  private AccountService accountBussiness;
+  private AccountService accountService;
   private Authentication authentication;
   private String password;
   private String confirmPassword;
@@ -39,7 +39,7 @@ public class PerfilController implements Serializable {
 
   @PostConstruct
   public void load() {
-    setAuthentication(accountBussiness.findAuthenticationByUserAccount(userAccount));
+    setAuthentication(accountService.findAuthenticationByUserAccount(userAccount));
   }
 
   public void carregarImagem() {
@@ -55,7 +55,7 @@ public class PerfilController implements Serializable {
 
   private boolean userAccountValid() {
     boolean result = true;
-    if (!accountBussiness.emailAvaliable(userAccount)) {
+    if (!accountService.emailAvaliable(userAccount)) {
       AlertaUtil.error("Email já cadastrado!");
       result = false;
     }
@@ -69,11 +69,11 @@ public class PerfilController implements Serializable {
   public void salvar() {
     if (userAccountValid()) {
       if (password.isEmpty()) {
-        accountBussiness.atualizar(userAccount);
+        accountService.atualizar(userAccount);
       } else {
         authentication.setUserAccount(userAccount);
         authentication.setPassword(HashUtil.sha256ToHex(password));
-        accountBussiness.atualizar(authentication);
+        accountService.atualizar(authentication);
       }
       AlertaUtil.info("Usuário atualizado com sucesso!");
     }

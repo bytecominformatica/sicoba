@@ -30,9 +30,9 @@ public class GerarMensalidadeController implements Serializable {
   private LocalDate dataInicio;
 
   @Inject
-  private MensalidadeService business;
+  private MensalidadeService service;
   @Inject
-  private ClienteService clientBussiness;
+  private ClienteService clientService;
 
   @PostConstruct
   public void init() {
@@ -48,7 +48,7 @@ public class GerarMensalidadeController implements Serializable {
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
     }
   }
 
@@ -59,7 +59,7 @@ public class GerarMensalidadeController implements Serializable {
       m.setValor(mensalidade.getValor());
       m.setDesconto(descontoGeracao);
       m.setDataVencimento(dataInicio);
-      business.salvar(m);
+      service.salvar(m);
       dataInicio = dataInicio.plusMonths(1);
     }
     dataInicio = mensalidade.getDataVencimento();
@@ -68,7 +68,7 @@ public class GerarMensalidadeController implements Serializable {
   public Mensalidade getNovaMensalidade() {
     LocalDate d =
         LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-    return business.getNovaMensalidade(cliente, d);
+    return service.getNovaMensalidade(cliente, d);
   }
 
   public Cliente getCliente() {

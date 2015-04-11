@@ -26,18 +26,18 @@ public class PlanoController implements Serializable {
   @Inject
   private Plano plano;
   @Inject
-  private PlanoService planoBussiness;
+  private PlanoService planoService;
 
   @PostConstruct
   public void load() {
-    listPlanos = planoBussiness.findAll();
+    listPlanos = planoService.findAll();
     getParameters();
   }
 
   private void getParameters() {
     String planoId = WebUtil.getParameters("id");
     if (planoId != null && !planoId.isEmpty()) {
-      setPlano(planoBussiness.buscarPorId(Integer.parseInt(planoId)));
+      setPlano(planoService.buscarPorId(Integer.parseInt(planoId)));
     }
   }
 
@@ -51,12 +51,12 @@ public class PlanoController implements Serializable {
 
   public String salvar() {
     String page = null;
-    if (planoBussiness.planAvaliable(getPlano())) {
+    if (planoService.planAvaliable(getPlano())) {
       if (getPlano().getId() == 0) {
-        planoBussiness.salvar(getPlano());
+        planoService.salvar(getPlano());
         AlertaUtil.info("Salvo com sucesso!");
       } else {
-        planoBussiness.atualizar(getPlano());
+        planoService.atualizar(getPlano());
         AlertaUtil.info("Atualizado com sucesso!");
       }
       load();
@@ -71,8 +71,8 @@ public class PlanoController implements Serializable {
 
   public String remover() {
     String page = null;
-    if (planoBussiness.planWithoutUse(plano)) {
-      planoBussiness.remover(plano);
+    if (planoService.planWithoutUse(plano)) {
+      planoService.remover(plano);
       load();
       AlertaUtil.info("Removido com sucesso!");
       page = "list";

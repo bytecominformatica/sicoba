@@ -34,9 +34,9 @@ public class CadastrarBoletosController implements Serializable {
   private LocalDate dataInicio;
 
   @Inject
-  private MensalidadeService business;
+  private MensalidadeService service;
   @Inject
-  private ClienteService clientBussiness;
+  private ClienteService clientService;
 
   @PostConstruct
   public void init() {
@@ -52,7 +52,7 @@ public class CadastrarBoletosController implements Serializable {
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
     }
   }
 
@@ -76,21 +76,21 @@ public class CadastrarBoletosController implements Serializable {
   }
 
   private void gravarBoleto(LocalDate c, int numeroBoleto) {
-    Mensalidade m = business.getNovaMensalidade(cliente, c);
+    Mensalidade m = service.getNovaMensalidade(cliente, c);
     m.setNumeroBoleto(numeroBoleto);
     m.setDesconto(descontoGeracao);
-    business.salvar(m);
+    service.salvar(m);
   }
 
   public Mensalidade getNovaMensalidade() {
     LocalDate d =
         LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-    return business.getNovaMensalidade(cliente, d);
+    return service.getNovaMensalidade(cliente, d);
   }
 
   private boolean boletosNaoRegistrado(int inicio, int fim) {
     boolean validos = true;
-    List<Mensalidade> listMensalidades = business.buscarMensalidadesPorBoleto(inicio, fim);
+    List<Mensalidade> listMensalidades = service.buscarMensalidadesPorBoleto(inicio, fim);
     if (!listMensalidades.isEmpty()) {
       validos = false;
       StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");

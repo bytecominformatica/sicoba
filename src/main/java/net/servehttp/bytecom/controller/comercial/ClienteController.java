@@ -35,22 +35,22 @@ public class ClienteController extends GenericoController implements Serializabl
   private Cidade cidade;
 
   @Inject
-  private ClienteService clientBussiness;
+  private ClienteService clientService;
   @Inject
-  private AddressService addressBussiness;
+  private AddressService addressService;
   @Inject
   private MikrotikPPP mikrotikPPP;
 
   @PostConstruct
   public void load() {
-    setListCidades(addressBussiness.findCities());
+    setListCidades(addressService.findCities());
     getParameters();
   }
 
   private void getParameters() {
     String clienteId = WebUtil.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
       selecionaCidade();
       atualizaBairros();
     }
@@ -75,11 +75,11 @@ public class ClienteController extends GenericoController implements Serializabl
       if (isClienteValido(cliente)) {
         if (cliente.getId() == 0) {
           cliente.setCreatedAt(LocalDateTime.now());
-          clientBussiness.salvar(cliente);
+          clientService.salvar(cliente);
           AlertaUtil.info("Cliente adicionado com sucesso!");
         } else {
           cliente.getStatus().atualizarConexao(cliente, mikrotikPPP);
-          clientBussiness.atualizar(cliente);
+          clientService.atualizar(cliente);
           AlertaUtil.info("Cliente atualizado com sucesso!");
         }
       }
@@ -90,13 +90,13 @@ public class ClienteController extends GenericoController implements Serializabl
 
   private boolean isClienteValido(Cliente cliente) {
     boolean valido = true;
-    if (!clientBussiness.rgAvaliable(cliente)) {
+    if (!clientService.rgAvaliable(cliente)) {
       AlertaUtil.error("RG já Cadastrado");
       valido = false;
-    } else if (!clientBussiness.cpfCnpjAvaliable(cliente)) {
+    } else if (!clientService.cpfCnpjAvaliable(cliente)) {
       AlertaUtil.error("CPF já Cadastrado");
       valido = false;
-    } else if (!clientBussiness.emailAvaliable(cliente)) {
+    } else if (!clientService.emailAvaliable(cliente)) {
       AlertaUtil.error("E-Mail já Cadastrado");
       valido = false;
     }
@@ -106,9 +106,9 @@ public class ClienteController extends GenericoController implements Serializabl
   public void buscarEndereco() {
     cidade = null;
     cliente.getEndereco().setLogradouro(null);
-    EnderecoPojo ep = addressBussiness.findAddressByCep(cliente.getEndereco().getCep());
-    cliente.getEndereco().setBairro(addressBussiness.getNeighborhood(ep));
-    listCidades = addressBussiness.findCities();
+    EnderecoPojo ep = addressService.findAddressByCep(cliente.getEndereco().getCep());
+    cliente.getEndereco().setBairro(addressService.getNeighborhood(ep));
+    listCidades = addressService.findCities();
 
     if (cliente.getEndereco().getBairro() != null) {
       cidade = cliente.getEndereco().getBairro().getCidade();

@@ -35,9 +35,9 @@ public class MensalidadeController implements Serializable {
   private Cliente cliente;
 
   @Inject
-  private MensalidadeService business;
+  private MensalidadeService service;
   @Inject
-  private ClienteService clientBussiness;
+  private ClienteService clientService;
 
   @PostConstruct
   public void init() {
@@ -55,20 +55,20 @@ public class MensalidadeController implements Serializable {
   }
 
   public void buscarCliente() {
-    cliente = clientBussiness.buscarPorId(cliente.getId());
+    cliente = clientService.buscarPorId(cliente.getId());
   }
 
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
     }
 
   }
 
   public void gerarBoletosPDF() throws IOException {
     if (clientePossuiTodosOsDadosNecessarios(cliente)) {
-      byte[] pdfData = business.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
+      byte[] pdfData = service.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
       WebUtil.downloadPDF(pdfData, cliente.getNome());
     }
   }
@@ -121,18 +121,18 @@ public class MensalidadeController implements Serializable {
   public Mensalidade getNovaMensalidade() {
     LocalDate d =
         LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-    return business.getNovaMensalidade(cliente, d);
+    return service.getNovaMensalidade(cliente, d);
   }
 
 
   public void salvar() {
     if (mensalidade.getId() == 0) {
-      business.salvar(mensalidade);
+      service.salvar(mensalidade);
       cliente.getMensalidades().add(mensalidade);
       ordernarMensalidades();
       AlertaUtil.info("Mensalidade adicionada com sucesso!");
     } else {
-      business.atualizar(mensalidade);
+      service.atualizar(mensalidade);
       AlertaUtil.info("Mensalidade atualizado com sucesso!");
     }
     mensalidade = getNovaMensalidade();
@@ -140,7 +140,7 @@ public class MensalidadeController implements Serializable {
   }
 
   public void remover(Mensalidade m) {
-    business.remover(m);
+    service.remover(m);
     cliente.getMensalidades().remove(m);
     mensalidade = getNovaMensalidade();
     AlertaUtil.info("Mensalidade removido com sucesso!");

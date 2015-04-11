@@ -41,11 +41,11 @@ public class UserAccountController implements Serializable {
   private Part file;
 
   @Inject
-  private AccountService business;
+  private AccountService service;
 
   @PostConstruct
   public void load() {
-    listUserAccount = business.findUsersAccounts();
+    listUserAccount = service.findUsersAccounts();
     getParameters();
 
   }
@@ -53,7 +53,7 @@ public class UserAccountController implements Serializable {
   private boolean valida(UserAccount userAccount) {
     boolean result = true;
 
-    if (!business.emailAvaliable(userAccount)) {
+    if (!service.emailAvaliable(userAccount)) {
       AlertaUtil.error("Email já cadastrado!");
       result = false;
     }
@@ -82,10 +82,10 @@ public class UserAccountController implements Serializable {
         auth.setUsername(username);
         auth.setPassword(HashUtil.sha256ToHex(password));
         auth.setUserAccount(userAccount);
-        business.salvar(auth);
+        service.salvar(auth);
         AlertaUtil.info("Usuário gravado com sucesso!");
       } else {
-        business.atualizar(userAccount);
+        service.atualizar(userAccount);
         AlertaUtil.info("Usuário atualizado com sucesso!");
       }
       page = "list";
@@ -95,23 +95,23 @@ public class UserAccountController implements Serializable {
   }
 
   public void resetPassword() {
-    Authentication auth = business.findAuthenticationByUserAccount(userAccount);
+    Authentication auth = service.findAuthenticationByUserAccount(userAccount);
     String senha = StringUtil.gerarSenha(8);
     auth.setPassword(HashUtil.sha256ToHex(senha));
-    business.atualizar(auth);
+    service.atualizar(auth);
     AlertaUtil.info("A senha do usuário " + auth.getUsername() + " foi alterada para " + senha);
   }
 
   private void getParameters() {
     String userAccountId = WebUtil.getParameters("id");
     if (userAccountId != null && !userAccountId.isEmpty()) {
-      userAccount = business.findUserAccountById(Integer.parseInt(userAccountId));
+      userAccount = service.findUserAccountById(Integer.parseInt(userAccountId));
     }
   }
 
   public String remover() {
     page = null;
-    business.remover(userAccount);
+    service.remover(userAccount);
     page = "list";
     return page;
   }

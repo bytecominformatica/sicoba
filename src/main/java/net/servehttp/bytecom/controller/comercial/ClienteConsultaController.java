@@ -28,16 +28,16 @@ public class ClienteConsultaController extends GenericoController implements Ser
   private StatusCliente status;
 
   @Inject
-  private ClienteService business;
+  private ClienteService service;
 
   @PostConstruct
   public void load() {
-    listClientes = business.buscaUltimosClientesAlterados();
+    listClientes = service.buscaUltimosClientesAlterados();
   }
 
   public void atualizarTodasConexoes() {
     try {
-      business.atualizarTodasConexoes();
+      service.atualizarTodasConexoes();
     } catch (Exception e) {
       log(e);
     }
@@ -48,7 +48,7 @@ public class ClienteConsultaController extends GenericoController implements Ser
   }
 
   public void consultar() {
-    listClientes = business.buscarTodosClientePorNomeIp(nome, ip, status);
+    listClientes = service.buscarTodosClientePorNomeIp(nome, ip, status);
   }
 
   public List<Cliente> getListClientes() {

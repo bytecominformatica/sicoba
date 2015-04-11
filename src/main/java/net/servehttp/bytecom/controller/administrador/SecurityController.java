@@ -40,7 +40,7 @@ public class SecurityController implements Serializable {
   private Subject currentUser = SecurityUtils.getSubject();
 
   @Inject
-  private AccountService accountBussiness;
+  private AccountService accountService;
   @EJB
   private MailEJB mail;
   @Inject
@@ -59,8 +59,8 @@ public class SecurityController implements Serializable {
     if (!currentUser.isAuthenticated()) {
       try {
         currentUser.login(new UsernamePasswordToken(username, password));
-        userAccount = accountBussiness.findUserAccountByUsername(username);
-        accountBussiness.createPictureInSession(userAccount);
+        userAccount = accountService.findUserAccountByUsername(username);
+        accountService.createPictureInSession(userAccount);
         currentUser.getSession().setAttribute("currentUser", userAccount);
         WebUtil.redirect(HOME_URL);
       } catch (AuthenticationException e) {

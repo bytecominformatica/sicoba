@@ -36,20 +36,20 @@ public class LocalizacaoController implements Serializable {
   private Cliente cliente = new Cliente();
 
   @Inject
-  private ClienteService clientBussiness;
+  private ClienteService clientService;
   @Inject
   private ClienteGeoReferenciaJPA jpa;
 
   @PostConstruct
   public void load() {
-    listClientes = clientBussiness.buscaUltimosClientesAlterados();
+    listClientes = clientService.buscaUltimosClientesAlterados();
     getParameters();
   }
 
   private void getParameters() {
     clienteId = WebUtil.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
       cidadeId = cliente.getEndereco().getBairro().getCidade().getId();
       bairroId = cliente.getEndereco().getBairro().getId();
     }
