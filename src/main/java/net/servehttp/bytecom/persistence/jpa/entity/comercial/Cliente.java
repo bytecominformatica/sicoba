@@ -18,8 +18,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.util.annotation.CpfCnpj;
 import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 

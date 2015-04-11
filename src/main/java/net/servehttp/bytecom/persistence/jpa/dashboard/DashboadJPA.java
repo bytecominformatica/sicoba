@@ -6,13 +6,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
-import net.servehttp.bytecom.financeiro.jpa.entity.QMensalidade;
-import net.servehttp.bytecom.financeiro.jpa.entity.StatusMensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.QCliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.QContrato;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.QMensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.JPASubQuery;

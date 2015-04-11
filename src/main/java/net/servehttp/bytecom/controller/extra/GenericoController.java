@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.extra.service.LogService;
+import net.servehttp.bytecom.service.extra.LogService;
 import net.servehttp.bytecom.util.MensagemException;
 import net.servehttp.bytecom.util.ejb.MailEJB;
 import net.servehttp.bytecom.util.web.AlertaUtil;

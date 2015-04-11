@@ -8,9 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.financeiro.jpa.MensalidadeRelatorioJPA;
-import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
-import net.servehttp.bytecom.financeiro.jpa.entity.StatusMensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
+import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeRelatorioJPA;
 import net.servehttp.bytecom.util.StringUtil;
 
 

@@ -9,10 +9,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.comercial.service.ClienteBussiness;
-import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
-import net.servehttp.bytecom.financeiro.service.MensalidadeBussiness;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.service.comercial.ClienteBussiness;
+import net.servehttp.bytecom.service.financeiro.MensalidadeBussiness;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 

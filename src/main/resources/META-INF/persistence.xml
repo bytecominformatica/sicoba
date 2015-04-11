@@ -11,20 +11,20 @@
 		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Endereco</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Estado</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Pais</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Header</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Trailer</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.HeaderLote</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Registro</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.RegistroDetalhe</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.TrailerLote</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Header</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Trailer</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLote</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.RegistroDetalhe</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.TrailerLote</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.administrador.AccessGroup</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.extra.ClienteGeoReferencia</class>
-		<class>net.servehttp.bytecom.financeiro.jpa.entity.Cedente</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.Cedente</class>
 		<class>net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter</class>
 		<class>net.servehttp.bytecom.util.converter.date.LocalDateTimePersistenceConverter</class>
 		<class>net.servehttp.bytecom.provedor.jpa.entity.Mikrotik</class>

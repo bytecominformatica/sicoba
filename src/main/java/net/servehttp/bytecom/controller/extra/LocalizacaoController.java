@@ -8,12 +8,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.extra.pojo.Location;
 import net.servehttp.bytecom.extra.util.GoogleMaps;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.extra.ClienteGeoReferencia;
 import net.servehttp.bytecom.persistence.jpa.extra.ClienteGeoReferenciaJPA;
+import net.servehttp.bytecom.service.comercial.ClienteBussiness;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
