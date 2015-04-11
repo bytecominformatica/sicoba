@@ -27,7 +27,7 @@
 		<class>net.servehttp.bytecom.persistence.jpa.entity.financeiro.Cedente</class>
 		<class>net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter</class>
 		<class>net.servehttp.bytecom.util.converter.date.LocalDateTimePersistenceConverter</class>
-		<class>net.servehttp.bytecom.provedor.jpa.entity.Mikrotik</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik</class>
 		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao</class>
 
 		<properties>

@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.extra.pojo;
+package net.servehttp.bytecom.pojo.extra;
 
 public class Location {
   private double lat;

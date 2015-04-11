@@ -7,11 +7,11 @@ import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
-import net.servehttp.bytecom.comercial.pojo.EnderecoPojo;
 import net.servehttp.bytecom.persistence.jpa.comercial.EnderecoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Bairro;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cidade;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Estado;
+import net.servehttp.bytecom.pojo.comercial.EnderecoPojo;
 
 import com.google.gson.Gson;
 

@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.extra.rest;
+package net.servehttp.bytecom.rest.extra;
 
 import java.io.Serializable;
 import java.util.ArrayList;

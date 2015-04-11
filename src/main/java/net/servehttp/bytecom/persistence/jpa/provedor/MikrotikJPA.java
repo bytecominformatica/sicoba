@@ -1,10 +1,10 @@
-package net.servehttp.bytecom.provedor.jpa;
+package net.servehttp.bytecom.persistence.jpa.provedor;
 
 import java.util.List;
 
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.QMikrotik;
 import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
-import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
-import net.servehttp.bytecom.provedor.jpa.entity.QMikrotik;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 

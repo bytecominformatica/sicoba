@@ -17,7 +17,7 @@
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 
-package net.servehttp.bytecom.comercial.pojo;
+package net.servehttp.bytecom.pojo.comercial;
 
 /**
  * @author Clairton Luz

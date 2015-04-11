@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.extra.util;
+package net.servehttp.bytecom.util.extra;
 
 import java.io.BufferedReader;
 import java.io.IOException;

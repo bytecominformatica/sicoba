@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.provedor.jpa.entity;
+package net.servehttp.bytecom.persistence.jpa.entity.provedor;
 
 import java.io.Serializable;
 

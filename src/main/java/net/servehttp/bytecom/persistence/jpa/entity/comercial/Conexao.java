@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
 
 @Entity
 @Table(name = "conexao")

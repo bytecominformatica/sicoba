@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.configuracao;
+package net.servehttp.bytecom.setup;
 
 
 import java.sql.Connection;

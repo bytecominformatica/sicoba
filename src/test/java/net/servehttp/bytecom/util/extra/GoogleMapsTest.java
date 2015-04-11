@@ -1,8 +1,9 @@
-package net.servehttp.bytecom.extra.util;
+package net.servehttp.bytecom.util.extra;
 
-import net.servehttp.bytecom.extra.pojo.Location;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Bairro;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Endereco;
+import net.servehttp.bytecom.pojo.extra.Location;
+import net.servehttp.bytecom.util.extra.GoogleMaps;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -8,8 +8,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.controller.extra.GenericoController;
-import net.servehttp.bytecom.provedor.jpa.MikrotikJPA;
-import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.provedor.MikrotikJPA;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**

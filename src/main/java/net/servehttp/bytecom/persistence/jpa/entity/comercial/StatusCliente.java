@@ -2,7 +2,7 @@ package net.servehttp.bytecom.persistence.jpa.entity.comercial;
 
 import java.util.Optional;
 
-import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
+import net.servehttp.bytecom.service.provedor.MikrotikPPP;
 
 public enum StatusCliente {
   INATIVO {

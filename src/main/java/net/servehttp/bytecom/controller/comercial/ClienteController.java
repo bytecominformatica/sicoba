@@ -9,14 +9,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.comercial.pojo.EnderecoPojo;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Bairro;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cidade;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
-import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
+import net.servehttp.bytecom.pojo.comercial.EnderecoPojo;
 import net.servehttp.bytecom.service.comercial.AddressBussiness;
 import net.servehttp.bytecom.service.comercial.ClienteBussiness;
+import net.servehttp.bytecom.service.provedor.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 

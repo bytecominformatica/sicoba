@@ -10,7 +10,7 @@ import net.servehttp.bytecom.persistence.jpa.comercial.ConexaoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
-import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
+import net.servehttp.bytecom.service.provedor.MikrotikPPP;
 
 public class ClienteBussiness implements Serializable {
 

@@ -1,4 +1,6 @@
-package net.servehttp.bytecom.extra.util;
+package net.servehttp.bytecom.util.extra;
+
+import net.servehttp.bytecom.util.extra.RestClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

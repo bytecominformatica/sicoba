@@ -1,11 +1,11 @@
-package net.servehttp.bytecom.provedor.service.mikrotik;
+package net.servehttp.bytecom.service.provedor;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import me.legrange.mikrotik.ApiConnection;
-import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
 import net.servehttp.bytecom.util.MensagemException;
 import net.servehttp.bytecom.util.NetworkUtil;
 

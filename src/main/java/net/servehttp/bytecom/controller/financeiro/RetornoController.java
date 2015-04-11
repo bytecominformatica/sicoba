@@ -15,8 +15,8 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
-import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 import net.servehttp.bytecom.service.financeiro.ArquivoRetornoCaixa;
+import net.servehttp.bytecom.service.provedor.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**

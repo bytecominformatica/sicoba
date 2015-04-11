@@ -1,4 +1,4 @@
-package net.servehttp.bytecom.extra.rest;
+package net.servehttp.bytecom.rest.extra;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Endereco;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
