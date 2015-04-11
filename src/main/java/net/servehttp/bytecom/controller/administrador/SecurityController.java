@@ -10,8 +10,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.administrador.jpa.entity.UserAccount;
 import net.servehttp.bytecom.administrador.service.AccountBussiness;
+import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.util.NetworkUtil;
 import net.servehttp.bytecom.util.ejb.MailEJB;
 import net.servehttp.bytecom.util.web.WebUtil;

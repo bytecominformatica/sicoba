@@ -5,11 +5,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.extra.jpa.GenericoJPA;
 import net.servehttp.bytecom.financeiro.jpa.entity.Cedente;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
 import net.servehttp.bytecom.financeiro.jpa.entity.QCedente;
 import net.servehttp.bytecom.financeiro.jpa.entity.QMensalidade;
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;

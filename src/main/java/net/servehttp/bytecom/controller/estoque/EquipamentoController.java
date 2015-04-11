@@ -8,8 +8,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.estoque.jpa.EquipamentoJPA;
-import net.servehttp.bytecom.estoque.jpa.entity.Equipamento;
+import net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento;
+import net.servehttp.bytecom.persistence.jpa.estoque.EquipamentoJPA;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 

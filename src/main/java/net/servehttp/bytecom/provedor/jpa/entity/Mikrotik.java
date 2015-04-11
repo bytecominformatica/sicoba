@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 @Entity
 @Table(name = "mikrotik")

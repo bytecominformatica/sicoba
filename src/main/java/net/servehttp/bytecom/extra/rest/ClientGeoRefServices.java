@@ -10,8 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import net.servehttp.bytecom.extra.jpa.ClienteGeoReferenciaJPA;
-import net.servehttp.bytecom.extra.jpa.entity.ClienteGeoReferencia;
+import net.servehttp.bytecom.persistence.jpa.entity.extra.ClienteGeoReferencia;
+import net.servehttp.bytecom.persistence.jpa.extra.ClienteGeoReferenciaJPA;
 
 @Path("maps")
 @Produces(MediaType.APPLICATION_JSON)

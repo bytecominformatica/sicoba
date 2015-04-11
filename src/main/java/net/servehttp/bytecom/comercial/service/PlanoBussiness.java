@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.comercial.jpa.PlanoJPA;
-import net.servehttp.bytecom.comercial.jpa.entity.Contrato;
-import net.servehttp.bytecom.comercial.jpa.entity.Plano;
+import net.servehttp.bytecom.persistence.jpa.comercial.PlanoJPA;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
 
 public class PlanoBussiness implements Serializable {
 

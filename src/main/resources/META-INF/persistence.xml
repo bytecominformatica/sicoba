@@ -4,31 +4,31 @@
 
 	<persistence-unit name="teste-pu" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Bairro</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Cidade</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Cliente</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Contrato</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Endereco</class>
-		<class>net.servehttp.bytecom.estoque.jpa.entity.Equipamento</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Estado</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Bairro</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Cidade</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Endereco</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Estado</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Pais</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Plano</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Pais</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Header</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Trailer</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.HeaderLote</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.Registro</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.RegistroDetalhe</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.retorno.TrailerLote</class>
-		<class>net.servehttp.bytecom.administrador.jpa.entity.UserAccount</class>
-		<class>net.servehttp.bytecom.administrador.jpa.entity.AccessGroup</class>
-		<class>net.servehttp.bytecom.administrador.jpa.entity.Authentication</class>
-		<class>net.servehttp.bytecom.extra.jpa.entity.ClienteGeoReferencia</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.administrador.AccessGroup</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.extra.ClienteGeoReferencia</class>
 		<class>net.servehttp.bytecom.financeiro.jpa.entity.Cedente</class>
 		<class>net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter</class>
 		<class>net.servehttp.bytecom.util.converter.date.LocalDateTimePersistenceConverter</class>
 		<class>net.servehttp.bytecom.provedor.jpa.entity.Mikrotik</class>
-		<class>net.servehttp.bytecom.comercial.jpa.entity.Conexao</class>
+		<class>net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bytecom" />

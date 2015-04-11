@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 
 @Entity

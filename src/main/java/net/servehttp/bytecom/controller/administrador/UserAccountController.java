@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
-import net.servehttp.bytecom.administrador.jpa.entity.Authentication;
-import net.servehttp.bytecom.administrador.jpa.entity.UserAccount;
 import net.servehttp.bytecom.administrador.service.AccountBussiness;
+import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication;
+import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.util.ImageUtil;
 import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.util.seguranca.HashUtil;

@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
-import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
 import net.servehttp.bytecom.financeiro.jpa.MensalidadeJPA;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
 import net.servehttp.bytecom.financeiro.jpa.entity.StatusMensalidade;
@@ -16,6 +15,7 @@ import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Header;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.HeaderLote;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Registro;
 import net.servehttp.bytecom.financeiro.service.ArquivoRetornoCaixa;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
@@ -46,8 +46,6 @@ public class RetornoController implements Serializable {
       try {
         header = caixaEJB.tratarArquivo(file);
         if (notExists(header)) {
-
-          boolean clienteAtivado = false;
 
           for (HeaderLote hl : header.getHeaderLotes()) {
             for (Registro r : hl.getRegistros()) {

@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Bairro;
-import net.servehttp.bytecom.comercial.jpa.entity.Endereco;
 import net.servehttp.bytecom.extra.pojo.Location;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Bairro;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Endereco;
 
 public abstract class GoogleMaps {
 

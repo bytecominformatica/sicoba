@@ -7,11 +7,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.comercial.jpa.ClienteJPA;
-import net.servehttp.bytecom.comercial.jpa.ConexaoJPA;
-import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
 import net.servehttp.bytecom.controller.extra.GenericoController;
+import net.servehttp.bytecom.persistence.jpa.comercial.ClienteJPA;
+import net.servehttp.bytecom.persistence.jpa.comercial.ConexaoJPA;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.provedor.jpa.MikrotikJPA;
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;

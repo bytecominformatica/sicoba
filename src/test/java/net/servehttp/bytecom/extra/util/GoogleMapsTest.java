@@ -1,8 +1,8 @@
 package net.servehttp.bytecom.extra.util;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Bairro;
-import net.servehttp.bytecom.comercial.jpa.entity.Endereco;
 import net.servehttp.bytecom.extra.pojo.Location;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Bairro;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Endereco;
 
 import org.junit.Assert;
 import org.junit.Test;

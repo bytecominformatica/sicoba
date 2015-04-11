@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 @Entity
 @Table(name = "cedente")

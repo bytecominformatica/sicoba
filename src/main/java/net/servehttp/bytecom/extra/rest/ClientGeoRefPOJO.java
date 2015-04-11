@@ -1,7 +1,7 @@
 package net.servehttp.bytecom.extra.rest;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Endereco;
-import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Endereco;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 
 public class ClientGeoRefPOJO {
 

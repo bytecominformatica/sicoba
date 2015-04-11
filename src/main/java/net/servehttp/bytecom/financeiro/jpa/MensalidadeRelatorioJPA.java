@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.extra.jpa.GenericoJPA;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
 import net.servehttp.bytecom.financeiro.jpa.entity.StatusMensalidade;
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 @Transactional
 public class MensalidadeRelatorioJPA extends GenericoJPA {

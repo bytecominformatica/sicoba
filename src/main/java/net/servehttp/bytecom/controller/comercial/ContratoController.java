@@ -9,14 +9,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.jpa.entity.Contrato;
-import net.servehttp.bytecom.comercial.jpa.entity.Plano;
 import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.comercial.service.ContratoBusiness;
 import net.servehttp.bytecom.comercial.service.PlanoBussiness;
-import net.servehttp.bytecom.estoque.jpa.entity.Equipamento;
 import net.servehttp.bytecom.estoque.service.EquipamentoBussiness;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
+import net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 

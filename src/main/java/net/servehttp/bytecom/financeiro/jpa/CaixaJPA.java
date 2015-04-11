@@ -2,9 +2,9 @@ package net.servehttp.bytecom.financeiro.jpa;
 
 import javax.transaction.Transactional;
 
-import net.servehttp.bytecom.extra.jpa.GenericoJPA;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.Header;
 import net.servehttp.bytecom.financeiro.jpa.entity.retorno.QHeader;
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 

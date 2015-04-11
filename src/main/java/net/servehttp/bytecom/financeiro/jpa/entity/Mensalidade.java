@@ -13,8 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 
 /**

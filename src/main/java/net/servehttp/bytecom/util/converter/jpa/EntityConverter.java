@@ -6,7 +6,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import net.servehttp.bytecom.extra.jpa.entity.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
  
 @FacesConverter(value = "entityConverter", forClass = EntityGeneric.class)

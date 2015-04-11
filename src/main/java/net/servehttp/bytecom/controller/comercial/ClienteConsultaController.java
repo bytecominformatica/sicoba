@@ -8,10 +8,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
 import net.servehttp.bytecom.comercial.service.ClienteBussiness;
 import net.servehttp.bytecom.controller.extra.GenericoController;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 
 /**
  * 

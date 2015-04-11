@@ -3,7 +3,7 @@ package net.servehttp.bytecom.provedor.service.mikrotik;
 import java.util.List;
 import java.util.Map;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import net.servehttp.bytecom.util.MensagemException;
 

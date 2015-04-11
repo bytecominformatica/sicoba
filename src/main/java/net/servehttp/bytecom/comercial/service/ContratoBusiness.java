@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.comercial.jpa.ContratoJPA;
-import net.servehttp.bytecom.comercial.jpa.entity.Contrato;
+import net.servehttp.bytecom.persistence.jpa.comercial.ContratoJPA;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
 
 public class ContratoBusiness implements Serializable {
 

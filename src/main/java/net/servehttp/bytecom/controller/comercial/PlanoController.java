@@ -8,8 +8,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Plano;
 import net.servehttp.bytecom.comercial.service.PlanoBussiness;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 

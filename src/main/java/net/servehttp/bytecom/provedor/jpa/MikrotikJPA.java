@@ -2,7 +2,7 @@ package net.servehttp.bytecom.provedor.jpa;
 
 import java.util.List;
 
-import net.servehttp.bytecom.extra.jpa.GenericoJPA;
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 import net.servehttp.bytecom.provedor.jpa.entity.Mikrotik;
 import net.servehttp.bytecom.provedor.jpa.entity.QMikrotik;
 

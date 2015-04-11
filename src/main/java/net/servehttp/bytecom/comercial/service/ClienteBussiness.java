@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import net.servehttp.bytecom.comercial.jpa.ClienteJPA;
-import net.servehttp.bytecom.comercial.jpa.ConexaoJPA;
-import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
-import net.servehttp.bytecom.comercial.jpa.entity.Conexao;
-import net.servehttp.bytecom.comercial.jpa.entity.StatusCliente;
+import net.servehttp.bytecom.persistence.jpa.comercial.ClienteJPA;
+import net.servehttp.bytecom.persistence.jpa.comercial.ConexaoJPA;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.provedor.service.mikrotik.MikrotikPPP;
 
 public class ClienteBussiness implements Serializable {

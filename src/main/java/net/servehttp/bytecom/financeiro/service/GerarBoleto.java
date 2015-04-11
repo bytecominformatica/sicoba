@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.servehttp.bytecom.comercial.jpa.entity.Cliente;
 import net.servehttp.bytecom.financeiro.jpa.entity.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.util.StringUtil;
 
 import org.jrimum.bopepo.BancosSuportados;

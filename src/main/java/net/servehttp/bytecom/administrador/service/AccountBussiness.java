@@ -7,9 +7,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
-import net.servehttp.bytecom.administrador.jpa.UserJPA;
-import net.servehttp.bytecom.administrador.jpa.entity.Authentication;
-import net.servehttp.bytecom.administrador.jpa.entity.UserAccount;
+import net.servehttp.bytecom.persistence.jpa.administrador.UserJPA;
+import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication;
+import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.util.ImageUtil;
 
 public class AccountBussiness implements Serializable {
