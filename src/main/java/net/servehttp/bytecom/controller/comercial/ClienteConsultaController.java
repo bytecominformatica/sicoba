@@ -12,6 +12,7 @@ import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 
@@ -38,6 +39,7 @@ public class ClienteConsultaController extends GenericoController implements Ser
   public void atualizarTodasConexoes() {
     try {
       service.atualizarTodasConexoes();
+      AlertaUtil.info("sucesso");
     } catch (Exception e) {
       log(e);
     }

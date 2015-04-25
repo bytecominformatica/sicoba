@@ -1,6 +1,5 @@
 package net.servehttp.bytecom.service.provedor;
 
-import java.net.Inet4Address;
 import java.util.List;
 import java.util.Map;
 
@@ -60,18 +59,28 @@ public class PPPoE implements IConnectionControl {
   
   @Override
   public void lock(IServer server, IConnectionClienteCertified client) throws Exception {
-    execute(server, "/ip/firewall/filter/add chain=forward src-address=%s dst-address=!%s action=drop",
-        client.getIp(), Inet4Address.getLocalHost().getHostAddress());
+    List<Map<String, String>> res =
+        execute(server, "/ip/firewall/filter/print where src-address=%s or dst-address=%s", client.getIp(), client.getIp());
+    
+    for (Map<String, String> r : res) {
+      execute(server, "/ip/firewall/filter/remove .id=%s", r.get(".id"));
+    }
   }
 
   @Override
   public void unlock(IServer server, IConnectionClienteCertified client) throws Exception {
+    lock(server, client);
+    
     List<Map<String, String>> res =
-        execute(server, "/ip/firewall/filter/print where src-address=%s", client.getIp());
-
+        execute(server, "/ip/firewall/filter/print where comment=BLOCKALL");
+    
     for (Map<String, String> r : res) {
       execute(server, "/ip/firewall/filter/remove .id=%s", r.get(".id"));
     }
+    
+    execute(server, "/ip/firewall/filter/add chain=forward src-address=%s action=accept", client.getIp());
+    execute(server, "/ip/firewall/filter/add chain=forward dst-address=%s action=accept", client.getIp());
+    execute(server, "/ip/firewall/filter/add chain=forward action=drop comment=BLOCKALL", client.getIp());
   }
 
   private List<Map<String, String>> execute(IServer server, String commando, Object... parametros)
