@@ -1,6 +1,5 @@
 package net.servehttp.bytecom.persistence.jpa.entity.comercial;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,7 +31,7 @@ import org.hibernate.validator.constraints.Email;
  */
 @Entity
 @Table(name = "cliente")
-public class Cliente extends EntityGeneric implements Serializable {
+public class Cliente extends EntityGeneric {
 
   private static final long serialVersionUID = -4600863330316226671L;
   @NotNull(message = "nome é obrigatório")

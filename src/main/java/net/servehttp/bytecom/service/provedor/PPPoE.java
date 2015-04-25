@@ -1,5 +1,6 @@
 package net.servehttp.bytecom.service.provedor;
 
+import java.net.Inet4Address;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import net.servehttp.bytecom.util.NetworkUtil;
 
 public class PPPoE implements IConnectionControl {
 
+  private static final long serialVersionUID = -2374802578829013911L;
+
   @Override
   public void save(IServer server, IConnectionClienteCertified client) throws Exception {
     if (exists(server, client)) {
@@ -20,13 +23,13 @@ public class PPPoE implements IConnectionControl {
       create(server, client);
     }
   }
-  
+
   private void create(IServer server, IConnectionClienteCertified client) throws Exception {
     execute(server,
         "/ppp/secret/add name=%s password=%s profile=%s remote-address=%s service=pppoe",
         client.getLogin(), client.getPass(), client.getProfile(), client.getIp());
   }
-  
+
   private void update(IServer server, IConnectionClienteCertified client) throws Exception {
     execute(server,
         "/ppp/secret/set .id=%s password=%s profile=%s remote-address=%s service=pppoe",
@@ -34,8 +37,9 @@ public class PPPoE implements IConnectionControl {
   }
 
   public boolean exists(IServer server, IConnectionClienteCertified client) throws Exception {
-    List<Map<String, String>> result = execute(server, "/ppp/secret/print where name=%s", client.getLogin());
-    
+    List<Map<String, String>> result =
+        execute(server, "/ppp/secret/print where name=%s", client.getLogin());
+
     return !result.isEmpty();
   }
 
@@ -53,11 +57,11 @@ public class PPPoE implements IConnectionControl {
       execute(server, "/ppp/active/remove .id=%s", r.get(".id"));
     }
   }
-
+  
   @Override
   public void lock(IServer server, IConnectionClienteCertified client) throws Exception {
-    execute(server, "/ip/firewall/filter/add chain=forward src-address=%s action=drop",
-        client.getIp());
+    execute(server, "/ip/firewall/filter/add chain=forward src-address=%s dst-address=!%s action=drop",
+        client.getIp(), Inet4Address.getLocalHost().getHostAddress());
   }
 
   @Override
