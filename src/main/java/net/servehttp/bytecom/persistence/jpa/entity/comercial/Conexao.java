@@ -8,11 +8,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.IConnectionClienteCertified;
 import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
 
 @Entity
 @Table(name = "conexao")
-public class Conexao extends net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric {
+public class Conexao extends EntityGeneric implements IConnectionClienteCertified {
 
   private static final long serialVersionUID = -4166003590731566705L;
 
@@ -76,5 +78,21 @@ public class Conexao extends net.servehttp.bytecom.persistence.jpa.entity.extra.
 
   public void setIp(String ip) {
     this.ip = ip;
+  }
+
+  @Override
+  public String getMac() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String getLogin() {
+    return nome;
+  }
+
+  @Override
+  public String getPass() {
+    return senha;
   }
 }

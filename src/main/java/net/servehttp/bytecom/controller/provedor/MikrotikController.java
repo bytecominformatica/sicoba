@@ -69,10 +69,10 @@ public class MikrotikController extends GenericoController {
     boolean valido = true;
 
     if (senha != null) {
-      m.setSenha(senha);
+      m.setPass(senha);
     }
 
-    if (m.getId() == 0 && m.getSenha() == null) {
+    if (m.getId() == 0 && m.getPass() == null) {
       AlertaUtil.error("Digite uma senha");
       valido = false;
     }

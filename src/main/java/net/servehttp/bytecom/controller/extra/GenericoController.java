@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import net.servehttp.bytecom.service.extra.LogService;
 import net.servehttp.bytecom.util.MensagemException;
 import net.servehttp.bytecom.util.ejb.MailEJB;
+import net.servehttp.bytecom.util.extra.EmailAddress;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
 public class GenericoController implements Serializable {
 
   private static final long serialVersionUID = 3946937417603951392L;
-  private static final String DESTINATARIO = "clairton.c.l@gmail.com";
   private static final String ASSUNTO = "ERROR NO SICOBA";
 
   @EJB
@@ -33,6 +33,6 @@ public class GenericoController implements Serializable {
   }
 
   private void enviarLogError(Exception e) {
-    mail.send(DESTINATARIO, ASSUNTO, log.getMensagemLog(e));
+    mail.send(EmailAddress.ADMIN, ASSUNTO, log.getMensagemLog(e));
   }
 }

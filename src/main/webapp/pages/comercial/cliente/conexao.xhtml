@@ -20,7 +20,7 @@
 				<h:selectOneMenu id="mikrotik" value="#{conexaoController.cliente.conexao.mikrotik}" converter="entityConverter"
 					styleClass="form-control" required="true" requiredMessage="Selecione um mikrotik">
 					<f:selectItem itemLabel="#{bundle.select}" noSelectionOption="true" />
-					<f:selectItems value="#{conexaoController.listMikrotik}" var="mk" itemLabel="#{mk.nome} - #{mk.host}"/>
+					<f:selectItems value="#{conexaoController.listMikrotik}" var="mk" itemLabel="#{mk.name} - #{mk.host}"/>
 				</h:selectOneMenu>
 
 				<label jsf:for="nome" class="control-label" >#{bundle.nome}</label>

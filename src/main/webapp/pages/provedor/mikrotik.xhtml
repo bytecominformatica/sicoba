@@ -11,23 +11,23 @@
 			<div class="panel-body" jsf:rendered="#{mikrotikController.mikrotik != null}">
 				<form jsf:id="form1" class="form-horizontal">
 					<label jsf:for="nome" class="control-label" >#{bundle.nome}</label>
-					<input jsf:id="nome" type="text" class="form-control" jsf:value="#{mikrotikController.mikrotik.nome}" autofocus="autofocus" required="required"/>
+					<input jsf:id="nome" type="text" class="form-control" jsf:value="#{mikrotikController.mikrotik.name}" autofocus="autofocus" required="required"/>
 	
 					<label jsf:for="host" class="control-label" >#{bundle.host}</label>
 					<input jsf:id="host" type="text" class="form-control" jsf:value="#{mikrotikController.mikrotik.host}" required="required"/>
 	
 					<label jsf:for="porta" class="control-label" >#{bundle.porta}</label>
-					<input jsf:id="porta" type="number" class="form-control" jsf:value="#{mikrotikController.mikrotik.porta}" required="required"/>
+					<input jsf:id="porta" type="number" class="form-control" jsf:value="#{mikrotikController.mikrotik.port}" required="required"/>
 	
 					<label jsf:for="usuario" class="control-label" >#{bundle.usuario}</label>
-					<input jsf:id="usuario" type="text" class="form-control" jsf:value="#{mikrotikController.mikrotik.usuario}" required="required"/>
+					<input jsf:id="usuario" type="text" class="form-control" jsf:value="#{mikrotikController.mikrotik.login}" required="required"/>
 	
 					<label class="control-label" >#{bundle.senha}</label>
-					<input jsf:rendered="#{!(mikrotikController.mikrotik.id > 0)}" jsf:id="senha1" type="password" class="form-control" jsf:value="#{mikrotikController.mikrotik.senha}" required="required"/>
+					<input jsf:rendered="#{!(mikrotikController.mikrotik.id > 0)}" jsf:id="senha1" type="password" class="form-control" jsf:value="#{mikrotikController.mikrotik.pass}" required="required"/>
 					<input jsf:rendered="#{mikrotikController.mikrotik.id > 0}" jsf:id="senha2" type="password" class="form-control" jsf:value="#{mikrotikController.senha}" placeholder="Deixe em branco para manter a mesma senha"/>
 	
 					<label jsf:for="descricao" class="control-label" >#{bundle.descricao}</label>
-					<textarea rows="3" jsf:id="descricao" class="form-control" jsf:value="#{mikrotikController.mikrotik.descricao}"/>
+					<textarea rows="3" jsf:id="descricao" class="form-control" jsf:value="#{mikrotikController.mikrotik.description}"/>
 	
 					<div class="modal-footer">
 						<button jsf:id="btAtualizar" jsf:action="#{mikrotikController.salvar()}" class="btn btn-primary">
@@ -61,7 +61,7 @@
 
 						<h:column>
 							<f:facet name="header">#{bundle.nome}</f:facet>
-							#{mikrotik.nome}
+							#{mikrotik.name}
 						</h:column>
 
 						<h:column>
@@ -71,17 +71,17 @@
 
 						<h:column>
 							<f:facet name="header">#{bundle.porta}</f:facet>
-							#{mikrotik.porta}
+							#{mikrotik.port}
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">#{bundle.usuario}</f:facet>
-							#{mikrotik.usuario}
+							#{mikrotik.login}
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">#{bundle.senha}</f:facet>
-							<h6 title="#{mikrotik.senha}">Senha Aqui</h6>
+							<h6 title="#{mikrotik.pass}">Senha Aqui</h6>
 						</h:column>
 
 						<h:column>
@@ -105,7 +105,7 @@
 		        <h4 class="modal-title">Deseja remover?</h4>
 		      </div>
 		      <div class="modal-body">
-		        <p>#{mikrotikController.mikrotik.nome}</p>
+		        <p>#{mikrotikController.mikrotik.name}</p>
 		      </div>
 		      <div class="modal-footer">
 		      	<form jsf:id="formRemover">

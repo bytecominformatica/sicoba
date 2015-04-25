@@ -19,7 +19,7 @@ import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 
- * @author Clairton Luz - clairton.c.l@gmail.com
+ * @author clairtonluz
  *
  */
 @Named

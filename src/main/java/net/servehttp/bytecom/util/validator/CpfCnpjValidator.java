@@ -12,7 +12,7 @@ import net.servehttp.bytecom.util.annotation.CpfCnpj;
 
 /**
  * 
- * @author Clairton Luz - clairton.c.l@gmail.com
+ * @author clairtonluz
  *
  */
 public class CpfCnpjValidator implements ConstraintValidator<CpfCnpj, String> {

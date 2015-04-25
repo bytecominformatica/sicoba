@@ -26,7 +26,7 @@ public class MikrotikPPP extends MikrotikService {
       desconectar(conexao);
     } else {
       throw new MensagemException("Plano %s não encontrado no %s", profile, conexao.getMikrotik()
-          .getNome());
+          .getName());
     }
   }
 

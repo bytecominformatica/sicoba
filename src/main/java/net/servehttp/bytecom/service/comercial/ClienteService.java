@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.service.comercial;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,7 +11,8 @@ import net.servehttp.bytecom.persistence.jpa.comercial.ConexaoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
-import net.servehttp.bytecom.service.provedor.MikrotikPPP;
+import net.servehttp.bytecom.service.provedor.IConnectionControl;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 public class ClienteService implements Serializable {
 
@@ -19,7 +21,7 @@ public class ClienteService implements Serializable {
   @Inject
   private ConexaoJPA conexaoJPA;
   @Inject
-  private MikrotikPPP mikrotikPPP;
+  private IConnectionControl connectionControl;
   @Inject
   private ClienteJPA clienteJPA;
 
@@ -62,6 +64,29 @@ public class ClienteService implements Serializable {
     clienteJPA.remover(cliente);
   }
 
+  public void salvar(Cliente cliente) throws Exception {
+    String irregularidade = getIrregularidade(cliente);
+    if (cliente.getId() == 0) {
+      cliente.setCreatedAt(LocalDateTime.now());
+      clienteJPA.salvar(cliente);
+    } else {
+      cliente.getStatus().atualizarConexao(cliente, connectionControl);
+      clienteJPA.atualizar(cliente);
+    }
+  }
+
+  public String getIrregularidade(Cliente cliente) {
+    String erro = null;
+    if (!rgAvaliable(cliente)) {
+      erro = "RG já Cadastrado";
+    } else if (!cpfCnpjAvaliable(cliente)) {
+      erro = "CPF já Cadastrado";
+    } else if (!emailAvaliable(cliente)) {
+      erro = "E-Mail já Cadastrado";
+    }
+    return erro;
+  }
+
   public void atualizarTodasConexoes() throws Exception {
     List<Conexao> list = conexaoJPA.buscarTodos(Conexao.class);
 
@@ -69,7 +94,7 @@ public class ClienteService implements Serializable {
       if (c.getIp() == null || c.getIp().isEmpty()) {
         c.setIp(conexaoJPA.getIpLivre());
       }
-//      mikrotikPPP.salvarSecret(c);
+      connectionControl.save(c.getMikrotik(), c);
       conexaoJPA.atualizar(c);
     }
 

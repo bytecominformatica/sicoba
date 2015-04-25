@@ -10,7 +10,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 /**
  * 
- * @author Clairton Luz - clairton.c.l@gmail.com
+ * @author clairtonluz
  *
  */
 @Entity
