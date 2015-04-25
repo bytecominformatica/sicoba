@@ -1,6 +1,5 @@
 package net.servehttp.bytecom.controller.financeiro;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.service.comercial.ClienteService;
@@ -20,7 +20,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class GerarMensalidadeController implements Serializable {
+public class GerarMensalidadeController extends GenericoController {
 
   private static final long serialVersionUID = -866830816286480241L;
   private Mensalidade mensalidade;
@@ -59,7 +59,7 @@ public class GerarMensalidadeController implements Serializable {
       m.setValor(mensalidade.getValor());
       m.setDesconto(descontoGeracao);
       m.setDataVencimento(dataInicio);
-      service.salvar(m);
+      jpa.salvar(m);
       dataInicio = dataInicio.plusMonths(1);
     }
     dataInicio = mensalidade.getDataVencimento();

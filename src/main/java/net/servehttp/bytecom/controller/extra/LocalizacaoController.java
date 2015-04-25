@@ -19,13 +19,14 @@ import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
+ * @author clairtonluz <br>
  * @author Felipe W. M. Martins <br>
  *         felipewmartins@gmail.com
  *
  */
 @Named
 @ViewScoped
-public class LocalizacaoController implements Serializable {
+public class LocalizacaoController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -6695262369077987911L;
 
@@ -38,7 +39,7 @@ public class LocalizacaoController implements Serializable {
   @Inject
   private ClienteService clientService;
   @Inject
-  private ClienteGeoReferenciaJPA jpa;
+  private ClienteGeoReferenciaJPA clienteGeoReferenciaJPA;
 
   @PostConstruct
   public void load() {
@@ -76,26 +77,19 @@ public class LocalizacaoController implements Serializable {
   }
 
   public boolean geocodificar(Cliente cliente) {
-    boolean sucesso;
+    boolean sucesso = false;
     Location location = GoogleMaps.getLocation(cliente.getEndereco());
     if (location != null) {
-      ClienteGeoReferencia clienteGeo = new ClienteGeoReferencia();
-      clienteGeo.setCliente(cliente);
+      ClienteGeoReferencia clienteGeo = clienteGeoReferenciaJPA.buscarClienteGeoReferenciaPorCliente(cliente);
+      if (clienteGeo == null) {
+        clienteGeo = new ClienteGeoReferencia();
+        clienteGeo.setCliente(cliente);
+      }
       clienteGeo.setLatitude(location.getLat());
       clienteGeo.setLongitude(location.getLng());
 
-      ClienteGeoReferencia geoReferenciaAntiga = jpa.buscarClienteGeoReferenciaPorCliente(cliente);
-      if (geoReferenciaAntiga == null) {
-        jpa.salvar(clienteGeo);
-      } else {
-        geoReferenciaAntiga.setLatitude(clienteGeo.getLatitude());
-        geoReferenciaAntiga.setLongitude(clienteGeo.getLongitude());
-        jpa.atualizar(geoReferenciaAntiga);
-      }
+      jpa.salvar(clienteGeo);
       sucesso = true;
-
-    } else {
-      sucesso = false;
     }
     return sucesso;
   }

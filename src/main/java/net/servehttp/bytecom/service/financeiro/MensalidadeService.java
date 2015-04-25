@@ -51,12 +51,4 @@ public class MensalidadeService implements Serializable {
     return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);
   }
 
-  public <T> T salvar(T t) {
-    return mensalidadeJPA.salvar(t);
-  }
-
-  public <T> T atualizar(T t) {
-    return mensalidadeJPA.atualizar(t);
-  }
-
 }

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.service.administrador.AccountService;
@@ -26,7 +27,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class UserAccountController implements Serializable {
+public class UserAccountController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -2081234112300283530L;
 
@@ -82,12 +83,10 @@ public class UserAccountController implements Serializable {
         auth.setUsername(username);
         auth.setPassword(HashUtil.sha256ToHex(password));
         auth.setUserAccount(userAccount);
-        service.salvar(auth);
-        AlertaUtil.info("Usuário gravado com sucesso!");
-      } else {
-        service.atualizar(userAccount);
-        AlertaUtil.info("Usuário atualizado com sucesso!");
+        jpa.salvar(auth);
       }
+      jpa.salvar(userAccount);
+      AlertaUtil.info("Usuário salvo com sucesso!");
       page = "list";
     }
 
@@ -98,7 +97,7 @@ public class UserAccountController implements Serializable {
     Authentication auth = service.findAuthenticationByUserAccount(userAccount);
     String senha = StringUtil.gerarSenha(8);
     auth.setPassword(HashUtil.sha256ToHex(senha));
-    service.atualizar(auth);
+    jpa.salvar(auth);
     AlertaUtil.info("A senha do usuário " + auth.getUsername() + " foi alterada para " + senha);
   }
 

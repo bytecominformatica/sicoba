@@ -2,6 +2,7 @@ package net.servehttp.bytecom.persistence.jpa.entity.comercial;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -75,6 +76,7 @@ public class Cliente extends EntityGeneric implements Serializable {
   private boolean online;
 
   public Cliente() {
+    this.createdAt = LocalDateTime.now();
     this.endereco = new Endereco();
     this.status = StatusCliente.ATIVO;
   }

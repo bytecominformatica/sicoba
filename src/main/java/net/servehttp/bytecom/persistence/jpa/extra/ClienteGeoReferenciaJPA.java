@@ -1,8 +1,8 @@
 package net.servehttp.bytecom.persistence.jpa.extra;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -18,18 +18,15 @@ import com.mysema.query.jpa.impl.JPAQuery;
  *
  */
 @Transactional
-public class ClienteGeoReferenciaJPA extends GenericoJPA implements Serializable {
+public class ClienteGeoReferenciaJPA implements Serializable {
 
   private static final long serialVersionUID = 7468802847947425443L;
+  @Inject
+  protected EntityManager em;
   private QClienteGeoReferencia cg = QClienteGeoReferencia.clienteGeoReferencia;
 
   public void setEntityManager(EntityManager em) {
     this.em = em;
-  }
-
-  public List<ClienteGeoReferencia> buscaClientesGeo() {
-    List<ClienteGeoReferencia> listClientes = buscarTodos(ClienteGeoReferencia.class);
-    return listClientes;
   }
 
   public ClienteGeoReferencia buscarClienteGeoReferenciaPorCliente(Cliente cliente) {

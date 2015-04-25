@@ -14,6 +14,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
@@ -28,7 +29,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class MensalidadeController implements Serializable {
+public class MensalidadeController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -866830816286480241L;
   private Mensalidade mensalidade;
@@ -79,9 +80,9 @@ public class MensalidadeController implements Serializable {
       possui = false;
       AlertaUtil.error("Cpf ou Cnpj obrigatório");
     }
-    
+
     List<Mensalidade> list = getBoletosEmAberto(cliente.getMensalidades());
-    if(list == null || list.isEmpty()) {
+    if (list == null || list.isEmpty()) {
       possui = false;
       AlertaUtil.error("Cliente nao possui nenhuma mensalidade em aberto.");
     }
@@ -126,15 +127,14 @@ public class MensalidadeController implements Serializable {
 
 
   public void salvar() {
-    if (mensalidade.getId() == 0) {
-      service.salvar(mensalidade);
+    jpa.salvar(mensalidade);
+    
+    if(!cliente.getMensalidades().contains(mensalidade)){
       cliente.getMensalidades().add(mensalidade);
       ordernarMensalidades();
-      AlertaUtil.info("Mensalidade adicionada com sucesso!");
-    } else {
-      service.atualizar(mensalidade);
-      AlertaUtil.info("Mensalidade atualizado com sucesso!");
     }
+
+    AlertaUtil.info("Mensalidade adicionada com sucesso!");
     mensalidade = getNovaMensalidade();
     init();
   }

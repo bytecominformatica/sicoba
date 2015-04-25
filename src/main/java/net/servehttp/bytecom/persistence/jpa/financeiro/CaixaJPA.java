@@ -1,10 +1,13 @@
 package net.servehttp.bytecom.persistence.jpa.financeiro;
 
+import java.io.Serializable;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.QHeader;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
@@ -13,9 +16,11 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class CaixaJPA extends GenericoJPA {
+public class CaixaJPA implements Serializable {
 
   private static final long serialVersionUID = 1857140370479772238L;
+  @Inject
+  protected EntityManager em;
 
   public Header buscarHeaderPorSequencial(int sequencial) {
     QHeader h = QHeader.header;

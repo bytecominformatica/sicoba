@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
@@ -16,7 +17,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLot
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
 import net.servehttp.bytecom.service.financeiro.ArquivoRetornoCaixa;
-import net.servehttp.bytecom.service.provedor.MikrotikPPP;
+import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
@@ -25,7 +26,7 @@ import net.servehttp.bytecom.util.web.AlertaUtil;
  */
 @Named
 @RequestScoped
-public class RetornoController implements Serializable {
+public class RetornoController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -3249445210310419657L;
 
@@ -33,7 +34,7 @@ public class RetornoController implements Serializable {
   @Inject
   private ArquivoRetornoCaixa caixaEJB;
   @Inject
-  private MikrotikPPP mikrotikPPP;
+  private IConnectionControl connectionControl;
 
   @Inject
   private MensalidadeJPA mensalidadeJPA;
@@ -53,7 +54,7 @@ public class RetornoController implements Serializable {
               Mensalidade m = mensalidadeJPA.buscarMensalidadePorNumeroBoleto(r.getNossoNumero());
 
               if (m == null) {
-                m = mensalidadeJPA.buscarPorId(r.getNossoNumero());
+                m = jpa.buscarPorId(Mensalidade.class, r.getNossoNumero());
               }
 
               if (m != null) {
@@ -63,18 +64,18 @@ public class RetornoController implements Serializable {
                 m.setDesconto(r.getRegistroDetalhe().getDesconto());
                 m.setTarifa(r.getValorTarifa());
                 m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
-                mensalidadeJPA.atualizar(m);
+                jpa.salvar(m);
 
                 if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
                   m.getCliente().setStatus(StatusCliente.ATIVO);
-                  mikrotikPPP.salvarSecret(m.getCliente().getConexao());
-                  mensalidadeJPA.atualizar(m.getCliente());
+                  connectionControl.save(m.getCliente().getConexao().getMikrotik(), m.getCliente().getConexao());
+                  jpa.salvar(m.getCliente());
                 }
 
               }
             }
           }
-          mensalidadeJPA.salvar(header);
+          jpa.salvar(header);
           AlertaUtil.info("Arquivo enviado com sucesso!");
         }
       } catch (IllegalArgumentException e) {
@@ -91,7 +92,7 @@ public class RetornoController implements Serializable {
   private boolean notExists(Header header) {
     boolean exists = false;
 
-    List<Header> list = mensalidadeJPA.buscarTodos("sequencial", header.getSequencial(), Header.class);
+    List<Header> list = jpa.buscarTodos("sequencial", header.getSequencial(), Header.class);
     if (!list.isEmpty()) {
       exists = true;
       AlertaUtil.error("Arquivo já foi enviado");

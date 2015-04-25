@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.service.administrador.AccountService;
@@ -24,7 +25,7 @@ import net.servehttp.bytecom.util.web.AlertaUtil;
  */
 @Named
 @ViewScoped
-public class PerfilController implements Serializable {
+public class PerfilController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -2081234112300283530L;
   @Inject
@@ -69,11 +70,11 @@ public class PerfilController implements Serializable {
   public void salvar() {
     if (userAccountValid()) {
       if (password.isEmpty()) {
-        accountService.atualizar(userAccount);
+        jpa.salvar(userAccount);
       } else {
         authentication.setUserAccount(userAccount);
         authentication.setPassword(HashUtil.sha256ToHex(password));
-        accountService.atualizar(authentication);
+        jpa.salvar(authentication);
       }
       AlertaUtil.info("Usuário atualizado com sucesso!");
     }

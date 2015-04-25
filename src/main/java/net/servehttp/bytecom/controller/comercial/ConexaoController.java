@@ -8,13 +8,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.servehttp.bytecom.controller.extra.GenericoController;
-import net.servehttp.bytecom.persistence.jpa.comercial.ClienteJPA;
 import net.servehttp.bytecom.persistence.jpa.comercial.ConexaoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
 import net.servehttp.bytecom.persistence.jpa.provedor.MikrotikJPA;
-import net.servehttp.bytecom.service.provedor.MikrotikPPP;
+import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
@@ -32,13 +31,11 @@ public class ConexaoController extends GenericoController {
 
   private Cliente cliente;
   @Inject
-  private ConexaoJPA jpa;
-  @Inject
-  private ClienteJPA clienteJPA;
+  private ConexaoJPA conexaoJPA;
   @Inject
   private MikrotikJPA mikrotikJPA;
   @Inject
-  private MikrotikPPP mikrotikPPP;
+  private IConnectionControl connectionControl;
   private Mikrotik mikrotik;
 
   private List<Mikrotik> listMikrotik;
@@ -56,7 +53,7 @@ public class ConexaoController extends GenericoController {
   private void carregarCliente() {
     String clienteId = WebUtil.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clienteJPA.buscarPorId(Cliente.class, Integer.valueOf(clienteId));
+      cliente = jpa.buscarPorId(Cliente.class, Integer.valueOf(clienteId));
     }
 
     if (cliente == null) {
@@ -70,15 +67,9 @@ public class ConexaoController extends GenericoController {
   public void salvar() {
     try {
       if (valido()) {
-        if (cliente.getConexao().getId() > 0) {
-          mikrotikPPP.salvarSecret(cliente.getConexao());
-          jpa.atualizar(cliente.getConexao());
-          AlertaUtil.info("Atualizado com sucesso!");
-        } else {
-          mikrotikPPP.salvarSecret(cliente.getConexao());
-          jpa.salvar(cliente.getConexao());
-          AlertaUtil.info("Salvo com sucesso!");
-        }
+        connectionControl.save(cliente.getConexao().getMikrotik(), cliente.getConexao());
+        jpa.salvar(cliente.getConexao());
+        AlertaUtil.info("Salvo com sucesso!");
       }
     } catch (Exception e) {
       log(e);
@@ -87,7 +78,7 @@ public class ConexaoController extends GenericoController {
 
   private boolean valido() {
     boolean valido = true;
-    if (!jpa.conexaoDisponivel(cliente.getConexao())) {
+    if (!conexaoJPA.conexaoDisponivel(cliente.getConexao())) {
       valido = false;
       AlertaUtil.error("Esse nome de usuário já está em uso");
     }
@@ -96,9 +87,9 @@ public class ConexaoController extends GenericoController {
 
   public void remover() {
     try {
-      mikrotikPPP.removerSecret(cliente.getConexao());
+      connectionControl.remove(cliente.getConexao().getMikrotik(), cliente.getConexao());
       cliente.setConexao(null);
-      clienteJPA.atualizar(cliente);
+      jpa.salvar(cliente);
       novaConexao();
     } catch (Exception e) {
       log(e);
@@ -115,12 +106,12 @@ public class ConexaoController extends GenericoController {
     } else {
       login = cliente.getNome() + cliente.getId();
     }
-    
+
     login = StringUtil.removeCaracterEspecial(login);
     conexao.setNome(login);
     conexao.setSenha(login);
-    
-    conexao.setIp(jpa.getIpLivre());
+
+    conexao.setIp(conexaoJPA.getIpLivre());
     cliente.setConexao(conexao);
   }
 

@@ -9,6 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.service.comercial.ClienteService;
@@ -22,7 +23,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class CadastrarBoletosController implements Serializable {
+public class CadastrarBoletosController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -5517379889465547854L;
   private Mensalidade mensalidade;
@@ -79,7 +80,7 @@ public class CadastrarBoletosController implements Serializable {
     Mensalidade m = service.getNovaMensalidade(cliente, c);
     m.setNumeroBoleto(numeroBoleto);
     m.setDesconto(descontoGeracao);
-    service.salvar(m);
+    jpa.salvar(m);
   }
 
   public Mensalidade getNovaMensalidade() {

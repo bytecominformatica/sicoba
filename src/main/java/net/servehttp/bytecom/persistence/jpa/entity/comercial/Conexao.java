@@ -1,5 +1,7 @@
 package net.servehttp.bytecom.persistence.jpa.entity.comercial;
 
+import java.util.Optional;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,14 +32,17 @@ public class Conexao extends EntityGeneric implements IConnectionClienteCertifie
 
   private String senha;
 
-  @Pattern(regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", message = "IP inválido")
+  @Pattern(
+      regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",
+      message = "IP inválido")
   @Size(min = 1, max = 50)
   private String ip;
 
   public Conexao() {}
-  
-  public String getProfile(){
-    return cliente.getStatus().getProfile(cliente);
+
+  public String getProfile() {
+    Optional<Cliente> c = Optional.ofNullable(cliente);
+    return c.map(Cliente::getContrato).map(Contrato::getPlano).map(Plano::getNome).orElse(null);
   }
 
   public String getNome() {

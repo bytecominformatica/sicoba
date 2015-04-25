@@ -1,7 +1,9 @@
 package net.servehttp.bytecom.persistence.jpa.administrador;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -9,7 +11,6 @@ import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.QAuthentication;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.QUserAccount;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
@@ -18,10 +19,12 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class UserJPA extends GenericoJPA {
+public class UserJPA implements Serializable {
 
   private static final long serialVersionUID = -1412149982160690889L;
-
+  @Inject
+  protected EntityManager em;
+  
   public void setEntityManager(EntityManager em) {
     this.em = em;
   }

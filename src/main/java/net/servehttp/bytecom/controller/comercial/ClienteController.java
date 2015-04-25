@@ -14,7 +14,6 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.pojo.comercial.EnderecoPojo;
 import net.servehttp.bytecom.service.comercial.AddressService;
 import net.servehttp.bytecom.service.comercial.ClienteService;
-import net.servehttp.bytecom.service.provedor.MikrotikPPP;
 import net.servehttp.bytecom.util.web.WebUtil;
 
 /**

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 import net.servehttp.bytecom.service.extra.LogService;
 import net.servehttp.bytecom.util.MensagemException;
 import net.servehttp.bytecom.util.ejb.MailEJB;
@@ -23,6 +24,9 @@ public class GenericoController implements Serializable {
 
   @Inject
   private LogService log;
+  
+  @Inject
+  protected GenericoJPA jpa;
 
   protected void log(Exception e) {
     AlertaUtil.error(e.getMessage());

@@ -1,8 +1,10 @@
 package net.servehttp.bytecom.persistence.jpa.dashboard;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -13,7 +15,6 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.QMensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.JPASubQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
@@ -23,9 +24,11 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class DashboadJPA extends GenericoJPA {
+public class DashboadJPA implements Serializable {
 
   private static final long serialVersionUID = 4057406973170798760L;
+  @Inject
+  protected EntityManager em;
   private LocalDate from;
   private LocalDate to;
 
