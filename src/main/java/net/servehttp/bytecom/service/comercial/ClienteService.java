@@ -79,13 +79,18 @@ public class ClienteService implements Serializable {
   public void atualizarTodasConexoes() throws Exception {
     List<Conexao> list = jpa.buscarTodos(Conexao.class);
 
-    for (Conexao c : list) {
-      if (c.getIp() == null || c.getIp().isEmpty()) {
-        c.setIp(conexaoJPA.getIpLivre());
+    connectionControl.setAutoCloseable(true);
+    try (IConnectionControl cc = connectionControl) {
+      for (Conexao c : list) {
+        if (c.getIp() == null || c.getIp().isEmpty()) {
+          c.setIp(conexaoJPA.getIpLivre());
+        }
+
+        c.getCliente().getStatus().atualizarConexao(c.getCliente(), cc);
+        jpa.salvar(c);
       }
-      c.getCliente().getStatus().atualizarConexao(c.getCliente(), connectionControl);
-      jpa.salvar(c);
     }
+    connectionControl.setAutoCloseable(false);
 
   }
 

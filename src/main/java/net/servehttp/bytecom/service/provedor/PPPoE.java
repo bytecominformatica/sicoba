@@ -1,5 +1,8 @@
 package net.servehttp.bytecom.service.provedor;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.Inet4Address;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +13,15 @@ import net.servehttp.bytecom.persistence.jpa.entity.provedor.IServer;
 import net.servehttp.bytecom.util.MensagemException;
 import net.servehttp.bytecom.util.NetworkUtil;
 
-public class PPPoE implements IConnectionControl {
+public class PPPoE implements IConnectionControl, Serializable {
 
-  private static final long serialVersionUID = -2374802578829013911L;
+  private static final long serialVersionUID = 1200975817858594209L;
+  private ApiConnection con;
+  private boolean autoCloseable;
+  
+  public PPPoE() {
+    autoCloseable = false;
+  }
 
   @Override
   public void save(IServer server, IConnectionClienteCertified client) throws Exception {
@@ -56,12 +65,13 @@ public class PPPoE implements IConnectionControl {
       execute(server, "/ppp/active/remove .id=%s", r.get(".id"));
     }
   }
-  
+
   @Override
   public void lock(IServer server, IConnectionClienteCertified client) throws Exception {
     List<Map<String, String>> res =
-        execute(server, "/ip/firewall/filter/print where src-address=%s or dst-address=%s", client.getIp(), client.getIp());
-    
+        execute(server, "/ip/firewall/filter/print where src-address=%s or dst-address=%s",
+            client.getIp(), client.getIp());
+
     for (Map<String, String> r : res) {
       execute(server, "/ip/firewall/filter/remove .id=%s", r.get(".id"));
     }
@@ -70,36 +80,68 @@ public class PPPoE implements IConnectionControl {
   @Override
   public void unlock(IServer server, IConnectionClienteCertified client) throws Exception {
     lock(server, client);
-    
+
     List<Map<String, String>> res =
         execute(server, "/ip/firewall/filter/print where comment=BLOCKALL");
-    
+
     for (Map<String, String> r : res) {
       execute(server, "/ip/firewall/filter/remove .id=%s", r.get(".id"));
     }
-    
-    execute(server, "/ip/firewall/filter/add chain=forward src-address=%s action=accept", client.getIp());
-    execute(server, "/ip/firewall/filter/add chain=forward dst-address=%s action=accept", client.getIp());
-    execute(server, "/ip/firewall/filter/add chain=forward action=drop comment=BLOCKALL", client.getIp());
+
+    execute(server, "/ip/firewall/filter/add chain=forward src-address=%s action=accept",
+        client.getIp());
+    execute(server, "/ip/firewall/filter/add chain=forward dst-address=%s action=accept",
+        client.getIp());
+    String serverAddress = Inet4Address.getLocalHost().getHostAddress();
+    execute(
+        server,
+        "/ip/firewall/filter/add chain=forward dst-address=!%s dst-address=!%s action=drop comment=BLOCKALL",
+        serverAddress, serverAddress);
   }
 
   private List<Map<String, String>> execute(IServer server, String commando, Object... parametros)
       throws Exception {
     commando = String.format(commando, parametros);
-    ApiConnection con = connect(server);
-    con.login(server.getLogin(), server.getPass());
+    if (!isOpen()) {
+      open(server);
+      con.login(server.getLogin(), server.getPass());
+    }
     List<Map<String, String>> result = con.execute(commando);
-    con.disconnect();
+
+    if (!autoCloseable) {
+      close();
+    }
     return result;
   }
 
-  private ApiConnection connect(IServer server) throws MikrotikApiException, MensagemException {
+  public IConnectionControl open(IServer server) throws MikrotikApiException, MensagemException {
     if (!NetworkUtil.INSTANCE.ping(server.getHost())) {
       throw new MensagemException(String.format("Mikrotik: %s - %s:%d não disponível",
           server.getName(), server.getHost(), server.getPort()));
     }
 
-    return ApiConnection.connect(server.getHost(), server.getPort());
+    con = ApiConnection.connect(server.getHost(), server.getPort());
+    return this;
+  }
+
+  @Override
+  public void close() throws IOException {
+    try {
+      con.disconnect();
+    } catch (MikrotikApiException e) {
+      throw new IOException(e.getMessage(), e.getCause());
+    }
+  }
+
+  @Override
+  public boolean isOpen() throws Exception {
+    return con != null && con.isConnected();
+  }
+
+  @Override
+  public void setAutoCloseable(boolean autoCloseable) throws Exception {
+    this.autoCloseable = autoCloseable;
+    
   }
 
 }
