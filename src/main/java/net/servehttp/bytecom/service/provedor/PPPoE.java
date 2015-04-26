@@ -95,7 +95,7 @@ public class PPPoE implements IConnectionControl, Serializable {
     String serverAddress = Inet4Address.getLocalHost().getHostAddress();
     execute(
         server,
-        "/ip/firewall/filter/add chain=forward dst-address=!%s dst-address=!%s action=drop comment=BLOCKALL",
+        "/ip/firewall/filter/add chain=forward src-address=!%s dst-address=!%s action=drop comment=BLOCKALL",
         serverAddress, serverAddress);
   }
 
