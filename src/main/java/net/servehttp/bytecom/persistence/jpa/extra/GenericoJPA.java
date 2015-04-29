@@ -10,6 +10,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
+
 /**
  * 
  * @author clairton
@@ -29,14 +31,14 @@ public class GenericoJPA implements Serializable {
     return (T) em.find(klass, id);
   }
 
-  public <T> T salvar(T t) {
-    em.persist(t);
-    em.flush();
+  public <T extends EntityGeneric> T salvar(T t) {
+    if(t.getId() > 0) {
+      em.merge(t);
+      em.flush();
+    } else {
+      em.persist(t);
+    }
     return t;
-  }
-
-  public <T> T atualizar(T t) {
-    return em.merge(t);
   }
 
   public <T> void remover(T t) {

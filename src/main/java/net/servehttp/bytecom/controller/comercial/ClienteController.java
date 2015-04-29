@@ -1,7 +1,5 @@
 package net.servehttp.bytecom.controller.comercial;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,9 +12,8 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Bairro;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cidade;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.pojo.comercial.EnderecoPojo;
-import net.servehttp.bytecom.service.comercial.AddressBussiness;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
-import net.servehttp.bytecom.service.provedor.MikrotikPPP;
+import net.servehttp.bytecom.service.comercial.AddressService;
+import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -26,7 +23,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class ClienteController extends GenericoController implements Serializable {
+public class ClienteController extends GenericoController {
 
   private static final long serialVersionUID = 8827281306259995250L;
   private Cliente cliente = new Cliente();
@@ -35,22 +32,20 @@ public class ClienteController extends GenericoController implements Serializabl
   private Cidade cidade;
 
   @Inject
-  private ClienteBussiness clientBussiness;
+  private ClienteService clientService;
   @Inject
-  private AddressBussiness addressBussiness;
-  @Inject
-  private MikrotikPPP mikrotikPPP;
+  private AddressService addressService;
 
   @PostConstruct
   public void load() {
-    setListCidades(addressBussiness.findCities());
+    setListCidades(addressService.findCities());
     getParameters();
   }
 
   private void getParameters() {
     String clienteId = WebUtil.getParameters("id");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
       selecionaCidade();
       atualizaBairros();
     }
@@ -72,43 +67,19 @@ public class ClienteController extends GenericoController implements Serializabl
 
   public void salvar() {
     try {
-      if (isClienteValido(cliente)) {
-        if (cliente.getId() == 0) {
-          cliente.setCreatedAt(LocalDateTime.now());
-          clientBussiness.salvar(cliente);
-          AlertaUtil.info("Cliente adicionado com sucesso!");
-        } else {
-          cliente.getStatus().atualizarConexao(cliente, mikrotikPPP);
-          clientBussiness.atualizar(cliente);
-          AlertaUtil.info("Cliente atualizado com sucesso!");
-        }
-      }
+      clientService.salvar(cliente);
+      AlertaUtil.info("sucesso");
     } catch (Exception e) {
       log(e);
     }
   }
 
-  private boolean isClienteValido(Cliente cliente) {
-    boolean valido = true;
-    if (!clientBussiness.rgAvaliable(cliente)) {
-      AlertaUtil.error("RG já Cadastrado");
-      valido = false;
-    } else if (!clientBussiness.cpfCnpjAvaliable(cliente)) {
-      AlertaUtil.error("CPF já Cadastrado");
-      valido = false;
-    } else if (!clientBussiness.emailAvaliable(cliente)) {
-      AlertaUtil.error("E-Mail já Cadastrado");
-      valido = false;
-    }
-    return valido;
-  }
-
   public void buscarEndereco() {
     cidade = null;
     cliente.getEndereco().setLogradouro(null);
-    EnderecoPojo ep = addressBussiness.findAddressByCep(cliente.getEndereco().getCep());
-    cliente.getEndereco().setBairro(addressBussiness.getNeighborhood(ep));
-    listCidades = addressBussiness.findCities();
+    EnderecoPojo ep = addressService.findAddressByCep(cliente.getEndereco().getCep());
+    cliente.getEndereco().setBairro(addressService.getNeighborhood(ep));
+    listCidades = addressService.findCities();
 
     if (cliente.getEndereco().getBairro() != null) {
       cidade = cliente.getEndereco().getBairro().getCidade();

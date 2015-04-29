@@ -1,20 +1,23 @@
 package net.servehttp.bytecom.persistence.jpa.financeiro;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 @Transactional
-public class MensalidadeRelatorioJPA extends GenericoJPA {
+public class MensalidadeRelatorioJPA implements Serializable {
 
   private static final long serialVersionUID = -666959135258997285L;
+  @Inject
+  protected EntityManager em;
 
   public List<Mensalidade> buscarPorDataStatus(LocalDate inicio, LocalDate fim, StatusMensalidade status, boolean buscarPorDataOcorrencia) {
 

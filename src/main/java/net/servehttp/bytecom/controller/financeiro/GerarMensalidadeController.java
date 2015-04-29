@@ -1,6 +1,5 @@
 package net.servehttp.bytecom.controller.financeiro;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
@@ -8,10 +7,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
-import net.servehttp.bytecom.service.financeiro.MensalidadeBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
@@ -20,7 +20,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class GerarMensalidadeController implements Serializable {
+public class GerarMensalidadeController extends GenericoController {
 
   private static final long serialVersionUID = -866830816286480241L;
   private Mensalidade mensalidade;
@@ -30,9 +30,9 @@ public class GerarMensalidadeController implements Serializable {
   private LocalDate dataInicio;
 
   @Inject
-  private MensalidadeBussiness business;
+  private MensalidadeService service;
   @Inject
-  private ClienteBussiness clientBussiness;
+  private ClienteService clientService;
 
   @PostConstruct
   public void init() {
@@ -48,7 +48,7 @@ public class GerarMensalidadeController implements Serializable {
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
     }
   }
 
@@ -59,7 +59,7 @@ public class GerarMensalidadeController implements Serializable {
       m.setValor(mensalidade.getValor());
       m.setDesconto(descontoGeracao);
       m.setDataVencimento(dataInicio);
-      business.salvar(m);
+      jpa.salvar(m);
       dataInicio = dataInicio.plusMonths(1);
     }
     dataInicio = mensalidade.getDataVencimento();
@@ -68,7 +68,7 @@ public class GerarMensalidadeController implements Serializable {
   public Mensalidade getNovaMensalidade() {
     LocalDate d =
         LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-    return business.getNovaMensalidade(cliente, d);
+    return service.getNovaMensalidade(cliente, d);
   }
 
   public Cliente getCliente() {

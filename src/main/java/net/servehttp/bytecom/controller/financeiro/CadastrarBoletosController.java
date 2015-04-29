@@ -9,10 +9,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
-import net.servehttp.bytecom.service.financeiro.MensalidadeBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -22,7 +23,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class CadastrarBoletosController implements Serializable {
+public class CadastrarBoletosController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -5517379889465547854L;
   private Mensalidade mensalidade;
@@ -34,9 +35,9 @@ public class CadastrarBoletosController implements Serializable {
   private LocalDate dataInicio;
 
   @Inject
-  private MensalidadeBussiness business;
+  private MensalidadeService service;
   @Inject
-  private ClienteBussiness clientBussiness;
+  private ClienteService clientService;
 
   @PostConstruct
   public void init() {
@@ -52,7 +53,7 @@ public class CadastrarBoletosController implements Serializable {
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
     }
   }
 
@@ -76,21 +77,21 @@ public class CadastrarBoletosController implements Serializable {
   }
 
   private void gravarBoleto(LocalDate c, int numeroBoleto) {
-    Mensalidade m = business.getNovaMensalidade(cliente, c);
+    Mensalidade m = service.getNovaMensalidade(cliente, c);
     m.setNumeroBoleto(numeroBoleto);
     m.setDesconto(descontoGeracao);
-    business.salvar(m);
+    jpa.salvar(m);
   }
 
   public Mensalidade getNovaMensalidade() {
     LocalDate d =
         LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-    return business.getNovaMensalidade(cliente, d);
+    return service.getNovaMensalidade(cliente, d);
   }
 
   private boolean boletosNaoRegistrado(int inicio, int fim) {
     boolean validos = true;
-    List<Mensalidade> listMensalidades = business.buscarMensalidadesPorBoleto(inicio, fim);
+    List<Mensalidade> listMensalidades = service.buscarMensalidadesPorBoleto(inicio, fim);
     if (!listMensalidades.isEmpty()) {
       validos = false;
       StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");

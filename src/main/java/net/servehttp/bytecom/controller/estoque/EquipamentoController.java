@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento;
 import net.servehttp.bytecom.persistence.jpa.estoque.EquipamentoJPA;
 import net.servehttp.bytecom.util.web.AlertaUtil;
@@ -19,17 +20,17 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class EquipamentoController implements Serializable {
+public class EquipamentoController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = 8291411734476446041L;
   private List<Equipamento> listEquipamentos;
   private Equipamento equipamento = new Equipamento();
   @Inject
-  private EquipamentoJPA jpa;
+  private EquipamentoJPA equipamentoJPA;
 
   @PostConstruct
   public void load() {
-    listEquipamentos = jpa.buscarTodosEquipamento();
+    listEquipamentos = equipamentoJPA.buscarTodosEquipamento();
     getParameters();
   }
 
@@ -37,7 +38,7 @@ public class EquipamentoController implements Serializable {
   private void getParameters() {
     String id = WebUtil.getParameters("id");
     if (id != null && !id.isEmpty()) {
-      equipamento = jpa.buscarPorId(Integer.valueOf(id));
+      equipamento = equipamentoJPA.buscarPorId(Integer.valueOf(id));
     }
   }
 
@@ -52,14 +53,8 @@ public class EquipamentoController implements Serializable {
   public String salvar() {
     String page = null;
     if (isValido(equipamento)) {
-      if (equipamento.getId() == 0) {
-        jpa.salvar(equipamento);
-        AlertaUtil.info("Equipamento adicionado com sucesso!");
-      } else {
-        jpa.atualizar(equipamento);
-        AlertaUtil.info("Equipamento atualizado com sucesso!");
-
-      }
+      jpa.salvar(equipamento);
+      AlertaUtil.info("Salvo com sucesso!");
       load();
       page = "list";
     }
@@ -68,7 +63,7 @@ public class EquipamentoController implements Serializable {
 
   public boolean isValido(Equipamento e) {
     boolean valido = true;
-    Equipamento equipamentoEncontrado = jpa.buscarEquipamentoPorMac(e.getMac());
+    Equipamento equipamentoEncontrado = equipamentoJPA.buscarEquipamentoPorMac(e.getMac());
     if (equipamentoEncontrado != null && equipamentoEncontrado.getId() != e.getId()) {
       AlertaUtil.error("MAC já Cadastrado");
       valido = false;
@@ -77,7 +72,7 @@ public class EquipamentoController implements Serializable {
   }
 
   public String remover() {
-    jpa.remover(equipamento);
+    equipamentoJPA.remover(equipamento);
     load();
     AlertaUtil.info("Equipamento removido com sucesso!");
     return "list";

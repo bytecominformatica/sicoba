@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.service.administrador.AccountService;
@@ -26,7 +27,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class UserAccountController implements Serializable {
+public class UserAccountController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -2081234112300283530L;
 
@@ -41,11 +42,11 @@ public class UserAccountController implements Serializable {
   private Part file;
 
   @Inject
-  private AccountService business;
+  private AccountService service;
 
   @PostConstruct
   public void load() {
-    listUserAccount = business.findUsersAccounts();
+    listUserAccount = service.findUsersAccounts();
     getParameters();
 
   }
@@ -53,7 +54,7 @@ public class UserAccountController implements Serializable {
   private boolean valida(UserAccount userAccount) {
     boolean result = true;
 
-    if (!business.emailAvaliable(userAccount)) {
+    if (!service.emailAvaliable(userAccount)) {
       AlertaUtil.error("Email já cadastrado!");
       result = false;
     }
@@ -82,12 +83,10 @@ public class UserAccountController implements Serializable {
         auth.setUsername(username);
         auth.setPassword(HashUtil.sha256ToHex(password));
         auth.setUserAccount(userAccount);
-        business.salvar(auth);
-        AlertaUtil.info("Usuário gravado com sucesso!");
-      } else {
-        business.atualizar(userAccount);
-        AlertaUtil.info("Usuário atualizado com sucesso!");
+        jpa.salvar(auth);
       }
+      jpa.salvar(userAccount);
+      AlertaUtil.info("Usuário salvo com sucesso!");
       page = "list";
     }
 
@@ -95,23 +94,23 @@ public class UserAccountController implements Serializable {
   }
 
   public void resetPassword() {
-    Authentication auth = business.findAuthenticationByUserAccount(userAccount);
+    Authentication auth = service.findAuthenticationByUserAccount(userAccount);
     String senha = StringUtil.gerarSenha(8);
     auth.setPassword(HashUtil.sha256ToHex(senha));
-    business.atualizar(auth);
+    jpa.salvar(auth);
     AlertaUtil.info("A senha do usuário " + auth.getUsername() + " foi alterada para " + senha);
   }
 
   private void getParameters() {
     String userAccountId = WebUtil.getParameters("id");
     if (userAccountId != null && !userAccountId.isEmpty()) {
-      userAccount = business.findUserAccountById(Integer.parseInt(userAccountId));
+      userAccount = service.findUserAccountById(Integer.parseInt(userAccountId));
     }
   }
 
   public String remover() {
     page = null;
-    business.remover(userAccount);
+    service.remover(userAccount);
     page = "list";
     return page;
   }

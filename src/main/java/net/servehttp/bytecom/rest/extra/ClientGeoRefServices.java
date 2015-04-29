@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import net.servehttp.bytecom.persistence.jpa.entity.extra.ClienteGeoReferencia;
-import net.servehttp.bytecom.persistence.jpa.extra.ClienteGeoReferenciaJPA;
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 @Path("maps")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,7 +20,7 @@ public class ClientGeoRefServices implements Serializable {
   private static final long serialVersionUID = -1973794686416313717L;
 
   @Inject
-  private ClienteGeoReferenciaJPA jpa;
+  private GenericoJPA jpa;
   
   private ClientGeoRefPOJO clientpojo = new ClientGeoRefPOJO();
   private List<ClientGeoRefPOJO> listPojo = new ArrayList<ClientGeoRefPOJO>();

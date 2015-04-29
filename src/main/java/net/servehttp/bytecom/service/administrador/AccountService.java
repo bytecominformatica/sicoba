@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import net.servehttp.bytecom.persistence.jpa.administrador.UserJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
+import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 import net.servehttp.bytecom.util.ImageUtil;
 
 public class AccountService implements Serializable {
@@ -19,18 +20,21 @@ public class AccountService implements Serializable {
   private static final String IMG_DEFAULT = "avatar_male.png";
 
   @Inject
-  private UserJPA jpa;
+  private UserJPA userJPA;
+
+  @Inject
+  private GenericoJPA jpa;
 
   public List<UserAccount> findUsersAccounts() {
-    return jpa.buscarTodosUserAccount();
+    return userJPA.buscarTodosUserAccount();
   }
 
   public boolean emailAvaliable(UserAccount userAccount) {
-    return jpa.emailAvaliable(userAccount);
+    return userJPA.emailAvaliable(userAccount);
   }
 
   public UserAccount findUserAccountByUsername(String username) {
-    return jpa.findUserAccountByUsername(username);
+    return userJPA.findUserAccountByUsername(username);
   }
 
   public void createPictureInSession(UserAccount user) {
@@ -53,15 +57,7 @@ public class AccountService implements Serializable {
   }
 
   public Authentication findAuthenticationByUserAccount(UserAccount userAccount) {
-    return jpa.findAuthenticationByUserAccount(userAccount);
-  }
-
-  public <T> T salvar(T t) {
-    return jpa.salvar(t);
-  }
-
-  public <T> T atualizar(T t) {
-    return jpa.atualizar(t);
+    return userJPA.findAuthenticationByUserAccount(userAccount);
   }
 
   public void remover(UserAccount userAccount) {

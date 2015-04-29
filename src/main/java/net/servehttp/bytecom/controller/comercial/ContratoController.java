@@ -9,14 +9,15 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Plano;
 import net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
-import net.servehttp.bytecom.service.comercial.ContratoBusiness;
-import net.servehttp.bytecom.service.comercial.PlanoBussiness;
-import net.servehttp.bytecom.service.estoque.EquipamentoBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.service.comercial.ContratoService;
+import net.servehttp.bytecom.service.comercial.PlanoService;
+import net.servehttp.bytecom.service.estoque.EquipamentoService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -26,7 +27,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class ContratoController implements Serializable {
+public class ContratoController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -5226446405193705169L;
   private List<Contrato> listContratos;
@@ -37,13 +38,13 @@ public class ContratoController implements Serializable {
   private Cliente cliente;
   private int clienteId;
   @Inject
-  private PlanoBussiness planoBusiness;
+  private PlanoService planoBusiness;
   @Inject
-  private EquipamentoBussiness equipamentoBusiness;
+  private EquipamentoService equipamentoBusiness;
   @Inject
-  private ClienteBussiness clientBusiness;
+  private ClienteService clientBusiness;
   @Inject
-  private ContratoBusiness contratoBusiness;
+  private ContratoService contratoBusiness;
 
   @PostConstruct
   public void load() {
@@ -113,19 +114,10 @@ public class ContratoController implements Serializable {
   }
 
   public String salvar() {
-    String page = null;
-    if (cliente.getContrato().getId() == 0) {
-      contratoBusiness.salvar(cliente.getContrato());
-      load();
-      AlertaUtil.info("Contrato adicionado com sucesso!");
-      page = "edit";
-    } else {
-      contratoBusiness.atualizar(cliente.getContrato());
-      load();
-      AlertaUtil.info("Contrato atualizado com sucesso!");
-      page = "edit";
-    }
-    return page;
+    jpa.salvar(cliente.getContrato());
+    load();
+    AlertaUtil.info("salvo com sucesso!");
+    return "edit";
   }
 
   public void remover() {

@@ -1,7 +1,5 @@
 package net.servehttp.bytecom.persistence.jpa.entity.provedor;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -10,22 +8,22 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 @Entity
 @Table(name = "mikrotik")
-public class Mikrotik extends EntityGeneric implements Serializable {
+public class Mikrotik extends EntityGeneric implements IServer {
 
   private static final long serialVersionUID = -5454193409609731613L;
 
   @Lob
-  private String descricao;
-  private String nome;
+  private String description;
+  private String name;
   private String host;
-  private int porta;
-  private String usuario;
-  private String senha;
+  private int port;
+  private String login;
+  private String pass;
 
   public Mikrotik() {
-    this.usuario = "admin";
-    this.senha = "";
-    this.porta = 8728;
+    this.login = "admin";
+    this.pass = "";
+    this.port = 8728;
   }
 
   public int getId() {
@@ -36,12 +34,12 @@ public class Mikrotik extends EntityGeneric implements Serializable {
     this.id = id;
   }
 
-  public String getDescricao() {
-    return this.descricao;
+  public String getDescription() {
+    return this.description;
   }
 
-  public void setDescricao(String descricao) {
-    this.descricao = descricao;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public String getHost() {
@@ -52,36 +50,36 @@ public class Mikrotik extends EntityGeneric implements Serializable {
     this.host = host;
   }
 
-  public String getNome() {
-    return this.nome;
+  public String getName() {
+    return this.name;
   }
 
-  public void setNome(String nome) {
-    this.nome = nome;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public int getPorta() {
-    return this.porta;
+  public int getPort() {
+    return this.port;
   }
 
-  public void setPorta(int porta) {
-    this.porta = porta;
+  public void setPort(int port) {
+    this.port = port;
   }
 
-  public String getSenha() {
-    return this.senha;
+  public String getPass() {
+    return this.pass;
   }
 
-  public void setSenha(String senha) {
-    this.senha = senha;
+  public void setPass(String pass) {
+    this.pass = pass;
   }
 
-  public String getUsuario() {
-    return this.usuario;
+  public String getLogin() {
+    return this.login;
   }
 
-  public void setUsuario(String usuario) {
-    this.usuario = usuario;
+  public void setLogin(String login) {
+    this.login = login;
   }
 
 }

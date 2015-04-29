@@ -14,6 +14,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.service.administrador.AccountService;
 import net.servehttp.bytecom.util.NetworkUtil;
 import net.servehttp.bytecom.util.ejb.MailEJB;
+import net.servehttp.bytecom.util.extra.EmailAddress;
 import net.servehttp.bytecom.util.web.WebUtil;
 
 import org.apache.shiro.SecurityUtils;
@@ -32,7 +33,6 @@ public class SecurityController implements Serializable {
 
   private static final long serialVersionUID = -4657746545855537894L;
   private static final Logger LOGGER = Logger.getLogger(SecurityController.class.getSimpleName());
-  private static final String destinatario = "clairton.c.l@gmail.com";
   private static final String HOME_URL = "index.xhtml";
 
   private String username;
@@ -40,7 +40,7 @@ public class SecurityController implements Serializable {
   private Subject currentUser = SecurityUtils.getSubject();
 
   @Inject
-  private AccountService accountBussiness;
+  private AccountService accountService;
   @EJB
   private MailEJB mail;
   @Inject
@@ -59,8 +59,8 @@ public class SecurityController implements Serializable {
     if (!currentUser.isAuthenticated()) {
       try {
         currentUser.login(new UsernamePasswordToken(username, password));
-        userAccount = accountBussiness.findUserAccountByUsername(username);
-        accountBussiness.createPictureInSession(userAccount);
+        userAccount = accountService.findUserAccountByUsername(username);
+        accountService.createPictureInSession(userAccount);
         currentUser.getSession().setAttribute("currentUser", userAccount);
         WebUtil.redirect(HOME_URL);
       } catch (AuthenticationException e) {
@@ -82,7 +82,7 @@ public class SecurityController implements Serializable {
         "O seguinte ip tentou acessar o sistema: " + ipQueTentouAcessar
             + " com o seguite usuario: " + username;
 
-    mail.send(destinatario, assunto, mensagem);
+    mail.send(EmailAddress.OWNERS, assunto, mensagem);
   }
 
   public String getUsername() {

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.Authentication;
 import net.servehttp.bytecom.persistence.jpa.entity.administrador.UserAccount;
 import net.servehttp.bytecom.service.administrador.AccountService;
@@ -19,19 +20,19 @@ import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 
- * @author Clairton Luz - clairton.c.l@gmail.com
+ * @author clairtonluz
  *
  */
 @Named
 @ViewScoped
-public class PerfilController implements Serializable {
+public class PerfilController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -2081234112300283530L;
   @Inject
   @UsuarioLogado
   private UserAccount userAccount;
   @Inject
-  private AccountService accountBussiness;
+  private AccountService accountService;
   private Authentication authentication;
   private String password;
   private String confirmPassword;
@@ -39,7 +40,7 @@ public class PerfilController implements Serializable {
 
   @PostConstruct
   public void load() {
-    setAuthentication(accountBussiness.findAuthenticationByUserAccount(userAccount));
+    setAuthentication(accountService.findAuthenticationByUserAccount(userAccount));
   }
 
   public void carregarImagem() {
@@ -55,7 +56,7 @@ public class PerfilController implements Serializable {
 
   private boolean userAccountValid() {
     boolean result = true;
-    if (!accountBussiness.emailAvaliable(userAccount)) {
+    if (!accountService.emailAvaliable(userAccount)) {
       AlertaUtil.error("Email já cadastrado!");
       result = false;
     }
@@ -69,11 +70,11 @@ public class PerfilController implements Serializable {
   public void salvar() {
     if (userAccountValid()) {
       if (password.isEmpty()) {
-        accountBussiness.atualizar(userAccount);
+        jpa.salvar(userAccount);
       } else {
         authentication.setUserAccount(userAccount);
         authentication.setPassword(HashUtil.sha256ToHex(password));
-        accountBussiness.atualizar(authentication);
+        jpa.salvar(authentication);
       }
       AlertaUtil.info("Usuário atualizado com sucesso!");
     }

@@ -14,11 +14,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
-import net.servehttp.bytecom.service.financeiro.MensalidadeBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
 
@@ -28,16 +29,16 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class MensalidadeController implements Serializable {
+public class MensalidadeController extends GenericoController implements Serializable {
 
   private static final long serialVersionUID = -866830816286480241L;
   private Mensalidade mensalidade;
   private Cliente cliente;
 
   @Inject
-  private MensalidadeBussiness business;
+  private MensalidadeService service;
   @Inject
-  private ClienteBussiness clientBussiness;
+  private ClienteService clientService;
 
   @PostConstruct
   public void init() {
@@ -55,20 +56,20 @@ public class MensalidadeController implements Serializable {
   }
 
   public void buscarCliente() {
-    cliente = clientBussiness.buscarPorId(cliente.getId());
+    cliente = clientService.buscarPorId(cliente.getId());
   }
 
   private void getParameters() {
     String clienteId = WebUtil.getParameters("clienteId");
     if (clienteId != null && !clienteId.isEmpty()) {
-      cliente = clientBussiness.buscarPorId(Integer.parseInt(clienteId));
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
     }
 
   }
 
   public void gerarBoletosPDF() throws IOException {
     if (clientePossuiTodosOsDadosNecessarios(cliente)) {
-      byte[] pdfData = business.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
+      byte[] pdfData = service.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
       WebUtil.downloadPDF(pdfData, cliente.getNome());
     }
   }
@@ -79,9 +80,9 @@ public class MensalidadeController implements Serializable {
       possui = false;
       AlertaUtil.error("Cpf ou Cnpj obrigatório");
     }
-    
+
     List<Mensalidade> list = getBoletosEmAberto(cliente.getMensalidades());
-    if(list == null || list.isEmpty()) {
+    if (list == null || list.isEmpty()) {
       possui = false;
       AlertaUtil.error("Cliente nao possui nenhuma mensalidade em aberto.");
     }
@@ -121,26 +122,25 @@ public class MensalidadeController implements Serializable {
   public Mensalidade getNovaMensalidade() {
     LocalDate d =
         LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-    return business.getNovaMensalidade(cliente, d);
+    return service.getNovaMensalidade(cliente, d);
   }
 
 
   public void salvar() {
-    if (mensalidade.getId() == 0) {
-      business.salvar(mensalidade);
+    jpa.salvar(mensalidade);
+    
+    if(!cliente.getMensalidades().contains(mensalidade)){
       cliente.getMensalidades().add(mensalidade);
       ordernarMensalidades();
-      AlertaUtil.info("Mensalidade adicionada com sucesso!");
-    } else {
-      business.atualizar(mensalidade);
-      AlertaUtil.info("Mensalidade atualizado com sucesso!");
     }
+
+    AlertaUtil.info("Mensalidade adicionada com sucesso!");
     mensalidade = getNovaMensalidade();
     init();
   }
 
   public void remover(Mensalidade m) {
-    business.remover(m);
+    service.remover(m);
     cliente.getMensalidades().remove(m);
     mensalidade = getNovaMensalidade();
     AlertaUtil.info("Mensalidade removido com sucesso!");

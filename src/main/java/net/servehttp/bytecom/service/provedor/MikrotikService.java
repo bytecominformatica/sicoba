@@ -16,7 +16,7 @@ public abstract class MikrotikService implements Serializable {
   protected List<Map<String, String>> execute(Mikrotik mk, String commando, Object...parametros) throws Exception {
     commando = String.format(commando, parametros);
     ApiConnection con = connect(mk);
-    con.login(mk.getUsuario(), mk.getSenha());
+    con.login(mk.getLogin(), mk.getPass());
     List<Map<String, String>> result = con.execute(commando);
     con.disconnect();
     return result;
@@ -30,10 +30,10 @@ public abstract class MikrotikService implements Serializable {
 
   protected ApiConnection connect(Mikrotik mk) throws Exception {
     if (NetworkUtil.INSTANCE.ping(mk.getHost())) {
-      return ApiConnection.connect(mk.getHost(), mk.getPorta());
+      return ApiConnection.connect(mk.getHost(), mk.getPort());
     } else {
-      throw new MensagemException(String.format("Mikrotik: %s - %s:%d não disponível", mk.getNome(), mk.getHost(),
-          mk.getPorta()));
+      throw new MensagemException(String.format("Mikrotik: %s - %s:%d não disponível", mk.getName(), mk.getHost(),
+          mk.getPort()));
     }
   }
 

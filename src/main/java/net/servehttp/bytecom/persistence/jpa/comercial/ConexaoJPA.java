@@ -1,14 +1,22 @@
 package net.servehttp.bytecom.persistence.jpa.comercial;
 
+import java.io.Serializable;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.QConexao;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
-public class ConexaoJPA extends GenericoJPA {
+public class ConexaoJPA implements Serializable {
 
   private static final long serialVersionUID = 556686224765753540L;
+
+  @Inject
+  protected EntityManager em;
+  
   QConexao c = QConexao.conexao;
 
   public boolean conexaoDisponivel(Conexao conexao) {

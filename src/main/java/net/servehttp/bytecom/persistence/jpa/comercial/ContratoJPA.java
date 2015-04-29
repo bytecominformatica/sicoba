@@ -1,20 +1,23 @@
 package net.servehttp.bytecom.persistence.jpa.comercial;
 
+import java.io.Serializable;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 /**
  * 
  * @author clairton
  */
 @Transactional
-public class ContratoJPA extends GenericoJPA {
+public class ContratoJPA implements Serializable {
 
   private static final long serialVersionUID = -2556507568580609030L;
-  
+  @Inject
+  protected EntityManager em;
   public void setEntityManager(EntityManager em) {
     this.em = em;
   }

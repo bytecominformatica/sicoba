@@ -1,7 +1,9 @@
 package net.servehttp.bytecom.persistence.jpa.estoque;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -9,7 +11,6 @@ import net.servehttp.bytecom.persistence.jpa.entity.estoque.Equipamento;
 import net.servehttp.bytecom.persistence.jpa.entity.estoque.QEquipamento;
 import net.servehttp.bytecom.persistence.jpa.entity.estoque.StatusEquipamento;
 import net.servehttp.bytecom.persistence.jpa.entity.estoque.TipoEquipamento;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
@@ -18,9 +19,11 @@ import com.mysema.query.jpa.impl.JPAQuery;
  * @author clairton
  */
 @Transactional
-public class EquipamentoJPA extends GenericoJPA {
+public class EquipamentoJPA implements Serializable {
 
   private static final long serialVersionUID = 7528131197866761853L;
+  @Inject
+  protected EntityManager em;
   private QEquipamento e = QEquipamento.equipamento;
 
   public void setEntityManager(EntityManager em) {

@@ -26,7 +26,7 @@ public class MikrotikController extends GenericoController {
 
   private Mikrotik mikrotik;
   @Inject
-  private MikrotikJPA jpa;
+  private MikrotikJPA mikrotikJPA;
   private String senha;
 
   @PostConstruct
@@ -35,7 +35,7 @@ public class MikrotikController extends GenericoController {
   }
 
   private void consultar() {
-    listMikrotik = jpa.buscarTodosMikrotik();
+    listMikrotik = mikrotikJPA.buscarTodosMikrotik();
   }
 
   public void novo() {
@@ -50,13 +50,8 @@ public class MikrotikController extends GenericoController {
   public void salvar() {
     try {
       if (senhaValida(mikrotik)) {
-        if (mikrotik.getId() > 0) {
-          jpa.atualizar(mikrotik);
-          AlertaUtil.info("Atualizado com sucesso!");
-        } else {
-          jpa.salvar(mikrotik);
-          AlertaUtil.info("Salvo com sucesso!");
-        }
+        jpa.salvar(mikrotik);
+        AlertaUtil.info("Salvo com sucesso!");
         limpar();
         consultar();
       }
@@ -69,10 +64,10 @@ public class MikrotikController extends GenericoController {
     boolean valido = true;
 
     if (senha != null) {
-      m.setSenha(senha);
+      m.setPass(senha);
     }
 
-    if (m.getId() == 0 && m.getSenha() == null) {
+    if (m.getId() == 0 && m.getPass() == null) {
       AlertaUtil.error("Digite uma senha");
       valido = false;
     }

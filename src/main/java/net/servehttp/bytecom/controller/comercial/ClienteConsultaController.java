@@ -11,7 +11,8 @@ import javax.inject.Named;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
-import net.servehttp.bytecom.service.comercial.ClienteBussiness;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
  * 
@@ -28,16 +29,17 @@ public class ClienteConsultaController extends GenericoController implements Ser
   private StatusCliente status;
 
   @Inject
-  private ClienteBussiness business;
+  private ClienteService service;
 
   @PostConstruct
   public void load() {
-    listClientes = business.buscaUltimosClientesAlterados();
+    listClientes = service.buscaUltimosClientesAlterados();
   }
 
   public void atualizarTodasConexoes() {
     try {
-      business.atualizarTodasConexoes();
+      service.atualizarTodasConexoes();
+      AlertaUtil.info("sucesso");
     } catch (Exception e) {
       log(e);
     }
@@ -48,7 +50,7 @@ public class ClienteConsultaController extends GenericoController implements Ser
   }
 
   public void consultar() {
-    listClientes = business.buscarTodosClientePorNomeIp(nome, ip, status);
+    listClientes = service.buscarTodosClientePorNomeIp(nome, ip, status);
   }
 
   public List<Cliente> getListClientes() {

@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.QCliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.expr.BooleanExpression;
@@ -20,8 +20,11 @@ import com.mysema.query.types.expr.BooleanExpression;
  * @author clairton
  */
 @Transactional
-public class ClienteJPA extends GenericoJPA implements Serializable {
+public class ClienteJPA implements Serializable {
 
+  @Inject
+  protected EntityManager em;
+  
   private static final long serialVersionUID = 1857140370479772238L;
   private QCliente c = QCliente.cliente;
 
