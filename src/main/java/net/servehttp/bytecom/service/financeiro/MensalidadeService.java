@@ -3,12 +3,14 @@ package net.servehttp.bytecom.service.financeiro;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Cedente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
 
 public class MensalidadeService implements Serializable {
@@ -46,6 +48,19 @@ public class MensalidadeService implements Serializable {
   public void remover(Mensalidade m) {
     mensalidadeJPA.remover(m);
   }
+  
+
+  public void removerMensalidadesAbertasNaoVencida(Cliente cliente) {
+    if (cliente.getMensalidades() != null){
+      List<Mensalidade> mensalidades = cliente.getMensalidades().stream().filter(m -> m.getStatus().equals(StatusMensalidade.PENDENTE) && m.getDataVencimento().isAfter(LocalDate.now())).collect(Collectors.toList());
+      mensalidades.forEach(m -> {
+        remover(m);
+        cliente.getMensalidades().remove(m);
+      });
+      
+    }
+  }
+
 
   public List<Mensalidade> buscarMensalidadesPorBoleto(int inicio, int fim) {
     return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);

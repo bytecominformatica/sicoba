@@ -30,7 +30,7 @@ public class ClienteService implements Serializable {
   public List<Cliente> buscaUltimosClientesAlterados() {
     return clienteJPA.buscaUltimosClientesAlterados();
   }
-
+  
   public Cliente buscarPorId(int id) {
     return jpa.buscarPorId(Cliente.class, id);
   }

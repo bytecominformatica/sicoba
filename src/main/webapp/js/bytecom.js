@@ -1,4 +1,4 @@
-function setFocus(id) {
+function focus(id) {
 	document.getElementById(id).focus();
 };
 

@@ -21,7 +21,7 @@
 					<f:ajax event="blur"
 						listener="#{clienteController.buscarEndereco()}"
 						render=":form:logradouro :form:cidade :form:bairro"
-						onevent="setFocus('form:numero')" />
+						onevent="focus('form:numero')" />
 				</h:inputText>
 
 				<label jsf:for="cidade" class="control-label">#{bundle.cidade}</label>
