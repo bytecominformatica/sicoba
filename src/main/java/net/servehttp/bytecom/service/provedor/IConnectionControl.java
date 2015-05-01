@@ -6,7 +6,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.provedor.IConnectionClienteC
 import net.servehttp.bytecom.persistence.jpa.entity.provedor.IServer;
 
 
-public interface IConnectionServer extends Serializable {
+public interface IConnectionControl extends Serializable {
   
   void save(IServer server, IConnectionClienteCertified connectionClient) throws Exception;
   void remove(IServer server, IConnectionClienteCertified connectionClient) throws Exception;

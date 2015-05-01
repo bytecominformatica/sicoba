@@ -13,7 +13,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.provedor.impl.Mikrotik;
 import net.servehttp.bytecom.persistence.jpa.provedor.MikrotikJPA;
-import net.servehttp.bytecom.service.provedor.IConnectionServer;
+import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
@@ -35,7 +35,7 @@ public class ConexaoController extends GenericoController {
   @Inject
   private MikrotikJPA mikrotikJPA;
   @Inject
-  private IConnectionServer connectionControl;
+  private IConnectionControl connectionControl;
   private Mikrotik mikrotik;
 
   private List<Mikrotik> listMikrotik;
@@ -67,8 +67,8 @@ public class ConexaoController extends GenericoController {
   public void salvar() {
     try {
       if (valido()) {
-        connectionControl.save(cliente.getConexao().getMikrotik(), cliente.getConexao());
         jpa.salvar(cliente.getConexao());
+        cliente.getStatus().atualizarConexao(cliente, connectionControl);
         AlertaUtil.info("Salvo com sucesso!");
       }
     } catch (Exception e) {

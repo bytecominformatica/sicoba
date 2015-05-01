@@ -7,11 +7,11 @@ import javax.inject.Inject;
 
 import net.servehttp.bytecom.persistence.jpa.entity.provedor.IConnectionClienteCertified;
 import net.servehttp.bytecom.persistence.jpa.entity.provedor.IServer;
-import net.servehttp.bytecom.service.provedor.IConnectionServer;
+import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.service.provedor.IFirewall;
 import net.servehttp.bytecom.service.provedor.MikrotikConnection;
 
-public class PPPoE extends MikrotikConnection implements IConnectionServer {
+public class PPPoE extends MikrotikConnection implements IConnectionControl {
 
   private static final long serialVersionUID = 1200975817858594209L;
   

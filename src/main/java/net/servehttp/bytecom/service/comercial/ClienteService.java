@@ -11,7 +11,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
-import net.servehttp.bytecom.service.provedor.IConnectionServer;
+import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.service.provedor.MikrotikConnection;
 import net.servehttp.bytecom.util.MensagemException;
 
@@ -22,7 +22,7 @@ public class ClienteService implements Serializable {
   @Inject
   private ConexaoJPA conexaoJPA;
   @Inject
-  private IConnectionServer connectionControl;
+  private IConnectionControl connectionControl;
   @Inject
   private ClienteJPA clienteJPA;
   @Inject
