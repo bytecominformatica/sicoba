@@ -17,7 +17,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLot
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
 import net.servehttp.bytecom.service.financeiro.ArquivoRetornoCaixa;
-import net.servehttp.bytecom.service.provedor.IConnectionControl;
+import net.servehttp.bytecom.service.provedor.IConnectionServer;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
@@ -34,7 +34,7 @@ public class RetornoController extends GenericoController implements Serializabl
   @Inject
   private ArquivoRetornoCaixa caixaEJB;
   @Inject
-  private IConnectionControl connectionControl;
+  private IConnectionServer connectionControl;
 
   @Inject
   private MensalidadeJPA mensalidadeJPA;

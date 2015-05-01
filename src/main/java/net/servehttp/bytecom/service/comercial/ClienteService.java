@@ -11,7 +11,8 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
-import net.servehttp.bytecom.service.provedor.IConnectionControl;
+import net.servehttp.bytecom.service.provedor.IConnectionServer;
+import net.servehttp.bytecom.service.provedor.MikrotikConnection;
 import net.servehttp.bytecom.util.MensagemException;
 
 public class ClienteService implements Serializable {
@@ -21,7 +22,7 @@ public class ClienteService implements Serializable {
   @Inject
   private ConexaoJPA conexaoJPA;
   @Inject
-  private IConnectionControl connectionControl;
+  private IConnectionServer connectionControl;
   @Inject
   private ClienteJPA clienteJPA;
   @Inject
@@ -79,14 +80,13 @@ public class ClienteService implements Serializable {
   public void atualizarTodasConexoes() throws Exception {
     List<Conexao> list = jpa.buscarTodos(Conexao.class);
 
-    connectionControl.setAutoCloseable(true);
-    try (IConnectionControl cc = connectionControl) {
+    try (MikrotikConnection mks = connectionControl.setAutoCloseable(true)) {
       for (Conexao c : list) {
         if (c.getIp() == null || c.getIp().isEmpty()) {
           c.setIp(conexaoJPA.getIpLivre());
         }
 
-        c.getCliente().getStatus().atualizarConexao(c.getCliente(), cc);
+        c.getCliente().getStatus().atualizarConexao(c.getCliente(), connectionControl);
         jpa.salvar(c);
       }
     }

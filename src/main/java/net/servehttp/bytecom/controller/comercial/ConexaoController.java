@@ -11,9 +11,9 @@ import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.comercial.ConexaoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
-import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.impl.Mikrotik;
 import net.servehttp.bytecom.persistence.jpa.provedor.MikrotikJPA;
-import net.servehttp.bytecom.service.provedor.IConnectionControl;
+import net.servehttp.bytecom.service.provedor.IConnectionServer;
 import net.servehttp.bytecom.util.StringUtil;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 import net.servehttp.bytecom.util.web.WebUtil;
@@ -35,7 +35,7 @@ public class ConexaoController extends GenericoController {
   @Inject
   private MikrotikJPA mikrotikJPA;
   @Inject
-  private IConnectionControl connectionControl;
+  private IConnectionServer connectionControl;
   private Mikrotik mikrotik;
 
   private List<Mikrotik> listMikrotik;

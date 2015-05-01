@@ -1,10 +1,11 @@
-package net.servehttp.bytecom.persistence.jpa.entity.provedor;
+package net.servehttp.bytecom.persistence.jpa.entity.provedor.impl;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.IServer;
 
 @Entity
 @Table(name = "mikrotik")
