@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.Part;
 
-import net.servehttp.bytecom.controller.financeiro.RetornoController;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
@@ -33,7 +32,7 @@ public class ArquivoRetornoCaixa {
       try {
         h = lerArquivoRetornoCaixa(file.getInputStream(), file.getSubmittedFileName());
       } catch (IOException e) {
-        Logger.getLogger(RetornoController.class.getName()).log(Level.SEVERE, null, e);
+        Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
       }
     }
     return h;
@@ -178,7 +177,7 @@ public class ArquivoRetornoCaixa {
   }
 
   private boolean isArquivoRetorno(Part file) {
-    if (file.getSubmittedFileName().indexOf(".ret") == -1
+    if (file.getSubmittedFileName().toLowerCase().indexOf(".ret") == -1
         || !"application/octet-stream".equals(file.getContentType())) {
       return false;
     }

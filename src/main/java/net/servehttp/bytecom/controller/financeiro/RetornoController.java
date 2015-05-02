@@ -81,8 +81,8 @@ public class RetornoController extends GenericoController implements Serializabl
       } catch (IllegalArgumentException e) {
         AlertaUtil.error("Arquivo corrompido!");
       } catch (Exception e) {
-        e.printStackTrace();
         AlertaUtil.error("Arquivo corrompido!");
+        log(e);
       }
     } else {
       AlertaUtil.error("Nenhum arquivo selecionado!");
@@ -91,7 +91,7 @@ public class RetornoController extends GenericoController implements Serializabl
 
   private boolean notExists(Header header) {
     boolean exists = false;
-
+    
     List<Header> list = jpa.buscarTodos("sequencial", header.getSequencial(), Header.class);
     if (!list.isEmpty()) {
       exists = true;
