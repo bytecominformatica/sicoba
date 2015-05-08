@@ -55,6 +55,11 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
   }
 
+  public void removerMensalidadesAbertasNaoVencida() {
+    service.removerMensalidadesAbertasNaoVencida(cliente);
+    AlertaUtil.info("sucesso");
+  }
+  
   public void buscarCliente() {
     cliente = clientService.buscarPorId(cliente.getId());
   }

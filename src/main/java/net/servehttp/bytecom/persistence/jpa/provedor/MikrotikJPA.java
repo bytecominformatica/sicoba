@@ -6,8 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
-import net.servehttp.bytecom.persistence.jpa.entity.provedor.QMikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.impl.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.impl.QMikrotik;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 

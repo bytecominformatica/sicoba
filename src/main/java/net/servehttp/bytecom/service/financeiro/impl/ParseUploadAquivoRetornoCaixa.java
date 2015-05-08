@@ -1,16 +1,14 @@
-package net.servehttp.bytecom.service.financeiro;
+package net.servehttp.bytecom.service.financeiro.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.http.Part;
 
-import net.servehttp.bytecom.controller.financeiro.RetornoController;
+import net.servehttp.bytecom.commons.parse.IParseUpload;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
@@ -19,7 +17,11 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Trailer;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.TrailerLote;
 import net.servehttp.bytecom.util.StringUtil;
 
-public class ArquivoRetornoCaixa {
+public class ParseUploadAquivoRetornoCaixa implements IParseUpload<Header> {
+
+  private static final long serialVersionUID = -6522095846509892574L;
+  private static final String RET = ".ret";
+  private static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
   private static final int HEADER = 0;
   private static final int HEADER_LOTE = 1;
   private static final int REGISTRO = 3;
@@ -27,28 +29,25 @@ public class ArquivoRetornoCaixa {
   private static final int TRAILER_LOTE = 5;
   private static final int TRAILER = 9;
 
-  public Header tratarArquivo(Part file) {
+  @Override
+  public Header parse(Part part) throws IOException {
     Header h = null;
-    if (isArquivoRetorno(file)) {
-      try {
-        h = lerArquivoRetornoCaixa(file.getInputStream(), file.getSubmittedFileName());
-      } catch (IOException e) {
-        Logger.getLogger(RetornoController.class.getName()).log(Level.SEVERE, null, e);
-      }
+    if (isArquivoRetorno(part)) {
+      h = lerArquivoRetornoCaixa(part.getInputStream(), part.getSubmittedFileName());
     }
     return h;
   }
 
 
-  public Header lerArquivoRetornoCaixa(InputStream input, String fileName) throws IOException {
+  private Header lerArquivoRetornoCaixa(InputStream input, String fileName) throws IOException {
     Header header = null;
     HeaderLote headerLote = null;
     BufferedReader in = new BufferedReader(new InputStreamReader(input));
     String line = null;
 
     while ((line = in.readLine()) != null) {
-      int tipoRegistro = StringUtil.getInt(line, 7, 8);
-      switch (tipoRegistro) {
+      int tipo = StringUtil.getInt(line, 7, 8);
+      switch (tipo) {
         case HEADER:
           header = preencheHeader(line, fileName);
           break;
@@ -178,11 +177,7 @@ public class ArquivoRetornoCaixa {
   }
 
   private boolean isArquivoRetorno(Part file) {
-    if (file.getSubmittedFileName().indexOf(".ret") == -1
-        || !"application/octet-stream".equals(file.getContentType())) {
-      return false;
-    }
-    return true;
+    return file.getSubmittedFileName().toLowerCase().contains(RET)
+        && APPLICATION_OCTET_STREAM.equals(file.getContentType());
   }
-
 }

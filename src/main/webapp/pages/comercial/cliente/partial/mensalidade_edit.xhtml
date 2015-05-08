@@ -5,7 +5,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 	
-<form jsf:id="form" class="form-horizontal">
+<form jsf:id="addForm" class="form-horizontal">
 	<div class="modal-header">
 		<div align="center">
 			<button jsf:id="boletos" jsf:actionListener="#{mensalidadeController.gerarBoletosPDF()}"
@@ -16,6 +16,9 @@
                 class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-plus" /> #{bundle.new}
            	</button>
+           	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" title="Remove todas as mensalidades em aberto que ainda não estão vencidas">
+			  Remover Mensalidades
+			</button>
        	</div>
 	</div>
 
@@ -30,7 +33,7 @@
 			styleClass="form-control" required="true">
 			<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
 			<f:selectItem itemLabel="BAIXA MANUAL" itemValue="BAIXA_MANUAL" />
-			<f:ajax event="change" render=":form:valorPagoDisplay" listener="#{mensalidadeController.prepararBaixaMensalidade()}"/>
+			<f:ajax event="change" render=":addForm:valorPagoDisplay" listener="#{mensalidadeController.prepararBaixaMensalidade()}"/>
 		</h:selectOneMenu>
 	</div>
 	<label jsf:for="valor" class="control-label">#{bundle.valor}</label>
@@ -67,21 +70,24 @@
             <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvar()}"
               class="btn btn-primary" type="submit">
               <span class="glyphicon glyphicon-floppy-save" /> #{mensalidadeController.mensalidade.id == 0 ?  bundle.save : bundle.update}
+              <f:ajax render=":mensalidadesForm :addForm"/>
             </button>
             <button jsf:id="btnRemove" jsf:actionListener="#{mensalidadeController.remover(mensalidadeController.mensalidade)}"
-		class="btn btn-danger" style="margin-left: 5px; #{mensalidadeController.mensalidade.id == 0 ?  'display: none' : ''}">
-		<span class="glyphicon glyphicon-remove" /> Remover
-				  </button>
+				class="btn btn-danger" style="margin-left: 5px; #{mensalidadeController.mensalidade.id == 0 ?  'display: none' : ''}">
+				<span class="glyphicon glyphicon-remove" /> 
+				Remover
+				<f:ajax render=":mensalidadesForm"/>
+		  	</button>
             <button jsf:id="btVoltar" jsf:outcome="cliente" style="margin-left: 5px;"
               class="btn btn-primary">
               <span class="glyphicon glyphicon-circle-arrow-left" /> #{bundle.back}
 		<f:param value="#{mensalidadeController.cliente.id}" name="id"></f:param>
             </button>
-          </div>
+    </div>
 	
 </form>
 
-<form jsf:id="formMensalidades">
+<form jsf:id="mensalidadesForm">
 	<div class="table-responsive">
 		<h:dataTable value="#{mensalidadeController.cliente.mensalidades}"
 			var="m" styleClass="table table-hover"
@@ -140,12 +146,37 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">#{bundle.actions}</f:facet>
-					<button jsf:id="btnEdit" class="btn btn-primary link-group" rendered="#{m.status == 'PAGO_NO_BOLETO' ? 'false' : 'true'}">
+					<button jsf:id="btnEdit" class="btn btn-primary link-group" rendered="#{m.status != 'PAGO_NO_BOLETO'}">
 						<span class="glyphicon glyphicon-edit" />
 						<f:setPropertyActionListener target="#{mensalidadeController.mensalidade}" value="#{m}"/>
+						<f:ajax render=":addForm" onevent="focus(:addForm)"/>
 					</button>
 			</h:column>
 		</h:dataTable>
 	</div>
 </form>
+
+<!-- Modal -->
+	        <form jsf:id="formRemover">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+        <h4 class="modal-title" id="myModalLabel">Remover mensalidades</h4>
+      </div>
+      <div class="modal-body">
+        Atenção: isso irá remover todas as mensalidades em aberto que não estão vencidas. Você deseja Continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">#{bundle.no}</button>
+        <button jsf:id="removerConfirm" jsf:actionListener="#{mensalidadeController.removerMensalidadesAbertasNaoVencida()}" type="button" data-dismiss="modal" class="btn btn-danger">
+        	#{bundle.yes}
+        	<f:ajax render=":mensalidadesForm :msgs"/>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+    	    </form>
 </html>

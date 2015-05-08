@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 import net.servehttp.bytecom.persistence.jpa.entity.provedor.IConnectionClienteCertified;
-import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.impl.Mikrotik;
 
 @Entity
 @Table(name = "conexao")
@@ -87,7 +87,6 @@ public class Conexao extends EntityGeneric implements IConnectionClienteCertifie
 
   @Override
   public String getMac() {
-    // TODO Auto-generated method stub
     return null;
   }
 

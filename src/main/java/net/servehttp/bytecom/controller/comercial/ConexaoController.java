@@ -11,7 +11,7 @@ import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.comercial.ConexaoJPA;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Conexao;
-import net.servehttp.bytecom.persistence.jpa.entity.provedor.Mikrotik;
+import net.servehttp.bytecom.persistence.jpa.entity.provedor.impl.Mikrotik;
 import net.servehttp.bytecom.persistence.jpa.provedor.MikrotikJPA;
 import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.StringUtil;
@@ -67,8 +67,8 @@ public class ConexaoController extends GenericoController {
   public void salvar() {
     try {
       if (valido()) {
-        connectionControl.save(cliente.getConexao().getMikrotik(), cliente.getConexao());
         jpa.salvar(cliente.getConexao());
+        cliente.getStatus().atualizarConexao(cliente, connectionControl);
         AlertaUtil.info("Salvo com sucesso!");
       }
     } catch (Exception e) {

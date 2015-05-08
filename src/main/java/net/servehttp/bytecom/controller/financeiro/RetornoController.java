@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
+import net.servehttp.bytecom.commons.parse.IParseUpload;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
@@ -16,7 +17,6 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
-import net.servehttp.bytecom.service.financeiro.ArquivoRetornoCaixa;
 import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
@@ -32,20 +32,18 @@ public class RetornoController extends GenericoController implements Serializabl
 
   private Part file;
   @Inject
-  private ArquivoRetornoCaixa caixaEJB;
+  private IParseUpload<Header> parserUpload;
   @Inject
   private IConnectionControl connectionControl;
 
   @Inject
   private MensalidadeJPA mensalidadeJPA;
 
-  public RetornoController() {}
-
   public void upload() {
     if (file != null) {
       Header header = null;
       try {
-        header = caixaEJB.tratarArquivo(file);
+        header = parserUpload.parse(file);
         if (notExists(header)) {
 
           for (HeaderLote hl : header.getHeaderLotes()) {
@@ -68,7 +66,7 @@ public class RetornoController extends GenericoController implements Serializabl
 
                 if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
                   m.getCliente().setStatus(StatusCliente.ATIVO);
-                  connectionControl.save(m.getCliente().getConexao().getMikrotik(), m.getCliente().getConexao());
+                  m.getCliente().getStatus().atualizarConexao(m.getCliente(), connectionControl);
                   jpa.salvar(m.getCliente());
                 }
 
@@ -81,8 +79,8 @@ public class RetornoController extends GenericoController implements Serializabl
       } catch (IllegalArgumentException e) {
         AlertaUtil.error("Arquivo corrompido!");
       } catch (Exception e) {
-        e.printStackTrace();
         AlertaUtil.error("Arquivo corrompido!");
+        log(e);
       }
     } else {
       AlertaUtil.error("Nenhum arquivo selecionado!");
@@ -91,7 +89,7 @@ public class RetornoController extends GenericoController implements Serializabl
 
   private boolean notExists(Header header) {
     boolean exists = false;
-
+    
     List<Header> list = jpa.buscarTodos("sequencial", header.getSequencial(), Header.class);
     if (!list.isEmpty()) {
       exists = true;
