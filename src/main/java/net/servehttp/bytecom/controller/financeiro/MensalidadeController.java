@@ -130,7 +130,6 @@ public class MensalidadeController extends GenericoController implements Seriali
     return service.getNovaMensalidade(cliente, d);
   }
 
-
   public void salvar() {
     jpa.salvar(mensalidade);
     
@@ -139,7 +138,7 @@ public class MensalidadeController extends GenericoController implements Seriali
       ordernarMensalidades();
     }
 
-    AlertaUtil.info("Mensalidade adicionada com sucesso!");
+    AlertaUtil.info("Mensalidade salva com sucesso!");
     mensalidade = getNovaMensalidade();
     init();
   }
