@@ -32,6 +32,7 @@ public class CadastrarBoletosController extends GenericoController implements Se
   private int numeroBoletoInicio;
   private int numeroBoletoFim;
   private double descontoGeracao;
+  private double valor;
   private LocalDate dataInicio;
 
   @Inject
@@ -46,6 +47,7 @@ public class CadastrarBoletosController extends GenericoController implements Se
       if (mensalidade == null) {
         mensalidade = getNovaMensalidade();
         dataInicio = mensalidade.getDataVencimento();
+        valor = mensalidade.getValor();
       }
     }
   }
@@ -80,6 +82,7 @@ public class CadastrarBoletosController extends GenericoController implements Se
     Mensalidade m = service.getNovaMensalidade(cliente, c);
     m.setNumeroBoleto(numeroBoleto);
     m.setDesconto(descontoGeracao);
+    m.setValor(valor);
     jpa.salvar(m);
   }
 
@@ -158,4 +161,12 @@ public class CadastrarBoletosController extends GenericoController implements Se
   public void setDescontoGeracao(double descontoGeracao) {
     this.descontoGeracao = descontoGeracao;
   }
+
+public double getValor() {
+	return valor;
+}
+
+public void setValor(double valor) {
+	this.valor = valor;
+}
 }
