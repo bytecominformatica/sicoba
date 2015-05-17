@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -44,7 +43,7 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   private Integer numeroBoleto;
 
   @JoinColumn(name = "cliente_id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne
   private Cliente cliente;
   
   public Mensalidade(){
