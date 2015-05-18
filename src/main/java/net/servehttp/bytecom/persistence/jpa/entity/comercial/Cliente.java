@@ -67,8 +67,7 @@ public class Cliente extends EntityGeneric {
       orphanRemoval = true)
   private Contrato contrato;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.EAGER,
-      orphanRemoval = true)
+  @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Mensalidade> mensalidades;
 
   @Transient

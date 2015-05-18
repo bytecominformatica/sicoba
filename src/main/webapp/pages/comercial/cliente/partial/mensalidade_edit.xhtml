@@ -70,13 +70,12 @@
             <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvar()}"
               class="btn btn-primary" type="submit">
               <span class="glyphicon glyphicon-floppy-save" /> #{mensalidadeController.mensalidade.id == 0 ?  bundle.save : bundle.update}
-              <f:ajax render=":mensalidadesForm :addForm"/>
             </button>
             <button jsf:id="btnRemove" jsf:actionListener="#{mensalidadeController.remover(mensalidadeController.mensalidade)}"
 				class="btn btn-danger" style="margin-left: 5px; #{mensalidadeController.mensalidade.id == 0 ?  'display: none' : ''}">
 				<span class="glyphicon glyphicon-remove" /> 
 				Remover
-				<f:ajax render=":mensalidadesForm"/>
+				<f:ajax render=":mensalidadesForm :addForm"/>
 		  	</button>
             <button jsf:id="btVoltar" jsf:outcome="cliente" style="margin-left: 5px;"
               class="btn btn-primary">
