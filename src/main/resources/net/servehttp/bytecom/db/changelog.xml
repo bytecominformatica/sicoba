@@ -192,5 +192,10 @@
 		<sqlFile path="net/servehttp/bytecom/db/changelog/33-clairtonluz.sql"
 			stripComments="true" />
 	</changeSet>
+	
+	<changeSet id="34" author="felipewmartins">
+		<sqlFile path="net/servehttp/bytecom/db/changelog/34-felipewmartins.sql"
+			stripComments="true" />
+	</changeSet>
 
 </databaseChangeLog>

@@ -27,10 +27,10 @@ public class LoginNavigationTest {
   @Test
   public void loginTest() {
     WebElement element = driver.findElement(By.id("form1:usuario"));
-    element.sendKeys("fwender");
+    element.sendKeys("selenium");
     
     element = driver.findElement(By.id("form1:senha"));
-    element.sendKeys("felipe");
+    element.sendKeys("teste");
     
     driver.findElement(By.id("form1:btLogin")).click();
   }
