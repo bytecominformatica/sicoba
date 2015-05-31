@@ -1,5 +1,9 @@
 package net.servehttp.bytecom.webdriver;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.util.concurrent.TimeUnit;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,6 +26,7 @@ public class LoginNavigationTest {
     System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/chromedriver");
     driver = new ChromeDriver();
     driver.get("http://localhost:8080/sicoba");
+    driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
   }
   
   @Test
@@ -33,6 +38,15 @@ public class LoginNavigationTest {
     element.sendKeys("teste");
     
     driver.findElement(By.id("form1:btLogin")).click();
+    
+    element = null;
+    
+    try {
+      element = driver.findElement(By.xpath("//a[@href='#mensalidadesEmAtraso']")); //Se passar por aqui conseguiu logar :)
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+    assertNotNull(element);
   }
   
   @AfterClass
