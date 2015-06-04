@@ -1,6 +1,5 @@
 package net.servehttp.bytecom.controller.estoque;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +19,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
  */
 @Named
 @ViewScoped
-public class EquipamentoController extends GenericoController implements Serializable {
+public class EquipamentoController extends GenericoController {
 
   private static final long serialVersionUID = 8291411734476446041L;
   private List<Equipamento> listEquipamentos;

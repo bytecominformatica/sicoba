@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * 
@@ -23,8 +23,7 @@ public class LoginNavigationTest {
   
   @BeforeClass
   public static void setUpTest() {
-    System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/chromedriver");
-    driver = new ChromeDriver();
+    driver = new FirefoxDriver();
     driver.get("http://localhost:8080/sicoba");
     driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
   }
