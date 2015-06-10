@@ -30,7 +30,7 @@ JPA 2.1
 
 Gson 2.2.4
 
-Mysql 5.1.29
+Mysql 5.1.35
 
 Hibernate
 
