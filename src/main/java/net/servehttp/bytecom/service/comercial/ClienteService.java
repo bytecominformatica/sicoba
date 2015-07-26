@@ -36,8 +36,8 @@ public class ClienteService implements Serializable {
     return jpa.buscarPorId(Cliente.class, id);
   }
 
-  public List<Cliente> buscarTodosClientePorNomeIp(String nome, String ip, StatusCliente status) {
-    return clienteJPA.buscarTodosClientePorNomeIp(nome, ip, status);
+  public List<Cliente> buscarTodosClientePorNomeIp(String nome, String ip, String mac, StatusCliente status) {
+    return clienteJPA.buscarTodosClientePorNomeIp(nome, ip, mac, status);
   }
 
   public boolean rgAvaliable(Cliente c) {

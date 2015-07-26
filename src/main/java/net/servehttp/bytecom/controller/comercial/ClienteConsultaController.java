@@ -26,6 +26,7 @@ public class ClienteConsultaController extends GenericoController implements Ser
   private List<Cliente> listClientes;
   private String nome;
   private String ip;
+  private String mac;
   private StatusCliente status;
 
   @Inject
@@ -50,7 +51,7 @@ public class ClienteConsultaController extends GenericoController implements Ser
   }
 
   public void consultar() {
-    listClientes = service.buscarTodosClientePorNomeIp(nome, ip, status);
+    listClientes = service.buscarTodosClientePorNomeIp(nome, ip, mac, status);
   }
 
   public List<Cliente> getListClientes() {
@@ -84,5 +85,13 @@ public class ClienteConsultaController extends GenericoController implements Ser
   public void setStatus(StatusCliente status) {
     this.status = status;
   }
+
+public String getMac() {
+	return mac;
+}
+
+public void setMac(String mac) {
+	this.mac = mac;
+}
 
 }

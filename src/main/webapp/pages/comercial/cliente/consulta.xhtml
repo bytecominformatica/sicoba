@@ -14,44 +14,41 @@
 		<div class="panel-header">
 			<br />
 			
-			<form jsf:id="formPesquisa" class="form-vertical">
-				<div class="col-lg-12" align="center">
-
-					<div class="col-lg-2">
-						<div class="input-group">
-							<input jsf:value="#{clienteConsultaController.nome}" type="text"
-								name="nome" class="form-control" placeholder="Nome"
-								jsf:id="nome" autofocus="autofocus" />
-						</div>
-					</div>
-
-					<div class="col-lg-2">
-						<div class="input-group">
-							<input jsf:value="#{clienteConsultaController.ip}" type="text"
-								name="ip" class="form-control" placeholder="IP" jsf:id="ip" />
-						</div>
-					</div>
-
-					<div class="col-lg-2">
-						<div class="input-group">
-							<h:selectOneMenu id="status"
-								value="#{clienteConsultaController.status}"
-								styleClass="form-control">
-								<f:selectItem itemLabel="#{bundle.todos}"
-									noSelectionOption="true" />
-								<f:selectItems value="#{clienteConsultaController.listStatus}" />
-							</h:selectOneMenu>
-						</div>
-					</div>
-
-					<div class="col-lg-2">
-						<button type="submit" class="btn btn-primary"
-							jsf:actionListener="#{clienteConsultaController.consultar()}">
-							<span class="glyphicon glyphicon-search" />
-						</button>
-					</div>
+			<form jsf:id="formPesquisa" class="form-inline">
+				<div class="input-group">
+					<label>Nome</label>
+					<input jsf:value="#{clienteConsultaController.nome}" type="text"
+						name="nome" class="form-control" placeholder="Nome"
+						jsf:id="nome" autofocus="autofocus" />
 				</div>
 
+				<div class="input-group">
+					<label>IP</label>
+					<input jsf:value="#{clienteConsultaController.ip}" type="text"
+						name="ip" class="form-control" placeholder="IP" jsf:id="ip" />
+				</div>
+
+				<div class="input-group">
+					<label>MAC</label>
+					<input jsf:value="#{clienteConsultaController.mac}" type="text"
+						name="mac" class="form-control" placeholder="MAC" jsf:id="mac" />
+				</div>
+
+				<div class="input-group">
+					<label>Status</label>
+					<h:selectOneMenu id="status"
+						value="#{clienteConsultaController.status}"
+						styleClass="form-control">
+						<f:selectItem itemLabel="#{bundle.todos}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{clienteConsultaController.listStatus}" />
+					</h:selectOneMenu>
+				</div>
+
+				<button type="submit" class="btn btn-primary" style="margin-top: 25px;"
+					jsf:actionListener="#{clienteConsultaController.consultar()}">
+					<span class="glyphicon glyphicon-search" />
+				</button>
 			</form>
 		</div>
 		<div class="panel-body">
@@ -82,11 +79,9 @@
 							#{c.id}
 						</h:column>
 
-						<h:column style="width: 5%;">
+						<h:column  style="width: 10px; text-align:center;">
 							<f:facet name="header">#{bundle.status}</f:facet>
-							<div align="center">
-								<h:graphicImage value="/img/#{c.status}.png" />
-							</div>
+							<h:graphicImage value="/img/#{c.status}.png" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">#{bundle.nome}</f:facet>
@@ -98,6 +93,16 @@
 						<h:column>
 							<f:facet name="header">#{bundle.ip}</f:facet>
 							<a href="http://#{c.conexao.ip}" target="_blank">#{c.conexao.ip}</a>
+						</h:column>
+
+						<h:column style="text-align: center;">
+							<f:facet name="header">#{bundle.mac}</f:facet>
+							#{c.contrato.equipamento.mac}
+						</h:column>
+
+						<h:column style="text-align: center;">
+							<f:facet name="header">#{bundle.mac} Wifi</f:facet>
+							#{c.contrato.equipamentoWifi.mac}
 						</h:column>
 
 						<h:column>
