@@ -38,6 +38,10 @@
 			</div>
 			<form jsf:id="form" class="form-horizontal">
 				
+				<label jsf:for="id" class="control-label">Id</label> 
+				<input jsf:id="id" type="text" jsf:value="#{clienteController.cliente.id}" disabled="disabled"
+					class="form-control" /> 
+				
 				<label jsf:for="nome" class="control-label">#{bundle.nome}</label> 
 				<input jsf:id="nome" type="text" jsf:value="#{clienteController.cliente.nome}"
 					class="form-control uppercase" required="required" autofocus="autofocus" /> 

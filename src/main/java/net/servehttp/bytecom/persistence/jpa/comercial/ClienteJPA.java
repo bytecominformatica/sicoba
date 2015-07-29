@@ -32,7 +32,7 @@ public class ClienteJPA implements Serializable {
     this.em = em;
   }
 
-  public List<Cliente> buscarTodosClientePorNomeIp(String nome, String ip, StatusCliente status) {
+  public List<Cliente> buscarTodosClientePorNomeIp(String nome, String ip, String mac, StatusCliente status) {
     BooleanExpression condicao = c.id.eq(c.id);
 
     if (nome != null && !nome.trim().isEmpty()) {
@@ -41,6 +41,13 @@ public class ClienteJPA implements Serializable {
 
     if (ip != null && !ip.isEmpty()) {
       condicao = condicao.and(c.conexao.ip.eq(ip));
+    }
+    
+    if (mac != null && !mac.isEmpty()) {
+    	condicao = condicao.and(
+    			(c.contrato.equipamento.mac.like("%" + mac + "%")
+    					.or(c.contrato.equipamentoWifi.mac.like("%" + mac + "%")))
+    			);
     }
 
     if (status != null) {
