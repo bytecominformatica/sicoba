@@ -29,10 +29,10 @@
 
 	<div style="display: #{mensalidadeController.mensalidade.id != 0 ?  'inline' : 'none'}">
 		<label jsf:for="status" class="control-label">#{bundle.status}</label>
-		<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.status}"
+		<h:selectOneMenu id="status" value="#{mensalidadeController.mensalidade.baixaManual}"
 			styleClass="form-control" required="true">
-			<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
-			<f:selectItem itemLabel="BAIXA MANUAL" itemValue="BAIXA_MANUAL" />
+			<f:selectItem itemLabel="PENDENTE" itemValue="false" />
+			<f:selectItem itemLabel="BAIXA MANUAL" itemValue="true" />
 			<f:ajax event="change" render=":addForm:valorPagoDisplay" listener="#{mensalidadeController.prepararBaixaMensalidade()}"/>
 		</h:selectOneMenu>
 	</div>
