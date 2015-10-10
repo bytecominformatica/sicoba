@@ -3,7 +3,6 @@ package net.servehttp.bytecom.controller.financeiro;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;

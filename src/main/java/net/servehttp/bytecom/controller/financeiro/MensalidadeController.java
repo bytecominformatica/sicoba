@@ -3,7 +3,6 @@ package net.servehttp.bytecom.controller.financeiro;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
 import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
@@ -16,11 +15,9 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
