@@ -11,7 +11,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.QMensalidade;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -47,8 +47,21 @@ public class MensalidadeJPA extends CrudJPA {
         return new JPAQuery(em).from(m).where(m.numeroBoleto.eq(numeroBoleto).and(m.modalidade.eq(modalidade))).uniqueResult(m);
     }
 
+    public List<Mensalidade> buscarTodosPorClienteDosUltimos6Meses(Integer clienteId) {
+        LocalDate data = LocalDate.now().minusMonths(6);
+        return new JPAQuery(em).from(m).where(m.cliente.id.eq(clienteId)
+                .and((m.pagamentos.isEmpty().or(m.dataVencimento.gt(data))))).list(m);
+    }
+
+    public List<Mensalidade> buscarTodosPendentePorCliente(Integer clienteId) {
+        return new JPAQuery(em).from(m).where(m.cliente.id.eq(clienteId).and(m.pagamentos.isEmpty())).list(m);
+    }
+
     @Override
     protected EntityManager getEm() {
         return em;
+    }
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 }

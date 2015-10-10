@@ -169,7 +169,7 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">#{bundle.mensalidade}</f:facet>
-									#{empty c.mensalidades || c.mensalidades == null ? 'SEM MENSALIDADES' : 'OK'}
+									#{dashboardController.isClienteSemMensalidade(c) ? 'SEM MENSALIDADES' : 'OK'}
 								</h:column>
 						</h:dataTable>
 					</div>

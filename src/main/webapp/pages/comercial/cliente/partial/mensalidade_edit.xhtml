@@ -69,7 +69,7 @@
         <button jsf:id="btVoltar" jsf:outcome="cliente" style="margin-left: 5px;"
                 class="btn btn-primary">
             <span class="glyphicon glyphicon-circle-arrow-left"/> #{bundle.back}
-            <f:param value="#{mensalidadeController.cliente.id}" name="id"></f:param>
+            <f:param value="#{mensalidadeController.clienteId}" name="id"></f:param>
         </button>
     </div>
 </form>
@@ -78,6 +78,7 @@
 <div jsf:id="pagamento"
      style="display: #{not empty mensalidadeController.pagamento ?  'inline' : 'none'}">
     <h2>PAGAMENTO</h2>
+
     <form jsf:id="pagamentoForm" class="form-horizontal">
 
         <label jsf:for="valor" class="control-label">#{bundle.valor}</label>
@@ -156,9 +157,10 @@
 
 
 <h2>MENSALIDADES</h2>
+
 <form jsf:id="mensalidadesForm">
     <div class="table-responsive">
-        <h:dataTable value="#{mensalidadeController.cliente.mensalidades}"
+        <h:dataTable value="#{mensalidadeController.mensalidades}"
                      var="m" styleClass="table table-hover"
                      headerClass="tableColumnsHeader">
 

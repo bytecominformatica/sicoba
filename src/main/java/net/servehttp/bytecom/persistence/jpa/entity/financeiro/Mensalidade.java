@@ -3,6 +3,7 @@ package net.servehttp.bytecom.persistence.jpa.entity.financeiro;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 
 import javax.persistence.*;

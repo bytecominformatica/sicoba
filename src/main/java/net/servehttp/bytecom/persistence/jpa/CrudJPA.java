@@ -17,11 +17,11 @@ public abstract class CrudJPA implements Serializable {
     protected abstract EntityManager getEm();
 
     public void remove(EntityGeneric entityGeneric) {
-        getEm().remove(entityGeneric);
+        getEm().remove(getEm().merge(entityGeneric));
     }
 
     public EntityGeneric save(EntityGeneric entityGeneric) {
-        if (entityGeneric.getId() > 0) {
+        if (entityGeneric.getId() != null && entityGeneric.getId() > 0) {
             entityGeneric = getEm().merge(entityGeneric);
         } else {
             getEm().persist(entityGeneric);

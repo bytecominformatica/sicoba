@@ -1,9 +1,9 @@
 package net.servehttp.bytecom.controller.financeiro;
 
-import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Pagamento;
+import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
 import net.servehttp.bytecom.persistence.jpa.financeiro.PagamentoJPA;
 import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.service.financeiro.MensalidadeService;
@@ -28,54 +28,62 @@ import java.util.stream.Collectors;
  */
 @Named
 @ViewScoped
-public class MensalidadeController extends GenericoController implements Serializable {
+public class MensalidadeController implements Serializable {
 
     private static final long serialVersionUID = -866830816286480241L;
     private Mensalidade mensalidade;
     private Pagamento pagamento;
-    private Cliente cliente;
+    private List<Mensalidade> mensalidades;
 
     @Inject
     private MensalidadeService service;
     @Inject
     private PagamentoJPA pagamentoJPA;
     @Inject
+    private MensalidadeJPA mensalidadeJPA;
+    @Inject
     private ClienteService clientService;
+    private Integer clienteId;
+
 
     @PostConstruct
     public void init() {
         getParameters();
-        if (cliente != null) {
-            buscarCliente();
-            ordernarMensalidades();
-            if (mensalidade == null) {
-                mensalidade = getNovaMensalidade();
-            }
+        if (clienteId != null) {
+            buscarMensalidades();
+            limpar();
         } else {
-            cliente = new Cliente();
             AlertaUtil.error("nenhum cliente selecionado");
         }
     }
 
+    public void buscarMensalidades() {
+        mensalidades = mensalidadeJPA.buscarTodosPorClienteDosUltimos6Meses(clienteId);
+    }
+
+    private void limpar(){
+        ordernarMensalidades();
+        if (mensalidade == null) {
+            mensalidade = getNovaMensalidade();
+        }
+    }
+
     public void removerMensalidadesAbertasNaoVencida() {
-        service.removerMensalidadesAbertasNaoVencida(cliente);
+        service.removerMensalidadesAbertasNaoVencida(mensalidades);
         AlertaUtil.info("sucesso");
     }
 
-    public void buscarCliente() {
-        cliente = clientService.buscarPorId(cliente.getId());
-    }
-
     private void getParameters() {
-        String clienteId = WebUtil.getParameters("clienteId");
-        if (clienteId != null && !clienteId.isEmpty()) {
-            cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
+        String id = WebUtil.getParameters("clienteId");
+        if(id != null && !id.isEmpty()) {
+            clienteId = Integer.parseInt(id);
         }
     }
 
     public void gerarBoletosPDF() throws IOException {
+        Cliente cliente = mensalidades.get(0).getCliente();
         if (clientePossuiTodosOsDadosNecessarios(cliente)) {
-            byte[] pdfData = service.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
+            byte[] pdfData = service.gerarCarne(getBoletosEmAberto(mensalidades));
             WebUtil.downloadPDF(pdfData, cliente.getNome());
         }
     }
@@ -87,7 +95,7 @@ public class MensalidadeController extends GenericoController implements Seriali
             AlertaUtil.error("Cpf ou Cnpj obrigatório");
         }
 
-        List<Mensalidade> list = getBoletosEmAberto(cliente.getMensalidades());
+        List<Mensalidade> list = getBoletosEmAberto(mensalidades);
         if (list == null || list.isEmpty()) {
             possui = false;
             AlertaUtil.error("Cliente nao possui nenhuma mensalidade em aberto.");
@@ -104,7 +112,7 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
 
     private void ordernarMensalidades() {
-        Collections.sort(cliente.getMensalidades(), new Comparator<Mensalidade>() {
+        Collections.sort(mensalidades, new Comparator<Mensalidade>() {
             public int compare(Mensalidade m1, Mensalidade m2) {
                 return m1.getDataVencimento().compareTo(m2.getDataVencimento());
             }
@@ -112,15 +120,16 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
 
     public Mensalidade getNovaMensalidade() {
+        Cliente cliente = clientService.buscarPorId(clienteId);
         LocalDate d = LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
         return service.getNovaMensalidade(cliente, d);
     }
 
     public void salvar() {
-        jpa.salvar(mensalidade);
+        mensalidadeJPA.save(mensalidade);
 
-        if (!cliente.getMensalidades().contains(mensalidade)) {
-            cliente.getMensalidades().add(mensalidade);
+        if (!mensalidades.contains(mensalidade)) {
+            mensalidades.add(mensalidade);
             ordernarMensalidades();
         }
 
@@ -130,15 +139,15 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
 
     public void salvarPagamento() {
-        jpa.salvar(pagamento);
+        pagamentoJPA.save(pagamento);
         AlertaUtil.info("Pagamento salva com sucesso!");
         pagamento = null;
     }
 
     public void removerMensalidade() {
-        if(mensalidade.getPagamentos().isEmpty()) {
+        if (mensalidade.getPagamentos().isEmpty()) {
             service.remover(mensalidade);
-            cliente.getMensalidades().remove(mensalidade);
+            mensalidades.remove(mensalidade);
             mensalidade = getNovaMensalidade();
             AlertaUtil.info("Mensalidade removido com sucesso!");
         } else {
@@ -150,14 +159,6 @@ public class MensalidadeController extends GenericoController implements Seriali
         pagamentoJPA.remove(pagamento);
         pagamento = null;
         AlertaUtil.info("Pagamento removido com sucesso!");
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 
     public Mensalidade getMensalidade() {
@@ -174,5 +175,21 @@ public class MensalidadeController extends GenericoController implements Seriali
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Integer getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Integer clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public List<Mensalidade> getMensalidades() {
+        return mensalidades;
+    }
+
+    public void setMensalidades(List<Mensalidade> mensalidades) {
+        this.mensalidades = mensalidades;
     }
 }

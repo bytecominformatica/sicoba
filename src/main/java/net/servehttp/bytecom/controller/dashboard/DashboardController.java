@@ -1,75 +1,80 @@
 package net.servehttp.bytecom.controller.dashboard;
 
-import java.io.Serializable;
-import java.util.List;
+import net.servehttp.bytecom.persistence.jpa.dashboard.DashboadJPA;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
+import net.servehttp.bytecom.util.StringUtil;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import net.servehttp.bytecom.persistence.jpa.dashboard.DashboadJPA;
-import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.util.StringUtil;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * 
  * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Named
 @ViewScoped
 public class DashboardController implements Serializable {
 
-  private static final long serialVersionUID = 8827281306259995250L;
+    private static final long serialVersionUID = 8827281306259995250L;
 
-  @Inject
-  private DashboadJPA dashboadJPA;
-  private long quantidadeInstalacoes;
-  private double faturamentoDoMes;
-  private double faturamentoPrevistoDoMes;
-  private List<Mensalidade> listMensalidadesAtrasadas;
-  private List<Cliente> listClientesInstalados;
-  private List<Cliente> listClientesSemMensalidades;
-  private List<Cliente> listClientesInativos;
+    @Inject
+    private DashboadJPA dashboadJPA;
+    @Inject
+    private MensalidadeJPA mensalidadeJPA;
+    private long quantidadeInstalacoes;
+    private double faturamentoDoMes;
+    private double faturamentoPrevistoDoMes;
+    private List<Mensalidade> listMensalidadesAtrasadas;
+    private List<Cliente> listClientesInstalados;
+    private List<Cliente> listClientesSemMensalidades;
+    private List<Cliente> listClientesInativos;
 
-  @PostConstruct
-  public void load() {
-    listClientesInstalados = dashboadJPA.buscarTodosClienteInstaladosRecente();
-    quantidadeInstalacoes = dashboadJPA.getQuantidadeInstalacoesDoMes();
-    faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
-    faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
-    listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();
-    listClientesInativos = dashboadJPA.getClientesInativos();
-    listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
-  }
+    @PostConstruct
+    public void load() {
+        listClientesInstalados = dashboadJPA.buscarTodosClienteInstaladosRecente();
+        quantidadeInstalacoes = dashboadJPA.getQuantidadeInstalacoesDoMes();
+        faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
+        faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
+        listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();
+        listClientesInativos = dashboadJPA.getClientesInativos();
+        listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
+    }
 
-  public List<Cliente> getListClientesInstalados() {
-    return listClientesInstalados;
-  }
+    public boolean isClienteSemMensalidade(Cliente cliente) {
+        return mensalidadeJPA.buscarTodosPendentePorCliente(cliente.getId()).isEmpty();
+    }
 
-  public long getQuantidadeInstalacoes() {
-    return quantidadeInstalacoes;
-  }
+    public List<Cliente> getListClientesInstalados() {
+        return listClientesInstalados;
+    }
 
-  public String getFaturamentoDoMes() {
-    return StringUtil.formatCurrence(faturamentoDoMes);
-  }
+    public long getQuantidadeInstalacoes() {
+        return quantidadeInstalacoes;
+    }
 
-  public String getFaturamentoPrevistoDoMes() {
-    return StringUtil.formatCurrence(faturamentoPrevistoDoMes);
-  }
+    public String getFaturamentoDoMes() {
+        return StringUtil.formatCurrence(faturamentoDoMes);
+    }
 
-  public List<Mensalidade> getListMensalidadesAtrasadas() {
-    return listMensalidadesAtrasadas;
-  }
+    public String getFaturamentoPrevistoDoMes() {
+        return StringUtil.formatCurrence(faturamentoPrevistoDoMes);
+    }
 
-  public List<Cliente> getListClientesSemMensalidades() {
-    return listClientesSemMensalidades;
-  }
+    public List<Mensalidade> getListMensalidadesAtrasadas() {
+        return listMensalidadesAtrasadas;
+    }
 
-  public List<Cliente> getListClientesInativos() {
-    return listClientesInativos;
-  }
+    public List<Cliente> getListClientesSemMensalidades() {
+        return listClientesSemMensalidades;
+    }
+
+    public List<Cliente> getListClientesInativos() {
+        return listClientesInativos;
+    }
 
 }

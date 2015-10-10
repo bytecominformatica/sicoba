@@ -8,13 +8,14 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.QContrato;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.QMensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.QPagamento;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.QRegistro;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,20 +56,25 @@ public class DashboadJPA implements Serializable {
 
     public List<Mensalidade> getMensalidadesEmAtraso() {
         QMensalidade m = QMensalidade.mensalidade;
-//    return new JPAQuery(em).from(m)
-//        .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(LocalDate.now())))
-//        .orderBy(m.dataVencimento.asc()).list(m);
-        return new ArrayList<>();
+        return new JPAQuery(em).from(m)
+                .where(m.pagamentos.isEmpty().and(m.dataVencimento.lt(LocalDate.now())))
+                .orderBy(m.dataVencimento.asc()).list(m);
     }
 
     public double getFaturamentoDoMes() {
-//        QMensalidade m = QMensalidade.mensalidade;
-//        Double d =
-//                new JPAQuery(em).from(m).where(m.dataOcorrencia.between(from, to))
-//                        .uniqueResult(m.valorPago.sum());
-//        return d != null ? d : 0;
-//        TODO: implementar faturamento do mes
-        return 0;
+        QPagamento p = QPagamento.pagamento;
+        QRegistro r = QRegistro.registro;
+        Double somaPagamentosManuais = new JPAQuery(em).from(p).where(p.data.between(from, to)).uniqueResult(p.valor.sum());
+        Double somaPagamentosBoleto = new JPAQuery(em).from(r).where(r.registroDetalhe.dataOcorrencia.between(from, to)).uniqueResult(r.registroDetalhe.valorPago.sum());
+
+        if(somaPagamentosManuais == null) {
+            somaPagamentosManuais = 0d;
+        }
+        if(somaPagamentosBoleto == null) {
+            somaPagamentosBoleto = 0d;
+        }
+
+        return somaPagamentosManuais + somaPagamentosBoleto;
     }
 
     public double getFaturamentoPrevistoDoMes() {

@@ -1,34 +1,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:jsf="http://xmlns.jcp.org/jsf">
-	
-<form jsf:id="formGerarMensalidades">
-	<label jsf:for="quantidade" class="control-label">#{bundle.quantidade}</label>
-	<input jsf:id="quantidade" type="number" class="form-control" required="required" min="1"
-		jsf:value="#{gerarMensalidadeController.quantidade}"/>
-		
-	<label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
-       <input jsf:id="dataInicio" type="text" maxlength="10" required="required"
-           jsf:value="#{gerarMensalidadeController.dataInicio}" class="form-control" pattern="#{bundle.datePattern}">
-           <f:converter converterId="localDateConverter"/>
-       </input>
-       
-	<label jsf:for="valor" class="control-label">#{bundle.valor}</label>
-	<input jsf:id="valor" type="number" step="any" class="form-control"
-		jsf:value="#{gerarMensalidadeController.mensalidade.valor}" />
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-	<label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
-	<input jsf:id="desconto" type="number" step="any" class="form-control"
-		jsf:value="#{gerarMensalidadeController.descontoGeracao}" />
-       
+<form jsf:id="formGerarMensalidades">
+    <label jsf:for="quantidade" class="control-label">#{bundle.quantidade}</label>
+    <input jsf:id="quantidade" type="number" class="form-control" required="required" min="1"
+           jsf:value="#{gerarMensalidadeController.quantidade}"/>
+
+    <label jsf:for="dataInicio" class="control-label">#{bundle.dataInicio}</label>
+    <input jsf:id="dataInicio" type="text" maxlength="10" required="required"
+           jsf:value="#{gerarMensalidadeController.dataInicio}" class="form-control" pattern="#{bundle.datePattern}">
+        <f:converter converterId="localDateConverter"/>
+    </input>
+
+    <label jsf:for="valor" class="control-label">#{bundle.valor}</label>
+    <input jsf:id="valor" type="number" step="any" class="form-control"
+           jsf:value="#{gerarMensalidadeController.mensalidade.valor}"/>
+
+    <label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
+    <input jsf:id="desconto" type="number" step="any" class="form-control"
+           jsf:value="#{gerarMensalidadeController.descontoGeracao}"/>
+
     <div class="modal-footer">
-      <button jsf:id="btGerar" jsf:actionListener="#{gerarMensalidadeController.gerarBoletos()}"
-      	jsf:action="#{mensalidadeController.buscarCliente()}"
-        class="btn btn-primary" type="submit">
-        <span class="glyphicon glyphicon-cog" /> #{bundle.gerar}
-      </button>	
+        <button jsf:id="btGerar" jsf:actionListener="#{gerarMensalidadeController.gerarBoletos()}"
+                jsf:action="#{mensalidadeController.buscarMensalidades()}"
+                class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-cog"/> #{bundle.gerar}
+        </button>
     </div>
 </form>
 </html>
