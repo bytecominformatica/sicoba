@@ -138,11 +138,6 @@ public class MensalidadeController implements Serializable {
         init();
     }
 
-    public void salvarPagamento() {
-        pagamentoJPA.save(pagamento);
-        AlertaUtil.info("Pagamento salva com sucesso!");
-        pagamento = null;
-    }
 
     public void removerMensalidade() {
         if (mensalidade.getPagamentos().isEmpty()) {
@@ -155,10 +150,34 @@ public class MensalidadeController implements Serializable {
         }
     }
 
+    public void prepararPagamento(Mensalidade mensalidade) {
+        if(mensalidade.getPagamentos().isEmpty()) {
+            pagamento = new Pagamento();
+            pagamento.setMensalidade(mensalidade);
+            pagamento.setDesconto(mensalidade.getDesconto());
+            pagamento.setValor(mensalidade.getValor() - mensalidade.getDesconto());
+        } else {
+            pagamento = mensalidade.getPagamentos().get(0);
+        }
+    }
+
+    public void salvarPagamento() {
+        pagamentoJPA.save(pagamento);
+        AlertaUtil.info("Pagamento salva com sucesso!");
+        limparPagamento();
+    }
+
+
     public void removerPagamento() {
         pagamentoJPA.remove(pagamento);
-        pagamento = null;
+        mensalidade.getPagamentos().remove(pagamento);
+        limparPagamento();
         AlertaUtil.info("Pagamento removido com sucesso!");
+    }
+
+    private void limparPagamento() {
+        pagamento = null;
+        buscarMensalidades();
     }
 
     public Mensalidade getMensalidade() {

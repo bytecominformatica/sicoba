@@ -36,6 +36,10 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     @OneToMany(mappedBy = "mensalidade", fetch = FetchType.EAGER)
     private List<Pagamento> pagamentos;
 
+    public Mensalidade() {
+        modalidade = 24;
+    }
+
     public LocalDate getDataVencimento() {
         return dataVencimento;
     }

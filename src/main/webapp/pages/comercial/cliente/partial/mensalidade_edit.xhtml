@@ -54,6 +54,7 @@
            jsf:value="#{mensalidadeController.mensalidade.numeroBoleto}"/>
 
     <div class="modal-footer">
+
         <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvar()}"
                 class="btn btn-primary" type="submit">
             <span class="glyphicon glyphicon-floppy-save"/> #{mensalidadeController.mensalidade.id > 0 ?  bundle.update : bundle.save}
@@ -64,7 +65,7 @@
                 style="margin-left: 5px; #{mensalidadeController.mensalidade.id > 0 ?  '' : 'display: none'}">
             <span class="glyphicon glyphicon-remove"/>
             Remover
-            <f:ajax render=":mensalidadesForm :addForm"/>
+            <f:ajax render=":mensalidadesForm :addForm :msgs"/>
         </button>
         <button jsf:id="btVoltar" jsf:outcome="cliente" style="margin-left: 5px;"
                 class="btn btn-primary">
@@ -97,9 +98,9 @@
         </input>
 
         <div class="modal-footer">
-            <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvarPagamento()}"
-                    class="btn btn-primary" type="submit">
-                <span class="glyphicon glyphicon-floppy-save"/> #{mensalidadeController.pagamento.id > 0 ?  bundle.update : bundle.save}
+            <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvarPagamento}"
+                    class="btn btn-primary">
+                #{bundle.save}
             </button>
             <button jsf:id="btnRemove"
                     jsf:actionListener="#{mensalidadeController.removerPagamento}"
@@ -107,7 +108,7 @@
                     style="margin-left: 5px; #{mensalidadeController.pagamento.id > 0 ?  '' : 'display: none'}">
                 <span class="glyphicon glyphicon-remove"/>
                 Remover
-                <f:ajax render=":pagamentoForm :addForm"/>
+                <f:ajax render=":pagamento :pagamentoList :addForm"/>
             </button>
         </div>
     </form>
@@ -148,7 +149,7 @@
                 <button jsf:id="btnEdit" class="btn btn-primary link-group" rendered="#{empty p.registro}">
                     <span class="glyphicon glyphicon-edit"/>
                     <f:setPropertyActionListener value="#{p}" target="#{mensalidadeController.pagamento}"/>
-                    <f:ajax render=":addForm" onevent="focus(:pagamento)"/>
+                    <f:ajax render=":addForm :pagamento" onevent="focus(:pagamento)"/>
                 </button>
             </form>
         </h:column>
@@ -188,7 +189,27 @@
                 <h:outputText value="#{m.desconto}">
                     <f:convertNumber minFractionDigits="2"/>
                 </h:outputText>
+            </h:column>
 
+            <h:column>
+                <f:facet name="header">#{bundle.valorPago}</f:facet>
+                <h:outputText value="#{empty m.pagamentos ? 0 : empty m.pagamentos.get(0).registro
+                ? m.pagamentos.get(0).valor : m.pagamentos.get(0).registro.registroDetalhe.valorPago}">
+                    <f:convertNumber minFractionDigits="2"/>
+                </h:outputText>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">#{bundle.desconto} Real</f:facet>
+                <h:outputText value="#{empty m.pagamentos ? 0 : empty m.pagamentos.get(0).registro
+                ? m.pagamentos.get(0).desconto : m.pagamentos.get(0).registro.registroDetalhe.desconto}">
+                    <f:convertNumber minFractionDigits="2"/>
+                </h:outputText>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">#{bundle.modalidade}</f:facet>
+                #{m.modalidade}
             </h:column>
 
             <h:column>
@@ -204,10 +225,11 @@
             <h:column>
                 <f:facet name="header">#{bundle.actions}</f:facet>
                 <button jsf:id="btnEdit" class="btn btn-primary link-group"
+                        jsf:actionListener="#{mensalidadeController.prepararPagamento(m)}"
                         rendered="#{empty m.pagamentos || empty m.pagamentos.get(0).registro}">
                     <span class="glyphicon glyphicon-edit"/>
                     <f:setPropertyActionListener value="#{m}" target="#{mensalidadeController.mensalidade}"/>
-                    <f:ajax render=":addForm" onevent="focus(:addForm)"/>
+                    <f:ajax render=":addForm :pagamento" onevent="focus(:addForm)"/>
                 </button>
             </h:column>
 

@@ -32,7 +32,7 @@ public class GenericoJPA implements Serializable {
   }
 
   public <T extends EntityGeneric> T salvar(T t) {
-    if(t.getId() > 0) {
+    if(t.getId() != null && t.getId() > 0) {
       em.merge(t);
       em.flush();
     } else {

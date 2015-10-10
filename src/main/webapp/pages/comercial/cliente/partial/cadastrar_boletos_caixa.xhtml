@@ -1,8 +1,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <form jsf:id="formBoletos">
+
+
+    <label jsf:for="modalidade" class="control-label">#{bundle.modalidade}</label>
+    <h:selectOneMenu id="modalidade" value="#{cadastrarBoletosController.modalidade}" styleClass="form-control">
+        <f:selectItem itemLabel="NÃO REGISTRADO" itemValue="24"/>
+        <f:selectItem itemLabel="REGISTRADO" itemValue="14"/>
+    </h:selectOneMenu>
+
     <label jsf:for="numeroBoletoInicio" class="control-label">#{bundle.boletoInicio}</label>
     <input jsf:id="numeroBoletoInicio" type="number" class="form-control" required="required"
            jsf:value="#{cadastrarBoletosController.numeroBoletoInicio}"/>

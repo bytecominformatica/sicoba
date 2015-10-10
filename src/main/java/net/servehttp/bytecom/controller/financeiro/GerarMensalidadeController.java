@@ -3,6 +3,7 @@ package net.servehttp.bytecom.controller.financeiro;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
 import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.WebUtil;
@@ -29,6 +30,8 @@ public class GerarMensalidadeController extends GenericoController {
 
     @Inject
     private MensalidadeService service;
+    @Inject
+    private MensalidadeJPA mensalidadeJPA;
     @Inject
     private ClienteService clientService;
 
@@ -57,7 +60,7 @@ public class GerarMensalidadeController extends GenericoController {
             m.setValor(mensalidade.getValor());
             m.setDesconto(descontoGeracao);
             m.setDataVencimento(dataInicio);
-            jpa.salvar(m);
+            mensalidadeJPA.save(m);
             dataInicio = dataInicio.plusMonths(1);
         }
         dataInicio = mensalidade.getDataVencimento();
