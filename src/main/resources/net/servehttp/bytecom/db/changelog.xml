@@ -1,201 +1,205 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
-    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-	<changeSet id="1" author="felipewmartins">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/create-tables.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="1" author="felipewmartins">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/create-tables.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="2" author="felipewmartins">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/carga-dados.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="2" author="felipewmartins">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/carga-dados.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="3" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140607-3-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="3" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140607-3-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="4" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140607-4-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="4" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140607-4-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="5" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140614-5-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="5" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140614-5-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="6" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140614-6-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="6" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140614-6-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="1" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140615-1-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="1" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140615-1-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="7" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140617-7-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="7" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140617-7-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="8" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140624-8-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="8" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140624-8-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="9" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140704-9-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="9" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140704-9-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="10" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140704-10-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="10" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140704-10-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="11" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140705-11-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="11" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140705-11-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="12" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140705-12-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="12" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140705-12-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="13" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140706-13-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="13" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140706-13-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="14" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140706-14-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="14" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140706-14-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="15" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140709-15-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="15" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140709-15-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="16" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140809-16-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="16" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140809-16-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="17" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140816-17-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="17" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140816-17-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="18" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140826-18-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="18" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140826-18-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="19" author="clairtonluz">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140830-19-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="19" author="clairtonluz">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140830-19-clairtonluz.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="20" author="felipewmartins">
-		<sqlFile
-			path="net/servehttp/bytecom/db/changelog/20140907-20-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="20" author="felipewmartins">
+        <sqlFile
+                path="net/servehttp/bytecom/db/changelog/20140907-20-felipewmartins.sql"
+                stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="21" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/21-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="21" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/21-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="22" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/22-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="22" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/22-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="23" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/23-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="23" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/23-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="24" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/24-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="24" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/24-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="25" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/25-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="25" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/25-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="26" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/26-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="26" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/26-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="27" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/27-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="27" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/27-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="28" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/28-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="28" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/28-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="29" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/29-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="29" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/29-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="30" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/30-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="30" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/30-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="31" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/31-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="31" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/31-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="32" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/32-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="32" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/32-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
-	<changeSet id="33" author="clairtonluz">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/33-clairtonluz.sql"
-			stripComments="true" />
-	</changeSet>
-	
-	<changeSet id="34" author="felipewmartins">
-		<sqlFile path="net/servehttp/bytecom/db/changelog/34-felipewmartins.sql"
-			stripComments="true" />
-	</changeSet>
+    <changeSet id="33" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/33-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="34" author="felipewmartins">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/34-felipewmartins.sql"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="35" author="clairtonluz">
+        <sqlFile path="net/servehttp/bytecom/db/changelog/35-clairtonluz.sql"
+                 stripComments="true"/>
+    </changeSet>
 
 </databaseChangeLog>

@@ -39,6 +39,8 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   private String parcela;
   @Enumerated
   private StatusMensalidade status;
+  @Column(name = "modalidade")
+  private Integer modalidade;
   @Column(name = "numero_boleto")
   private Integer numeroBoleto;
 
