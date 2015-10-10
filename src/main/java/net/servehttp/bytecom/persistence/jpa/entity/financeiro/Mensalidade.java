@@ -63,11 +63,7 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     }
 
     public Integer getNumeroBoleto() {
-        if (numeroBoleto != null) {
-            return numeroBoleto;
-        } else {
-            return id;
-        }
+        return numeroBoleto;
     }
 
     public void setNumeroBoleto(Integer numeroBoleto) {
