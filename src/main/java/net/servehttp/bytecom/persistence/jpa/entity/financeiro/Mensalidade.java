@@ -38,6 +38,8 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
+    private Pagamento pagamento;
+
     public LocalDate getDataVencimento() {
         return dataVencimento;
     }
