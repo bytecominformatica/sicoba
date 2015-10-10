@@ -97,11 +97,7 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
 
     public String statusMensalidade(Mensalidade mensalidade1) {
-        if (mensalidade1 != null) {
-            return service.statusMensalidade(mensalidade1);
-        }
-        System.out.println("INVALIDO");
-        return "INVALIDO";
+        return service.statusMensalidade(mensalidade1);
     }
 
     private void ordernarMensalidades() {
