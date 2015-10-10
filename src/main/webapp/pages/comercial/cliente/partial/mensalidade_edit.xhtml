@@ -22,10 +22,6 @@
         </div>
     </div>
 
-    <label jsf:for="idMensalidade" class="control-label">#{bundle.id}</label>
-    <input jsf:id="idMensalidade" type="text" class="form-control"
-           jsf:value="#{mensalidadeController.mensalidade.id}" readonly="readonly"/>
-
     <label jsf:for="cliente" class="control-label">#{bundle.cliente}</label>
     <input jsf:id="cliente" type="text" class="form-control"
            jsf:value="#{mensalidadeController.mensalidade.cliente.nome}" readonly="readonly"
@@ -57,31 +53,13 @@
     <input jsf:id="numeroBoleto" type="number" class="form-control"
            jsf:value="#{mensalidadeController.mensalidade.numeroBoleto}"/>
 
-    <div jsf:id="pagamento" style="display: #{mensalidadeController.mensalidade.id > 0 ?  'inline' : 'none'}">
-
-        <h2>PAGAMENTO</h2>
-        <label jsf:for="valorPagamento" class="control-label">#{bundle.valorPago}</label>
-        <input jsf:id="valorPagamento" type="number" step="any" class="form-control"
-               jsf:value="#{mensalidadeController.pagamento.valor}"/>
-
-        <label jsf:for="dataPagamento" class="control-label">#{bundle.dataOcorrencia}</label>
-        <input jsf:id="dataPagamento" jsf:value="#{mensalidadeController.pagamento.data}" type="text"
-               maxlength="10" class="form-control" pattern="#{bundle.datePattern}">
-            <f:converter converterId="localDateConverter"/>
-        </input>
-
-        <label jsf:for="descontoPagamento" class="control-label">#{bundle.desconto}</label>
-        <input jsf:id="descontoPagamento" jsf:value="#{mensalidadeController.pagamento.desconto}" type="number"
-               step="any" class="form-control"/>
-    </div>
-
     <div class="modal-footer">
         <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvar()}"
                 class="btn btn-primary" type="submit">
             <span class="glyphicon glyphicon-floppy-save"/> #{mensalidadeController.mensalidade.id > 0 ?  bundle.update : bundle.save}
         </button>
         <button jsf:id="btnRemove"
-                jsf:actionListener="#{mensalidadeController.remover(mensalidadeController.mensalidade)}"
+                jsf:actionListener="#{mensalidadeController.removerMensalidade}"
                 class="btn btn-danger"
                 style="margin-left: 5px; #{mensalidadeController.mensalidade.id > 0 ?  '' : 'display: none'}">
             <span class="glyphicon glyphicon-remove"/>
@@ -96,6 +74,88 @@
     </div>
 </form>
 
+
+<div jsf:id="pagamento"
+     style="display: #{not empty mensalidadeController.pagamento ?  'inline' : 'none'}">
+    <h2>PAGAMENTO</h2>
+    <form jsf:id="pagamentoForm" class="form-horizontal">
+
+        <label jsf:for="valor" class="control-label">#{bundle.valor}</label>
+        <input jsf:id="valor" type="number" step="any" class="form-control"
+               jsf:value="#{mensalidadeController.pagamento.valor}"/>
+
+        <label jsf:for="desconto" class="control-label">#{bundle.desconto}</label>
+        <input jsf:id="desconto" type="number" step="any" class="form-control"
+               jsf:value="#{mensalidadeController.pagamento.desconto}"/>
+
+        <label jsf:for="data" class="control-label">#{bundle.dataOcorrencia}</label>
+        <input jsf:id="data" required="required"
+               jsf:value="#{mensalidadeController.pagamento.data}" type="text" maxlength="10"
+               class="form-control" pattern="#{bundle.datePattern}">
+            <f:converter converterId="localDateConverter"/>
+        </input>
+
+        <div class="modal-footer">
+            <button jsf:id="btSalvar" jsf:actionListener="#{mensalidadeController.salvarPagamento()}"
+                    class="btn btn-primary" type="submit">
+                <span class="glyphicon glyphicon-floppy-save"/> #{mensalidadeController.pagamento.id > 0 ?  bundle.update : bundle.save}
+            </button>
+            <button jsf:id="btnRemove"
+                    jsf:actionListener="#{mensalidadeController.removerPagamento}"
+                    class="btn btn-danger"
+                    style="margin-left: 5px; #{mensalidadeController.pagamento.id > 0 ?  '' : 'display: none'}">
+                <span class="glyphicon glyphicon-remove"/>
+                Remover
+                <f:ajax render=":pagamentoForm :addForm"/>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div jsf:id="pagamentoList"
+     style="display: #{not empty mensalidadeController.mensalidade.pagamentos ?  'inline' : 'none'}">
+
+    <h2>PAGAMENTOS</h2>
+    <h:dataTable value="#{mensalidadeController.mensalidade.pagamentos}" var="p" styleClass="table table-hover"
+                 headerClass="tableColumnsHeader">
+        <h:column>
+            <f:facet name="header">#{bundle.id}</f:facet>
+            <h:outputText value="#{p.id}"/>
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">#{bundle.valor}</f:facet>
+            <h:outputText value="#{p.valor}"/>
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">#{bundle.desconto}</f:facet>
+            <h:outputText value="#{p.desconto}"/>
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">#{bundle.dataOcorrencia}</f:facet>
+            <h:outputText value="#{p.data}">
+                <f:converter converterId="localDateConverter"/>
+            </h:outputText>
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">#{bundle.actions}</f:facet>
+
+            <form jsf:id="actionsForm">
+                <button jsf:id="btnEdit" class="btn btn-primary link-group" rendered="#{empty p.registro}">
+                    <span class="glyphicon glyphicon-edit"/>
+                    <f:setPropertyActionListener value="#{p}" target="#{mensalidadeController.pagamento}"/>
+                    <f:ajax render=":addForm" onevent="focus(:pagamento)"/>
+                </button>
+            </form>
+        </h:column>
+    </h:dataTable>
+</div>
+
+
+<h2>MENSALIDADES</h2>
 <form jsf:id="mensalidadesForm">
     <div class="table-responsive">
         <h:dataTable value="#{mensalidadeController.cliente.mensalidades}"
@@ -136,7 +196,7 @@
 
             <h:column>
                 <f:facet name="header">#{bundle.status}</f:facet>
-                <span class="label #{empty m.pagamentos ? 'label-warning' : 'label-success'}">#{empty m.pagamentos ? 'PENDENTE' : 'PAGO '} #{not empty m.pagamentos ? m.pagamentos.size() : ''}</span>
+                <span class="label #{empty m.pagamentos ? 'label-warning' : 'label-success'}">#{empty m.pagamentos ? 'PENDENTE' : empty m.pagamentos.get(0).registro ? 'PAGO' : 'PAGO NO BOLETO'} #{not empty m.pagamentos ? m.pagamentos.size() : ''}</span>
             </h:column>
 
             <h:column>
@@ -144,8 +204,7 @@
                 <button jsf:id="btnEdit" class="btn btn-primary link-group"
                         rendered="#{empty m.pagamentos || empty m.pagamentos.get(0).registro}">
                     <span class="glyphicon glyphicon-edit"/>
-                    <f:setPropertyActionListener target="#{mensalidadeController.pagamento}"
-                                                 value="#{m.pagamentos.get(0)}"/>
+                    <f:setPropertyActionListener value="#{m}" target="#{mensalidadeController.mensalidade}"/>
                     <f:ajax render=":addForm" onevent="focus(:addForm)"/>
                 </button>
             </h:column>

@@ -4,6 +4,7 @@ import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Pagamento;
+import net.servehttp.bytecom.persistence.jpa.financeiro.PagamentoJPA;
 import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
@@ -16,9 +17,11 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
@@ -34,6 +37,8 @@ public class MensalidadeController extends GenericoController implements Seriali
 
     @Inject
     private MensalidadeService service;
+    @Inject
+    private PagamentoJPA pagamentoJPA;
     @Inject
     private ClienteService clientService;
 
@@ -91,10 +96,10 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
 
     private List<Mensalidade> getBoletosEmAberto(List<Mensalidade> list) {
-//        if (list != null) {
-//            return list.stream().filter(m -> m.getStatus() == StatusMensalidade.PENDENTE)
-//                    .collect(Collectors.toCollection(ArrayList::new));
-//        }
+        if (list != null) {
+            return list.stream().filter(m -> m.getPagamentos().isEmpty())
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
         return null;
     }
 
@@ -107,8 +112,7 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
 
     public Mensalidade getNovaMensalidade() {
-        LocalDate d =
-                LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
+        LocalDate d = LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
         return service.getNovaMensalidade(cliente, d);
     }
 
@@ -125,11 +129,27 @@ public class MensalidadeController extends GenericoController implements Seriali
         init();
     }
 
-    public void remover(Mensalidade m) {
-        service.remover(m);
-        cliente.getMensalidades().remove(m);
-        mensalidade = getNovaMensalidade();
-        AlertaUtil.info("Mensalidade removido com sucesso!");
+    public void salvarPagamento() {
+        jpa.salvar(pagamento);
+        AlertaUtil.info("Pagamento salva com sucesso!");
+        pagamento = null;
+    }
+
+    public void removerMensalidade() {
+        if(mensalidade.getPagamentos().isEmpty()) {
+            service.remover(mensalidade);
+            cliente.getMensalidades().remove(mensalidade);
+            mensalidade = getNovaMensalidade();
+            AlertaUtil.info("Mensalidade removido com sucesso!");
+        } else {
+            AlertaUtil.error("Mensalidade possui pagamentos e não pode ser removida");
+        }
+    }
+
+    public void removerPagamento() {
+        pagamentoJPA.remove(pagamento);
+        pagamento = null;
+        AlertaUtil.info("Pagamento removido com sucesso!");
     }
 
     public Cliente getCliente() {

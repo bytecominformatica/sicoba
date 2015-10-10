@@ -1,6 +1,7 @@
 package net.servehttp.bytecom.service.financeiro;
 
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Cedente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
@@ -47,7 +48,7 @@ public class MensalidadeService implements Serializable {
     }
 
     public void remover(Mensalidade m) {
-        mensalidadeJPA.remover(m);
+        mensalidadeJPA.remove(m);
     }
 
 
