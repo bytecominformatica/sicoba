@@ -144,6 +144,12 @@
 									<f:converter converterId="localDateConverter"  />
 								</h:outputText>
 							</h:column>
+							<h:column>
+								<f:facet name="header">Ultima Mensalidade</f:facet>
+								<h:outputText value="#{not empty dashboardController.buscarUltimaMensalidade(c) ? dashboardController.buscarUltimaMensalidade(c).dataVencimento : null}" >
+									<f:converter converterId="localDateConverter"  />
+								</h:outputText>
+							</h:column>
 						</h:dataTable>
 					</div>
 					

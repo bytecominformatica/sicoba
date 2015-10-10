@@ -57,6 +57,11 @@ public class MensalidadeJPA extends CrudJPA {
         return new JPAQuery(em).from(m).where(m.cliente.id.eq(clienteId).and(m.pagamentos.isEmpty())).list(m);
     }
 
+    public Mensalidade buscarUltimaPorCliente(Integer clienteId) {
+        return new JPAQuery(em).from(m).where(m.cliente.id.eq(clienteId))
+                .orderBy(m.dataVencimento.desc()).limit(1).uniqueResult(m);
+    }
+
     @Override
     protected EntityManager getEm() {
         return em;

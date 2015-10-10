@@ -45,6 +45,10 @@ public class DashboardController implements Serializable {
         listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
     }
 
+    public Mensalidade buscarUltimaMensalidade(Cliente cliente) {
+        return mensalidadeJPA.buscarUltimaPorCliente(cliente.getId());
+    }
+
     public boolean isClienteSemMensalidade(Cliente cliente) {
         return mensalidadeJPA.buscarTodosPendentePorCliente(cliente.getId()).isEmpty();
     }
