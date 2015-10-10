@@ -97,9 +97,11 @@ public class MensalidadeController extends GenericoController implements Seriali
     }
 
     public String statusMensalidade(Mensalidade mensalidade1) {
-        String status = mensalidade1.isBaixaManual() ? "BAIXA MANUAL" : "PENDENTE";
-
-        return status;
+        if (mensalidade1 != null) {
+            return service.statusMensalidade(mensalidade1);
+        }
+        System.out.println("INVALIDO");
+        return "INVALIDO";
     }
 
     private void ordernarMensalidades() {

@@ -13,7 +13,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 @Entity
 @Table(name = "cidade")
-public class Cidade extends EntityGeneric implements Serializable {
+public class Cidade extends EntityGeneric {
   private static final long serialVersionUID = -4732281989184639857L;
 
   private String nome;
@@ -23,14 +23,6 @@ public class Cidade extends EntityGeneric implements Serializable {
 
   @ManyToOne(fetch = FetchType.EAGER)
   private Estado estado;
-
-  public int getId() {
-    return this.id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
 
   public String getNome() {
     return this.nome;

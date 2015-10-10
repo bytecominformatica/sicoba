@@ -3,7 +3,9 @@ package net.servehttp.bytecom.service.financeiro;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Cedente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
+import net.servehttp.bytecom.persistence.jpa.financeiro.caixa.RegistroJPA;
 
 import javax.inject.Inject;
 import java.io.Serializable;
@@ -15,6 +17,8 @@ public class MensalidadeService implements Serializable {
     private static final long serialVersionUID = 8705835474790847188L;
     @Inject
     private MensalidadeJPA mensalidadeJPA;
+    @Inject
+    private RegistroJPA registroJPA;
 
     public Mensalidade getNovaMensalidade(Cliente cliente, LocalDate vencimento) {
         Mensalidade m = new Mensalidade();
@@ -64,4 +68,12 @@ public class MensalidadeService implements Serializable {
         return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);
     }
 
+    public String statusMensalidade(Mensalidade mensalidade1) {
+        String status = mensalidade1.isBaixaManual() ? "BAIXA MANUAL" : "PENDENTE";
+        Registro registro = registroJPA.buscarPorModalidadeNossoNumero(mensalidade1.getModalidade(), mensalidade1.getNumeroBoleto());
+        if(registro != null) {
+            status = "PAGO NO BOLETO";
+        }
+        return status;
+    }
 }

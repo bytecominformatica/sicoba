@@ -45,7 +45,7 @@
 	<input jsf:id="desconto" type="number" step="any" class="form-control"
 		jsf:value="#{mensalidadeController.mensalidade.desconto}" />
 
-	<div jsf:id="valorPagoDisplay" style="display: #{mensalidadeController.mensalidade.status == 'BAIXA_MANUAL' ?  'inline' : 'none'}">
+	<div jsf:id="valorPagoDisplay" style="display: #{mensalidadeController.statusMensalidade(mensalidade) == 'BAIXA_MANUAL' ?  'inline' : 'none'}">
 		<label jsf:for="valorPago" class="control-label" >#{bundle.valorPago}</label>
 		<input jsf:id="valorPago" type="number" step="any" class="form-control"
 			jsf:value="#{mensalidadeController.mensalidade.valorPago}" />
@@ -141,11 +141,11 @@
 			
 			<h:column>
 				<f:facet name="header">#{bundle.status}</f:facet>
-				<span class="label #{m.status == 'PENDENTE' ? 'label-warning' : m.status == 'PAGO_NO_BOLETO' || m.status == 'BAIXA_MANUAL' ? 'label-success' : ''}">#{m.status}</span>
+				<span class="label #{mensalidadeController.statusMensalidade(m) == 'PENDENTE' ? 'label-warning' : mensalidadeController.statusMensalidade(m) == 'PAGO_NO_BOLETO' || mensalidadeController.statusMensalidade(m) == 'BAIXA_MANUAL' ? 'label-success' : ''}">#{m.status}</span>
 			</h:column>
 			<h:column>
 				<f:facet name="header">#{bundle.actions}</f:facet>
-					<button jsf:id="btnEdit" class="btn btn-primary link-group" rendered="#{m.status != 'PAGO_NO_BOLETO'}">
+					<button jsf:id="btnEdit" class="btn btn-primary link-group" rendered="#{mensalidadeController.statusMensalidade(m) != 'PAGO_NO_BOLETO'}">
 						<span class="glyphicon glyphicon-edit" />
 						<f:setPropertyActionListener target="#{mensalidadeController.mensalidade}" value="#{m}"/>
 						<f:ajax render=":addForm" onevent="focus(:addForm)"/>
