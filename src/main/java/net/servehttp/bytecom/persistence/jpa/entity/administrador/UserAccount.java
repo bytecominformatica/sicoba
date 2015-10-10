@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.Email;
 
 /**
  * 
- * @author clairtonluz
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  *
  */
 @Entity

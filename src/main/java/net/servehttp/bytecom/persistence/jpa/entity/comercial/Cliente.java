@@ -27,7 +27,7 @@ import org.hibernate.validator.constraints.Email;
 
 /**
  *
- * @author clairton
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Entity
 @Table(name = "cliente")

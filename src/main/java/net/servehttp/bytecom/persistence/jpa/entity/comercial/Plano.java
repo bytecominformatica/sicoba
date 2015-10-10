@@ -10,7 +10,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 /**
  * 
- * @author clairton
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Entity
 @Table(name = "plano")

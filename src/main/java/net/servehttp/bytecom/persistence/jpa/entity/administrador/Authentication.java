@@ -12,7 +12,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 /**
  * 
- * @author clairtonluz
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  *
  */
 @Entity

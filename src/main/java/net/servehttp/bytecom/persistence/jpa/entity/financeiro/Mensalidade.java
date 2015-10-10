@@ -17,8 +17,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 
 /**
- *
- * @author clairton
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Entity
 @Table(name = "mensalidade")
@@ -35,10 +34,8 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   @Column(name = "valor_pago")
   private double valorPago;
   private double desconto;
-  private double tarifa;
-  private String parcela;
-  @Enumerated
-  private StatusMensalidade status;
+  @Column(name = "baixa_manual")
+  private boolean baixaManual;
   @Column(name = "modalidade")
   private Integer modalidade;
   @Column(name = "numero_boleto")
@@ -47,10 +44,6 @@ public class Mensalidade extends EntityGeneric implements Serializable {
   @JoinColumn(name = "cliente_id")
   @ManyToOne
   private Cliente cliente;
-  
-  public Mensalidade(){
-    status = StatusMensalidade.PENDENTE;
-  }
 
   public LocalDate getDataVencimento() {
     return dataVencimento;
@@ -66,14 +59,6 @@ public class Mensalidade extends EntityGeneric implements Serializable {
 
   public void setValor(double valor) {
     this.valor = valor;
-  }
-
-  public StatusMensalidade getStatus() {
-    return status;
-  }
-
-  public void setStatus(StatusMensalidade status) {
-    this.status = status;
   }
 
   public Cliente getCliente() {
@@ -100,14 +85,6 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     this.valorPago = valorPago;
   }
 
-  public double getTarifa() {
-    return tarifa;
-  }
-
-  public void setTarifa(double tarifa) {
-    this.tarifa = tarifa;
-  }
-
   public LocalDate getDataOcorrencia() {
     return dataOcorrencia;
   }
@@ -124,13 +101,19 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     this.desconto = desconto;
   }
 
-  public String getParcela() {
-    return parcela;
+  public Integer getModalidade() {
+    return modalidade;
   }
 
-  public void setParcela(String parcela) {
-    this.parcela = parcela;
+  public void setModalidade(Integer modalidade) {
+    this.modalidade = modalidade;
   }
 
+  public boolean isBaixaManual() {
+    return baixaManual;
+  }
 
+  public void setBaixaManual(boolean baixaManual) {
+    this.baixaManual = baixaManual;
+  }
 }

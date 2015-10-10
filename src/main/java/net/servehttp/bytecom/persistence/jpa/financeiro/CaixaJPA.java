@@ -13,7 +13,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 
 /**
  * 
- * @author clairton
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Transactional
 public class CaixaJPA implements Serializable {

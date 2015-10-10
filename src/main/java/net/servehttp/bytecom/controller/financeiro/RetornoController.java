@@ -19,7 +19,7 @@ import javax.servlet.http.Part;
 import java.util.List;
 
 /**
- * Created by <a href="https://github.com/clairtonluz">clairtonluz</a>
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Named
 @RequestScoped

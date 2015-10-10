@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Created by <a href="https://github.com/clairtonluz">clairtonluz</a> on 09/10/15.
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a> on 09/10/15.
  */
 public class ParseArquivoRetornoCaixaTest {
 

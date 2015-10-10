@@ -15,7 +15,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
- * @author clairton
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Named
 @ViewScoped

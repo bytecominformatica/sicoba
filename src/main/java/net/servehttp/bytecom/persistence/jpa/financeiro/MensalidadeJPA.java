@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author clairton
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Transactional
 public class MensalidadeJPA implements Serializable {
