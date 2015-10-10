@@ -67,19 +67,4 @@ public class MensalidadeService implements Serializable {
     public List<Mensalidade> buscarMensalidadesPorBoleto(int inicio, int fim) {
         return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);
     }
-
-    public String statusMensalidade(Mensalidade mensalidade1) {
-        String status = mensalidade1.isBaixaManual() ? "BAIXA MANUAL" : "PENDENTE";
-        Registro registro = null;
-        if(mensalidade1.getNumeroBoleto() != null) {
-            registro = registroJPA.buscarPorModalidadeNossoNumero(mensalidade1.getModalidade(), mensalidade1.getNumeroBoleto());
-        } else {
-            registro = registroJPA.buscarPorModalidadeNossoNumero(mensalidade1.getModalidade(), mensalidade1.getId());
-        }
-
-        if(registro != null) {
-            status = "PAGO NO BOLETO";
-        }
-        return status;
-    }
 }

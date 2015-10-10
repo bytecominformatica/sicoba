@@ -47,11 +47,21 @@ public class MensalidadeRelatorioController implements Serializable {
         valorTotal = valorPagoTotal = tarifaTotal = descontoTotal = 0;
         for (Mensalidade m : listMensalidades) {
             valorTotal += m.getValor();
-            valorPagoTotal += m.getValorPago();
-            descontoTotal += m.getDesconto();
-            //TODO: totalizar tarifas
-        }
 
+            descontoTotal += m.getDesconto();
+            if (!m.getPagamentos().isEmpty()) {
+                m.getPagamentos().forEach(p -> {
+                    if (p.getRegistro() != null) {
+                        valorPagoTotal += p.getRegistro().getValorTitulo();
+                        descontoTotal += p.getRegistro().getRegistroDetalhe().getDesconto();
+                        tarifaTotal += p.getRegistro().getValorTarifa();
+                    } else {
+                        valorPagoTotal += p.getValor();
+                        descontoTotal += p.getDesconto();
+                    }
+                });
+            }
+        }
     }
 
     public LocalDate getDataInicio() {

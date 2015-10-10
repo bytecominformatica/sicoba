@@ -62,11 +62,13 @@ public class DashboadJPA implements Serializable {
     }
 
     public double getFaturamentoDoMes() {
-        QMensalidade m = QMensalidade.mensalidade;
-        Double d =
-                new JPAQuery(em).from(m).where(m.dataOcorrencia.between(from, to))
-                        .uniqueResult(m.valorPago.sum());
-        return d != null ? d : 0;
+//        QMensalidade m = QMensalidade.mensalidade;
+//        Double d =
+//                new JPAQuery(em).from(m).where(m.dataOcorrencia.between(from, to))
+//                        .uniqueResult(m.valorPago.sum());
+//        return d != null ? d : 0;
+//        TODO: implementar faturamento do mes
+        return 0;
     }
 
     public double getFaturamentoPrevistoDoMes() {

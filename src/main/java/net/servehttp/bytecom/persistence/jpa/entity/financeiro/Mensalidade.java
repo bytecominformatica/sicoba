@@ -8,6 +8,7 @@ import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
@@ -20,15 +21,8 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     @Column(name = "data_vencimento")
     @Convert(converter = LocalDatePersistenceConverter.class)
     private LocalDate dataVencimento;
-    @Column(name = "data_ocorrencia")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataOcorrencia;
     private double valor;
-    @Column(name = "valor_pago")
-    private double valorPago;
     private double desconto;
-    @Column(name = "baixa_manual")
-    private boolean baixaManual;
     @Column(name = "modalidade")
     private Integer modalidade;
     @Column(name = "numero_boleto")
@@ -38,7 +32,8 @@ public class Mensalidade extends EntityGeneric implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
-    private Pagamento pagamento;
+    @OneToMany(mappedBy = "mensalidade", fetch = FetchType.EAGER)
+    private List<Pagamento> pagamentos;
 
     public LocalDate getDataVencimento() {
         return dataVencimento;
@@ -54,38 +49,6 @@ public class Mensalidade extends EntityGeneric implements Serializable {
 
     public void setValor(double valor) {
         this.valor = valor;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Integer getNumeroBoleto() {
-        return numeroBoleto;
-    }
-
-    public void setNumeroBoleto(Integer numeroBoleto) {
-        this.numeroBoleto = numeroBoleto;
-    }
-
-    public double getValorPago() {
-        return valorPago;
-    }
-
-    public void setValorPago(double valorPago) {
-        this.valorPago = valorPago;
-    }
-
-    public LocalDate getDataOcorrencia() {
-        return dataOcorrencia;
-    }
-
-    public void setDataOcorrencia(LocalDate dataOcorrencia) {
-        this.dataOcorrencia = dataOcorrencia;
     }
 
     public double getDesconto() {
@@ -104,11 +67,27 @@ public class Mensalidade extends EntityGeneric implements Serializable {
         this.modalidade = modalidade;
     }
 
-    public boolean isBaixaManual() {
-        return baixaManual;
+    public Integer getNumeroBoleto() {
+        return numeroBoleto;
     }
 
-    public void setBaixaManual(boolean baixaManual) {
-        this.baixaManual = baixaManual;
+    public void setNumeroBoleto(Integer numeroBoleto) {
+        this.numeroBoleto = numeroBoleto;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
     }
 }

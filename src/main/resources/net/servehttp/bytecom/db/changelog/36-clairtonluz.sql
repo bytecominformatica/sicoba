@@ -5,6 +5,8 @@ CREATE TABLE pagamento(
   desconto double,
   mensalidade_id INT,
   registro_id INT,
+  created_at datetime,
+  updated_at timestamp not null default current_timestamp on update current_timestamp,
   CONSTRAINT fk_pagamento_mensalidade_id
   FOREIGN KEY(mensalidade_id) REFERENCES mensalidade(id),
   CONSTRAINT fk_pagamento_registro_id
@@ -21,5 +23,4 @@ DROP COLUMN tarifa,
 DROP COLUMN parcela,
 DROP COLUMN data_ocorrencia,
 DROP COLUMN valor_pago,
-DROP COLUMN desconto,
 DROP COLUMN status;

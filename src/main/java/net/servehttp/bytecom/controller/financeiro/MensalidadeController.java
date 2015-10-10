@@ -3,6 +3,7 @@ package net.servehttp.bytecom.controller.financeiro;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Pagamento;
 import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.AlertaUtil;
@@ -28,6 +29,7 @@ public class MensalidadeController extends GenericoController implements Seriali
 
     private static final long serialVersionUID = -866830816286480241L;
     private Mensalidade mensalidade;
+    private Pagamento pagamento;
     private Cliente cliente;
 
     @Inject
@@ -96,30 +98,12 @@ public class MensalidadeController extends GenericoController implements Seriali
         return null;
     }
 
-    public String statusMensalidade(Mensalidade mensalidade1) {
-        return service.statusMensalidade(mensalidade1);
-    }
-
     private void ordernarMensalidades() {
         Collections.sort(cliente.getMensalidades(), new Comparator<Mensalidade>() {
             public int compare(Mensalidade m1, Mensalidade m2) {
                 return m1.getDataVencimento().compareTo(m2.getDataVencimento());
             }
         });
-    }
-
-    public void prepararBaixaMensalidade() {
-        if (mensalidade.isBaixaManual()) {
-            if (mensalidade.getValorPago() == 0) {
-                mensalidade.setValorPago(mensalidade.getValor() - mensalidade.getDesconto());
-            }
-            if (mensalidade.getDataOcorrencia() == null) {
-                mensalidade.setDataOcorrencia(LocalDate.now());
-            }
-        } else {
-            mensalidade.setValorPago(0);
-            mensalidade.setDataOcorrencia(null);
-        }
     }
 
     public Mensalidade getNovaMensalidade() {
@@ -162,5 +146,13 @@ public class MensalidadeController extends GenericoController implements Seriali
 
     public void setMensalidade(Mensalidade mensalidade) {
         this.mensalidade = mensalidade;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 }

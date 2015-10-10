@@ -8,6 +8,7 @@ import net.servehttp.bytecom.util.converter.date.LocalDatePersistenceConverter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
@@ -30,6 +31,10 @@ public class Pagamento extends EntityGeneric {
     @ManyToOne
     @JoinColumn(name = "mensalidade_id")
     private Mensalidade mensalidade;
+
+    public Pagamento() {
+        data = LocalDate.now();
+    }
 
     public LocalDate getData() {
         return data;
@@ -61,5 +66,13 @@ public class Pagamento extends EntityGeneric {
 
     public void setRegistro(Registro registro) {
         this.registro = registro;
+    }
+
+    public Mensalidade getMensalidade() {
+        return mensalidade;
+    }
+
+    public void setMensalidade(Mensalidade mensalidade) {
+        this.mensalidade = mensalidade;
     }
 }
