@@ -17,7 +17,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.Trailer;
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.retorno.TrailerLote;
 import net.servehttp.bytecom.util.StringUtil;
 
-public class ParseUploadAquivoRetornoCaixa implements IParseUpload<Header> {
+public class ParseUploadArquivoRetornoCaixa implements IParseUpload<Header> {
 
   private static final long serialVersionUID = -6522095846509892574L;
   private static final String RET = ".ret";
