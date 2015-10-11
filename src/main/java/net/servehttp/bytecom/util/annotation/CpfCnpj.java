@@ -13,7 +13,7 @@ import net.servehttp.bytecom.util.validator.CpfCnpjValidator;
  
 /**
  * 
- * @author clairtonluz
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  *
  */	
 @Constraint(validatedBy = {CpfCnpjValidator.class})

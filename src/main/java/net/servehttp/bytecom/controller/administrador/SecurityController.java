@@ -23,9 +23,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 /**
- * 
- * @author clairtonluz
- *
+ * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
  */
 @Named
 @RequestScoped

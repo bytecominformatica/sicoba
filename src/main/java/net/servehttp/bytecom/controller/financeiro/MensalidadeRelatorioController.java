@@ -1,121 +1,116 @@
 package net.servehttp.bytecom.controller.financeiro;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeRelatorioJPA;
+import net.servehttp.bytecom.util.StringUtil;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
-import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeRelatorioJPA;
-import net.servehttp.bytecom.util.StringUtil;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
 
 @Named
 @ViewScoped
 public class MensalidadeRelatorioController implements Serializable {
 
-  private static final long serialVersionUID = -7284911722827189143L;
-  private LocalDate dataInicio;
-  private LocalDate dataFim;
-  private StatusMensalidade status;
-  private boolean pesquisarPorDataOcorrencia = true;
+    private static final long serialVersionUID = -7284911722827189143L;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
+    private boolean pesquisarPorDataOcorrencia = true;
 
-  private double valorTotal;
-  private double valorPagoTotal;
-  private double descontoTotal;
-  private double tarifaTotal;
-
+    private double valorTotal;
+    private double valorPagoTotal;
+    private double descontoTotal;
+    private double tarifaTotal;
 
 
-  private List<Mensalidade> listMensalidades;
-  @Inject
-  MensalidadeRelatorioJPA mensalidadeRelatorioJPA;
+    private List<Mensalidade> listMensalidades;
+    @Inject
+    MensalidadeRelatorioJPA mensalidadeRelatorioJPA;
 
-  public MensalidadeRelatorioController() {
-    dataInicio = LocalDate.now().withDayOfMonth(1);
-    dataFim = LocalDate.now();
-    dataFim = dataFim.withDayOfMonth(dataFim.lengthOfMonth());
-  }
-
-  public void consultar() {
-    listMensalidades =
-        mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status,
-            pesquisarPorDataOcorrencia);
-    calcularTotalizadores();
-  }
-
-  private void calcularTotalizadores() {
-    valorTotal = valorPagoTotal = tarifaTotal = descontoTotal = 0;
-    for (Mensalidade m : listMensalidades) {
-      valorTotal += m.getValor();
-      valorPagoTotal += m.getValorPago();
-      descontoTotal += m.getDesconto();
-      tarifaTotal += m.getTarifa();
-
+    public MensalidadeRelatorioController() {
+        dataInicio = LocalDate.now().withDayOfMonth(1);
+        dataFim = LocalDate.now();
+        dataFim = dataFim.withDayOfMonth(dataFim.lengthOfMonth());
     }
 
-  }
+    public void consultar() {
+        listMensalidades =
+                mensalidadeRelatorioJPA.buscarPorData(dataInicio, dataFim, pesquisarPorDataOcorrencia);
+        calcularTotalizadores();
+    }
 
-  public LocalDate getDataInicio() {
-    return dataInicio;
-  }
+    private void calcularTotalizadores() {
+        valorTotal = valorPagoTotal = tarifaTotal = descontoTotal = 0;
+        for (Mensalidade m : listMensalidades) {
+            valorTotal += m.getValor();
 
-  public void setDataInicio(LocalDate dataInicio) {
-    this.dataInicio = dataInicio;
-  }
+            descontoTotal += m.getDesconto();
+            if (!m.getPagamentos().isEmpty()) {
+                m.getPagamentos().forEach(p -> {
+                    if (p.getRegistro() != null) {
+                        valorPagoTotal += p.getRegistro().getValorTitulo();
+                        descontoTotal += p.getRegistro().getRegistroDetalhe().getDesconto();
+                        tarifaTotal += p.getRegistro().getValorTarifa();
+                    } else {
+                        valorPagoTotal += p.getValor();
+                        descontoTotal += p.getDesconto();
+                    }
+                });
+            }
+        }
+    }
 
-  public LocalDate getDataFim() {
-    return dataFim;
-  }
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
 
-  public void setDataFim(LocalDate dataFim) {
-    this.dataFim = dataFim;
-  }
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
 
-  public List<Mensalidade> getListMensalidades() {
-    return listMensalidades;
-  }
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
 
-  public void setListMensalidades(List<Mensalidade> listMensalidades) {
-    this.listMensalidades = listMensalidades;
-  }
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
 
-  public String getValorTotal() {
-    return StringUtil.formatCurrence(valorTotal);
-  }
+    public List<Mensalidade> getListMensalidades() {
+        return listMensalidades;
+    }
 
-  public String getValorPagoTotal() {
-    return StringUtil.formatCurrence(valorPagoTotal);
-  }
+    public void setListMensalidades(List<Mensalidade> listMensalidades) {
+        this.listMensalidades = listMensalidades;
+    }
 
-  public String getTarifaTotal() {
-    return StringUtil.formatCurrence(tarifaTotal);
-  }
+    public String getValorTotal() {
+        return StringUtil.formatCurrence(valorTotal);
+    }
 
-  public String getDescontoTotal() {
-    return StringUtil.formatCurrence(descontoTotal);
-  }
+    public String getValorPagoTotal() {
+        return StringUtil.formatCurrence(valorPagoTotal);
+    }
 
-  public StatusMensalidade getStatus() {
-    return status;
-  }
+    public String getTarifaTotal() {
+        return StringUtil.formatCurrence(tarifaTotal);
+    }
 
-  public void setStatus(StatusMensalidade status) {
-    this.status = status;
-  }
+    public String getDescontoTotal() {
+        return StringUtil.formatCurrence(descontoTotal);
+    }
 
-  public boolean isPesquisarPorDataOcorrencia() {
-    return pesquisarPorDataOcorrencia;
-  }
+    public boolean isPesquisarPorDataOcorrencia() {
+        return pesquisarPorDataOcorrencia;
+    }
 
-  public void setPesquisarPorDataOcorrencia(boolean pesquisarPorDataOcorrencia) {
-    this.pesquisarPorDataOcorrencia = pesquisarPorDataOcorrencia;
-  }
-
+    public void setPesquisarPorDataOcorrencia(boolean pesquisarPorDataOcorrencia) {
+        this.pesquisarPorDataOcorrencia = pesquisarPorDataOcorrencia;
+    }
 
 
 }
