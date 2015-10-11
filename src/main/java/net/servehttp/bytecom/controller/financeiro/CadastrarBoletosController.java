@@ -99,7 +99,7 @@ public class CadastrarBoletosController extends GenericoController implements Se
             validos = false;
             StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
             for (Mensalidade m : listMensalidades) {
-                sb.append(" : " + m.getModalidade() + '-'+ m.getNumeroBoleto());
+                sb.append(" : " + m.getModalidade() + '-' + m.getNumeroBoleto());
             }
             AlertaUtil.error(sb.toString());
         }
