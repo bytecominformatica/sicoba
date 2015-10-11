@@ -14,4 +14,4 @@ target/
 .settings
 
 .idea/
-*.iml
+sicoba.iml

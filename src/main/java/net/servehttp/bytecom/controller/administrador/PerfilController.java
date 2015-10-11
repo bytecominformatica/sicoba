@@ -19,7 +19,9 @@ import net.servehttp.bytecom.util.seguranca.HashUtil;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
 /**
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ * 
+ * @author clairtonluz
+ *
  */
 @Named
 @ViewScoped

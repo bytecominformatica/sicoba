@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  * 
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ * @author clairton
  */
 public final class StringUtil {
 

@@ -14,7 +14,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 @Entity
 @Table(name = "estado")
-public class Estado extends EntityGeneric {
+public class Estado extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -6261865881321268540L;
 
@@ -28,6 +28,16 @@ public class Estado extends EntityGeneric {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "pais_id")
   private Pais pais;
+
+  public Estado() {}
+
+  public int getId() {
+    return this.id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getNome() {
     return this.nome;

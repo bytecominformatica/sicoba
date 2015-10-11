@@ -14,7 +14,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 @Entity
 @Table(name = "endereco")
 @NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e")
-public class Endereco extends EntityGeneric {
+public class Endereco extends EntityGeneric implements Serializable {
 
   private static final long serialVersionUID = -1834900327044240105L;
   @NotNull(message = "cep é obrigatório")
@@ -27,6 +27,14 @@ public class Endereco extends EntityGeneric {
   @NotNull(message = "bairro é obrigatório")
   @ManyToOne(fetch = FetchType.EAGER)
   private Bairro bairro;
+
+  public int getId() {
+    return this.id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getComplemento() {
     return this.complemento;

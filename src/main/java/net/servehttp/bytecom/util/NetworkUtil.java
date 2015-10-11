@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ * @author clairtonluz
  *
  */
 public enum NetworkUtil {

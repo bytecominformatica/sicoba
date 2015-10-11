@@ -14,7 +14,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 /**
  * 
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ * @author clairton
  */
 @Transactional
 public class GenericoJPA implements Serializable {
@@ -32,7 +32,7 @@ public class GenericoJPA implements Serializable {
   }
 
   public <T extends EntityGeneric> T salvar(T t) {
-    if(t.getId() != null && t.getId() > 0) {
+    if(t.getId() > 0) {
       em.merge(t);
       em.flush();
     } else {

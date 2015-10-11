@@ -12,12 +12,24 @@ import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 @Entity
 @Table(name = "bairro")
-public class Bairro extends EntityGeneric{
+public class Bairro extends EntityGeneric implements Serializable {
+
   private static final long serialVersionUID = 4219357783343963670L;
 
   private String nome;
+
   @ManyToOne(fetch = FetchType.EAGER)
   private Cidade cidade;
+
+  public Bairro() {}
+
+  public int getId() {
+    return this.id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getNome() {
     return this.nome;

@@ -17,7 +17,7 @@ import com.mysema.query.types.expr.BooleanExpression;
 
 /**
  * 
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ * @author clairton
  */
 @Transactional
 public class ClienteJPA implements Serializable {

@@ -27,6 +27,14 @@ public class Mikrotik extends EntityGeneric implements IServer {
     this.port = 8728;
   }
 
+  public int getId() {
+    return this.id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public String getDescription() {
     return this.description;
   }

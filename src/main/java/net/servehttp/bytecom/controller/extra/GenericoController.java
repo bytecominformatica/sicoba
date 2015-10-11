@@ -21,8 +21,10 @@ public class GenericoController implements Serializable {
 
   @EJB
   private MailEJB mail;
+
   @Inject
   private LogService log;
+  
   @Inject
   protected GenericoJPA jpa;
 

@@ -19,7 +19,7 @@ import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
  * 
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a> <br>
+ * @author clairtonluz <br>
  * @author Felipe W. M. Martins <br>
  *         felipewmartins@gmail.com
  *

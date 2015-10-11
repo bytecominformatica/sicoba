@@ -27,7 +27,7 @@ import org.hibernate.validator.constraints.Email;
 
 /**
  *
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ * @author clairton
  */
 @Entity
 @Table(name = "cliente")
@@ -67,6 +67,9 @@ public class Cliente extends EntityGeneric {
       orphanRemoval = true)
   private Contrato contrato;
 
+  @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private List<Mensalidade> mensalidades;
+
   @Transient
   private boolean online;
 
@@ -82,6 +85,14 @@ public class Cliente extends EntityGeneric {
 
   public void setOnline(boolean online) {
     this.online = online;
+  }
+
+  public List<Mensalidade> getMensalidades() {
+    return mensalidades;
+  }
+
+  public void setMensalidades(List<Mensalidade> mensalidades) {
+    this.mensalidades = mensalidades;
   }
 
   public String getNome() {

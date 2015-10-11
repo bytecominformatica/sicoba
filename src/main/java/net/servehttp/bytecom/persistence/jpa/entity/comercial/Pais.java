@@ -1,52 +1,64 @@
 package net.servehttp.bytecom.persistence.jpa.entity.comercial;
 
-import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
+
+import net.servehttp.bytecom.persistence.jpa.entity.extra.EntityGeneric;
 
 @Entity
 @Table(name = "pais")
-public class Pais extends EntityGeneric {
+public class Pais extends EntityGeneric implements Serializable {
 
-    private static final long serialVersionUID = -8042147881454631916L;
+  private static final long serialVersionUID = -8042147881454631916L;
 
-    private String nome;
+  private String nome;
 
-    @OneToMany(mappedBy = "pais", fetch = FetchType.EAGER)
-    private List<Estado> estados;
+  @OneToMany(mappedBy = "pais", fetch = FetchType.EAGER)
+  private List<Estado> estados;
 
-    public String getNome() {
-        return this.nome;
-    }
+  public Pais() {}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+  public int getId() {
+    return this.id;
+  }
 
-    public List<Estado> getEstados() {
-        return this.estados;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setEstados(List<Estado> estados) {
-        this.estados = estados;
-    }
+  public String getNome() {
+    return this.nome;
+  }
 
-    public Estado addEstado(Estado estado) {
-        getEstados().add(estado);
-        estado.setPais(this);
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-        return estado;
-    }
+  public List<Estado> getEstados() {
+    return this.estados;
+  }
 
-    public Estado removeEstado(Estado estado) {
-        getEstados().remove(estado);
-        estado.setPais(null);
+  public void setEstados(List<Estado> estados) {
+    this.estados = estados;
+  }
 
-        return estado;
-    }
+  public Estado addEstado(Estado estado) {
+    getEstados().add(estado);
+    estado.setPais(this);
+
+    return estado;
+  }
+
+  public Estado removeEstado(Estado estado) {
+    getEstados().remove(estado);
+    estado.setPais(null);
+
+    return estado;
+  }
 
 }

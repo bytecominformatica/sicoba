@@ -10,7 +10,7 @@ import net.servehttp.bytecom.persistence.jpa.entity.comercial.Contrato;
 
 /**
  * 
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ * @author clairton
  */
 @Transactional
 public class ContratoJPA implements Serializable {

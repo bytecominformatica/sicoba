@@ -2,7 +2,6 @@ package net.servehttp.bytecom.persistence.jpa.financeiro;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
 
 @Transactional
 public class MensalidadeRelatorioJPA implements Serializable {
@@ -19,27 +19,34 @@ public class MensalidadeRelatorioJPA implements Serializable {
   @Inject
   protected EntityManager em;
 
-  public List<Mensalidade> buscarPorData(LocalDate inicio, LocalDate fim, boolean buscarPorDataOcorrencia) {
-//
-//    String jpql;
-//    if(buscarPorDataOcorrencia){
-//      jpql = "select m from Mensalidade m where m.dataOcorrencia between :inicio and :fim ";
-//    } else {
-//      jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";
-//    }
-//
-//    if(buscarPorDataOcorrencia){
-//      jpql += "order by m.dataOcorrencia, m.dataVencimento desc ";
-//    } else {
-//      jpql += "order by m.dataVencimento, m.dataOcorrencia desc ";
-//    }
-//
-//    TypedQuery<Mensalidade> query =
-//        em.createQuery(jpql, Mensalidade.class).setParameter("inicio", inicio)
-//            .setParameter("fim", fim);
-//
-//    return query.getResultList();
-    return new ArrayList<>();
+  public List<Mensalidade> buscarPorDataStatus(LocalDate inicio, LocalDate fim, StatusMensalidade status, boolean buscarPorDataOcorrencia) {
+
+    String jpql;
+    if(buscarPorDataOcorrencia){
+      jpql = "select m from Mensalidade m where m.dataOcorrencia between :inicio and :fim ";
+    } else {
+      jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";  
+    }
+    
+    if (status != null) {
+      jpql += "and m.status = :status ";
+    }
+    
+    if(buscarPorDataOcorrencia){
+      jpql += "order by m.dataOcorrencia, m.dataVencimento desc ";
+    } else {
+      jpql += "order by m.dataVencimento, m.dataOcorrencia desc ";
+    }
+
+    TypedQuery<Mensalidade> query =
+        em.createQuery(jpql, Mensalidade.class).setParameter("inicio", inicio)
+            .setParameter("fim", fim);
+    
+    if (status != null) {
+      query.setParameter("status", status);
+    }
+    
+    return query.getResultList();
   }
 
   public void setEntityManager(EntityManager em2) {

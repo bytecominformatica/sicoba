@@ -1,115 +1,113 @@
 package net.servehttp.bytecom.controller.financeiro;
 
-import net.servehttp.bytecom.controller.extra.GenericoController;
-import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeJPA;
-import net.servehttp.bytecom.service.comercial.ClienteService;
-import net.servehttp.bytecom.service.financeiro.MensalidadeService;
-import net.servehttp.bytecom.util.web.WebUtil;
+import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.time.LocalDate;
+
+import net.servehttp.bytecom.controller.extra.GenericoController;
+import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.service.comercial.ClienteService;
+import net.servehttp.bytecom.service.financeiro.MensalidadeService;
+import net.servehttp.bytecom.util.web.WebUtil;
 
 /**
- * Created by <a href="https://github.com/clairtonluz">Clairton Luz</a>
+ *
+ * @author clairton
  */
 @Named
 @ViewScoped
 public class GerarMensalidadeController extends GenericoController {
 
-    private static final long serialVersionUID = -866830816286480241L;
-    private Mensalidade mensalidade;
-    private Cliente cliente;
-    private int quantidade;
-    private double descontoGeracao;
-    private LocalDate dataInicio;
+  private static final long serialVersionUID = -866830816286480241L;
+  private Mensalidade mensalidade;
+  private Cliente cliente;
+  private int quantidade;
+  private double descontoGeracao;
+  private LocalDate dataInicio;
 
-    @Inject
-    private MensalidadeService service;
-    @Inject
-    private MensalidadeJPA mensalidadeJPA;
-    @Inject
-    private ClienteService clientService;
+  @Inject
+  private MensalidadeService service;
+  @Inject
+  private ClienteService clientService;
 
-    @PostConstruct
-    public void init() {
-        getParameters();
-        if (cliente != null) {
-            if (mensalidade == null) {
-                mensalidade = getNovaMensalidade();
-                dataInicio = mensalidade.getDataVencimento();
-            }
-        }
-    }
-
-    private void getParameters() {
-        String clienteId = WebUtil.getParameters("clienteId");
-        if (clienteId != null && !clienteId.isEmpty()) {
-            cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
-        }
-    }
-
-    public void gerarBoletos() {
-        for (int i = 0; i < quantidade; i++) {
-            Mensalidade m = new Mensalidade();
-            m.setCliente(cliente);
-            m.setValor(mensalidade.getValor());
-            m.setDesconto(descontoGeracao);
-            m.setDataVencimento(dataInicio);
-            mensalidadeJPA.save(m);
-            dataInicio = dataInicio.plusMonths(1);
-        }
+  @PostConstruct
+  public void init() {
+    getParameters();
+    if (cliente != null) {
+      if (mensalidade == null) {
+        mensalidade = getNovaMensalidade();
         dataInicio = mensalidade.getDataVencimento();
-
+      }
     }
+  }
 
-    public Mensalidade getNovaMensalidade() {
-        LocalDate d =
-                LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-        return service.getNovaMensalidade(cliente, d);
+  private void getParameters() {
+    String clienteId = WebUtil.getParameters("clienteId");
+    if (clienteId != null && !clienteId.isEmpty()) {
+      cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
     }
+  }
 
-    public Cliente getCliente() {
-        return cliente;
+  public void gerarBoletos() {
+    for (int i = 0; i < quantidade; i++) {
+      Mensalidade m = new Mensalidade();
+      m.setCliente(cliente);
+      m.setValor(mensalidade.getValor());
+      m.setDesconto(descontoGeracao);
+      m.setDataVencimento(dataInicio);
+      jpa.salvar(m);
+      dataInicio = dataInicio.plusMonths(1);
     }
+    dataInicio = mensalidade.getDataVencimento();
+  }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+  public Mensalidade getNovaMensalidade() {
+    LocalDate d =
+        LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
+    return service.getNovaMensalidade(cliente, d);
+  }
 
-    public Mensalidade getMensalidade() {
-        return mensalidade;
-    }
+  public Cliente getCliente() {
+    return cliente;
+  }
 
-    public void setMensalidade(Mensalidade mensalidade) {
-        this.mensalidade = mensalidade;
-    }
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
+  }
 
-    public LocalDate getDataInicio() {
-        return dataInicio;
-    }
+  public Mensalidade getMensalidade() {
+    return mensalidade;
+  }
 
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
-    }
+  public void setMensalidade(Mensalidade mensalidade) {
+    this.mensalidade = mensalidade;
+  }
 
-    public double getDescontoGeracao() {
-        return descontoGeracao;
-    }
+  public LocalDate getDataInicio() {
+    return dataInicio;
+  }
 
-    public void setDescontoGeracao(double descontoGeracao) {
-        this.descontoGeracao = descontoGeracao;
-    }
+  public void setDataInicio(LocalDate dataInicio) {
+    this.dataInicio = dataInicio;
+  }
 
-    public int getQuantidade() {
-        return quantidade;
-    }
+  public double getDescontoGeracao() {
+    return descontoGeracao;
+  }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
+  public void setDescontoGeracao(double descontoGeracao) {
+    this.descontoGeracao = descontoGeracao;
+  }
+
+  public int getQuantidade() {
+    return quantidade;
+  }
+
+  public void setQuantidade(int quantidade) {
+    this.quantidade = quantidade;
+  }
 }
