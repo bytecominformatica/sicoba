@@ -49,7 +49,7 @@ public class RetornoController extends GenericoController implements Serializabl
           for (HeaderLote hl : header.getHeaderLotes()) {
             for (Registro r : hl.getRegistros()) {
 
-              Mensalidade m = mensalidadeJPA.buscarMensalidadePorNumeroBoleto(r.getNossoNumero());
+              Mensalidade m = mensalidadeJPA.buscarPorModalidadeNumeroBoleto(r.getModalidadeNossoNumero(), r.getNossoNumero());
 
               if (m == null) {
                 m = jpa.buscarPorId(Mensalidade.class, r.getNossoNumero());

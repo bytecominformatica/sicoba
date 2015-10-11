@@ -39,9 +39,9 @@ public class MensalidadeJPA implements Serializable {
     this.em = em;
   }
 
-  public List<Mensalidade> buscarMensalidadesPorBoletos(int numeroBoletoInicio, int numeroBoletoFim) {
+  public List<Mensalidade> buscarMensalidadesPorBoletos(int modalidade, int numeroBoletoInicio, int numeroBoletoFim) {
     return new JPAQuery(em).from(m)
-        .where(m.numeroBoleto.between(numeroBoletoInicio, numeroBoletoFim)).list(m);
+        .where(m.numeroBoleto.between(numeroBoletoInicio, numeroBoletoFim).and(m.modalidade.eq(modalidade))).list(m);
   }
 
   public Cedente buscarCedente() {
@@ -49,7 +49,7 @@ public class MensalidadeJPA implements Serializable {
     return new JPAQuery(em).from(c).uniqueResult(c);
   }
 
-  public Mensalidade buscarMensalidadePorNumeroBoleto(int numeroBoleto) {
-    return new JPAQuery(em).from(m).where(m.numeroBoleto.eq(numeroBoleto)).uniqueResult(m);
+  public Mensalidade buscarPorModalidadeNumeroBoleto(int modalidade, int numeroBoleto) {
+    return new JPAQuery(em).from(m).where(m.numeroBoleto.eq(numeroBoleto).and(m.modalidade.eq(modalidade))).uniqueResult(m);
   }
 }

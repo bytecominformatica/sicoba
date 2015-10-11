@@ -62,8 +62,8 @@ public class MensalidadeService implements Serializable {
   }
 
 
-  public List<Mensalidade> buscarMensalidadesPorBoleto(int inicio, int fim) {
-    return mensalidadeJPA.buscarMensalidadesPorBoletos(inicio, fim);
+  public List<Mensalidade> buscarMensalidadesPorBoleto(int modalidade, int inicio, int fim) {
+    return mensalidadeJPA.buscarMensalidadesPorBoletos(modalidade, inicio, fim);
   }
 
 }
