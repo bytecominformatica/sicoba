@@ -13,3 +13,5 @@ target/
 .project
 .settings
 
+.idea/
+sicoba.iml
