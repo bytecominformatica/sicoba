@@ -1,6 +1,6 @@
 package net.servehttp.bytecom.controller.extra;
 
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
+import net.servehttp.bytecom.model.jpa.extra.GenericoJPA;
 import net.servehttp.bytecom.service.extra.LogService;
 import net.servehttp.bytecom.util.MensagemException;
 import net.servehttp.bytecom.util.ejb.MailEJB;

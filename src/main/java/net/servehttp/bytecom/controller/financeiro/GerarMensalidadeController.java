@@ -1,8 +1,8 @@
 package net.servehttp.bytecom.controller.financeiro;
 
 import net.servehttp.bytecom.controller.extra.GenericoController;
-import net.servehttp.bytecom.persistence.jpa.entity.comercial.Cliente;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.model.jpa.entity.comercial.Cliente;
+import net.servehttp.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.service.comercial.ClienteService;
 import net.servehttp.bytecom.service.financeiro.MensalidadeService;
 import net.servehttp.bytecom.util.web.WebUtil;

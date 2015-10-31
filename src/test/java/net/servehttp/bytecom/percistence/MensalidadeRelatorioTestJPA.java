@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.EntityManager;
 
 import net.servehttp.bytecom.facede.CreateEntityManager;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
-import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeRelatorioJPA;
+import net.servehttp.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
+import net.servehttp.bytecom.model.jpa.financeiro.MensalidadeRelatorioJPA;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

@@ -11,19 +11,19 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("passwordValidator")
 public class PasswordValidator implements Validator {
 
-	@Override
-	public void validate(FacesContext arg0, UIComponent componente, Object value)
-			throws ValidatorException {
-		String password = value.toString();
-		
-		UIInput uiConfirmPassword = (UIInput)componente.getAttributes().get("confirmPassword");
-		String confirmPassword = uiConfirmPassword.getSubmittedValue().toString();
-		
-		if(!password.equals(confirmPassword)){
-			uiConfirmPassword.setValid(false);
-			throw new ValidatorException(new FacesMessage(
-					FacesMessage.SEVERITY_WARN,"As senhas digitadas não conferem!!",null));
-		}
-	}
+    @Override
+    public void validate(FacesContext arg0, UIComponent componente, Object value)
+            throws ValidatorException {
+        String password = value.toString();
+
+        UIInput uiConfirmPassword = (UIInput) componente.getAttributes().get("confirmPassword");
+        String confirmPassword = uiConfirmPassword.getSubmittedValue().toString();
+
+        if (!password.equals(confirmPassword)) {
+            uiConfirmPassword.setValid(false);
+            throw new ValidatorException(new FacesMessage(
+                    FacesMessage.SEVERITY_WARN, "As senhas digitadas não conferem!!", null));
+        }
+    }
 
 }

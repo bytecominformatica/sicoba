@@ -1,53 +1,52 @@
 package net.servehttp.bytecom.rest.extra;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import net.servehttp.bytecom.model.jpa.entity.extra.ClienteGeoReferencia;
+import net.servehttp.bytecom.model.jpa.extra.GenericoJPA;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import net.servehttp.bytecom.persistence.jpa.entity.extra.ClienteGeoReferencia;
-import net.servehttp.bytecom.persistence.jpa.extra.GenericoJPA;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("maps")
 @Produces(MediaType.APPLICATION_JSON)
 public class ClientGeoRefServices implements Serializable {
 
-  private static final long serialVersionUID = -1973794686416313717L;
+    private static final long serialVersionUID = -1973794686416313717L;
 
-  @Inject
-  private GenericoJPA jpa;
-  
-  private ClientGeoRefPOJO clientpojo = new ClientGeoRefPOJO();
-  private List<ClientGeoRefPOJO> listPojo = new ArrayList<ClientGeoRefPOJO>();
+    @Inject
+    private GenericoJPA jpa;
 
-  private List<ClienteGeoReferencia> listClientes;
+    private ClientGeoRefPOJO clientpojo = new ClientGeoRefPOJO();
+    private List<ClientGeoRefPOJO> listPojo = new ArrayList<ClientGeoRefPOJO>();
 
-  @GET
-  @Path("clientesGeo")
-  public List<ClientGeoRefPOJO> listarClientes() {
-    listClientes = jpa.buscarTodos(ClienteGeoReferencia.class);
-    
-    for (ClienteGeoReferencia clienteGeoReferencia : listClientes) {
-      clientpojo.setNome(clienteGeoReferencia.getCliente().getNome());
-      clientpojo.setLatitude((String)clienteGeoReferencia.getLatitude().toString());
-      clientpojo.setLongitude((String)clienteGeoReferencia.getLongitude().toString());
-      clientpojo.setStatus(clienteGeoReferencia.getCliente().getStatus());
-      clientpojo.setEndereco(clienteGeoReferencia.getCliente().getEndereco());
-      clientpojo.setNumero(clienteGeoReferencia.getCliente().getEndereco().getNumero());
-      clientpojo.setFoneTitular(clienteGeoReferencia.getCliente().getFoneTitular());
-      clientpojo.setFoneContato(clienteGeoReferencia.getCliente().getFoneContato());
-      clientpojo.setContato(clienteGeoReferencia.getCliente().getContato());
-      
-      listPojo.add(clientpojo);
-      
+    private List<ClienteGeoReferencia> listClientes;
+
+    @GET
+    @Path("clientesGeo")
+    public List<ClientGeoRefPOJO> listarClientes() {
+        listClientes = jpa.buscarTodos(ClienteGeoReferencia.class);
+
+        for (ClienteGeoReferencia clienteGeoReferencia : listClientes) {
+            clientpojo.setNome(clienteGeoReferencia.getCliente().getNome());
+            clientpojo.setLatitude((String) clienteGeoReferencia.getLatitude().toString());
+            clientpojo.setLongitude((String) clienteGeoReferencia.getLongitude().toString());
+            clientpojo.setStatus(clienteGeoReferencia.getCliente().getStatus());
+            clientpojo.setEndereco(clienteGeoReferencia.getCliente().getEndereco());
+            clientpojo.setNumero(clienteGeoReferencia.getCliente().getEndereco().getNumero());
+            clientpojo.setFoneTitular(clienteGeoReferencia.getCliente().getFoneTitular());
+            clientpojo.setFoneContato(clienteGeoReferencia.getCliente().getFoneContato());
+            clientpojo.setContato(clienteGeoReferencia.getCliente().getContato());
+
+            listPojo.add(clientpojo);
+
+        }
+
+        return listPojo;
     }
-    
-    return listPojo;
-  }
 
 }

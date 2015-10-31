@@ -8,14 +8,14 @@ import javax.persistence.PersistenceContext;
 
 @ApplicationScoped
 public class EntityManagerProducer {
-  
-  @PersistenceContext(unitName = "bytecom-pu")
-  private EntityManager em;
 
-  @Produces
-  @RequestScoped
-  public EntityManager create() {
-    return em;
-  }
+    @PersistenceContext(unitName = "bytecom-pu")
+    private EntityManager em;
+
+    @Produces
+    @RequestScoped
+    public EntityManager create() {
+        return em;
+    }
 
 }

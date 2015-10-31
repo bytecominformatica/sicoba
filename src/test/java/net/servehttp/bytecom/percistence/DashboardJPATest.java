@@ -3,7 +3,7 @@ package net.servehttp.bytecom.percistence;
 import javax.persistence.EntityManager;
 
 import net.servehttp.bytecom.facede.CreateEntityManager;
-import net.servehttp.bytecom.persistence.jpa.dashboard.DashboadJPA;
+import net.servehttp.bytecom.model.jpa.dashboard.DashboadJPA;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

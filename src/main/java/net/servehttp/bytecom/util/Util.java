@@ -7,7 +7,7 @@ import javax.inject.Named;
 @RequestScoped
 public class Util {
 
-  public String active(String path, String menu) {
-    return path.contains(menu) ? "active" : "";
-  }
+    public String active(String path, String menu) {
+        return path.contains(menu) ? "active" : "";
+    }
 }

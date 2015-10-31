@@ -1,8 +1,8 @@
 package net.servehttp.bytecom.controller.financeiro;
 
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.Mensalidade;
-import net.servehttp.bytecom.persistence.jpa.entity.financeiro.StatusMensalidade;
-import net.servehttp.bytecom.persistence.jpa.financeiro.MensalidadeRelatorioJPA;
+import net.servehttp.bytecom.model.jpa.entity.financeiro.Mensalidade;
+import net.servehttp.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
+import net.servehttp.bytecom.model.jpa.financeiro.MensalidadeRelatorioJPA;
 import net.servehttp.bytecom.util.StringUtil;
 
 import javax.faces.view.ViewScoped;
