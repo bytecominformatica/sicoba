@@ -1,21 +1,14 @@
-package net.servehttp.bytecom.service.financeiro.impl;
+package net.servehttp.bytecom.commons.parse;
 
-import net.servehttp.bytecom.commons.parse.IParseUpload;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.*;
 import net.servehttp.bytecom.util.StringUtil;
 
-import javax.servlet.http.Part;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
-public class ParseUploadAquivoRetornoCaixa implements IParseUpload<Header> {
+public class ParseRetornoCaixa implements Serializable {
 
     private static final long serialVersionUID = -6522095846509892574L;
-    private static final String RET = ".ret";
-    private static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     private static final int HEADER = 0;
     private static final int HEADER_LOTE = 1;
     private static final int REGISTRO = 3;
@@ -23,12 +16,10 @@ public class ParseUploadAquivoRetornoCaixa implements IParseUpload<Header> {
     private static final int TRAILER_LOTE = 5;
     private static final int TRAILER = 9;
 
-    @Override
-    public Header parse(Part part) throws IOException {
+
+    public Header parse(InputStream inputStream, String filename) throws IOException {
         Header h = null;
-        if (isArquivoRetorno(part)) {
-            h = lerArquivoRetornoCaixa(part.getInputStream(), part.getSubmittedFileName());
-        }
+        h = lerArquivoRetornoCaixa(inputStream, filename);
         return h;
     }
 
@@ -168,10 +159,5 @@ public class ParseUploadAquivoRetornoCaixa implements IParseUpload<Header> {
         t.setQuantidadeLotes(StringUtil.getInt(line, 17, 23));
         t.setQuantidadeRegistros(StringUtil.getInt(line, 23, 29));
         return t;
-    }
-
-    private boolean isArquivoRetorno(Part file) {
-        return file.getSubmittedFileName().toLowerCase().contains(RET)
-                && APPLICATION_OCTET_STREAM.equals(file.getContentType());
     }
 }

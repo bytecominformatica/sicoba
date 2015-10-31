@@ -1,6 +1,5 @@
 package net.servehttp.bytecom.controller.financeiro;
 
-import net.servehttp.bytecom.commons.parse.IParseUpload;
 import net.servehttp.bytecom.controller.extra.GenericoController;
 import net.servehttp.bytecom.model.jpa.entity.comercial.StatusCliente;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.Mensalidade;
@@ -9,6 +8,7 @@ import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.model.jpa.financeiro.MensalidadeJPA;
+import net.servehttp.bytecom.service.financeiro.RetornoCaixaService;
 import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
@@ -30,7 +30,7 @@ public class RetornoController extends GenericoController implements Serializabl
 
     private Part file;
     @Inject
-    private IParseUpload<Header> parserUpload;
+    private RetornoCaixaService retornoCaixaService;
     @Inject
     private IConnectionControl connectionControl;
 
@@ -38,10 +38,10 @@ public class RetornoController extends GenericoController implements Serializabl
     private MensalidadeJPA mensalidadeJPA;
 
     public void upload() {
-        if (file != null) {
+        if (isFileValid(file)) {
             Header header = null;
             try {
-                header = parserUpload.parse(file);
+                header = retornoCaixaService.parse(file.getInputStream(), file.getSubmittedFileName());
                 if (notExists(header)) {
 
                     for (HeaderLote hl : header.getHeaderLotes()) {
@@ -80,9 +80,22 @@ public class RetornoController extends GenericoController implements Serializabl
                 AlertaUtil.error("Arquivo corrompido!");
                 log(e);
             }
-        } else {
-            AlertaUtil.error("Nenhum arquivo selecionado!");
         }
+    }
+
+    private boolean isFileValid(Part file) {
+        boolean valid = true;
+        if (file != null) {
+            valid = false;
+            AlertaUtil.error("Nenhum arquivo selecionado!");
+        } else if (file.getSubmittedFileName().toLowerCase().contains(".ret")) {
+            valid = false;
+            AlertaUtil.error("Tipo de arquivo inválido");
+        } else if ("application/octet-stream".equals(file.getContentType())) {
+            valid = false;
+            AlertaUtil.error("Tipo de arquivo inválido");
+        }
+        return valid;
     }
 
     private boolean notExists(Header header) {
