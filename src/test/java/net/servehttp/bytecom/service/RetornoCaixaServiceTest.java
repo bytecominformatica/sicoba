@@ -1,6 +1,8 @@
 package net.servehttp.bytecom.service;
 
 import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Header;
+import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
+import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Trailer;
 import net.servehttp.bytecom.service.financeiro.RetornoCaixaService;
 import org.junit.Test;
 
@@ -31,7 +33,15 @@ public class RetornoCaixaServiceTest {
         assertEquals(149, header.getSequencial());
         assertEquals(LocalDateTime.of(2015, 2, 19, 1, 0, 46), header.getDataGeracao());
         assertEquals(1, header.getHeaderLotes().size());
-        assertNotNull(header.getTrailer());
+
+        Trailer trailer = header.getTrailer();
+        assertNotNull(trailer);
+        assertEquals(1, trailer.getQuantidadeLotes());
+        assertEquals(14, trailer.getQuantidadeRegistros());
+
+        HeaderLote headerLote = header.getHeaderLotes().get(0);
+        assertNotNull(headerLote);
+
 
     }
 }
