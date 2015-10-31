@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * Registro Detalhe - Segmento U (Obrigatório - Retorno)
+ */
 @Entity
 @Table(name = "registro_detalhe")
 public class RegistroDetalhe extends EntityGeneric implements Serializable {

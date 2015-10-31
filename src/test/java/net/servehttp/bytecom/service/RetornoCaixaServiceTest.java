@@ -95,6 +95,22 @@ public class RetornoCaixaServiceTest {
         assertEquals(4.43d, registro.getValorTarifa(), 0d);
         assertEquals(35d, registro.getValorTitulo(), 0d);
         assertEquals(LocalDate.of(2015, 3, 20), registro.getVencimento());
+    }
 
+    @Test
+    public void deveriaVerificarOsDadosDoRegistroDetalhe() throws IOException {
+        Header header = retornoCaixaService.parse(file, filename);
+        RegistroDetalhe registroDetalhe = header.getHeaderLotes().get(0).getRegistros().get(0).getRegistroDetalhe();
+
+        assertNotNull(registroDetalhe);
+        assertEquals(0d, registroDetalhe.getJurosMultasEncargos(), 0d);
+        assertEquals(0d, registroDetalhe.getDesconto(), 0d);
+        assertEquals(0d, registroDetalhe.getAbatimento(), 0d);
+        assertEquals(0d, registroDetalhe.getIof(), 0d);
+        assertEquals(35d, registroDetalhe.getValorPago(), 0d);
+        assertEquals(35d, registroDetalhe.getValorLiquido(), 0d);
+        assertEquals(LocalDate.of(2015, 2, 19), registroDetalhe.getDataOcorrencia());
+        assertEquals(LocalDate.of(2015, 2, 20), registroDetalhe.getDataCredito());
+        assertEquals(LocalDate.of(2015, 2, 20), registroDetalhe.getDataDebitoTarifa());
     }
 }
