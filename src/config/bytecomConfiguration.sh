@@ -11,7 +11,7 @@ mkdir -p $DIRETORIO_INSTALACAO
 echo "DIGITE SUA SENHA PARA UTILIZAÇÃO DO COMANDO SUDO "
 sudo chmod 777 /tmp
 
-WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-8.2.0.Final;
+WILDFLY_DIR=$DIRETORIO_INSTALACAO/wildfly-9.0.2.Final;
 
 
 ######################### CONFIGURANDO BANCO ###########################
@@ -27,25 +27,18 @@ mysql -u root -p$MYSQL_SENHA -e 'CREATE DATABASE IF NOT EXISTS bytecom'
 
 mysql -u root -p$MYSQL_SENHA -e "grant all privileges on bytecom.* to bytecom@localhost identified by 'bytecom'"
 
-######################### ENVIRONMENT VARIABLE #########################
-WF_FILE=/etc/profile.d/wf.sh;
-
-echo "SETTING ENVIRONMENT VARIABLE";
-echo "CREATING $WF_FILE...";
-sudo echo "export WILDFLY_HOME=$WILDFLY_DIR" > $WF_FILE;
-
 ######################### WILDFLY SERVER ###############################
  
 cd /tmp
-WILDFLY_ZIP=wildfly-8.2.0.Final.zip;
+WILDFLY_ZIP=wildfly-9.0.2.Final.zip;
  
 if ! [ -d "$WILDFLY_DIR" ]; then
 	if ! [ -f "$WILDFLY_ZIP" ]; then
 		echo "DOWNLOADING WILDFLY 8 FINAL...";
-		wget http://download.jboss.org/wildfly/8.2.0.Final/wildfly-8.2.0.Final.zip;
+		wget http://download.jboss.org/wildfly/9.0.2.Final/wildfly-9.0.2.Final.zip;
 	fi;
 	echo "EXTRACTING $WILDFLY_ZIP";
-	unzip wildfly-8.2.0.Final.zip -d $DIRETORIO_INSTALACAO;	
+	unzip wildfly-9.0.2.Final.zip -d $DIRETORIO_INSTALACAO;	
 fi;
 
 #################### WILDFLY SERVER CONFIGURATION ######################
