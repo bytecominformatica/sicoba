@@ -121,7 +121,7 @@ public class ParseRetornoCaixa implements Serializable {
         r.setNossoNumero(StringUtil.getInt(line, 41, 56));
         r.setVencimento(StringUtil.getData(line, 73, 81));
         r.setValorTitulo(StringUtil.getDouble2Decimal(line, 81, 96));
-        r.setValorTarifa(StringUtil.getDouble2Decimal(line, 198, 212));
+        r.setValorTarifa(StringUtil.getDouble2Decimal(line, 198, 213));
 
         if ((line = in.readLine()) != null) {
             int tipoDetalhe = StringUtil.getInt(line, 15, 17);
