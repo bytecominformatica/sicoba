@@ -43,11 +43,9 @@ public class RetornoController extends GenericoController implements Serializabl
             try {
                 header = retornoCaixaService.parse(file.getInputStream(), file.getSubmittedFileName());
                 if (notExists(header)) {
-
                     for (HeaderLote hl : header.getHeaderLotes()) {
                         for (Registro r : hl.getRegistros()) {
-
-                            Mensalidade m = mensalidadeJPA.buscarPorModalidadeNumeroBoleto(r.getModalidadeNossoNumero(), r.getNossoNumero());
+                            Mensalidade m = mensalidadeJPA.buscarPorModalidadeNumeroBoletoMovimento(r.getModalidadeNossoNumero(), r.getNossoNumero(), r.getCodigoMovimento());
 
                             if (m == null) {
                                 m = jpa.buscarPorId(Mensalidade.class, r.getNossoNumero());
@@ -100,13 +98,11 @@ public class RetornoController extends GenericoController implements Serializabl
 
     private boolean notExists(Header header) {
         boolean exists = false;
-
         List<Header> list = jpa.buscarTodos("sequencial", header.getSequencial(), Header.class);
         if (!list.isEmpty()) {
             exists = true;
             AlertaUtil.error("Arquivo já foi enviado");
         }
-
         return !exists;
     }
 

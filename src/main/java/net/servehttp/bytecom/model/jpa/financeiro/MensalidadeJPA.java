@@ -46,7 +46,7 @@ public class MensalidadeJPA implements Serializable {
         return new JPAQuery(em).from(c).uniqueResult(c);
     }
 
-    public Mensalidade buscarPorModalidadeNumeroBoleto(int modalidade, int numeroBoleto) {
+    public Mensalidade buscarPorModalidadeNumeroBoletoMovimento(int modalidade, int numeroBoleto, int codigoMovimento) {
         return new JPAQuery(em).from(m).where(m.numeroBoleto.eq(numeroBoleto).and(m.modalidade.eq(modalidade))).uniqueResult(m);
     }
 }
