@@ -25,8 +25,7 @@ public class RetornoCaixaServiceTest {
     private String filename = "ret000149.ret";
 
     @Before
-    public void setup(){
-
+    public void setup() {
         file = getClass().getResourceAsStream("/files/" + filename);
         assertNotNull(file);
     }
@@ -48,7 +47,6 @@ public class RetornoCaixaServiceTest {
 
         HeaderLote headerLote = header.getHeaderLotes().get(0);
         assertNotNull(headerLote);
-
     }
 
     @Test
@@ -95,6 +93,33 @@ public class RetornoCaixaServiceTest {
         assertEquals(4.43d, registro.getValorTarifa(), 0d);
         assertEquals(35d, registro.getValorTitulo(), 0d);
         assertEquals(LocalDate.of(2015, 3, 20), registro.getVencimento());
+    }
+
+    @Test
+    public void deveriaVerificarOsDadosDoRegistroDeEntradaConfirmada() throws IOException {
+        String filename2 = "ret000290.ret";
+        InputStream file2 = getClass().getResourceAsStream("/files/" + filename2);
+        assertNotNull(file2);
+
+        Header header = retornoCaixaService.parse(file2, filename2);
+        List<Registro> registros = header.getHeaderLotes().get(0).getRegistros();
+
+        assertEquals(28, registros.size());
+
+        Registro registro = registros.get(3);
+        assertEquals(14, registro.getModalidadeNossoNumero());
+        assertEquals(1836, registro.getNossoNumero());
+        assertEquals("79-2/001", registro.getNumeroDocumento());
+        assertNotNull(registro.getRegistroDetalhe());
+        assertEquals(0d, registro.getValorTarifa(), 0d);
+        assertEquals(85d, registro.getValorTitulo(), 0d);
+        assertEquals(LocalDate.of(2015, 12, 20), registro.getVencimento());
+        assertEquals("000", registro.getBancoRecebedor());
+        assertEquals("00000", registro.getAgenciaRecebedor());
+        assertEquals("0", registro.getDigitoVerificadorRecebedor());
+        assertEquals("79-2/001", registro.getUsoDaEmpresa().trim());
+
+        file2.close();
     }
 
     @Test

@@ -12,9 +12,12 @@ public class ParseRetornoCaixa implements Serializable {
     private static final int HEADER = 0;
     private static final int HEADER_LOTE = 1;
     private static final int REGISTRO = 3;
-    private static final int DETALHE6 = 6;
     private static final int TRAILER_LOTE = 5;
     private static final int TRAILER = 9;
+
+    private static final int ENTRADA_CONFIRMADA = 2;
+    private static final int LIQUIDACAO = 6;
+    private static final int TARIFA = 28;
 
 
     public Header parse(InputStream inputStream, String filename) throws IOException {
@@ -115,16 +118,26 @@ public class ParseRetornoCaixa implements Serializable {
 
     private Registro preencheRegistro(String line, HeaderLote headerLote, BufferedReader in)
             throws IOException {
+
         Registro r = new Registro();
+        r.setCodigoMovimento(StringUtil.getInt(line, 15, 17));
+        if (r.getCodigoMovimento() != TARIFA) {
+            r.setModalidadeNossoNumero(StringUtil.getInt(line, 39, 41));
+            r.setNossoNumero(StringUtil.getInt(line, 41, 56));
+            r.setNumeroDocumento(StringUtil.get(line, 58, 69).trim());
+            r.setVencimento(StringUtil.getData(line, 73, 81));
+
+        }
         r.setHeaderLote(headerLote);
-        r.setModalidadeNossoNumero(StringUtil.getInt(line, 39, 41));
-        r.setNossoNumero(StringUtil.getInt(line, 41, 56));
-        r.setVencimento(StringUtil.getData(line, 73, 81));
         r.setValorTitulo(StringUtil.getDouble2Decimal(line, 81, 96));
+        r.setBancoRecebedor(StringUtil.get(line, 96, 99));
+        r.setAgenciaRecebedor(StringUtil.get(line, 99, 104));
+        r.setDigitoVerificadorRecebedor(StringUtil.get(line, 104, 105));
+        r.setUsoDaEmpresa(StringUtil.get(line, 105, 130));
         r.setValorTarifa(StringUtil.getDouble2Decimal(line, 198, 213));
 
         if ((line = in.readLine()) != null) {
-            int tipoDetalhe = StringUtil.getInt(line, 15, 17);
+
 
             RegistroDetalhe rd = new RegistroDetalhe();
             rd.setRegistro(r);
@@ -135,12 +148,16 @@ public class ParseRetornoCaixa implements Serializable {
             rd.setValorPago(StringUtil.getDouble2Decimal(line, 77, 92));
             rd.setValorLiquido(StringUtil.getDouble2Decimal(line, 92, 107));
             rd.setDataOcorrencia(StringUtil.getData(line, 137, 145));
-            rd.setDataCredito(StringUtil.getData(line, 145, 153));
+            String dataCredito = StringUtil.get(line, 145, 153);
+            if (!dataCredito.equals("00000000")) {
+                rd.setDataCredito(StringUtil.getData(line, 145, 153));
+            }
 
-            if (tipoDetalhe == DETALHE6) {
+            if (r.getCodigoMovimento() == LIQUIDACAO) {
                 rd.setDataDebitoTarifa(StringUtil.getData(line, 157, 165));
             }
             r.setRegistroDetalhe(rd);
+
         }
 
         return r;
