@@ -15,9 +15,7 @@ public class ParseRetornoCaixa implements Serializable {
     private static final int TRAILER_LOTE = 5;
     private static final int TRAILER = 9;
 
-    private static final int ENTRADA_CONFIRMADA = 2;
-    private static final int LIQUIDACAO = 6;
-    private static final int TARIFA = 28;
+
 
 
     public Header parse(InputStream inputStream, String filename) throws IOException {
@@ -121,7 +119,7 @@ public class ParseRetornoCaixa implements Serializable {
 
         Registro r = new Registro();
         r.setCodigoMovimento(StringUtil.getInt(line, 15, 17));
-        if (r.getCodigoMovimento() != TARIFA) {
+        if (r.getCodigoMovimento() != Registro.TARIFA) {
             r.setModalidadeNossoNumero(StringUtil.getInt(line, 39, 41));
             r.setNossoNumero(StringUtil.getInt(line, 41, 56));
             r.setNumeroDocumento(StringUtil.get(line, 58, 69).trim());
@@ -153,7 +151,7 @@ public class ParseRetornoCaixa implements Serializable {
                 rd.setDataCredito(StringUtil.getData(line, 145, 153));
             }
 
-            if (r.getCodigoMovimento() == LIQUIDACAO) {
+            if (r.getCodigoMovimento() == Registro.LIQUIDACAO) {
                 rd.setDataDebitoTarifa(StringUtil.getData(line, 157, 165));
             }
             r.setRegistroDetalhe(rd);

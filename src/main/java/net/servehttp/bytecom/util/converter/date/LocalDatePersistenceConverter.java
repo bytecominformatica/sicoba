@@ -11,7 +11,10 @@ public class LocalDatePersistenceConverter implements AttributeConverter<LocalDa
 
     @Override
     public Date convertToDatabaseColumn(LocalDate attribute) {
-        return java.sql.Date.valueOf(attribute);
+        if(attribute != null) {
+            return java.sql.Date.valueOf(attribute);
+        }
+        return null;
     }
 
     @Override

@@ -12,7 +12,10 @@ public class LocalDateTimePersistenceConverter implements
 
     @Override
     public Timestamp convertToDatabaseColumn(LocalDateTime attribute) {
-        return Timestamp.valueOf(attribute);
+        if(attribute != null) {
+            return Timestamp.valueOf(attribute);
+        }
+        return null;
     }
 
     @Override

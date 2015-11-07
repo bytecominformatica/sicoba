@@ -194,7 +194,7 @@ public abstract class GerarBoleto implements Serializable {
 
         List<byte[]> boletosEmBytes = new ArrayList<byte[]>(boletos.size());
 
-        // Adicionando os PDF, em forma de array de bytes, na lista.
+        // Adicionando os PDF, entityManager forma de array de bytes, na lista.
         for (Boleto b : boletos) {
             boletosEmBytes.add(boletoViewer.setBoleto(b).getPdfAsByteArray());
         }

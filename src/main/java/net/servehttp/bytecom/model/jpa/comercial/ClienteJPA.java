@@ -2,6 +2,7 @@ package net.servehttp.bytecom.model.jpa.comercial;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.expr.BooleanExpression;
+import net.servehttp.bytecom.model.jpa.CrudJPA;
 import net.servehttp.bytecom.model.jpa.entity.comercial.Cliente;
 import net.servehttp.bytecom.model.jpa.entity.comercial.QCliente;
 import net.servehttp.bytecom.model.jpa.entity.comercial.StatusCliente;
@@ -9,7 +10,6 @@ import net.servehttp.bytecom.model.jpa.entity.comercial.StatusCliente;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author clairton
  */
 @Transactional
-public class ClienteJPA implements Serializable {
+public class ClienteJPA extends CrudJPA {
 
     @Inject
     protected EntityManager em;
@@ -58,5 +58,9 @@ public class ClienteJPA implements Serializable {
         LocalDateTime data = LocalDateTime.now().minusMonths(2);
         return new JPAQuery(em).from(c).where(c.updatedAt.gt(data)).orderBy(c.updatedAt.desc())
                 .limit(20).list(c);
+    }
+
+    public Cliente buscarPorId(int clienteId) {
+        return em.find(Cliente.class, clienteId);
     }
 }

@@ -87,7 +87,7 @@ public class MensalidadeController extends GenericoController implements Seriali
         List<Mensalidade> list = getBoletosEmAberto(cliente.getMensalidades());
         if (list == null || list.isEmpty()) {
             possui = false;
-            AlertaUtil.error("Cliente nao possui nenhuma mensalidade em aberto.");
+            AlertaUtil.error("Cliente nao possui nenhuma mensalidade entityManager aberto.");
         }
         return possui;
     }

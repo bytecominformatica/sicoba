@@ -77,7 +77,7 @@ public class ConexaoController extends GenericoController {
         boolean valido = true;
         if (!conexaoJPA.conexaoDisponivel(cliente.getConexao())) {
             valido = false;
-            AlertaUtil.error("Esse nome de usuário já está em uso");
+            AlertaUtil.error("Esse nome de usuário já está entityManager uso");
         }
         return valido;
     }

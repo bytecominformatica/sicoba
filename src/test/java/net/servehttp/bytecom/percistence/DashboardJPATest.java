@@ -5,6 +5,8 @@ import javax.persistence.EntityManager;
 import net.servehttp.bytecom.facede.CreateEntityManager;
 import net.servehttp.bytecom.model.jpa.dashboard.DashboadJPA;
 
+import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Header;
+import net.servehttp.bytecom.model.jpa.financeiro.HeaderJPA;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,9 +24,12 @@ public class DashboardJPATest {
 
   @Test
   public void deveriaBuscasQuantidadeDeInstalacoesDoMes() {
-    dashboadJPA.getQuantidadeInstalacoesDoMes();
+      HeaderJPA headerJPA = new HeaderJPA();
+      headerJPA.setEntityManager(em);
+      Header header = headerJPA.buscarPorId(291);
+      headerJPA.remove(header);
   }
- 
+
   @Test
   public void deveriaBuscasFaturamentoDoMes() {
     dashboadJPA.getFaturamentoDoMes();
@@ -34,12 +39,12 @@ public class DashboardJPATest {
   public void deveriaBuscasFaturamentoPrevistoDoMes() {
     dashboadJPA.getFaturamentoPrevistoDoMes();
   }
-  
+
   @Test
   public void deveriaBuscasMensalidadesEmAtraso() {
     dashboadJPA.getMensalidadesEmAtraso();
   }
-  
+
   @AfterClass
   public static void closeUp() {
     em.close();

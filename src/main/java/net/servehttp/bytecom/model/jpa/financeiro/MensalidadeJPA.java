@@ -2,6 +2,7 @@ package net.servehttp.bytecom.model.jpa.financeiro;
 
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
+import net.servehttp.bytecom.model.jpa.CrudJPA;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.Cedente;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.QCedente;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author clairton
  */
 @Transactional
-public class MensalidadeJPA implements Serializable {
+public class MensalidadeJPA extends CrudJPA {
 
     private static final long serialVersionUID = -5750421956273634462L;
     @Inject
@@ -46,7 +47,12 @@ public class MensalidadeJPA implements Serializable {
         return new JPAQuery(em).from(c).uniqueResult(c);
     }
 
-    public Mensalidade buscarPorModalidadeNumeroBoletoMovimento(int modalidade, int numeroBoleto, int codigoMovimento) {
+    public Mensalidade buscarPorModalidadeNumeroBoleto(int modalidade, int numeroBoleto) {
         return new JPAQuery(em).from(m).where(m.numeroBoleto.eq(numeroBoleto).and(m.modalidade.eq(modalidade))).uniqueResult(m);
     }
+
+    public Mensalidade buscarPorId(int id) {
+        return new JPAQuery(em).from(m).where(m.id.eq(id)).uniqueResult(m);
+    }
+
 }

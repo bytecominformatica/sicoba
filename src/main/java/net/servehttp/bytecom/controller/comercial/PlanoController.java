@@ -71,7 +71,7 @@ public class PlanoController extends GenericoController implements Serializable 
             AlertaUtil.info("Removido com sucesso!");
             page = "list";
         } else {
-            AlertaUtil.error("Não é possível remover este plano, pois o mesmo está em uso!");
+            AlertaUtil.error("Não é possível remover este plano, pois o mesmo está entityManager uso!");
         }
         return page;
     }

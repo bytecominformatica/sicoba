@@ -15,6 +15,9 @@ import java.time.LocalDate;
 public class Registro extends EntityGeneric implements Serializable {
 
     private static final long serialVersionUID = -6545044532807044580L;
+    public static final int ENTRADA_CONFIRMADA = 2;
+    public static final int LIQUIDACAO = 6;
+    public static final int TARIFA = 28;
 
     @Column(name = "modalidade_nosso_numero")
     private int modalidadeNossoNumero;

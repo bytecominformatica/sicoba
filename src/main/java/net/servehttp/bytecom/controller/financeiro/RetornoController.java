@@ -42,36 +42,7 @@ public class RetornoController extends GenericoController implements Serializabl
             Header header = null;
             try {
                 header = retornoCaixaService.parse(file.getInputStream(), file.getSubmittedFileName());
-                if (notExists(header)) {
-                    for (HeaderLote hl : header.getHeaderLotes()) {
-                        for (Registro r : hl.getRegistros()) {
-                            Mensalidade m = mensalidadeJPA.buscarPorModalidadeNumeroBoletoMovimento(r.getModalidadeNossoNumero(), r.getNossoNumero(), r.getCodigoMovimento());
-
-                            if (m == null) {
-                                m = jpa.buscarPorId(Mensalidade.class, r.getNossoNumero());
-                            }
-
-                            if (m != null) {
-                                m.setStatus(StatusMensalidade.PAGO_NO_BOLETO);
-                                m.setValor(r.getValorTitulo());
-                                m.setValorPago(r.getRegistroDetalhe().getValorPago());
-                                m.setDesconto(r.getRegistroDetalhe().getDesconto());
-                                m.setTarifa(r.getValorTarifa());
-                                m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
-                                jpa.salvar(m);
-
-                                if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
-                                    m.getCliente().setStatus(StatusCliente.ATIVO);
-                                    m.getCliente().getStatus().atualizarConexao(m.getCliente(), connectionControl);
-                                    jpa.salvar(m.getCliente());
-                                }
-
-                            }
-                        }
-                    }
-                    jpa.salvar(header);
-                    AlertaUtil.info("Arquivo enviado com sucesso!");
-                }
+                retornoCaixaService.processarHeader(header);
             } catch (IllegalArgumentException e) {
                 AlertaUtil.error("Arquivo corrompido!");
             } catch (Exception e) {
@@ -83,28 +54,19 @@ public class RetornoController extends GenericoController implements Serializabl
 
     private boolean isFileValid(Part file) {
         boolean valid = true;
-        if (file != null) {
+        if (file == null) {
             valid = false;
             AlertaUtil.error("Nenhum arquivo selecionado!");
-        } else if (file.getSubmittedFileName().toLowerCase().contains(".ret")) {
+        } else if (!file.getSubmittedFileName().toLowerCase().contains(".ret")) {
             valid = false;
             AlertaUtil.error("Tipo de arquivo inválido");
-        } else if ("application/octet-stream".equals(file.getContentType())) {
+        } else if (!"application/octet-stream".equals(file.getContentType())) {
             valid = false;
             AlertaUtil.error("Tipo de arquivo inválido");
         }
         return valid;
     }
 
-    private boolean notExists(Header header) {
-        boolean exists = false;
-        List<Header> list = jpa.buscarTodos("sequencial", header.getSequencial(), Header.class);
-        if (!list.isEmpty()) {
-            exists = true;
-            AlertaUtil.error("Arquivo já foi enviado");
-        }
-        return !exists;
-    }
 
     public Part getFile() {
         return file;
