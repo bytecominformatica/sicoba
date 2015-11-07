@@ -1,28 +1,80 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:jsf="http://xmlns.jcp.org/jsf">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 <ui:composition template="/layout.xhtml">
-	<ui:define name="title">#{bundle.caixa}</ui:define>
-	<ui:define name="subtitle">#{bundle.retorno}</ui:define>
-	<ui:define name="content">
-		<div class="panel-body">
-			<form jsf:id="form" enctype="multipart/form-data" class="form-horizontal">
-				<input type="file" jsf:id="file" jsf:value="#{retornoController.file}" class="form-control">
-					<i class="glyphicon glyphicon-plus"></i>
-	            	<span>Add files...</span>
-				</input>
-				
-				<div class="panel-footer">
-					<button type="submit" jsf:actionListener="#{retornoController.upload}" class="btn btn-primary">
-						<i class="fa fa-upload"></i>
-						Upload
-					</button>
-				</div>
-			</form>
-		</div>
-	</ui:define>
+    <ui:define name="title">#{bundle.caixa}</ui:define>
+    <ui:define name="subtitle">#{bundle.retorno}</ui:define>
+    <ui:define name="content">
+        <div class="panel-body">
+            <form jsf:id="form" enctype="multipart/form-data" class="form-horizontal">
+                <input type="file" jsf:id="file" jsf:value="#{retornoController.file}" class="form-control">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                </input>
+
+                <div class="panel-footer">
+                    <button type="submit" jsf:actionListener="#{retornoController.upload}" class="btn btn-primary">
+                        <i class="fa fa-upload"></i>
+                        Upload
+                    </button>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <h:dataTable value="#{retornoController.retornoPojos}" var="retorno"
+                             styleClass="table table-hover"
+                             headerClass="tableColumnsHeader">
+                    <h:column>
+                        <f:facet name="header">#{bundle.nome}</f:facet>
+                        #{retorno.mensalidade.cliente.nome}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.valor}</f:facet>
+                        #{retorno.mensalidade.valor}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.valorPago}</f:facet>
+                        #{retorno.mensalidade.valorPago}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.movimento}</f:facet>
+                        #{retorno.movimento}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.vencimento}</f:facet>
+                        #{retorno.mensalidade.dataVencimento}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.dataOcorrencia}</f:facet>
+                        #{retorno.mensalidade.dataOcorrencia}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.desconto}</f:facet>
+                        #{retorno.mensalidade.desconto}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.boleto}</f:facet>
+                        #{retorno.mensalidade.modalidade}/#{retorno.mensalidade.numeroBoleto}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{bundle.tarifa}</f:facet>
+                        #{retorno.mensalidade.tarifa}
+                    </h:column>
+
+                </h:dataTable>
+            </div>
+        </div>
+    </ui:define>
 </ui:composition>
 </html>

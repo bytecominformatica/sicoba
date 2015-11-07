@@ -12,6 +12,7 @@ import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.model.jpa.financeiro.HeaderJPA;
 import net.servehttp.bytecom.model.jpa.financeiro.MensalidadeJPA;
+import net.servehttp.bytecom.pojo.financeiro.RetornoPojo;
 import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.web.AlertaUtil;
 
@@ -41,7 +42,8 @@ public class RetornoCaixaService implements Serializable {
         return PARSE_RETORNO.parse(inputStream, filename);
     }
 
-    public void processarHeader(Header header) throws Exception {
+    public List<RetornoPojo> processarHeader(Header header) throws Exception {
+        List<RetornoPojo> retornoPojos = new ArrayList<>();
         if (notExists(header)) {
             List<EntityGeneric> mensalidadesRegistradas = new ArrayList<>();
             for (HeaderLote hl : header.getHeaderLotes()) {
@@ -49,35 +51,54 @@ public class RetornoCaixaService implements Serializable {
                     if (r.getCodigoMovimento() == Registro.ENTRADA_CONFIRMADA) {
                         mensalidadesRegistradas.add(criarMensalidadeRegistrada(r));
                     } else if (r.getCodigoMovimento() == Registro.LIQUIDACAO) {
-                        Mensalidade m = mensalidadeJPA.buscarPorModalidadeNumeroBoleto(r.getModalidadeNossoNumero(), r.getNossoNumero());
+                        Mensalidade m = liquidarMensalidade(r);
+                        RetornoPojo pojo = new RetornoPojo();
 
-//                        TODO: remover isso quando todos os boletos estiverem registrados
-                        if (m == null) {
-                            m = mensalidadeJPA.buscarPorId(r.getNossoNumero());
-                        }
-
-                        if (m != null) {
-                            m.setStatus(StatusMensalidade.PAGO_NO_BOLETO);
-                            m.setValor(r.getValorTitulo());
-                            m.setValorPago(r.getRegistroDetalhe().getValorPago());
-                            m.setDesconto(r.getRegistroDetalhe().getDesconto());
-                            m.setTarifa(r.getValorTarifa());
-                            m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
-                            mensalidadeJPA.save(m);
-
-                            if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
-                                m.getCliente().setStatus(StatusCliente.ATIVO);
-                                m.getCliente().getStatus().atualizarConexao(m.getCliente(), connectionControl);
-                                clienteJPA.save(m.getCliente());
-                            }
-                        }
+                        pojo.setMensalidade(m);
+                        pojo.setMovimento("LIQUIDAÇÂO");
+                        retornoPojos.add(pojo);
                     }
                 }
             }
             mensalidadeJPA.save(mensalidadesRegistradas);
+            mensalidadesRegistradas.forEach(mensalidade -> {
+                Mensalidade m = (Mensalidade) mensalidade;
+                RetornoPojo r = new RetornoPojo();
+
+                r.setMensalidade(m);
+                r.setMovimento("ENTRADA CONFIRMADA");
+                retornoPojos.add(r);
+            });
             headerJPA.save(header);
-            AlertaUtil.info("Arquivo enviado com sucesso!");
         }
+        return retornoPojos;
+    }
+
+    private Mensalidade liquidarMensalidade(Registro r) throws Exception {
+        Mensalidade m = mensalidadeJPA.buscarPorModalidadeNumeroBoleto(r.getModalidadeNossoNumero(), r.getNossoNumero());
+
+//                        TODO: remover isso quando todos os boletos estiverem registrados
+        if (m == null) {
+            m = mensalidadeJPA.buscarPorId(r.getNossoNumero());
+        }
+
+        if (m != null) {
+            m.setStatus(StatusMensalidade.PAGO_NO_BOLETO);
+            m.setValor(r.getValorTitulo());
+            m.setValorPago(r.getRegistroDetalhe().getValorPago());
+            m.setDesconto(r.getRegistroDetalhe().getDesconto());
+            m.setTarifa(r.getValorTarifa());
+            m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
+            mensalidadeJPA.save(m);
+
+            if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
+                m.getCliente().setStatus(StatusCliente.ATIVO);
+                m.getCliente().getStatus().atualizarConexao(m.getCliente(), connectionControl);
+                clienteJPA.save(m.getCliente());
+            }
+
+        }
+        return m;
     }
 
     private Mensalidade criarMensalidadeRegistrada(Registro r) {

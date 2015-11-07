@@ -8,6 +8,7 @@ import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Header;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
 import net.servehttp.bytecom.model.jpa.entity.financeiro.retorno.Registro;
 import net.servehttp.bytecom.model.jpa.financeiro.MensalidadeJPA;
+import net.servehttp.bytecom.pojo.financeiro.RetornoPojo;
 import net.servehttp.bytecom.service.financeiro.RetornoCaixaService;
 import net.servehttp.bytecom.service.provedor.IConnectionControl;
 import net.servehttp.bytecom.util.web.AlertaUtil;
@@ -36,17 +37,21 @@ public class RetornoController extends GenericoController implements Serializabl
 
     @Inject
     private MensalidadeJPA mensalidadeJPA;
+    private List<RetornoPojo> retornoPojos;
 
     public void upload() {
         if (isFileValid(file)) {
             Header header = null;
             try {
                 header = retornoCaixaService.parse(file.getInputStream(), file.getSubmittedFileName());
-                retornoCaixaService.processarHeader(header);
+                retornoPojos = retornoCaixaService.processarHeader(header);
+                if(!retornoPojos.isEmpty()){
+                    AlertaUtil.info("Arquivo enviado com sucesso!");
+                }
             } catch (IllegalArgumentException e) {
                 AlertaUtil.error("Arquivo corrompido!");
             } catch (Exception e) {
-                AlertaUtil.error("Arquivo corrompido!");
+                AlertaUtil.error(e.getMessage());
                 log(e);
             }
         }
@@ -76,4 +81,11 @@ public class RetornoController extends GenericoController implements Serializabl
         this.file = file;
     }
 
+    public List<RetornoPojo> getRetornoPojos() {
+        return retornoPojos;
+    }
+
+    public void setRetornoPojos(List<RetornoPojo> retornoPojos) {
+        this.retornoPojos = retornoPojos;
+    }
 }

@@ -25,15 +25,9 @@ public class CrudJPA implements Serializable {
     }
 
     public void save(List<EntityGeneric> list) {
-        entityManager.getTransaction().begin();
         list.forEach(e -> {
-            if (e.getId() > 0) {
-                entityManager.merge(e);
-            } else {
-                entityManager.persist(e);
-            }
+            save(e);
         });
-        entityManager.getTransaction().commit();
     }
 
     public void remove(EntityGeneric entityGeneric) {
