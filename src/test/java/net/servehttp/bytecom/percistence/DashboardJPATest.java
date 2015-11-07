@@ -24,10 +24,7 @@ public class DashboardJPATest {
 
   @Test
   public void deveriaBuscasQuantidadeDeInstalacoesDoMes() {
-      HeaderJPA headerJPA = new HeaderJPA();
-      headerJPA.setEntityManager(em);
-      Header header = headerJPA.buscarPorId(291);
-      headerJPA.remove(header);
+    dashboadJPA.getQuantidadeInstalacoesDoMes();
   }
 
   @Test
