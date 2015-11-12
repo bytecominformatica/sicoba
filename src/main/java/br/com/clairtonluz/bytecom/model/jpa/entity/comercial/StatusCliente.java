@@ -28,7 +28,7 @@ public enum StatusCliente {
         @Override
         public void atualizarConexao(Cliente cliente, IConnectionControl control) throws Exception {
             if (cliente.getConexao() != null) {
-//                control.remove(cliente.getConexao().getMikrotik(), cliente.getConexao());
+                control.remove(cliente.getConexao().getMikrotik(), cliente.getConexao());
                 cliente.setConexao(null);
             }
             if (cliente.getContrato() != null) {
