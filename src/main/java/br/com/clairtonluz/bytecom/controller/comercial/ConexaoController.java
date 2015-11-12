@@ -3,6 +3,7 @@ package br.com.clairtonluz.bytecom.controller.comercial;
 import br.com.clairtonluz.bytecom.model.jpa.comercial.ConexaoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.bytecom.model.jpa.provedor.MikrotikJPA;
 import br.com.clairtonluz.bytecom.service.comercial.ClienteService;
@@ -75,7 +76,10 @@ public class ConexaoController implements Serializable {
 
     private boolean valido() {
         boolean valido = true;
-        if (!conexaoJPA.conexaoDisponivel(cliente.getConexao())) {
+        if (cliente.getStatus().equals(StatusCliente.CANCELADO)) {
+            valido = false;
+            AlertaUtil.error("Cliente cancelado nao pode possuir uma conexao");
+        } else if (!conexaoJPA.conexaoDisponivel(cliente.getConexao())) {
             valido = false;
             AlertaUtil.error("Esse nome de usuário já está entityManager uso");
         }
