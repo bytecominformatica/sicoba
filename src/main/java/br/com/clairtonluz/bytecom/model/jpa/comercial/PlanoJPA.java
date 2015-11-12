@@ -44,9 +44,14 @@ public class PlanoJPA extends CrudJPA {
         return new JPAQuery(entityManager).from(p).where(p.nome.eq(nome)).uniqueResult(p);
     }
 
-    public boolean isWithoutUse(Plano plano) {
+    public boolean isNotUsed(Plano plano) {
         QContrato contrato = QContrato.contrato;
-        return new JPAQuery(entityManager).from(contrato)
-                .where(contrato.plano.id.eq(plano.getId())).list(contrato.plano).isEmpty();
+        boolean isNotUsed = true;
+        if(plano != null){
+            List<Plano> planos = new JPAQuery(entityManager).from(contrato)
+                    .where(contrato.plano.id.eq(plano.getId())).list(contrato.plano);
+            isNotUsed = planos.isEmpty();
+        }
+        return isNotUsed;
     }
 }

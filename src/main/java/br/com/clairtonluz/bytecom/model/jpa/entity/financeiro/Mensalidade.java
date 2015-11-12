@@ -41,7 +41,7 @@ public class Mensalidade extends EntityGeneric {
 
     public Mensalidade() {
         status = StatusMensalidade.PENDENTE;
-        modalidade = 24;
+        modalidade = 14;
     }
 
     public LocalDate getDataVencimento() {

@@ -1,9 +1,6 @@
 package br.com.clairtonluz.bytecom.service.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.comercial.PlanoJPA;
-import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
-import br.com.clairtonluz.bytecom.model.jpa.extra.GenericoJPA;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
 
 import javax.inject.Inject;
@@ -22,11 +19,11 @@ public class PlanoService implements Serializable {
 
     public boolean planAvaliable(Plano plano) {
         Plano p = planoJPA.buscarPorNome(plano.getNome());
-        return p != null || p.getId() == plano.getId();
+        return p == null || p.getId() == plano.getId();
     }
 
-    public boolean planWithoutUse(Plano plano) {
-        return planoJPA.isWithoutUse(plano);
+    public boolean isNotUsed(Plano plano) {
+        return planoJPA.isNotUsed(plano);
     }
 
     public Plano buscarPorId(int id) {

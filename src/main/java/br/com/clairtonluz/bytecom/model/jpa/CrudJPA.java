@@ -31,7 +31,7 @@ public abstract class CrudJPA implements Serializable {
     }
 
     public void remove(EntityGeneric entityGeneric) {
-        getEntityManager().remove(entityGeneric);
+        getEntityManager().remove(getEntityManager().merge(entityGeneric));
     }
 
     public abstract EntityManager getEntityManager();
