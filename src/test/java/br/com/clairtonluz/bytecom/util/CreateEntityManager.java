@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.facede;
+package br.com.clairtonluz.bytecom.util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

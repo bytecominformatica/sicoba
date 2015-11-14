@@ -2,7 +2,7 @@ package br.com.clairtonluz.bytecom.percistence;
 
 import javax.persistence.EntityManager;
 
-import br.com.clairtonluz.bytecom.facede.CreateEntityManager;
+import br.com.clairtonluz.bytecom.util.CreateEntityManager;
 import br.com.clairtonluz.bytecom.model.jpa.administrador.UserJPA;
 
 import org.junit.After;

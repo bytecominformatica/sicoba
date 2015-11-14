@@ -2,13 +2,13 @@ package br.com.clairtonluz.bytecom.model.jpa.dashboard;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QCliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import com.mysema.query.jpa.JPASubQuery;
-import com.mysema.query.jpa.impl.JPAQuery;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QContrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.QMensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
+import com.mysema.query.jpa.JPASubQuery;
+import com.mysema.query.jpa.impl.JPAQuery;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -91,7 +91,7 @@ public class DashboadJPA implements Serializable {
                 .where(
                         (c.status.eq(StatusCliente.ATIVO).or(c.status.eq(StatusCliente.INATIVO)).and(c.id
                                 .notIn(new JPASubQuery().from(m).distinct().where(m.dataVencimento.gt(data))
-                                        .orderBy(m.cliente.contrato.dataInstalacao.asc()).list(m.cliente.id)))))
+                                        .list(m.cliente.id)))))
                 .list(c);
     }
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
 
-import br.com.clairtonluz.bytecom.facede.CreateEntityManager;
+import br.com.clairtonluz.bytecom.util.CreateEntityManager;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeRelatorioJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
 

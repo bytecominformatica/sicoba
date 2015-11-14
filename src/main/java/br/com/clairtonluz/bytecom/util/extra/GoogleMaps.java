@@ -30,13 +30,13 @@ public abstract class GoogleMaps {
         Location l = null;
         if (endereco != null) {
             String url = getPathMap(endereco);
-            JSONObject json = RestClient.get(url);
-            JSONArray results = json.getJSONArray("results");
-            if (results.length() > 0) {
-                JSONObject location =
-                        results.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
-                l = new Location(location.getDouble("lat"), location.getDouble("lng"));
-            }
+//            JSONObject json = RestClient.get(url);
+//            JSONArray results = json.getJSONArray("results");
+//            if (results.length() > 0) {
+//                JSONObject location =
+//                        results.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+//                l = new Location(location.getDouble("lat"), location.getDouble("lng"));
+//            }
         }
         return l;
     }

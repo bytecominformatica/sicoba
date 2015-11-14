@@ -22,6 +22,13 @@ public class ContratoJPA extends CrudJPA {
     @Inject
     private EntityManager entityManager;
 
+    public ContratoJPA() {
+    }
+
+    public ContratoJPA(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
@@ -36,4 +43,7 @@ public class ContratoJPA extends CrudJPA {
         return new JPAQuery(entityManager).from(c).where(c.dataInstalacao.between(from, to)).list(c);
     }
 
+    public Contrato findById(Integer id) {
+        return entityManager.find(Contrato.class, id);
+    }
 }

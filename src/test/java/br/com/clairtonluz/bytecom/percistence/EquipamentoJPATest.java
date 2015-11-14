@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.com.clairtonluz.bytecom.facede.CreateEntityManager;
+import br.com.clairtonluz.bytecom.util.CreateEntityManager;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.StatusEquipamento;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.TipoEquipamento;
