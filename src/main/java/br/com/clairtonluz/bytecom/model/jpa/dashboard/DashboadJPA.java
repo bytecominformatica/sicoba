@@ -46,13 +46,6 @@ public class DashboadJPA implements Serializable {
         return new JPAQuery(em).from(c).orderBy(c.contrato.dataInstalacao.desc()).limit(10).list(c);
     }
 
-
-    public long getQuantidadeInstalacoesDoMes() {
-        QContrato c = QContrato.contrato;
-        LocalDate data = LocalDate.now().withDayOfMonth(1);
-        return new JPAQuery(em).from(c).where(c.dataInstalacao.goe(data)).count();
-    }
-
     public List<Mensalidade> getMensalidadesEmAtraso() {
         QMensalidade m = QMensalidade.mensalidade;
         return new JPAQuery(em).from(m)

@@ -32,15 +32,6 @@ public class MensalidadeService extends CrudService {
         return m;
     }
 
-    public byte[] gerarCarne(List<Mensalidade> mensalidades) throws IOException {
-        Cedente cedente = buscarCedente();
-        if (cedente == null) {
-            throw new IllegalArgumentException("NÃO EXISTEM NENHUM CEDENTE CADASTRADO");
-        } else {
-            return GerarBoleto.criarCarneCaixa(mensalidades, cedente);
-        }
-    }
-
     private Cedente buscarCedente() {
         return mensalidadeJPA.buscarCedente();
     }

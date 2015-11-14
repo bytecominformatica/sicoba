@@ -69,13 +69,6 @@ public class MensalidadeController implements Serializable {
 
     }
 
-    public void gerarBoletosPDF() throws IOException {
-        if (clientePossuiTodosOsDadosNecessarios(cliente)) {
-            byte[] pdfData = mensalidadeService.gerarCarne(getBoletosEmAberto(cliente.getMensalidades()));
-            WebUtil.downloadPDF(pdfData, cliente.getNome());
-        }
-    }
-
     private boolean clientePossuiTodosOsDadosNecessarios(Cliente c) {
         boolean possui = true;
         if (c.getCpfCnpj() == null) {
