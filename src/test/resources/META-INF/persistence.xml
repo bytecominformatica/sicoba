@@ -24,7 +24,6 @@
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.administrador.UserAccount</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.administrador.AccessGroup</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.administrador.Authentication</class>
-        <class>br.com.clairtonluz.bytecom.model.jpa.entity.extra.ClienteGeoReferencia</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Cedente</class>
         <class>br.com.clairtonluz.bytecom.util.converter.date.LocalDatePersistenceConverter</class>
         <class>br.com.clairtonluz.bytecom.util.converter.date.LocalDateTimePersistenceConverter</class>
