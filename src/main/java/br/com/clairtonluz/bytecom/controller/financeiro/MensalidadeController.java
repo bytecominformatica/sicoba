@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class MensalidadeController implements Serializable {
     }
 
     public void removerMensalidadesAbertasNaoVencida() {
-        mensalidadeService.removerMensalidadesAbertasNaoVencida(cliente);
+        mensalidadeService.removerTodosAbertasNaoVencida(cliente);
         AlertaUtil.info("sucesso");
     }
 
@@ -117,7 +116,7 @@ public class MensalidadeController implements Serializable {
     public Mensalidade getNovaMensalidade() {
         LocalDate d =
                 LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-        return mensalidadeService.getNovaMensalidade(cliente, d);
+        return mensalidadeService.getNova(cliente, d);
     }
 
     public void salvar() {
@@ -134,7 +133,7 @@ public class MensalidadeController implements Serializable {
     }
 
     public void remover(Mensalidade m) {
-        mensalidadeService.remover(m);
+        mensalidadeService.remove(m);
         cliente.getMensalidades().remove(m);
         mensalidade = getNovaMensalidade();
         AlertaUtil.info("Mensalidade removido com sucesso!");

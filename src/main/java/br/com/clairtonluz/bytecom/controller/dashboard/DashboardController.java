@@ -3,7 +3,7 @@ package br.com.clairtonluz.bytecom.controller.dashboard;
 import br.com.clairtonluz.bytecom.model.jpa.dashboard.DashboadJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import br.com.clairtonluz.bytecom.model.service.comercial.ContractService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.util.StringUtil;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +25,7 @@ public class DashboardController implements Serializable {
     @Inject
     private DashboadJPA dashboadJPA;
     @Inject
-    private ContractService contractService;
+    private ContratoService contractService;
     private long quantidadeInstalacoes;
     private double faturamentoDoMes;
     private double faturamentoPrevistoDoMes;
@@ -37,7 +37,7 @@ public class DashboardController implements Serializable {
     @PostConstruct
     public void load() {
         listClientesInstalados = dashboadJPA.buscarTodosClienteInstaladosRecente();
-        quantidadeInstalacoes = contractService.findAllInstalledThisMonth().size();
+        quantidadeInstalacoes = contractService.buscarTodosInstaladoEsseMes().size();
         faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
         faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
         listMensalidadesAtrasadas = dashboadJPA.getMensalidadesEmAtraso();

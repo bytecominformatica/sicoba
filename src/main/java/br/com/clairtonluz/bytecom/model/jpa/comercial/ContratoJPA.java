@@ -38,12 +38,12 @@ public class ContratoJPA extends CrudJPA {
         this.entityManager = em;
     }
 
-    public List<Contrato> findAllByInstalationDate(LocalDate from, LocalDate to) {
+    public List<Contrato> buscarTodosPorDataInstalacao(LocalDate from, LocalDate to) {
         QContrato c = QContrato.contrato;
         return new JPAQuery(entityManager).from(c).where(c.dataInstalacao.between(from, to)).list(c);
     }
 
-    public Contrato findById(Integer id) {
+    public Contrato buscarPorId(Integer id) {
         return entityManager.find(Contrato.class, id);
     }
 }

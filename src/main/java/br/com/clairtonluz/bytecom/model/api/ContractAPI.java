@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.api;
 
-import br.com.clairtonluz.bytecom.model.service.comercial.ContractService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -17,12 +17,12 @@ import javax.ws.rs.Produces;
 public class ContractAPI {
 
     @Inject
-    private ContractService contratoService;
+    private ContratoService contratoService;
 
     @GET
     @Path("installed/this/month/amount")
     public Integer getInstalledThisMonth() {
-        return contratoService.findAllInstalledThisMonth().size();
+        return contratoService.buscarTodosInstaladoEsseMes().size();
     }
 
 }

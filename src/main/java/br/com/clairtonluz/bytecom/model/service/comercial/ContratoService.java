@@ -8,28 +8,28 @@ import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ContractService extends CrudService {
+public class ContratoService extends CrudService {
 
     private static final long serialVersionUID = 8705835474790847188L;
     @Inject
     private ContratoJPA contratoJPA;
 
-    public ContractService() {
+    public ContratoService() {
     }
 
-    public ContractService(ContratoJPA contratoJPA) {
+    public ContratoService(ContratoJPA contratoJPA) {
         this.contratoJPA = contratoJPA;
     }
 
-    public Contrato findById(int id) {
-        return contratoJPA.findById(id);
+    public Contrato buscarPorId(int id) {
+        return contratoJPA.buscarPorId(id);
     }
 
-    public List<Contrato> findAllInstalledThisMonth() {
+    public List<Contrato> buscarTodosInstaladoEsseMes() {
         LocalDate now = LocalDate.now();
         LocalDate from = now.withDayOfMonth(1);
         LocalDate to = now.withDayOfMonth(now.lengthOfMonth());
-        return contratoJPA.findAllByInstalationDate(from, to);
+        return contratoJPA.buscarTodosPorDataInstalacao(from, to);
     }
 
 }

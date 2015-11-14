@@ -77,7 +77,7 @@ public class CadastrarBoletosController implements Serializable {
     }
 
     private void gravarBoleto(LocalDate c, int numeroBoleto) {
-        Mensalidade m = mensalidadeService.getNovaMensalidade(cliente, c);
+        Mensalidade m = mensalidadeService.getNova(cliente, c);
         m.setModalidade(modalidade);
         m.setNumeroBoleto(numeroBoleto);
         m.setDesconto(descontoGeracao);
@@ -88,12 +88,12 @@ public class CadastrarBoletosController implements Serializable {
     public Mensalidade getNovaMensalidade() {
         LocalDate d =
                 LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-        return mensalidadeService.getNovaMensalidade(cliente, d);
+        return mensalidadeService.getNova(cliente, d);
     }
 
     private boolean boletosNaoRegistrado(int inicio, int fim) {
         boolean validos = true;
-        List<Mensalidade> listMensalidades = mensalidadeService.buscarMensalidadesPorBoleto(modalidade, inicio, fim);
+        List<Mensalidade> listMensalidades = mensalidadeService.buscarPorBoleto(modalidade, inicio, fim);
         if (!listMensalidades.isEmpty()) {
             validos = false;
             StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");

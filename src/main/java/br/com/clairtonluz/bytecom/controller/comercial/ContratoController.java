@@ -5,7 +5,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
-import br.com.clairtonluz.bytecom.model.service.comercial.ContractService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.model.service.comercial.PlanoService;
 import br.com.clairtonluz.bytecom.model.service.estoque.EquipamentoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
@@ -42,7 +42,7 @@ public class ContratoController implements Serializable {
     @Inject
     private ClienteService clienteService;
     @Inject
-    private ContractService contratoService;
+    private ContratoService contratoService;
     @Inject
     private IConnectionControl connectionControl;
 

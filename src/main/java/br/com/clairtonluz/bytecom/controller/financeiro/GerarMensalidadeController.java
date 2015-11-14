@@ -68,7 +68,7 @@ public class GerarMensalidadeController implements Serializable {
     public Mensalidade getNovaMensalidade() {
         LocalDate d =
                 LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
-        return mensalidadeService.getNovaMensalidade(cliente, d);
+        return mensalidadeService.getNova(cliente, d);
     }
 
     public Cliente getCliente() {
