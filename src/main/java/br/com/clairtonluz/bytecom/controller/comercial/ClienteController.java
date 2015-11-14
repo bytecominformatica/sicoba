@@ -4,8 +4,8 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Bairro;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.pojo.comercial.EnderecoPojo;
-import br.com.clairtonluz.bytecom.service.comercial.AddressService;
-import br.com.clairtonluz.bytecom.service.comercial.ClienteService;
+import br.com.clairtonluz.bytecom.model.service.comercial.AddressService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 

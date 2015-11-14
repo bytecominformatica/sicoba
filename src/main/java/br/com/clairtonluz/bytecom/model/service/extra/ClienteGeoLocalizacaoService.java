@@ -1,8 +1,8 @@
-package br.com.clairtonluz.bytecom.service.extra;
+package br.com.clairtonluz.bytecom.model.service.extra;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.ClienteGeoReferencia;
 import br.com.clairtonluz.bytecom.model.jpa.extra.ClienteGeoReferenciaJPA;
-import br.com.clairtonluz.bytecom.service.CrudService;
+import br.com.clairtonluz.bytecom.model.service.CrudService;
 
 import javax.inject.Inject;
 

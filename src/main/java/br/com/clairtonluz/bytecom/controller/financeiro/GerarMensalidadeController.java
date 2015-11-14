@@ -2,8 +2,8 @@ package br.com.clairtonluz.bytecom.controller.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import br.com.clairtonluz.bytecom.service.comercial.ClienteService;
-import br.com.clairtonluz.bytecom.service.financeiro.MensalidadeService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
+import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 
 import javax.annotation.PostConstruct;

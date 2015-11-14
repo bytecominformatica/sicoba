@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.service.financeiro;
+package br.com.clairtonluz.bytecom.model.service.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;

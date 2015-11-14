@@ -1,9 +1,9 @@
-package br.com.clairtonluz.bytecom.service.provedor.impl;
+package br.com.clairtonluz.bytecom.model.service.provedor.impl;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.IConnectionClienteCertified;
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.IServer;
-import br.com.clairtonluz.bytecom.service.provedor.IFirewall;
-import br.com.clairtonluz.bytecom.service.provedor.MikrotikConnection;
+import br.com.clairtonluz.bytecom.model.service.provedor.IFirewall;
+import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikConnection;
 
 import java.net.Inet4Address;
 import java.util.List;

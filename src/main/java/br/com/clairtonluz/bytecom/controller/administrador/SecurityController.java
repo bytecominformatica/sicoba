@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.controller.administrador;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.administrador.UserAccount;
-import br.com.clairtonluz.bytecom.service.administrador.AccountService;
+import br.com.clairtonluz.bytecom.model.service.administrador.AccountService;
 import br.com.clairtonluz.bytecom.util.NetworkUtil;
 import br.com.clairtonluz.bytecom.util.ejb.MailEJB;
 import br.com.clairtonluz.bytecom.util.extra.EmailAddress;

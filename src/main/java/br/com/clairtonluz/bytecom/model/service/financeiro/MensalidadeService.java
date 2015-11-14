@@ -1,15 +1,14 @@
-package br.com.clairtonluz.bytecom.service.financeiro;
+package br.com.clairtonluz.bytecom.model.service.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Cedente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeJPA;
-import br.com.clairtonluz.bytecom.service.CrudService;
+import br.com.clairtonluz.bytecom.model.service.CrudService;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;

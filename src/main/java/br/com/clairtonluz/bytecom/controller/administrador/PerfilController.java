@@ -2,8 +2,8 @@ package br.com.clairtonluz.bytecom.controller.administrador;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.administrador.Authentication;
 import br.com.clairtonluz.bytecom.model.jpa.entity.administrador.UserAccount;
-import br.com.clairtonluz.bytecom.service.administrador.AccountService;
-import br.com.clairtonluz.bytecom.service.administrador.UserAccountService;
+import br.com.clairtonluz.bytecom.model.service.administrador.AccountService;
+import br.com.clairtonluz.bytecom.model.service.administrador.UserAccountService;
 import br.com.clairtonluz.bytecom.util.ImageUtil;
 import br.com.clairtonluz.bytecom.util.qualifier.UsuarioLogado;
 import br.com.clairtonluz.bytecom.util.seguranca.HashUtil;

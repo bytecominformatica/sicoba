@@ -1,8 +1,7 @@
 package br.com.clairtonluz.bytecom.controller.estoque;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
-import br.com.clairtonluz.bytecom.model.jpa.estoque.EquipamentoJPA;
-import br.com.clairtonluz.bytecom.service.estoque.EquipamentoService;
+import br.com.clairtonluz.bytecom.model.service.estoque.EquipamentoService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 

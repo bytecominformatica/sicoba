@@ -3,8 +3,8 @@ package br.com.clairtonluz.bytecom.controller.financeiro;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeJPA;
 import br.com.clairtonluz.bytecom.pojo.financeiro.RetornoPojo;
-import br.com.clairtonluz.bytecom.service.financeiro.RetornoCaixaService;
-import br.com.clairtonluz.bytecom.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.model.service.financeiro.RetornoCaixaService;
+import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 
 import javax.enterprise.context.RequestScoped;

@@ -2,7 +2,7 @@ package br.com.clairtonluz.bytecom.controller.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
-import br.com.clairtonluz.bytecom.service.comercial.ClienteService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 
 import javax.annotation.PostConstruct;

@@ -4,11 +4,11 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
-import br.com.clairtonluz.bytecom.service.comercial.ClienteService;
-import br.com.clairtonluz.bytecom.service.comercial.ContratoService;
-import br.com.clairtonluz.bytecom.service.comercial.PlanoService;
-import br.com.clairtonluz.bytecom.service.estoque.EquipamentoService;
-import br.com.clairtonluz.bytecom.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
+import br.com.clairtonluz.bytecom.model.service.comercial.PlanoService;
+import br.com.clairtonluz.bytecom.model.service.estoque.EquipamentoService;
+import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 

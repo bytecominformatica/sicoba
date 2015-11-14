@@ -1,6 +1,5 @@
-package br.com.clairtonluz.bytecom.service;
+package br.com.clairtonluz.bytecom.model.service;
 
-import br.com.clairtonluz.bytecom.model.jpa.CrudJPA;
 import br.com.clairtonluz.bytecom.model.jpa.comercial.PlanoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
 

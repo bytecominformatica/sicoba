@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.service.comercial;
+package br.com.clairtonluz.bytecom.model.service.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.comercial.PlanoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;

@@ -2,7 +2,7 @@ package br.com.clairtonluz.bytecom.controller.provedor;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.bytecom.model.jpa.provedor.MikrotikJPA;
-import br.com.clairtonluz.bytecom.service.provedor.MikrotikService;
+import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 
 import javax.annotation.PostConstruct;

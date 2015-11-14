@@ -1,7 +1,7 @@
-package br.com.clairtonluz.bytecom.service;
+package br.com.clairtonluz.bytecom.model.service;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.*;
-import br.com.clairtonluz.bytecom.service.financeiro.RetornoCaixaService;
+import br.com.clairtonluz.bytecom.model.service.financeiro.RetornoCaixaService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

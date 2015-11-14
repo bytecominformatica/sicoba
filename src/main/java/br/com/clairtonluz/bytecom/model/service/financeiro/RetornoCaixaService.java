@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.service.financeiro;
+package br.com.clairtonluz.bytecom.model.service.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
@@ -13,7 +13,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.HeaderJPA;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeJPA;
 import br.com.clairtonluz.bytecom.pojo.financeiro.RetornoPojo;
-import br.com.clairtonluz.bytecom.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.controller.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
-import br.com.clairtonluz.bytecom.service.comercial.PlanoService;
+import br.com.clairtonluz.bytecom.model.service.comercial.PlanoService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 

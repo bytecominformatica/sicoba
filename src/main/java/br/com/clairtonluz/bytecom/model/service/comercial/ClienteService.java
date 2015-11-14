@@ -1,12 +1,12 @@
-package br.com.clairtonluz.bytecom.service.comercial;
+package br.com.clairtonluz.bytecom.model.service.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.comercial.ClienteJPA;
 import br.com.clairtonluz.bytecom.model.jpa.comercial.ConexaoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
-import br.com.clairtonluz.bytecom.service.provedor.IConnectionControl;
-import br.com.clairtonluz.bytecom.service.provedor.MikrotikConnection;
+import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikConnection;
 import br.com.clairtonluz.bytecom.util.MensagemException;
 
 import javax.inject.Inject;

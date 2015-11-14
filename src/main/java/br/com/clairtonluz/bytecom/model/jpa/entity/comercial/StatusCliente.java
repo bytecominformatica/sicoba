@@ -1,8 +1,8 @@
 package br.com.clairtonluz.bytecom.model.jpa.entity.comercial;
 
-import br.com.clairtonluz.bytecom.service.provedor.IConnectionControl;
-import br.com.clairtonluz.bytecom.service.provedor.IFirewall;
-import br.com.clairtonluz.bytecom.service.provedor.impl.MikrotikFirewall;
+import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.model.service.provedor.IFirewall;
+import br.com.clairtonluz.bytecom.model.service.provedor.impl.MikrotikFirewall;
 
 public enum StatusCliente {
 

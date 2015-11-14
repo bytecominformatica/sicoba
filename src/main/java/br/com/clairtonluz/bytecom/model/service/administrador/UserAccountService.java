@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.service.administrador;
+package br.com.clairtonluz.bytecom.model.service.administrador;
 
 import br.com.clairtonluz.bytecom.model.jpa.administrador.UserAccountJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.administrador.UserAccount;

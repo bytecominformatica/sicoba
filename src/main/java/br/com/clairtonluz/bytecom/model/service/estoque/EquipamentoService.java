@@ -1,11 +1,11 @@
-package br.com.clairtonluz.bytecom.service.estoque;
+package br.com.clairtonluz.bytecom.model.service.estoque;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.StatusEquipamento;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.TipoEquipamento;
 import br.com.clairtonluz.bytecom.model.jpa.estoque.EquipamentoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.extra.GenericoJPA;
-import br.com.clairtonluz.bytecom.service.CrudService;
+import br.com.clairtonluz.bytecom.model.service.CrudService;
 
 import javax.inject.Inject;
 import java.util.List;
