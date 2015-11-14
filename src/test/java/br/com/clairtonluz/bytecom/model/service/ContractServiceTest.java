@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by clairtonluz on 14/11/15.
@@ -30,6 +29,6 @@ public class ContractServiceTest {
 
     @Test
     public void deveria_buscar_contrato_por_id() {
-        assertNull(contractService.findById(1));
+        assertNotNull(contractService.findById(1));
     }
 }
