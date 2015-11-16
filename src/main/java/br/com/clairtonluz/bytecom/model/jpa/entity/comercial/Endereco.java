@@ -23,14 +23,6 @@ public class Endereco extends EntityGeneric {
     @ManyToOne(fetch = FetchType.EAGER)
     private Bairro bairro;
 
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getComplemento() {
         return this.complemento;
     }

@@ -5,9 +5,9 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
-import br.com.clairtonluz.bytecom.model.jpa.provedor.MikrotikJPA;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikService;
 import br.com.clairtonluz.bytecom.util.StringUtil;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
@@ -32,7 +32,7 @@ public class ConexaoController implements Serializable {
     @Inject
     private ConexaoJPA conexaoJPA;
     @Inject
-    private MikrotikJPA mikrotikJPA;
+    private MikrotikService mikrotikService;
     @Inject
     private IConnectionControl connectionControl;
     @Inject
@@ -49,7 +49,7 @@ public class ConexaoController implements Serializable {
     }
 
     public void buscarTodosMikrotik() {
-        listMikrotik = mikrotikJPA.buscarTodosMikrotik();
+        listMikrotik = mikrotikService.findAll();
     }
 
     private void carregarCliente() {

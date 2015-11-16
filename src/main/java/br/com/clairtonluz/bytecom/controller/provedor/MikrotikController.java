@@ -1,7 +1,6 @@
 package br.com.clairtonluz.bytecom.controller.provedor;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
-import br.com.clairtonluz.bytecom.model.jpa.provedor.MikrotikJPA;
 import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 
@@ -24,9 +23,8 @@ public class MikrotikController implements Serializable {
 
     private Mikrotik mikrotik;
     @Inject
-    private MikrotikJPA mikrotikJPA;
-    private String senha;
     private MikrotikService mikrotikService;
+    private String senha;
 
     @PostConstruct
     public void load() {
@@ -34,7 +32,7 @@ public class MikrotikController implements Serializable {
     }
 
     private void consultar() {
-        listMikrotik = mikrotikJPA.buscarTodosMikrotik();
+        listMikrotik = mikrotikService.findAll();
     }
 
     public void novo() {

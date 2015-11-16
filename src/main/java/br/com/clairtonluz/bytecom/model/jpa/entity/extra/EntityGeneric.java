@@ -12,7 +12,7 @@ public abstract class EntityGeneric implements Serializable {
     private static final long serialVersionUID = -7494177824158985929L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
+    protected Integer id;
 
     @Column(name = "created_at")
     @Convert(converter = LocalDateTimePersistenceConverter.class)
@@ -26,11 +26,11 @@ public abstract class EntityGeneric implements Serializable {
         createdAt = LocalDateTime.now();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
