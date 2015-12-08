@@ -49,6 +49,6 @@ public class ConexaoJPA extends CrudJPA {
     }
 
     public List<Conexao> buscarTodos() {
-        return new JPAQuery(entityManager).orderBy(c.nome.asc()).list(c);
+        return new JPAQuery(entityManager).from(c).orderBy(c.nome.asc()).list(c);
     }
 }

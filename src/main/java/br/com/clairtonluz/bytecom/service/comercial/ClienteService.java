@@ -23,6 +23,7 @@ public class ClienteService implements Serializable {
     private IConnectionControl connectionControl;
     @Inject
     private ClienteJPA clienteJPA;
+    @Inject
     private ConnectionService connectionService;
 
     public List<Cliente> buscaUltimosClientesAlterados() {
