@@ -1,6 +1,7 @@
 package br.com.clairtonluz.bytecom.model.jpa.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.CrudJPA;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Cedente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.QCedente;
@@ -60,4 +61,7 @@ public class MensalidadeJPA extends CrudJPA {
         return new JPAQuery(entityManager).from(m).where(m.id.eq(id)).uniqueResult(m);
     }
 
+    public List<Mensalidade> bucarPorCliente(Cliente cliente) {
+        return new JPAQuery(entityManager).from(m).where(m.cliente.id.eq(cliente.getId())).list(m);
+    }
 }

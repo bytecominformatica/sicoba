@@ -1,206 +1,196 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:jsf="http://xmlns.jcp.org/jsf">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
 <ui:composition template="/layout.xhtml">
-	<ui:define name="title">#{bundle.dashboard}</ui:define>
-	<ui:define name="subtitle">#{bundle.controlPanel}</ui:define>
-	<ui:define name="content">
+    <ui:define name="title">#{bundle.dashboard}</ui:define>
+    <ui:define name="subtitle">#{bundle.controlPanel}</ui:define>
+    <ui:define name="content">
 
-		<!-- Main content -->
-		<section class="content">
+        <!-- Main content -->
+        <section class="content">
 
-			<!-- Small boxes (Stat box) -->
+            <!-- Small boxes (Stat box) -->
 
-			<div class="row">
-				<div class="col-lg-3 col-xs-6">
-					<!-- small box -->
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
 
-					<div class="small-box bg-yellow">
-						<div class="inner">
-							<h3>#{dashboardController.quantidadeInstalacoes}</h3>
-							<p>Instalações do Mês</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-add"></i>
-						</div>
-					</div>
-				</div>
-				<!-- ./col -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>#{dashboardController.quantidadeInstalacoes}</h3>
 
-				<div class="col-lg-3 col-xs-6">
-					<!-- small box -->
-					<div class="small-box bg-red">
-						<div class="inner">
-							<h3>#{dashboardController.listMensalidadesAtrasadas.size()}
-							</h3>
-							<p>Mensalidades em atraso</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-pie-graph"></i>
-						</div>
-					</div>
-				</div>
-				<!-- ./col -->
-				<div class="col-lg-3 col-xs-6">
-					<!-- small box -->
-					<div class="small-box bg-purple">
-						<div class="inner">
-							<h3>#{dashboardController.listClientesInativos.size()}</h3>
-							<p>Clientes Inativos</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-stalker"></i>
-						</div>
-					</div>
-				</div>
-				<!-- ./col -->
-			</div>
-			<!-- /.row -->
+                            <p>Instalações do Mês</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
 
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>#{dashboardController.listMensalidadesAtrasadas.size()}
+                            </h3>
 
-			<div id="dashboard_tabs" class="col-xs-12 col-sm-10">
+                            <p>Mensalidades em atraso</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-purple">
+                        <div class="inner">
+                            <h3>#{dashboardController.listClientesInativos.size()}</h3>
 
-
-				<!-- Nav tabs -->
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active">
-						<a href="#mensalidadesEmAtraso" aria-controls="mensalidadesEmAtraso" role="tab" data-toggle="tab">
-							Mensalidades Em Atraso
-							<span class="label label-warning">#{dashboardController.listMensalidadesAtrasadas.size()}</span>
-						</a>
-					</li>
-					
-					<li role="presentation">
-						<a href="#clientesSemMensalidade" aria-controls="clientesSemMensalidade" role="tab" data-toggle="tab">
-							Clientes Sem Mensalidade
-							<span class="label label-danger">#{dashboardController.listClientesSemMensalidades.size()}</span>
-						</a>
-					</li>
-					
-					<li role="presentation">
-						<a href="#ultimasInstalacoes" aria-controls="ultimasInstalacoes" role="tab" data-toggle="tab">
-							Ultimas	Instalações
-							<span class="label label-success">#{dashboardController.listClientesInstalados.size()}</span>
-						</a>
-					</li>
-					
-					<li role="presentation">
-						<a href="#clientesInativos" aria-controls="clientesInativos" role="tab" data-toggle="tab">
-							Cliente Inativos
-							<span class="label label-success">#{dashboardController.listClientesInativos.size()}</span>
-						</a>
-					</li>
-					
-				</ul>
-
-				<!-- Tab panes -->
-				<div class="tab-content">
-					
-					<div role="tabpanel" class="tab-pane active col-sm-12 col-md-12"
-						id="mensalidadesEmAtraso">
-							<h:dataTable
-								styleClass="table m-table table-bordered table-hover table-heading"
-								value="#{dashboardController.listMensalidadesAtrasadas}" var="m">
-								<h:column>
-									<f:facet name="header">#{bundle.cliente}</f:facet>
-									<a
-										href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{m.cliente.id}"
-										style="color: #{m.cliente.status == 'ATIVO' ? 'green' : m.cliente.status == 'INATIVO' ? 'orange' : 'red'};">#{m.cliente.nome}</a>
-								</h:column>
-								<h:column>
-									<f:facet name="header">#{bundle.valor}</f:facet>
-									#{m.valor}
-								</h:column>
-								<h:column>
-									<f:facet name="header">#{bundle.vencimento}</f:facet>
-									<h:outputText value="#{m.dataVencimento}" >
-										<f:converter converterId="localDateConverter"  />
-									</h:outputText>
-								</h:column>
-								<h:column>
-									<f:facet name="header">#{bundle.ip}</f:facet>
-									<a href="http://#{m.cliente.conexao.ip}" target="_blank">#{m.cliente.conexao.ip}</a>
-								</h:column>
-							</h:dataTable>
-					</div>
-					
-					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
-						id="clientesSemMensalidade">
-						<h:dataTable
-							styleClass="table m-table table-bordered table-hover table-heading"
-							value="#{dashboardController.listClientesSemMensalidades}"
-							var="c">
-							<h:column>
-								<f:facet name="header">#{bundle.nome}</f:facet>
-								<a
-									href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
-							</h:column>
-							<h:column>
-								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
-								<h:outputText value="#{c.contrato.dataInstalacao}" >
-									<f:converter converterId="localDateConverter"  />
-								</h:outputText>
-							</h:column>
-						</h:dataTable>
-					</div>
-					
-					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
-						id="ultimasInstalacoes">
-						<h:dataTable
-							styleClass="table m-table table-bordered table-hover table-heading"
-							value="#{dashboardController.listClientesInstalados}" var="c">
-							<h:column>
-								<f:facet name="header">#{bundle.nome}</f:facet>
-								<a
-									href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
-							</h:column>
-							<h:column>
-								<f:facet name="header">#{bundle.dataInstalacao}</f:facet>
-								<h:outputText value="#{c.contrato.dataInstalacao}" >
-									<f:converter converterId="localDateConverter"  />
-								</h:outputText>
-							</h:column>
-							<h:column>
-								<f:facet name="header">#{bundle.ip}</f:facet>
-								<a href="http://#{c.conexao.ip}" target="_blank">#{c.conexao.ip}</a>
-							</h:column>
-							<h:column>
-								<f:facet name="header">#{bundle.mensalidade}</f:facet>
-									#{empty c.mensalidades || c.mensalidades == null ? 'SEM MENSALIDADES' : 'OK'}
-								</h:column>
-						</h:dataTable>
-					</div>
-					
-					<div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
-						id="clientesInativos">
-						<h:dataTable
-							styleClass="table m-table table-bordered table-hover table-heading"
-							value="#{dashboardController.listClientesInativos}" var="c">
-							<h:column>
-								<f:facet name="header">#{bundle.nome}</f:facet>
-								<a
-									href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
-							</h:column>
-						</h:dataTable>
-					</div>
-				</div>
+                            <p>Clientes Inativos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-stalker"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
 
 
+            <div id="dashboard_tabs" class="col-xs-12 col-sm-10">
 
 
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#mensalidadesEmAtraso" aria-controls="mensalidadesEmAtraso" role="tab"
+                           data-toggle="tab">
+                            Mensalidades Em Atraso
+                            <span class="label label-warning">#{dashboardController.listMensalidadesAtrasadas.size()}</span>
+                        </a>
+                    </li>
+
+                    <li role="presentation">
+                        <a href="#clientesSemMensalidade" aria-controls="clientesSemMensalidade" role="tab"
+                           data-toggle="tab">
+                            Clientes Sem Mensalidade
+                            <span class="label label-danger">#{dashboardController.listClientesSemMensalidades.size()}</span>
+                        </a>
+                    </li>
+
+                    <li role="presentation">
+                        <a href="#ultimasInstalacoes" aria-controls="ultimasInstalacoes" role="tab" data-toggle="tab">
+                            Ultimas Instalações
+                            <span class="label label-success">#{dashboardController.listNovosContratos.size()}</span>
+                        </a>
+                    </li>
+
+                    <li role="presentation">
+                        <a href="#clientesInativos" aria-controls="clientesInativos" role="tab" data-toggle="tab">
+                            Cliente Inativos
+                            <span class="label label-success">#{dashboardController.listClientesInativos.size()}</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+
+                    <div role="tabpanel" class="tab-pane active col-sm-12 col-md-12"
+                         id="mensalidadesEmAtraso">
+                        <h:dataTable
+                                styleClass="table m-table table-bordered table-hover table-heading"
+                                value="#{dashboardController.listMensalidadesAtrasadas}" var="m">
+                            <h:column>
+                                <f:facet name="header">#{bundle.cliente}</f:facet>
+                                <a
+                                        href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{m.cliente.id}"
+                                        style="color: #{m.cliente.status == 'ATIVO' ? 'green' : m.cliente.status == 'INATIVO' ? 'orange' : 'red'};">#{m.cliente.nome}</a>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle.valor}</f:facet>
+                                #{m.valor}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle.vencimento}</f:facet>
+                                <h:outputText value="#{m.dataVencimento}">
+                                    <f:converter converterId="localDateConverter"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle.ip}</f:facet>
+                                <a href="http://#{dashboardController.getConexao(m.cliente).ip}" target="_blank">#{dashboardController.getConexao(m.cliente).ip}</a>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+                         id="clientesSemMensalidade">
+                        <h:dataTable
+                                styleClass="table m-table table-bordered table-hover table-heading"
+                                value="#{dashboardController.listClientesSemMensalidades}"
+                                var="c">
+                            <h:column>
+                                <f:facet name="header">#{bundle.nome}</f:facet>
+                                <a
+                                        href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+                         id="ultimasInstalacoes">
+                        <h:dataTable
+                                styleClass="table m-table table-bordered table-hover table-heading"
+                                value="#{dashboardController.listNovosContratos}" var="c">
+                            <h:column>
+                                <f:facet name="header">#{bundle.nome}</f:facet>
+                                <a href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.cliente.id}">#{c.cliente.nome}</a>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle.dataInstalacao}</f:facet>
+                                <h:outputText value="#{c.dataInstalacao}">
+                                    <f:converter converterId="localDateConverter"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle.ip}</f:facet>
+                                <a href="http://#{dashboardController.getConexao(c.cliente).ip}" target="_blank">#{dashboardController.getConexao(c.cliente).ip}</a>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle.mensalidade}</f:facet>
+                                #{empty dashboardController.getMensalidades(c.cliente) || dashboardController.getMensalidades(c.cliente) == null ? 'SEM MENSALIDADES' : 'OK'}
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane col-sm-12 col-md-12"
+                         id="clientesInativos">
+                        <h:dataTable
+                                styleClass="table m-table table-bordered table-hover table-heading"
+                                value="#{dashboardController.listClientesInativos}" var="c">
+                            <h:column>
+                                <f:facet name="header">#{bundle.nome}</f:facet>
+                                <a
+                                        href="#{request.contextPath}/pages/comercial/cliente/cliente.xhtml?id=#{c.id}">#{c.nome}</a>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
 
 
-
-
-
-
-			</div>
-			<!--End Dashboard Tab 1-->
-		</section>
-		<!-- /.content -->
-	</ui:define>
+            </div>
+            <!--End Dashboard Tab 1-->
+        </section>
+        <!-- /.content -->
+    </ui:define>
 </ui:composition>
 </html>

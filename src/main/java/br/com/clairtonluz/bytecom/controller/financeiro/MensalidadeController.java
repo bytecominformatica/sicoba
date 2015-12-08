@@ -1,9 +1,11 @@
 package br.com.clairtonluz.bytecom.controller.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
@@ -29,12 +31,17 @@ public class MensalidadeController implements Serializable {
 
     private static final long serialVersionUID = -866830816286480241L;
     private Mensalidade mensalidade;
+
+
+    private List<Mensalidade> mensalidades;
     private Cliente cliente;
 
     @Inject
     private MensalidadeService mensalidadeService;
     @Inject
-    private ClienteService clientService;
+    private ContratoService contratoService;
+    @Inject
+    private ClienteService clienteService;
 
     @PostConstruct
     public void init() {
@@ -52,47 +59,25 @@ public class MensalidadeController implements Serializable {
     }
 
     public void removerMensalidadesAbertasNaoVencida() {
-        mensalidadeService.removerTodosAbertasNaoVencida(cliente);
+        mensalidadeService.removerTodosAbertasNaoVencida(mensalidades);
         AlertaUtil.info("sucesso");
     }
 
     public void buscarCliente() {
-        cliente = clientService.buscarPorId(cliente.getId());
+        cliente = clienteService.buscarPorId(cliente.getId());
     }
 
     private void getParameters() {
         String clienteId = WebUtil.getParameters("clienteId");
         if (clienteId != null && !clienteId.isEmpty()) {
-            cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
+            Cliente cliente = clienteService.buscarPorId(Integer.parseInt(clienteId));
+            mensalidades = mensalidadeService.buscarPorCliente(cliente);
         }
 
-    }
-
-    private boolean clientePossuiTodosOsDadosNecessarios(Cliente c) {
-        boolean possui = true;
-        if (c.getCpfCnpj() == null) {
-            possui = false;
-            AlertaUtil.error("Cpf ou Cnpj obrigatório");
-        }
-
-        List<Mensalidade> list = getBoletosEmAberto(cliente.getMensalidades());
-        if (list == null || list.isEmpty()) {
-            possui = false;
-            AlertaUtil.error("Cliente nao possui nenhuma mensalidade entityManager aberto.");
-        }
-        return possui;
-    }
-
-    private List<Mensalidade> getBoletosEmAberto(List<Mensalidade> list) {
-        if (list != null) {
-            return list.stream().filter(m -> m.getStatus() == StatusMensalidade.PENDENTE)
-                    .collect(Collectors.toCollection(ArrayList::new));
-        }
-        return null;
     }
 
     private void ordernarMensalidades() {
-        Collections.sort(cliente.getMensalidades(), new Comparator<Mensalidade>() {
+        Collections.sort(mensalidades, new Comparator<Mensalidade>() {
             public int compare(Mensalidade m1, Mensalidade m2) {
                 return m1.getDataVencimento().compareTo(m2.getDataVencimento());
             }
@@ -114,16 +99,17 @@ public class MensalidadeController implements Serializable {
     }
 
     public Mensalidade getNovaMensalidade() {
+        Contrato contrato = contratoService.buscarPorCliente(cliente);
         LocalDate d =
-                LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
+                LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento());
         return mensalidadeService.getNova(cliente, d);
     }
 
     public void salvar() {
         mensalidadeService.save(mensalidade);
 
-        if (!cliente.getMensalidades().contains(mensalidade)) {
-            cliente.getMensalidades().add(mensalidade);
+        if (!mensalidades.contains(mensalidade)) {
+            mensalidades.add(mensalidade);
             ordernarMensalidades();
         }
 
@@ -134,7 +120,7 @@ public class MensalidadeController implements Serializable {
 
     public void remover(Mensalidade m) {
         mensalidadeService.remove(m);
-        cliente.getMensalidades().remove(m);
+        mensalidades.remove(m);
         mensalidade = getNovaMensalidade();
         AlertaUtil.info("Mensalidade removido com sucesso!");
     }
@@ -153,5 +139,13 @@ public class MensalidadeController implements Serializable {
 
     public void setMensalidade(Mensalidade mensalidade) {
         this.mensalidade = mensalidade;
+    }
+
+    public List<Mensalidade> getMensalidades() {
+        return mensalidades;
+    }
+
+    public void setMensalidades(List<Mensalidade> mensalidades) {
+        this.mensalidades = mensalidades;
     }
 }

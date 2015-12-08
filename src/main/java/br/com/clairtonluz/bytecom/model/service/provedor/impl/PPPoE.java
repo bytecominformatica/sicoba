@@ -2,6 +2,8 @@ package br.com.clairtonluz.bytecom.model.service.provedor.impl;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.IConnectionClienteCertified;
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.IServer;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.model.service.provedor.IFirewall;
 import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikConnection;

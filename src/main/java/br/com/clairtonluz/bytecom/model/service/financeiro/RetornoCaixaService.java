@@ -1,19 +1,23 @@
 package br.com.clairtonluz.bytecom.model.service.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Registro;
 import br.com.clairtonluz.bytecom.commons.parse.ParseRetornoCaixa;
 import br.com.clairtonluz.bytecom.model.jpa.comercial.ClienteJPA;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Registro;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.HeaderJPA;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeJPA;
-import br.com.clairtonluz.bytecom.pojo.financeiro.RetornoPojo;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
+import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.pojo.financeiro.RetornoPojo;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 
 import javax.inject.Inject;
@@ -35,6 +39,10 @@ public class RetornoCaixaService implements Serializable {
     private HeaderJPA headerJPA;
     @Inject
     private ClienteJPA clienteJPA;
+    @Inject
+    private ContratoRepository contratoRepository;
+    @Inject
+    private ConexaoService conexaoService;
     @Inject
     private IConnectionControl connectionControl;
 
@@ -93,8 +101,12 @@ public class RetornoCaixaService implements Serializable {
 
             if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
                 m.getCliente().setStatus(StatusCliente.ATIVO);
-                m.getCliente().getStatus().atualizarConexao(m.getCliente(), connectionControl);
+
+                Cliente cliente = m.getCliente();
+                Contrato contrato = contratoRepository.findByCliente(cliente);
+                Conexao conexao = conexaoService.buscarPorCliente(cliente);
                 clienteJPA.save(m.getCliente());
+                conexaoService.save(conexao);
             }
 
         }

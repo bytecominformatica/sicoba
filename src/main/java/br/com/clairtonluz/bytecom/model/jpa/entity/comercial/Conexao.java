@@ -1,17 +1,16 @@
 package br.com.clairtonluz.bytecom.model.jpa.entity.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
-import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.IConnectionClienteCertified;
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
+import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Secret;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Optional;
 
 @Entity
 @Table(name = "conexao")
-public class Conexao extends EntityGeneric implements IConnectionClienteCertified {
+public class Conexao extends EntityGeneric {
 
     private static final long serialVersionUID = -4166003590731566705L;
 
@@ -33,12 +32,8 @@ public class Conexao extends EntityGeneric implements IConnectionClienteCertifie
     @Size(min = 1, max = 50)
     private String ip;
 
-    public Conexao() {
-    }
-
-    public String getProfile() {
-        Optional<Cliente> c = Optional.ofNullable(cliente);
-        return c.map(Cliente::getContrato).map(Contrato::getPlano).map(Plano::getNome).orElse(null);
+    public Secret createSecret(Plano plano) {
+        return new Secret(nome, senha, ip, plano.getNome());
     }
 
     public String getNome() {
@@ -81,18 +76,4 @@ public class Conexao extends EntityGeneric implements IConnectionClienteCertifie
         this.ip = ip;
     }
 
-    @Override
-    public String getMac() {
-        return null;
-    }
-
-    @Override
-    public String getLogin() {
-        return nome;
-    }
-
-    @Override
-    public String getPass() {
-        return senha;
-    }
 }

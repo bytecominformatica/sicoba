@@ -3,6 +3,8 @@ package br.com.clairtonluz.bytecom.controller.comercial;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Bairro;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.pojo.comercial.EnderecoPojo;
 import br.com.clairtonluz.bytecom.model.service.comercial.AddressService;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
@@ -25,12 +27,15 @@ public class ClienteController implements Serializable {
 
     private static final long serialVersionUID = 8827281306259995250L;
     private Cliente cliente = new Cliente();
+    private Contrato contrato;
     private List<Cidade> listCidades;
     private List<Bairro> listBairros;
     private Cidade cidade;
 
     @Inject
     private ClienteService clientService;
+    @Inject
+    private ContratoService contratoService;
     @Inject
     private AddressService addressService;
 
@@ -44,6 +49,7 @@ public class ClienteController implements Serializable {
         String clienteId = WebUtil.getParameters("id");
         if (clienteId != null && !clienteId.isEmpty()) {
             cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
+            contrato = contratoService.buscarPorCliente(cliente);
             selecionaCidade();
             atualizaBairros();
         }
@@ -114,4 +120,11 @@ public class ClienteController implements Serializable {
         this.cidade = cidade;
     }
 
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
+    }
 }

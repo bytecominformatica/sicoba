@@ -4,9 +4,13 @@ import br.com.clairtonluz.bytecom.model.jpa.comercial.ClienteJPA;
 import br.com.clairtonluz.bytecom.model.jpa.comercial.ConexaoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.IConnectionClienteCertified;
+import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Secret;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
+import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
-import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikConnection;
 import br.com.clairtonluz.bytecom.util.MensagemException;
 
 import javax.inject.Inject;
@@ -23,7 +27,9 @@ public class ClienteService implements Serializable {
     private IConnectionControl connectionControl;
     @Inject
     private ClienteJPA clienteJPA;
-    private ConnectionService connectionService;
+    @Inject
+    private ContratoRepository contratoRepository;
+    private ConexaoService conexaoService;
 
     public List<Cliente> buscaUltimosClientesAlterados() {
         return clienteJPA.buscaUltimosClientesAlterados();
@@ -33,8 +39,8 @@ public class ClienteService implements Serializable {
         return clienteJPA.buscarPorId(id);
     }
 
-    public List<Cliente> buscarTodosPorNomeIp(String nome, String ip, String mac, StatusCliente status) {
-        return clienteJPA.buscarTodosClientePorNomeIp(nome, ip, mac, status);
+    public List<Cliente> buscarTodosPorNomeIp(String nome, String ip, StatusCliente status) {
+        return clienteJPA.buscarTodosClientePorNomeIp(nome, ip, status);
     }
 
     public boolean rgAvaliable(Cliente c) {
@@ -58,8 +64,20 @@ public class ClienteService implements Serializable {
 
     public void save(Cliente cliente) throws Exception {
         if (isAvaliable(cliente)) {
-            cliente.getStatus().atualizarConexao(cliente, connectionControl);
             clienteJPA.save(cliente);
+            Contrato contrato = contratoRepository.findByCliente(cliente);
+            Conexao conexao = conexaoService.buscarPorCliente(cliente);
+
+            if (conexao != null) {
+                conexaoService.save(conexao);
+            }
+
+            if (cliente.getStatus().equals(StatusCliente.CANCELADO) && contrato != null) {
+                contrato.setEquipamento(null);
+                contrato.setEquipamentoWifi(null);
+                contratoRepository.save(contrato);
+            }
+
         }
     }
 
@@ -75,19 +93,17 @@ public class ClienteService implements Serializable {
     }
 
     public void atualizarTodasConexoes() throws Exception {
-        List<Conexao> list = connectionService.buscarTodos();
+        List<Conexao> list = conexaoService.buscarTodos();
 
-        try (MikrotikConnection mks = connectionControl.setAutoCloseable(true)) {
-            for (Conexao c : list) {
-                if (c.getIp() == null || c.getIp().isEmpty()) {
-                    c.setIp(conexaoJPA.getIpLivre());
-                }
-
-                c.getCliente().getStatus().atualizarConexao(c.getCliente(), connectionControl);
-                connectionService.save(c);
+        for (Conexao c : list) {
+            Cliente cliente = c.getCliente();
+            if (c.getIp() == null || c.getIp().isEmpty()) {
+                c.setIp(conexaoJPA.buscarIpLivre());
             }
+
+            conexaoService.save(c);
         }
-        connectionControl.setAutoCloseable(false);
+
     }
 
     public List<Cliente> findAll() {

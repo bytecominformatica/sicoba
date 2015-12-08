@@ -1,8 +1,10 @@
 package br.com.clairtonluz.bytecom.controller.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
+import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 
 import javax.annotation.PostConstruct;
@@ -23,20 +25,25 @@ public class ClienteConsultaController implements Serializable {
     private List<Cliente> listClientes;
     private String nome;
     private String ip;
-    private String mac;
     private StatusCliente status;
 
     @Inject
-    private ClienteService service;
+    private ClienteService clienteService;
+    @Inject
+    private ConexaoService conexaoService;
 
     @PostConstruct
     public void load() {
-        listClientes = service.buscaUltimosClientesAlterados();
+        listClientes = clienteService.buscaUltimosClientesAlterados();
     }
 
     public void atualizarTodasConexoes() throws Exception {
-        service.atualizarTodasConexoes();
+        clienteService.atualizarTodasConexoes();
         AlertaUtil.info("sucesso");
+    }
+
+    public Conexao getConexao(Cliente cliente) {
+        return conexaoService.buscarPorCliente(cliente);
     }
 
     public StatusCliente[] getListStatus() {
@@ -44,7 +51,7 @@ public class ClienteConsultaController implements Serializable {
     }
 
     public void consultar() {
-        listClientes = service.buscarTodosPorNomeIp(nome, ip, mac, status);
+        listClientes = clienteService.buscarTodosPorNomeIp(nome, ip, status);
     }
 
     public List<Cliente> getListClientes() {
@@ -77,14 +84,6 @@ public class ClienteConsultaController implements Serializable {
 
     public void setStatus(StatusCliente status) {
         this.status = status;
-    }
-
-    public String getMac() {
-        return mac;
-    }
-
-    public void setMac(String mac) {
-        this.mac = mac;
     }
 
 }

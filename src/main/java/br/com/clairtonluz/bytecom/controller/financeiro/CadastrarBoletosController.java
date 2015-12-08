@@ -1,8 +1,10 @@
 package br.com.clairtonluz.bytecom.controller.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
+import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
@@ -35,6 +37,8 @@ public class CadastrarBoletosController implements Serializable {
 
     @Inject
     private MensalidadeService mensalidadeService;
+    @Inject
+    private ContratoService contratoService;
     @Inject
     private ClienteService clientService;
 
@@ -86,8 +90,9 @@ public class CadastrarBoletosController implements Serializable {
     }
 
     public Mensalidade getNovaMensalidade() {
+        Contrato contrato = contratoService.buscarPorCliente(cliente);
         LocalDate d =
-                LocalDate.now().plusMonths(1).withDayOfMonth(cliente.getContrato().getVencimento());
+                LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento());
         return mensalidadeService.getNova(cliente, d);
     }
 

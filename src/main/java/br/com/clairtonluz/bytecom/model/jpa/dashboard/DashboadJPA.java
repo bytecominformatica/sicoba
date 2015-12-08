@@ -1,9 +1,6 @@
 package br.com.clairtonluz.bytecom.model.jpa.dashboard;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QCliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QContrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.*;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.QMensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
@@ -41,9 +38,9 @@ public class DashboadJPA implements Serializable {
     }
 
 
-    public List<Cliente> buscarTodosClienteInstaladosRecente() {
-        QCliente c = QCliente.cliente;
-        return new JPAQuery(em).from(c).orderBy(c.contrato.dataInstalacao.desc()).limit(10).list(c);
+    public List<Contrato> buscarNovosContratos() {
+        QContrato c = QContrato.contrato;
+        return new JPAQuery(em).from(c).orderBy(c.dataInstalacao.desc()).limit(10).list(c);
     }
 
     public List<Mensalidade> getMensalidadesEmAtraso() {

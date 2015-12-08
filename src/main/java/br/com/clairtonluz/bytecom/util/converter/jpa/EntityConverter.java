@@ -9,41 +9,39 @@ import javax.faces.convert.FacesConverter;
 import java.util.Map;
 
 
-@FacesConverter(value = "entityConverter", forClass = EntityGeneric.class)
+@FacesConverter(value = "entityConverter")
 public class EntityConverter implements Converter {
 
-    public Object getAsObject(FacesContext ctx, UIComponent component,
-                              String value) {
+    public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
         if (value != null) {
-            return this.getAttributesFrom(component).get(value);
+            Object o = this.getAttributesFrom(component).get(value);
+            System.out.println("tetes");
+            System.out.println(o);
+            return o;
         }
         return null;
     }
 
-    public String getAsString(FacesContext ctx, UIComponent component,
-                              Object value) {
-
+    public String getAsString(FacesContext ctx, UIComponent component, Object value) {
         if (value != null && !"".equals(value)) {
             EntityGeneric entity = (EntityGeneric) value;
 
-            if (entity.getId() != 0) {
-                this.addAttribute(component, entity);
+            this.addAttribute(component, entity);
 
-                if (entity.getId() != 0) {
-                    return String.valueOf(entity.getId());
-                }
-                return (String) value;
+            Integer codigo = entity.getId();
+            if (codigo != null) {
+                return String.valueOf(codigo);
             }
         }
-        return "";
+        return (String) value;
     }
 
-    private void addAttribute(UIComponent component, EntityGeneric o) {
-        this.getAttributesFrom(component).put(Integer.toString(o.getId()), o);
+    protected void addAttribute(UIComponent component, EntityGeneric o) {
+        String key = o.getId().toString(); // codigo da empresa como chave neste caso
+        this.getAttributesFrom(component).put(key, o);
     }
 
-    private Map<String, Object> getAttributesFrom(UIComponent component) {
+    protected Map<String, Object> getAttributesFrom(UIComponent component) {
         return component.getAttributes();
     }
-
 }

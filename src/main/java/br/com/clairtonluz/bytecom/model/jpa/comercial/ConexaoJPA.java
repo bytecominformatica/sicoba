@@ -1,6 +1,7 @@
 package br.com.clairtonluz.bytecom.model.jpa.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.CrudJPA;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QConexao;
 import com.mysema.query.jpa.impl.JPAQuery;
@@ -26,7 +27,7 @@ public class ConexaoJPA extends CrudJPA {
         this.entityManager = em;
     }
 
-    public boolean conexaoDisponivel(Conexao conexao) {
+    public boolean isDisponivel(Conexao conexao) {
         Conexao conexao2 = buscarConexaoPorNome(conexao.getNome());
         return conexao2 == null || conexao2.getId() == conexao.getId();
     }
@@ -35,7 +36,7 @@ public class ConexaoJPA extends CrudJPA {
         return new JPAQuery(entityManager).from(c).where(c.nome.eq(nome)).uniqueResult(c);
     }
 
-    public String getIpLivre() {
+    public String buscarIpLivre() {
         String rede = "10.77.3.";
         String ipLivre = null;
         for (int i = 10; i <= 250; i++) {
@@ -49,6 +50,12 @@ public class ConexaoJPA extends CrudJPA {
     }
 
     public List<Conexao> buscarTodos() {
-        return new JPAQuery(entityManager).orderBy(c.nome.asc()).list(c);
+        return new JPAQuery(entityManager).from(c).orderBy(c.nome.asc()).list(c);
+    }
+
+    public Conexao buscarPorCliente(Cliente cliente) {
+        return cliente != null ?
+                new JPAQuery(entityManager).from(c).where(c.cliente.id.eq(cliente.getId())).uniqueResult(c) :
+                null;
     }
 }

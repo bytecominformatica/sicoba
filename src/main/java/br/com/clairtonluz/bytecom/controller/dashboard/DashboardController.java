@@ -2,8 +2,12 @@ package br.com.clairtonluz.bytecom.controller.dashboard;
 
 import br.com.clairtonluz.bytecom.model.jpa.dashboard.DashboadJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
+import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
+import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
 import br.com.clairtonluz.bytecom.util.StringUtil;
 
 import javax.annotation.PostConstruct;
@@ -26,17 +30,21 @@ public class DashboardController implements Serializable {
     private DashboadJPA dashboadJPA;
     @Inject
     private ContratoService contractService;
+    @Inject
+    private ConexaoService conexaoService;
+    @Inject
+    private MensalidadeService mensalidadeService;
     private long quantidadeInstalacoes;
     private double faturamentoDoMes;
     private double faturamentoPrevistoDoMes;
     private List<Mensalidade> listMensalidadesAtrasadas;
-    private List<Cliente> listClientesInstalados;
+    private List<Contrato> listNovosContratos;
     private List<Cliente> listClientesSemMensalidades;
     private List<Cliente> listClientesInativos;
 
     @PostConstruct
     public void load() {
-        listClientesInstalados = dashboadJPA.buscarTodosClienteInstaladosRecente();
+        listNovosContratos = dashboadJPA.buscarNovosContratos();
         quantidadeInstalacoes = contractService.buscarTodosInstaladoEsseMes().size();
         faturamentoDoMes = dashboadJPA.getFaturamentoDoMes();
         faturamentoPrevistoDoMes = dashboadJPA.getFaturamentoPrevistoDoMes();
@@ -45,8 +53,15 @@ public class DashboardController implements Serializable {
         listClientesSemMensalidades = dashboadJPA.getClientesSemMensalidade();
     }
 
-    public List<Cliente> getListClientesInstalados() {
-        return listClientesInstalados;
+    public Conexao getConexao(Cliente cliente) {
+        return conexaoService.buscarPorCliente(cliente);
+    }
+    public List<Mensalidade> getMensalidades(Cliente cliente) {
+        return mensalidadeService.buscarPorCliente(cliente);
+    }
+
+    public List<Contrato> getListNovosContratos() {
+        return listNovosContratos;
     }
 
     public long getQuantidadeInstalacoes() {

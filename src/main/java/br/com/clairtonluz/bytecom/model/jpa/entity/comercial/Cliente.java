@@ -47,16 +47,6 @@ public class Cliente extends EntityGeneric {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Conexao conexao;
-
-    @OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Contrato contrato;
-
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Mensalidade> mensalidades;
-
     @Transient
     private boolean online;
 
@@ -72,14 +62,6 @@ public class Cliente extends EntityGeneric {
 
     public void setOnline(boolean online) {
         this.online = online;
-    }
-
-    public List<Mensalidade> getMensalidades() {
-        return mensalidades;
-    }
-
-    public void setMensalidades(List<Mensalidade> mensalidades) {
-        this.mensalidades = mensalidades;
     }
 
     public String getNome() {
@@ -104,14 +86,6 @@ public class Cliente extends EntityGeneric {
 
     public void setEmail(String email) {
         this.email = email != null && email.isEmpty() ? null : email;
-    }
-
-    public Contrato getContrato() {
-        return contrato;
-    }
-
-    public void setContrato(Contrato contrato) {
-        this.contrato = contrato;
     }
 
     public String getFoneTitular() {
@@ -169,13 +143,4 @@ public class Cliente extends EntityGeneric {
     public void setStatus(StatusCliente status) {
         this.status = status;
     }
-
-    public Conexao getConexao() {
-        return conexao;
-    }
-
-    public void setConexao(Conexao conexao) {
-        this.conexao = conexao;
-    }
-
 }
