@@ -16,6 +16,7 @@ public class Registro extends EntityGeneric {
 
     private static final long serialVersionUID = -6545044532807044580L;
     public static final int ENTRADA_CONFIRMADA = 2;
+    public static final int ENTRADA_REJEITADA = 3;
     public static final int LIQUIDACAO = 6;
     public static final int TARIFA = 28;
 
