@@ -31,6 +31,7 @@ public class ClienteService implements Serializable {
     private ContratoRepository contratoRepository;
     private ConexaoService conexaoService;
 
+
     public List<Cliente> buscaUltimosClientesAlterados() {
         return clienteJPA.buscaUltimosClientesAlterados();
     }
