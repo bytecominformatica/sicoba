@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Dashboard",
+    "icon": "fa fa-dashboard fa-fw",
+    "url": "#/"
+  },
+  {
+    "title": "Comercial",
+    "icon": "fa fa-group fa-fw",
+    "items": [
+      {
+        "title": "Clientes",
+        "icon": "fa fa-user fa-fw",
+        "url": "#/cliente"
+      },
+      {
+        "title": "Morris.js Chart",
+        "url": "#/morris"
+      }
+    ]
+  }
+]
