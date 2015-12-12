@@ -3,6 +3,7 @@ package br.com.clairtonluz.bytecom.model.jpa.comercial;
 import br.com.clairtonluz.bytecom.model.jpa.CrudJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QCliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QConexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.expr.BooleanExpression;
@@ -36,13 +37,13 @@ public class ClienteJPA extends CrudJPA {
 
     public List<Cliente> buscarTodosClientePorNomeIp(String nome, String ip, StatusCliente status) {
         BooleanExpression condicao = c.id.eq(c.id);
-
+        QConexao conexao = QConexao.conexao;
         if (nome != null && !nome.trim().isEmpty()) {
             condicao = condicao.and(c.nome.like("%" + nome + "%"));
         }
 
         if (ip != null && !ip.isEmpty()) {
-            condicao = condicao.and(c.conexao.ip.eq(ip));
+            condicao = condicao.and(conexao.ip.eq(ip));
         }
 
         if (status != null) {
