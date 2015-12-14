@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sicobaApp')
-    .controller('MenuCtrl', function ($scope, $http, $location) {
+    .controller('NavbarCtrl', function ($scope, $http, $location) {
 
         $scope.getPath = _getPath;
 
