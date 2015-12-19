@@ -5,7 +5,7 @@
 
 angular.module('sicobaApp')
     .factory('Cliente', ['$resource', function($resource) {
-        return $resource('/clientes/:id', {id: '@id'},
+        return $resource('api/clientes/:id', {id: '@id'},
             {
                 'semMensalidade': {
                     method:'GET',
