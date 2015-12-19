@@ -4,41 +4,40 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                         <div class="row">
-
                             <div class="col-sm-12">
-                                <div id="dataTables-example_filter" class="dataTables_filter"><label>Search:<input
-                                        type="search" class="form-control input-sm" placeholder=""
-                                        aria-controls="dataTables-example"></label></div>
+                                <div class="dataTables_filter">
+                                    <label>Search:<input ng-model="criterio.cliente.nome" type="search"
+                                                         placeholder="Nome do cliente aqui" class="form-control input-sm">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <table class="table table-striped table-bordered table-hover dataTable no-footer"
-                                       role="grid" aria-describedby="dataTables-example_info">
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer">
                                     <thead>
-                                    <tr role="row">
-                                        <th class="sorting" tabindex="0">
+                                    <tr>
+                                        <th ng-class="{'sorting':predicate != 'cliente.nome', 'sorting_asc': !reverse, 'sorting_desc': reverse}"
+                                            tabindex="0" ng-click="order('cliente.nome')">
                                             Cliente
                                         </th>
-                                        <th class="sorting" tabindex="1">
+                                        <th ng-class="{'sorting':predicate != 'valor', 'sorting_asc': !reverse, 'sorting_desc': reverse}"
+                                            tabindex="1" ng-click="order('valor')">
                                             Valor
                                         </th>
-                                        <th class="sorting" tabindex="2">
+                                        <th ng-class="{'sorting':predicate != 'dataVencimento', 'sorting_asc': !reverse, 'sorting_desc': reverse}"
+                                            tabindex="2" ng-click="order('dataVencimento')">
                                             Vencimento
-                                        </th>
-                                        <th class="sorting" tabindex="3">
-                                            IP
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX odd" role="row" ng-repeat="it in mensalidadesAtrasada">
+                                    <tr ng-repeat="it in mensalidadesAtrasada | filter:criterio | orderBy:predicate:reverse track by it.id">
                                         <td class="">{{it.cliente.nome}}</td>
                                         <td class="">{{it.valor | currency}}</td>
                                         <td class="">{{it.dataVencimento | date:'dd/MM/yyyy'}}</td>
-                                        <td class="">{{it.cliente.ip}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
