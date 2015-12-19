@@ -1,6 +1,8 @@
 package br.com.clairtonluz.bytecom.api;
 
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
+import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
 
 import javax.inject.Inject;
@@ -16,16 +18,16 @@ import java.util.List;
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Path("mensalidades")
-public class MensalidadeAPI {
+@Path("clientes")
+public class ClienteAPI {
 
     @Inject
-    private MensalidadeService mensalidadeService;
+    private ClienteService clienteService;
 
     @GET
-    @Path("atrasada")
-    public List<Mensalidade> getAtrasadas() {
-        return mensalidadeService.buscarMensalidadesAtrasada();
+    @Path("/sem_mensalidade")
+    public List<Cliente> getSemMensalidade() {
+        return clienteService.buscarSemMensalidade();
     }
 
 }

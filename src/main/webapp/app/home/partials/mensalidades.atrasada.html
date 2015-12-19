@@ -36,8 +36,8 @@
                                     <tbody>
                                     <tr class="gradeX odd" role="row" ng-repeat="it in mensalidadesAtrasada">
                                         <td class="">{{it.cliente.nome}}</td>
-                                        <td class="">{{it.valor}}</td>
-                                        <td class="">{{it.dataVencimento | date}}</td>
+                                        <td class="">{{it.valor | currency}}</td>
+                                        <td class="">{{it.dataVencimento | date:'dd/MM/yyyy'}}</td>
                                         <td class="">{{it.cliente.ip}}</td>
                                     </tr>
                                     </tbody>

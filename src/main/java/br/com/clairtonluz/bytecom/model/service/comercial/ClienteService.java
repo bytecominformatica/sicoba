@@ -108,4 +108,8 @@ public class ClienteService implements Serializable {
     public List<Cliente> findAll() {
         return clienteJPA.findAll();
     }
+
+    public List<Cliente> buscarSemMensalidade() {
+        return clienteJPA.buscarSemMensalidade();
+    }
 }

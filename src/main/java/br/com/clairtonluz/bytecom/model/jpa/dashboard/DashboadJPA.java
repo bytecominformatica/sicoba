@@ -43,13 +43,6 @@ public class DashboadJPA implements Serializable {
         return new JPAQuery(em).from(c).orderBy(c.dataInstalacao.desc()).limit(10).list(c);
     }
 
-    public List<Mensalidade> getMensalidadesEmAtraso() {
-        QMensalidade m = QMensalidade.mensalidade;
-        return new JPAQuery(em).from(m)
-                .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(LocalDate.now())))
-                .orderBy(m.dataVencimento.asc()).list(m);
-    }
-
     public double getFaturamentoDoMes() {
         QMensalidade m = QMensalidade.mensalidade;
         Double d =
@@ -69,19 +62,6 @@ public class DashboadJPA implements Serializable {
     public List<Cliente> getClientesInativos() {
         QCliente c = QCliente.cliente;
         return new JPAQuery(em).from(c).where(c.status.eq(StatusCliente.INATIVO)).orderBy(c.nome.asc())
-                .list(c);
-    }
-
-    public List<Cliente> getClientesSemMensalidade() {
-        QCliente c = QCliente.cliente;
-        QMensalidade m = QMensalidade.mensalidade;
-        LocalDate data = LocalDate.now().plusMonths(2);
-        return new JPAQuery(em)
-                .from(c)
-                .where(
-                        (c.status.eq(StatusCliente.ATIVO).or(c.status.eq(StatusCliente.INATIVO)).and(c.id
-                                .notIn(new JPASubQuery().from(m).distinct().where(m.dataVencimento.gt(data))
-                                        .list(m.cliente.id)))))
                 .list(c);
     }
 }
