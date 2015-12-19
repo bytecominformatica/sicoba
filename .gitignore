@@ -12,8 +12,9 @@ server/target/
 .classpath
 .project
 .settings
+target
 
 .idea/
 *.iml
 
-client/bower_components
+bower_components
