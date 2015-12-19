@@ -6,26 +6,19 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeJPA;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
-import br.com.clairtonluz.bytecom.model.service.CrudService;
 
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class MensalidadeService extends CrudService {
+public class MensalidadeService implements Serializable {
 
     private static final long serialVersionUID = 8705835474790847188L;
     @Inject
     private MensalidadeJPA mensalidadeJPA;
     @Inject
     private ContratoRepository contratoRepository;
-
-    public MensalidadeService() {
-    }
-
-    public MensalidadeService(MensalidadeJPA mensalidadeJPA) {
-        this.mensalidadeJPA = mensalidadeJPA;
-    }
 
     public Mensalidade getNova(Cliente cliente, LocalDate vencimento) {
         Contrato contrato = contratoRepository.findByCliente(cliente);
@@ -53,11 +46,23 @@ public class MensalidadeService extends CrudService {
         }
     }
 
+    public void remove(Mensalidade m) {
+        mensalidadeJPA.remove(m);
+    }
+
     public List<Mensalidade> buscarPorBoleto(int modalidade, int inicio, int fim) {
         return mensalidadeJPA.buscarMensalidadesPorBoletos(modalidade, inicio, fim);
     }
 
     public List<Mensalidade> buscarPorCliente(Cliente cliente) {
         return mensalidadeJPA.bucarPorCliente(cliente);
+    }
+
+    public List<Mensalidade> buscarMensalidadesAtrasada() {
+        return mensalidadeJPA.buscarMensaliadadesAtrasada();
+    }
+
+    public void save(Mensalidade mensalidade) {
+        mensalidadeJPA.save(mensalidade);
     }
 }

@@ -35,6 +35,7 @@
     "flot.tooltip": "~0.8.4",
     "angular": "~1.4.8",
     "angular-route": "~1.4.8",
-    "angular-resource": "~1.4.8"
+    "angular-resource": "~1.4.8",
+    "angular-locale-pt-br": "~1.3.15"
   }
 }

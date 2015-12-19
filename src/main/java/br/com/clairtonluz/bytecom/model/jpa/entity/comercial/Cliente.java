@@ -45,23 +45,12 @@ public class Cliente extends EntityGeneric {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @Transient
-    private boolean online;
-
     public Cliente() {
         this.createdAt = LocalDateTime.now();
         this.endereco = new Endereco();
         this.status = StatusCliente.ATIVO;
     }
-
-    public boolean isOnline() {
-        return online;
-    }
-
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
+    
     public String getNome() {
         return nome;
     }

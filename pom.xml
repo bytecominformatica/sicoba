@@ -84,6 +84,7 @@
         <junit.version>4.12</junit.version>
         <slf4j-api.version>1.7.13</slf4j-api.version>
         <deltaspike.version>1.5.1</deltaspike.version>
+        <jackson-datatype-jsr310.version>2.4.0</jackson-datatype-jsr310.version>
     </properties>
 
     <dependencies>
@@ -99,6 +100,12 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
         </dependency>
 
         <dependency>

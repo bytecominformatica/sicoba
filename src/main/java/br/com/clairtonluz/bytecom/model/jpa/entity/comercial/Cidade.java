@@ -12,9 +12,6 @@ public class Cidade extends EntityGeneric {
 
     private String nome;
 
-    @OneToMany(mappedBy = "cidade", fetch = FetchType.EAGER)
-    private List<Bairro> bairros;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Estado estado;
 
@@ -24,28 +21,6 @@ public class Cidade extends EntityGeneric {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public List<Bairro> getBairros() {
-        return this.bairros;
-    }
-
-    public void setBairros(List<Bairro> bairros) {
-        this.bairros = bairros;
-    }
-
-    public Bairro addBairro(Bairro bairro) {
-        getBairros().add(bairro);
-        bairro.setCidade(this);
-
-        return bairro;
-    }
-
-    public Bairro removeBairro(Bairro bairro) {
-        getBairros().remove(bairro);
-        bairro.setCidade(null);
-
-        return bairro;
     }
 
     public Estado getEstado() {

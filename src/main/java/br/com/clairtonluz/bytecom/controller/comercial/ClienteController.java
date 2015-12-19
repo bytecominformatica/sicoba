@@ -63,7 +63,7 @@ public class ClienteController implements Serializable {
 
     public void atualizaBairros() {
         if (cidade != null) {
-            listBairros = cidade.getBairros();
+//            listBairros = cidade.getBairros();
         } else if (listBairros != null) {
             listBairros.clear();
         }

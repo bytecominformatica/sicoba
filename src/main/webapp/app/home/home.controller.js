@@ -1,6 +1,11 @@
 'use strict';
 
 angular.module('sicobaApp')
-    .controller('HomeCtrl', function ($scope) {
-        $scope.teste = 'TESTANDO...'
+    .controller('HomeCtrl', function ($scope, Mensalidade) {
+
+        _buscarMensalidadesAtrasada();
+
+        function _buscarMensalidadesAtrasada() {
+            $scope.mensalidadesAtrasada = Mensalidade.atrasados();
+        }
     });

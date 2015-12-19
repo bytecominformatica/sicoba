@@ -19,9 +19,6 @@ public class Bairro extends EntityGeneric {
     @ManyToOne(fetch = FetchType.EAGER)
     private Cidade cidade;
 
-    public Bairro() {
-    }
-
     public String getNome() {
         return this.nome;
     }

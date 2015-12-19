@@ -2,16 +2,14 @@ package br.com.clairtonluz.bytecom.model.jpa.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.CrudJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Cedente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.QCedente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.QMensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.*;
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -39,18 +37,9 @@ public class MensalidadeJPA extends CrudJPA {
         new JPADeleteClause(entityManager, m).where(m.id.eq(mensalidade.getId())).execute();
     }
 
-    public void removerPorBoleto(int inicio, int fim) {
-        new JPADeleteClause(entityManager, m).where(m.numeroBoleto.between(inicio, fim)).execute();
-    }
-
     public List<Mensalidade> buscarMensalidadesPorBoletos(int modalidade, int numeroBoletoInicio, int numeroBoletoFim) {
         return new JPAQuery(entityManager).from(m)
                 .where(m.numeroBoleto.between(numeroBoletoInicio, numeroBoletoFim).and(m.modalidade.eq(modalidade))).list(m);
-    }
-
-    public Cedente buscarCedente() {
-        QCedente c = QCedente.cedente;
-        return new JPAQuery(entityManager).from(c).uniqueResult(c);
     }
 
     public Mensalidade buscarPorModalidadeNumeroBoleto(int modalidade, int numeroBoleto) {
@@ -63,5 +52,11 @@ public class MensalidadeJPA extends CrudJPA {
 
     public List<Mensalidade> bucarPorCliente(Cliente cliente) {
         return new JPAQuery(entityManager).from(m).where(m.cliente.id.eq(cliente.getId())).list(m);
+    }
+
+    public List<Mensalidade> buscarMensaliadadesAtrasada() {
+        return new JPAQuery(entityManager).from(m)
+                .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(LocalDate.now())))
+                .orderBy(m.dataVencimento.asc()).list(m);
     }
 }
