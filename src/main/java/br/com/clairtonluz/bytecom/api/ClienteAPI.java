@@ -1,15 +1,11 @@
 package br.com.clairtonluz.bytecom.api;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
-import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -25,9 +21,20 @@ public class ClienteAPI {
     private ClienteService clienteService;
 
     @GET
+    @Path("/{id}")
+    public Cliente getPorId(@PathParam("id") Integer id) {
+        return clienteService.buscarPorId(id);
+    }
+
+    @GET
     @Path("/sem_mensalidade")
     public List<Cliente> getSemMensalidade() {
         return clienteService.buscarSemMensalidade();
+    }
+
+    @GET
+    public List<Cliente> getPorStatus(@QueryParam("status") StatusCliente status) {
+        return clienteService.buscarPorStatus(status);
     }
 
 }

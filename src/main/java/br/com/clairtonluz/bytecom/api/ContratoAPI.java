@@ -1,5 +1,6 @@
 package br.com.clairtonluz.bytecom.api;
 
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created by clairtonluz on 14/11/15.
@@ -22,8 +24,8 @@ public class ContratoAPI {
 
     @GET
     @Path("novos")
-    public Integer getInstalledThisMonth() {
-        return contratoService.buscarTodosInstaladoEsseMes().size();
+    public List<Contrato> getNovos() {
+        return contratoService.buscarRecentes();
     }
 
 }

@@ -6,6 +6,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
@@ -13,6 +14,7 @@ import br.com.clairtonluz.bytecom.util.MensagemException;
 
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ClienteService implements Serializable {
@@ -26,16 +28,19 @@ public class ClienteService implements Serializable {
     @Inject
     private ClienteJPA clienteJPA;
     @Inject
+    private ClienteRepository clienteRepository;
+    @Inject
     private ContratoRepository contratoRepository;
     private ConexaoService conexaoService;
 
 
     public List<Cliente> buscaUltimosClientesAlterados() {
-        return clienteJPA.buscaUltimosClientesAlterados();
+        LocalDateTime data = LocalDateTime.now().minusMonths(2);
+        return clienteRepository.findByUpdateAtGreaterThan(data);
     }
 
-    public Cliente buscarPorId(int id) {
-        return clienteJPA.buscarPorId(id);
+    public Cliente buscarPorId(Integer id) {
+        return clienteRepository.findBy(id);
     }
 
     public List<Cliente> buscarTodosPorNomeIp(String nome, String ip, StatusCliente status) {
@@ -43,17 +48,17 @@ public class ClienteService implements Serializable {
     }
 
     public boolean rgAvaliable(Cliente c) {
-        Cliente cliente = clienteJPA.findByRg(c.getRg());
+        Cliente cliente = clienteRepository.findByRg(c.getRg());
         return cliente == null || cliente.getId() == c.getId();
     }
 
     public boolean cpfCnpjAvaliable(Cliente c) {
-        Cliente cliente = clienteJPA.findByCpfCnpj(c.getCpfCnpj());
+        Cliente cliente = clienteRepository.findByCpfCnpj(c.getCpfCnpj());
         return cliente == null || cliente.getId() == c.getId();
     }
 
     public boolean emailAvaliable(Cliente c) {
-        Cliente cliente = clienteJPA.findByEmail(c.getEmail());
+        Cliente cliente = clienteRepository.findByEmail(c.getEmail());
         return cliente == null || cliente.getId() == c.getId();
     }
 
@@ -105,11 +110,11 @@ public class ClienteService implements Serializable {
 
     }
 
-    public List<Cliente> findAll() {
-        return clienteJPA.findAll();
-    }
-
     public List<Cliente> buscarSemMensalidade() {
         return clienteJPA.buscarSemMensalidade();
+    }
+
+    public List<Cliente> buscarPorStatus(StatusCliente status) {
+        return clienteRepository.findByStatus(status);
     }
 }

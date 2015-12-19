@@ -62,38 +62,6 @@ public class ClienteJPA extends CrudJPA {
                 .limit(20).list(c);
     }
 
-    public Cliente buscarPorId(int clienteId) {
-        return entityManager.find(Cliente.class, clienteId);
-    }
-
-    public Cliente findByRg(String rg) {
-        Cliente cliente = null;
-        if (rg != null) {
-            cliente = new JPAQuery(entityManager).from(c).where(c.rg.eq(rg)).uniqueResult(c);
-        }
-        return cliente;
-    }
-
-    public Cliente findByCpfCnpj(String cpfCnpj) {
-        Cliente cliente = null;
-        if (cpfCnpj != null) {
-            cliente = new JPAQuery(entityManager).from(c).where(c.cpfCnpj.eq(cpfCnpj)).uniqueResult(c);
-        }
-        return cliente;
-    }
-
-    public Cliente findByEmail(String email) {
-        Cliente cliente = null;
-        if (email != null) {
-            cliente = new JPAQuery(entityManager).from(c).where(c.email.eq(email)).uniqueResult(c);
-        }
-        return cliente;
-    }
-
-    public List<Cliente> findAll() {
-        return new JPAQuery(entityManager).from(c).orderBy(c.nome.asc()).list(c);
-    }
-
     public List<Cliente> buscarSemMensalidade() {
         QMensalidade m = QMensalidade.mensalidade;
         LocalDate data = LocalDate.now().plusMonths(2);

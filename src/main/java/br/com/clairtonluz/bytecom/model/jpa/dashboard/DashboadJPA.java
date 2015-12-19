@@ -58,10 +58,4 @@ public class DashboadJPA implements Serializable {
                         .uniqueResult(m.valor.sum());
         return d != null ? d : 0;
     }
-
-    public List<Cliente> getClientesInativos() {
-        QCliente c = QCliente.cliente;
-        return new JPAQuery(em).from(c).where(c.status.eq(StatusCliente.INATIVO)).orderBy(c.nome.asc())
-                .list(c);
-    }
 }

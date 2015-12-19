@@ -14,6 +14,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Registro;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.HeaderJPA;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeJPA;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
@@ -38,7 +39,7 @@ public class RetornoCaixaService implements Serializable {
     @Inject
     private HeaderJPA headerJPA;
     @Inject
-    private ClienteJPA clienteJPA;
+    private ClienteRepository clienteRepository;
     @Inject
     private ContratoRepository contratoRepository;
     @Inject
@@ -105,7 +106,7 @@ public class RetornoCaixaService implements Serializable {
                 Cliente cliente = m.getCliente();
                 Contrato contrato = contratoRepository.findByCliente(cliente);
                 Conexao conexao = conexaoService.buscarPorCliente(cliente);
-                clienteJPA.save(m.getCliente());
+                clienteRepository.save(m.getCliente());
                 conexaoService.save(conexao);
             }
 
@@ -116,7 +117,7 @@ public class RetornoCaixaService implements Serializable {
     private Mensalidade criarMensalidadeRegistrada(Registro r) {
         String[] split = r.getNumeroDocumento().split("-");
         int clienteId = Integer.parseInt(split[0]);
-        Cliente c = clienteJPA.buscarPorId(clienteId);
+        Cliente c = clienteRepository.findBy(clienteId);
         Mensalidade m = new Mensalidade();
         m.setCliente(c);
         m.setDataVencimento(r.getVencimento());

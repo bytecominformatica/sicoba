@@ -23,10 +23,9 @@ public class ContratoService implements Serializable {
     @Inject
     private ConexaoOperacaoFactory conexaoOperacaoFactory;
 
-    public List<Contrato> buscarTodosInstaladoEsseMes() {
-        LocalDate now = LocalDate.now();
-        LocalDate from = now.withDayOfMonth(1);
-        LocalDate to = now.withDayOfMonth(now.lengthOfMonth());
+    public List<Contrato> buscarRecentes() {
+        LocalDate to = LocalDate.now();
+        LocalDate from = to.minusDays(30);
         List<Contrato> result = contratoRepository.findByDataInstalacaoBetween(from, to);
         return result;
     }
