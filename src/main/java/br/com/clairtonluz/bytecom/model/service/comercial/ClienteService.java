@@ -114,7 +114,15 @@ public class ClienteService implements Serializable {
         return clienteJPA.buscarSemMensalidade();
     }
 
-    public List<Cliente> buscarPorStatus(StatusCliente status) {
-        return clienteRepository.findByStatus(status);
+    public List<Cliente> query(String nome, StatusCliente status) {
+        List<Cliente> result;
+        if (nome != null && !nome.isEmpty()) {
+            result = clienteRepository.findByNomeLike("%" + nome + "%");
+        } else if (status != null) {
+            result = clienteRepository.findByStatus(status);
+        } else {
+            result = clienteRepository.findAll();
+        }
+        return result;
     }
 }

@@ -39,8 +39,10 @@ public class ClienteAPI {
     }
 
     @GET
-    public List<Cliente> getPorStatus(@QueryParam("status") StatusCliente status) {
-        return clienteService.buscarPorStatus(status);
+    public List<Cliente> query(@QueryParam("nome") String nome,
+                               @QueryParam("status") StatusCliente status) {
+
+        return clienteService.query(nome, status);
     }
 
 }
