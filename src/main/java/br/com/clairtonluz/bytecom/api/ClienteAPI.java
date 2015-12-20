@@ -33,6 +33,12 @@ public class ClienteAPI {
     }
 
     @GET
+    @Path("/ultimos_alterados")
+    public List<Cliente> getUltimosAlterados() {
+        return clienteService.buscarUltimosAlterados();
+    }
+
+    @GET
     public List<Cliente> getPorStatus(@QueryParam("status") StatusCliente status) {
         return clienteService.buscarPorStatus(status);
     }

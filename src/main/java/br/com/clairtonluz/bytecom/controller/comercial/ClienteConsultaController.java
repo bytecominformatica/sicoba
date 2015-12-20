@@ -34,7 +34,7 @@ public class ClienteConsultaController implements Serializable {
 
     @PostConstruct
     public void load() {
-        listClientes = clienteService.buscaUltimosClientesAlterados();
+        listClientes = clienteService.buscarUltimosAlterados();
     }
 
     public void atualizarTodasConexoes() throws Exception {

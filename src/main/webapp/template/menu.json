@@ -11,7 +11,7 @@
       {
         "title": "Clientes",
         "icon": "fa fa-user fa-fw",
-        "url": "#/cliente"
+        "url": "#/clientes"
       },
       {
         "title": "Morris.js Chart",

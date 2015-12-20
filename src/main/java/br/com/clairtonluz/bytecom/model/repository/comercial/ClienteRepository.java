@@ -22,5 +22,5 @@ public interface ClienteRepository extends EntityRepository<Cliente, Integer> {
 
     Cliente findByRg(String rg);
 
-    List<Cliente> findByUpdateAtGreaterThan(LocalDateTime data);
+    List<Cliente> findByUpdatedAtGreaterThan(LocalDateTime data);
 }

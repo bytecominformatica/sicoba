@@ -2,8 +2,8 @@
 
 angular.module('sicobaApp')
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: 'app/home',
-            controller: 'HomeCtrl'
+        $routeProvider.when('/login', {
+            templateUrl: 'app/views/login',
+            controller: 'LoginCtrl'
         });
     }]);

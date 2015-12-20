@@ -34,9 +34,9 @@ public class ClienteService implements Serializable {
     private ConexaoService conexaoService;
 
 
-    public List<Cliente> buscaUltimosClientesAlterados() {
+    public List<Cliente> buscarUltimosAlterados() {
         LocalDateTime data = LocalDateTime.now().minusMonths(2);
-        return clienteRepository.findByUpdateAtGreaterThan(data);
+        return clienteRepository.findByUpdatedAtGreaterThan(data);
     }
 
     public Cliente buscarPorId(Integer id) {
