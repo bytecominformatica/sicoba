@@ -1,9 +1,9 @@
 package br.com.clairtonluz.bytecom.model.service.comercial.conexao;
 
-import br.com.clairtonluz.bytecom.model.jpa.comercial.ConexaoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 
 import javax.inject.Inject;
@@ -16,36 +16,46 @@ import java.util.List;
 public class ConexaoService implements Serializable {
 
     @Inject
-    private ConexaoJPA conexaoJPA;
+    private ConexaoRepository conexaoRepository;
     @Inject
     private ContratoService contratoService;
     @Inject
     private ConexaoOperacaoFactory conexaoOperacaoFactory;
 
     public List<Conexao> buscarTodos() {
-        return conexaoJPA.buscarTodos();
+        return conexaoRepository.findAllOrderByNomeAsc();
     }
 
     public Conexao buscarPorCliente(Cliente cliente) {
-        return conexaoJPA.buscarPorCliente(cliente);
+        return conexaoRepository.findOptionalByCliente(cliente);
     }
 
     public void save(Conexao conexao) throws Exception {
         Plano plano = contratoService.buscarPorCliente(conexao.getCliente()).getPlano();
         conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
-        conexaoJPA.save(conexao);
+        conexaoRepository.save(conexao);
     }
 
     public boolean isDisponivel(Conexao conexao) {
-        return conexaoJPA.isDisponivel(conexao);
+        Conexao conexao2 = conexaoRepository.findOptionalByNome(conexao.getNome());
+        return conexao2 == null || conexao2.getId() == conexao.getId();
     }
 
     public void remove(Conexao conexao) {
-        conexaoJPA.remove(conexao);
+        conexaoRepository.remove(conexao);
     }
 
     public String buscarIpLivre() {
-        return conexaoJPA.buscarIpLivre();
+        String rede = "10.77.3.";
+        String ipLivre = null;
+        for (int i = 10; i <= 250; i++) {
+            Conexao result = conexaoRepository.findOptionalByIp(rede + i);
+            if (result == null) {
+                ipLivre = rede + i;
+                break;
+            }
+        }
+        return ipLivre;
     }
 
 }

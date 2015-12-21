@@ -1,12 +1,12 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.comercial.ClienteJPA;
-import br.com.clairtonluz.bytecom.model.jpa.comercial.ConexaoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
@@ -22,13 +22,13 @@ public class ClienteService implements Serializable {
     private static final long serialVersionUID = -8296012997453708684L;
 
     @Inject
-    private ConexaoJPA conexaoJPA;
-    @Inject
     private IConnectionControl connectionControl;
     @Inject
     private ClienteJPA clienteJPA;
     @Inject
     private ClienteRepository clienteRepository;
+    @Inject
+    private ConexaoRepository conexaoRepository;
     @Inject
     private ContratoRepository contratoRepository;
     private ConexaoService conexaoService;
@@ -102,12 +102,10 @@ public class ClienteService implements Serializable {
         for (Conexao c : list) {
             Cliente cliente = c.getCliente();
             if (c.getIp() == null || c.getIp().isEmpty()) {
-                c.setIp(conexaoJPA.buscarIpLivre());
+                c.setIp(conexaoService.buscarIpLivre());
             }
-
             conexaoService.save(c);
         }
-
     }
 
     public List<Cliente> buscarSemMensalidade() {
@@ -124,5 +122,9 @@ public class ClienteService implements Serializable {
             result = clienteRepository.findAll();
         }
         return result;
+    }
+
+    public Conexao buscarPorCliente(Integer clienteId) {
+        return conexaoRepository.findOptionalByCliente(buscarPorId(clienteId));
     }
 }

@@ -25,20 +25,18 @@
         <tr>
             <th>Id</th>
             <th>Nome</th>
-            <th>Status</th>
             <th>IP</th>
-            <th>Mac</th>
             <th>---</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="it in clientes track by it.id">
             <td>{{it.id}}</td>
-            <td>{{it.nome}}</td>
-            <td>{{it.status}}</td>
-            <td>ip aqui</td>
-            <td>mac aqui</td>
-            <td></td>
+            <td ng-style="getStyle(it)">{{it.nome}}</td>
+            <td><a ng-href="{{it.conexao.ip}}" target="_blank">{{it.conexao.ip}}</a></td>
+            <td class="text-center"><a ng-href="#/cliente/{{it.id}}" class="btn btn-primary">
+                <span class="fa fa-edit"></span>
+            </a></td>
         </tr>
         </tbody>
     </table>

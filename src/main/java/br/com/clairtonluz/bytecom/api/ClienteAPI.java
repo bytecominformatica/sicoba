@@ -1,6 +1,7 @@
 package br.com.clairtonluz.bytecom.api;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 
@@ -24,6 +25,12 @@ public class ClienteAPI {
     @Path("/{id}")
     public Cliente getPorId(@PathParam("id") Integer id) {
         return clienteService.buscarPorId(id);
+    }
+
+    @GET
+    @Path("/{id}/conexao")
+    public Conexao getConexao(@PathParam("id") Integer clienteId) {
+        return clienteService.buscarPorCliente(clienteId);
     }
 
     @GET

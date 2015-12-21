@@ -1,10 +1,10 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.comercial.ConexaoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Secret;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoOperacaoFactory;
 
@@ -19,7 +19,7 @@ public class ContratoService implements Serializable {
     @Inject
     private ContratoRepository contratoRepository;
     @Inject
-    private ConexaoJPA conexaoJPA;
+    private ConexaoRepository conexaoRepository;
     @Inject
     private ConexaoOperacaoFactory conexaoOperacaoFactory;
 
@@ -31,7 +31,7 @@ public class ContratoService implements Serializable {
     }
 
     public void salvar(Contrato contrato) throws Exception {
-        Conexao conexao = conexaoJPA.buscarPorCliente(contrato.getCliente());
+        Conexao conexao = conexaoRepository.findOptionalByCliente(contrato.getCliente());
         if (conexao != null) {
             Secret secret = conexao.createSecret(contrato.getPlano());
             conexaoOperacaoFactory.create(conexao).executar(conexao, contrato.getPlano());
