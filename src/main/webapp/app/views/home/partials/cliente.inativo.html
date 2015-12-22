@@ -28,7 +28,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="it in clientesInativo | filter:criterio | orderBy:predicate:reverse track by it.id">
-                                        <td class="">{{it.nome}}</td>
+                                        <td><a ng-class="it.status" ng-href="#/cliente/{{it.id}}">{{it.nome}}</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
