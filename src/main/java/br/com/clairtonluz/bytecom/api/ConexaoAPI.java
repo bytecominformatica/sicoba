@@ -27,5 +27,11 @@ public class ConexaoAPI {
         return conexaoService.buscarPorCliente(cliente);
     }
 
+    @GET
+    @Path("/ip/{ip}")
+    public Conexao getPorIp(@PathParam("ip") String ip) {
+        return conexaoService.buscarPorIp(ip);
+    }
+
 
 }

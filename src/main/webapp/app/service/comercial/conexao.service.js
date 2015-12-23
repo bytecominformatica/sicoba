@@ -11,6 +11,11 @@ angular.module('sicobaApp')
                     method:'GET',
                     url: 'api/conexoes/cliente/:id',
                     params: {id: '@id'}
+                },
+                buscarPorIp: {
+                    method:'GET',
+                    url: 'api/conexoes/ip/:ip',
+                    params: {ip: '@ip'}
                 }
             });
     }]);

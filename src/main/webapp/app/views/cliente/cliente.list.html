@@ -1,12 +1,25 @@
 <h1 class="page-header" xmlns="http://java.sun.com/jsf/html">Clientes</h1>
 
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-3">
         <form ng-submit="buscarPorNome(search.nome)">
             <label>
                 Nome
                 <div class="input-group">
                     <input ng-model="search.nome" name="nome" type="text" class="form-control" placeholder="Nome">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><span class="fa fa-search"></span></button>
+                    </span>
+                </div><!-- /input-group -->
+            </label>
+        </form>
+    </div>
+    <div class="col-lg-3">
+        <form ng-submit="buscarPorIp(search.ip)">
+            <label>
+                Ip
+                <div class="input-group">
+                    <input ng-model="search.ip" name="ip" type="text" class="form-control" placeholder="Ip">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit"><span class="fa fa-search"></span></button>
                     </span>
@@ -32,7 +45,7 @@
         <tbody>
         <tr ng-repeat="it in clientes track by it.id">
             <td>{{it.id}}</td>
-            <td ng-class="it.status">{{it.nome}}</td>
+            <td><a ng-class="it.status" ng-href="#/cliente/{{it.id}}">{{it.nome}}</a></td>
             <td><a ng-href="{{it.conexao.ip}}" target="_blank">{{it.conexao.ip}}</a></td>
             <td class="text-center"><a ng-href="#/cliente/{{it.id}}" class="btn btn-primary">
                 <span class="fa fa-edit"></span>

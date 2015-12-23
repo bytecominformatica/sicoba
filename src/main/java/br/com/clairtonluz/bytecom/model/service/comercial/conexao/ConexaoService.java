@@ -58,4 +58,7 @@ public class ConexaoService implements Serializable {
         return ipLivre;
     }
 
+    public Conexao buscarPorIp(String ip) {
+        return conexaoRepository.findOptionalByIp(ip);
+    }
 }
