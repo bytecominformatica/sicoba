@@ -86,11 +86,6 @@ public class RetornoCaixaService implements Serializable {
     private Mensalidade liquidarMensalidade(Registro r) throws Exception {
         Mensalidade m = mensalidadeJPA.buscarPorModalidadeNumeroBoleto(r.getModalidadeNossoNumero(), r.getNossoNumero());
 
-//                        TODO: remove isso quando todos os boletos estiverem registrados
-        if (m == null) {
-            m = mensalidadeJPA.buscarPorId(r.getNossoNumero());
-        }
-
         if (m != null) {
             m.setStatus(StatusMensalidade.PAGO_NO_BOLETO);
             m.setValor(r.getValorTitulo());

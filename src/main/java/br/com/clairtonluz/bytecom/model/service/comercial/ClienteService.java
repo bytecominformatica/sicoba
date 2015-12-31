@@ -13,6 +13,7 @@ import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.util.MensagemException;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +32,7 @@ public class ClienteService implements Serializable {
     private ConexaoRepository conexaoRepository;
     @Inject
     private ContratoRepository contratoRepository;
+    @Inject
     private ConexaoService conexaoService;
 
 
@@ -48,17 +50,17 @@ public class ClienteService implements Serializable {
     }
 
     public boolean rgAvaliable(Cliente c) {
-        Cliente cliente = clienteRepository.findByRg(c.getRg());
+        Cliente cliente = clienteRepository.findOptionalByRg(c.getRg());
         return cliente == null || cliente.getId() == c.getId();
     }
 
     public boolean cpfCnpjAvaliable(Cliente c) {
-        Cliente cliente = clienteRepository.findByCpfCnpj(c.getCpfCnpj());
+        Cliente cliente = clienteRepository.findOptionalByCpfCnpj(c.getCpfCnpj());
         return cliente == null || cliente.getId() == c.getId();
     }
 
     public boolean emailAvaliable(Cliente c) {
-        Cliente cliente = clienteRepository.findByEmail(c.getEmail());
+        Cliente cliente = clienteRepository.findOptionalByEmail(c.getEmail());
         return cliente == null || cliente.getId() == c.getId();
     }
 
@@ -66,9 +68,10 @@ public class ClienteService implements Serializable {
         clienteJPA.remove(cliente);
     }
 
-    public void save(Cliente cliente) throws Exception {
+    @Transactional
+    public Cliente save(Cliente cliente) throws Exception {
         if (isAvaliable(cliente)) {
-            clienteJPA.save(cliente);
+            clienteRepository.save(cliente);
             Contrato contrato = contratoRepository.findByCliente(cliente);
             Conexao conexao = conexaoService.buscarPorCliente(cliente);
 
@@ -83,6 +86,8 @@ public class ClienteService implements Serializable {
             }
 
         }
+
+        return cliente;
     }
 
     public boolean isAvaliable(Cliente cliente) throws MensagemException {

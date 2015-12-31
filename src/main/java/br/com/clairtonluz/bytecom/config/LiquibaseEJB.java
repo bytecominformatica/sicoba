@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.setup;
+package br.com.clairtonluz.bytecom.config;
 
 
 import liquibase.Liquibase;

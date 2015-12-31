@@ -2,7 +2,6 @@ package br.com.clairtonluz.bytecom.model.jpa.entity.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
 import br.com.clairtonluz.bytecom.util.annotation.CpfCnpj;
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDatePersistenceConverter;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -10,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author clairton
@@ -30,8 +30,8 @@ public class Cliente extends EntityGeneric {
     @CpfCnpj
     private String cpfCnpj;
     @Column(name = "dt_nascimento")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataNascimento;
+    @Temporal(TemporalType.DATE)
+    private Date dataNascimento;
     @Email(message = "Email inválido")
     private String email;
     @NotNull(message = "Fone titular é obrigatório")
@@ -50,7 +50,7 @@ public class Cliente extends EntityGeneric {
         this.endereco = new Endereco();
         this.status = StatusCliente.ATIVO;
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -115,11 +115,11 @@ public class Cliente extends EntityGeneric {
         this.cpfCnpj = cpfCnpj != null && cpfCnpj.isEmpty() ? null : cpfCnpj;
     }
 
-    public LocalDate getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

@@ -15,8 +15,6 @@ public class EntityConverter implements Converter {
     public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
         if (value != null) {
             Object o = this.getAttributesFrom(component).get(value);
-            System.out.println("tetes");
-            System.out.println(o);
             return o;
         }
         return null;

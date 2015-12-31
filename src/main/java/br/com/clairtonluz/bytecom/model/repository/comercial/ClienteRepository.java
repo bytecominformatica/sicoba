@@ -16,11 +16,11 @@ public interface ClienteRepository extends EntityRepository<Cliente, Integer> {
 
     List<Cliente> findByStatus(StatusCliente status);
 
-    Cliente findByEmail(String email);
+    Cliente findOptionalByEmail(String email);
 
-    Cliente findByCpfCnpj(String cpfCnpj);
+    Cliente findOptionalByCpfCnpj(String cpfCnpj);
 
-    Cliente findByRg(String rg);
+    Cliente findOptionalByRg(String rg);
 
     List<Cliente> findByUpdatedAtGreaterThan(LocalDateTime data);
 

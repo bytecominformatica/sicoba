@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.api;
+package br.com.clairtonluz.bytecom.api.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;

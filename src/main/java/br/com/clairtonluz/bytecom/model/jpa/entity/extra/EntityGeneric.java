@@ -55,7 +55,7 @@ public abstract class EntityGeneric implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
-        result = prime * result + id;
+        result = id != null ? prime * result + id : result;
         result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
         return result;
     }

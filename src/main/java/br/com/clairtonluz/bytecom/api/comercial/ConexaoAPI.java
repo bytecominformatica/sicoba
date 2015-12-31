@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.api;
+package br.com.clairtonluz.bytecom.api.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;

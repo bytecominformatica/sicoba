@@ -1,4 +1,4 @@
-package br.com.clairtonluz.bytecom.api;
+package br.com.clairtonluz.bytecom.api.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
@@ -25,6 +25,18 @@ public class ClienteAPI {
     @Path("/{id}")
     public Cliente getPorId(@PathParam("id") Integer id) {
         return clienteService.buscarPorId(id);
+    }
+
+
+    @POST
+    public Cliente save(Cliente cliente) throws Exception {
+        return clienteService.save(cliente);
+    }
+
+    @POST
+    @Path("/{id}")
+    public Cliente update(Cliente cliente) throws Exception {
+        return save(cliente);
     }
 
     @GET

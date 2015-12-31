@@ -231,5 +231,6 @@
             <version>${deltaspike.version}</version>
             <scope>runtime</scope>
         </dependency>
+
     </dependencies>
 </project>
