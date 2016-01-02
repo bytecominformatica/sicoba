@@ -18,4 +18,5 @@ public interface CidadeRepository extends EntityRepository<Cidade, Integer> {
     List<Cidade> findAllOrderByNome();
 
 
+    Cidade findOptionalByNomeAndEstado_uf(String nome, String nomeEstado);
 }

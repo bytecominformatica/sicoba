@@ -1,6 +1,7 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Endereco;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Estado;
 import br.com.clairtonluz.bytecom.model.jpa.extra.GenericoJPA;
 import br.com.clairtonluz.bytecom.pojo.comercial.EnderecoPojo;
@@ -67,18 +68,18 @@ public class AddressService implements Serializable {
      * @param enderecoPojo
      * @return
      */
-    public Bairro getNeighborhood(EnderecoPojo enderecoPojo) {
-        Bairro neighborhood = null;
+    public Bairro getBairro(EnderecoPojo enderecoPojo) {
+        Bairro bairro = null;
         if (enderecoPojo != null) {
-            neighborhood = findNeighborhoodByName(enderecoPojo.getBairro());
+            bairro = findNeighborhoodByName(enderecoPojo.getBairro());
 
-            if (neighborhood == null) {
+            if (bairro == null) {
                 Cidade city = findCityByName(enderecoPojo.getLocalidade());
                 if (city != null) {
-                    neighborhood = new Bairro();
-                    neighborhood.setNome(enderecoPojo.getBairro());
-                    neighborhood.setCidade(city);
-                    jpa.salvar(neighborhood);
+                    bairro = new Bairro();
+                    bairro.setNome(enderecoPojo.getBairro());
+                    bairro.setCidade(city);
+                    jpa.salvar(bairro);
                 } else {
                     Estado state = findStateByName(enderecoPojo.getUf());
                     if (state != null) {
@@ -87,15 +88,15 @@ public class AddressService implements Serializable {
                         c.setNome(enderecoPojo.getLocalidade());
                         jpa.salvar(c);
 
-                        neighborhood = new Bairro();
-                        neighborhood.setNome(enderecoPojo.getBairro());
-                        neighborhood.setCidade(c);
-                        jpa.salvar(neighborhood);
+                        bairro = new Bairro();
+                        bairro.setNome(enderecoPojo.getBairro());
+                        bairro.setCidade(c);
+                        jpa.salvar(bairro);
                     }
                 }
             }
         }
-        return neighborhood;
+        return bairro;
     }
 
 }

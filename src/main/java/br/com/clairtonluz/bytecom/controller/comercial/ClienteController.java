@@ -78,7 +78,7 @@ public class ClienteController implements Serializable {
         cidade = null;
         cliente.getEndereco().setLogradouro(null);
         EnderecoPojo ep = addressService.findAddressByCep(cliente.getEndereco().getCep());
-        cliente.getEndereco().setBairro(addressService.getNeighborhood(ep));
+        cliente.getEndereco().setBairro(addressService.getBairro(ep));
         listCidades = addressService.findCities();
 
         if (cliente.getEndereco().getBairro() != null) {

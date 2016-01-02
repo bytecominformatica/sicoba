@@ -1,10 +1,7 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.comercial.ClienteJPA;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.*;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
@@ -34,6 +31,8 @@ public class ClienteService implements Serializable {
     private ContratoRepository contratoRepository;
     @Inject
     private ConexaoService conexaoService;
+    @Inject
+    private BairroService bairroService;
 
 
     public List<Cliente> buscarUltimosAlterados() {
@@ -70,7 +69,11 @@ public class ClienteService implements Serializable {
 
     @Transactional
     public Cliente save(Cliente cliente) throws Exception {
+        Bairro bairro = bairroService.buscarOuCriarBairro(cliente.getEndereco());
+        cliente.getEndereco().setBairro(bairro);
+
         if (isAvaliable(cliente)) {
+            System.out.println(cliente.getEndereco().getBairro().getCidade().getEstado().getNome());
             clienteRepository.save(cliente);
             Contrato contrato = contratoRepository.findByCliente(cliente);
             Conexao conexao = conexaoService.buscarPorCliente(cliente);
@@ -84,7 +87,7 @@ public class ClienteService implements Serializable {
                 contrato.setEquipamentoWifi(null);
                 contratoRepository.save(contrato);
             }
-
+//
         }
 
         return cliente;

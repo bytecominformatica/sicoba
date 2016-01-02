@@ -1,37 +1,64 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Bairro;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Endereco;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Estado;
+import br.com.clairtonluz.bytecom.model.repository.comercial.BairroRepository;
+import br.com.clairtonluz.bytecom.model.repository.comercial.CidadeRepository;
+import br.com.clairtonluz.bytecom.model.repository.comercial.EstadoRepository;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class BairroService implements Serializable {
 
     private static final long serialVersionUID = -8296012997453708684L;
 
     @Inject
-    private ClienteRepository clienteRepository;
-
-
-//    public List<Bairro> buscarTodos() {
-//        LocalDateTime data = LocalDateTime.now().minusMonths(2);
-//        return clienteRepository.findByUpdatedAtGreaterThan(data);
-//    }
-
-    public Cliente buscarPorId(Integer id) {
-        return clienteRepository.findBy(id);
-    }
+    private BairroRepository bairroRepository;
+    @Inject
+    private CidadeRepository cidadeRepository;
+    @Inject
+    private EstadoRepository estadoRepository;
 
     @Transactional
-    public Cliente save(Cliente cliente) throws Exception {
+    public Bairro buscarOuCriarBairro(Endereco endereco) {
+        Bairro bairro = null;
+        if (endereco != null) {
+            bairro = bairroRepository.findOptionalByNome(endereco.getBairro().getNome());
 
+            if (bairro == null) {
+                Cidade cidade = cidadeRepository.findOptionalByNomeAndEstado_uf(endereco.getBairro().getCidade().getNome(),
+                        endereco.getBairro().getCidade().getEstado().getUf());
+                if (cidade != null) {
+                    bairro = novoBairro(endereco, cidade);
+                } else {
+                    Estado estado = estadoRepository.findOptionalByUf(endereco.getBairro().getCidade().getEstado().getUf());
+                    Cidade cidade1 = novaCidade(endereco, estado);
+                    bairro = novoBairro(endereco, cidade1);
+                }
+            }
+        }
+        return bairro;
+    }
 
-        return cliente;
+    private Cidade novaCidade(Endereco endereco, Estado estado) {
+        Cidade cidade = new Cidade();
+        cidade.setEstado(estado);
+        cidade.setNome(endereco.getBairro().getCidade().getNome());
+        cidadeRepository.save(cidade);
+        return cidade;
+    }
+
+    private Bairro novoBairro(Endereco endereco, Cidade cidade) {
+        Bairro bairro;
+        bairro = new Bairro();
+        bairro.setNome(endereco.getBairro().getNome());
+        bairro.setCidade(cidade);
+        bairroRepository.save(bairro);
+        return bairro;
     }
 
 }

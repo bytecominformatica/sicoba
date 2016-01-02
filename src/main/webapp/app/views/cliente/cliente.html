@@ -78,27 +78,8 @@
                ng-blur="form.cep.$valid && buscarEnderecoPorCep(cliente.endereco.cep, form)">
         <p class="help-block" ng-show="form.$submitted || form.cep.$touched">
             <span ng-show="form.cep.$error.required">Digite seu CEP para que possamos encontrar seu endereço.</span>
-            <span ng-show="form.cep.$error.pattern">CEP invalido.</span>
+            <span ng-show="form.cep.$error.pattern">CEP inválido.</span>
             <span ng-show="form.cep.$error.notFound">CEP não encontrado.</span>
-        </p>
-    </div>
-    <div class="col-lg-6" ng-class="{'has-error': (form.cidade.$invalid && (form.$submitted || form.cidade.$touched))}">
-        <label>Cidade</label>
-        <select name="cidade" ng-model="cidade" class="form-control" required
-                ng-options="cidade.nome group by cidade.estado.nome for cidade in cidades track by cidade.id">
-            <option value="">-- Escolha sua cidade --</option>
-        </select>
-        <p class="help-block" ng-show="form.$submitted || form.cidade.$touched">
-            <span ng-show="form.cidade.$error.required">Você esqueceu de informar a sua cidade.</span>
-        </p>
-    </div>
-    <div class="col-lg-6" ng-class="{'has-error': (form.bairro.$invalid && (form.$submitted || form.bairro.$touched))}">
-        <label>Bairro</label>
-        <select name="bairro" ng-model="cliente.endereco.bairro" class="form-control" required>
-            <option value="">-- Escolha sua cidade --</option>
-        </select>
-        <p class="help-block" ng-show="form.$submitted || form.bairro.$touched">
-            <span ng-show="form.bairro.$error.required">Você esqueceu de informar a seu bairro.</span>
         </p>
     </div>
     <div class="col-lg-10"
@@ -113,6 +94,30 @@
         <label>Numero</label>
         <input name="numero" type="text" ng-model="cliente.endereco.numero" class="form-control"/>
     </div>
+    <div class="col-lg-5" ng-class="{'has-error': (form.bairro.$invalid && (form.$submitted || form.bairro.$touched))}">
+        <label>Bairro</label>
+        <input name="bairro" type="text" ng-model="cliente.endereco.bairro.nome" class="form-control" required readonly>
+        <p class="help-block" ng-show="form.$submitted || form.bairro.$touched">
+            <span ng-show="form.bairro.$error.required">Informe um CEP válido para encontrar seu bairro.</span>
+        </p>
+    </div>
+    <div class="col-lg-5" ng-class="{'has-error': (form.cidade.$invalid && (form.$submitted || form.cidade.$touched))}">
+        <label>Cidade</label>
+        <input name="cidade" type="text" ng-model="cliente.endereco.bairro.cidade.nome" class="form-control" required
+               readonly>
+        <p class="help-block" ng-show="form.$submitted || form.cidade.$touched">
+            <span ng-show="form.cidade.$error.required">Informe um CEP válido para encontrar sua cidade.</span>
+        </p>
+    </div>
+    <div class="col-lg-2" ng-class="{'has-error': (form.uf.$invalid && (form.$submitted || form.uf.$touched))}">
+        <label>UF</label>
+        <input name="uf" type="text" ng-model="cliente.endereco.bairro.cidade.estado.uf" class="form-control" required
+               readonly>
+        <p class="help-block" ng-show="form.$submitted || form.uf.$touched">
+            <span ng-show="form.uf.$error.required">Informe um CEP válido para encontrar seu distrito.</span>
+        </p>
+    </div>
+
     <div class="col-lg-12">
         <label>Complemento</label>
         <input name="complemento" type="text" ng-model="cliente.endereco.complemento" class="form-control"/>

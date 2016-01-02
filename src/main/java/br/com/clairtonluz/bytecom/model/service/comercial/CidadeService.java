@@ -18,4 +18,7 @@ public class CidadeService implements Serializable {
         return cidadeRepository.findAllOrderByNome();
     }
 
+    public Cidade buscarPorNomeEUf(String nome, String uf) {
+        return cidadeRepository.findOptionalByNomeAndEstado_uf(nome, uf);
+    }
 }
