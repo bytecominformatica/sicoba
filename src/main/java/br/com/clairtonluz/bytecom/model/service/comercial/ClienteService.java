@@ -7,12 +7,15 @@ import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
+import br.com.clairtonluz.bytecom.util.DateUtil;
 import br.com.clairtonluz.bytecom.util.MensagemException;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class ClienteService implements Serializable {
@@ -36,7 +39,7 @@ public class ClienteService implements Serializable {
 
 
     public List<Cliente> buscarUltimosAlterados() {
-        LocalDateTime data = LocalDateTime.now().minusMonths(2);
+        Date data = DateUtil.toDate(LocalDateTime.now().minusMonths(2));
         return clienteRepository.findByUpdatedAtGreaterThan(data);
     }
 
@@ -69,14 +72,15 @@ public class ClienteService implements Serializable {
 
     @Transactional
     public Cliente save(Cliente cliente) throws Exception {
-        Bairro bairro = bairroService.buscarOuCriarBairro(cliente.getEndereco());
-        cliente.getEndereco().setBairro(bairro);
+        if (cliente.getEndereco().getBairro().getId() == null) {
+            Bairro bairro = bairroService.buscarOuCriarBairro(cliente.getEndereco());
+            cliente.getEndereco().setBairro(bairro);
+        }
 
         if (isAvaliable(cliente)) {
-            System.out.println(cliente.getEndereco().getBairro().getCidade().getEstado().getNome());
             clienteRepository.save(cliente);
-            Contrato contrato = contratoRepository.findByCliente(cliente);
-            Conexao conexao = conexaoService.buscarPorCliente(cliente);
+            Contrato contrato = contratoRepository.findOptionalByCliente(cliente);
+            Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
 
             if (conexao != null) {
                 conexaoService.save(conexao);
@@ -87,7 +91,6 @@ public class ClienteService implements Serializable {
                 contrato.setEquipamentoWifi(null);
                 contratoRepository.save(contrato);
             }
-//
         }
 
         return cliente;
@@ -117,7 +120,9 @@ public class ClienteService implements Serializable {
     }
 
     public List<Cliente> buscarSemMensalidade() {
-        return clienteJPA.buscarSemMensalidade();
+        Date data = DateUtil.toDate(LocalDate.now().plusMonths(2));
+        return clienteRepository.findBySemMensalidadesDepoisDe(data);
+//        return clienteJPA.buscarSemMensalidade();
     }
 
     public List<Cliente> query(String nome, StatusCliente status) {

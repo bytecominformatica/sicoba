@@ -3,13 +3,12 @@ package br.com.clairtonluz.bytecom.model.service.financeiro;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeJPA;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class MensalidadeService implements Serializable {
@@ -20,8 +19,8 @@ public class MensalidadeService implements Serializable {
     @Inject
     private ContratoRepository contratoRepository;
 
-    public Mensalidade getNova(Cliente cliente, LocalDate vencimento) {
-        Contrato contrato = contratoRepository.findByCliente(cliente);
+    public Mensalidade getNova(Cliente cliente, Date vencimento) {
+        Contrato contrato = contratoRepository.findOptionalByCliente(cliente);
 
         Mensalidade m = new Mensalidade();
         m.setDataVencimento(vencimento);
@@ -37,12 +36,12 @@ public class MensalidadeService implements Serializable {
 
     public void removerTodosAbertasNaoVencida(List<Mensalidade> mensalidades) {
         if (mensalidades != null) {
-            mensalidades.stream().filter(m -> m.getStatus().equals(StatusMensalidade.PENDENTE)
-                    && m.getDataVencimento().isAfter(LocalDate.now()))
-                    .forEach(m -> {
-                        remove(m);
-                        mensalidades.remove(m);
-                    });
+//            mensalidades.stream().filter(m -> m.getStatus().equals(StatusMensalidade.PENDENTE)
+//                    && m.getDataVencimento().isAfter(LocalDate.now()))
+//                    .forEach(m -> {
+//                        remove(m);
+//                        mensalidades.remove(m);
+//                    });
         }
     }
 

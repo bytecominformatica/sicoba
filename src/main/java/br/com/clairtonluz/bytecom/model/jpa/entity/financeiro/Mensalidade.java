@@ -2,11 +2,10 @@ package br.com.clairtonluz.bytecom.model.jpa.entity.financeiro;
 
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDatePersistenceConverter;
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @author clairton
@@ -17,11 +16,11 @@ public class Mensalidade extends EntityGeneric {
 
     private static final long serialVersionUID = -8955481650524371350L;
     @Column(name = "data_vencimento")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataVencimento;
+    @Temporal(TemporalType.DATE)
+    private Date dataVencimento;
     @Column(name = "data_ocorrencia")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataOcorrencia;
+    @Temporal(TemporalType.DATE)
+    private Date dataOcorrencia;
     private double valor;
     @Column(name = "valor_pago")
     private double valorPago;
@@ -43,11 +42,11 @@ public class Mensalidade extends EntityGeneric {
         modalidade = 14;
     }
 
-    public LocalDate getDataVencimento() {
+    public Date getDataVencimento() {
         return dataVencimento;
     }
 
-    public void setDataVencimento(LocalDate dataVencimento) {
+    public void setDataVencimento(Date dataVencimento) {
         this.dataVencimento = dataVencimento;
     }
 
@@ -99,11 +98,11 @@ public class Mensalidade extends EntityGeneric {
         this.tarifa = tarifa;
     }
 
-    public LocalDate getDataOcorrencia() {
+    public Date getDataOcorrencia() {
         return dataOcorrencia;
     }
 
-    public void setDataOcorrencia(LocalDate dataOcorrencia) {
+    public void setDataOcorrencia(Date dataOcorrencia) {
         this.dataOcorrencia = dataOcorrencia;
     }
 

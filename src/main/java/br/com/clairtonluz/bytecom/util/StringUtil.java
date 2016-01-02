@@ -1,9 +1,9 @@
 package br.com.clairtonluz.bytecom.util;
 
 import java.text.Normalizer;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
@@ -12,9 +12,8 @@ import java.util.Random;
  */
 public final class StringUtil {
 
-    private static final DateTimeFormatter FORMATTER_DATA = DateTimeFormatter.ofPattern("ddMMyyyy");
-    private static final DateTimeFormatter FORMATTER_DATA_HORA = DateTimeFormatter
-            .ofPattern("ddMMyyyyHHmmss");
+    private static final SimpleDateFormat FORMATTER_DATA = new SimpleDateFormat("ddMMyyyy");
+    private static final SimpleDateFormat FORMATTER_DATA_HORA = new SimpleDateFormat("ddMMyyyyHHmmss");
 
 
     public static String removeCaracterEspecial(String str) {
@@ -50,14 +49,26 @@ public final class StringUtil {
         return Double.parseDouble(get(line, inicio, fim)) / 100;
     }
 
-    public static LocalDateTime getDataHora(String line, int inicio, int fim) {
-        String data = get(line, inicio, fim);
-        return LocalDateTime.parse(data, FORMATTER_DATA_HORA);
+    public static Date getDataHora(String line, int inicio, int fim) {
+        Date date = null;
+        try {
+            String data = get(line, inicio, fim);
+            date = FORMATTER_DATA_HORA.parse(data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
-    public static LocalDate getData(String line, int inicio, int fim) {
-        String data = get(line, inicio, fim);
-        return LocalDate.parse(data, FORMATTER_DATA);
+    public static Date getData(String line, int inicio, int fim) {
+        Date date = null;
+        try {
+            String data = get(line, inicio, fim);
+            date = FORMATTER_DATA.parse(data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     public static String formatCurrence(double value) {

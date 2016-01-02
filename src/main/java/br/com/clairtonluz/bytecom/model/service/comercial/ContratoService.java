@@ -7,10 +7,12 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Secret;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoOperacaoFactory;
+import br.com.clairtonluz.bytecom.util.DateUtil;
 
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class ContratoService implements Serializable {
@@ -24,8 +26,9 @@ public class ContratoService implements Serializable {
     private ConexaoOperacaoFactory conexaoOperacaoFactory;
 
     public List<Contrato> buscarRecentes() {
-        LocalDate to = LocalDate.now();
-        LocalDate from = to.minusDays(30);
+        LocalDate hoje = LocalDate.now();
+        Date to = DateUtil.toDate(hoje);
+        Date from = DateUtil.toDate(hoje.minusDays(30));
         List<Contrato> result = contratoRepository.findByDataInstalacaoBetween(from, to);
         return result;
     }
@@ -45,6 +48,6 @@ public class ContratoService implements Serializable {
     }
 
     public Contrato buscarPorCliente(Cliente cliente) {
-        return contratoRepository.findByCliente(cliente);
+        return contratoRepository.findOptionalByCliente(cliente);
     }
 }

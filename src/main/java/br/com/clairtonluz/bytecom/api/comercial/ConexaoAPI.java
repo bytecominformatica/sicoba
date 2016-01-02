@@ -24,7 +24,7 @@ public class ConexaoAPI {
     public Conexao getPorCliente(@PathParam("id") Integer id) {
         Cliente cliente = new Cliente();
         cliente.setId(id);
-        return conexaoService.buscarPorCliente(cliente);
+        return conexaoService.buscarOptionalPorCliente(cliente);
     }
 
     @GET

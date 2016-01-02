@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "cedente")
@@ -45,7 +46,7 @@ public class Cedente extends EntityGeneric {
     private double juros;
 
     public Cedente() {
-        createdAt = LocalDateTime.now();
+        createdAt = new Date();
     }
 
     public int getCodigoOperacao() {

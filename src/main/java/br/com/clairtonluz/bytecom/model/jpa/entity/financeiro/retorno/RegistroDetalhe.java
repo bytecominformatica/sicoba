@@ -1,10 +1,9 @@
 package br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno;
 
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDatePersistenceConverter;
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Registro Detalhe - Segmento U (Obrigatório - Retorno)
@@ -25,14 +24,14 @@ public class RegistroDetalhe extends EntityGeneric {
     @Column(name = "valor_liquido")
     private double valorLiquido;
     @Column(name = "data_ocorrencia")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataOcorrencia;
+    @Temporal(TemporalType.DATE)
+    private Date dataOcorrencia;
     @Column(name = "data_credito")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataCredito;
+    @Temporal(TemporalType.DATE)
+    private Date dataCredito;
     @Column(name = "data_debito_tarifa")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataDebitoTarifa;
+    @Temporal(TemporalType.DATE)
+    private Date dataDebitoTarifa;
 
     @OneToOne
     @JoinColumn(name = "registro_id")
@@ -86,27 +85,27 @@ public class RegistroDetalhe extends EntityGeneric {
         this.valorLiquido = valorLiquido;
     }
 
-    public LocalDate getDataOcorrencia() {
+    public Date getDataOcorrencia() {
         return dataOcorrencia;
     }
 
-    public void setDataOcorrencia(LocalDate dataOcorrencia) {
+    public void setDataOcorrencia(Date dataOcorrencia) {
         this.dataOcorrencia = dataOcorrencia;
     }
 
-    public LocalDate getDataCredito() {
+    public Date getDataCredito() {
         return dataCredito;
     }
 
-    public void setDataCredito(LocalDate dataCredito) {
+    public void setDataCredito(Date dataCredito) {
         this.dataCredito = dataCredito;
     }
 
-    public LocalDate getDataDebitoTarifa() {
+    public Date getDataDebitoTarifa() {
         return dataDebitoTarifa;
     }
 
-    public void setDataDebitoTarifa(LocalDate dataDebitoTarifa) {
+    public void setDataDebitoTarifa(Date dataDebitoTarifa) {
         this.dataDebitoTarifa = dataDebitoTarifa;
     }
 

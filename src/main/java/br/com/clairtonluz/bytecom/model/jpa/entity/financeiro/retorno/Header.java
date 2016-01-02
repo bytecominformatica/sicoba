@@ -1,10 +1,9 @@
 package br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDateTimePersistenceConverter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,8 +16,8 @@ public class Header extends EntityGeneric {
     @Column(name = "nome_arquivo")
     private String nomeArquivo;
     @Column(name = "data_geracao")
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
-    private LocalDateTime dataGeracao;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataGeracao;
 
     @OneToMany(mappedBy = "header", cascade = CascadeType.ALL)
     private List<HeaderLote> headerLotes;
@@ -41,11 +40,11 @@ public class Header extends EntityGeneric {
         this.sequencial = sequencial;
     }
 
-    public LocalDateTime getDataGeracao() {
+    public Date getDataGeracao() {
         return dataGeracao;
     }
 
-    public void setDataGeracao(LocalDateTime dataGeracao) {
+    public void setDataGeracao(Date dataGeracao) {
         this.dataGeracao = dataGeracao;
     }
 

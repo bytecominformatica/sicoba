@@ -63,7 +63,7 @@ public class ConexaoController implements Serializable {
         String clienteId = WebUtil.getParameters("id");
         if (clienteId != null && !clienteId.isEmpty()) {
             cliente = clienteService.buscarPorId(Integer.valueOf(clienteId));
-            conexao = conexaoService.buscarPorCliente(cliente);
+            conexao = conexaoService.buscarOptionalPorCliente(cliente);
         }
 
         if (cliente == null) {

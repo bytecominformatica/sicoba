@@ -43,7 +43,7 @@ public class ClienteConsultaController implements Serializable {
     }
 
     public Conexao getConexao(Cliente cliente) {
-        return conexaoService.buscarPorCliente(cliente);
+        return conexaoService.buscarOptionalPorCliente(cliente);
     }
 
     public StatusCliente[] getListStatus() {

@@ -30,7 +30,7 @@ public class Cliente extends EntityGeneric {
     @CpfCnpj
     private String cpfCnpj;
     @Column(name = "dt_nascimento")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataNascimento;
     @Email(message = "Email inválido")
     private String email;
@@ -46,7 +46,7 @@ public class Cliente extends EntityGeneric {
     private Endereco endereco;
 
     public Cliente() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = new Date();
         this.endereco = new Endereco();
         this.status = StatusCliente.ATIVO;
     }

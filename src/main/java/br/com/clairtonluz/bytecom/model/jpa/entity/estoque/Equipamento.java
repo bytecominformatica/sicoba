@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author Clairton
@@ -37,14 +38,6 @@ public class Equipamento extends EntityGeneric {
 
     public Equipamento(Integer id) {
         this.setId(id);
-    }
-
-    public Equipamento(Integer id, String marca, String modelo, String mac, LocalDateTime updatedAt) {
-        this.setId(id);
-        this.marca = marca;
-        this.modelo = modelo;
-        this.mac = mac;
-        this.updatedAt = updatedAt;
     }
 
     public String getMarca() {

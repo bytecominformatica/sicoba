@@ -6,6 +6,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
+import br.com.clairtonluz.bytecom.util.DateUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @author clairton
@@ -28,7 +30,7 @@ public class GerarMensalidadeController implements Serializable {
     private int modalidade;
     private int quantidade;
     private double descontoGeracao;
-    private LocalDate dataInicio;
+    private Date dataInicio;
 
     @Inject
     private MensalidadeService mensalidadeService;
@@ -55,24 +57,9 @@ public class GerarMensalidadeController implements Serializable {
         }
     }
 
-    public void gerarBoletos() {
-        for (int i = 0; i < quantidade; i++) {
-            Mensalidade m = new Mensalidade();
-            m.setModalidade(modalidade);
-            m.setCliente(cliente);
-            m.setValor(mensalidade.getValor());
-            m.setDesconto(descontoGeracao);
-            m.setDataVencimento(dataInicio);
-            mensalidadeService.save(m);
-            dataInicio = dataInicio.plusMonths(1);
-        }
-        dataInicio = mensalidade.getDataVencimento();
-    }
-
     public Mensalidade getNovaMensalidade() {
         Contrato contrato = contratoService.buscarPorCliente(cliente);
-        LocalDate d =
-                LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento());
+        Date d = DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
         return mensalidadeService.getNova(cliente, d);
     }
 
@@ -92,11 +79,11 @@ public class GerarMensalidadeController implements Serializable {
         this.mensalidade = mensalidade;
     }
 
-    public LocalDate getDataInicio() {
+    public Date getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(LocalDate dataInicio) {
+    public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
 

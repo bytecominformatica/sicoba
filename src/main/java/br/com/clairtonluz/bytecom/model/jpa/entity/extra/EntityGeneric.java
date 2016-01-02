@@ -1,10 +1,8 @@
 package br.com.clairtonluz.bytecom.model.jpa.entity.extra;
 
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDateTimePersistenceConverter;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @MappedSuperclass
 public abstract class EntityGeneric implements Serializable {
@@ -15,15 +13,15 @@ public abstract class EntityGeneric implements Serializable {
     protected Integer id;
 
     @Column(name = "created_at")
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
-    protected LocalDateTime createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date createdAt;
 
     @Column(name = "updated_at")
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
-    protected LocalDateTime updatedAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date updatedAt;
 
     public EntityGeneric() {
-        createdAt = LocalDateTime.now();
+        createdAt = new Date();
     }
 
     public Integer getId() {
@@ -34,19 +32,19 @@ public abstract class EntityGeneric implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 

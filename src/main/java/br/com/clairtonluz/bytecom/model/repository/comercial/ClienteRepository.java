@@ -3,9 +3,11 @@ package br.com.clairtonluz.bytecom.model.repository.comercial;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import org.apache.deltaspike.data.api.EntityRepository;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,7 +24,10 @@ public interface ClienteRepository extends EntityRepository<Cliente, Integer> {
 
     Cliente findOptionalByRg(String rg);
 
-    List<Cliente> findByUpdatedAtGreaterThan(LocalDateTime data);
+    List<Cliente> findByUpdatedAtGreaterThan(Date data);
 
     List<Cliente> findByNomeLike(String nome);
+
+    @Query("select c from Cliente c where c.status <> 2 and c.id not in(select DISTINCT(m.cliente.id) from Mensalidade m where m.dataVencimento > ?1)")
+    List<Cliente> findBySemMensalidadesDepoisDe(Date date);
 }

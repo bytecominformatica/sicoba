@@ -1,7 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service.financeiro;
 
 import br.com.clairtonluz.bytecom.commons.parse.ParseRetornoCaixa;
-import br.com.clairtonluz.bytecom.model.jpa.comercial.ClienteJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
@@ -99,8 +98,8 @@ public class RetornoCaixaService implements Serializable {
                 m.getCliente().setStatus(StatusCliente.ATIVO);
 
                 Cliente cliente = m.getCliente();
-                Contrato contrato = contratoRepository.findByCliente(cliente);
-                Conexao conexao = conexaoService.buscarPorCliente(cliente);
+                Contrato contrato = contratoRepository.findOptionalByCliente(cliente);
+                Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
                 clienteRepository.save(m.getCliente());
                 conexaoService.save(conexao);
             }

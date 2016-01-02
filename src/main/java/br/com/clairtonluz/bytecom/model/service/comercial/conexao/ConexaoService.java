@@ -26,7 +26,7 @@ public class ConexaoService implements Serializable {
         return conexaoRepository.findAllOrderByNomeAsc();
     }
 
-    public Conexao buscarPorCliente(Cliente cliente) {
+    public Conexao buscarOptionalPorCliente(Cliente cliente) {
         return conexaoRepository.findOptionalByCliente(cliente);
     }
 

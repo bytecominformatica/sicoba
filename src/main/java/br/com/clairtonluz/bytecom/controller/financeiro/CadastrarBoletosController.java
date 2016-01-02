@@ -6,6 +6,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
+import br.com.clairtonluz.bytecom.util.DateUtil;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 
@@ -15,6 +16,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +36,7 @@ public class CadastrarBoletosController implements Serializable {
     private int numeroBoletoFim;
     private double descontoGeracao;
     private double valor;
-    private LocalDate dataInicio;
+    private Date dataInicio;
 
     @Inject
     private MensalidadeService mensalidadeService;
@@ -63,24 +66,26 @@ public class CadastrarBoletosController implements Serializable {
 
     public void cadastrarBoletosCaixa() {
         if (boletosNaoRegistrado(numeroBoletoInicio, numeroBoletoFim)) {
-            LocalDate c = dataInicio;
+            Date c = dataInicio;
 
             if (numeroBoletoInicio < numeroBoletoFim) {
                 for (int i = numeroBoletoInicio; i <= numeroBoletoFim; i++) {
                     gravarBoleto(c, i);
-                    c = c.plusMonths(1);
+                    LocalDateTime x = DateUtil.toLocalDateTime(c).plusMonths(1);
+                    c = DateUtil.toDate(x);
                 }
             } else {
                 for (int i = numeroBoletoInicio; i >= numeroBoletoFim; i--) {
                     gravarBoleto(c, i);
-                    c = c.plusMonths(1);
+                    LocalDateTime x = DateUtil.toLocalDateTime(c).plusMonths(1);
+                    c = DateUtil.toDate(x);
                 }
             }
             AlertaUtil.info("Boletos gerados com sucesso!");
         }
     }
 
-    private void gravarBoleto(LocalDate c, int numeroBoleto) {
+    private void gravarBoleto(Date c, int numeroBoleto) {
         Mensalidade m = mensalidadeService.getNova(cliente, c);
         m.setModalidade(modalidade);
         m.setNumeroBoleto(numeroBoleto);
@@ -91,8 +96,7 @@ public class CadastrarBoletosController implements Serializable {
 
     public Mensalidade getNovaMensalidade() {
         Contrato contrato = contratoService.buscarPorCliente(cliente);
-        LocalDate d =
-                LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento());
+        Date d = DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
         return mensalidadeService.getNova(cliente, d);
     }
 
@@ -150,11 +154,11 @@ public class CadastrarBoletosController implements Serializable {
         this.numeroBoletoFim = numeroBoletoFim;
     }
 
-    public LocalDate getDataInicio() {
+    public Date getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(LocalDate dataInicio) {
+    public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
 

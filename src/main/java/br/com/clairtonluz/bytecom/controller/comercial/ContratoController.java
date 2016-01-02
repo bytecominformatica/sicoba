@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,7 +92,7 @@ public class ContratoController implements Serializable {
     private void gerarNovoContrato() {
         contrato = new Contrato();
         contrato.setCliente(cliente);
-        contrato.setDataInstalacao(LocalDate.now());
+        contrato.setDataInstalacao(new Date());
     }
 
     public List<Equipamento> getListEquipamentosWifi() {

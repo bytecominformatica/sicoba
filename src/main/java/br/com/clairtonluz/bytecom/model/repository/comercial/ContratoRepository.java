@@ -5,7 +5,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 public interface ContratoRepository extends EntityRepository<Contrato, Integer> {
 
-    List<Contrato> findByDataInstalacaoBetween(LocalDate from, LocalDate to);
-    Contrato findByCliente(Cliente cliente);
+    List<Contrato> findByDataInstalacaoBetween(Date from, Date to);
+
+    Contrato findOptionalByCliente(Cliente cliente);
 }

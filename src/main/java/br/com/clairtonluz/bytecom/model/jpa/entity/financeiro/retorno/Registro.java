@@ -1,10 +1,9 @@
 package br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDatePersistenceConverter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Registro Detalhe - Segmento T (Obrigatório - Retorno)
@@ -13,20 +12,19 @@ import java.time.LocalDate;
 @Table(name = "registro")
 public class Registro extends EntityGeneric {
 
-    private static final long serialVersionUID = -6545044532807044580L;
     public static final int ENTRADA_CONFIRMADA = 2;
     public static final int ENTRADA_REJEITADA = 3;
     public static final int LIQUIDACAO = 6;
     public static final int TARIFA = 28;
-
+    private static final long serialVersionUID = -6545044532807044580L;
     @Column(name = "modalidade_nosso_numero")
     private int modalidadeNossoNumero;
     @Column(name = "nosso_numero")
     private int nossoNumero;
     @Column(name = "numero_documento")
     private String numeroDocumento;
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate vencimento;
+    @Temporal(TemporalType.DATE)
+    private Date vencimento;
     @Column(name = "valor_titulo")
     private double valorTitulo;
     @Column(name = "valor_tarifa")
@@ -73,11 +71,11 @@ public class Registro extends EntityGeneric {
         this.nossoNumero = nossoNumero;
     }
 
-    public LocalDate getVencimento() {
+    public Date getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(LocalDate vencimento) {
+    public void setVencimento(Date vencimento) {
         this.vencimento = vencimento;
     }
 

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class MensalidadeJPA extends CrudJPA {
 
     public List<Mensalidade> buscarMensaliadadesAtrasada() {
         return new JPAQuery(entityManager).from(m)
-                .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(LocalDate.now())))
+                .where(m.status.eq(StatusMensalidade.PENDENTE).and(m.dataVencimento.lt(new Date())))
                 .orderBy(m.dataVencimento.asc()).list(m);
     }
 }

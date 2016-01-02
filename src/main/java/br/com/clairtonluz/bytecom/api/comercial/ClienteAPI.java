@@ -36,7 +36,7 @@ public class ClienteAPI {
     @POST
     @Path("/{id}")
     public Cliente update(Cliente cliente) throws Exception {
-        return save(cliente);
+        return clienteService.save(cliente);
     }
 
     @GET

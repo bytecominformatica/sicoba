@@ -5,6 +5,7 @@ angular.module('sicobaApp', [
     'ngResource',
     'ngAnimate',
     'ui.bootstrap',
+    'ngMask',
     'angular-loading-bar'
 ]).
 config(['$routeProvider', function ($routeProvider) {

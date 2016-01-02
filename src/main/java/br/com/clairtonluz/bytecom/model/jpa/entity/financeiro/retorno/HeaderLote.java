@@ -1,10 +1,9 @@
 package br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno;
 
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDatePersistenceConverter;
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,8 +15,8 @@ public class HeaderLote extends EntityGeneric {
     @Column(name = "numero_remessa_retorno")
     private int numeroRemessaRetorno;
     @Column(name = "data_gravacao_remessa_retorno")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataGravacaoRemessaRetorno;
+    @Temporal(TemporalType.DATE)
+    private Date dataGravacaoRemessaRetorno;
 
     @ManyToOne
     @JoinColumn(name = "header_id")
@@ -35,11 +34,11 @@ public class HeaderLote extends EntityGeneric {
         this.numeroRemessaRetorno = numeroRemessaRetorno;
     }
 
-    public LocalDate getDataGravacaoRemessaRetorno() {
+    public Date getDataGravacaoRemessaRetorno() {
         return dataGravacaoRemessaRetorno;
     }
 
-    public void setDataGravacaoRemessaRetorno(LocalDate dataGravacaoRemessaRetorno) {
+    public void setDataGravacaoRemessaRetorno(Date dataGravacaoRemessaRetorno) {
         this.dataGravacaoRemessaRetorno = dataGravacaoRemessaRetorno;
     }
 

@@ -2,11 +2,10 @@ package br.com.clairtonluz.bytecom.model.jpa.entity.comercial;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
 import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
-import br.com.clairtonluz.bytecom.util.converter.date.LocalDatePersistenceConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "contrato")
@@ -17,8 +16,8 @@ public class Contrato extends EntityGeneric {
     private short vencimento;
     @Column(name = "data_instalacao")
     @NotNull(message = "data de instalação é obrigatório")
-    @Convert(converter = LocalDatePersistenceConverter.class)
-    private LocalDate dataInstalacao;
+    @Temporal(TemporalType.DATE)
+    private Date dataInstalacao;
 
 
     @JoinColumn(name = "equipamento_wifi_id", referencedColumnName = "id")
@@ -47,11 +46,11 @@ public class Contrato extends EntityGeneric {
         this.vencimento = vencimento;
     }
 
-    public LocalDate getDataInstalacao() {
+    public Date getDataInstalacao() {
         return dataInstalacao;
     }
 
-    public void setDataInstalacao(LocalDate dataInstalacao) {
+    public void setDataInstalacao(Date dataInstalacao) {
         this.dataInstalacao = dataInstalacao;
     }
 

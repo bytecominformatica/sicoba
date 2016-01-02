@@ -7,6 +7,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
+import br.com.clairtonluz.bytecom.util.DateUtil;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 
@@ -18,6 +19,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,7 +90,7 @@ public class MensalidadeController implements Serializable {
                 mensalidade.setValorPago(mensalidade.getValor() - mensalidade.getDesconto());
             }
             if (mensalidade.getDataOcorrencia() == null) {
-                mensalidade.setDataOcorrencia(LocalDate.now());
+                mensalidade.setDataOcorrencia(new Date());
             }
         } else if (mensalidade.getStatus() == StatusMensalidade.PENDENTE) {
             mensalidade.setValorPago(0);
@@ -98,8 +100,7 @@ public class MensalidadeController implements Serializable {
 
     public Mensalidade getNovaMensalidade() {
         Contrato contrato = contratoService.buscarPorCliente(cliente);
-        LocalDate d =
-                LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento());
+        Date d = DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
         return mensalidadeService.getNova(cliente, d);
     }
 
