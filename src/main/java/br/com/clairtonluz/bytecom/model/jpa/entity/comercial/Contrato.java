@@ -16,7 +16,7 @@ public class Contrato extends EntityGeneric {
     private short vencimento;
     @Column(name = "data_instalacao")
     @NotNull(message = "data de instalação é obrigatório")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataInstalacao;
 
 

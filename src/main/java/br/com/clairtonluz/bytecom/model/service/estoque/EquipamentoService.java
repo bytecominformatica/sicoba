@@ -5,12 +5,12 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.StatusEquipamento;
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.TipoEquipamento;
 import br.com.clairtonluz.bytecom.model.jpa.estoque.EquipamentoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.extra.GenericoJPA;
-import br.com.clairtonluz.bytecom.model.service.CrudService;
 
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.util.List;
 
-public class EquipamentoService extends CrudService {
+public class EquipamentoService implements Serializable {
 
     private static final long serialVersionUID = 8705835474790847188L;
     @Inject
@@ -41,5 +41,9 @@ public class EquipamentoService extends CrudService {
 
     public Equipamento buscarPorMac(String mac) {
         return equipamentoJPA.buscarPorMac(mac);
+    }
+
+    public void save(Equipamento equipamento) {
+        equipamentoJPA.save(equipamento);
     }
 }

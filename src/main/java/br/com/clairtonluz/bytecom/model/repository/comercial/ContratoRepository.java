@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.model.repository.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 
@@ -17,5 +17,7 @@ public interface ContratoRepository extends EntityRepository<Contrato, Integer> 
 
     List<Contrato> findByDataInstalacaoBetween(Date from, Date to);
 
-    Contrato findOptionalByCliente(Cliente cliente);
+    Contrato findOptionalByCliente_id(Integer clienteId);
+
+    List<Contrato> findByPlano(Plano plano);
 }

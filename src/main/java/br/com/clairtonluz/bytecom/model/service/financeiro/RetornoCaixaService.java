@@ -98,7 +98,7 @@ public class RetornoCaixaService implements Serializable {
                 m.getCliente().setStatus(StatusCliente.ATIVO);
 
                 Cliente cliente = m.getCliente();
-                Contrato contrato = contratoRepository.findOptionalByCliente(cliente);
+                Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
                 Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
                 clienteRepository.save(m.getCliente());
                 conexaoService.save(conexao);

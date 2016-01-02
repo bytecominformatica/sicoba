@@ -1,6 +1,5 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Secret;
@@ -10,6 +9,7 @@ import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoOperaca
 import br.com.clairtonluz.bytecom.util.DateUtil;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
@@ -47,7 +47,12 @@ public class ContratoService implements Serializable {
         contratoRepository.remove(contrato);
     }
 
-    public Contrato buscarPorCliente(Cliente cliente) {
-        return contratoRepository.findOptionalByCliente(cliente);
+    public Contrato buscarPorCliente(Integer clienteId) {
+        return contratoRepository.findOptionalByCliente_id(clienteId);
+    }
+
+    @Transactional
+    public Contrato save(Contrato contrato) {
+        return contratoRepository.save(contrato);
     }
 }

@@ -79,7 +79,7 @@ public class ClienteService implements Serializable {
 
         if (isAvaliable(cliente)) {
             clienteRepository.save(cliente);
-            Contrato contrato = contratoRepository.findOptionalByCliente(cliente);
+            Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
             Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
 
             if (conexao != null) {

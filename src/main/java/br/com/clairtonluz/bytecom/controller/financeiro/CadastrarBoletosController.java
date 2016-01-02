@@ -95,7 +95,7 @@ public class CadastrarBoletosController implements Serializable {
     }
 
     public Mensalidade getNovaMensalidade() {
-        Contrato contrato = contratoService.buscarPorCliente(cliente);
+        Contrato contrato = contratoService.buscarPorCliente(cliente.getId());
         Date d = DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
         return mensalidadeService.getNova(cliente, d);
     }

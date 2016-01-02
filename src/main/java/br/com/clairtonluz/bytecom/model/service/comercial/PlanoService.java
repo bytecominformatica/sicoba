@@ -1,7 +1,8 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.comercial.PlanoJPA;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
+import br.com.clairtonluz.bytecom.model.repository.comercial.PlanoRepository;
 
 import javax.inject.Inject;
 import java.io.Serializable;
@@ -11,30 +12,33 @@ public class PlanoService implements Serializable {
 
     private static final long serialVersionUID = -8296012997453708684L;
     @Inject
-    private PlanoJPA planoJPA;
+    private PlanoRepository planoRepository;
+    @Inject
+    private ContratoRepository contratoRepository;
 
-    public List<Plano> findAll() {
-        return planoJPA.buscarTodos();
+    public List<Plano> buscarTodos() {
+        return planoRepository.findAll();
     }
 
     public boolean planAvaliable(Plano plano) {
-        Plano p = planoJPA.buscarPorNome(plano.getNome());
+        Plano p = planoRepository.findOptionalByNome(plano.getNome());
         return p == null || p.getId() == plano.getId();
     }
 
     public boolean isNotUsed(Plano plano) {
-        return planoJPA.isNotUsed(plano);
+        return contratoRepository.findByPlano(plano).isEmpty();
     }
 
-    public Plano buscarPorId(int id) {
-        return planoJPA.buscarPorId(id);
+    public Plano buscarPorId(Integer id) {
+        return planoRepository.findBy(id);
     }
 
     public void remover(Plano plano) {
-        planoJPA.remove(plano);
+        planoRepository.remove(plano);
     }
 
     public Plano save(Plano plano) {
-        return (Plano) planoJPA.save(plano);
+        return (Plano) planoRepository.save(plano);
     }
+
 }

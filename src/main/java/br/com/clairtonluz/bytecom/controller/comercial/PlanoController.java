@@ -29,7 +29,7 @@ public class PlanoController implements Serializable {
     @PostConstruct
     public void load() {
         plano = new Plano();
-        listPlanos = planoService.findAll();
+        listPlanos = planoService.buscarTodos();
         getParameters();
     }
 

@@ -93,7 +93,7 @@ public class ConexaoController implements Serializable {
     }
 
     public void remover() throws Exception {
-        Contrato contrato = contratoService.buscarPorCliente(conexao.getCliente());
+        Contrato contrato = contratoService.buscarPorCliente(conexao.getCliente().getId());
         IConnectionClienteCertified secret = new Secret(conexao.getNome(),
                 conexao.getSenha(),
                 conexao.getIp(),

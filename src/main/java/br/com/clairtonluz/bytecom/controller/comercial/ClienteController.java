@@ -49,7 +49,7 @@ public class ClienteController implements Serializable {
         String clienteId = WebUtil.getParameters("id");
         if (clienteId != null && !clienteId.isEmpty()) {
             cliente = clientService.buscarPorId(Integer.parseInt(clienteId));
-            contrato = contratoService.buscarPorCliente(cliente);
+            contrato = contratoService.buscarPorCliente(cliente.getId());
             selecionaCidade();
             atualizaBairros();
         }

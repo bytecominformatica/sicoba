@@ -16,7 +16,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class ContratoController implements Serializable {
 
     @PostConstruct
     public void load() {
-        listPlanos = planoService.findAll();
+        listPlanos = planoService.buscarTodos();
         listEquipamentos = equipamentoService.buscarEquipamentosInstalacaoNaoUtilizados();
         listEquipamentosWifi = equipamentoService.buscarEquipamentosWifiNaoUtilizados();
         getParameters();
@@ -71,7 +70,7 @@ public class ContratoController implements Serializable {
         String clienteId = WebUtil.getParameters("clienteId");
         if (clienteId != null && !clienteId.isEmpty()) {
             cliente = clienteService.buscarPorId(Integer.parseInt(clienteId));
-            contrato = contratoService.buscarPorCliente(cliente);
+            contrato = contratoService.buscarPorCliente(cliente.getId());
             if (contrato == null) {
                 gerarNovoContrato();
             } else {

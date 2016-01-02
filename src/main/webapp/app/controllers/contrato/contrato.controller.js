@@ -1,49 +1,35 @@
 'use strict';
 
 angular.module('sicobaApp')
-    .controller('ClienteCtrl', function ($scope, $routeParams, Cliente, Cep) {
+    .controller('ContratoCtrl', function ($scope, $routeParams, Cliente, Contrato, Plano) {
 
         $scope.save = _save;
-        $scope.buscarEnderecoPorCep = _buscarEnderecoPorCep;
 
         _init();
+        _carregarContrato();
 
         function _init() {
-            $scope.cliente = {status: 'ATIVO'};
             $scope.hoje = new Date();
-
-            if ($routeParams.id) {
-                $scope.cliente = Cliente.get({id: $routeParams.id});
-            }
-
+            $scope.planos = Plano.query();
         }
 
-        function _save(cliente) {
-            Cliente.save(cliente, function (data) {
-                $scope.cliente = data;
-                $scope.message = {title: 'Sucesso', type: 'alert-success'};
-            }, _handleErrorApi);
-        }
-
-        function _buscarEnderecoPorCep(cep, form) {
-            if (cep) {
-                Cep.get({cep: cep}, function (data) {
-                    if (data.erro) {
-                        form.cep.$error.notFound = true
+        function _carregarContrato() {
+            if ($routeParams.clienteId) {
+                Contrato.buscarPorCliente({clienteId: $routeParams.clienteId}, function (contrato) {
+                    if (contrato) {
+                        $scope.contrato = contrato
                     } else {
-                        $scope.cliente.endereco.cep = data.cep;
-                        $scope.cliente.endereco.logradouro = data.logradouro;
-
-                        $scope.cliente.endereco.bairro = {
-                            "nome": data.bairro,
-                            "cidade": {
-                                "nome": data.localidade,
-                                "estado": {"uf": data.uf}
-                            }
-                        };
+                        $scope.contrato.cliente = Cliente.get({id: $routeParams.clienteId});
                     }
                 }, _handleErrorApi);
             }
+        }
+
+        function _save(contrato) {
+            Contrato.save(contrato, function (data) {
+                $scope.contrato = data;
+                $scope.message = {title: 'Sucesso', type: 'alert-success'};
+            }, _handleErrorApi);
         }
 
         function _handleErrorApi(error) {

@@ -20,7 +20,7 @@ public class MensalidadeService implements Serializable {
     private ContratoRepository contratoRepository;
 
     public Mensalidade getNova(Cliente cliente, Date vencimento) {
-        Contrato contrato = contratoRepository.findOptionalByCliente(cliente);
+        Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
 
         Mensalidade m = new Mensalidade();
         m.setDataVencimento(vencimento);
