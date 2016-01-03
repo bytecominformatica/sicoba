@@ -8,7 +8,7 @@
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(contrato)" novalidate>
     <div class="col-lg-12" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
         <label>Cliente</label>
-        <input name="nome" ng-model="contrato.cliente.nome" class="form-control" type="text" required>
+        <input name="nome" ng-model="contrato.cliente.nome" class="form-control" type="text" required readonly>
         <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
             <i ng-show="form.nome.$error.required">Nenhum cliente selecionado.</i>
         </p>
@@ -27,11 +27,10 @@
 
     <div class="col-lg-3"
          ng-class="{'has-error': (form.vencimento.$invalid && (form.$submitted || form.vencimento.$touched))}">
-        <label>Vencimento {{contrato.vencimento}}</label>
-        <select name="vencimento" ng-model="contrato.vencimento" class="form-control" required>
-            <option value="">---Escolha o dia do seu vencimento---</option>
-            <option value="5">05</option>
-            <option value="20">20</option>
+        <label>Vencimento</label>
+        <select name="vencimento" ng-model="contrato.vencimento" class="form-control" required
+                ng-options="item for item in [5,20]">
+            <option value="">---Escolha o melhor dia para o vencimento---</option>
         </select>
         <p class="help-block" ng-show="form.$submitted || form.vencimento.$touched">
             <i ng-show="form.vencimento.$error.required">Qual é o melhor dia para o vencimento da sua mensalidade?</i>
@@ -57,6 +56,16 @@
                 </i>
             </p>
         </div>
+    </div>
+
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.equipamento.$invalid && (form.$submitted || form.equipamento.$touched))}">
+        <label>Equipamento</label>
+        <select name="equipamento" ng-model="contrato.equipamento" class="form-control"
+                ng-options="equipamento.nome for equipamento in equipamentos track by equipamento.id">
+            <option value="">---Escolha o melhor equipamento para você---</option>
+        </select>
     </div>
 
     <div class="col-lg-12">

@@ -46,8 +46,8 @@ public class ContratoController implements Serializable {
     @PostConstruct
     public void load() {
         listPlanos = planoService.buscarTodos();
-        listEquipamentos = equipamentoService.buscarEquipamentosInstalacaoNaoUtilizados();
-        listEquipamentosWifi = equipamentoService.buscarEquipamentosWifiNaoUtilizados();
+        listEquipamentos = equipamentoService.buscarDisponiveisParaInstalacao();
+        listEquipamentosWifi = equipamentoService.buscarDisponiveisParaWifi();
         getParameters();
     }
 
