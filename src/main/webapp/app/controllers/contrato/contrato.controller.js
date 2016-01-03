@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sicobaApp')
-    .controller('ContratoCtrl', function ($scope, $routeParams, Cliente, Contrato, Plano) {
+    .controller('ContratoCtrl', function ($scope, $routeParams, Cliente, Contrato, Plano, Equipamento) {
 
         $scope.save = _save;
 
@@ -11,6 +11,8 @@ angular.module('sicobaApp')
         function _init() {
             $scope.hoje = new Date();
             $scope.planos = Plano.query();
+            $scope.equipamentosInstalacao = Equipamento.disponiveisParaInstalacao();
+            $scope.equipamentosWifi = Equipamento.disponiveisParaWifi();
         }
 
         function _carregarContrato() {

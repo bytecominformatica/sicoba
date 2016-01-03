@@ -63,8 +63,8 @@
          ng-class="{'has-error': (form.equipamento.$invalid && (form.$submitted || form.equipamento.$touched))}">
         <label>Equipamento</label>
         <select name="equipamento" ng-model="contrato.equipamento" class="form-control"
-                ng-options="equipamento.nome for equipamento in equipamentos track by equipamento.id">
-            <option value="">---Escolha o melhor equipamento para você---</option>
+                ng-options="equipamento.modelo + ' - ' + equipamento.mac group by equipamento.marca for equipamento in equipamentosInstalacao track by equipamento.id">
+            <option value="">---Qual equipamento utilizado na instalação---</option>
         </select>
     </div>
 

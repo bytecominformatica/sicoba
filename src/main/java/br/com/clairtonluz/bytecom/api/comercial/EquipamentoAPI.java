@@ -28,4 +28,10 @@ public class EquipamentoAPI {
         return equipamentoService.buscarDisponiveisParaInstalacao();
     }
 
+    @GET
+    @Path("wifi/disponiveis")
+    public List<Equipamento> buscarDisponiveisParaWifi() {
+        return equipamentoService.buscarDisponiveisParaWifi();
+    }
+
 }
