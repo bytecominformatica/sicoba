@@ -6,24 +6,31 @@ angular.module('sicobaApp')
         $scope.save = _save;
 
         _init();
-        _carregarContrato();
 
         function _init() {
             $scope.hoje = new Date();
             $scope.planos = Plano.query();
             $scope.equipamentosInstalacao = Equipamento.disponiveisParaInstalacao();
             $scope.equipamentosWifi = Equipamento.disponiveisParaWifi();
+            _carregarContrato();
         }
 
         function _carregarContrato() {
             if ($routeParams.clienteId) {
                 Contrato.buscarPorCliente({clienteId: $routeParams.clienteId}, function (contrato) {
+                    console.log(contrato)
                     if (contrato) {
                         $scope.contrato = contrato
+                        if (contrato.equipamento) {
+                            $scope.equipamentosInstalacao.push(contrato.equipamento)
+                        }
+                        if (contrato.equipamentoWifi) {
+                            $scope.equipamentosWifi.push(contrato.equipamentoWifi)
+                        }
                     } else {
                         $scope.contrato.cliente = Cliente.get({id: $routeParams.clienteId});
                     }
-                }, _handleErrorApi);
+                });
             }
         }
 
@@ -31,11 +38,6 @@ angular.module('sicobaApp')
             Contrato.save(contrato, function (data) {
                 $scope.contrato = data;
                 $scope.message = {title: 'Sucesso', type: 'alert-success'};
-            }, _handleErrorApi);
-        }
-
-        function _handleErrorApi(error) {
-            console.log(error);
-            $scope.message = {title: 'Error:', body: error.data.error, type: 'alert-danger'};
+            });
         }
     });

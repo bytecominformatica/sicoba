@@ -1,4 +1,10 @@
-<div class="alert" ng-class="message.type" ng-show="message">
-    <button type="button" class="close" ng-click="message = null" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>{{message.title}}</strong> {{message.body}}
+<div ng-show="messages">
+    <br>
+    <div ng-repeat="message in messages">
+        <div class="alert" ng-class="message.type">
+            <button type="button" class="close" ng-click="messages.splice($index, 1)" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong>{{message.title}} {{$index}}</strong> {{message.body}}
+        </div>
+    </div>
 </div>

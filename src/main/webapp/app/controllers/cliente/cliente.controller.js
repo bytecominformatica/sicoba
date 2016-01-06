@@ -22,7 +22,7 @@ angular.module('sicobaApp')
             Cliente.save(cliente, function (data) {
                 $scope.cliente = data;
                 $scope.message = {title: 'Sucesso', type: 'alert-success'};
-            }, _handleErrorApi);
+            });
         }
 
         function _buscarEnderecoPorCep(cep, form) {
@@ -42,12 +42,7 @@ angular.module('sicobaApp')
                             }
                         };
                     }
-                }, _handleErrorApi);
+                });
             }
-        }
-
-        function _handleErrorApi(error) {
-            console.log(error);
-            $scope.message = {title: 'Error:', body: error.data.error, type: 'alert-danger'};
         }
     });

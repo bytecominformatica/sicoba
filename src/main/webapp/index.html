@@ -16,7 +16,8 @@
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="bower_components/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet" type="text/css" media='all'>
+    <link href="bower_components/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet" type="text/css"
+          media='all'>
 
     <!-- Custom CSS -->
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
@@ -42,6 +43,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
+                    <sicoba-alert></sicoba-alert>
                     <div ng-view></div>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -101,6 +103,8 @@
 <script src="app/service/comercial/cep.service.js"></script>
 <script src="app/service/estoque/equipamento.service.js"></script>
 <script src="app/service/financeiro/mensalidade.service.js"></script>
+
+<script src="app/componentes/logging.interceptor.js"></script>
 
 <script src="app/directives/alert/alert.directive.js"></script>
 </body>

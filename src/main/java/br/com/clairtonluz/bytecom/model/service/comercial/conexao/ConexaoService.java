@@ -32,6 +32,7 @@ public class ConexaoService implements Serializable {
 
     public void save(Conexao conexao) throws Exception {
         Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
+        System.out.println("TODO: descomentar linha antes de publicar em produão");
 //TODO: descomentar linha antes de publicar em produão
 //      conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
         conexaoRepository.save(conexao);

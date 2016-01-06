@@ -3,8 +3,6 @@
     <small>{{contrato.id ? 'Editar' : 'Novo'}}</small>
 </h1>
 
-<sicoba-alert></sicoba-alert>
-
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(contrato)" novalidate>
     <div class="col-lg-12" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
         <label>Cliente</label>
@@ -14,7 +12,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2" ng-class="{'has-error': (form.plano.$invalid && (form.$submitted || form.plano.$touched))}">
+    <div class="col-lg-6" ng-class="{'has-error': (form.plano.$invalid && (form.$submitted || form.plano.$touched))}">
         <label>Plano</label>
         <select name="plano" ng-model="contrato.plano" class="form-control" required
                 ng-options="plano.nome for plano in planos track by plano.id">
@@ -22,18 +20,6 @@
         </select>
         <p class="help-block" ng-show="form.$submitted || form.plano.$touched">
             <i ng-show="form.plano.$error.required">Qual plano melhor lhe atende?</i>
-        </p>
-    </div>
-
-    <div class="col-lg-3"
-         ng-class="{'has-error': (form.vencimento.$invalid && (form.$submitted || form.vencimento.$touched))}">
-        <label>Vencimento</label>
-        <select name="vencimento" ng-model="contrato.vencimento" class="form-control" required
-                ng-options="item for item in [5,20]">
-            <option value="">---Escolha o melhor dia para o vencimento---</option>
-        </select>
-        <p class="help-block" ng-show="form.$submitted || form.vencimento.$touched">
-            <i ng-show="form.vencimento.$error.required">Qual é o melhor dia para o vencimento da sua mensalidade?</i>
         </p>
     </div>
 
@@ -58,12 +44,32 @@
         </div>
     </div>
 
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.vencimento.$invalid && (form.$submitted || form.vencimento.$touched))}">
+        <label>Vencimento</label>
+        <select name="vencimento" ng-model="contrato.vencimento" class="form-control" required
+                ng-options="item for item in [5,20]">
+            <option value="">---Escolha o melhor dia para o vencimento---</option>
+        </select>
+        <p class="help-block" ng-show="form.$submitted || form.vencimento.$touched">
+            <i ng-show="form.vencimento.$error.required">Qual é o melhor dia para o vencimento da sua mensalidade?</i>
+        </p>
+    </div>
 
-    <div class="col-lg-2"
+    <div class="col-lg-6"
          ng-class="{'has-error': (form.equipamento.$invalid && (form.$submitted || form.equipamento.$touched))}">
         <label>Equipamento</label>
         <select name="equipamento" ng-model="contrato.equipamento" class="form-control"
                 ng-options="equipamento.modelo + ' - ' + equipamento.mac group by equipamento.marca for equipamento in equipamentosInstalacao track by equipamento.id">
+            <option value="">---Qual equipamento utilizado na instalação---</option>
+        </select>
+    </div>
+
+    <div class="col-lg-6"
+         ng-class="{'has-error': (form.equipamentoWifi.$invalid && (form.$submitted || form.equipamentoWifi.$touched))}">
+        <label>Equipamento Wifi</label>
+        <select name="equipamentoWifi" ng-model="contrato.equipamentoWifi" class="form-control"
+                ng-options="equipamento.modelo + ' - ' + equipamento.mac group by equipamento.marca for equipamento in equipamentosWifi track by equipamento.id">
             <option value="">---Qual equipamento utilizado na instalação---</option>
         </select>
     </div>
