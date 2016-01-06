@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sicobaApp')
-    .controller('ContratoCtrl', function ($scope, $routeParams, Cliente, Contrato, Plano, Equipamento) {
+    .controller('ContratoCtrl', function ($scope, $rootScope, $routeParams, Cliente, Contrato, Plano, Equipamento) {
 
         $scope.save = _save;
 
@@ -18,8 +18,7 @@ angular.module('sicobaApp')
         function _carregarContrato() {
             if ($routeParams.clienteId) {
                 Contrato.buscarPorCliente({clienteId: $routeParams.clienteId}, function (contrato) {
-                    console.log(contrato)
-                    if (contrato) {
+                    if (contrato.id) {
                         $scope.contrato = contrato
                         if (contrato.equipamento) {
                             $scope.equipamentosInstalacao.push(contrato.equipamento)
@@ -28,7 +27,9 @@ angular.module('sicobaApp')
                             $scope.equipamentosWifi.push(contrato.equipamentoWifi)
                         }
                     } else {
-                        $scope.contrato.cliente = Cliente.get({id: $routeParams.clienteId});
+                        $scope.contrato = {
+                            cliente: Cliente.get({id: $routeParams.clienteId})
+                        }
                     }
                 });
             }
@@ -37,7 +38,7 @@ angular.module('sicobaApp')
         function _save(contrato) {
             Contrato.save(contrato, function (data) {
                 $scope.contrato = data;
-                $scope.message = {title: 'Sucesso', type: 'alert-success'};
+                $rootScope.messages = [{title: 'Sucesso', type: 'alert-success'}];
             });
         }
     });

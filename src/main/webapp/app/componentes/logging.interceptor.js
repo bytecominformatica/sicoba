@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('sicobaApp')
-    .factory('MyLoggingInterceptor', ['$rootScope', '$q', function ($rootScope, $q) {
+    .factory('MyLoggingInterceptor', function ($rootScope, $q) {
         return {
             responseError: function (rejection) {
                 console.log('Error in response ', rejection);
@@ -21,7 +21,7 @@ angular.module('sicobaApp')
                 return $q.reject(rejection);
             }
         }
-    }])
-    .config(['$httpProvider', function ($httpProvider) {
+    })
+    .config(function ($httpProvider) {
         $httpProvider.interceptors.push('MyLoggingInterceptor');
-    }]);
+    });
