@@ -60,7 +60,7 @@ public class ContratoController implements Serializable {
     }
 
     public void remover() {
-        contratoService.remover(contrato);
+        contratoService.remover(contrato.getId());
         gerarNovoContrato();
         load();
         AlertaUtil.info("Contrato removido com sucesso!");

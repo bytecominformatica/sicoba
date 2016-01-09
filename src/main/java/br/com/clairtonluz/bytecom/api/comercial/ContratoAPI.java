@@ -32,14 +32,20 @@ public class ContratoAPI {
     }
 
     @POST
-    public Contrato save(Contrato contrato) throws Exception {
+    public Contrato save(Contrato contrato) {
         return contratoService.save(contrato);
     }
 
     @POST
     @Path("/{id}")
-    public Contrato update(Contrato contrato) throws Exception {
+    public Contrato update(Contrato contrato) {
         return contratoService.save(contrato);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void remove(@PathParam("id") Integer id) {
+        contratoService.remover(id);
     }
 
 }

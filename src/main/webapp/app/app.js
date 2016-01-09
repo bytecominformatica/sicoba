@@ -6,6 +6,7 @@ angular.module('sicobaApp', [
     'ngAnimate',
     'ui.bootstrap',
     'ngMask',
+    'angular-confirm',
     'angular-loading-bar'
 ]).
 config(['$routeProvider', function ($routeProvider) {

@@ -40,6 +40,7 @@
     "angular-loading-bar": "~0.8.0",
     "angular-animate": "~1.4.8",
     "angular-bootstrap": "~0.14.3",
-    "ngMask": "angular-mask#~3.0.16"
+    "ngMask": "angular-mask#~3.0.16",
+    "angular-confirm-modal": "~1.2.2"
   }
 }
