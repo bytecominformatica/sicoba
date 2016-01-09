@@ -50,15 +50,19 @@
             function _save(conexao) {
                 Conexao.save(conexao, function (data) {
                     $scope.conexao = data;
-                    $rootScope.messages = [{title: 'Sucesso', type: 'alert-success'}];
+                    _sucesso();
                 });
             }
 
             function _remove(conexao) {
                 Conexao.remove({id: conexao.id}, function (data) {
                     _init();
-                    $rootScope.messages = [{title: 'Sucesso', type: 'alert-success'}];
+                    _sucesso();
                 });
+            }
+
+            function _sucesso(){
+                $rootScope.messages = [{title: 'Sucesso', type: 'alert-success'}];
             }
         });
 }());
