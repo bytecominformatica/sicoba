@@ -71,7 +71,7 @@ public class MensalidadeController implements Serializable {
         String clienteId = WebUtil.getParameters("clienteId");
         if (clienteId != null && !clienteId.isEmpty()) {
             Cliente cliente = clienteService.buscarPorId(Integer.parseInt(clienteId));
-            mensalidades = mensalidadeService.buscarPorCliente(cliente);
+            mensalidades = mensalidadeService.buscarPorCliente(cliente.getId());
         }
 
     }
@@ -118,7 +118,7 @@ public class MensalidadeController implements Serializable {
     }
 
     public void remover(Mensalidade m) {
-        mensalidadeService.remove(m);
+        mensalidadeService.remove(m.getId());
         mensalidades.remove(m);
         mensalidade = getNovaMensalidade();
         AlertaUtil.info("Mensalidade removido com sucesso!");

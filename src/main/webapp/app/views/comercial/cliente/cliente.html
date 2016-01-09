@@ -1,4 +1,7 @@
 <h1 class="page-header">
+    <a ng-href="#/clientes">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
     Cliente
     <small>{{cliente.id ? 'Editar' : 'Novo'}}</small>
 </h1>
@@ -14,7 +17,7 @@
         Conexao
     </a>
 
-    <a ng-href="#/mensalidade/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+    <a ng-href="#/mensalidades/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
         <i class="fa fa-money"></i>
         Mensalidade
     </a>
@@ -71,7 +74,7 @@
          ng-class="{'has-error': (form.foneTitular.$invalid && (form.$submitted || form.foneTitular.$touched))}">
         <label>Fone Titular</label>
         <input name="foneTitular" type="tel" ng-model="cliente.foneTitular" class="form-control" mask="(99)9?9999-9999"
-               placeholder="(99)99999-9999 ou (99)9999-9999" required>
+               placeholder="Telefone" required>
         <p class="help-block" ng-show="form.$submitted || form.foneTitular.$touched">
             <span ng-show="form.foneTitular.$error.required">Precisamos do seu telefone.</span>
             <span ng-show="form.foneTitular.$error.mask">Telefone invalido veja os padroes aceitos: (99)99999-9999 ou (99)9999-9999</span>
@@ -87,7 +90,7 @@
          ng-class="{'has-error': (form.foneContato.$invalid && (form.$submitted || form.foneContato.$touched))}">
         <label>Fone Contato</label>
         <input name="foneContato" type="tel" ng-model="cliente.foneContato" class="form-control" mask="(99)9?9999-9999"
-               placeholder="(99)99999-9999 ou (99)9999-9999"/>
+               placeholder="Telefone"/>
         <p class="help-block" ng-show="form.$submitted || form.foneContato.$touched">
             <span ng-show="form.foneContato.$error.mask">Telefone invalido veja os padroes aceitos: (99)99999-9999 ou (99)9999-9999</span>
         </p>

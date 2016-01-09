@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ClienteCtrl', function ($scope, $routeParams, Cliente, Cep, Contrato) {
+        .controller('ClienteCtrl', function ($scope, $rootScope, $routeParams, Cliente, Cep, Contrato) {
 
             $scope.save = _save;
             $scope.buscarEnderecoPorCep = _buscarEnderecoPorCep;
@@ -23,7 +23,7 @@
             function _save(cliente) {
                 Cliente.save(cliente, function (data) {
                     $scope.cliente = data;
-                    $scope.message = {title: 'Sucesso', type: 'alert-success'};
+                    $rootScope.messages = [{title: 'Sucesso:', body: 'Cliente ' + data.nome + ' foi salvo.', type: 'alert-success'}];
                 });
             }
 

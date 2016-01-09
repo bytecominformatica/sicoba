@@ -12,6 +12,17 @@
                         method: 'GET',
                         url: 'api/mensalidades/atrasada',
                         isArray: true
+                    },
+                    'nova': {
+                        method: 'GET',
+                        url: 'api/mensalidades/cliente/:clienteId/nova',
+                        params: {clienteId: '@clienteId'}
+                    },
+                    buscarPorCliente: {
+                        method: 'GET',
+                        url: 'api/mensalidades/cliente/:clienteId',
+                        params: {clienteId: '@clienteId'},
+                        isArray: true
                     }
                 });
         }]);

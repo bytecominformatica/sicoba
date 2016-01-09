@@ -5,7 +5,7 @@
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/conexao/cliente/:clienteId', {
-                    templateUrl: 'app/views/conexao/conexao.html',
+                    templateUrl: 'app/views/comercial/conexao.html',
                     controller: 'ConexaoCtrl'
                 });
         }]);

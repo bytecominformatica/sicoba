@@ -44,7 +44,7 @@ public class ContratoService implements Serializable {
     }
 
     @Transactional
-    public void remover(Integer id) {
+    public void remove(Integer id) {
         Contrato c = contratoRepository.findBy(id);
         contratoRepository.remove(c);
     }

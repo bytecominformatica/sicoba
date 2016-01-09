@@ -10,6 +10,7 @@
             _init();
 
             function _init() {
+                $scope.clienteId = $routeParams.clienteId;
                 _carregarConexao();
                 $scope.contrato = Contrato.buscarPorCliente({clienteId: $routeParams.clienteId});
                 $scope.mikrotiks = Mikrotik.query();

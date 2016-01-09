@@ -32,7 +32,7 @@
 
             function _buscarConexoes(clientes) {
                 clientes.forEach(function (cliente) {
-                    cliente.conexao = Conexao.buscarPorCliente({id: cliente.id});
+                    cliente.conexao = Conexao.buscarPorCliente({clienteId: cliente.id});
                 });
             }
 

@@ -1,0 +1,143 @@
+<h1 class="page-header">
+    <a ng-href="#/cliente/{{clienteId}}">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    Mensalidade
+    <small>{{mensalidade.id ? 'Editar' : 'Novo'}}</small>
+</h1>
+
+<form name="form" class="form-horizontal" ng-submit="form.$valid && save(mensalidade)" novalidate>
+    <div class="col-lg-12"
+         ng-class="{'has-error': (form.cliente.$invalid && (form.$submitted || form.cliente.$touched))}">
+        <label>Cliente</label>
+        <input name="cliente" ng-model="mensalidade.cliente.nome" class="form-control" type="text" required readonly>
+        <p class="help-block" ng-show="form.$submitted || form.cliente.$touched">
+            <i ng-show="form.cliente.$error.required">Nenhum cliente selecionado.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
+        <label>Status</label>
+        <select name="status" ng-model="mensalidade.status" class="form-control" required
+                ng-change="atualizarValores(mensalidade)"
+                ng-options="status.value as status.descricao for status in statusList">
+            <option value="">---Escolha o status do boleto---</option>
+        </select>
+        <p class="help-block" ng-show="form.$submitted || form.status.$touched">
+            <i ng-show="form.status.$error.required">Qual status do boleto?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.valor.$invalid && (form.$submitted || form.valor.$touched))}">
+        <label>Valor</label>
+        <input type="number" step="any" name="valor" ng-model="mensalidade.valor" class="form-control" required
+               ng-change="atualizarValores(mensalidade)">
+        <p class="help-block" ng-show="form.$submitted || form.valor.$touched">
+            <i ng-show="form.valor.$error.required">Qual o valor dessa mensalidade?</i>
+            <i ng-show="form.valor.$error.number">Valor inválido.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.desconto.$invalid && (form.$submitted || form.desconto.$touched))}">
+        <label>Desconto</label>
+        <input type="number" step="any" name="desconto" ng-model="mensalidade.desconto" class="form-control"
+               ng-change="atualizarValores(mensalidade)">
+        <p class="help-block" ng-show="form.$submitted || form.desconto.$touched">
+            <i ng-show="form.desconto.$error.number">Valor inválido.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-3" ng-show="mensalidade.status === 'BAIXA_MANUAL'"
+         ng-class="{'has-error': (form.valorPago.$invalid && (form.$submitted || form.valorPago.$touched))}">
+        <label>Valor Pago</label>
+        <input type="number" step="any" name="valorPago" ng-model="mensalidade.valorPago" class="form-control" required
+               readonly>
+        <p class="help-block" ng-show="form.$submitted || form.valorPago.$touched">
+            <i ng-show="form.valorPago.$error.required">Qual valor foi pago nessa mensalidade?</i>
+            <i ng-show="form.valorPago.$error.number">Valor inválido.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.dataVencimento.$invalid && (form.$submitted || form.dataVencimento.$touched))}">
+        <div class="input-group">
+            <label>Vencimento</label>
+            <div class="input-group">
+                <input name="dataVencimento" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                       ng-model="mensalidade.dataVencimento"
+                       is-open="status.opened" close-text="Close" required/>
+                <i class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </i>
+            </div>
+            <p class="help-block" ng-show="form.$submitted || form.dataVencimento.$touched">
+                <i ng-show="form.dataVencimento.$error.required">
+                    Quando o vencimento desta mensalidade?
+                </i>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-lg-3" ng-show="mensalidade.status === 'BAIXA_MANUAL'"
+         ng-class="{'has-error': (form.dataOcorrencia.$invalid && (form.$submitted || form.dataOcorrencia.$touched))}">
+        <div class="input-group">
+            <label>Data Ocorrência</label>
+            <div class="input-group">
+                <input name="dataOcorrencia" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                       ng-model="mensalidade.dataOcorrencia"
+                       is-open="status.opened2" close-text="Close" ng-required="mensalidade.status === 'BAIXA_MANUAL'"/>
+                <i class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="status.opened2 = !status.opened2">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </i>
+            </div>
+            <p class="help-block" ng-show="form.$submitted || form.dataOcorrencia.$touched">
+                <i ng-show="form.dataOcorrencia.$error.required">
+                    Quando esta mensalidade foi paga?
+                </i>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.modalidade.$invalid && (form.$submitted || form.modalidade.$touched))}">
+        <label>Modalidade</label>
+        <select name="modalidade" ng-model="mensalidade.modalidade" class="form-control" required
+                ng-options="modalidade.value as modalidade.descricao for modalidade in modalidades">
+            <option value="">---Escolha a modalidade do boleto---</option>
+        </select>
+        <p class="help-block" ng-show="form.$submitted || form.modalidade.$touched">
+            <i ng-show="form.modalidade.$error.required">Qual modalidade de boleto deseja?</i>
+        </p>
+    </div>
+
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.numeroBoleto.$invalid && (form.$submitted || form.numeroBoleto.$touched))}">
+        <label>Número Boleto</label>
+        <input type="text" name="numeroBoleto" ng-model="mensalidade.numeroBoleto" class="form-control">
+    </div>
+
+
+    <div class="col-lg-12">
+        <br/>
+        <br/>
+
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit">{{mensalidade.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-danger" type="button" ng-show="mensalidade.id"
+                    ng-click="remove(mensalidade)"
+                    confirm="Tem certeza que desseja remover a mensalidade do(a) {{mensalidade.cliente.nome}} no valor de {{mensalidade.valor}} com vencimento para {{mensalidade.dataVencimento | date}}?">Remover
+            </button>
+            <a ng-href="#/mensalidades/cliente/{{mensalidade.cliente.id}}" class="btn btn-default">Voltar</a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</form>

@@ -45,7 +45,7 @@ public class ContratoAPI {
     @DELETE
     @Path("/{id}")
     public void remove(@PathParam("id") Integer id) {
-        contratoService.remover(id);
+        contratoService.remove(id);
     }
 
 }

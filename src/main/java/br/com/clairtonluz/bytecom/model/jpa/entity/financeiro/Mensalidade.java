@@ -16,10 +16,10 @@ public class Mensalidade extends EntityGeneric {
 
     private static final long serialVersionUID = -8955481650524371350L;
     @Column(name = "data_vencimento")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataVencimento;
     @Column(name = "data_ocorrencia")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataOcorrencia;
     private double valor;
     @Column(name = "valor_pago")

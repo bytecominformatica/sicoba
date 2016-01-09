@@ -5,7 +5,7 @@
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/contrato/cliente/:clienteId', {
-                    templateUrl: 'app/views/contrato/contrato.html',
+                    templateUrl: 'app/views/comercial/contrato.html',
                     controller: 'ContratoCtrl'
                 });
         }]);
