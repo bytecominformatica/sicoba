@@ -1,49 +1,36 @@
 SICOBA - SISTEMA DE CONTROLE DE BANDA
 =====================================
 
-
-
 Contact
 -------
 
             Project Leader: Clairton Carneiro Luz
-            Personal Blog: http://clairtondev.wordpress.com/
+            Personal Blog: http://blog.clairtonluz.com.br
             Email Address: clairton.c.l@gmail.com
-
-Main Contributors
--------------------
-
-            Clairton Carneiro Luz
-            Felipe Wender Mendonça Martins
 
 
 Technologies In Use
 -------------------
 
-JDK 8
+1. Front end
+    ..* AngularJS
+    ..* HTML5
+    ..* Bootstrap
+    ..* gulp
+    ..* jshint
 
-Mikrotik API
-
-Wildfly 9.0.2 Final
-
-JPA 2.1
-
-Gson 2.2.4
-
-Mysql 5.1.37
-
-Hibernate
-
-JSF 2.2
-
-Bootstrap v3.3.2
-
-JUnit 4.12
-
-Liquibase 3.0.7
-
-JAX-RS
+2. Back end
+    ..* JDK 8
+    ..* Mikrotik API
+    ..* Wildfly
+    ..* JPA
+    ..* Mysql 5.1.37
+    ..* Hibernate
+    ..* JUnit 4.12
+    ..* Liquibase 3.0.7
+    ..* JAX-RS
+    ..* Maven
 
 
 --------------------------------------------
-Copyright (C) 2013-2015, Clairton Carneiro Luz
+Copyright (C) 2013-2016, Clairton Carneiro Luz
