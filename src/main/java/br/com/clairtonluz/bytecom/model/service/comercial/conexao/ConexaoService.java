@@ -7,6 +7,7 @@ import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
@@ -30,12 +31,14 @@ public class ConexaoService implements Serializable {
         return conexaoRepository.findOptionalByCliente(cliente);
     }
 
-    public void save(Conexao conexao) throws Exception {
+    @Transactional
+    public Conexao save(Conexao conexao) throws Exception {
         Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
         System.out.println("TODO: descomentar linha antes de publicar em produão");
 //TODO: descomentar linha antes de publicar em produão
 //      conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
         conexaoRepository.save(conexao);
+        return conexao;
     }
 
     public boolean isDisponivel(Conexao conexao) {
@@ -43,8 +46,10 @@ public class ConexaoService implements Serializable {
         return conexao2 == null || conexao2.getId() == conexao.getId();
     }
 
-    public void remove(Conexao conexao) {
-        conexaoRepository.remove(conexao);
+    @Transactional
+    public void remove(Integer id) {
+        Conexao c = conexaoRepository.findBy(id);
+        conexaoRepository.remove(c);
     }
 
     public String buscarIpLivre() {

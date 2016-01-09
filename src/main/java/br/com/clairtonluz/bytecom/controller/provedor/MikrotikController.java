@@ -32,7 +32,7 @@ public class MikrotikController implements Serializable {
     }
 
     private void consultar() {
-        listMikrotik = mikrotikService.findAll();
+        listMikrotik = mikrotikService.buscarTodos();
     }
 
     public void novo() {

@@ -56,7 +56,7 @@ public class ConexaoController implements Serializable {
     }
 
     public void buscarTodosMikrotik() {
-        listMikrotik = mikrotikService.findAll();
+        listMikrotik = mikrotikService.buscarTodos();
     }
 
     private void carregarCliente() {
@@ -101,7 +101,7 @@ public class ConexaoController implements Serializable {
         );
 
         connectionControl.remove(conexao.getMikrotik(), secret);
-        conexaoService.remove(conexao);
+        conexaoService.remove(conexao.getId());
         novaConexao();
     }
 

@@ -16,7 +16,7 @@ public class MikrotikService implements Serializable {
     @Inject
     private MikrotikRepository mikrotikRepository;
 
-    public List<Mikrotik> findAll() {
+    public List<Mikrotik> buscarTodos() {
         return mikrotikRepository.findAll();
     }
 

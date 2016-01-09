@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ClienteCtrl', function ($scope, $routeParams, Cliente, Cep) {
+        .controller('ClienteCtrl', function ($scope, $routeParams, Cliente, Cep, Contrato) {
 
             $scope.save = _save;
             $scope.buscarEnderecoPorCep = _buscarEnderecoPorCep;
@@ -15,6 +15,7 @@
 
                 if ($routeParams.id) {
                     $scope.cliente = Cliente.get({id: $routeParams.id});
+                    $scope.contrato = Contrato.buscarPorCliente({clienteId: $routeParams.id});
                 }
 
             }

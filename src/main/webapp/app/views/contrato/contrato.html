@@ -81,17 +81,9 @@
         <div class="pull-right">
             <button class="btn btn-primary" type="submit">{{contrato.id ? 'Atualizar' : 'Salvar'}}</button>
             <button class="btn btn-danger" type="button" ng-show="contrato.id"
-                    ng-click="remove(contrato)" confirm="Tem certeza que desseja remover o contrato do {{contrato.cliente.nome}}?">Remover
+                    ng-click="remove(contrato)" confirm="Tem certeza que desseja remover o contrato do(a) {{contrato.cliente.nome}}?">Remover
             </button>
-            <!--<button uib-popover-template="dynamicPopover.templateUrl" popover-title="Tem certeza disso?"-->
-            <!--type="button" class="btn btn-default">Popover With Template-->
-            <!--</button>-->
-
-            <!--<script type="text/ng-template" id="myPopoverTemplate.html">-->
-            <!--<button class="btn btn-danger" type="button">Sim</button>-->
-            <!--<button class="btn btn-default" type="button">Nao</button>-->
-            <!--</script>-->
-            <a ng-href="#/cliente/{{contrato.cliente.id}}" class="btn btn-default">Cancelar</a>
+            <a ng-href="#/cliente/{{contrato.cliente.id}}" class="btn btn-default">Voltar</a>
         </div>
         <br/>
         <br/>

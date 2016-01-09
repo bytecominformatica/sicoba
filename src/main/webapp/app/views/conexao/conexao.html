@@ -1,0 +1,83 @@
+<h1 class="page-header">
+    Conexão
+    <small>{{conexao.id ? 'Editar' : 'Novo'}}</small>
+</h1>
+
+<form name="form" class="form-horizontal" ng-submit="form.$valid && save(conexao)" novalidate>
+    <div class="col-lg-9"
+         ng-class="{'has-error': (form.cliente.$invalid && (form.$submitted || form.cliente.$touched))}">
+        <label>Cliente</label>
+        <input name="cliente" ng-model="conexao.cliente.nome" class="form-control" type="text" required readonly>
+        <p class="help-block" ng-show="form.$submitted || form.cliente.$touched">
+            <i ng-show="form.cliente.$error.required">Nenhum cliente selecionado.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-3" ng-class="{'has-error': (form.plano.$invalid && (form.$submitted || form.plano.$touched))}">
+        <label>Plano</label>
+        <input name="plano" ng-model="contrato.plano.nome" class="form-control" type="text" required readonly>
+        <p class="help-block" ng-show="form.$submitted || form.plano.$touched">
+            <i ng-show="form.plano.$error.required">Nenhum plano informado no contrato</i>
+        </p>
+    </div>
+
+    <div class="col-lg-4"
+         ng-class="{'has-error': (form.mikrotik.$invalid && (form.$submitted || form.mikrotik.$touched))}">
+        <div class="input-group">
+            <label>Mikrotik</label>
+            <select name="mikrotik" ng-model="conexao.mikrotik" class="form-control" required
+                    ng-options="mk.name + ' - ' + mk.host for mk in mikrotiks track by mk.id">
+                <option value="">---Escolha o mikrotik desejado---</option>
+            </select>
+            <p class="help-block" ng-show="form.$submitted || form.mikrotik.$touched">
+                <i ng-show="form.mikrotik.$error.required">
+                    Quando mikrotik devemos salvar essa conexao?
+                </i>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-lg-3" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
+        <label>Nome</label>
+        <input name="nome" ng-model="conexao.nome" class="form-control" required>
+        <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
+            <i ng-show="form.nome.$error.required">Qual o nome de usuário que deseja?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.senha.$invalid && (form.$submitted || form.senha.$touched))}">
+        <label>Senha</label>
+        <input name="senha" ng-model="conexao.senha" class="form-control" required>
+        <p class="help-block" ng-show="form.$submitted || form.senha.$touched">
+            <i ng-show="form.senha.$error.required">Qual a senha que deseja?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.ip.$invalid && (form.$submitted || form.ip.$touched))}">
+        <label>IP</label>
+        <input name="ip" ng-model="conexao.ip" class="form-control" required
+               pattern="(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])">
+        <p class="help-block" ng-show="form.$submitted || form.ip.$touched">
+            <i ng-show="form.ip.$error.required">Qual ip o cliente irá receber?</i>
+            <i ng-show="form.ip.$error.pattern">IP inválido</i>
+        </p>
+    </div>
+
+    <div class="col-lg-12">
+        <br/>
+        <br/>
+
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit">{{conexao.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-danger" type="button" ng-show="conexao.id"
+                    ng-click="remove(conexao)"
+                    confirm="Tem certeza que desseja remover a conexao do(a) {{conexao.cliente.nome}}?">Remover
+            </button>
+            <a ng-href="#/cliente/{{conexao.cliente.id}}" class="btn btn-default">Voltar</a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</form>

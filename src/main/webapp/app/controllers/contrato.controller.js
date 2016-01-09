@@ -9,12 +9,6 @@
 
             _init();
 
-            $scope.dynamicPopover = {
-                content: 'Hello, World!',
-                templateUrl: 'myPopoverTemplate.html',
-                title: 'Title'
-            };
-
             function _init() {
                 $scope.hoje = new Date();
                 $scope.planos = Plano.query();
