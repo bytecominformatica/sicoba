@@ -1,4 +1,5 @@
-'use strict';
+(function () {
+    'use strict';
 
 angular.module('sicobaApp')
     .config(['$routeProvider', function ($routeProvider) {
@@ -7,3 +8,4 @@ angular.module('sicobaApp')
             controller: 'HomeCtrl'
         });
     }]);
+}());

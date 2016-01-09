@@ -8,7 +8,7 @@ angular.module('sicobaApp')
         _loadMenu();
 
         function _loadMenu() {
-            $http({method: 'GET', url: 'template/menu.json'}).success(function (data) {
+            $http({method: 'GET', url: 'app/template/menu.json'}).success(function (data) {
                 $scope.menus = data;
             });
         }

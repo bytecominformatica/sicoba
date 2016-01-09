@@ -1,0 +1,29 @@
+{
+  "name": "sicoba",
+  "version": "1.0.0",
+  "description": "SICOBA - SISTEMA DE CONTROLE DE BANDA",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bytecomoficial/SICOBA.git"
+  },
+  "author": "clairtonluz (clairton.c.l@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bytecomoficial/SICOBA/issues"
+  },
+  "homepage": "https://github.com/bytecomoficial/SICOBA#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.1.0"
+  }
+}
