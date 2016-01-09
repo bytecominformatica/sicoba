@@ -13,6 +13,11 @@
 
     <base href="/sicoba/">
 
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -42,7 +47,7 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12" ng-cloak class="ng-cloak">
                     <sicoba-alert></sicoba-alert>
                     <div ng-view></div>
                 </div>
