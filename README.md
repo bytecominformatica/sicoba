@@ -13,23 +13,23 @@ Technologies In Use
 -------------------
 
 1. Front end
-    ..* AngularJS
-    ..* HTML5
-    ..* Bootstrap
-    ..* gulp
-    ..* jshint
+    ** AngularJS
+    ** HTML5
+    ** Bootstrap
+    ** gulp
+    ** jshint
 
 2. Back end
-    ..* JDK 8
-    ..* Mikrotik API
-    ..* Wildfly
-    ..* JPA
-    ..* Mysql 5.1.37
-    ..* Hibernate
-    ..* JUnit 4.12
-    ..* Liquibase 3.0.7
-    ..* JAX-RS
-    ..* Maven
+    ** JDK 8
+    ** Mikrotik API
+    ** Wildfly
+    ** JPA
+    ** Mysql 5.1.37
+    ** Hibernate
+    ** JUnit 4.12
+    ** Liquibase 3.0.7
+    ** JAX-RS
+    ** Maven
 
 
 --------------------------------------------
