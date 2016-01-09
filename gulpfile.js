@@ -26,7 +26,7 @@ gulp.task('watch', function () {
 gulp.task('build-js', ['jshint'], function() {
     return gulp.src('src/main/webapp/app/**/*.js')
         .pipe(sourcemaps.init())
-        .pipe(concat('all.js'))
+        .pipe(concat('app.js'))
         //only uglify if gulp is ran with '--type production'
         .pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
         .pipe(sourcemaps.write())

@@ -20,4 +20,4 @@ target
 bower_components
 node_modules
 
-src/main/webapp/dist/js/all.js
+src/main/webapp/dist/js/app.js
