@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.model.jpa.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -12,19 +12,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Transactional
-public class MensalidadeRelatorioJPA implements Serializable {
+public class TituloRelatorioJPA implements Serializable {
 
     private static final long serialVersionUID = -666959135258997285L;
     @Inject
     protected EntityManager em;
 
-    public List<Mensalidade> buscarPorDataStatus(LocalDate inicio, LocalDate fim, StatusMensalidade status, boolean buscarPorDataOcorrencia) {
+    public List<Titulo> buscarPorDataStatus(LocalDate inicio, LocalDate fim, StatusTitulo status, boolean buscarPorDataOcorrencia) {
 
         String jpql;
         if (buscarPorDataOcorrencia) {
-            jpql = "select m from Mensalidade m where m.dataOcorrencia between :inicio and :fim ";
+            jpql = "select m from Titulo m where m.dataOcorrencia between :inicio and :fim ";
         } else {
-            jpql = "select m from Mensalidade m where m.dataVencimento between :inicio and :fim ";
+            jpql = "select m from Titulo m where m.dataVencimento between :inicio and :fim ";
         }
 
         if (status != null) {
@@ -37,8 +37,8 @@ public class MensalidadeRelatorioJPA implements Serializable {
             jpql += "order by m.dataVencimento, m.dataOcorrencia desc ";
         }
 
-        TypedQuery<Mensalidade> query =
-                em.createQuery(jpql, Mensalidade.class).setParameter("inicio", inicio)
+        TypedQuery<Titulo> query =
+                em.createQuery(jpql, Titulo.class).setParameter("inicio", inicio)
                         .setParameter("fim", fim);
 
         if (status != null) {

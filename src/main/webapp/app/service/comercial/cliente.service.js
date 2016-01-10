@@ -8,9 +8,9 @@
         .factory('Cliente', ['$resource', function ($resource) {
             return $resource('api/clientes/:id', {id: '@id'},
                 {
-                    semMensalidade: {
+                    semTitulo: {
                         method: 'GET',
-                        url: 'api/clientes/sem_mensalidade',
+                        url: 'api/clientes/sem_titulo',
                         isArray: true
                     },
                     ultimosAlterados: {

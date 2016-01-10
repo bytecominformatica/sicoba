@@ -6,6 +6,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -29,12 +30,14 @@ public class ClienteAPI {
 
 
     @POST
+    @Transactional
     public Cliente save(Cliente cliente) throws Exception {
         return clienteService.save(cliente);
     }
 
     @POST
     @Path("/{id}")
+    @Transactional
     public Cliente update(Cliente cliente) throws Exception {
         return clienteService.save(cliente);
     }
@@ -46,9 +49,9 @@ public class ClienteAPI {
     }
 
     @GET
-    @Path("/sem_mensalidade")
-    public List<Cliente> getSemMensalidade() {
-        return clienteService.buscarSemMensalidade();
+    @Path("/sem_titulo")
+    public List<Cliente> getSemTitulo() {
+        return clienteService.buscarSemTitulo();
     }
 
     @GET

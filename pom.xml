@@ -70,7 +70,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javaee-api.version>7.0</javaee-api.version>
-        <resteasy.version>3.0.13.Final</resteasy.version>
+        <resteasy.version>3.0.14.Final</resteasy.version>
         <querydsl.version>3.6.9</querydsl.version>
         <mikrotik.version>2.1</mikrotik.version>
         <liquibase.version>3.1.1</liquibase.version>
@@ -79,6 +79,7 @@
         <gson.version>2.3.1</gson.version>
         <hibernate-entitymanager.version>5.0.3.Final</hibernate-entitymanager.version>
         <hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
+        <hibernate-core.version>5.0.6.Final</hibernate-core.version>
         <mysql.version>5.1.37</mysql.version>
         <h2database.version>1.4.190</h2database.version>
         <junit.version>4.12</junit.version>
@@ -103,10 +104,17 @@
 
         <dependency>
             <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate-entitymanager.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>

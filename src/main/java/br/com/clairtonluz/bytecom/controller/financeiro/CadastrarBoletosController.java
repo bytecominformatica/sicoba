@@ -2,11 +2,12 @@ package br.com.clairtonluz.bytecom.controller.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
-import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
+import br.com.clairtonluz.bytecom.model.service.financeiro.TituloService;
 import br.com.clairtonluz.bytecom.util.DateUtil;
+import br.com.clairtonluz.bytecom.util.MensagemException;
 import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class CadastrarBoletosController implements Serializable {
 
     private static final long serialVersionUID = -5517379889465547854L;
-    private Mensalidade mensalidade;
+    private Titulo titulo;
     private Cliente cliente;
     private int clienteId;
     private int modalidade;
@@ -39,7 +40,7 @@ public class CadastrarBoletosController implements Serializable {
     private Date dataInicio;
 
     @Inject
-    private MensalidadeService mensalidadeService;
+    private TituloService tituloService;
     @Inject
     private ContratoService contratoService;
     @Inject
@@ -49,10 +50,10 @@ public class CadastrarBoletosController implements Serializable {
     public void init() {
         getParameters();
         if (cliente != null) {
-            if (mensalidade == null) {
-                mensalidade = getNovaMensalidade();
-                dataInicio = mensalidade.getDataVencimento();
-                valor = mensalidade.getValor();
+            if (titulo == null) {
+                titulo = getNovaTitulo();
+                dataInicio = titulo.getDataVencimento();
+                valor = titulo.getValor();
             }
         }
     }
@@ -64,7 +65,7 @@ public class CadastrarBoletosController implements Serializable {
         }
     }
 
-    public void cadastrarBoletosCaixa() {
+    public void cadastrarBoletosCaixa() throws MensagemException {
         if (boletosNaoRegistrado(numeroBoletoInicio, numeroBoletoFim)) {
             Date c = dataInicio;
 
@@ -85,28 +86,28 @@ public class CadastrarBoletosController implements Serializable {
         }
     }
 
-    private void gravarBoleto(Date c, int numeroBoleto) {
-        Mensalidade m = mensalidadeService.getNova(cliente, c);
+    private void gravarBoleto(Date c, int numeroBoleto) throws MensagemException {
+        Titulo m = tituloService.getNovo(cliente, c);
         m.setModalidade(modalidade);
         m.setNumeroBoleto(numeroBoleto);
         m.setDesconto(descontoGeracao);
         m.setValor(valor);
-        mensalidadeService.save(m);
+        tituloService.save(m);
     }
 
-    public Mensalidade getNovaMensalidade() {
+    public Titulo getNovaTitulo() {
         Contrato contrato = contratoService.buscarPorCliente(cliente.getId());
         Date d = DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
-        return mensalidadeService.getNova(cliente, d);
+        return tituloService.getNovo(cliente, d);
     }
 
     private boolean boletosNaoRegistrado(int inicio, int fim) {
         boolean validos = true;
-        List<Mensalidade> listMensalidades = mensalidadeService.buscarPorBoleto(modalidade, inicio, fim);
-        if (!listMensalidades.isEmpty()) {
+        List<Titulo> listTitulos = tituloService.buscarPorBoleto(inicio, fim);
+        if (!listTitulos.isEmpty()) {
             validos = false;
             StringBuilder sb = new StringBuilder("Os seguintes boletos já estão cadastrados");
-            for (Mensalidade m : listMensalidades) {
+            for (Titulo m : listTitulos) {
                 sb.append(" : " + m.getModalidade() + '-' + m.getNumeroBoleto());
             }
             AlertaUtil.error(sb.toString());
@@ -130,12 +131,12 @@ public class CadastrarBoletosController implements Serializable {
         this.clienteId = clienteId;
     }
 
-    public Mensalidade getMensalidade() {
-        return mensalidade;
+    public Titulo getTitulo() {
+        return titulo;
     }
 
-    public void setMensalidade(Mensalidade mensalidade) {
-        this.mensalidade = mensalidade;
+    public void setTitulo(Titulo titulo) {
+        this.titulo = titulo;
     }
 
     public int getNumeroBoletoInicio() {

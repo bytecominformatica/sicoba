@@ -34,7 +34,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="it in mensalidadesAtrasada | filter:criterio | orderBy:predicate:reverse track by it.id">
+                                    <tr ng-repeat="it in titulosVencidos | filter:criterio | orderBy:predicate:reverse track by it.id">
                                         <td><a ng-class="it.cliente.status" ng-href="#/cliente/{{it.cliente.id}}">{{it.cliente.nome}}</a></td>
                                         <td class="">{{it.valor | currency}}</td>
                                         <td class="">{{it.dataVencimento | date:'dd/MM/yyyy'}}</td>

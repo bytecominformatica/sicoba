@@ -1,20 +1,20 @@
 package br.com.clairtonluz.bytecom.pojo.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
 
 /**
  * Created by clairtonluz on 07/11/15.
  */
 public class RetornoPojo {
-    private Mensalidade mensalidade;
+    private Titulo titulo;
     private String movimento;
 
-    public Mensalidade getMensalidade() {
-        return mensalidade;
+    public Titulo getTitulo() {
+        return titulo;
     }
 
-    public void setMensalidade(Mensalidade mensalidade) {
-        this.mensalidade = mensalidade;
+    public void setTitulo(Titulo titulo) {
+        this.titulo = titulo;
     }
 
     public String getMovimento() {

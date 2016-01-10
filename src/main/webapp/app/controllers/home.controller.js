@@ -2,22 +2,22 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('HomeCtrl', function ($scope, Mensalidade, Cliente, Contrato) {
+        .controller('HomeCtrl', function ($scope, Titulo, Cliente, Contrato) {
 
             $scope.order = _order;
 
-            _buscarMensalidadesAtrasada();
-            _buscarClientesSemMensalidade();
+            _buscarTitulosVencido();
+            _buscarClientesSemTitulo();
             _buscarClientesInativo();
             _buscarContratosNovos();
 
 
-            function _buscarMensalidadesAtrasada() {
-                $scope.mensalidadesAtrasada = Mensalidade.atrasados();
+            function _buscarTitulosVencido() {
+                $scope.titulosVencidos = Titulo.vencidos();
             }
 
-            function _buscarClientesSemMensalidade() {
-                $scope.clientesSemMensalidade = Cliente.semMensalidade();
+            function _buscarClientesSemTitulo() {
+                $scope.clientesSemTitulo = Cliente.semTitulo();
             }
 
             function _buscarClientesInativo() {

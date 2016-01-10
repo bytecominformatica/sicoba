@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('MensalidadeCtrl', function ($scope, $rootScope, $routeParams, $location, Mensalidade) {
+        .controller('TituloCtrl', function ($scope, $rootScope, $routeParams, $location, Titulo) {
 
             $scope.save = _save;
             $scope.remove = _remove;
@@ -13,7 +13,7 @@
             function _init() {
                 if ($routeParams.clienteId) {
                     $scope.clienteId = $routeParams.clienteId;
-                    _novaMensalidade();
+                    _novaTitulo();
                 } else if ($routeParams.id) {
                     _buscarPorId($routeParams.id);
                 }
@@ -28,46 +28,46 @@
                 ];
             }
 
-            function _novaMensalidade() {
-                $scope.mensalidade = Mensalidade.nova({clienteId: $routeParams.clienteId});
+            function _novaTitulo() {
+                $scope.titulo = Titulo.novo({clienteId: $routeParams.clienteId});
             }
 
             function _buscarPorId(id) {
-                Mensalidade.get({id: id}, function (mensalidade) {
-                    $scope.mensalidade = mensalidade;
-                    $scope.clienteId = mensalidade.cliente.id;
+                Titulo.get({id: id}, function (titulo) {
+                    $scope.titulo = titulo;
+                    $scope.clienteId = titulo.cliente.id;
                 });
             }
 
-            function _atualizarValores(mensalidade) {
-                if (mensalidade.status === 'BAIXA_MANUAL') {
-                    mensalidade.valorPago = mensalidade.valor - mensalidade.desconto;
-                    if (!mensalidade.dataOcorrencia) {
-                        mensalidade.dataOcorrencia = new Date();
+            function _atualizarValores(titulo) {
+                if (titulo.status === 'BAIXA_MANUAL') {
+                    titulo.valorPago = titulo.valor - titulo.desconto;
+                    if (!titulo.dataOcorrencia) {
+                        titulo.dataOcorrencia = new Date();
                     }
                 } else {
-                    mensalidade.valorPago = 0;
-                    mensalidade.dataOcorrencia = null;
+                    titulo.valorPago = 0;
+                    titulo.dataOcorrencia = null;
                 }
             }
 
-            function _save(mensalidade) {
-                Mensalidade.save(mensalidade, function (data) {
+            function _save(titulo) {
+                Titulo.save(titulo, function (data) {
                     $rootScope.messages = [{
                         title: 'Sucesso:',
-                        body: 'Criada mensalidade de número ' + data.id,
+                        body: 'Criado titulo de número ' + data.id,
                         type: 'alert-success'
                     }];
                     _voltar();
                 });
             }
 
-            function _remove(mensalidade) {
-                Mensalidade.remove({id: mensalidade.id}, function (data) {
+            function _remove(titulo) {
+                Titulo.remove({id: titulo.id}, function (data) {
                     _init();
                     $rootScope.messages = [{
                         title: 'Sucesso',
-                        body: 'Removida mensalidade de número ' + data.id,
+                        body: 'Removido titulo de número ' + data.id,
                         type: 'alert-success'
                     }];
                     _voltar();
@@ -75,7 +75,7 @@
             }
 
             function _voltar() {
-                $location.path('#/mensalidades/cliente/' + $routeParams.clienteId);
+                $location.path('/titulos/cliente/' + $scope.clienteId);
             }
         });
 }());

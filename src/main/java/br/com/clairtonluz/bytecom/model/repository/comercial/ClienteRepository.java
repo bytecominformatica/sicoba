@@ -28,6 +28,6 @@ public interface ClienteRepository extends EntityRepository<Cliente, Integer> {
 
     List<Cliente> findByNomeLike(String nome);
 
-    @Query("select c from Cliente c where c.status <> 2 and c.id not in(select DISTINCT(m.cliente.id) from Mensalidade m where m.dataVencimento > ?1)")
-    List<Cliente> findBySemMensalidadesDepoisDe(Date date);
+    @Query("select c from Cliente c where c.status <> 2 and c.id not in(select DISTINCT(m.cliente.id) from Titulo m where m.dataVencimento > ?1)")
+    List<Cliente> findBySemTitulosDepoisDe(Date date);
 }

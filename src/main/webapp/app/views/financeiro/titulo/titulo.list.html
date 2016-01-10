@@ -2,17 +2,31 @@
     <a ng-href="#/cliente/{{cliente.id}}">
         <i class="fa fa-arrow-circle-left"></i>
     </a>
-    Mensalidades
-    <a ng-href="#/mensalidade/cliente/{{cliente.id}}" class="btn btn-primary pull-right">
-        <i class="fa fa-plus"></i>
-        Adicionar
-    </a>
+    Titulos
+    <div class="btn-group pull-right">
+        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button"
+                aria-expanded="false">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu slidedown">
+            <li>
+                <a ng-href="#/titulo/cliente/{{cliente.id}}">
+                    <i class="fa fa-plus"></i> Novo Titulo
+                </a>
+            <li class="divider"></li>
+            <li>
+                <a ng-href="#/titulo/cliente/{{cliente.id}}/carne">
+                    <i class="glyphicon glyphicon-paperclip"></i> Novo Carne
+                </a>
+            </li>
+        </ul>
+    </div>
 </h1>
 
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <b>{{cliente.nome}}</b> cliente desde {{cliente.createdAt | date}}
+            <b>{{cliente.nome}}</b> cliente desde <b>{{cliente.createdAt | date}}</b>
         </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
@@ -25,12 +39,13 @@
                     <th>Valor Pago</th>
                     <th>Vencimento</th>
                     <th>Ocorrencia</th>
+                    <th>Boleto</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="it in mensalidades track by it.id">
+                <tr ng-repeat="it in titulos track by it.id">
                     <td>{{it.id}}</td>
                     <td>{{it.valor | currency}}</td>
                     <td>{{it.desconto | currency}}</td>
@@ -38,12 +53,15 @@
                     <td>{{it.dataVencimento | date:'dd/MM/yyyy'}}</td>
                     <td>{{it.dataOcorrencia | date:'dd/MM/yyyy'}}</td>
                     <td>
+                        <div ng-show="{{it.numeroBoleto}}">{{it.modalidade}}/{{it.numeroBoleto}}</div>
+                    </td>
+                    <td>
                         <i class="label" ng-class="getStatusClass(it.status)">
                             {{it.status}}
                         </i>
                     </td>
                     <td class="text-center">
-                        <a class="btn btn-primary" title="Editar" ng-href="#/mensalidade/{{it.id}}"
+                        <a class="btn btn-primary" title="Editar" ng-href="#/titulo/{{it.id}}"
                            ng-hide="it.status === 'PAGO_NO_BOLETO'">
                             <i class="fa fa-edit"></i>
                         </a>

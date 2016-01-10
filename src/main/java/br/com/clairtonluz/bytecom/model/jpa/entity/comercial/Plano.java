@@ -20,7 +20,7 @@ public class Plano extends EntityGeneric {
     @Column(name = "valor_instalacao")
     private double valorInstalacao;
     @Column(name = "valor_mensalidade")
-    private double valorMensalidade;
+    private double valorTitulo;
 
     public String getNome() {
         return nome;
@@ -54,12 +54,12 @@ public class Plano extends EntityGeneric {
         this.valorInstalacao = valorInstalacao;
     }
 
-    public double getValorMensalidade() {
-        return valorMensalidade;
+    public double getValorTitulo() {
+        return valorTitulo;
     }
 
-    public void setValorMensalidade(double valorMensalidade) {
-        this.valorMensalidade = valorMensalidade;
+    public void setValorTitulo(double valorTitulo) {
+        this.valorTitulo = valorTitulo;
     }
 
 }

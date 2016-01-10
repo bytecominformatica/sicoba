@@ -5,7 +5,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QCliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.QConexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.QMensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.QTitulo;
 import br.com.clairtonluz.bytecom.util.DateUtil;
 import br.com.clairtonluz.bytecom.util.StringUtil;
 import com.mysema.query.jpa.JPASubQuery;
@@ -59,8 +59,8 @@ public class ClienteJPA extends CrudJPA {
         return new JPAQuery(entityManager).from(c).where(condicao).orderBy(c.nome.asc()).limit(200).list(c);
     }
 
-    public List<Cliente> buscarSemMensalidade() {
-        QMensalidade m = QMensalidade.mensalidade;
+    public List<Cliente> buscarSemTitulo() {
+        QTitulo m = QTitulo.titulo;
         Date data = DateUtil.toDate(LocalDate.now().plusMonths(2));
         return new JPAQuery(entityManager)
                 .from(c)

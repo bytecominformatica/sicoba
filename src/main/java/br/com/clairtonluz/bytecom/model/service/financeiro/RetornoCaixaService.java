@@ -5,15 +5,15 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Registro;
 import br.com.clairtonluz.bytecom.model.jpa.financeiro.HeaderJPA;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
-import br.com.clairtonluz.bytecom.model.repository.financeiro.MensalidadeRepository;
+import br.com.clairtonluz.bytecom.model.repository.financeiro.TituloRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.pojo.financeiro.RetornoPojo;
@@ -34,7 +34,7 @@ public class RetornoCaixaService implements Serializable {
     private static ParseRetornoCaixa PARSE_RETORNO = new ParseRetornoCaixa();
 
     @Inject
-    private MensalidadeRepository mensalidadeRepository;
+    private TituloRepository tituloRepository;
     @Inject
     private HeaderJPA headerJPA;
     @Inject
@@ -54,29 +54,29 @@ public class RetornoCaixaService implements Serializable {
     public List<RetornoPojo> processarHeader(Header header) throws Exception {
         List<RetornoPojo> retornoPojos = new ArrayList<>();
         if (notExists(header)) {
-            List<Mensalidade> mensalidadesRegistradas = new ArrayList<>();
+            List<Titulo> titulosRegistradas = new ArrayList<>();
             for (HeaderLote hl : header.getHeaderLotes()) {
                 for (Registro r : hl.getRegistros()) {
                     if (r.getCodigoMovimento() == Registro.ENTRADA_CONFIRMADA) {
-                        mensalidadesRegistradas.add(criarMensalidadeRegistrada(r));
+                        titulosRegistradas.add(criarTituloRegistrada(r));
                     } else if (r.getCodigoMovimento() == Registro.LIQUIDACAO) {
-                        Mensalidade m = liquidarMensalidade(r);
+                        Titulo m = liquidarTitulo(r);
                         RetornoPojo pojo = new RetornoPojo();
 
-                        pojo.setMensalidade(m);
+                        pojo.setTitulo(m);
                         pojo.setMovimento("LIQUIDAÇÂO");
                         retornoPojos.add(pojo);
                     }
                 }
             }
-            mensalidadesRegistradas.forEach((it) -> {
-                mensalidadeRepository.save(it);
+            titulosRegistradas.forEach((it) -> {
+                tituloRepository.save(it);
             });
-            mensalidadesRegistradas.forEach(mensalidade -> {
-                Mensalidade m = (Mensalidade) mensalidade;
+            titulosRegistradas.forEach(titulo -> {
+                Titulo m = (Titulo) titulo;
                 RetornoPojo r = new RetornoPojo();
 
-                r.setMensalidade(m);
+                r.setTitulo(m);
                 r.setMovimento("ENTRADA CONFIRMADA");
                 retornoPojos.add(r);
             });
@@ -86,17 +86,17 @@ public class RetornoCaixaService implements Serializable {
     }
 
     @Transactional
-    private Mensalidade liquidarMensalidade(Registro r) throws Exception {
-        Mensalidade m = mensalidadeRepository.findOptionalByNumeroBoletoAndModalidade(r.getNossoNumero(), r.getModalidadeNossoNumero());
+    private Titulo liquidarTitulo(Registro r) throws Exception {
+        Titulo m = tituloRepository.findOptionalByNumeroBoleto(r.getNossoNumero());
 
         if (m != null) {
-            m.setStatus(StatusMensalidade.PAGO_NO_BOLETO);
+            m.setStatus(StatusTitulo.PAGO_NO_BOLETO);
             m.setValor(r.getValorTitulo());
             m.setValorPago(r.getRegistroDetalhe().getValorPago());
             m.setDesconto(r.getRegistroDetalhe().getDesconto());
             m.setTarifa(r.getValorTarifa());
             m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
-            mensalidadeRepository.save(m);
+            tituloRepository.save(m);
 
             if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
                 m.getCliente().setStatus(StatusCliente.ATIVO);
@@ -111,11 +111,11 @@ public class RetornoCaixaService implements Serializable {
         return m;
     }
 
-    private Mensalidade criarMensalidadeRegistrada(Registro r) {
+    private Titulo criarTituloRegistrada(Registro r) {
         String[] split = r.getNumeroDocumento().split("-");
         int clienteId = Integer.parseInt(split[0]);
         Cliente c = clienteRepository.findBy(clienteId);
-        Mensalidade m = new Mensalidade();
+        Titulo m = new Titulo();
         m.setCliente(c);
         m.setDataVencimento(r.getVencimento());
         m.setDesconto(r.getRegistroDetalhe().getDesconto());

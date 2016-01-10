@@ -2,10 +2,10 @@ package br.com.clairtonluz.bytecom.controller.financeiro;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 import br.com.clairtonluz.bytecom.model.service.comercial.ContratoService;
-import br.com.clairtonluz.bytecom.model.service.financeiro.MensalidadeService;
+import br.com.clairtonluz.bytecom.model.service.financeiro.TituloService;
 import br.com.clairtonluz.bytecom.util.DateUtil;
 import br.com.clairtonluz.bytecom.util.web.WebUtil;
 
@@ -22,10 +22,10 @@ import java.util.Date;
  */
 @Named
 @ViewScoped
-public class GerarMensalidadeController implements Serializable {
+public class GerarTituloController implements Serializable {
 
     private static final long serialVersionUID = -866830816286480241L;
-    private Mensalidade mensalidade;
+    private Titulo titulo;
     private Cliente cliente;
     private int modalidade;
     private int quantidade;
@@ -33,7 +33,7 @@ public class GerarMensalidadeController implements Serializable {
     private Date dataInicio;
 
     @Inject
-    private MensalidadeService mensalidadeService;
+    private TituloService tituloService;
     @Inject
     private ClienteService clientService;
     @Inject
@@ -43,9 +43,9 @@ public class GerarMensalidadeController implements Serializable {
     public void init() {
         getParameters();
         if (cliente != null) {
-            if (mensalidade == null) {
-                mensalidade = getNovaMensalidade();
-                dataInicio = mensalidade.getDataVencimento();
+            if (titulo == null) {
+                titulo = getNovaTitulo();
+                dataInicio = titulo.getDataVencimento();
             }
         }
     }
@@ -57,10 +57,10 @@ public class GerarMensalidadeController implements Serializable {
         }
     }
 
-    public Mensalidade getNovaMensalidade() {
+    public Titulo getNovaTitulo() {
         Contrato contrato = contratoService.buscarPorCliente(cliente.getId());
         Date d = DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
-        return mensalidadeService.getNova(cliente, d);
+        return tituloService.getNovo(cliente, d);
     }
 
     public Cliente getCliente() {
@@ -71,12 +71,12 @@ public class GerarMensalidadeController implements Serializable {
         this.cliente = cliente;
     }
 
-    public Mensalidade getMensalidade() {
-        return mensalidade;
+    public Titulo getTitulo() {
+        return titulo;
     }
 
-    public void setMensalidade(Mensalidade mensalidade) {
-        this.mensalidade = mensalidade;
+    public void setTitulo(Titulo titulo) {
+        this.titulo = titulo;
     }
 
     public Date getDataInicio() {

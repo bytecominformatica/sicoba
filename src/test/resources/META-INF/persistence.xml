@@ -12,7 +12,7 @@
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Endereco</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Estado</class>
-        <class>br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade</class>
+        <class>br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Pais</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano</class>
         <class>br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header</class>

@@ -70,7 +70,6 @@ public class ClienteService implements Serializable {
         clienteJPA.remove(cliente);
     }
 
-    @Transactional
     public Cliente save(Cliente cliente) throws Exception {
         if (cliente.getEndereco().getBairro().getId() == null) {
             Bairro bairro = bairroService.buscarOuCriarBairro(cliente.getEndereco());
@@ -119,10 +118,10 @@ public class ClienteService implements Serializable {
         }
     }
 
-    public List<Cliente> buscarSemMensalidade() {
+    public List<Cliente> buscarSemTitulo() {
         Date data = DateUtil.toDate(LocalDate.now().plusMonths(2));
-        return clienteRepository.findBySemMensalidadesDepoisDe(data);
-//        return clienteJPA.buscarSemMensalidade();
+        return clienteRepository.findBySemTitulosDepoisDe(data);
+//        return clienteJPA.buscarSemTitulo();
     }
 
     public List<Cliente> query(String nome, StatusCliente status) {

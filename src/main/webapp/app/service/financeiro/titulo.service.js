@@ -5,23 +5,28 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .factory('Mensalidade', ['$resource', function ($resource) {
-            return $resource('api/mensalidades/:id', {id: '@id'},
+        .factory('Titulo', ['$resource', function ($resource) {
+            return $resource('api/titulos/:id', {id: '@id'},
                 {
-                    'atrasados': {
+                    'vencidos': {
                         method: 'GET',
-                        url: 'api/mensalidades/atrasada',
+                        url: 'api/titulos/vencidos',
                         isArray: true
                     },
-                    'nova': {
+                    'novo': {
                         method: 'GET',
-                        url: 'api/mensalidades/cliente/:clienteId/nova',
+                        url: 'api/titulos/cliente/:clienteId/nova',
                         params: {clienteId: '@clienteId'}
                     },
                     buscarPorCliente: {
                         method: 'GET',
-                        url: 'api/mensalidades/cliente/:clienteId',
+                        url: 'api/titulos/cliente/:clienteId',
                         params: {clienteId: '@clienteId'},
+                        isArray: true
+                    },
+                    criarCarne: {
+                        method: 'POST',
+                        url: 'api/titulos/carne',
                         isArray: true
                     }
                 });

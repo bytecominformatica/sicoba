@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('MensalidadeListCtrl', function ($scope, $routeParams, Mensalidade, Cliente) {
+        .controller('TituloListCtrl', function ($scope, $routeParams, Titulo, Cliente) {
 
             $scope.getStatusClass = _getStatusClass;
 
@@ -10,7 +10,7 @@
 
             function _init() {
                 $scope.cliente = Cliente.get({id: $routeParams.clienteId});
-                $scope.mensalidades = Mensalidade.buscarPorCliente({clienteId: $routeParams.clienteId});
+                $scope.titulos = Titulo.buscarPorCliente({clienteId: $routeParams.clienteId});
             }
 
             function _getStatusClass(status) {

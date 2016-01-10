@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "mensalidade")
-public class Mensalidade extends EntityGeneric {
+public class Titulo extends EntityGeneric {
 
     private static final long serialVersionUID = -8955481650524371350L;
     @Column(name = "data_vencimento")
@@ -28,7 +28,7 @@ public class Mensalidade extends EntityGeneric {
     private double tarifa;
     private String parcela;
     @Enumerated
-    private StatusMensalidade status;
+    private StatusTitulo status;
     private Integer modalidade;
     @Column(name = "numero_boleto")
     private Integer numeroBoleto;
@@ -37,8 +37,8 @@ public class Mensalidade extends EntityGeneric {
     @ManyToOne
     private Cliente cliente;
 
-    public Mensalidade() {
-        status = StatusMensalidade.PENDENTE;
+    public Titulo() {
+        status = StatusTitulo.PENDENTE;
         modalidade = 14;
     }
 
@@ -58,11 +58,11 @@ public class Mensalidade extends EntityGeneric {
         this.valor = valor;
     }
 
-    public StatusMensalidade getStatus() {
+    public StatusTitulo getStatus() {
         return status;
     }
 
-    public void setStatus(StatusMensalidade status) {
+    public void setStatus(StatusTitulo status) {
         this.status = status;
     }
 

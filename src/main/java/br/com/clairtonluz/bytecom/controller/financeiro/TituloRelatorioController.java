@@ -1,8 +1,8 @@
 package br.com.clairtonluz.bytecom.controller.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Mensalidade;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusMensalidade;
-import br.com.clairtonluz.bytecom.model.jpa.financeiro.MensalidadeRelatorioJPA;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
+import br.com.clairtonluz.bytecom.model.jpa.financeiro.TituloRelatorioJPA;
 import br.com.clairtonluz.bytecom.util.StringUtil;
 
 import javax.faces.view.ViewScoped;
@@ -15,12 +15,12 @@ import java.util.List;
 
 @Named
 @ViewScoped
-public class MensalidadeRelatorioController implements Serializable {
+public class TituloRelatorioController implements Serializable {
 
     private static final long serialVersionUID = -7284911722827189143L;
     private LocalDate dataInicio;
     private LocalDate dataFim;
-    private StatusMensalidade status;
+    private StatusTitulo status;
     private boolean pesquisarPorDataOcorrencia = true;
 
     private double valorTotal;
@@ -29,26 +29,26 @@ public class MensalidadeRelatorioController implements Serializable {
     private double tarifaTotal;
 
 
-    private List<Mensalidade> listMensalidades;
+    private List<Titulo> listTitulos;
     @Inject
-    MensalidadeRelatorioJPA mensalidadeRelatorioJPA;
+    TituloRelatorioJPA tituloRelatorioJPA;
 
-    public MensalidadeRelatorioController() {
+    public TituloRelatorioController() {
         dataInicio = LocalDate.now().withDayOfMonth(1);
         dataFim = LocalDate.now();
         dataFim = dataFim.withDayOfMonth(dataFim.lengthOfMonth());
     }
 
     public void consultar() {
-        listMensalidades =
-                mensalidadeRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status,
+        listTitulos =
+                tituloRelatorioJPA.buscarPorDataStatus(dataInicio, dataFim, status,
                         pesquisarPorDataOcorrencia);
         calcularTotalizadores();
     }
 
     private void calcularTotalizadores() {
         valorTotal = valorPagoTotal = tarifaTotal = descontoTotal = 0;
-        for (Mensalidade m : listMensalidades) {
+        for (Titulo m : listTitulos) {
             valorTotal += m.getValor();
             valorPagoTotal += m.getValorPago();
             descontoTotal += m.getDesconto();
@@ -74,12 +74,12 @@ public class MensalidadeRelatorioController implements Serializable {
         this.dataFim = dataFim;
     }
 
-    public List<Mensalidade> getListMensalidades() {
-        return listMensalidades;
+    public List<Titulo> getListTitulos() {
+        return listTitulos;
     }
 
-    public void setListMensalidades(List<Mensalidade> listMensalidades) {
-        this.listMensalidades = listMensalidades;
+    public void setListTitulos(List<Titulo> listTitulos) {
+        this.listTitulos = listTitulos;
     }
 
     public String getValorTotal() {
@@ -98,11 +98,11 @@ public class MensalidadeRelatorioController implements Serializable {
         return StringUtil.formatCurrence(descontoTotal);
     }
 
-    public StatusMensalidade getStatus() {
+    public StatusTitulo getStatus() {
         return status;
     }
 
-    public void setStatus(StatusMensalidade status) {
+    public void setStatus(StatusTitulo status) {
         this.status = status;
     }
 
