@@ -65,7 +65,7 @@ public class PlanoController implements Serializable {
     public String remover() {
         String page = null;
         if (planoService.isNotUsed(plano)) {
-            planoService.remover(plano);
+            planoService.remover(plano.getId());
             AlertaUtil.info("Removido com sucesso!");
             page = "list";
         } else {

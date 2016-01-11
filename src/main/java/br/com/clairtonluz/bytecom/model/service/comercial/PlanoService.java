@@ -5,6 +5,7 @@ import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.PlanoRepository;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,12 +34,15 @@ public class PlanoService implements Serializable {
         return planoRepository.findBy(id);
     }
 
-    public void remover(Plano plano) {
-        planoRepository.remove(plano);
-    }
-
+    @Transactional
     public Plano save(Plano plano) {
         return (Plano) planoRepository.save(plano);
+    }
+
+    @Transactional
+    public void remover(Integer id) {
+        Plano plano = planoRepository.findBy(id);
+        planoRepository.remove(plano);
     }
 
 }

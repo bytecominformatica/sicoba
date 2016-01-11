@@ -4,15 +4,14 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
 import br.com.clairtonluz.bytecom.model.service.comercial.PlanoService;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 /**
- * Created by clairtonluz on 01/01/16.
+ * Created by clairtonluz on 11/01/16.
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -27,4 +26,27 @@ public class PlanoAPI {
         return planoService.buscarTodos();
     }
 
+    @GET
+    @Path("/{id}")
+    public Plano getPorId(@PathParam("id") Integer id) {
+        return planoService.buscarPorId(id);
+    }
+
+
+    @POST
+    public Plano save(@Valid Plano plano) {
+        return planoService.save(plano);
+    }
+
+    @POST
+    @Path("/{id}")
+    public Plano update(@Valid Plano plano) {
+        return planoService.save(plano);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void remove(@PathParam("id") @NotNull Integer id) {
+        planoService.remover(id);
+    }
 }

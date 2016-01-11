@@ -5,6 +5,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.extra.EntityGeneric;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author clairton
@@ -14,13 +15,16 @@ import javax.persistence.Table;
 public class Plano extends EntityGeneric {
 
     private static final long serialVersionUID = 5998642329673118596L;
+    @NotNull(message = "nome é obrigatório")
     private String nome;
-    private int upload;
-    private int download;
+    @NotNull(message = "Upload é obrigatório")
+    private Integer upload;
+    @NotNull(message = "Download é obrigatório")
+    private Integer download;
     @Column(name = "valor_instalacao")
-    private double valorInstalacao;
+    private Double valorInstalacao;
     @Column(name = "valor_mensalidade")
-    private double valorTitulo;
+    private Double valorTitulo;
 
     public String getNome() {
         return nome;
@@ -30,36 +34,35 @@ public class Plano extends EntityGeneric {
         this.nome = nome;
     }
 
-    public int getUpload() {
+    public Integer getUpload() {
         return upload;
     }
 
-    public void setUpload(int upload) {
+    public void setUpload(Integer upload) {
         this.upload = upload;
     }
 
-    public int getDownload() {
+    public Integer getDownload() {
         return download;
     }
 
-    public void setDownload(int download) {
+    public void setDownload(Integer download) {
         this.download = download;
     }
 
-    public double getValorInstalacao() {
+    public Double getValorInstalacao() {
         return valorInstalacao;
     }
 
-    public void setValorInstalacao(double valorInstalacao) {
+    public void setValorInstalacao(Double valorInstalacao) {
         this.valorInstalacao = valorInstalacao;
     }
 
-    public double getValorTitulo() {
+    public Double getValorTitulo() {
         return valorTitulo;
     }
 
-    public void setValorTitulo(double valorTitulo) {
+    public void setValorTitulo(Double valorTitulo) {
         this.valorTitulo = valorTitulo;
     }
-
 }

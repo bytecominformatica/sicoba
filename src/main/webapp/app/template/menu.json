@@ -14,8 +14,9 @@
         "url": "#/clientes"
       },
       {
-        "title": "Morris.js Chart",
-        "url": "#/morris"
+        "title": "Planos",
+        "icon": "fa fa-cloud",
+        "url": "#/planos"
       }
     ]
   }
