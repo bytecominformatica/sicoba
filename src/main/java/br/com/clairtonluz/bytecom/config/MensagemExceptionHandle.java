@@ -13,7 +13,6 @@ public class MensagemExceptionHandle implements ExceptionMapper<MensagemExceptio
 
     @Override
     public Response toResponse(MensagemException e) {
-        System.out.println("MensagemException");
         return HANDLE.handle(e);
     }
 }

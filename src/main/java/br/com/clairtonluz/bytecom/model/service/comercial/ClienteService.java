@@ -70,6 +70,7 @@ public class ClienteService implements Serializable {
         clienteJPA.remove(cliente);
     }
 
+    @Transactional
     public Cliente save(Cliente cliente) throws Exception {
         if (cliente.getEndereco().getBairro().getId() == null) {
             Bairro bairro = bairroService.buscarOuCriarBairro(cliente.getEndereco());

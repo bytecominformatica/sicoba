@@ -7,17 +7,29 @@
     angular.module('sicobaApp')
         .factory('MyLoggingInterceptor', function ($rootScope, $q) {
             return {
+                request: function (config) {
+                    if ($rootScope.messages) {
+                        $rootScope.messages = [];
+                    }
+                    return config;
+                },
                 responseError: function (rejection) {
                     console.log('Error in response ', rejection);
                     // if (rejection.status === 403) {
                     //                Show a login dialog
                     // }
 
-                    if ($rootScope.messages === undefined) {
-                        $rootScope.messages = [];
+                    if (rejection.data.parameterViolations) {
+                        rejection.data.parameterViolations.forEach(function (violation) {
+                            $rootScope.messages.push({
+                                title: 'Error:',
+                                body: violation.value + ': ' + violation.message,
+                                type: 'alert-danger'
+                            });
+                        });
+                    } else {
+                        $rootScope.messages.push({title: 'Error:', body: rejection.data.message, type: 'alert-danger'});
                     }
-
-                    $rootScope.messages.push({title: 'Error:', body: rejection.data.error, type: 'alert-danger'});
 
                     return $q.reject(rejection);
                 }
