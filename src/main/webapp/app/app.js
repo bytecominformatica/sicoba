@@ -5,6 +5,7 @@
         'ngRoute',
         'ngResource',
         'ngAnimate',
+        'ngFileUpload',
         'ui.bootstrap',
         'ngMask',
         'angular-confirm',

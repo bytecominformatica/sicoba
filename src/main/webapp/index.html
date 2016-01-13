@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Bytecom - Home</title>
+    <title>Sicoba - Bytecom</title>
 
     <base href="/sicoba/">
 
@@ -39,7 +39,7 @@
 
 <body ng-app="sicobaApp">
 
-<div id="wrapper">
+<div id="wrapper" ng-cloak class="ng-cloak">
 
     <ng-include src="'app/template/navbar.html'"></ng-include>
 
@@ -47,7 +47,7 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12" ng-cloak class="ng-cloak">
+                <div class="col-lg-12">
                     <sicoba-alert></sicoba-alert>
                     <div ng-view></div>
                 </div>
@@ -74,6 +74,8 @@
 <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
 <script src="bower_components/ngMask/dist/ngMask.min.js"></script>
 <script src="bower_components/angular-confirm-modal/angular-confirm.min.js"></script>
+<script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="dist/js/sb-admin-2.js"></script>

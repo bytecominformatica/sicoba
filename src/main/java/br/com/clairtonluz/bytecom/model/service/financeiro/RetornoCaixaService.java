@@ -5,19 +5,18 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Registro;
-import br.com.clairtonluz.bytecom.model.jpa.financeiro.HeaderJPA;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
+import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
-import br.com.clairtonluz.bytecom.model.repository.financeiro.TituloRepository;
-import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
+import br.com.clairtonluz.bytecom.model.repository.financeiro.HeaderRepository;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.pojo.financeiro.RetornoPojo;
-import br.com.clairtonluz.bytecom.util.web.AlertaUtil;
+import br.com.clairtonluz.bytecom.util.MensagemException;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -34,15 +33,15 @@ public class RetornoCaixaService implements Serializable {
     private static ParseRetornoCaixa PARSE_RETORNO = new ParseRetornoCaixa();
 
     @Inject
-    private TituloRepository tituloRepository;
+    private TituloService tituloService;
     @Inject
-    private HeaderJPA headerJPA;
+    private HeaderRepository headerRepository;
     @Inject
     private ClienteRepository clienteRepository;
     @Inject
     private ContratoRepository contratoRepository;
     @Inject
-    private ConexaoService conexaoService;
+    private ConexaoRepository conexaoRepository;
     @Inject
     private IConnectionControl connectionControl;
 
@@ -54,11 +53,11 @@ public class RetornoCaixaService implements Serializable {
     public List<RetornoPojo> processarHeader(Header header) throws Exception {
         List<RetornoPojo> retornoPojos = new ArrayList<>();
         if (notExists(header)) {
-            List<Titulo> titulosRegistradas = new ArrayList<>();
+            List<Titulo> titulosRegistrados = new ArrayList<>();
             for (HeaderLote hl : header.getHeaderLotes()) {
                 for (Registro r : hl.getRegistros()) {
                     if (r.getCodigoMovimento() == Registro.ENTRADA_CONFIRMADA) {
-                        titulosRegistradas.add(criarTituloRegistrada(r));
+                        titulosRegistrados.add(criarTituloRegistrada(r));
                     } else if (r.getCodigoMovimento() == Registro.LIQUIDACAO) {
                         Titulo m = liquidarTitulo(r);
                         RetornoPojo pojo = new RetornoPojo();
@@ -69,25 +68,28 @@ public class RetornoCaixaService implements Serializable {
                     }
                 }
             }
-            titulosRegistradas.forEach((it) -> {
-                tituloRepository.save(it);
-            });
-            titulosRegistradas.forEach(titulo -> {
-                Titulo m = (Titulo) titulo;
+            tituloService.save(titulosRegistrados);
+
+            titulosRegistrados.forEach(titulo -> {
+                Titulo m = titulo;
                 RetornoPojo r = new RetornoPojo();
 
                 r.setTitulo(m);
                 r.setMovimento("ENTRADA CONFIRMADA");
                 retornoPojos.add(r);
             });
-            headerJPA.save(header);
+            
+            headerRepository.save(header);
+        } else {
+            throw new MensagemException("Arquivo já foi enviado");
         }
+
         return retornoPojos;
     }
 
     @Transactional
     private Titulo liquidarTitulo(Registro r) throws Exception {
-        Titulo m = tituloRepository.findOptionalByNumeroBoleto(r.getNossoNumero());
+        Titulo m = tituloService.buscarPorBoleto(r.getNossoNumero());
 
         if (m != null) {
             m.setStatus(StatusTitulo.PAGO_NO_BOLETO);
@@ -96,16 +98,16 @@ public class RetornoCaixaService implements Serializable {
             m.setDesconto(r.getRegistroDetalhe().getDesconto());
             m.setTarifa(r.getValorTarifa());
             m.setDataOcorrencia(r.getRegistroDetalhe().getDataOcorrencia());
-            tituloRepository.save(m);
+            tituloService.save(m);
 
             if (m.getCliente().getStatus().equals(StatusCliente.INATIVO)) {
                 m.getCliente().setStatus(StatusCliente.ATIVO);
 
                 Cliente cliente = m.getCliente();
                 Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
-                Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
+                Conexao conexao = conexaoRepository.findOptionalByCliente(cliente);
                 clienteRepository.save(m.getCliente());
-                conexaoService.save(conexao);
+                conexaoRepository.save(conexao);
             }
         }
         return m;
@@ -125,13 +127,8 @@ public class RetornoCaixaService implements Serializable {
         return m;
     }
 
-    private boolean notExists(Header header) {
-        boolean exists = false;
-        List<Header> list = headerJPA.buscarTodosPorSequencial(header.getSequencial());
-        if (!list.isEmpty()) {
-            exists = true;
-            AlertaUtil.error("Arquivo já foi enviado");
-        }
-        return !exists;
+    private boolean notExists(Header header) throws MensagemException {
+        List<Header> list = headerRepository.findBySequencial(header.getSequencial());
+        return list.isEmpty();
     }
 }

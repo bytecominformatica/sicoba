@@ -85,11 +85,28 @@ public class TituloService implements Serializable {
         return tituloRepository.save(titulo);
     }
 
-    public List<Titulo> save(List<Titulo> titulos) {
-        for (Titulo titulo : titulos) {
-            tituloRepository.save(titulo);
+    public List<Titulo> save(List<Titulo> titulos) throws MensagemException {
+        List<Integer> existentes = buscarNumeroBoletoSeExistir(titulos);
+        if (existentes.isEmpty()) {
+            for (Titulo titulo : titulos) {
+                tituloRepository.save(titulo);
+            }
+        } else {
+            throw new MensagemException("Já existe titulos com os seguintes números de boleto: " + existentes.toString());
         }
         return titulos;
+    }
+
+    public List<Integer> buscarNumeroBoletoSeExistir(List<Titulo> titulosRegistradas) {
+        List<Integer> existentes = new ArrayList<>();
+        titulosRegistradas.forEach((it) -> {
+            Titulo tituloExistente = tituloRepository.findOptionalByNumeroBoleto(it.getNumeroBoleto());
+            if (tituloExistente != null) {
+                existentes.add(tituloExistente.getNumeroBoleto());
+            }
+        });
+
+        return existentes;
     }
 
     @Transactional
@@ -141,7 +158,8 @@ public class TituloService implements Serializable {
     }
 
     private boolean existe(Titulo titulo) {
-        return tituloRepository.findOptionalByNumeroBoleto(titulo.getNumeroBoleto()) != null;
+        Titulo t = tituloRepository.findOptionalByNumeroBoleto(titulo.getNumeroBoleto());
+        return t != null && t.getId() != titulo.getId();
     }
 
     private boolean titulosNaoRegistrado(Integer modalidade, Integer inicio, Integer fim) throws MensagemException {
@@ -156,5 +174,9 @@ public class TituloService implements Serializable {
             throw new MensagemException(sb.toString());
         }
         return validos;
+    }
+
+    public Titulo buscarPorBoleto(Integer numeroBoleto) {
+        return tituloRepository.findOptionalByNumeroBoleto(numeroBoleto);
     }
 }

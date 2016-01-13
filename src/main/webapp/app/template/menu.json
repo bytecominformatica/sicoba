@@ -19,5 +19,21 @@
         "url": "#/planos"
       }
     ]
+  },
+  {
+    "title": "Financeiro",
+    "icon": "fa fa-dollar",
+    "items": [
+      {
+        "title": "Enviar Retorno",
+        "icon": "fa fa-upload",
+        "url": "#/retorno"
+      },
+      {
+        "title": "Relatorio",
+        "icon": "fa fa-files-o",
+        "url": "#/relatorio"
+      }
+    ]
   }
 ]

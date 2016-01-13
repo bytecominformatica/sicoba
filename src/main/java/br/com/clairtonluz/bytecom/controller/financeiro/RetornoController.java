@@ -32,8 +32,7 @@ public class RetornoController implements Serializable {
 
     public void upload() throws Exception {
         if (isFileValid(file)) {
-            Header header = null;
-            header = retornoCaixaService.parse(file.getInputStream(), file.getSubmittedFileName());
+            Header header = retornoCaixaService.parse(file.getInputStream(), file.getSubmittedFileName());
             retornoPojos = retornoCaixaService.processarHeader(header);
             if (!retornoPojos.isEmpty()) {
                 AlertaUtil.info("Arquivo enviado com sucesso!");

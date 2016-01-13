@@ -1,12 +1,12 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
+import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Bairro;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cidade;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Endereco;
 import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Estado;
 import br.com.clairtonluz.bytecom.model.jpa.extra.GenericoJPA;
+import br.com.clairtonluz.bytecom.model.repository.comercial.BairroRepository;
 import br.com.clairtonluz.bytecom.pojo.comercial.EnderecoPojo;
 import com.google.gson.Gson;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Bairro;
 
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
@@ -20,13 +20,15 @@ public class AddressService implements Serializable {
 
     @Inject
     private GenericoJPA jpa;
+    @Inject
+    private BairroRepository bairroRepository;
 
     public List<Cidade> findCities() {
         return jpa.buscarTodos(Cidade.class, true, "nome", 200);
     }
 
     public Bairro buscarPorId(int bairroId) {
-        return jpa.buscarPorId(Bairro.class, bairroId);
+        return bairroRepository.findBy(bairroId);
     }
 
     public Bairro findNeighborhoodByName(String name) {

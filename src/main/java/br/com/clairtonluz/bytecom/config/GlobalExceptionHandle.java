@@ -11,7 +11,6 @@ public class GlobalExceptionHandle implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(Exception e) {
-        System.out.println("Global");
         e.printStackTrace();
         return HANDLE.handle(e);
     }

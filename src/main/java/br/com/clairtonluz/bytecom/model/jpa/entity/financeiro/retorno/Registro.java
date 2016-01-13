@@ -15,7 +15,10 @@ public class Registro extends EntityGeneric {
     public static final int ENTRADA_CONFIRMADA = 2;
     public static final int ENTRADA_REJEITADA = 3;
     public static final int LIQUIDACAO = 6;
+    public static final int BAIXA = 9;
+    public static final int CONFIRMACAO_ALTERACAO_VENCIMENTO = 9;
     public static final int TARIFA = 28;
+
     private static final long serialVersionUID = -6545044532807044580L;
     @Column(name = "modalidade_nosso_numero")
     private int modalidadeNossoNumero;
