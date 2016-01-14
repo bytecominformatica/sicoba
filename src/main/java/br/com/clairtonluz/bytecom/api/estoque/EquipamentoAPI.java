@@ -1,13 +1,12 @@
-package br.com.clairtonluz.bytecom.api.comercial;
+package br.com.clairtonluz.bytecom.api.estoque;
 
 import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
 import br.com.clairtonluz.bytecom.model.service.estoque.EquipamentoService;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -34,4 +33,32 @@ public class EquipamentoAPI {
         return equipamentoService.buscarDisponiveisParaWifi();
     }
 
+
+    @GET
+    public List<Equipamento> query() {
+        return equipamentoService.buscarTodos();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Equipamento getPorId(@PathParam("id") Integer id) {
+        return equipamentoService.buscarPorId(id);
+    }
+
+    @POST
+    public Equipamento save(@Valid Equipamento equipamento) {
+        return equipamentoService.save(equipamento);
+    }
+
+    @POST
+    @Path("/{id}")
+    public Equipamento update(@Valid Equipamento equipamento) {
+        return equipamentoService.save(equipamento);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void remove(@PathParam("id") @NotNull Integer id) {
+        equipamentoService.remove(id);
+    }
 }

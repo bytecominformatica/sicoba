@@ -1,0 +1,84 @@
+<h1 class="page-header">
+    <a ng-href="#/equipamentos">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    Equipamento
+    <small>{{equipamento.id ? 'Editar' : 'Novo'}}</small>
+</h1>
+
+<form name="form" class="form-horizontal" ng-submit="form.$valid && save(equipamento)" novalidate>
+    <div class="col-lg-4" ng-class="{'has-error': (form.marca.$invalid && (form.$submitted || form.marca.$touched))}">
+        <label>Marca</label>
+        <input name="marca" ng-model="equipamento.marca" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.marca.$touched">
+            <i ng-show="form.marca.$error.required">Qual a marca do equipamento?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.modelo.$invalid && (form.$submitted || form.modelo.$touched))}">
+        <label>Modelo</label>
+        <input name="modelo" ng-model="equipamento.modelo" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.modelo.$touched">
+            <i ng-show="form.modelo.$error.required">Qual o modelo do equipamento?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.mac.$invalid && (form.$submitted || form.mac.$touched))}">
+        <label>MAC</label>
+        <input name="mac" ng-model="equipamento.mac" class="form-control" type="text" required
+               pattern="[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}">
+        <p class="help-block" ng-show="form.$submitted || form.mac.$touched">
+            <i ng-show="form.mac.$error.required">Qual o mac do equipamento?</i>
+            <i ng-show="form.mac.$error.pattern">MAC inválido</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.tipo.$invalid && (form.$submitted || form.tipo.$touched))}">
+        <label>Tipo</label>
+        <select name="tipo" ng-model="equipamento.tipo" class="form-control" required
+                ng-options="tipo.value as tipo.descricao for tipo in tipos">
+        </select>
+        <p class="help-block" ng-show="form.$submitted || form.tipo.$touched">
+            <i ng-show="form.tipo.$error.required">Qual o tipo do equipamento?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
+        <label>Status</label>
+        <select name="status" ng-model="equipamento.status" class="form-control" required
+                ng-options="status.value as status.descricao for status in statusList">
+        </select>
+        <p class="help-block" ng-show="form.$submitted || form.status.$touched">
+            <i ng-show="form.status.$error.required">Qual o status do equipamento?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-12"
+         ng-class="{'has-error': (form.descricao.$invalid && (form.$submitted || form.descricao.$touched))}">
+        <label>Descricao</label>
+        <textarea name="descricao" ng-model="equipamento.descricao" class="form-control">
+        </textarea>
+    </div>
+
+
+    <div class="col-lg-12">
+        <br/>
+        <br/>
+
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit">{{equipamento.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-danger" type="button" ng-show="equipamento.id"
+                    ng-click="remove(equipamento)"
+                    confirm="Tem certeza que desseja remover o equipamento {{equipamento.nome}}?">
+                Remover
+            </button>
+            <a ng-href="#/equipamentos" class="btn btn-default">Cancelar</a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</form>

@@ -35,5 +35,16 @@
         "url": "#/relatorio"
       }
     ]
+  },
+  {
+    "title": "Estoque",
+    "icon": "fa fa-dropbox",
+    "items": [
+      {
+        "title": "Equipamentos",
+        "icon": "fa fa-wrench",
+        "url": "#/equipamentos"
+      }
+    ]
   }
 ]

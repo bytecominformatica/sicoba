@@ -25,7 +25,7 @@ public class Equipamento extends EntityGeneric {
     @Size(min = 1, max = 30)
     private String modelo;
     @Pattern(
-            regexp = "^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$",
+                regexp = "^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$",
             message = "MAC inválido")
     private String mac;
     @Enumerated

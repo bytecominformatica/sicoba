@@ -69,7 +69,7 @@ public class EquipamentoController implements Serializable {
     }
 
     public String remover() {
-        equipamentoService.remove(equipamento);
+        equipamentoService.remove(equipamento.getId());
         load();
         AlertaUtil.info("Equipamento removido com sucesso!");
         return "list";

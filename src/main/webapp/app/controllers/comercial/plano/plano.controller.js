@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('PlanoCtrl', function ($scope, $rootScope, $routeParams, $location, Plano) {
+        .controller('PlanoCtrl', function ($scope, $rootScope, $routeParams, Plano) {
 
             $scope.save = _save;
             $scope.remove = _remove;
@@ -23,19 +23,18 @@
                         body: 'Plano ' + data.nome + ' foi salvo.',
                         type: 'alert-success'
                     }];
-                    _voltar();
                 });
             }
 
             function _remove(plano) {
                 Plano.remove({id: plano.id}, function () {
-                    _voltar();
+                    $rootScope.messages = [{
+                        title: 'Sucesso:',
+                        body: 'Plano ' + plano.nome + ' foi removido.',
+                        type: 'alert-success'
+                    }];
+                    $scope.plano = {};
                 });
             }
-
-            function _voltar() {
-                $location.path('/planos');
-            }
-
         });
 }());

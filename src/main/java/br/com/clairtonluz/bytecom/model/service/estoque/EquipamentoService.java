@@ -36,12 +36,13 @@ public class EquipamentoService implements Serializable {
     }
 
     @Transactional
-    public void save(Equipamento equipamento) {
-        equipamentoRepository.save(equipamento);
+    public Equipamento save(Equipamento equipamento) {
+        return equipamentoRepository.save(equipamento);
     }
 
     @Transactional
-    public void remove(Equipamento e) {
+    public void remove(Integer id) {
+        Equipamento e = equipamentoRepository.findBy(id);
         equipamentoRepository.remove(e);
     }
 }
