@@ -73,10 +73,10 @@
             <button class="btn btn-primary" type="submit">{{equipamento.id ? 'Atualizar' : 'Salvar'}}</button>
             <button class="btn btn-danger" type="button" ng-show="equipamento.id"
                     ng-click="remove(equipamento)"
-                    confirm="Tem certeza que desseja remover o equipamento {{equipamento.nome}}?">
+                    confirm="Tem certeza que desseja remover o equipamento {{equipamento.marca}} {{equipamento.modelo}} de MAC {{equipamento.mac}}?">
                 Remover
             </button>
-            <a ng-href="#/equipamentos" class="btn btn-default">Cancelar</a>
+            <a ng-href="#/equipamentos" class="btn btn-default">Voltar</a>
         </div>
         <br/>
         <br/>

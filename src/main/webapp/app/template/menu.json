@@ -46,5 +46,16 @@
         "url": "#/equipamentos"
       }
     ]
+  },
+  {
+    "title": "Provedor",
+    "icon": "fa fa-linux",
+    "items": [
+      {
+        "title": "Mikrotik",
+        "icon": "fa fa-maxcdn",
+        "url": "#/mikrotiks"
+      }
+    ]
   }
 ]

@@ -1,0 +1,80 @@
+<h1 class="page-header">
+    <a ng-href="#/mikrotiks">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    Mikrotik
+    <small>{{mikrotik.id ? 'Editar' : 'Novo'}}</small>
+</h1>
+
+<form name="form" class="form-horizontal" ng-submit="form.$valid && save(mikrotik)" novalidate>
+    <div class="col-lg-12" ng-class="{'has-error': (form.name.$invalid && (form.$submitted || form.name.$touched))}">
+        <label>Nome</label>
+        <input name="name" ng-model="mikrotik.name" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.name.$touched">
+            <i ng-show="form.name.$error.required">Qual o nome do mikrotik?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-6"
+         ng-class="{'has-error': (form.host.$invalid && (form.$submitted || form.host.$touched))}">
+        <label>Host</label>
+        <div class="input-group">
+            <i class="input-group-addon">http://</i>
+            <input name="host" ng-model="mikrotik.host" class="form-control" type="text" required>
+        </div>
+        <p class="help-block" ng-show="form.$submitted || form.host.$touched">
+            <i ng-show="form.host.$error.required">Qual o host para esse mikrotik?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.port.$invalid && (form.$submitted || form.port.$touched))}">
+        <label>Porta</label>
+        <input name="port" ng-model="mikrotik.port" class="form-control" type="number" required>
+        <p class="help-block" ng-show="form.$submitted || form.port.$touched">
+            <i ng-show="form.port.$error.required">Qual a porta para esse mikrotik?</i>
+            <i ng-show="form.port.$error.number">Valor inválido</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.login.$invalid && (form.$submitted || form.login.$touched))}">
+        <label>Login</label>
+        <input name="login" ng-model="mikrotik.login" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.login.$touched">
+            <i ng-show="form.login.$error.required">Qual o login para esse mikrotik?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.pass.$invalid && (form.$submitted || form.pass.$touched))}">
+        <label>Senha</label>
+        <input name="pass" ng-model="mikrotik.pass" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.pass.$touched">
+            <i ng-show="form.pass.$error.required">Qual a senha para esse mikrotik?</i>
+        </p>
+    </div>
+
+    <div class="col-lg-12"
+         ng-class="{'has-error': (form.description.$invalid && (form.$submitted || form.description.$touched))}">
+        <label>Descrição</label>
+        <textarea name="description" ng-model="mikrotik.description" class="form-control" type="text"></textarea>
+    </div>
+
+    <div class="col-lg-12">
+        <br/>
+        <br/>
+
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit">{{mikrotik.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-danger" type="button" ng-show="mikrotik.id"
+                    ng-click="remove(mikrotik)"
+                    confirm="Tem certeza que desseja remover o mikrotik {{mikrotik.name}}?">
+                Remover
+            </button>
+            <a ng-href="#/mikrotiks" class="btn btn-default">Voltar</a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</form>

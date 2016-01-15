@@ -4,10 +4,9 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.bytecom.model.service.provedor.MikrotikService;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -27,4 +26,26 @@ public class MikrotikAPI {
         return mikrotikService.buscarTodos();
     }
 
+    @GET
+    @Path("/{id}")
+    public Mikrotik getPorId(@PathParam("id") Integer id) {
+        return mikrotikService.buscarPorId(id);
+    }
+
+    @POST
+    public Mikrotik save(@Valid Mikrotik mikrotik) {
+        return mikrotikService.save(mikrotik);
+    }
+
+    @POST
+    @Path("/{id}")
+    public Mikrotik update(@Valid Mikrotik mikrotik) {
+        return mikrotikService.save(mikrotik);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void remove(@PathParam("id") @NotNull Integer id) {
+        mikrotikService.remove(id);
+    }
 }

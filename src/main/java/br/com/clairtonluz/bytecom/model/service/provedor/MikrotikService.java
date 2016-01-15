@@ -4,6 +4,7 @@ import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.bytecom.model.repository.provedor.MikrotikRepository;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,11 +21,18 @@ public class MikrotikService implements Serializable {
         return mikrotikRepository.findAll();
     }
 
+    @Transactional
     public Mikrotik save(Mikrotik mikrotik) {
         return mikrotikRepository.save(mikrotik);
     }
 
-    public void remove(Mikrotik mikrotik) {
+    @Transactional
+    public void remove(Integer id) {
+        Mikrotik mikrotik = buscarPorId(id);
         mikrotikRepository.remove(mikrotik);
+    }
+
+    public Mikrotik buscarPorId(Integer id) {
+        return mikrotikRepository.findBy(id);
     }
 }
