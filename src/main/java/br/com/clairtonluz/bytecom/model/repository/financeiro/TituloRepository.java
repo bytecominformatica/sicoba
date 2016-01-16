@@ -22,4 +22,6 @@ public interface TituloRepository extends EntityRepository<Titulo, Integer> {
     List<Titulo> findByStatusAndDataVencimentoLessThanOrderByDataVencimentoAsc(StatusTitulo status, Date date);
 
     Titulo findOptionalByNumeroBoleto(Integer numeroBoleto);
+
+    List<Titulo> findByDataOcorrenciaBetweenAndStatus(Date inicio, Date fim, StatusTitulo status);
 }

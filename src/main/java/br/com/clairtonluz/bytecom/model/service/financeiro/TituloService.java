@@ -179,4 +179,8 @@ public class TituloService implements Serializable {
     public Titulo buscarPorBoleto(Integer numeroBoleto) {
         return tituloRepository.findOptionalByNumeroBoleto(numeroBoleto);
     }
+
+    public List<Titulo> buscarPorDataOcorreciaStatus(Date inicio, Date fim, StatusTitulo status) {
+        return tituloRepository.findByDataOcorrenciaBetweenAndStatus(inicio, fim, status);
+    }
 }

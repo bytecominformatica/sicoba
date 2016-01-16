@@ -32,7 +32,7 @@
       {
         "title": "Relatorio",
         "icon": "fa fa-files-o",
-        "url": "#/relatorio"
+        "url": "#/titulos/relatorio"
       }
     ]
   },

@@ -1,5 +1,6 @@
 package br.com.clairtonluz.bytecom.api.financeiro;
 
+import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
 import br.com.clairtonluz.bytecom.model.service.financeiro.TituloService;
 import br.com.clairtonluz.bytecom.pojo.financeiro.Carne;
@@ -8,6 +9,7 @@ import br.com.clairtonluz.bytecom.util.MensagemException;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +22,15 @@ public class TituloAPI {
 
     @Inject
     private TituloService tituloService;
+
+    @GET
+    public List<Titulo> query(@QueryParam("inicio") Date inicio,
+                              @QueryParam("fim") Date fim,
+                              @QueryParam("status") StatusTitulo status,
+                              @QueryParam("porDataOcorrencia") boolean porDataOcorrencia) {
+
+        return tituloService.buscarPorDataOcorreciaStatus(inicio, fim, status);
+    }
 
     @GET
     @Path("vencidos")

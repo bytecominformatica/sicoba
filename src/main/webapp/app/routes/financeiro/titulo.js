@@ -22,6 +22,10 @@
                 .when('/titulo/cliente/:clienteId/carne', {
                     templateUrl: 'app/views/financeiro/titulo/carne.html',
                     controller: 'CarneCtrl'
+                })
+                .when('/titulos/relatorio', {
+                    templateUrl: 'app/views/financeiro/titulo/relatorio.html',
+                    controller: 'RelatorioTituloCtrl'
                 });
         }]);
 }());
