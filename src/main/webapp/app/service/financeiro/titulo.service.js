@@ -28,6 +28,16 @@
                         method: 'POST',
                         url: 'api/titulos/carne',
                         isArray: true
+                    },
+                    buscarPorDataOcorrencia: {
+                        method: 'GET',
+                        url: 'api/titulos/ocorrencia',
+                        isArray: true
+                    },
+                    buscarPorDataVencimento: {
+                        method: 'GET',
+                        url: 'api/titulos/vencimento',
+                        isArray: true
                     }
                 });
         }]);

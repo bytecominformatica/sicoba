@@ -181,6 +181,18 @@ public class TituloService implements Serializable {
     }
 
     public List<Titulo> buscarPorDataOcorreciaStatus(Date inicio, Date fim, StatusTitulo status) {
-        return tituloRepository.findByDataOcorrenciaBetweenAndStatus(inicio, fim, status);
+        if (status == null) {
+            return tituloRepository.findByDataOcorrenciaBetween(inicio, fim);
+        } else {
+            return tituloRepository.findByDataOcorrenciaBetweenAndStatus(inicio, fim, status);
+        }
+    }
+
+    public List<Titulo> buscarPorDataVencimentoStatus(Date inicio, Date fim, StatusTitulo status) {
+        if (status == null) {
+            return tituloRepository.findByDataVencimentoBetween(inicio, fim);
+        } else {
+            return tituloRepository.findByDataVencimentoBetweenAndStatus(inicio, fim, status);
+        }
     }
 }

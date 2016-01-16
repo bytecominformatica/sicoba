@@ -7,8 +7,11 @@ import br.com.clairtonluz.bytecom.pojo.financeiro.Carne;
 import br.com.clairtonluz.bytecom.util.MensagemException;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,14 +25,28 @@ public class TituloAPI {
 
     @Inject
     private TituloService tituloService;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @GET
-    public List<Titulo> query(@QueryParam("inicio") Date inicio,
-                              @QueryParam("fim") Date fim,
-                              @QueryParam("status") StatusTitulo status,
-                              @QueryParam("porDataOcorrencia") boolean porDataOcorrencia) {
+    @Path("ocorrencia")
+    public List<Titulo> porDataOcorrencia(@QueryParam("inicio") @NotNull(message = "Início é obrigatório") String inicio,
+                                          @QueryParam("fim") @NotNull(message = "Fim é obrigatório") String fim,
+                                          @QueryParam("status") StatusTitulo status) throws ParseException {
 
-        return tituloService.buscarPorDataOcorreciaStatus(inicio, fim, status);
+        Date i = sdf.parse(inicio);
+        Date f = sdf.parse(fim);
+        return tituloService.buscarPorDataOcorreciaStatus(i, f, status);
+    }
+
+    @GET
+    @Path("vencimento")
+    public List<Titulo> porDataVencimento(@QueryParam("inicio") @NotNull(message = "Início é obrigatório") String inicio,
+                                          @QueryParam("fim") @NotNull(message = "Fim é obrigatório") String fim,
+                                          @QueryParam("status") StatusTitulo status) throws ParseException {
+
+        Date i = sdf.parse(inicio);
+        Date f = sdf.parse(fim);
+        return tituloService.buscarPorDataVencimentoStatus(i, f, status);
     }
 
     @GET

@@ -9,7 +9,7 @@
     </a>
 </h1>
 
-<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+<div class="dataTables_wrapper form-inline dt-bootstrap">
     <div class="row">
         <div class="col-sm-6">
             <div class="dataTables_length">
@@ -22,7 +22,7 @@
         </div>
         <div class="col-sm-6">
             <div id="example_filter" class="dataTables_filter">
-                <label>Search:
+                <label>Pesquisar:
                     <input ng-model="searchText" type="search" class="form-control input-sm" placeholder="Pesquisar...">
                 </label>
             </div>
@@ -53,7 +53,7 @@
                 </tr>
                 </tfoot>
                 <tbody>
-                <tr ng-repeat="it in equipamentos | filter:searchText | limitTo:limit:(currentPage -1) * limit track by it.id">
+                <tr ng-repeat="it in result = (equipamentos | filter:searchText) | limitTo:limit:(currentPage -1) * limit track by it.id">
                     <td>{{it.id}}</td>
                     <td>{{it.marca}}</td>
                     <td>{{it.modelo}}</td>
@@ -73,10 +73,10 @@
         <div class="col-sm-5">
             <div class="dataTables_info">
                 Exibindo de {{(currentPage - 1) * limit + 1}} ate {{(currentPage - 1) * limit + limit}} de
-                {{equipamentos.length}}
+                {{result.length}}
             </div>
         </div>
-        <uib-pagination total-items="equipamentos.length" ng-model="currentPage" items-per-page="limit"
+        <uib-pagination total-items="result.length" ng-model="currentPage" items-per-page="limit"
                         ng-init="currentPage = 1"
                         class="pagination-sm" max-size="6" boundary-links="true"></uib-pagination>
 
