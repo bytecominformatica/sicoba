@@ -1,9 +1,9 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Bairro;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cidade;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Endereco;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Estado;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Bairro;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Cidade;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Endereco;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Estado;
 import br.com.clairtonluz.bytecom.model.repository.comercial.BairroRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.CidadeRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.EstadoRepository;

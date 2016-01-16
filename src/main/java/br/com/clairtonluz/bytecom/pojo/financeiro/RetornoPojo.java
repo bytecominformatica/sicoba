@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.pojo.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.Titulo;
 
 /**
  * Created by clairtonluz on 07/11/15.

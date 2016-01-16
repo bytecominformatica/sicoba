@@ -1,8 +1,8 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Secret;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Contrato;
+import br.com.clairtonluz.bytecom.model.entity.provedor.impl.Secret;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoOperacaoFactory;

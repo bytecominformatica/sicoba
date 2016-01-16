@@ -1,7 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.comercial.ClienteJPA;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.*;
+import br.com.clairtonluz.bytecom.model.entity.comercial.*;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
@@ -25,8 +24,6 @@ public class ClienteService implements Serializable {
     @Inject
     private IConnectionControl connectionControl;
     @Inject
-    private ClienteJPA clienteJPA;
-    @Inject
     private ClienteRepository clienteRepository;
     @Inject
     private ConexaoRepository conexaoRepository;
@@ -47,10 +44,6 @@ public class ClienteService implements Serializable {
         return clienteRepository.findBy(id);
     }
 
-    public List<Cliente> buscarTodosPorNomeIp(String nome, String ip, StatusCliente status) {
-        return clienteJPA.buscarTodosClientePorNomeIp(nome, ip, status);
-    }
-
     public boolean rgAvaliable(Cliente c) {
         Cliente cliente = clienteRepository.findOptionalByRg(c.getRg());
         return cliente == null || cliente.getId() == c.getId();
@@ -67,7 +60,7 @@ public class ClienteService implements Serializable {
     }
 
     public void remove(Cliente cliente) {
-        clienteJPA.remove(cliente);
+        clienteRepository.remove(cliente);
     }
 
     @Transactional

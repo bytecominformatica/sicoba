@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service.provedor;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.IServer;
+import br.com.clairtonluz.bytecom.model.entity.provedor.IServer;
 import br.com.clairtonluz.bytecom.util.MensagemException;
 import br.com.clairtonluz.bytecom.util.NetworkUtil;
 import me.legrange.mikrotik.ApiConnection;

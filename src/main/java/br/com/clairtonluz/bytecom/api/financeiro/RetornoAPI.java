@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.api.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Plano;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.bytecom.model.service.comercial.PlanoService;
 import br.com.clairtonluz.bytecom.model.service.financeiro.RetornoCaixaService;
 import br.com.clairtonluz.bytecom.pojo.financeiro.RetornoPojo;

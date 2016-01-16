@@ -1,15 +1,15 @@
 package br.com.clairtonluz.bytecom.model.service.financeiro;
 
 import br.com.clairtonluz.bytecom.commons.parse.ParseRetornoCaixa;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.HeaderLote;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Registro;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Contrato;
+import br.com.clairtonluz.bytecom.model.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.StatusTitulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.retorno.Header;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.retorno.HeaderLote;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.retorno.Registro;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;

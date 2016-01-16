@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service.provedor;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
+import br.com.clairtonluz.bytecom.model.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.bytecom.model.repository.provedor.MikrotikRepository;
 
 import javax.inject.Inject;

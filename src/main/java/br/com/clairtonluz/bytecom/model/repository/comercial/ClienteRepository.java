@@ -1,12 +1,11 @@
 package br.com.clairtonluz.bytecom.model.repository.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.StatusCliente;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 

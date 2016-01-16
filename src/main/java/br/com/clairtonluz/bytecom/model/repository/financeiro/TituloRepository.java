@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.model.repository.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.StatusTitulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.Titulo;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 

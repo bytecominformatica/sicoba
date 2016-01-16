@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.repository.estoque;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
+import br.com.clairtonluz.bytecom.model.entity.estoque.Equipamento;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;

@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.api.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Conexao;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.ConexaoService;
 
 import javax.inject.Inject;

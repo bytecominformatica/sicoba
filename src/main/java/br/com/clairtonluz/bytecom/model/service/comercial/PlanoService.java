@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Plano;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.PlanoRepository;
 

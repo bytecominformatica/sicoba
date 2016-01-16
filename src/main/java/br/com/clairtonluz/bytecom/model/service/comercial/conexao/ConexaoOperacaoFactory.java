@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.model.service.comercial.conexao;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.impl.ConexaoOperacaoAtivo;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.impl.ConexaoOperacaoCancelado;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.impl.ConexaoOperacaoInativo;

@@ -1,8 +1,8 @@
 package br.com.clairtonluz.bytecom.model.service.comercial.conexao.impl;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
-import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Secret;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Plano;
+import br.com.clairtonluz.bytecom.model.entity.provedor.impl.Secret;
 import br.com.clairtonluz.bytecom.model.service.comercial.conexao.IConexaoOperacao;
 import br.com.clairtonluz.bytecom.model.service.provedor.IConnectionControl;
 import br.com.clairtonluz.bytecom.model.service.provedor.IFirewall;

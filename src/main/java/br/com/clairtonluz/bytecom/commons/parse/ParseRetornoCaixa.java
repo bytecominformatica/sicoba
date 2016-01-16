@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.commons.parse;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.*;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.retorno.*;
 import br.com.clairtonluz.bytecom.util.StringUtil;
 
 import java.io.*;

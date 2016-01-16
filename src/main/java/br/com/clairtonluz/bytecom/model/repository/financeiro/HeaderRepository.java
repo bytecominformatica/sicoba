@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.repository.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.Header;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.retorno.Header;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 

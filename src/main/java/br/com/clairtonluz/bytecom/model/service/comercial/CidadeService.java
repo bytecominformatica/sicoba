@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cidade;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Cidade;
 import br.com.clairtonluz.bytecom.model.repository.comercial.CidadeRepository;
 
 import javax.inject.Inject;

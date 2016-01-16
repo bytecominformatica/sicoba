@@ -1,12 +1,11 @@
 package br.com.clairtonluz.bytecom.api.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Conexao;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.StatusCliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Conexao;
+import br.com.clairtonluz.bytecom.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.bytecom.model.service.comercial.ClienteService;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

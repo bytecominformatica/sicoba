@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.model.repository.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Plano;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Contrato;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Plano;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 

@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.repository.comercial;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Bairro;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Bairro;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 

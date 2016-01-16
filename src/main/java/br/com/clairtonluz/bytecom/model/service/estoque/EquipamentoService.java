@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service.estoque;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.estoque.Equipamento;
+import br.com.clairtonluz.bytecom.model.entity.estoque.Equipamento;
 import br.com.clairtonluz.bytecom.model.repository.estoque.EquipamentoRepository;
 
 import javax.inject.Inject;

@@ -1,9 +1,9 @@
 package br.com.clairtonluz.bytecom.model.service.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Cliente;
-import br.com.clairtonluz.bytecom.model.jpa.entity.comercial.Contrato;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Cliente;
+import br.com.clairtonluz.bytecom.model.entity.comercial.Contrato;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.StatusTitulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.bytecom.model.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.bytecom.model.repository.financeiro.TituloRepository;

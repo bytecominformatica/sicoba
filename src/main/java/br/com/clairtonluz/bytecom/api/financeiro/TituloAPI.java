@@ -1,7 +1,7 @@
 package br.com.clairtonluz.bytecom.api.financeiro;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.StatusTitulo;
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.Titulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.StatusTitulo;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.bytecom.model.service.financeiro.TituloService;
 import br.com.clairtonluz.bytecom.pojo.financeiro.Carne;
 import br.com.clairtonluz.bytecom.util.MensagemException;

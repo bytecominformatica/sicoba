@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.service;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.financeiro.retorno.*;
+import br.com.clairtonluz.bytecom.model.entity.financeiro.retorno.*;
 import br.com.clairtonluz.bytecom.model.service.financeiro.RetornoCaixaService;
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -42,7 +43,7 @@ public class RetornoCaixaServiceTest {
         assertNotNull(header);
         assertEquals(filename, header.getNomeArquivo());
         assertEquals(149, header.getSequencial());
-        assertEquals(LocalDateTime.of(2015, 2, 19, 1, 0, 46), header.getDataGeracao());
+        assertEquals(new Date(115, 1, 19, 1, 0, 46), header.getDataGeracao());
         assertEquals(1, header.getHeaderLotes().size());
 
         HeaderLote headerLote = header.getHeaderLotes().get(0);
@@ -66,7 +67,7 @@ public class RetornoCaixaServiceTest {
         HeaderLote headerLote = header.getHeaderLotes().get(0);
         assertNotNull(headerLote);
         assertEquals(149, headerLote.getNumeroRemessaRetorno());
-        assertEquals(LocalDate.of(2015, 2, 19), headerLote.getDataGravacaoRemessaRetorno());
+        assertEquals(new Date(115, 1, 19), headerLote.getDataGravacaoRemessaRetorno());
         assertEquals(5, headerLote.getRegistros().size());
     }
 
@@ -92,7 +93,7 @@ public class RetornoCaixaServiceTest {
         assertNotNull(registro.getRegistroDetalhe());
         assertEquals(4.43d, registro.getValorTarifa(), 0d);
         assertEquals(35d, registro.getValorTitulo(), 0d);
-        assertEquals(LocalDate.of(2015, 3, 20), registro.getVencimento());
+        assertEquals(new Date(115, 2, 20), registro.getVencimento());
     }
 
     @Test
@@ -113,7 +114,7 @@ public class RetornoCaixaServiceTest {
         assertNotNull(registro.getRegistroDetalhe());
         assertEquals(0d, registro.getValorTarifa(), 0d);
         assertEquals(85d, registro.getValorTitulo(), 0d);
-        assertEquals(LocalDate.of(2015, 12, 20), registro.getVencimento());
+        assertEquals(new Date(115, 11, 20), registro.getVencimento());
         assertEquals("000", registro.getBancoRecebedor());
         assertEquals("00000", registro.getAgenciaRecebedor());
         assertEquals("0", registro.getDigitoVerificadorRecebedor());
@@ -134,8 +135,8 @@ public class RetornoCaixaServiceTest {
         assertEquals(0d, registroDetalhe.getIof(), 0d);
         assertEquals(35d, registroDetalhe.getValorPago(), 0d);
         assertEquals(35d, registroDetalhe.getValorLiquido(), 0d);
-        assertEquals(LocalDate.of(2015, 2, 19), registroDetalhe.getDataOcorrencia());
-        assertEquals(LocalDate.of(2015, 2, 20), registroDetalhe.getDataCredito());
-        assertEquals(LocalDate.of(2015, 2, 20), registroDetalhe.getDataDebitoTarifa());
+        assertEquals(new Date(115, 1, 19), registroDetalhe.getDataOcorrencia());
+        assertEquals(new Date(115, 1, 20), registroDetalhe.getDataCredito());
+        assertEquals(new Date(115, 1, 20), registroDetalhe.getDataDebitoTarifa());
     }
 }

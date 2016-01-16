@@ -1,6 +1,6 @@
 package br.com.clairtonluz.bytecom.model.repository.provedor;
 
-import br.com.clairtonluz.bytecom.model.jpa.entity.provedor.impl.Mikrotik;
+import br.com.clairtonluz.bytecom.model.entity.provedor.impl.Mikrotik;
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 
