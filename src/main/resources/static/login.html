@@ -1,0 +1,73 @@
+<!-- The top of file index.html -->
+<html>
+<head>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Bem vindo a Bytecom</h1>
+
+            <div class="account-wall" align="center">
+                <button id="signinButton" class="btn btn-danger btn-block" ng-click="loginGoogle()">Sign in with
+                    Google
+                </button>
+                <div id="result"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- jQuery -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+<!-- Continuing the <head> section -->
+<script>
+    $('#signinButton').click(function() {
+        console.log('singInButton');
+        // signInCallback defined in step 6.
+        auth2.grantOfflineAccess({'redirect_uri': 'postmessage'}).then(signInCallback);
+    });
+
+    function start() {
+        gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                client_id: '275948024425-ml60j1mqu63t237ifm2d6p617l3gimt3.apps.googleusercontent.com',
+                // Scopes to request in addition to 'profile' and 'email'
+                scope: 'profile email'
+            });
+        });
+    }
+
+    function signInCallback(authResult) {
+        console.log('singInCallBack2');
+        if (authResult['code']) {
+            console.log('singInCallBack');
+            // Hide the sign-in button now that the user is authorized, for example:
+            $('#signinButton').attr('style', 'display: none');
+
+            // Send the code to the server
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/api/google/oauth2callback',
+                cache:false,
+                contentType: 'application/json; charset=utf-8',
+                crossDomain : true,
+                success: function(result) {
+                    // Handle or verify the server response.
+                },
+                processData: false,
+                data: authResult['code']
+            });
+        } else {
+            // There was an error.
+        }
+    }
+</script>
+
+</body>
+</html>
