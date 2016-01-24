@@ -17,11 +17,11 @@
                     //                Show a login dialog
                     // }
 
-                    if (rejection.data && rejection.data.parameterViolations) {
-                        rejection.data.parameterViolations.forEach(function (violation) {
+                    if (rejection.data && rejection.data.errors) {
+                        rejection.data.errors.forEach(function (it) {
                             $rootScope.messages.push({
-                                title: 'Error:',
-                                body: violation.value + ': ' + violation.message,
+                                title: 'Error:' + it.field,
+                                body: it.defaultMessage,
                                 type: 'alert-danger'
                             });
                         });

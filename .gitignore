@@ -16,7 +16,8 @@ target
 
 # gradle
 build/
-
+.gradle
+!gradle-wrapper.jar
 
 .idea/
 *.iml
@@ -24,4 +25,5 @@ build/
 bower_components
 node_modules
 
-src/main/webapp/dist/js/app.js
+src/main/resources/static/dist/js/app.js
+#!app.jar

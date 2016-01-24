@@ -25,6 +25,8 @@ public class Plano extends EntityGeneric {
     @Column(name = "valor_mensalidade")
     private Double valorTitulo;
 
+
+
     public String getNome() {
         return nome;
     }

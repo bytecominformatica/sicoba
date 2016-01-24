@@ -16,8 +16,8 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'restJPA'
-    version = '0.0.1-SNAPSHOT'
+    baseName = 'sicoba'
+    version = '2.0.0'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -34,7 +34,7 @@ dependencies {
     compile('me.legrange:mikrotik:2.1')
 
     runtime('com.h2database:h2')
-    runtime('mysql:mysql-connector-java')
+    runtime('org.postgresql:postgresql')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("junit:junit")
@@ -50,4 +50,18 @@ eclipse {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
+}
+
+// task to heroku
+task stage(type: Copy, dependsOn: [clean, build]) {
+    from jar.archivePath
+    into project.rootDir
+    rename {
+        'app.jar'
+    }
+}
+stage.mustRunAfter(clean)
+
+clean << {
+    project.file('app.jar').delete()
 }

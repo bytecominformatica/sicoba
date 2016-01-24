@@ -25,7 +25,6 @@ public class Titulo extends EntityGeneric {
     private double valorPago;
     private double desconto;
     private double tarifa;
-    private String parcela;
     @Enumerated
     private StatusTitulo status;
     private Integer modalidade;
@@ -112,15 +111,6 @@ public class Titulo extends EntityGeneric {
     public void setDesconto(double desconto) {
         this.desconto = desconto;
     }
-
-    public String getParcela() {
-        return parcela;
-    }
-
-    public void setParcela(String parcela) {
-        this.parcela = parcela;
-    }
-
 
     public Integer getModalidade() {
         return modalidade;

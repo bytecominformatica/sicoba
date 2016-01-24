@@ -19,7 +19,8 @@ public abstract class EntityGeneric {
     protected Date updatedAt;
 
     public EntityGeneric() {
-        createdAt = new Date();
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
     public Integer getId() {
