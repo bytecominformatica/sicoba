@@ -7,7 +7,7 @@ import java.util.Date;
 public abstract class EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected Integer id;
 
     @Column(name = "created_at")
