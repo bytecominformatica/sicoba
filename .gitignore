@@ -27,3 +27,4 @@ node_modules
 
 src/main/resources/static/dist/js/app.js
 #!app.jar
+/bin/

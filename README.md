@@ -27,14 +27,14 @@ Technologies In Use
 2. Back end
     - JDK 8
     - Mikrotik API
-    - Wildfly
+    - Spring Boot
     - JPA
-    - Mysql 5.1.37
+    - PostGreSQL
     - Hibernate
     - JUnit 4.12
-    - Liquibase 3.0.7
+    - Flyway
     - JAX-RS
-    - Maven
+    - Gradle
 
 
 --------------------------------------------
