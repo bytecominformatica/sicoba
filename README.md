@@ -8,7 +8,11 @@ Contact
             Personal Blog: http://blog.clairtonluz.com.br
             Email Address: clairton.c.l@gmail.com
 
-
+Setup database
+--------------
+```shell
+echo /etc/profile.d/database.sh > 'export JDBC_DATABASE_URL='jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom'
+```
 Technologies In Use
 -------------------
 
