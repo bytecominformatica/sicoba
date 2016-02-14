@@ -1,73 +1,80 @@
 <!-- The top of file index.html -->
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>Login Bytecom</title>
     <!-- Bootstrap Core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #eee;
+        }
+
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+    </style>
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <h1 class="text-center login-title">Bem vindo a Bytecom</h1>
-
-            <div class="account-wall" align="center">
-                <button id="signinButton" class="btn btn-danger btn-block" ng-click="loginGoogle()">Sign in with
-                    Google
-                </button>
-                <div id="result"></div>
-            </div>
+    <form class="form-signin" action="/login" method="post">
+        <h2 class="form-signin-heading">Bem vindo!</h2>
+        <label for="username" class="sr-only">Usuário</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Usuário" required autofocus>
+        <label for="password" class="sr-only">Senha</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Senha" required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
         </div>
-    </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+    </form>
+
 </div>
-
-
-<!-- jQuery -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-<!-- Continuing the <head> section -->
-<script>
-    $('#signinButton').click(function() {
-        console.log('singInButton');
-        // signInCallback defined in step 6.
-        auth2.grantOfflineAccess({'redirect_uri': 'postmessage'}).then(signInCallback);
-    });
-
-    function start() {
-        gapi.load('auth2', function() {
-            auth2 = gapi.auth2.init({
-                client_id: '275948024425-ml60j1mqu63t237ifm2d6p617l3gimt3.apps.googleusercontent.com',
-                // Scopes to request in addition to 'profile' and 'email'
-                scope: 'profile email'
-            });
-        });
-    }
-
-    function signInCallback(authResult) {
-        console.log('singInCallBack2');
-        if (authResult['code']) {
-            console.log('singInCallBack');
-            // Hide the sign-in button now that the user is authorized, for example:
-            $('#signinButton').attr('style', 'display: none');
-
-            // Send the code to the server
-            $.ajax({
-                type: 'POST',
-                url: 'http://localhost:8080/api/google/oauth2callback',
-                cache:false,
-                contentType: 'application/json; charset=utf-8',
-                crossDomain : true,
-                success: function(result) {
-                    // Handle or verify the server response.
-                },
-                processData: false,
-                data: authResult['code']
-            });
-        } else {
-            // There was an error.
-        }
-    }
-</script>
 
 </body>
 </html>

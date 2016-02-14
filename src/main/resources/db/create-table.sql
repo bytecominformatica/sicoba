@@ -233,7 +233,23 @@ CREATE TABLE trailer (
 CREATE TABLE trailer_lote (
   id                       SERIAL    NOT NULL PRIMARY KEY,
   quantidade_registro_lote INT DEFAULT NULL,
-  header_lote_id           INT DEFAULT NULL REFERENCES header_lote(id),
+  header_lote_id           INT DEFAULT NULL REFERENCES header_lote (id),
   created_at               TIMESTAMP NOT NULL,
   updated_at               TIMESTAMP NOT NULL
+);
+
+CREATE TABLE users (
+  id       SERIAL       NOT NULL PRIMARY KEY,
+  name     VARCHAR(150) NOT NULL,
+  username VARCHAR(45)  NOT NULL,
+  password VARCHAR(45)  NOT NULL,
+  enabled  SMALLINT     NOT NULL DEFAULT 1,
+  UNIQUE (username)
+);
+
+CREATE TABLE user_roles (
+  id      SERIAL      NOT NULL PRIMARY KEY,
+  user_id VARCHAR(45) NOT NULL REFERENCES users (id),
+  role    VARCHAR(45) NOT NULL,
+  UNIQUE (role, user_id)
 );

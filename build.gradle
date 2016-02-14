@@ -28,7 +28,7 @@ repositories {
 
 
 dependencies {
-//    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('me.legrange:mikrotik:2.1')
