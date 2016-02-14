@@ -8,7 +8,11 @@ Contact
             Personal Blog: http://blog.clairtonluz.com.br
             Email Address: clairton.c.l@gmail.com
 
-
+Setup database
+--------------
+```shell
+echo /etc/profile.d/database.sh > 'export JDBC_DATABASE_URL='jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom'
+```
 Technologies In Use
 -------------------
 
@@ -23,14 +27,14 @@ Technologies In Use
 2. Back end
     - JDK 8
     - Mikrotik API
-    - Wildfly
+    - Spring Boot
     - JPA
-    - Mysql 5.1.37
+    - PostGreSQL
     - Hibernate
     - JUnit 4.12
-    - Liquibase 3.0.7
+    - Flyway
     - JAX-RS
-    - Maven
+    - Gradle
 
 
 --------------------------------------------

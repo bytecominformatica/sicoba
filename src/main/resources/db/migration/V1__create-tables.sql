@@ -108,20 +108,15 @@ CREATE TABLE conexao (
   UNIQUE (ip)
 );
 
-CREATE TABLE contrato (
-  id                  SERIAL    NOT NULL PRIMARY KEY,
-  cliente_id          INT       NOT NULL REFERENCES cliente (id),
-  plano_id            INT       NOT NULL REFERENCES plano (id),
-  vencimento          SMALLINT  NOT NULL,
-  data_instalacao     DATE      NOT NULL,
-  equipamento_id      INT DEFAULT NULL REFERENCES equipamento (id),
-  equipamento_wifi_id INT DEFAULT NULL REFERENCES equipamento (id),
-  created_at          TIMESTAMP NOT NULL,
-  updated_at          TIMESTAMP NOT NULL,
-
-  UNIQUE (cliente_id),
-  UNIQUE (equipamento_id),
-  UNIQUE (equipamento_wifi_id)
+CREATE TABLE plano (
+  id                SERIAL                 NOT NULL PRIMARY KEY,
+  nome              CHARACTER VARYING(100) NOT NULL,
+  upload            INT                    NOT NULL DEFAULT 0,
+  download          INT                    NOT NULL DEFAULT 0,
+  valor_instalacao  DECIMAL(20, 2)                  DEFAULT NULL,
+  valor_mensalidade DECIMAL(20, 2)                  DEFAULT NULL,
+  created_at        TIMESTAMP              NOT NULL,
+  updated_at        TIMESTAMP              NOT NULL
 );
 
 CREATE TABLE equipamento (
@@ -136,6 +131,22 @@ CREATE TABLE equipamento (
   updated_at TIMESTAMP             NOT NULL,
 
   UNIQUE (mac)
+);
+
+CREATE TABLE contrato (
+  id                  SERIAL    NOT NULL PRIMARY KEY,
+  cliente_id          INT       NOT NULL REFERENCES cliente (id),
+  plano_id            INT       NOT NULL REFERENCES plano (id),
+  vencimento          SMALLINT  NOT NULL,
+  data_instalacao     DATE      NOT NULL,
+  equipamento_id      INT DEFAULT NULL REFERENCES equipamento (id),
+  equipamento_wifi_id INT DEFAULT NULL REFERENCES equipamento (id),
+  created_at          TIMESTAMP NOT NULL,
+  updated_at          TIMESTAMP NOT NULL,
+
+  UNIQUE (cliente_id),
+  UNIQUE (equipamento_id),
+  UNIQUE (equipamento_wifi_id)
 );
 
 CREATE TABLE header (
@@ -174,17 +185,6 @@ CREATE TABLE mensalidade (
   modalidade      INT            NOT NULL DEFAULT '24',
 
   UNIQUE (numero_boleto)
-);
-
-CREATE TABLE plano (
-  id                SERIAL                 NOT NULL PRIMARY KEY,
-  nome              CHARACTER VARYING(100) NOT NULL,
-  upload            INT                    NOT NULL DEFAULT 0,
-  download          INT                    NOT NULL DEFAULT 0,
-  valor_instalacao  DECIMAL(20, 2)                  DEFAULT NULL,
-  valor_mensalidade DECIMAL(20, 2)                  DEFAULT NULL,
-  created_at        TIMESTAMP              NOT NULL,
-  updated_at        TIMESTAMP              NOT NULL
 );
 
 CREATE TABLE registro (
