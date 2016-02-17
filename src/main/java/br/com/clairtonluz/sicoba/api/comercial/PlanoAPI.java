@@ -1,7 +1,7 @@
 package br.com.clairtonluz.sicoba.api.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
-import br.com.clairtonluz.sicoba.model.service.comercial.PlanoService;
+import br.com.clairtonluz.sicoba.service.comercial.PlanoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -25,6 +25,6 @@ build/
 bower_components
 node_modules
 
-src/main/resources/static/dist/js/app.js
+client/dist/js/app.js
 #!app.jar
 /bin/

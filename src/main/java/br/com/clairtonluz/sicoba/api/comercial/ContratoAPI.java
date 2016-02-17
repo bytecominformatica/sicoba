@@ -1,7 +1,7 @@
 package br.com.clairtonluz.sicoba.api.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
-import br.com.clairtonluz.sicoba.model.service.comercial.ContratoService;
+import br.com.clairtonluz.sicoba.service.comercial.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

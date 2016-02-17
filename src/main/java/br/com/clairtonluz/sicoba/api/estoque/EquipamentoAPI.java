@@ -1,7 +1,7 @@
 package br.com.clairtonluz.sicoba.api.estoque;
 
 import br.com.clairtonluz.sicoba.model.entity.estoque.Equipamento;
-import br.com.clairtonluz.sicoba.model.service.estoque.EquipamentoService;
+import br.com.clairtonluz.sicoba.service.estoque.EquipamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

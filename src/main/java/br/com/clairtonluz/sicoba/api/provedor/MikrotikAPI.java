@@ -1,7 +1,7 @@
 package br.com.clairtonluz.sicoba.api.provedor;
 
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Mikrotik;
-import br.com.clairtonluz.sicoba.model.service.provedor.MikrotikService;
+import br.com.clairtonluz.sicoba.service.provedor.MikrotikService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

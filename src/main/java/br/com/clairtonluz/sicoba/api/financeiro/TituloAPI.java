@@ -3,7 +3,7 @@ package br.com.clairtonluz.sicoba.api.financeiro;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.Carne;
-import br.com.clairtonluz.sicoba.model.service.financeiro.TituloService;
+import br.com.clairtonluz.sicoba.service.financeiro.TituloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

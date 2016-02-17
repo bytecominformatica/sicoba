@@ -3,7 +3,7 @@ package br.com.clairtonluz.sicoba.api.comercial;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
-import br.com.clairtonluz.sicoba.model.service.comercial.ClienteService;
+import br.com.clairtonluz.sicoba.service.comercial.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

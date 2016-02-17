@@ -2,8 +2,8 @@ package br.com.clairtonluz.sicoba.api.financeiro;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.RetornoPojo;
-import br.com.clairtonluz.sicoba.model.service.comercial.PlanoService;
-import br.com.clairtonluz.sicoba.model.service.financeiro.RetornoCaixaService;
+import br.com.clairtonluz.sicoba.service.comercial.PlanoService;
+import br.com.clairtonluz.sicoba.service.financeiro.RetornoCaixaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

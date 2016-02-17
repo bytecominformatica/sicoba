@@ -249,7 +249,7 @@ CREATE TABLE users (
 
 CREATE TABLE user_roles (
   id      SERIAL      NOT NULL PRIMARY KEY,
-  user_id VARCHAR(45) NOT NULL REFERENCES users (id),
+  user_id INT NOT NULL REFERENCES users (id),
   role    VARCHAR(45) NOT NULL,
   UNIQUE (role, user_id)
 );
