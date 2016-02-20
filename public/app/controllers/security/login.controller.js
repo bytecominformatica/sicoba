@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('LoginCtrl', function ($rootScope, $scope, $http, $location) {
+        .controller('LoginCtrl', function ($rootScope, $scope, $http, $location, $cookies) {
 
             $scope.login = _login;
 
@@ -17,8 +17,8 @@
                 } : {};
 
                 $http.get('user', {headers: headers}).success(function (data) {
-                    console.log(data);
                     if (data && data.name) {
+                        $cookies.put('Authorization', headers.authorization);
                         $rootScope.authenticated = true;
                     } else {
                         $rootScope.authenticated = false;

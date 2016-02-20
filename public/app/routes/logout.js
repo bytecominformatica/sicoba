@@ -3,10 +3,9 @@
 
     angular.module('sicobaApp')
         .config(['$routeProvider', function ($routeProvider) {
-            $routeProvider
-                .when('/logout', {
-                    template: '<div> Bye bye!</div>',
-                    controller: 'LogoutCtrl'
-                });
+            $routeProvider.when('/logout', {
+                template: '<div> Bye bye!</div>',
+                controller: 'LogoutCtrl'
+            });
         }]);
 }());

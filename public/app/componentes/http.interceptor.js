@@ -14,16 +14,17 @@
 
             return {
                 request: function (config) {
+                    var auth_token = $cookies.get('Authorization');
                     if (isRequestServerSide(config.url)) {
                         config.url = 'http://localhost:8080/' + config.url;
 
-                        var auth_token = $cookies.get('Authorization');
-
-                        if (config.headers.authorization) {
-                            $cookies.put('Authorization', config.headers.authorization);
-                        } else if (auth_token) {
+                        if (auth_token) {
                             config.headers.authorization = auth_token;
                         }
+                    }
+
+                    if (auth_token) {
+                        $rootScope.authenticated = true;
                     }
 
                     return config;
