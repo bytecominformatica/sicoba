@@ -25,6 +25,6 @@ build/
 bower_components
 node_modules
 
-client/dist/js/app.js
+public/dist/js/app.js
 #!app.jar
 /bin/

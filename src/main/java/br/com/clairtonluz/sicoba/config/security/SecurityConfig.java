@@ -1,12 +1,14 @@
 package br.com.clairtonluz.sicoba.config.security;
 
-import br.com.clairtonluz.sicoba.filter.CsrfTokenResponseHeaderBindingFilter;
+import br.com.clairtonluz.sicoba.filter.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 /**
  * Created by clairtonluz on 31/01/16.
@@ -16,14 +18,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/index.html", "/#/login", "/login.html", "/", "/bower_components/**", "/dist/**"
-//                        ,"/app/styles/**", "/app/directives/**","/app/template/**","/app/views/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and().formLogin().loginPage("/#/login").permitAll()
-//                .and().logout().permitAll();
+
+        http
+                .httpBasic().and()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+                .csrf().csrfTokenRepository(csrfTokenRepository());
+
     }
 
     @Autowired
@@ -34,6 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "select u.username, r.role from users u left join user_roles r on u.id = r.user_id where u.username=?");
         auth.inMemoryAuthentication()
                 .withUser("admin").password("admin").roles("USER");
+    }
+
+    private CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-XSRF-TOKEN");
+        return repository;
     }
 
 }

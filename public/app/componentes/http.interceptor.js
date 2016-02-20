@@ -5,31 +5,50 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .factory('HttpInterceptor', function ($location) {
+        .factory('HttpInterceptor', function ($rootScope, $location, $cookies) {
+
+            var isRequestServerSide = _isRequestServerSide;
+            var isHtml = _isHtml;
+            var isLoginPage = _isLoginPage;
+            var isMenu = _isMenu;
+
             return {
                 request: function (config) {
                     if (isRequestServerSide(config.url)) {
                         config.url = 'http://localhost:8080/' + config.url;
+
+                        var auth_token = $cookies.get('Authorization');
+
+                        if (config.headers.authorization) {
+                            $cookies.put('Authorization', config.headers.authorization);
+                        } else if (auth_token) {
+                            config.headers.authorization = auth_token;
+                        }
                     }
+
                     return config;
                 },
                 responseError: function (rejection) {
                     if (rejection.status === 401) {
-                        console.log("acesso nao autorizado para " + rejection.config.url);
                         $location.path('/login');
                     }
                 }
             };
 
-            function isRequestServerSide(url) {
+
+            function _isRequestServerSide(url) {
                 return !(isHtml(url) || isMenu(url));
             }
 
-            function isHtml(url) {
+            function _isHtml(url) {
                 return url.indexOf('.html') > -1;
             }
 
-            function isMenu(url) {
+            function _isLoginPage(url) {
+                return url.indexOf('/login') > -1;
+            }
+
+            function _isMenu(url) {
                 return url.indexOf('menu.json') > -1;
             }
         })
