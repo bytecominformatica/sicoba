@@ -5,18 +5,27 @@
         .controller('LoginCtrl', function ($rootScope, $scope, $http, $location, $cookies) {
 
             $scope.login = _login;
+            _init();
 
             function _init() {
                 $scope.credentials = {};
+                $http.get('login').success(function (data) {
+
+                });
             }
+
 
             function _authenticate(credentials, callback) {
                 var auth_token = btoa(credentials.username + ":" + credentials.password);
-                var headers = credentials ? {
-                    authorization: "Basic " + auth_token
-                } : {};
 
-                $http.get('user', {headers: headers}).success(function (data) {
+                var result = 'username=admin&password=admin&submit=Login&_csrf=' + $cookies.get('XSRF-TOKEN');
+
+                var headers = credentials ? {
+                    authorization: 'Basic ' + auth_token
+                } : {};
+                headers['Content-Type'] = 'application/x-www-form-urlencoded';
+
+                $http.post('login', result, {headers: headers}).success(function (data) {
                     if (data && data.name) {
                         $cookies.put('Authorization', headers.authorization);
                         $rootScope.authenticated = true;

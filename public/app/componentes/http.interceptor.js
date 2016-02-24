@@ -14,25 +14,28 @@
 
             return {
                 request: function (config) {
-                    var auth_token = $cookies.get('Authorization');
+                    //var auth_token = $cookies.get('Authorization');
+                    //var jSessionId = $cookies.get('JSESSIONID');
+                    //var xsrfToken = $cookies.get('XSRF-TOKEN');
                     if (isRequestServerSide(config.url)) {
                         config.url = 'http://localhost:8080/' + config.url;
 
-                        if (auth_token) {
-                            config.headers.authorization = auth_token;
-                        }
+                        //console.log($cookies.getAll());
+                        //config.headers['Set-Cookie'] = 'JSESSIONID=' + $cookies.get('JSESSIONID') + '; XSRF-TOKEN=' + $cookies.get('XSRF-TOKEN');
+                        //config.headers['X-XSRF-TOKEN'] = $cookies.get('XSRF-TOKEN');
+                        //config.headers.authorization = $cookies.get('Authorization');
                     }
 
-                    if (auth_token) {
-                        $rootScope.authenticated = true;
-                    }
+                    //if (auth_token) {
+                    //    $rootScope.authenticated = true;
+                    //}
 
                     return config;
                 },
                 responseError: function (rejection) {
-                    if (rejection.status === 401) {
-                        $location.path('/login');
-                    }
+                    //if (rejection.status === 401) {
+                    //    $location.path('/login');
+                    //}
                 }
             };
 

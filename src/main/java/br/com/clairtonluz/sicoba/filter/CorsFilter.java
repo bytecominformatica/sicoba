@@ -21,9 +21,6 @@ public class CorsFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(request.getHeader(ORIGIN));
-        System.out.println(request.getMethod());
-
         response.setHeader("Access-Control-Allow-Origin", "*");//* or origin as u prefer
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
