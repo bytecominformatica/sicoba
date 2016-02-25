@@ -10,7 +10,7 @@
             function _logout() {
                 $http.post('logout', {}).finally(function (data) {
                     console.log(data);
-                    $location.baseUrl('/login');
+                    //$location.baseUrl('/login');
                 });
             }
 

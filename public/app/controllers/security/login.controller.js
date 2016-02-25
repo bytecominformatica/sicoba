@@ -9,25 +9,17 @@
 
             function _init() {
                 $scope.credentials = {};
-                $http.get('login').success(function (data) {
-
-                });
+                _authenticate();
             }
 
-
             function _authenticate(credentials, callback) {
-                var auth_token = btoa(credentials.username + ":" + credentials.password);
-
-                var result = 'username=admin&password=admin&submit=Login&_csrf=' + $cookies.get('XSRF-TOKEN');
 
                 var headers = credentials ? {
-                    authorization: 'Basic ' + auth_token
+                    authorization: 'Basic ' + btoa(credentials.username + ":" + credentials.password)
                 } : {};
-                headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
-                $http.post('login', result, {headers: headers}).success(function (data) {
-                    if (data && data.name) {
-                        $cookies.put('Authorization', headers.authorization);
+                $http.get('user', {headers: headers}).success(function (data) {
+                    if (data.name) {
                         $rootScope.authenticated = true;
                     } else {
                         $rootScope.authenticated = false;
@@ -37,7 +29,6 @@
                     $rootScope.authenticated = false;
                     return callback && callback();
                 });
-
             }
 
             function _login() {
