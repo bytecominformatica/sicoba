@@ -21,8 +21,10 @@
                 $http.get('user', {headers: headers}).success(function (data) {
                     if (data.name) {
                         $rootScope.authenticated = true;
+                        $rootScope.pageId = 'page-wrapper';
                     } else {
                         $rootScope.authenticated = false;
+                        $rootScope.pageId = 'page-not-logged';
                     }
                     return callback && callback();
                 }).error(function () {
