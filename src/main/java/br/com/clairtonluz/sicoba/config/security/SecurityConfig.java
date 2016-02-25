@@ -22,10 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/**/*.html", "/**/*.js", "/**/*.css", "/bower_components/**").permitAll()
+                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+                .and().logout()
+                .and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
                 .csrf().csrfTokenRepository(csrfTokenRepository());
 
     }
