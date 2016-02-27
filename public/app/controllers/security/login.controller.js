@@ -8,6 +8,7 @@
             _init();
 
             function _init() {
+                $rootScope.pageId = 'page-not-logged';
                 $scope.credentials = {};
                 _authenticate();
             }
@@ -21,15 +22,13 @@
                 $http.get('user', {headers: headers}).success(function (data) {
                     if (data.name) {
                         $rootScope.authenticated = true;
-                        $rootScope.pageId = 'page-wrapper';
                     } else {
                         $rootScope.authenticated = false;
-                        $rootScope.pageId = 'page-not-logged';
                     }
-                    return callback && callback();
+                    callback();
                 }).error(function () {
                     $rootScope.authenticated = false;
-                    return callback && callback();
+                    callback();
                 });
             }
 
@@ -38,6 +37,7 @@
                 _authenticate($scope.credentials, function () {
                     if ($rootScope.authenticated) {
                         console.log('sucesso');
+                        $rootScope.pageId = 'page-wrapper';
                         $location.path("/");
                         $scope.error = false;
                     } else {

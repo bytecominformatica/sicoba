@@ -39,7 +39,7 @@
 
 <div id="wrapper" ng-cloak class="ng-cloak" ng-init="pageId = 'page-wrapper'">
 
-    <ng-include src="'app/template/navbar.html'" ng-show="authenticated"></ng-include>
+    <ng-include src="'app/template/navbar.html'" ng-show="pageId == 'page-wrapper'"></ng-include>
 
     <!-- Page Content -->
     <div id="{{pageId}}">
