@@ -4,7 +4,7 @@
   "description": "SICOBA - SISTEMA DE CONTROLE DE BANDA",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node node_modules/bower/bin/bower install"
   },
   "repository": {
