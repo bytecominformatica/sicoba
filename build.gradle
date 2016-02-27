@@ -4,10 +4,8 @@ buildscript {
     }
     repositories {
         mavenCentral()
-        jcenter()
     }
     dependencies {
-        classpath 'be.filipblondeel.gradle:gradle-gulp-plugin:0.1'
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
@@ -16,7 +14,6 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'gulp'
 
 jar {
     baseName = 'sicoba'
@@ -27,7 +24,6 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 
@@ -65,9 +61,6 @@ task stage(type: Copy, dependsOn: [clean, build]) {
         'app.jar'
     }
 }
-
-gulp_build.dependsOn(installGulp)
-build.dependsOn(gulp_build)
 stage.mustRunAfter(clean)
 
 clean << {
