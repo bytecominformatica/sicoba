@@ -26,6 +26,6 @@ bower_components
 node_modules
 
 public/dist/js/app.js
-#!app.jar
+!app.jar
 /bin/
 .env
