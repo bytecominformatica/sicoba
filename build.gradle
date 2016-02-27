@@ -66,6 +66,7 @@ task stage(type: Copy, dependsOn: [clean, build]) {
     }
 }
 
+gulp_build.dependsOn(installGulp)
 build.dependsOn(gulp_build)
 stage.mustRunAfter(clean)
 
