@@ -2,46 +2,33 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('LoginCtrl', function ($rootScope, $scope, $http, $location, $cookies) {
+        .controller('LoginCtrl', function ($rootScope, $scope, $location, Login) {
 
             $scope.login = _login;
             _init();
 
             function _init() {
-                $rootScope.pageId = 'page-not-logged';
+                $rootScope.pageId = 'page-wrapper2';
                 $scope.credentials = {};
                 _authenticate();
             }
 
             function _authenticate(credentials, callback) {
-
-                var headers = credentials ? {
-                    authorization: 'Basic ' + btoa(credentials.username + ":" + credentials.password)
-                } : {};
-
-                $http.get('user', {headers: headers}).success(function (data) {
-                    if (data.name) {
-                        $rootScope.authenticated = true;
-                    } else {
-                        $rootScope.authenticated = false;
+                Login.authenticate(credentials).then(function (response) {
+                    if (callback) {
+                        callback(response && response.data.name);
                     }
-                    callback();
-                }).error(function () {
-                    $rootScope.authenticated = false;
-                    callback();
                 });
             }
 
             function _login() {
-                console.log('login');
-                _authenticate($scope.credentials, function () {
-                    if ($rootScope.authenticated) {
-                        console.log('sucesso');
+                _authenticate($scope.credentials, function (authenticated) {
+                    if (authenticated) {
                         $rootScope.pageId = 'page-wrapper';
                         $location.path("/");
                         $scope.error = false;
                     } else {
-                        console.log('fail');
+                        $rootScope.pageId = 'page-wrapper2';
                         $location.path("/login");
                         $scope.error = true;
                     }

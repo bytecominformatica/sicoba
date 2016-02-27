@@ -10,11 +10,15 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
+import javax.sql.DataSource;
+
 /**
  * Created by clairtonluz on 31/01/16.
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,13 +41,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().usersByUsernameQuery(
-//                "select username,password, enabled from users where username=?")
-//                .authoritiesByUsernameQuery(
-//                        "select u.username, r.role from users u left join user_roles r on u.id = r.user_id where u.username=?");
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("admin").roles("USER");
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(new AuthenticationDatabase()).inMemoryAuthentication();
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "select username,password, enabled from users where username=?")
+                .authoritiesByUsernameQuery(
+                        "select u.username, ur.role from user_roles ur INNER JOIN users u on u.id = ur.user_id where u.username=?");
     }
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("admin").password("admin").roles("USER");
+//    }
 
 }

@@ -3,6 +3,12 @@
     <form name="form" class="form-signin" ng-submit="form.$valid && login()" novalidate>
         <h2 class="form-signin-heading">Bem vindo!</h2>
 
+        <div class="alert alert-danger" ng-show="error">
+            <button type="button" class="close" ng-click="error=null" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong>Credenciais invalida</strong>
+        </div>
+
         <div ng-class="{'has-error': (form.username.$invalid && (form.$submitted || form.username.$touched))}">
             <label class="sr-only">Usuário</label>
             <input name="username" ng-model="credentials.username" class="form-control" type="text" required autofocus>
