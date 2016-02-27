@@ -2,6 +2,7 @@ var gulp = require('gulp'),
     gutil = require('gulp-util'),
     jshint = require('gulp-jshint'),
     concat = require('gulp-concat'),
+    bower = require('gulp-bower'),
     uglify = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps');
 
@@ -31,4 +32,8 @@ gulp.task('build-js', ['jshint'], function() {
         .pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('src/main/resources/public/dist/js'));
+});
+
+gulp.task('bower', function() {
+    return bower();
 });

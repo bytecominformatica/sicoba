@@ -18,6 +18,7 @@
   "homepage": "https://github.com/bytecomoficial/SICOBA#readme",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-bower": "0.0.13",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
