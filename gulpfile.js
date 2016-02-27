@@ -8,6 +8,7 @@ var gulp = require('gulp'),
 
 // define a tarefa padrao e adiciona a tarefa watch para ela
 gulp.task('default', ['watch']);
+gulp.task('build', ['bower', 'build-js']);
 
 // configura a tarefa jshint
 gulp.task('jshint', function () {
