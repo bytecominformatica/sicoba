@@ -1,0 +1,6 @@
+{
+  "name": "sicoba",
+  "description": "Sistema de controle de banda",
+  "image": "heroku/gradle",
+  "addons": [ "heroku-postgresql" ]
+}
