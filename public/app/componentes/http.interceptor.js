@@ -15,7 +15,7 @@
             return {
                 request: function (config) {
                     if (isRequestServerSide(config.url)) {
-                        config.url = 'http://localhost:8080/' + config.url;
+                        config.url = 'http://localhost:5000/' + config.url;
                         config.headers['X-XSRF-TOKEN'] = $cookies.get('XSRF-TOKEN');
                     }
 

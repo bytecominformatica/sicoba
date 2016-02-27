@@ -28,3 +28,4 @@ node_modules
 public/dist/js/app.js
 #!app.jar
 /bin/
+.env

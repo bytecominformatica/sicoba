@@ -18,7 +18,6 @@ public class Application {
     
     @RequestMapping("/user")
     public Principal user(Principal user) {
-        System.out.println("TESTE USER");
         return user;
     }
 }
