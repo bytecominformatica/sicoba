@@ -16,7 +16,6 @@ import java.util.Date;
 public class Cliente extends EntityGeneric {
 
     @NotNull(message = "nome é obrigatório")
-    @Size(max = 255, message = "nome tamanho máximo 255 caracteres")
     private String nome;
     private String rg;
     @Enumerated
@@ -124,5 +123,21 @@ public class Cliente extends EntityGeneric {
 
     public void setStatus(StatusCliente status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", rg='" + rg + '\'' +
+                ", status=" + status +
+                ", cpfCnpj='" + cpfCnpj + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", email='" + email + '\'' +
+                ", foneTitular='" + foneTitular + '\'' +
+                ", contato='" + contato + '\'' +
+                ", foneContato='" + foneContato + '\'' +
+                ", endereco=" + endereco +
+                '}';
     }
 }

@@ -27,12 +27,12 @@ public class ClienteAPI {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public Cliente save(@Valid Cliente cliente) throws Exception {
+    public Cliente save(@Valid @RequestBody Cliente cliente) throws Exception {
         return clienteService.save(cliente);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Cliente update(@Valid Cliente cliente) throws Exception {
+    public Cliente update(@Valid @RequestBody Cliente cliente) throws Exception {
         return clienteService.save(cliente);
     }
 

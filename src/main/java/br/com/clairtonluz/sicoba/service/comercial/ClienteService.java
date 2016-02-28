@@ -1,12 +1,12 @@
 package br.com.clairtonluz.sicoba.service.comercial;
 
+import br.com.clairtonluz.sicoba.model.entity.comercial.*;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.sicoba.service.provedor.IConnectionControl;
 import br.com.clairtonluz.sicoba.util.DateUtil;
-import br.com.clairtonluz.sicoba.model.entity.comercial.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,10 @@ public class ClienteService {
     }
 
     public boolean rgAvaliable(Cliente c) {
-        Cliente cliente = clienteRepository.findOptionalByRg(c.getRg());
+        Cliente cliente = null;
+        if (c.getRg() != null) {
+            cliente = clienteRepository.findOptionalByRg(c.getRg());
+        }
         return cliente == null || cliente.getId() == c.getId();
     }
 
@@ -53,12 +56,11 @@ public class ClienteService {
     }
 
     public boolean emailAvaliable(Cliente c) {
-        Cliente cliente = clienteRepository.findOptionalByEmail(c.getEmail());
+        Cliente cliente = null;
+        if (c.getEmail() != null) {
+            cliente = clienteRepository.findOptionalByEmail(c.getEmail());
+        }
         return cliente == null || cliente.getId() == c.getId();
-    }
-
-    public void remove(Cliente cliente) {
-        clienteRepository.delete(cliente);
     }
 
     @Transactional
@@ -120,7 +122,7 @@ public class ClienteService {
     public List<Cliente> query(String nome, StatusCliente status) {
         List<Cliente> result;
         if (nome != null && !nome.isEmpty()) {
-            result = clienteRepository.findByNomeLike("%" + nome + "%");
+            result = clienteRepository.findByNomeLike("%" + nome.toUpperCase() + "%");
         } else if (status != null) {
             result = clienteRepository.findByStatus(status);
         } else {

@@ -4,11 +4,9 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,12 +42,12 @@ public class ConexaoAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Conexao save(Conexao conexao) throws Exception {
+    public Conexao save(@Valid @RequestBody Conexao conexao) throws Exception {
         return conexaoService.save(conexao);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Conexao update(Conexao conexao) throws Exception {
+    public Conexao update(@Valid @RequestBody Conexao conexao) throws Exception {
         return conexaoService.save(conexao);
     }
 
@@ -57,6 +55,5 @@ public class ConexaoAPI {
     public void remove(@PathVariable Integer id) {
         conexaoService.remove(id);
     }
-
 
 }

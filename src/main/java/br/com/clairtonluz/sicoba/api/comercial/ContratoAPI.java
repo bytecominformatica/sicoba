@@ -3,11 +3,9 @@ package br.com.clairtonluz.sicoba.api.comercial;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.service.comercial.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -31,12 +29,12 @@ public class ContratoAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Contrato save(Contrato contrato) {
+    public Contrato save(@Valid @RequestBody Contrato contrato) {
         return contratoService.save(contrato);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.POST)
-    public Contrato update(Contrato contrato) {
+    public Contrato update(@Valid @RequestBody Contrato contrato) {
         return contratoService.save(contrato);
     }
 

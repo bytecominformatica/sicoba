@@ -3,6 +3,7 @@ package br.com.clairtonluz.sicoba.api.provedor;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.sicoba.service.provedor.MikrotikService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,12 +33,12 @@ public class MikrotikAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Mikrotik save(@Valid Mikrotik mikrotik) {
+    public Mikrotik save(@Valid @RequestBody Mikrotik mikrotik) {
         return mikrotikService.save(mikrotik);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Mikrotik update(@Valid Mikrotik mikrotik) {
+    public Mikrotik update(@Valid @RequestBody Mikrotik mikrotik) {
         return mikrotikService.save(mikrotik);
     }
 

@@ -242,7 +242,7 @@ CREATE TABLE users (
   id       SERIAL       NOT NULL PRIMARY KEY,
   name     VARCHAR(150) NOT NULL,
   username VARCHAR(45)  NOT NULL,
-  password VARCHAR(45)  NOT NULL,
+  password VARCHAR(255) NOT NULL,
   enabled  SMALLINT     NOT NULL DEFAULT 1,
   UNIQUE (username)
 );

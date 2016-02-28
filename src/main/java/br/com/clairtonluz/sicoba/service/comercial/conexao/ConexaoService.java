@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.service.comercial.conexao;
 
+import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
@@ -35,9 +36,7 @@ public class ConexaoService {
     @Transactional
     public Conexao save(Conexao conexao) throws Exception {
         Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
-        System.out.println("TODO: descomentar linha antes de publicar em produão");
-//TODO: descomentar linha antes de publicar em produão
-//      conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
+        conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
         conexaoRepository.save(conexao);
         return conexao;
     }

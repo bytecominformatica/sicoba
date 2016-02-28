@@ -3,10 +3,7 @@ package br.com.clairtonluz.sicoba.api.estoque;
 import br.com.clairtonluz.sicoba.model.entity.estoque.Equipamento;
 import br.com.clairtonluz.sicoba.service.estoque.EquipamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -44,12 +41,12 @@ public class EquipamentoAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Equipamento save(@Valid Equipamento equipamento) {
+    public Equipamento save(@Valid @RequestBody Equipamento equipamento) {
         return equipamentoService.save(equipamento);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Equipamento update(@Valid Equipamento equipamento) {
+    public Equipamento update(@Valid @RequestBody Equipamento equipamento) {
         return equipamentoService.save(equipamento);
     }
 
