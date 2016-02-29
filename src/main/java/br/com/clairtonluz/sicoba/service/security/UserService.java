@@ -29,7 +29,6 @@ public class UserService {
     }
 
     private void criptografaPassword(User user) {
-        System.out.println("cript");
         if (isNovo(user) || passwordChanged(user)) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String hashedPassword = passwordEncoder.encode(user.getPassword());
