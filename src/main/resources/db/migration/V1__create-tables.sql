@@ -243,7 +243,9 @@ CREATE TABLE users (
   name     VARCHAR(150) NOT NULL,
   username VARCHAR(45)  NOT NULL,
   password VARCHAR(255) NOT NULL,
-  enabled  SMALLINT     NOT NULL DEFAULT 1,
+  enabled  boolean      NOT NULL DEFAULT true,
+  created_at            TIMESTAMP NOT NULL,
+  updated_at            TIMESTAMP NOT NULL,
   UNIQUE (username)
 );
 
@@ -251,5 +253,7 @@ CREATE TABLE user_roles (
   id      SERIAL      NOT NULL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES users (id),
   role    VARCHAR(45) NOT NULL,
+  created_at          TIMESTAMP NOT NULL,
+  updated_at          TIMESTAMP NOT NULL,
   UNIQUE (role, user_id)
 );

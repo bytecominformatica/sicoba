@@ -36,7 +36,7 @@ public class PlanoService {
 
     @Transactional
     public Plano save(Plano plano) {
-        return (Plano) planoRepository.save(plano);
+        return planoRepository.save(plano);
     }
 
     @Transactional

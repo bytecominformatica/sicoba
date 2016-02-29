@@ -7,7 +7,7 @@
     angular.module('sicobaApp')
         .factory('Login', function ($http) {
             return {
-                authenticate: function (credentials, callback) {
+                authenticate: function (credentials) {
                     var headers = credentials ? {
                         authorization: 'Basic ' + btoa(credentials.username + ":" + credentials.password)
                     } : {};
