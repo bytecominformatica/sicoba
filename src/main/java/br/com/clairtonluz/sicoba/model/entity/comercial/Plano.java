@@ -22,8 +22,7 @@ public class Plano extends EntityGeneric {
     private Integer download;
     @Column(name = "valor_instalacao")
     private Double valorInstalacao;
-    @Column(name = "valor_mensalidade")
-    private Double valorTitulo;
+    private Double valor;
 
 
 
@@ -59,11 +58,11 @@ public class Plano extends EntityGeneric {
         this.valorInstalacao = valorInstalacao;
     }
 
-    public Double getValorTitulo() {
-        return valorTitulo;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setValorTitulo(Double valorTitulo) {
-        this.valorTitulo = valorTitulo;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 }

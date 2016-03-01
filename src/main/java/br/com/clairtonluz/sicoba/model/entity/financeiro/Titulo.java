@@ -11,7 +11,7 @@ import java.util.Date;
  * @author clairton
  */
 @Entity
-@Table(name = "mensalidade")
+@Table(name = "titulo")
 public class Titulo extends EntityGeneric {
 
     @Column(name = "data_vencimento")

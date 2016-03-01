@@ -114,7 +114,7 @@ CREATE TABLE plano (
   upload            INT                    NOT NULL DEFAULT 0,
   download          INT                    NOT NULL DEFAULT 0,
   valor_instalacao  DECIMAL(20, 2)                  DEFAULT NULL,
-  valor_mensalidade DECIMAL(20, 2)                  DEFAULT NULL,
+  valor DECIMAL(20, 2)                  DEFAULT NULL,
   created_at        TIMESTAMP              NOT NULL,
   updated_at        TIMESTAMP              NOT NULL
 );
@@ -169,7 +169,7 @@ CREATE TABLE header_lote (
   updated_at                    TIMESTAMP NOT NULL
 );
 
-CREATE TABLE mensalidade (
+CREATE TABLE titulo (
   id              SERIAL         NOT NULL PRIMARY KEY,
   data_vencimento DATE                    DEFAULT NULL,
   data_ocorrencia DATE                    DEFAULT NULL,

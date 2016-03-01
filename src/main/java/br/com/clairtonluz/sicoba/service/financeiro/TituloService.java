@@ -39,7 +39,7 @@ public class TituloService {
 
         Titulo m = new Titulo();
         m.setDataVencimento(vencimento);
-        double valorTitulo = contrato.getPlano().getValorTitulo();
+        double valorTitulo = contrato.getPlano().getValor();
         if (contrato.getEquipamentoWifi() != null) {
             valorTitulo += 5;
         }
