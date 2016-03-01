@@ -29,7 +29,7 @@ public class ConexaoAPI {
     }
 
     @RequestMapping(value = "/ip/{ip}", method = RequestMethod.GET)
-    public Conexao getPorIp(@PathParam("ip") String ip) {
+    public Conexao getPorIp(@PathVariable String ip) {
         return conexaoService.buscarPorIp(ip);
     }
 

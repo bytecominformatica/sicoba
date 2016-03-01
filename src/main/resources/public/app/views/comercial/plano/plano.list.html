@@ -26,7 +26,7 @@
         <tr ng-repeat="it in planos track by it.id">
             <td>{{it.id}}</td>
             <td>{{it.nome}}</td>
-            <td>{{it.valorTitulo | currency}}</td>
+            <td>{{it.valor | currency}}</td>
             <td class="text-center">
                 <a ng-href="#/plano/{{it.id}}" class="btn btn-primary" title="Editar">
                     <i class="fa fa-edit"></i>

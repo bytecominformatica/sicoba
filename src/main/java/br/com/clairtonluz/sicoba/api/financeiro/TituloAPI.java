@@ -52,17 +52,18 @@ public class TituloAPI {
     }
 
     @RequestMapping(value = "/cliente/{clienteId}/nova", method = RequestMethod.GET)
-    public Titulo getNova(@PathParam("clienteId") Integer clienteId) {
+    public Titulo getNova(@PathVariable Integer clienteId) {
         return tituloService.getNovo(clienteId);
     }
 
     @RequestMapping(value = "cliente/{clienteId}", method = RequestMethod.GET)
-    public List<Titulo> getPorCliente(@PathParam("clienteId") Integer clienteId) {
+    public List<Titulo> getPorCliente(@PathVariable Integer clienteId) {
+        System.out.println(clienteId);
         return tituloService.buscarPorCliente(clienteId);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Titulo get(@PathParam("id") Integer id) {
+    public Titulo get(@PathVariable Integer id) {
         return tituloService.buscarPorId(id);
     }
 
@@ -82,7 +83,7 @@ public class TituloAPI {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathParam("id") Integer id) {
+    public void remove(@PathVariable Integer id) {
         tituloService.remove(id);
     }
 

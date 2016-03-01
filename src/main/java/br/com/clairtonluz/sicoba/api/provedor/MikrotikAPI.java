@@ -3,10 +3,7 @@ package br.com.clairtonluz.sicoba.api.provedor;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.sicoba.service.provedor.MikrotikService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -28,7 +25,7 @@ public class MikrotikAPI {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Mikrotik getPorId(@PathParam("id") Integer id) {
+    public Mikrotik getPorId(@PathVariable Integer id) {
         return mikrotikService.buscarPorId(id);
     }
 
@@ -43,7 +40,7 @@ public class MikrotikAPI {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathParam("id") @NotNull Integer id) {
+    public void remove(@PathVariable @NotNull Integer id) {
         mikrotikService.remove(id);
     }
 }

@@ -53,13 +53,13 @@
     </div>
 
     <div class="col-lg-2"
-         ng-class="{'has-error': (form.valorTitulo.$invalid && (form.$submitted || form.valorTitulo.$touched))}">
-        <label>Valor titulo</label>
-        <input name="valorTitulo" ng-model="plano.valorTitulo" class="form-control" type="number" step="any"
+         ng-class="{'has-error': (form.valor.$invalid && (form.$submitted || form.valor.$touched))}">
+        <label>Valor</label>
+        <input name="valor" ng-model="plano.valor" class="form-control" type="number" step="any"
                required>
-        <p class="help-block" ng-show="form.$submitted || form.valorTitulo.$touched">
-            <i ng-show="form.valorTitulo.$error.required">Qual o valor da instalacao para esse plano?</i>
-            <i ng-show="form.valorTitulo.$error.number">Valor inválido</i>
+        <p class="help-block" ng-show="form.$submitted || form.valor.$touched">
+            <i ng-show="form.valor.$error.required">Qual o valor da instalacao para esse plano?</i>
+            <i ng-show="form.valor.$error.number">Valor inválido</i>
         </p>
     </div>
 
