@@ -2,9 +2,7 @@ package br.com.clairtonluz.sicoba.model.entity.estoque;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -15,7 +13,10 @@ import javax.validation.constraints.Size;
 @Table(name = "equipamento")
 public class Equipamento extends EntityGeneric {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipamento_id_seq")
+    @SequenceGenerator(name = "equipamento_id_seq", sequenceName = "equipamento_id_seq")
+    private Integer id;
     private String descricao;
     @Size(min = 1, max = 30)
     private String marca;
@@ -90,4 +91,12 @@ public class Equipamento extends EntityGeneric {
         this.status = status;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

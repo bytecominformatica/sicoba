@@ -1,14 +1,11 @@
 package br.com.clairtonluz.sicoba.model.entity.extra;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
 public abstract class EntityGeneric {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    protected Integer id;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -23,13 +20,7 @@ public abstract class EntityGeneric {
         this.updatedAt = new Date();
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public abstract Integer getId();
 
     public Date getCreatedAt() {
         return createdAt;
@@ -54,12 +45,12 @@ public abstract class EntityGeneric {
 
         EntityGeneric that = (EntityGeneric) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return getId() != null ? getId().hashCode() : 0;
     }
 }

@@ -10,6 +10,10 @@ import javax.validation.constraints.NotNull;
 @NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e")
 public class Endereco extends EntityGeneric {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_id_seq")
+    @SequenceGenerator(name = "endereco_id_seq", sequenceName = "endereco_id_seq")
+    private Integer id;
     @NotNull(message = "cep é obrigatório")
     private String cep;
     @NotNull(message = "logradouro é obrigatório")
@@ -73,5 +77,14 @@ public class Endereco extends EntityGeneric {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

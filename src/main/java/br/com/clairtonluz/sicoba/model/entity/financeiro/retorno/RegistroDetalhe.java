@@ -12,6 +12,10 @@ import java.util.Date;
 @Table(name = "registro_detalhe")
 public class RegistroDetalhe extends EntityGeneric {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registro_detalhe_id_seq")
+    @SequenceGenerator(name = "registro_detalhe_id_seq", sequenceName = "registro_detalhe_id_seq")
+    private Integer id;
     @Column(name = "juros_multas_encargos")
     private double jurosMultasEncargos;
     private double desconto;
@@ -113,5 +117,14 @@ public class RegistroDetalhe extends EntityGeneric {
 
     public void setRegistro(Registro registro) {
         this.registro = registro;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

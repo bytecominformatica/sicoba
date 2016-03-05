@@ -11,6 +11,10 @@ import java.util.Date;
 @Table(name = "contrato")
 public class Contrato extends EntityGeneric {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contrato_id_seq")
+    @SequenceGenerator(name = "contrato_id_seq", sequenceName = "contrato_id_seq")
+    private Integer id;
     @NotNull(message = "vencimento é obrigatório")
     private short vencimento;
     @Column(name = "data_instalacao")
@@ -20,20 +24,20 @@ public class Contrato extends EntityGeneric {
 
 
     @JoinColumn(name = "equipamento_wifi_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private Equipamento equipamentoWifi;
 
     @JoinColumn(name = "equipamento_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private Equipamento equipamento;
 
     @JoinColumn(name = "plano_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @NotNull(message = "plano é obrigatório")
     private Plano plano;
 
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @NotNull(message = "cliente é obrigatório")
     private Cliente cliente;
 
@@ -85,4 +89,12 @@ public class Contrato extends EntityGeneric {
         this.cliente = cliente;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

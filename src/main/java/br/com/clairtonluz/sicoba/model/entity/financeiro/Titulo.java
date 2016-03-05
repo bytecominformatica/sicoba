@@ -13,7 +13,10 @@ import java.util.Date;
 @Entity
 @Table(name = "titulo")
 public class Titulo extends EntityGeneric {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "titulo_id_seq")
+    @SequenceGenerator(name = "titulo_id_seq", sequenceName = "titulo_id_seq")
+    private Integer id;
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataVencimento;
@@ -118,5 +121,14 @@ public class Titulo extends EntityGeneric {
 
     public void setModalidade(Integer modalidade) {
         this.modalidade = modalidade;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

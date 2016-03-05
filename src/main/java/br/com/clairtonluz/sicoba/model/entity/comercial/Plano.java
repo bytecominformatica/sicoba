@@ -1,19 +1,19 @@
 package br.com.clairtonluz.sicoba.model.entity.comercial;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * @author clairton
  */
 @Entity
 @Table(name = "plano")
-public class Plano extends EntityGeneric {
-
+public class Plano {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plano_id_seq")
+    @SequenceGenerator(name = "plano_id_seq", sequenceName = "plano_id_seq")
+    private Integer id;
     @NotNull(message = "nome é obrigatório")
     private String nome;
     @NotNull(message = "Upload é obrigatório")
@@ -24,7 +24,18 @@ public class Plano extends EntityGeneric {
     private Double valorInstalacao;
     private Double valor;
 
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date createdAt;
 
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date updatedAt;
+
+    public Plano() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
 
     public String getNome() {
         return nome;
@@ -64,5 +75,29 @@ public class Plano extends EntityGeneric {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -18,7 +18,10 @@ public class Registro extends EntityGeneric {
     public static final int BAIXA = 9;
     public static final int CONFIRMACAO_ALTERACAO_VENCIMENTO = 9;
     public static final int TARIFA = 28;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registro_id_seq")
+    @SequenceGenerator(name = "registro_id_seq", sequenceName = "registro_id_seq")
+    private Integer id;
     @Column(name = "modalidade_nosso_numero")
     private int modalidadeNossoNumero;
     @Column(name = "nosso_numero")
@@ -151,5 +154,14 @@ public class Registro extends EntityGeneric {
 
     public void setCodigoMovimento(int codigoMovimento) {
         this.codigoMovimento = codigoMovimento;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

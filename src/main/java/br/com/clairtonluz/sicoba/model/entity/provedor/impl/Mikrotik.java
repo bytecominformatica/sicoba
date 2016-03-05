@@ -3,14 +3,16 @@ package br.com.clairtonluz.sicoba.model.entity.provedor.impl;
 import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
 import br.com.clairtonluz.sicoba.model.entity.provedor.IServer;
 
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mikrotik")
 public class Mikrotik extends EntityGeneric implements IServer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mikrotik_id_seq")
+    @SequenceGenerator(name = "mikrotik_id_seq", sequenceName = "mikrotik_id_seq")
+    private Integer id;
     @Lob
     private String description;
     private String name;
@@ -73,4 +75,12 @@ public class Mikrotik extends EntityGeneric implements IServer {
         this.login = login;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

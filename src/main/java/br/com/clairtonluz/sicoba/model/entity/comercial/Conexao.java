@@ -11,7 +11,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "conexao")
 public class Conexao extends EntityGeneric {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "conexao_id_seq")
+    @SequenceGenerator(name = "conexao_id_seq", sequenceName = "conexao_id_seq")
+    private Integer id;
     @OneToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -74,4 +77,12 @@ public class Conexao extends EntityGeneric {
         this.ip = ip;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

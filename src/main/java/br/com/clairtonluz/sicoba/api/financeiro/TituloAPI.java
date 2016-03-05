@@ -58,7 +58,6 @@ public class TituloAPI {
 
     @RequestMapping(value = "cliente/{clienteId}", method = RequestMethod.GET)
     public List<Titulo> getPorCliente(@PathVariable Integer clienteId) {
-        System.out.println(clienteId);
         return tituloService.buscarPorCliente(clienteId);
     }
 

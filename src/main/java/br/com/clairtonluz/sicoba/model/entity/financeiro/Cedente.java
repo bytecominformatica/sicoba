@@ -2,15 +2,17 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "cedente")
 public class Cedente extends EntityGeneric {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cedente_id_seq")
+    @SequenceGenerator(name = "cedente_id_seq", sequenceName = "cedente_id_seq")
+    private Integer id;
     private String nome;
 
     private int codigo;
@@ -142,4 +144,12 @@ public class Cedente extends EntityGeneric {
         this.juros = juros;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

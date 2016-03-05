@@ -2,15 +2,16 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.retorno;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "trailer")
 public class Trailer extends EntityGeneric {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trailer_id_seq")
+    @SequenceGenerator(name = "trailer_id_seq", sequenceName = "trailer_id_seq")
+    private Integer id;
     private int quantidadeLotes;
     private int quantidadeRegistros;
 
@@ -42,4 +43,12 @@ public class Trailer extends EntityGeneric {
         this.header = header;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

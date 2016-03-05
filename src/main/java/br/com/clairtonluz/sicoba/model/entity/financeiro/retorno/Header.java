@@ -10,6 +10,10 @@ import java.util.List;
 @Table(name = "header")
 public class Header extends EntityGeneric {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "header_id_seq")
+    @SequenceGenerator(name = "header_id_seq", sequenceName = "header_id_seq")
+    private Integer id;
     private int sequencial;
 
     @Column(name = "nome_arquivo")
@@ -61,5 +65,14 @@ public class Header extends EntityGeneric {
 
     public void setHeaderLotes(List<HeaderLote> headerLotes) {
         this.headerLotes = headerLotes;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

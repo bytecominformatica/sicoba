@@ -15,6 +15,10 @@ import java.util.Date;
 @Table(name = "cliente")
 public class Cliente extends EntityGeneric {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cliente_id_seq")
+    @SequenceGenerator(name = "cliente_id_seq", sequenceName = "cliente_id_seq")
+    private Integer id;
     @NotNull(message = "nome é obrigatório")
     private String nome;
     private String rg;
@@ -139,5 +143,14 @@ public class Cliente extends EntityGeneric {
                 ", foneContato='" + foneContato + '\'' +
                 ", endereco=" + endereco +
                 '}';
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

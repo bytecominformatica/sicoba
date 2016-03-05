@@ -2,10 +2,7 @@ package br.com.clairtonluz.sicoba.model.entity.security;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,7 +11,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "users")
 public class User extends EntityGeneric {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq")
+    private Integer id;
     @NotNull(message = "nome é obrigatório")
     private String name;
     @NotNull(message = "username é obrigatório")
@@ -58,5 +58,14 @@ public class User extends EntityGeneric {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

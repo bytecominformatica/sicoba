@@ -9,7 +9,10 @@ import java.util.List;
 @Entity
 @Table(name = "header_lote")
 public class HeaderLote extends EntityGeneric {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "header_lote_id_seq")
+    @SequenceGenerator(name = "header_lote_id_seq", sequenceName = "header_lote_id_seq")
+    private Integer id;
     @Column(name = "numero_remessa_retorno")
     private int numeroRemessaRetorno;
     @Column(name = "data_gravacao_remessa_retorno")
@@ -64,4 +67,12 @@ public class HeaderLote extends EntityGeneric {
         this.trailerLote = trailerLote;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
