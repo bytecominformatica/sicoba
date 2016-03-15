@@ -1,16 +1,15 @@
 package br.com.clairtonluz.sicoba.api.financeiro;
 
+import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.RetornoPojo;
+import br.com.clairtonluz.sicoba.service.financeiro.RetornoCaixaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,17 +19,16 @@ import java.util.List;
 @RequestMapping("api/retornos")
 public class RetornoAPI {
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public List<RetornoPojo> upload(@RequestParam("name") String name,
-                                    @RequestParam("file") MultipartFile file) throws Exception {
-        List<RetornoPojo> retornoPojos = new ArrayList<>();
-        if (!file.isEmpty()) {
-            byte[] bytes = file.getBytes();
-            BufferedOutputStream stream =
-                    new BufferedOutputStream(new FileOutputStream(new File(name)));
-            stream.write(bytes);
-            stream.close();
+    @Autowired
+    private RetornoCaixaService retornoCaixaService;
 
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public List<RetornoPojo> upload(@RequestParam("file") MultipartFile file) throws Exception {
+        List<RetornoPojo> retornoPojos;
+        if (!file.isEmpty()) {
+            System.out.println(file.getName());
+            Header header = retornoCaixaService.parse(file.getInputStream(), file.getName());
+            retornoPojos = retornoCaixaService.processarHeader(header);
         } else {
             throw new RuntimeException("Arquivo vazio");
         }

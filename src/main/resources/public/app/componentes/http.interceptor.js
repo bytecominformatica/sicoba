@@ -5,20 +5,10 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .factory('HttpInterceptor', function ($rootScope, $location, $cookies) {
-
-            //var isRequestServerSide = _isRequestServerSide;
-            //var isHtml = _isHtml;
-            //var isLoginPage = _isLoginPage;
-            //var isMenu = _isMenu;
+        .factory('HttpInterceptor', function ($rootScope, $location) {
 
             return {
                 request: function (config) {
-                    //if (isRequestServerSide(config.url)) {
-                    //    config.url = 'http://localhost:5000/' + config.url;
-                    //    config.headers['X-XSRF-TOKEN'] = $cookies.get('XSRF-TOKEN');
-                    //}
-
                     return config;
                 },
                 responseError: function (rejection) {
@@ -28,21 +18,15 @@
                 }
             };
 
-            //function _isRequestServerSide(url) {
-            //    return !(isHtml(url) || isMenu(url));
+            //function _isLoginPageContent(url) {
+            //    return url.indexOf('login/index.html') > -1 ||
+            //        url.indexOf('alert.html') > -1 ||
+            //        url.indexOf('navbar.html') > -1 ||
+            //        url.indexOf('menu.json') > -1 ||
+            //        url.indexOf('menu.html') > -1 ||
+            //        url.indexOf('/user') > -1;
             //}
-            //
-            //function _isHtml(url) {
-            //    return url.indexOf('.html') > -1;
-            //}
-            //
-            //function _isLoginPage(url) {
-            //    return url.indexOf('/login') > -1;
-            //}
-            //
-            //function _isMenu(url) {
-            //    return url.indexOf('menu.json') > -1;
-            //}
+
         })
         .config(function ($httpProvider) {
             $httpProvider.interceptors.push('HttpInterceptor');

@@ -57,7 +57,7 @@
 
         <div class="col-lg-2">
             <label></label>
-            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || params.status == 'PENDENTE'">
                 Por Ocorrencia
                 <i class="fa fa-search"></i>
             </button>

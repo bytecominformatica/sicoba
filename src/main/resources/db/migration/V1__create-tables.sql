@@ -223,8 +223,8 @@ CREATE TABLE registro_detalhe (
 
 CREATE TABLE trailer (
   id                  SERIAL    NOT NULL PRIMARY KEY,
-  quantidadeLotes     INT       NOT NULL,
-  quantidadeRegistros INT       NOT NULL,
+  quantidade_lotes     INT       NOT NULL,
+  quantidade_registros INT       NOT NULL,
   header_id           INT       NOT NULL REFERENCES header (id),
   created_at          TIMESTAMP NOT NULL,
   updated_at          TIMESTAMP NOT NULL

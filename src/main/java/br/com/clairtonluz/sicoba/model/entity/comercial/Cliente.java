@@ -130,22 +130,6 @@ public class Cliente extends EntityGeneric {
     }
 
     @Override
-    public String toString() {
-        return "Cliente{" +
-                "nome='" + nome + '\'' +
-                ", rg='" + rg + '\'' +
-                ", status=" + status +
-                ", cpfCnpj='" + cpfCnpj + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                ", email='" + email + '\'' +
-                ", foneTitular='" + foneTitular + '\'' +
-                ", contato='" + contato + '\'' +
-                ", foneContato='" + foneContato + '\'' +
-                ", endereco=" + endereco +
-                '}';
-    }
-
-    @Override
     public Integer getId() {
         return id;
     }

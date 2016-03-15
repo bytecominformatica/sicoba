@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.websocket.server.PathParam;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,7 +38,7 @@ public class TituloAPI {
     @RequestMapping(value = "vencimento", method = RequestMethod.GET)
     public List<Titulo> porDataVencimento(@RequestParam("inicio") @NotNull(message = "Início é obrigatório") String inicio,
                                           @RequestParam("fim") @NotNull(message = "Fim é obrigatório") String fim,
-                                          @RequestParam("status") StatusTitulo status) throws ParseException {
+                                          @RequestParam(value = "status", required = false) StatusTitulo status) throws ParseException {
 
         Date i = sdf.parse(inicio);
         Date f = sdf.parse(fim);

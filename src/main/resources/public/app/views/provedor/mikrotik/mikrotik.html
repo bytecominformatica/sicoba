@@ -49,7 +49,7 @@
     <div class="col-lg-2"
          ng-class="{'has-error': (form.pass.$invalid && (form.$submitted || form.pass.$touched))}">
         <label>Senha</label>
-        <input name="pass" ng-model="mikrotik.pass" class="form-control" type="text" required>
+        <input name="pass" ng-model="mikrotik.pass" class="form-control" type="password" required>
         <p class="help-block" ng-show="form.$submitted || form.pass.$touched">
             <i ng-show="form.pass.$error.required">Qual a senha para esse mikrotik?</i>
         </p>

@@ -9,8 +9,8 @@ import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.HeaderLote;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.Registro;
-import br.com.clairtonluz.sicoba.parse.ParseRetornoCaixa;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.RetornoPojo;
+import br.com.clairtonluz.sicoba.parse.ParseRetornoCaixa;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
@@ -64,6 +64,7 @@ public class RetornoCaixaService {
 
                         pojo.setTitulo(m);
                         pojo.setMovimento("LIQUIDAÇÂO");
+                        pojo.setNossoNumero(r.getNossoNumero());
                         retornoPojos.add(pojo);
                     }
                 }
@@ -81,8 +82,7 @@ public class RetornoCaixaService {
 
             headerRepository.save(header);
         } else {
-//            TODO: MensagemException
-//            throw new MensagemException("Arquivo já foi enviado");
+            throw new RuntimeException("Arquivo já foi enviado");
         }
 
         return retornoPojos;

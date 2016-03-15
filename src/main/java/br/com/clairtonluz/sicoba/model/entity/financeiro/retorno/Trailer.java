@@ -12,7 +12,9 @@ public class Trailer extends EntityGeneric {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trailer_id_seq")
     @SequenceGenerator(name = "trailer_id_seq", sequenceName = "trailer_id_seq")
     private Integer id;
+    @Column(name = "quantidade_lotes")
     private int quantidadeLotes;
+    @Column(name = "quantidade_registros")
     private int quantidadeRegistros;
 
     @OneToOne

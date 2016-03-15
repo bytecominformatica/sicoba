@@ -90,8 +90,6 @@ public class ClienteService {
     }
 
     public boolean isAvaliable(Cliente cliente) {
-        System.out.println("verificar como vai ficar isso aqui");
-//        TODO: verificar como vai ficar isso aqui
         if (!rgAvaliable(cliente)) {
             throw new RuntimeException("RG já Cadastrado");
         } else if (!cpfCnpjAvaliable(cliente)) {
@@ -100,18 +98,6 @@ public class ClienteService {
             throw new RuntimeException("E-Mail já Cadastrado");
         }
         return true;
-    }
-
-    public void atualizarTodasConexoes() throws Exception {
-        List<Conexao> list = conexaoService.buscarTodos();
-
-        for (Conexao c : list) {
-            Cliente cliente = c.getCliente();
-            if (c.getIp() == null || c.getIp().isEmpty()) {
-                c.setIp(conexaoService.buscarIpLivre());
-            }
-            conexaoService.save(c);
-        }
     }
 
     public List<Cliente> buscarSemTitulo() {

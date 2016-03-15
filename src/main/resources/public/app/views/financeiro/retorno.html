@@ -69,8 +69,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="it in f.retorno track by it.titulo.id">
-                    <td>{{it.titulo.cliente.nome}}</td>
+                <tr ng-repeat="it in f.retorno track by it.nossoNumero">
+                    <td><a ng-href="/cliente/{{it.titulo.cliente.id}}">{{it.titulo.cliente.nome}}</a></td>
                     <td>{{it.titulo.valor | currency}}</td>
                     <td>{{it.titulo.desconto | currency}}</td>
                     <td>{{it.titulo.valorPago | currency}}</td>
@@ -78,7 +78,7 @@
                     <td>{{it.movimento}}</td>
                     <td>{{it.titulo.dataVencimento | date:'dd/MM/yyyy'}}</td>
                     <td>{{it.titulo.dataOcorrencia | date:'dd/MM/yyyy'}}</td>
-                    <td>{{it.titulo.boleto}}</td>
+                    <td>{{it.nossoNumero}}</td>
                 </tr>
                 </tbody>
             </table>

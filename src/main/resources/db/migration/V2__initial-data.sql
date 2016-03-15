@@ -1,0 +1,32 @@
+INSERT INTO pais (id,nome,created_at,updated_at) VALUES (1,'Brasil','2015-01-08 22:27:10','2015-01-08 22:27:10');
+
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (1,'Acre','AC',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (2,'Alagoas','AL',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (3,'Amazonas','AM',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (4,'Amapá','AP',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (5,'Bahia','BA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (6,'Ceará','CE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (7,'Distrito Federal','DF',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (8,'Espírito Santo','ES',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (9,'Goiás','GO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (10,'Maranhão','MA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (11,'Minas Gerais','MG',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (12,'Mato Grosso do Sul','MS',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (13,'Mato Grosso','MT',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (14,'Pará','PA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (15,'Paraíba','PB',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (16,'Pernambuco','PE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (17,'Piauí','PI',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (18,'Paraná','PR',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (19,'Rio de Janeiro','RJ',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (20,'Rio Grande do Norte','RN',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (21,'Roraima','RR',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (22,'Rondônia','RO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (23,'Rio Grande do Sul','RS',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (24,'Santa Catarina','SC',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (25,'Sergipe','SE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (26,'São Paulo','SP',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (id,nome,uf,pais_id,created_at,updated_at) VALUES (27,'Tocantins','TO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+
+INSERT INTO users (name, username, password, enabled, created_at, updated_at) VALUES ('Administrador', 'admin', '$2a$10$IV1.6EyW2KvKOhlLf8mFYuK6JEjWvrfqDXm1c9wPMcfQW2/ywaS4G', true, now(), now());
+INSERT INTO user_roles (user_id, role, created_at, updated_at) VALUES (1, 'ROLE_ADMIN', now(), now());

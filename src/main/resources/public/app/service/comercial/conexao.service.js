@@ -21,6 +21,10 @@
                     buscarIpLivre: {
                         method: 'GET',
                         url: 'api/conexoes/ip/livre'
+                    },
+                    atualizarTodos: {
+                        method: 'GET',
+                        url: 'api/conexoes/atualizarTodos'
                     }
                 });
         });

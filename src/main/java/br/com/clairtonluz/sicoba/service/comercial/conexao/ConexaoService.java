@@ -1,6 +1,5 @@
 package br.com.clairtonluz.sicoba.service.comercial.conexao;
 
-import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
@@ -29,16 +28,34 @@ public class ConexaoService {
         return conexaoRepository.findAllByOrderByNomeAsc();
     }
 
+    @Transactional
     public Conexao buscarOptionalPorCliente(Cliente cliente) {
         return conexaoRepository.findOptionalByCliente(cliente);
     }
 
     @Transactional
+    public void atualizarTodos() throws Exception {
+        List<Conexao> list = buscarTodos();
+
+        for (Conexao c : list) {
+            Cliente cliente = c.getCliente();
+            if (c.getIp() == null || c.getIp().isEmpty()) {
+                c.setIp(buscarIpLivre());
+            }
+            save(c);
+        }
+    }
+
+    @Transactional
     public Conexao save(Conexao conexao) throws Exception {
-        Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
-        conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
-        conexaoRepository.save(conexao);
-        return conexao;
+        if (isDisponivel(conexao)) {
+            Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
+            conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
+            conexaoRepository.save(conexao);
+            return conexao;
+        } else {
+            throw new RuntimeException(conexao.getNome() + " já esta sendo utilizado");
+        }
     }
 
     public boolean isDisponivel(Conexao conexao) {

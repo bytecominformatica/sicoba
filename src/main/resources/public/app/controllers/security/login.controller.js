@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('LoginCtrl', function ($rootScope, $scope, $location, Login) {
+        .controller('LoginCtrl', function ($rootScope, $scope, $location, Login, User) {
 
             $scope.login = _login;
             _init();
@@ -16,7 +16,14 @@
             function _authenticate(credentials, callback) {
                 Login.authenticate(credentials).then(function (response) {
                     if (callback) {
-                        callback(response && response.data.name);
+                        if (response && response.data.name) {
+                            User.findByUsername({username: response.data.name}, function (user) {
+                                $rootScope.userLogged = user;
+                                callback(true);
+                            });
+                        } else {
+                            callback(false);
+                        }
                     }
                 });
             }
