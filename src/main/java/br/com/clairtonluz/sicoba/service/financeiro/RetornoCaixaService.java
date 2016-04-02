@@ -60,25 +60,15 @@ public class RetornoCaixaService {
                     if (r.getCodigoMovimento() == Registro.ENTRADA_CONFIRMADA) {
                         titulosRegistrados.add(criarTituloRegistrada(r));
                     } else if (r.getCodigoMovimento() == Registro.LIQUIDACAO) {
-                        Titulo m = liquidarTitulo(r);
-                        RetornoPojo pojo = new RetornoPojo();
-
-                        pojo.setTitulo(m);
-                        pojo.setMovimento("LIQUIDAÇÂO");
-                        pojo.setNossoNumero(r.getNossoNumero());
-                        retornoPojos.add(pojo);
+                        Titulo t = liquidarTitulo(r);
+                        retornoPojos.add(criarRetorno(t, r.getNossoNumero(), "LIQUIDAÇÃO"));
                     }
                 }
             }
             tituloService.save(titulosRegistrados);
 
             titulosRegistrados.forEach(titulo -> {
-                Titulo m = titulo;
-                RetornoPojo r = new RetornoPojo();
-
-                r.setTitulo(m);
-                r.setMovimento("ENTRADA CONFIRMADA");
-                retornoPojos.add(r);
+                retornoPojos.add(criarRetorno(titulo, titulo.getNumeroBoleto(), "ENTRADA CONFIRMADA"));
             });
 
             headerRepository.save(header);
@@ -87,6 +77,14 @@ public class RetornoCaixaService {
         }
 
         return retornoPojos;
+    }
+
+    private RetornoPojo criarRetorno(Titulo titulo, Integer nossoNumero, String movimento) {
+        RetornoPojo r = new RetornoPojo();
+        r.setTitulo(titulo);
+        r.setMovimento(movimento);
+        r.setNossoNumero(nossoNumero);
+        return r;
     }
 
     @Transactional
