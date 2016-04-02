@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.api.financeiro;
 
+import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.Header;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.RetornoPojo;
 import br.com.clairtonluz.sicoba.service.financeiro.RetornoCaixaService;
@@ -30,7 +31,7 @@ public class RetornoAPI {
             Header header = retornoCaixaService.parse(file.getInputStream(), file.getName());
             retornoPojos = retornoCaixaService.processarHeader(header);
         } else {
-            throw new RuntimeException("Arquivo vazio");
+            throw new BadRequestException("Arquivo vazio");
         }
         return retornoPojos;
     }

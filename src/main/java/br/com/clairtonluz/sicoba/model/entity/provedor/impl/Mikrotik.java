@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Mikrotik extends EntityGeneric implements IServer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mikrotik_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "mikrotik_id_seq")
     @SequenceGenerator(name = "mikrotik_id_seq", sequenceName = "mikrotik_id_seq")
     private Integer id;
     @Lob

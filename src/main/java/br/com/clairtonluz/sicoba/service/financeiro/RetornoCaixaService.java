@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.service.financeiro;
 
+import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
@@ -82,7 +83,7 @@ public class RetornoCaixaService {
 
             headerRepository.save(header);
         } else {
-            throw new RuntimeException("Arquivo já foi enviado");
+            throw new ConflitException("Arquivo já foi enviado");
         }
 
         return retornoPojos;

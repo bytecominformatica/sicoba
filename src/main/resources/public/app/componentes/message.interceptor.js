@@ -13,25 +13,11 @@
                 },
                 responseError: function (rejection) {
                     if (rejection.status !== 401) {
-                        if (rejection.data && rejection.data.errors) {
-                            rejection.data.errors.forEach(function (it) {
-                                $rootScope.messages.push({
-                                    title: 'Error:' + it.field,
-                                    body: it.defaultMessage,
-                                    type: 'alert-danger'
-                                });
-                            });
-                        } else {
-                            var message = rejection.message;
-                            if (rejection.data && rejection.data.message) {
-                                message = rejection.data.message;
-                            }
-                            $rootScope.messages.push({
-                                title: 'Error:',
-                                body: message,
-                                type: 'alert-danger'
-                            });
-                        }
+                        $rootScope.messages.push({
+                            title: 'Error:',
+                            body: rejection.message,
+                            type: 'alert-danger'
+                        });
                     }
 
                     return $q.reject(rejection);

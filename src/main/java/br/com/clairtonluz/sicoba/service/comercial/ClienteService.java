@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.service.comercial;
 
+import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.*;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
@@ -91,11 +92,11 @@ public class ClienteService {
 
     public boolean isAvaliable(Cliente cliente) {
         if (!rgAvaliable(cliente)) {
-            throw new RuntimeException("RG já Cadastrado");
+            throw new ConflitException("RG já Cadastrado");
         } else if (!cpfCnpjAvaliable(cliente)) {
-            throw new RuntimeException("CPF já Cadastrado");
+            throw new ConflitException("CPF já Cadastrado");
         } else if (!emailAvaliable(cliente)) {
-            throw new RuntimeException("E-Mail já Cadastrado");
+            throw new ConflitException("E-Mail já Cadastrado");
         }
         return true;
     }

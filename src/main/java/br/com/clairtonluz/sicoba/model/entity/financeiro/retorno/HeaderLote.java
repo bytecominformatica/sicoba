@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "header_lote")
 public class HeaderLote extends EntityGeneric {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "header_lote_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "header_lote_id_seq")
     @SequenceGenerator(name = "header_lote_id_seq", sequenceName = "header_lote_id_seq")
     private Integer id;
     @Column(name = "numero_remessa_retorno")

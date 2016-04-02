@@ -6,7 +6,7 @@
 
     angular.module('sicobaApp')
         .factory('Cep', ['$resource', function ($resource) {
-            return $resource('http://viacep.com.br/ws/:cep/json', {cep: '@cep'},
+            return $resource('https://viacep.com.br/ws/:cep/json', {cep: '@cep'},
                 {});
         }]);
 }());

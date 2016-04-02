@@ -7,11 +7,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "endereco")
-@NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e")
 public class Endereco extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "endereco_id_seq")
     @SequenceGenerator(name = "endereco_id_seq", sequenceName = "endereco_id_seq")
     private Integer id;
     @NotNull(message = "cep é obrigatório")
@@ -22,7 +21,7 @@ public class Endereco extends EntityGeneric {
     private String complemento;
 
     @NotNull(message = "bairro é obrigatório")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Bairro bairro;
 
     public String getComplemento() {

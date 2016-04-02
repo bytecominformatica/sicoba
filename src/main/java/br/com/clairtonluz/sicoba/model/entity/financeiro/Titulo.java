@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(name = "titulo")
 public class Titulo extends EntityGeneric {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "titulo_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "titulo_id_seq")
     @SequenceGenerator(name = "titulo_id_seq", sequenceName = "titulo_id_seq")
     private Integer id;
     @Column(name = "data_vencimento")

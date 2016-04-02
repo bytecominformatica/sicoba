@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class UserRole extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_roles_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_roles_id_seq")
     @SequenceGenerator(name = "user_roles_id_seq", sequenceName = "user_roles_id_seq")
     private Integer id;
     @NotNull(message = "role é obrigatório")

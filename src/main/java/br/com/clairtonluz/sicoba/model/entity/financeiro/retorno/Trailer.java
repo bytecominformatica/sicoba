@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Trailer extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trailer_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "trailer_id_seq")
     @SequenceGenerator(name = "trailer_id_seq", sequenceName = "trailer_id_seq")
     private Integer id;
     @Column(name = "quantidade_lotes")

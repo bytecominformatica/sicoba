@@ -10,7 +10,7 @@ import java.util.Date;
 public class Cedente extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cedente_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cedente_id_seq")
     @SequenceGenerator(name = "cedente_id_seq", sequenceName = "cedente_id_seq")
     private Integer id;
     private String nome;

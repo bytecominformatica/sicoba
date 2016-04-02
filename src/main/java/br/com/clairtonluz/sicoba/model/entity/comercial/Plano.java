@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "plano")
 public class Plano {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plano_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "plano_id_seq")
     @SequenceGenerator(name = "plano_id_seq", sequenceName = "plano_id_seq")
     private Integer id;
     @NotNull(message = "nome é obrigatório")

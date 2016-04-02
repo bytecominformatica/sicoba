@@ -19,7 +19,7 @@ public class Registro extends EntityGeneric {
     public static final int CONFIRMACAO_ALTERACAO_VENCIMENTO = 9;
     public static final int TARIFA = 28;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registro_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "registro_id_seq")
     @SequenceGenerator(name = "registro_id_seq", sequenceName = "registro_id_seq")
     private Integer id;
     @Column(name = "modalidade_nosso_numero")

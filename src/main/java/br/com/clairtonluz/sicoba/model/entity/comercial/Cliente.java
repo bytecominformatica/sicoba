@@ -16,7 +16,7 @@ import java.util.Date;
 public class Cliente extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cliente_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cliente_id_seq")
     @SequenceGenerator(name = "cliente_id_seq", sequenceName = "cliente_id_seq")
     private Integer id;
     @NotNull(message = "nome é obrigatório")

@@ -11,7 +11,7 @@ import java.util.List;
 public class Header extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "header_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "header_id_seq")
     @SequenceGenerator(name = "header_id_seq", sequenceName = "header_id_seq")
     private Integer id;
     private int sequencial;

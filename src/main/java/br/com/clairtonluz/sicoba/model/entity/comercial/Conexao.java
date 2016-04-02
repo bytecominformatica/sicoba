@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Table(name = "conexao")
 public class Conexao extends EntityGeneric {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "conexao_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "conexao_id_seq")
     @SequenceGenerator(name = "conexao_id_seq", sequenceName = "conexao_id_seq")
     private Integer id;
     @OneToOne

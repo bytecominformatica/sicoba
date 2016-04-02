@@ -13,7 +13,7 @@ import java.util.Date;
 public class RegistroDetalhe extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registro_detalhe_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "registro_detalhe_id_seq")
     @SequenceGenerator(name = "registro_detalhe_id_seq", sequenceName = "registro_detalhe_id_seq")
     private Integer id;
     @Column(name = "juros_multas_encargos")

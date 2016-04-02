@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "users")
 public class User extends EntityGeneric {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "users_id_seq")
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq")
     private Integer id;
     @NotNull(message = "nome é obrigatório")

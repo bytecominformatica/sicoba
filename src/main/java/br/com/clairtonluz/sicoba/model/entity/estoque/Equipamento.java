@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class Equipamento extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipamento_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "equipamento_id_seq")
     @SequenceGenerator(name = "equipamento_id_seq", sequenceName = "equipamento_id_seq")
     private Integer id;
     private String descricao;

@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.service.comercial.conexao;
 
+import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
@@ -54,7 +55,7 @@ public class ConexaoService {
             conexaoRepository.save(conexao);
             return conexao;
         } else {
-            throw new RuntimeException(conexao.getNome() + " já esta sendo utilizado");
+            throw new ConflitException(conexao.getNome() + " já esta sendo utilizado");
         }
     }
 

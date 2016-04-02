@@ -12,7 +12,7 @@ import java.util.Date;
 public class Contrato extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contrato_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "contrato_id_seq")
     @SequenceGenerator(name = "contrato_id_seq", sequenceName = "contrato_id_seq")
     private Integer id;
     @NotNull(message = "vencimento é obrigatório")

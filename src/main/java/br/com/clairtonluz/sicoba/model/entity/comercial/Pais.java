@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Pais extends EntityGeneric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pais_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "pais_id_seq")
     @SequenceGenerator(name = "pais_id_seq", sequenceName = "pais_id_seq")
     private Integer id;
     private String nome;
