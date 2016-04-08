@@ -33,10 +33,9 @@
                         cliente: cliente
                     };
 
-
                     var indexOfSpace = cliente.nome.indexOf(' ');
                     if (indexOfSpace > 0) {
-                        $scope.conexao.nome = $scope.conexao.senha = cliente.nome.splice(0, indexOfSpace) + cliente.id;
+                        $scope.conexao.nome = $scope.conexao.senha = cliente.nome.substring(0, indexOfSpace) + cliente.id;
                     } else {
                         $scope.conexao.nome = $scope.conexao.senha = cliente.nome + cliente.id;
                     }
