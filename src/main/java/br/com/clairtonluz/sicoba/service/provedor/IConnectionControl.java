@@ -14,6 +14,4 @@ public interface IConnectionControl extends Serializable {
 
     void kickout(IServer server, IConnectionClienteCertified connectionClient) throws Exception;
 
-    MikrotikConnection setAutoCloseable(boolean autoCloseable) throws Exception;
-
 }

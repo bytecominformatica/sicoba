@@ -31,7 +31,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('me.legrange:mikrotik:2.1')
+    compile('me.legrange:mikrotik:3.0.1')
     compile("org.flywaydb:flyway-core")
 
     runtime('com.h2database:h2')

@@ -24,7 +24,7 @@ public enum NetworkUtil {
     public boolean ping(String ip) throws IOException {
         boolean pingSucess = false;
         InetAddress ipAdress = InetAddress.getByName(ip);
-        pingSucess = ipAdress.isReachable(5000);
+        pingSucess = ipAdress.isReachable(10000);
 
         return pingSucess;
     }

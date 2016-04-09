@@ -4,9 +4,6 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Secret;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.IConexaoOperacao;
 import br.com.clairtonluz.sicoba.service.provedor.IConnectionControl;
-import br.com.clairtonluz.sicoba.service.provedor.IFirewall;
-import br.com.clairtonluz.sicoba.service.provedor.impl.MikrotikFirewall;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 

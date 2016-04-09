@@ -9,52 +9,30 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public abstract class MikrotikConnection implements AutoCloseable {
+public abstract class MikrotikConnection {
 
     private ApiConnection con;
-    private boolean autoCloseable;
 
-    public MikrotikConnection() {
-        autoCloseable = false;
-    }
-
-    protected List<Map<String, String>> execute(IServer server, String commando, Object... parametros)
+    protected List<Map<String, String>> execute(String commando, Object... parametros)
             throws MikrotikApiException, InterruptedException, IOException {
         commando = String.format(commando, parametros);
-        if (!isOpen()) {
-            open(server);
-            con.login(server.getLogin(), server.getPass());
-        }
         List<Map<String, String>> result = con.execute(commando);
 
-        if (!autoCloseable) {
-            close();
-        }
         return result;
     }
 
-    protected MikrotikConnection open(IServer server) throws MikrotikApiException, IOException {
+    protected ApiConnection open(IServer server) throws MikrotikApiException, IOException {
         if (!NetworkUtil.INSTANCE.ping(server.getHost())) {
             throw new RuntimeException(String.format("Mikrotik: %s - %s:%d não disponível",
                     server.getName(), server.getHost(), server.getPort()));
         }
-        con = ApiConnection.connect(server.getHost(), server.getPort());
-        return this;
-    }
-
-    public void close() throws MikrotikApiException {
-        if (con != null && con.isConnected()) {
-            con.disconnect();
-        }
+        con = ApiConnection.connect(server.getHost());
+        con.login(server.getLogin(), server.getPass());
+        return con;
     }
 
     public boolean isOpen() {
         return con != null && con.isConnected();
     }
 
-    public MikrotikConnection setAutoCloseable(boolean autoCloseable) {
-        this.autoCloseable = autoCloseable;
-        return this;
-
-    }
 }
