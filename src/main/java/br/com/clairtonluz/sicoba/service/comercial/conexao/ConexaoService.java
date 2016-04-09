@@ -46,15 +46,19 @@ public class ConexaoService {
             if (c.getIp() == null || c.getIp().isEmpty()) {
                 c.setIp(buscarIpLivre());
             }
-            save(c);
+
+            atualizarNoServidor(c);
+
+            if (c.getCliente().getStatus() == StatusCliente.CANCELADO) {
+                conexaoRepository.delete(c);
+            }
         }
     }
 
     @Transactional
     public Conexao save(Conexao conexao) throws Exception {
         if (isDisponivel(conexao)) {
-            Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
-            conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
+            atualizarNoServidor(conexao);
 
             if (conexao.getCliente().getStatus() == StatusCliente.CANCELADO) {
                 conexaoRepository.delete(conexao);
@@ -65,6 +69,11 @@ public class ConexaoService {
         } else {
             throw new ConflitException(conexao.getNome() + " já esta sendo utilizado");
         }
+    }
+
+    private void atualizarNoServidor(Conexao conexao) throws Exception {
+        Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
+        conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
     }
 
     public boolean isDisponivel(Conexao conexao) {
