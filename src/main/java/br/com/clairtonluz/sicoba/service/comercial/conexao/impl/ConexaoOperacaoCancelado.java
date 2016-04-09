@@ -24,7 +24,7 @@ public class ConexaoOperacaoCancelado implements IConexaoOperacao {
     @Override
     public void executar(Conexao conexao, Plano plano) throws Exception {
 //        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
-        System.out.println("CANCELADO");
+        System.out.println("CANCELADO " + conexao.getNome());
         Secret secret = conexao.createSecret(plano);
 //        FIREWALL.lock(conexao.getMikrotik(), secret);
         server.remove(conexao.getMikrotik(), secret);

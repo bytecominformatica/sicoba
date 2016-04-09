@@ -24,7 +24,7 @@ public class ConexaoOperacaoAtivo implements IConexaoOperacao {
     @Override
     public void executar(Conexao conexao, Plano plano) throws Exception {
 //        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
-        System.out.println("ATIVO");
+        System.out.println("ATIVO " + conexao.getNome());
         Secret secret = conexao.createSecret(plano);
         server.save(conexao.getMikrotik(), secret);
 //            FIREWALL.unlock(conexao.getMikrotik(), secret);
