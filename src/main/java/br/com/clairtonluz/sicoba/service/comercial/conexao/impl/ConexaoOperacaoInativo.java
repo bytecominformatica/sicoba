@@ -1,7 +1,5 @@
 package br.com.clairtonluz.sicoba.service.comercial.conexao.impl;
 
-import br.com.clairtonluz.sicoba.config.Environment;
-import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Secret;
@@ -25,10 +23,11 @@ public class ConexaoOperacaoInativo implements IConexaoOperacao {
 
     @Override
     public void executar(Conexao conexao, Plano plano) throws Exception {
-        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
-            Secret secret = conexao.createSecret(plano);
-            server.save(conexao.getMikrotik(), secret);
-            FIREWALL.lock(conexao.getMikrotik(), secret);
-        }
+//        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
+        System.out.println("INATIVO");
+        Secret secret = conexao.createSecret(plano);
+        server.save(conexao.getMikrotik(), secret);
+        FIREWALL.lock(conexao.getMikrotik(), secret);
+//        }
     }
 }

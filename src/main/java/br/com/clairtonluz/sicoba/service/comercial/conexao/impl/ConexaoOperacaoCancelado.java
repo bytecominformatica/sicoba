@@ -1,7 +1,5 @@
 package br.com.clairtonluz.sicoba.service.comercial.conexao.impl;
 
-import br.com.clairtonluz.sicoba.config.Environment;
-import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Secret;
@@ -25,12 +23,11 @@ public class ConexaoOperacaoCancelado implements IConexaoOperacao {
 
     @Override
     public void executar(Conexao conexao, Plano plano) throws Exception {
-        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
-            Secret secret = conexao.createSecret(plano);
-            server.remove(conexao.getMikrotik(), secret);
-            conexao.setCliente(null);
-            server.save(conexao.getMikrotik(), secret);
-            FIREWALL.unlock(conexao.getMikrotik(), secret);
-        }
+//        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
+        System.out.println("CANCELADO");
+        Secret secret = conexao.createSecret(plano);
+        FIREWALL.lock(conexao.getMikrotik(), secret);
+        server.remove(conexao.getMikrotik(), secret);
+//        }
     }
 }

@@ -12,10 +12,23 @@
                     return config;
                 },
                 responseError: function (rejection) {
+                    console.log('TESTE');
                     if (rejection.status !== 401) {
+                        console.log(rejection);
+                        var message;
+                        if (rejection) {
+                            if (rejection.data) {
+                                message = rejection.data.message;
+                            } else {
+                                message = rejection.message;
+                            }
+                        }
+
+                        console.log(message);
+
                         $rootScope.messages.push({
                             title: 'Error:',
-                            body: rejection.message,
+                            body: message,
                             type: 'alert-danger'
                         });
                     }

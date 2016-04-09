@@ -73,17 +73,20 @@ public class ClienteService {
 
         if (isAvaliable(cliente)) {
             clienteRepository.save(cliente);
-            Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
             Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
 
             if (conexao != null) {
                 conexaoService.save(conexao);
             }
 
-            if (cliente.getStatus().equals(StatusCliente.CANCELADO) && contrato != null) {
-                contrato.setEquipamento(null);
-                contrato.setEquipamentoWifi(null);
-                contratoRepository.save(contrato);
+            if (cliente.getStatus().equals(StatusCliente.CANCELADO)) {
+                Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
+                if (contrato != null) {
+                    contrato.setEquipamento(null);
+                    contrato.setEquipamentoWifi(null);
+                    contratoRepository.save(contrato);
+                }
+
             }
         }
 

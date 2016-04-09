@@ -9,8 +9,7 @@
             'ngFileUpload',
             'ui.bootstrap',
             'ngMask',
-            'angular-confirm',
-            'angular-loading-bar'
+            'angular-confirm'
         ])
         .config(function ($routeProvider, $httpProvider) {
             $routeProvider.otherwise({redirectTo: '/'});

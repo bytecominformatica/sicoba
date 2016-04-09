@@ -4,6 +4,7 @@ import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
+import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,12 @@ public class ConexaoService {
         if (isDisponivel(conexao)) {
             Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
             conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
-            conexaoRepository.save(conexao);
+
+            if (conexao.getCliente().getStatus() == StatusCliente.CANCELADO) {
+                conexaoRepository.delete(conexao);
+            } else {
+                conexaoRepository.save(conexao);
+            }
             return conexao;
         } else {
             throw new ConflitException(conexao.getNome() + " já esta sendo utilizado");
