@@ -16,7 +16,6 @@ import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.HeaderRepository;
-import br.com.clairtonluz.sicoba.service.provedor.IConnectionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +42,6 @@ public class RetornoCaixaService {
     private ContratoRepository contratoRepository;
     @Autowired
     private ConexaoRepository conexaoRepository;
-    @Autowired
-    private IConnectionControl connectionControl;
 
     public Header parse(InputStream inputStream, String filename) throws IOException {
         return PARSE_RETORNO.parse(inputStream, filename);

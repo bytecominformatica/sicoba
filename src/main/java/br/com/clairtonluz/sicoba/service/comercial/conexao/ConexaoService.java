@@ -5,16 +5,18 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Plano;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
+import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Mikrotik;
+import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Secret;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
-import br.com.clairtonluz.sicoba.service.comercial.ContratoService;
+import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
+import br.com.clairtonluz.sicoba.service.provedor.Servidor;
+import me.legrange.mikrotik.ApiConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by clairtonluz on 07/12/15.
@@ -25,9 +27,11 @@ public class ConexaoService {
     @Autowired
     private ConexaoRepository conexaoRepository;
     @Autowired
-    private ContratoService contratoService;
+    private Servidor servidor;
     @Autowired
-    private ConexaoOperacaoFactory conexaoOperacaoFactory;
+    private SecretService secretService;
+    @Autowired
+    private ContratoRepository contratoRepository;
 
     public List<Conexao> buscarTodos() {
         return conexaoRepository.findAllByOrderByNomeAsc();
@@ -41,13 +45,35 @@ public class ConexaoService {
     @Async
     public void atualizarTodos() throws Exception {
         List<Conexao> list = buscarTodos();
-
         Map<Integer, Plano> planos = getPlanos(list);
 
-        for (Conexao c : list) {
-            atualizarNoServidor(c, planos.get(c.getId()));
+        Collection<List<Conexao>> conexoesPorMk = separarPorMikrotik(list);
+
+        for (List<Conexao> conexoes : conexoesPorMk) {
+            Mikrotik mikrotik = conexoes.get(0).getMikrotik();
+            try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getLogin(), mikrotik.getPass())) {
+                for (Conexao c : conexoes) {
+                    Secret secret = c.createSecret(planos.get(c.getId()));
+                    c.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
+                }
+            }
         }
     }
+
+    private Collection<List<Conexao>> separarPorMikrotik(List<Conexao> list) {
+        Map<Integer, List<Conexao>> map = new HashMap<>();
+
+        for (Conexao c : list) {
+            Integer id = c.getMikrotik().getId();
+
+            if (map.get(id) == null) {
+                map.put(id, new ArrayList<>());
+            }
+            map.get(id).add(c);
+        }
+        return map.values();
+    }
+
 
     @Transactional
     private Map<Integer, Plano> getPlanos(List<Conexao> list) {
@@ -58,7 +84,7 @@ public class ConexaoService {
                 c.setIp(buscarIpLivre());
             }
 
-            Plano plano = contratoService.buscarPorCliente(c.getCliente().getId()).getPlano();
+            Plano plano = contratoRepository.findOptionalByCliente_id(c.getCliente().getId()).getPlano();
             planos.put(c.getId(), plano);
             if (c.getCliente().getStatus() == StatusCliente.CANCELADO) {
                 conexaoRepository.delete(c);
@@ -70,7 +96,7 @@ public class ConexaoService {
     @Transactional
     public Conexao save(Conexao conexao) throws Exception {
         if (isDisponivel(conexao)) {
-            Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
+            Plano plano = contratoRepository.findOptionalByCliente_id(conexao.getCliente().getId()).getPlano();
             atualizarNoServidor(conexao, plano);
 
             if (conexao.getCliente().getStatus() == StatusCliente.CANCELADO) {
@@ -85,7 +111,12 @@ public class ConexaoService {
     }
 
     private void atualizarNoServidor(Conexao conexao, Plano plano) throws Exception {
-        conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
+        Secret secret = conexao.createSecret(plano);
+
+        Mikrotik mikrotik = conexao.getMikrotik();
+        try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getLogin(), mikrotik.getPass())) {
+            conexao.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
+        }
     }
 
     public boolean isDisponivel(Conexao conexao) {
@@ -96,10 +127,16 @@ public class ConexaoService {
     @Transactional
     public void remove(Integer id) throws Exception {
         Conexao c = conexaoRepository.findOne(id);
-        Plano plano = contratoService.buscarPorCliente(c.getCliente().getId()).getPlano();
-        conexaoOperacaoFactory.create(c).remover(c,plano);
-        conexaoRepository.delete(c);
+        Plano plano = contratoRepository.findOptionalByCliente_id(c.getCliente().getId()).getPlano();
 
+        Secret secret = c.createSecret(plano);
+        Mikrotik mikrotik = c.getMikrotik();
+
+        try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getLogin(), mikrotik.getPass())) {
+            secretService.remove(servidor, secret);
+        }
+
+        conexaoRepository.delete(c);
     }
 
     public String buscarIpLivre() {

@@ -6,7 +6,6 @@ import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
-import br.com.clairtonluz.sicoba.service.provedor.IConnectionControl;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,6 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    @Autowired
-    private IConnectionControl connectionControl;
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired

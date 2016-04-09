@@ -2,10 +2,8 @@ package br.com.clairtonluz.sicoba.service.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
-import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Secret;
-import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
-import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoOperacaoFactory;
+import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +19,7 @@ public class ContratoService {
     @Autowired
     private ContratoRepository contratoRepository;
     @Autowired
-    private ConexaoRepository conexaoRepository;
-    @Autowired
-    private ConexaoOperacaoFactory conexaoOperacaoFactory;
+    private ConexaoService conexaoService;
 
     public List<Contrato> buscarRecentes() {
         LocalDate hoje = LocalDate.now();
@@ -34,12 +30,10 @@ public class ContratoService {
     }
 
     public void salvar(Contrato contrato) throws Exception {
-        Conexao conexao = conexaoRepository.findOptionalByCliente(contrato.getCliente());
+        Conexao conexao = conexaoService.buscarOptionalPorCliente(contrato.getCliente());
         if (conexao != null) {
-            Secret secret = conexao.createSecret(contrato.getPlano());
-            conexaoOperacaoFactory.create(conexao).executar(conexao, contrato.getPlano());
+            conexaoService.save(conexao);
         }
-
         contratoRepository.save(contrato);
     }
 
