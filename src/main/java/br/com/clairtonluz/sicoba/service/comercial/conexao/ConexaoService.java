@@ -8,6 +8,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,6 +37,7 @@ public class ConexaoService {
     }
 
     @Transactional
+    @Async
     public void atualizarTodos() throws Exception {
         List<Conexao> list = buscarTodos();
 
