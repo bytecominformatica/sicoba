@@ -1,5 +1,7 @@
 package br.com.clairtonluz.sicoba.service.provedor.impl;
 
+import br.com.clairtonluz.sicoba.config.Environment;
+import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
 import br.com.clairtonluz.sicoba.service.provedor.Servidor;
 import me.legrange.mikrotik.ApiConnection;
 import me.legrange.mikrotik.MikrotikApiException;
@@ -18,27 +20,33 @@ public class ServidorMikrotik implements Servidor {
 
     @Override
     public ApiConnection connect(String host, String user, String pass) {
-        //        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
-        try {
-            con = ApiConnection.connect(host);
-            con.setTimeout(10000);
-            con.login(user, pass);
-        } catch (MikrotikApiException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
+            try {
+                con = ApiConnection.connect(host);
+                con.setTimeout(10000);
+                con.login(user, pass);
+            } catch (MikrotikApiException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
+            }
         }
         return con;
     }
 
     @Override
     public List<Map<String, String>> execute(String command) {
-        //        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
-        try {
-            return con.execute(command);
-        } catch (MikrotikApiException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
+            try {
+                System.out.println(command);
+                return con.execute(command);
+            } catch (MikrotikApiException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
+            }
+        } else {
+            System.out.println("Ambiente: " + EnvironmentFactory.create().getEnv() + " não deve lançar comando para o servidor");
         }
+        return null;
     }
 
     @Override
