@@ -12,7 +12,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by clairtonluz on 07/12/15.
@@ -41,24 +43,30 @@ public class ConexaoService {
     public void atualizarTodos() throws Exception {
         List<Conexao> list = buscarTodos();
 
+        Map<Integer, Plano> planos = new HashMap<>();
         for (Conexao c : list) {
             Cliente cliente = c.getCliente();
             if (c.getIp() == null || c.getIp().isEmpty()) {
                 c.setIp(buscarIpLivre());
             }
 
-            atualizarNoServidor(c);
-
+            Plano plano = contratoService.buscarPorCliente(c.getCliente().getId()).getPlano();
+            planos.put(c.getId(), plano);
             if (c.getCliente().getStatus() == StatusCliente.CANCELADO) {
                 conexaoRepository.delete(c);
             }
+        }
+
+        for (Conexao c : list) {
+            atualizarNoServidor(c, planos.get(c.getId()));
         }
     }
 
     @Transactional
     public Conexao save(Conexao conexao) throws Exception {
         if (isDisponivel(conexao)) {
-            atualizarNoServidor(conexao);
+            Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
+            atualizarNoServidor(conexao, plano);
 
             if (conexao.getCliente().getStatus() == StatusCliente.CANCELADO) {
                 conexaoRepository.delete(conexao);
@@ -71,8 +79,7 @@ public class ConexaoService {
         }
     }
 
-    private void atualizarNoServidor(Conexao conexao) throws Exception {
-        Plano plano = contratoService.buscarPorCliente(conexao.getCliente().getId()).getPlano();
+    private void atualizarNoServidor(Conexao conexao, Plano plano) throws Exception {
         conexaoOperacaoFactory.create(conexao).executar(conexao, plano);
     }
 
