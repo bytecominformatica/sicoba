@@ -26,7 +26,7 @@ public class ConexaoOperacaoCancelado implements IConexaoOperacao {
 //        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
         System.out.println("CANCELADO");
         Secret secret = conexao.createSecret(plano);
-        FIREWALL.lock(conexao.getMikrotik(), secret);
+//        FIREWALL.lock(conexao.getMikrotik(), secret);
         server.remove(conexao.getMikrotik(), secret);
 //        }
     }

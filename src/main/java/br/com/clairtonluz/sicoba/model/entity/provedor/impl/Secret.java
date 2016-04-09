@@ -12,12 +12,14 @@ public class Secret implements IConnectionClienteCertified {
     private String ip;
     private String mac;
     private String profile;
+    private boolean disabled;
 
-    public Secret(String login, String pass, String ip, String profile) {
+    public Secret(String login, String pass, String ip, String profile, boolean disabled) {
         this.login = login;
         this.pass = pass;
         this.ip = ip;
         this.profile = profile;
+        this.disabled = disabled;
     }
 
     @Override
@@ -36,6 +38,15 @@ public class Secret implements IConnectionClienteCertified {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    @Override
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
     @Override
@@ -64,4 +75,5 @@ public class Secret implements IConnectionClienteCertified {
     public void setProfile(String profile) {
         this.profile = profile;
     }
+
 }

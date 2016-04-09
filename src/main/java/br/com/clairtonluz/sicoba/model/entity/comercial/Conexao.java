@@ -34,7 +34,8 @@ public class Conexao extends EntityGeneric {
     private String ip;
 
     public Secret createSecret(Plano plano) {
-        return new Secret(nome, senha, ip, plano.getNome());
+        boolean disabled = cliente.getStatus() != StatusCliente.ATIVO;
+        return new Secret(nome, senha, ip, plano.getNome(), disabled);
     }
 
     public String getNome() {

@@ -27,15 +27,17 @@ public class PPPoE extends MikrotikConnection implements IConnectionControl {
     }
 
     private void create(IServer server, IConnectionClienteCertified client) throws Exception {
+        String disabled = client.isDisabled() ? "yes" : "no";
         execute(server,
-                "/ppp/secret/add name=%s password=%s profile=%s remote-address=%s service=pppoe",
-                client.getLogin(), client.getPass(), client.getProfile(), client.getIp());
+                "/ppp/secret/add name=%s password=%s profile=%s remote-address=%s service=pppoe disabled=%s",
+                client.getLogin(), client.getPass(), client.getProfile(), client.getIp(), disabled);
     }
 
     private void update(IServer server, IConnectionClienteCertified client) throws Exception {
+        String disabled = client.isDisabled() ? "yes" : "no";
         execute(server,
-                "/ppp/secret/set .id=%s password=%s profile=%s remote-address=%s service=pppoe",
-                client.getLogin(), client.getPass(), client.getProfile(), client.getIp());
+                "/ppp/secret/set .id=%s password=%s profile=%s remote-address=%s service=pppoe disabled=%s",
+                client.getLogin(), client.getPass(), client.getProfile(), client.getIp(), disabled);
     }
 
     public boolean exists(IServer server, IConnectionClienteCertified client) throws Exception {

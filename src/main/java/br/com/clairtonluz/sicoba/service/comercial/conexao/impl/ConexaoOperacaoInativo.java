@@ -27,7 +27,7 @@ public class ConexaoOperacaoInativo implements IConexaoOperacao {
         System.out.println("INATIVO");
         Secret secret = conexao.createSecret(plano);
         server.save(conexao.getMikrotik(), secret);
-        FIREWALL.lock(conexao.getMikrotik(), secret);
+//        FIREWALL.lock(conexao.getMikrotik(), secret);
 //        }
     }
 }

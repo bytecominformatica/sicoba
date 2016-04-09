@@ -12,7 +12,6 @@
                     return config;
                 },
                 responseError: function (rejection) {
-                    console.log('TESTE');
                     if (rejection.status !== 401) {
                         console.log(rejection);
                         var message;
