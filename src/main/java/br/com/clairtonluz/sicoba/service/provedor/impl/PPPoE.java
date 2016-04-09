@@ -14,9 +14,6 @@ import java.util.Map;
 @Service
 public class PPPoE extends MikrotikConnection implements IConnectionControl {
 
-    @Autowired
-    private IFirewall firewall;
-
     @Override
     public void save(IServer server, IConnectionClienteCertified client) throws Exception {
         if (exists(server, client)) {
@@ -49,7 +46,6 @@ public class PPPoE extends MikrotikConnection implements IConnectionControl {
 
     @Override
     public void remove(IServer server, IConnectionClienteCertified client) throws Exception {
-        firewall.lock(server, client);
         execute(server, String.format("/ppp/secret/remove .id=%s", client.getLogin()));
     }
 

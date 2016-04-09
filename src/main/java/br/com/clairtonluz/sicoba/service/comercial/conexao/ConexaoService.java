@@ -38,14 +38,22 @@ public class ConexaoService {
         return conexaoRepository.findOptionalByCliente(cliente);
     }
 
-    @Transactional
     @Async
     public void atualizarTodos() throws Exception {
         List<Conexao> list = buscarTodos();
 
+        Map<Integer, Plano> planos = getPlanos(list);
+
+        for (Conexao c : list) {
+            atualizarNoServidor(c, planos.get(c.getId()));
+        }
+    }
+
+    @Transactional
+    private Map<Integer, Plano> getPlanos(List<Conexao> list) {
         Map<Integer, Plano> planos = new HashMap<>();
         for (Conexao c : list) {
-            Cliente cliente = c.getCliente();
+
             if (c.getIp() == null || c.getIp().isEmpty()) {
                 c.setIp(buscarIpLivre());
             }
@@ -56,10 +64,7 @@ public class ConexaoService {
                 conexaoRepository.delete(c);
             }
         }
-
-        for (Conexao c : list) {
-            atualizarNoServidor(c, planos.get(c.getId()));
-        }
+        return planos;
     }
 
     @Transactional
@@ -85,13 +90,16 @@ public class ConexaoService {
 
     public boolean isDisponivel(Conexao conexao) {
         Conexao conexao2 = conexaoRepository.findOptionalByNome(conexao.getNome());
-        return conexao2 == null || conexao2.getId() == conexao.getId();
+        return conexao2 == null || conexao2.getId().equals(conexao.getId());
     }
 
     @Transactional
-    public void remove(Integer id) {
+    public void remove(Integer id) throws Exception {
         Conexao c = conexaoRepository.findOne(id);
+        Plano plano = contratoService.buscarPorCliente(c.getCliente().getId()).getPlano();
+        conexaoOperacaoFactory.create(c).remover(c,plano);
         conexaoRepository.delete(c);
+
     }
 
     public String buscarIpLivre() {

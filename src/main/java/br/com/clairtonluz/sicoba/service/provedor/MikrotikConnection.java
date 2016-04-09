@@ -35,11 +35,9 @@ public abstract class MikrotikConnection implements AutoCloseable {
 
     protected MikrotikConnection open(IServer server) throws MikrotikApiException, IOException {
         if (!NetworkUtil.INSTANCE.ping(server.getHost())) {
-//            TODO: MensagemException
-//            throw new MensagemException(String.format("Mikrotik: %s - %s:%d não disponível",
-//                    server.getName(), server.getHost(), server.getPort()));
+            throw new RuntimeException(String.format("Mikrotik: %s - %s:%d não disponível",
+                    server.getName(), server.getHost(), server.getPort()));
         }
-
         con = ApiConnection.connect(server.getHost(), server.getPort());
         return this;
     }

@@ -24,6 +24,7 @@ public class ConexaoAPI {
     public void getAtualizarTodos() throws Exception {
         conexaoService.atualizarTodos();
     }
+
     @RequestMapping(value = "/cliente/{id}", method = RequestMethod.GET)
     public Conexao getPorCliente(@PathVariable Integer id) {
         Cliente cliente = new Cliente();
@@ -55,7 +56,7 @@ public class ConexaoAPI {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathVariable Integer id) {
+    public void remove(@PathVariable Integer id) throws Exception {
         conexaoService.remove(id);
     }
 
