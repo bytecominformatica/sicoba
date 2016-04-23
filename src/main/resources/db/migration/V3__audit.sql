@@ -1,0 +1,32 @@
+INSERT INTO pais (nome,created_at,updated_at) VALUES ('Brasil','2015-01-08 22:27:10','2015-01-08 22:27:10');
+
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Acre','AC',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Alagoas','AL',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Amazonas','AM',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Amapá','AP',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Bahia','BA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Ceará','CE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Distrito Federal','DF',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Espírito Santo','ES',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Goiás','GO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Maranhão','MA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Minas Gerais','MG',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Mato Grosso do Sul','MS',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Mato Grosso','MT',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Pará','PA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Paraíba','PB',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Pernambuco','PE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Piauí','PI',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Paraná','PR',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rio de Janeiro','RJ',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rio Grande do Norte','RN',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Roraima','RR',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rondônia','RO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rio Grande do Sul','RS',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Santa Catarina','SC',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Sergipe','SE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('São Paulo','SP',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Tocantins','TO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+
+INSERT INTO users (name, username, password, enabled, created_at, updated_at) VALUES ('Administrador', 'admin', '$2a$10$IV1.6EyW2KvKOhlLf8mFYuK6JEjWvrfqDXm1c9wPMcfQW2/ywaS4G', true, now(), now());
+INSERT INTO user_roles (user_id, role, created_at, updated_at) VALUES (1, 'ROLE_ADMIN', now(), now());
