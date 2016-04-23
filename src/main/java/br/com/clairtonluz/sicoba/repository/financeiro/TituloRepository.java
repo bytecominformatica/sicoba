@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.repository.financeiro;
 
+import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import org.springframework.data.repository.CrudRepository;
@@ -18,7 +19,7 @@ public interface TituloRepository extends CrudRepository<Titulo, Integer> {
 
     List<Titulo> findByNumeroBoletoBetween(Integer inicio, Integer fim);
 
-    List<Titulo> findByStatusAndDataVencimentoLessThanOrderByDataVencimentoAsc(StatusTitulo status, Date date);
+    List<Titulo> findByStatusAndDataVencimentoLessThanAndCliente_statusNotOrderByDataVencimentoAsc(StatusTitulo statusTitulo, Date date, StatusCliente statusCliente);
 
     Titulo findOptionalByNumeroBoleto(Integer numeroBoleto);
 

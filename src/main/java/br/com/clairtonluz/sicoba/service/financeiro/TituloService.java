@@ -3,6 +3,7 @@ package br.com.clairtonluz.sicoba.service.financeiro;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
+import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.Carne;
@@ -72,7 +73,7 @@ public class TituloService {
 
     public List<Titulo> buscarVencidos() {
         return tituloRepository
-                .findByStatusAndDataVencimentoLessThanOrderByDataVencimentoAsc(StatusTitulo.PENDENTE, new Date());
+                .findByStatusAndDataVencimentoLessThanAndCliente_statusNotOrderByDataVencimentoAsc(StatusTitulo.PENDENTE, new Date(), StatusCliente.CANCELADO);
     }
 
     @Transactional
