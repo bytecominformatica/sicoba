@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.service.financeiro;
 
+import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
@@ -78,8 +79,7 @@ public class TituloService {
     public Titulo save(Titulo titulo) {
 
         if (existe(titulo)) {
-//            TODO: MensagemException
-//            throw new MensagemException("Titulo de número " + titulo.getNumeroBoleto() + " já existe.");
+            throw new ConflitException("Titulo de número " + titulo.getNumeroBoleto() + " já existe.");
         }
 
         return tituloRepository.save(titulo);
@@ -159,8 +159,12 @@ public class TituloService {
     }
 
     private boolean existe(Titulo titulo) {
-        Titulo t = tituloRepository.findOptionalByNumeroBoleto(titulo.getNumeroBoleto());
-        return t != null && t.getId() != titulo.getId();
+        boolean existe = false;
+        if (titulo.getNumeroBoleto() != null) {
+            Titulo t = tituloRepository.findOptionalByNumeroBoleto(titulo.getNumeroBoleto());
+            existe = t != null && t.getId() != titulo.getId();
+        }
+        return existe;
     }
 
     private boolean titulosNaoRegistrado(Integer modalidade, Integer inicio, Integer fim) {
