@@ -1,32 +1,170 @@
-INSERT INTO pais (nome,created_at,updated_at) VALUES ('Brasil','2015-01-08 22:27:10','2015-01-08 22:27:10');
+ALTER TABLE bairro
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE cedente
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE cidade
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE cliente
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE conexao
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE contrato
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE endereco
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE equipamento
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE estado
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE header
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE header_lote
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE mikrotik
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE pais
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE plano
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE registro
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE registro_detalhe
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE titulo
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE trailer
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE trailer_lote
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE users
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
+ALTER TABLE user_roles
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN updated_by VARCHAR(255);
 
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Acre','AC',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Alagoas','AL',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Amazonas','AM',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Amapá','AP',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Bahia','BA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Ceará','CE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Distrito Federal','DF',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Espírito Santo','ES',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Goiás','GO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Maranhão','MA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Minas Gerais','MG',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Mato Grosso do Sul','MS',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Mato Grosso','MT',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Pará','PA',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Paraíba','PB',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Pernambuco','PE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Piauí','PI',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Paraná','PR',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rio de Janeiro','RJ',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rio Grande do Norte','RN',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Roraima','RR',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rondônia','RO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Rio Grande do Sul','RS',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Santa Catarina','SC',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Sergipe','SE',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('São Paulo','SP',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
-INSERT INTO estado (nome,uf,pais_id,created_at,updated_at) VALUES ('Tocantins','TO',1,'2015-01-08 22:27:10','2015-01-08 22:27:10');
+UPDATE bairro
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE cedente
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE cidade
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE cliente
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE conexao
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE contrato
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE endereco
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE equipamento
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE estado
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE header
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE header_lote
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE mikrotik
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE pais
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE plano
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE registro
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE registro_detalhe
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE titulo
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE trailer
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE trailer_lote
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE users
+SET created_by = 'indefinido', updated_by = 'indefinido';
+UPDATE user_roles
+SET created_by = 'indefinido', updated_by = 'indefinido';
 
-INSERT INTO users (name, username, password, enabled, created_at, updated_at) VALUES ('Administrador', 'admin', '$2a$10$IV1.6EyW2KvKOhlLf8mFYuK6JEjWvrfqDXm1c9wPMcfQW2/ywaS4G', true, now(), now());
-INSERT INTO user_roles (user_id, role, created_at, updated_at) VALUES (1, 'ROLE_ADMIN', now(), now());
+ALTER TABLE bairro
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE cedente
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE cidade
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE cliente
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE conexao
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE contrato
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE endereco
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE equipamento
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE estado
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE header
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE header_lote
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE mikrotik
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE pais
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE plano
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE registro
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE registro_detalhe
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE titulo
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE trailer
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE trailer_lote
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE users
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;
+ALTER TABLE user_roles
+ALTER COLUMN created_by SET NOT NULL,
+ALTER COLUMN updated_by SET NOT NULL;

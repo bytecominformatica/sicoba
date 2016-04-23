@@ -1,7 +1,7 @@
 package br.com.clairtonluz.sicoba.model.entity.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.estoque.Equipamento;
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "contrato")
-public class Contrato extends EntityGeneric {
+public class Contrato extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "contrato_id_seq")

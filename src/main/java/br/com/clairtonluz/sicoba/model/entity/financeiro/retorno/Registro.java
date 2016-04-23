@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.retorno;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "registro")
-public class Registro extends EntityGeneric {
+public class Registro extends BaseEntity {
 
     public static final int ENTRADA_CONFIRMADA = 2;
     public static final int ENTRADA_REJEITADA = 3;

@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.security;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "users")
-public class User extends EntityGeneric {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "users_id_seq")
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq")

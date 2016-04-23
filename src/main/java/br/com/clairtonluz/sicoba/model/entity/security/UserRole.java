@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.security;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "user_roles")
-public class UserRole extends EntityGeneric {
+public class UserRole extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_roles_id_seq")

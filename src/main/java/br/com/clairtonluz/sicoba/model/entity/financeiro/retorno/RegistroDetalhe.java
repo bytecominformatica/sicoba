@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.retorno;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "registro_detalhe")
-public class RegistroDetalhe extends EntityGeneric {
+public class RegistroDetalhe extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "registro_detalhe_id_seq")

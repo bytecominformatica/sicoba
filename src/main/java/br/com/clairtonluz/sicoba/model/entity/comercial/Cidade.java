@@ -1,12 +1,12 @@
 package br.com.clairtonluz.sicoba.model.entity.comercial;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cidade")
-public class Cidade extends EntityGeneric {
+public class Cidade extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "cidade_id_seq")
     @SequenceGenerator(name = "cidade_id_seq", sequenceName = "cidade_id_seq")

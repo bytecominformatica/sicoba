@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.estoque;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "equipamento")
-public class Equipamento extends EntityGeneric {
+public class Equipamento extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "equipamento_id_seq")

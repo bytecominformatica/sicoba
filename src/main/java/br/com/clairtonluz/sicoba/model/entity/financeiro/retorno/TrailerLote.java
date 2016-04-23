@@ -1,12 +1,12 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.retorno;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "trailer_lote")
-public class TrailerLote extends EntityGeneric {
+public class TrailerLote extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "trailer_lote_id_seq")

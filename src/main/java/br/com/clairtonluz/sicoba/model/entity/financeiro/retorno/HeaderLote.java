@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.retorno;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "header_lote")
-public class HeaderLote extends EntityGeneric {
+public class HeaderLote extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "header_lote_id_seq")
     @SequenceGenerator(name = "header_lote_id_seq", sequenceName = "header_lote_id_seq")

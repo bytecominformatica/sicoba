@@ -7,6 +7,7 @@ import me.legrange.mikrotik.ApiConnection;
 import me.legrange.mikrotik.MikrotikApiException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,8 @@ public class ServidorMikrotik implements Servidor {
 
     @Override
     public List<Map<String, String>> execute(String command) {
-        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
+        String env = EnvironmentFactory.create().getEnv();
+        if (env == Environment.PRODUCTION) {
             try {
                 System.out.println(command);
                 return con.execute(command);
@@ -44,9 +46,9 @@ public class ServidorMikrotik implements Servidor {
                 throw new RuntimeException(e.getMessage());
             }
         } else {
-            System.out.println("Ambiente: " + EnvironmentFactory.create().getEnv() + " não deve lançar comando para o servidor");
+            System.out.println("Ambiente: " + env + " não deve lançar comando para o servidor");
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

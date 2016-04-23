@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.comercial;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Secret;
 
@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "conexao")
-public class Conexao extends EntityGeneric {
+public class Conexao extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "conexao_id_seq")
     @SequenceGenerator(name = "conexao_id_seq", sequenceName = "conexao_id_seq")

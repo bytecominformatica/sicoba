@@ -1,13 +1,13 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "cedente")
-public class Cedente extends EntityGeneric {
+public class Cedente extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "cedente_id_seq")

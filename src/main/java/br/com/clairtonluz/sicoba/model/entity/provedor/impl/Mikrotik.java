@@ -1,13 +1,13 @@
 package br.com.clairtonluz.sicoba.model.entity.provedor.impl;
 
-import br.com.clairtonluz.sicoba.model.entity.extra.EntityGeneric;
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.provedor.IServer;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "mikrotik")
-public class Mikrotik extends EntityGeneric implements IServer {
+public class Mikrotik extends BaseEntity implements IServer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "mikrotik_id_seq")
