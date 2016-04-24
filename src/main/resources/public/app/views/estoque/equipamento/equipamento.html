@@ -7,6 +7,11 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(equipamento)" novalidate>
+    <div class="col-lg-4">
+        <label>Cliente:</label>
+        <a ng-class="contrato.cliente.status" ng-href="#/cliente/{{contrato.cliente.id}}">{{contrato.cliente.nome}}</a>
+    </div>
+
     <div class="col-lg-4" ng-class="{'has-error': (form.marca.$invalid && (form.$submitted || form.marca.$touched))}">
         <label>Marca</label>
         <input name="marca" ng-model="equipamento.marca" class="form-control" type="text" required>

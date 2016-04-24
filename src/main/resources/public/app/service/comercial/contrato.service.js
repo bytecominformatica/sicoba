@@ -17,6 +17,11 @@
                         method: 'GET',
                         url: 'api/contratos/cliente/:clienteId',
                         params: {clienteId: '@clienteId'}
+                    },
+                    buscarPorEquipamento: {
+                        method: 'GET',
+                        url: 'api/contratos/equipamento/:equipamentoId',
+                        params: {equipamentoId: '@equipamentoId'}
                     }
                 });
         }]);

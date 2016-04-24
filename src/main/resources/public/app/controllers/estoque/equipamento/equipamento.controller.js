@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('EquipamentoCtrl', function ($scope, $rootScope, $routeParams, Equipamento) {
+        .controller('EquipamentoCtrl', function ($scope, $rootScope, $routeParams, Equipamento, Contrato) {
 
             $scope.save = _save;
             $scope.remove = _remove;
@@ -12,6 +12,7 @@
             function _init() {
                 if ($routeParams.id) {
                     $scope.equipamento = Equipamento.get({id: $routeParams.id});
+                    $scope.contrato = Contrato.buscarPorEquipamento({equipamentoId: $routeParams.id});
                 } else {
                     $scope.equipamento = {tipo: "INSTALACAO", status: "OK"};
                 }

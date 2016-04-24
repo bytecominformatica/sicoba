@@ -124,7 +124,6 @@ public class ClienteService {
 
     public List<Cliente> buscarUltimosCancelados() {
         Date data = DateUtil.toDate(LocalDate.now().minusMonths(2));
-        System.out.println(data);
         return clienteRepository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, data);
     }
 }

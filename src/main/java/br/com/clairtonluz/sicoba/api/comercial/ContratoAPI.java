@@ -38,9 +38,14 @@ public class ContratoAPI {
         return contratoService.save(contrato);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void remove(@PathVariable Integer id) {
         contratoService.remove(id);
     }
 
+
+    @RequestMapping(value = "equipamento/{id}", method = RequestMethod.GET)
+    public Contrato buscarPorEquipamento(@PathVariable Integer id) {
+        return contratoService.buscarPorEquipamento(id);
+    }
 }

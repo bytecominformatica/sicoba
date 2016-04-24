@@ -51,4 +51,8 @@ public class ContratoService {
     public Contrato save(Contrato contrato) {
         return contratoRepository.save(contrato);
     }
+
+    public Contrato buscarPorEquipamento(Integer equipamentoId) {
+        return contratoRepository.findOptionalByEquipamento_id(equipamentoId);
+    }
 }

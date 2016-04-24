@@ -17,4 +17,6 @@ public interface ContratoRepository extends CrudRepository<Contrato, Integer> {
     Contrato findOptionalByCliente_id(Integer clienteId);
 
     List<Contrato> findByPlano(Plano plano);
+
+    Contrato findOptionalByEquipamento_id(Integer equipamentoId);
 }
