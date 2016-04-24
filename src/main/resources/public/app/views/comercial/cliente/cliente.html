@@ -165,7 +165,12 @@
         <br/>
 
         <div class="pull-right">
-            <button class="btn btn-primary" type="submit">{{cliente.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-primary" type="submit" ng-hide="cliente.status == 'CANCELADO'">{{cliente.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-danger" type="button" ng-show="cliente.status == 'CANCELADO'"
+                    ng-click="form.$valid && save(cliente)"
+                    confirm="(ATENÇÃO) Ao cancelar um cliente os equipamentos serão desalocados e todos os titulos não vencidos serão apagados. Tem certeza que desseja cancelar o(a) cliente {{cliente.nome}}?">
+                {{cliente.id ? 'Atualizar' : 'Salvar'}}
+            </button>
             <a ng-href="#/clientes" class="btn btn-default">Voltar</a>
         </div>
         <br/>

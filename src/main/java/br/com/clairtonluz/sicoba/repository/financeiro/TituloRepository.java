@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.repository.financeiro;
 
+import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
@@ -31,5 +32,5 @@ public interface TituloRepository extends CrudRepository<Titulo, Integer> {
 
     List<Titulo> findByDataVencimentoBetweenAndStatus(Date inicio, Date fim, StatusTitulo status);
 
-
+    List<Titulo> findByClienteAndStatusAndDataVencimentoGreaterThan(Cliente cliente, StatusTitulo status, Date date);
 }

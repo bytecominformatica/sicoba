@@ -51,17 +51,6 @@ public class TituloService {
         return m;
     }
 
-    public void removerTodosAbertasNaoVencida(List<Titulo> titulos) {
-        if (titulos != null) {
-//            titulos.stream().filter(m -> m.getStatus().equals(StatusTitulo.PENDENTE)
-//                    && m.getDataVencimento().isAfter(LocalDate.now()))
-//                    .forEach(m -> {
-//                        remove(m);
-//                        titulos.remove(m);
-//                    });
-        }
-    }
-
     public List<Titulo> buscarPorBoleto(Integer inicio, Integer fim) {
         return tituloRepository.findByNumeroBoletoBetween(inicio, fim);
     }
@@ -200,5 +189,9 @@ public class TituloService {
         } else {
             return tituloRepository.findByDataVencimentoBetweenAndStatus(inicio, fim, status);
         }
+    }
+
+    public List<Titulo> buscarNaoVencidosPorCliente(Cliente cliente) {
+        return tituloRepository.findByClienteAndStatusAndDataVencimentoGreaterThan(cliente, StatusTitulo.PENDENTE, new Date());
     }
 }

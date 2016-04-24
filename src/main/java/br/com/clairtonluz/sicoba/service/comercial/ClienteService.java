@@ -2,10 +2,12 @@ package br.com.clairtonluz.sicoba.service.comercial;
 
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.*;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
+import br.com.clairtonluz.sicoba.service.financeiro.TituloService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
     @Autowired
     private ConexaoRepository conexaoRepository;
+    @Autowired
+    private TituloService tituloService;
     @Autowired
     private ContratoRepository contratoRepository;
     @Autowired
@@ -77,17 +81,25 @@ public class ClienteService {
             }
 
             if (cliente.getStatus().equals(StatusCliente.CANCELADO)) {
-                Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
-                if (contrato != null) {
-                    contrato.setEquipamento(null);
-                    contrato.setEquipamentoWifi(null);
-                    contratoRepository.save(contrato);
-                }
-
+                efetuarCancelamento(cliente);
             }
         }
 
         return cliente;
+    }
+
+    private void efetuarCancelamento(Cliente cliente) {
+        Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
+        if (contrato != null) {
+            contrato.setEquipamento(null);
+            contrato.setEquipamentoWifi(null);
+            contratoRepository.save(contrato);
+        }
+        List<Titulo> titulosNaoVencidos = tituloService.buscarNaoVencidosPorCliente(cliente);
+
+        titulosNaoVencidos.forEach(it -> {
+            tituloService.remove(it.getId());
+        });
     }
 
     public boolean isAvaliable(Cliente cliente) {
