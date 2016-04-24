@@ -162,7 +162,7 @@ public class TituloService {
         boolean existe = false;
         if (titulo.getNumeroBoleto() != null) {
             Titulo t = tituloRepository.findOptionalByNumeroBoleto(titulo.getNumeroBoleto());
-            existe = t != null && t.getId() != titulo.getId();
+            existe = t != null && !t.getId().equals(titulo.getId());
         }
         return existe;
     }
