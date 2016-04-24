@@ -6,25 +6,13 @@
 
             $scope.order = _order;
 
-            _buscarTitulosVencido();
-            _buscarClientesSemTitulo();
-            _buscarClientesInativo();
-            _buscarContratosNovos();
+            _init();
 
-
-            function _buscarTitulosVencido() {
+            function _init() {
                 $scope.titulosVencidos = Titulo.vencidos();
-            }
-
-            function _buscarClientesSemTitulo() {
                 $scope.clientesSemTitulo = Cliente.semTitulo();
-            }
-
-            function _buscarClientesInativo() {
+                $scope.clientesCancelados = Cliente.ultimosCancelados();
                 $scope.clientesInativo = Cliente.query({status: 'INATIVO'});
-            }
-
-            function _buscarContratosNovos() {
                 $scope.contratosNovos = Contrato.novos();
             }
 

@@ -29,4 +29,6 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
     @Query("select c from Cliente c where c.status <> 2 and c.id not in(select DISTINCT(m.cliente.id) from Titulo m where m.dataVencimento > :date)")
     List<Cliente> findBySemTitulosDepoisDe(@Param("date") Date date);
+
+    List<Cliente> findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente status, Date data);
 }

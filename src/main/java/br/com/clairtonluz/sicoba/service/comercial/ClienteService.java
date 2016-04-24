@@ -121,4 +121,10 @@ public class ClienteService {
     public Conexao buscarPorCliente(Integer clienteId) {
         return conexaoRepository.findOptionalByCliente(buscarPorId(clienteId));
     }
+
+    public List<Cliente> buscarUltimosCancelados() {
+        Date data = DateUtil.toDate(LocalDate.now().minusMonths(2));
+        System.out.println(data);
+        return clienteRepository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, data);
+    }
 }

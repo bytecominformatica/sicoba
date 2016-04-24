@@ -17,6 +17,11 @@
                         method: 'GET',
                         url: 'api/clientes/ultimos_alterados',
                         isArray: true
+                    },
+                    ultimosCancelados: {
+                        method: 'GET',
+                        url: 'api/clientes/ultimos_cancelados',
+                        isArray: true
                     }
                 });
         });

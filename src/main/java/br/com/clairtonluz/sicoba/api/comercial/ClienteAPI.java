@@ -51,6 +51,12 @@ public class ClienteAPI {
         return clienteService.buscarUltimosAlterados();
     }
 
+
+    @RequestMapping(value = "/ultimos_cancelados", method = RequestMethod.GET)
+    public List<Cliente> getUltimosCancelados() {
+        return clienteService.buscarUltimosCancelados();
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Cliente> query(@RequestParam(value = "nome", required = false) String nome,
                                @RequestParam(value = "status", required = false) StatusCliente status) {

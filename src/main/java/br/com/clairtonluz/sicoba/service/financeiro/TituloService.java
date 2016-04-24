@@ -62,7 +62,6 @@ public class TituloService {
         }
     }
 
-
     public List<Titulo> buscarPorBoleto(Integer inicio, Integer fim) {
         return tituloRepository.findByNumeroBoletoBetween(inicio, fim);
     }
