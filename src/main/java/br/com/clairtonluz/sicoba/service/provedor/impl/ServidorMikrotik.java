@@ -7,9 +7,13 @@ import me.legrange.mikrotik.ApiConnection;
 import me.legrange.mikrotik.MikrotikApiException;
 import org.springframework.stereotype.Service;
 
+import javax.net.SocketFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static me.legrange.mikrotik.ApiConnection.DEFAULT_COMMAND_TIMEOUT;
+import static me.legrange.mikrotik.ApiConnection.DEFAULT_PORT;
 
 /**
  * Created by clairtonluz<clairton.c.l@gmail.com> on 09/04/16.
@@ -20,10 +24,10 @@ public class ServidorMikrotik implements Servidor {
     private ApiConnection con;
 
     @Override
-    public ApiConnection connect(String host, String user, String pass) {
+    public ApiConnection connect(String host, int port, String user, String pass) {
         if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
             try {
-                con = ApiConnection.connect(host);
+                con = ApiConnection.connect(SocketFactory.getDefault(), host, port, DEFAULT_COMMAND_TIMEOUT);
                 con.setTimeout(10000);
                 con.login(user, pass);
             } catch (MikrotikApiException e) {

@@ -5,7 +5,7 @@ package br.com.clairtonluz.sicoba.service.provedor;
  */
 public interface Servidor extends AutoCloseable {
 
-    <T> T connect(String host, String user, String pass);
+    <T> T connect(String host, int port, String user, String pass);
 
     <T> T execute(String command);
 

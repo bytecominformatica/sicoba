@@ -51,7 +51,7 @@ public class ConexaoService {
 
         for (List<Conexao> conexoes : conexoesPorMk) {
             Mikrotik mikrotik = conexoes.get(0).getMikrotik();
-            try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getLogin(), mikrotik.getPass())) {
+            try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getPort(), mikrotik.getLogin(), mikrotik.getPass())) {
                 for (Conexao c : conexoes) {
                     Secret secret = c.createSecret(planos.get(c.getId()));
                     c.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
@@ -114,7 +114,7 @@ public class ConexaoService {
         Secret secret = conexao.createSecret(plano);
 
         Mikrotik mikrotik = conexao.getMikrotik();
-        try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getLogin(), mikrotik.getPass())) {
+        try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getPort(), mikrotik.getLogin(), mikrotik.getPass())) {
             conexao.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
         }
     }
@@ -132,7 +132,7 @@ public class ConexaoService {
         Secret secret = c.createSecret(plano);
         Mikrotik mikrotik = c.getMikrotik();
 
-        try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getLogin(), mikrotik.getPass())) {
+        try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getPort(), mikrotik.getLogin(), mikrotik.getPass())) {
             secretService.remove(servidor, secret);
         }
 
