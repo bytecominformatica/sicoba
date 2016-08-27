@@ -11,8 +11,39 @@ Contact
 Setup database
 --------------
 ```shell
-echo /etc/profile.d/database.sh > 'export JDBC_DATABASE_URL='jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom'
+sudo -i
+adduser bytecom
+passwd bytecom
+
+echo "export JDBC_DATABASE_URL='jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom'" > /etc/profile.d/database.sh
+
+sudo -i -u postgres
+
 ```
+
+
+```sql
+CREATE USER bytecom WITH PASSWORD 'bytecom';
+GRANT ALL PRIVILEGES ON DATABASE bytecom to bytecom;
+\q
+```
+
+Setup project
+-------------
+```shell
+cd path_to_project
+
+npm install
+bower install
+
+```
+
+
+Credentials default to login in system
+--------------------------------------
+user:admin
+pass:admin
+
 Technologies In Use
 -------------------
 
