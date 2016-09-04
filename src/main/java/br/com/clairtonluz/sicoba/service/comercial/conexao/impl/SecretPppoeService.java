@@ -6,6 +6,7 @@ import br.com.clairtonluz.sicoba.service.provedor.Servidor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by clairtonluz<clairton.c.l@gmail.com> on 09/04/16.
@@ -37,6 +38,12 @@ public class SecretPppoeService implements SecretService {
         return !result.isEmpty();
     }
 
+    private List getActive(Servidor servidor, Secret secret) {
+        String command = String.format("/ppp/active/print where name=%s", secret.getLogin());
+        return servidor.execute(command);
+    }
+
+
     private void create(Servidor servidor, Secret secret) {
         String disabled = secret.isDisabled() ? "yes" : "no";
         String command = String.format("/ppp/secret/add name=%s password=%s profile=%s remote-address=%s service=pppoe disabled=%s",
@@ -49,15 +56,20 @@ public class SecretPppoeService implements SecretService {
         String command = String.format("/ppp/secret/set .id=%s password=%s profile=%s remote-address=%s service=pppoe disabled=%s",
                 secret.getLogin(), secret.getPass(), secret.getProfile(), secret.getIp(), disabled);
 
-        if (secret.isDisabled()) {
-            desconect(servidor, secret);
-        }
         servidor.execute(command);
+
+        if (secret.isDisabled()) {
+            disconnect(servidor, secret);
+        }
     }
 
-
-    private void desconect(Servidor servidor, Secret secret) {
-        String command = String.format("/ppp/active/remove .id=%s", secret.getLogin());
-        servidor.execute(command);
+    private void disconnect(Servidor servidor, Secret secret) {
+        List<Map<String, String>> result = getActive(servidor, secret);
+        if (!result.isEmpty()) {
+            result.forEach(active -> {
+                String command = String.format("/ppp/active/remove .id=%s", active.get(".id"));
+                servidor.execute(command);
+            });
+        }
     }
 }
