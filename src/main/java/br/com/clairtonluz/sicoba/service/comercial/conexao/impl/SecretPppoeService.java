@@ -48,6 +48,16 @@ public class SecretPppoeService implements SecretService {
         String disabled = secret.isDisabled() ? "yes" : "no";
         String command = String.format("/ppp/secret/set .id=%s password=%s profile=%s remote-address=%s service=pppoe disabled=%s",
                 secret.getLogin(), secret.getPass(), secret.getProfile(), secret.getIp(), disabled);
+
+        if (secret.isDisabled()) {
+            desconect(servidor, secret);
+        }
+        servidor.execute(command);
+    }
+
+
+    private void desconect(Servidor servidor, Secret secret) {
+        String command = String.format("/ppp/active/remove .id=%s", secret.getLogin());
         servidor.execute(command);
     }
 }
