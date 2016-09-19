@@ -1,5 +1,7 @@
 package br.com.clairtonluz.sicoba.model.entity.comercial;
 
+import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -9,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "plano")
-public class Plano {
+public class Plano extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "plano_id_seq")
     @SequenceGenerator(name = "plano_id_seq", sequenceName = "plano_id_seq")
@@ -23,19 +25,6 @@ public class Plano {
     @Column(name = "valor_instalacao")
     private Double valorInstalacao;
     private Double valor;
-
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    protected Date createdAt;
-
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    protected Date updatedAt;
-
-    public Plano() {
-        this.createdAt = new Date();
-        this.updatedAt = new Date();
-    }
 
     public String getNome() {
         return nome;
