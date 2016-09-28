@@ -56,6 +56,15 @@ public class Endereco extends BaseEntity {
         this.bairro = bairro;
     }
 
+    public String getLogradouroNumeroComplemento() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(logradouro).append(", ").append(numero);
+        if (complemento != null && !complemento.isEmpty()) {
+            sb.append(", ").append(complemento);
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

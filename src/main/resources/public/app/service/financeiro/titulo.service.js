@@ -24,6 +24,24 @@
                         params: {clienteId: '@clienteId'},
                         isArray: true
                     },
+                    gerarBoletos: {
+                        method: 'GET',
+                        url: 'api/titulos/boletos',
+                        headers: {
+                            accept: 'application/pdf'
+                        },
+                        responseType: 'arraybuffer',
+                        cache: false,
+                        transformResponse: function (data) {
+                            var pdf;
+                            if (data) {
+                                pdf = new Blob([data], {type: 'application/pdf'});
+                            }
+                            return {
+                                file: pdf
+                            };
+                        }
+                    },
                     criarCarne: {
                         method: 'POST',
                         url: 'api/titulos/carne',

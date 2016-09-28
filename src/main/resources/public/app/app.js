@@ -9,6 +9,7 @@
             'ngFileUpload',
             'ui.bootstrap',
             'ngMask',
+            'ngFileSaver',
             'angular-confirm'
         ])
         .config(function ($routeProvider, $httpProvider) {

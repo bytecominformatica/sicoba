@@ -85,4 +85,12 @@ public class TituloAPI {
         tituloService.remove(id);
     }
 
+    @RequestMapping(value = "/boletos", method = RequestMethod.GET)
+    public byte[] gerarPDF(@RequestParam(name = "titulos") List<Integer> titulos) {
+        byte[] contents = null;
+        if (titulos != null && !titulos.isEmpty()) {
+            contents = tituloService.gerarPDF(titulos);
+        }
+        return contents;
+    }
 }

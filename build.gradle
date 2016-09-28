@@ -35,6 +35,12 @@ dependencies {
     compile('me.legrange:mikrotik:3.0.1')
     compile("org.flywaydb:flyway-core")
 
+
+    compile('br.com.caelum.stella:caelum-stella-core:2.1.2')
+    compile('br.com.caelum.stella:caelum-stella-boleto:2.1.2')
+    compile('net.sf.jasperreports:jasperreports:5.5.0')
+    compile group: 'com.lowagie', name: 'itext', version: '2.1.7'
+
     runtime('com.h2database:h2')
     runtime('org.postgresql:postgresql')
 

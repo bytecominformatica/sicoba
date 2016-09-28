@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface TituloRepository extends CrudRepository<Titulo, Integer> {
 
-    List<Titulo> findByCliente_idOrderByDataVencimentoAsc(Integer clienteId);
+    List<Titulo> findByCliente_idOrderByDataVencimentoDesc(Integer clienteId);
 
     List<Titulo> findByNumeroBoletoBetween(Integer inicio, Integer fim);
 
@@ -33,4 +33,6 @@ public interface TituloRepository extends CrudRepository<Titulo, Integer> {
     List<Titulo> findByDataVencimentoBetweenAndStatus(Date inicio, Date fim, StatusTitulo status);
 
     List<Titulo> findByClienteAndStatusAndDataVencimentoGreaterThan(Cliente cliente, StatusTitulo status, Date date);
+
+    List<Titulo> findByIdIn(List<Integer> ids);
 }
