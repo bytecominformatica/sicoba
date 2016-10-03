@@ -123,6 +123,51 @@
         </p>
     </div>
 
+    <div class="col-lg-3" ng-class="{'has-error': (form.cep.$invalid && (form.$submitted || form.cep.$touched))}">
+        <label>CEP</label>
+        <input name="cep" type="text" ng-model="cedente.cep" class="form-control" required
+               pattern="(^[0-9]{5}-[0-9]{3}$) || (^[0-9]{8}$)"
+               ng-blur="form.cep.$valid && buscarEnderecoPorCep(cedente.cep, form)">
+        <p class="help-block" ng-show="form.$submitted || form.cep.$touched">
+            <span ng-show="form.cep.$error.required">Digite o CEP para que possamos encontrar seu endereço.</span>
+            <span ng-show="form.cep.$error.pattern">CEP inválido.</span>
+            <span ng-show="form.cep.$error.notFound">CEP não encontrado.</span>
+        </p>
+    </div>
+
+    <div class="col-lg-10"
+         ng-class="{'has-error': (form.logradouro.$invalid && (form.$submitted || form.logradouro.$touched))}">
+        <label>Logradouro</label>
+        <input name="logradouro" type="text" ng-model="cedente.logradouro" class="form-control" required>
+        <p class="help-block" ng-show="form.$submitted || form.logradouro.$touched">
+            <span ng-show="form.logradouro.$error.required">Qual a rua ou avenida que você mora?</span>
+        </p>
+    </div>
+
+    <div class="col-lg-5" ng-class="{'has-error': (form.bairro.$invalid && (form.$submitted || form.bairro.$touched))}">
+        <label>Bairro</label>
+        <input name="bairro" type="text" ng-model="cedente.bairro" class="form-control" required readonly>
+        <p class="help-block" ng-show="form.$submitted || form.bairro.$touched">
+            <span ng-show="form.bairro.$error.required">Informe um CEP válido para encontrar seu bairro.</span>
+        </p>
+    </div>
+    <div class="col-lg-5" ng-class="{'has-error': (form.cidade.$invalid && (form.$submitted || form.cidade.$touched))}">
+        <label>Cidade</label>
+        <input name="cidade" type="text" ng-model="cedente.cidade" class="form-control" required
+               readonly>
+        <p class="help-block" ng-show="form.$submitted || form.cidade.$touched">
+            <span ng-show="form.cidade.$error.required">Informe um CEP válido para encontrar sua cidade.</span>
+        </p>
+    </div>
+    <div class="col-lg-2" ng-class="{'has-error': (form.uf.$invalid && (form.$submitted || form.uf.$touched))}">
+        <label>UF</label>
+        <input name="uf" type="text" ng-model="cedente.uf" class="form-control" required
+               readonly>
+        <p class="help-block" ng-show="form.$submitted || form.uf.$touched">
+            <span ng-show="form.uf.$error.required">Informe um CEP válido para encontrar seu distrito.</span>
+        </p>
+    </div>
+
     <div class="col-lg-12">
         <br/>
         <br/>

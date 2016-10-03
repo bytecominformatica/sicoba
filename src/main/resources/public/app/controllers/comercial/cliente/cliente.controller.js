@@ -23,7 +23,11 @@
             function _save(cliente) {
                 Cliente.save(cliente, function (data) {
                     $scope.cliente = data;
-                    $rootScope.messages = [{title: 'Sucesso:', body: 'Cliente ' + data.nome + ' foi salvo.', type: 'alert-success'}];
+                    $rootScope.messages = [{
+                        title: 'Sucesso:',
+                        body: 'Cliente ' + data.nome + ' foi salvo.',
+                        type: 'alert-success'
+                    }];
                 });
             }
 
@@ -33,6 +37,7 @@
                         if (data.erro) {
                             form.cep.$error.notFound = true;
                         } else {
+                            form.cep.$error.notFound = false;
                             $scope.cliente.endereco.cep = data.cep;
                             $scope.cliente.endereco.logradouro = data.logradouro;
 

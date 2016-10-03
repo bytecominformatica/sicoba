@@ -3,7 +3,6 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "cedente")
@@ -14,39 +13,29 @@ public class Cedente extends BaseEntity {
     @SequenceGenerator(name = "cedente_id_seq", sequenceName = "cedente_id_seq")
     private Integer id;
     private String nome;
-
     private int codigo;
-
     @Column(name = "digito_verificador")
     private int digitoVerificador;
-
     @Column(name = "codigo_operacao")
     private int codigoOperacao;
-
     @Column(name = "cpf_cnpj")
     private String cpfCnpj;
-
     @Column(name = "numero_agencia")
     private int numeroAgencia;
-
     @Column(name = "digito_agencia")
     private int digitoAgencia;
-
     @Column(name = "numero_conta")
     private int numeroConta;
-
     @Column(name = "digito_conta")
     private int digitoConta;
-
     private int prazo;
-
     private double multa;
-
     private double juros;
-
-    public Cedente() {
-        createdAt = new Date();
-    }
+    private String cep;
+    private String logradouro;
+    private String bairro;
+    private String cidade;
+    private String uf;
 
     public int getCodigoOperacao() {
         return this.codigoOperacao;
@@ -151,5 +140,45 @@ public class Cedente extends BaseEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 }

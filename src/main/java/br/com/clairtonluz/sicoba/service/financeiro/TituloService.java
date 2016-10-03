@@ -225,12 +225,11 @@ public class TituloService {
                 .comVencimento(vencimento.getDayOfMonth(), vencimento.getMonthValue(), vencimento.getYear());
 
         Endereco enderecoBeneficiario = Endereco.novoEndereco()
-                .comLogradouro("Rua 30, 977")
-                .comBairro("Patrícia Gomes")
-                .comCep("61607-045")
-                .comCidade("Fortaleza")
-                .comUf("CE");
-        //Quem emite o boleto
+                .comLogradouro(cedente.getLogradouro())
+                .comBairro(cedente.getBairro())
+                .comCep(cedente.getCep())
+                .comCidade(cedente.getCidade())
+                .comUf(cedente.getUf());
 
         String nossoNumeroCriarIncrementalSeparado = "123456";
         Beneficiario beneficiario = Beneficiario.novoBeneficiario()

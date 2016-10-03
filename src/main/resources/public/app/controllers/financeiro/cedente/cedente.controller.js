@@ -2,10 +2,12 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('CedenteCtrl', function ($scope, $rootScope, $routeParams, Cedente) {
+        .controller('CedenteCtrl', ['$scope', '$rootScope', '$routeParams', 'Cedente', 'Cep',
+            function ($scope, $rootScope, $routeParams, Cedente, Cep) {
 
             $scope.save = _save;
             $scope.remove = _remove;
+            $scope.buscarEnderecoPorCep = _buscarEnderecoPorCep;
 
             _init();
 
@@ -36,5 +38,24 @@
                     $scope.cedente = {};
                 });
             }
-        });
+
+            function _buscarEnderecoPorCep(cep, form) {
+                if (cep) {
+                    Cep.get({cep: cep}, function (data) {
+                        if (data.erro) {
+                            form.cep.$error.notFound = true;
+                        } else {
+                            form.cep.$error.notFound = false;
+                            $scope.cedente.cep = data.cep;
+                            $scope.cedente.logradouro = data.logradouro;
+
+                            $scope.cedente.bairro = data.bairro;
+                            $scope.cedente.cidade = data.localidade;
+                            $scope.cedente.uf = data.uf;
+                        }
+                    });
+                }
+            }
+
+        }]);
 }());
