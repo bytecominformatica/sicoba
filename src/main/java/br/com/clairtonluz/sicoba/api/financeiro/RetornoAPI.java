@@ -27,7 +27,6 @@ public class RetornoAPI {
     public List<RetornoPojo> upload(@RequestParam("file") MultipartFile file) throws Exception {
         List<RetornoPojo> retornoPojos;
         if (!file.isEmpty()) {
-            System.out.println(file.getName());
             Header header = retornoCaixaService.parse(file.getInputStream(), file.getName());
             retornoPojos = retornoCaixaService.processarHeader(header);
         } else {

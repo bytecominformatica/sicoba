@@ -3,7 +3,6 @@ package br.com.clairtonluz.sicoba.service.financeiro;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
-import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
@@ -13,9 +12,9 @@ import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.Registro;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.RetornoPojo;
 import br.com.clairtonluz.sicoba.parse.ParseRetornoCaixa;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
-import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.HeaderRepository;
+import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,7 @@ public class RetornoCaixaService {
     @Autowired
     private ContratoRepository contratoRepository;
     @Autowired
-    private ConexaoRepository conexaoRepository;
+    private ConexaoService conexaoService;
 
     public Header parse(InputStream inputStream, String filename) throws IOException {
         return PARSE_RETORNO.parse(inputStream, filename);
@@ -101,10 +100,9 @@ public class RetornoCaixaService {
                 m.getCliente().setStatus(StatusCliente.ATIVO);
 
                 Cliente cliente = m.getCliente();
-                Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
-                Conexao conexao = conexaoRepository.findOptionalByCliente(cliente);
+                Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
                 clienteRepository.save(m.getCliente());
-                conexaoRepository.save(conexao);
+                conexaoService.save(conexao);
             }
         }
         return m;
