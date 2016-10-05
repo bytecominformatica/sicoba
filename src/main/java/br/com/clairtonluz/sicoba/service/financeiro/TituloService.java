@@ -206,7 +206,7 @@ public class TituloService {
 
     public byte[] gerarPDF(List<Integer> tituloIds) {
         List<Titulo> titulos = tituloRepository.findByIdIn(tituloIds);
-        Cedente cedente = cedenteRepository.findOne(2);
+        Cedente cedente = cedenteRepository.findOne(1);
         Boleto[] boletos = new Boleto[titulos.size()];
         for (int i = 0; i < titulos.size(); i++) {
             boletos[i] = gerarBoleto(cedente, titulos.get(i));
