@@ -51,7 +51,7 @@
          ng-class="{'has-error': (form.vencimento.$invalid && (form.$submitted || form.vencimento.$touched))}">
         <label>Vencimento</label>
         <select name="vencimento" ng-model="contrato.vencimento" class="form-control" required
-                ng-options="item for item in [5,20]">
+                ng-options="item for item in [5,10,20]">
             <option value="">---Escolha o melhor dia para o vencimento---</option>
         </select>
         <p class="help-block" ng-show="form.$submitted || form.vencimento.$touched">
