@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.repository.financeiro;
 
-import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.Header;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.edi.retorno.Header;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

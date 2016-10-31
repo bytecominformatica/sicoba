@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.parse;
 
-import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.*;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.edi.retorno.*;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 
 import java.io.BufferedReader;

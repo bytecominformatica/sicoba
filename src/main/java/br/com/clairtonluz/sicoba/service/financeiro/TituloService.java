@@ -45,7 +45,7 @@ public class TituloService {
         return getNovo(contrato.getCliente(), vencimento);
     }
 
-    public Titulo getNovo(Cliente cliente, Date vencimento) {
+    private Titulo getNovo(Cliente cliente, Date vencimento) {
         Contrato contrato = contratoRepository.findOptionalByCliente_id(cliente.getId());
 
         Titulo m = new Titulo();
@@ -53,6 +53,7 @@ public class TituloService {
         double valorTitulo = contrato.getPlano().getValor();
         if (contrato.getEquipamentoWifi() != null) {
             valorTitulo += 5;
+            m.setDesconto(5);
         }
         m.setValor(valorTitulo);
         m.setCliente(cliente);

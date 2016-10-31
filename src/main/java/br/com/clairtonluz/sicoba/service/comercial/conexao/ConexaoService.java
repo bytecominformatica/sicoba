@@ -11,6 +11,7 @@ import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.service.provedor.Servidor;
 import me.legrange.mikrotik.ApiConnection;
+import me.legrange.mikrotik.ApiConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -94,7 +95,7 @@ public class ConexaoService {
     }
 
     @Transactional
-    public Conexao save(Conexao conexao) throws Exception {
+    public Conexao save(Conexao conexao) {
         if (isDisponivel(conexao)) {
             Plano plano = contratoRepository.findOptionalByCliente_id(conexao.getCliente().getId()).getPlano();
             atualizarNoServidor(conexao, plano);
@@ -110,12 +111,14 @@ public class ConexaoService {
         }
     }
 
-    private void atualizarNoServidor(Conexao conexao, Plano plano) throws Exception {
+    private void atualizarNoServidor(Conexao conexao, Plano plano) {
         Secret secret = conexao.createSecret(plano);
 
         Mikrotik mikrotik = conexao.getMikrotik();
         try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getPort(), mikrotik.getLogin(), mikrotik.getPass())) {
             conexao.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
+        } catch (ApiConnectionException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

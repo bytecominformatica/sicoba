@@ -8,14 +8,14 @@
         .factory('Titulo', ['$resource', function ($resource) {
             return $resource('api/titulos/:id', {id: '@id'},
                 {
-                    'vencidos': {
+                    vencidos: {
                         method: 'GET',
                         url: 'api/titulos/vencidos',
                         isArray: true
                     },
-                    'novo': {
+                    novo: {
                         method: 'GET',
-                        url: 'api/titulos/cliente/:clienteId/nova',
+                        url: 'api/titulos/cliente/:clienteId/new',
                         params: {clienteId: '@clienteId'}
                     },
                     buscarPorCliente: {

@@ -30,6 +30,11 @@
         "url": "#/retorno"
       },
       {
+        "title": "Cedentes",
+        "icon": "fa fa-upload",
+        "url": "#/cedentes"
+      },
+      {
         "title": "Relatorio",
         "icon": "fa fa-files-o",
         "url": "#/titulos/relatorio"

@@ -17,6 +17,7 @@
                         clienteId: novoTitulo.cliente.id,
                         modalidade: novoTitulo.modalidade,
                         valor: novoTitulo.valor,
+                        desconto: novoTitulo.desconto,
                         dataInicio: novoTitulo.dataVencimento
                     };
                 });

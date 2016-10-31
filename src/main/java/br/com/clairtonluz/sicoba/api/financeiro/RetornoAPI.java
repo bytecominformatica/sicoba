@@ -1,7 +1,7 @@
 package br.com.clairtonluz.sicoba.api.financeiro;
 
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.retorno.Header;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.edi.retorno.Header;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.RetornoPojo;
 import br.com.clairtonluz.sicoba.service.financeiro.RetornoCaixaService;
 import org.springframework.beans.factory.annotation.Autowired;

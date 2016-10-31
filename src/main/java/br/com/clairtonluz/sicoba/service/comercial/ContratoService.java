@@ -29,12 +29,14 @@ public class ContratoService {
         return result;
     }
 
-    public void salvar(Contrato contrato) throws Exception {
+    @Transactional
+    public Contrato save(Contrato contrato) {
+        Contrato save = contratoRepository.save(contrato);
         Conexao conexao = conexaoService.buscarOptionalPorCliente(contrato.getCliente());
         if (conexao != null) {
             conexaoService.save(conexao);
         }
-        contratoRepository.save(contrato);
+        return save;
     }
 
     @Transactional
@@ -45,11 +47,6 @@ public class ContratoService {
 
     public Contrato buscarPorCliente(Integer clienteId) {
         return contratoRepository.findOptionalByCliente_id(clienteId);
-    }
-
-    @Transactional
-    public Contrato save(Contrato contrato) {
-        return contratoRepository.save(contrato);
     }
 
     public Contrato buscarPorEquipamento(Integer equipamentoId) {

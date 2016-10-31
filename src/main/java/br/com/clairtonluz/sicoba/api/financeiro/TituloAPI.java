@@ -50,8 +50,8 @@ public class TituloAPI {
         return tituloService.buscarVencidos();
     }
 
-    @RequestMapping(value = "/cliente/{clienteId}/nova", method = RequestMethod.GET)
-    public Titulo getNova(@PathVariable Integer clienteId) {
+    @RequestMapping(value = "/cliente/{clienteId}/new", method = RequestMethod.GET)
+    public Titulo getNovo(@PathVariable Integer clienteId) {
         return tituloService.getNovo(clienteId);
     }
 

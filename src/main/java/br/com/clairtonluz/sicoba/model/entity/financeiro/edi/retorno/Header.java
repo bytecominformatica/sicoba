@@ -1,4 +1,4 @@
-package br.com.clairtonluz.sicoba.model.entity.financeiro.retorno;
+package br.com.clairtonluz.sicoba.model.entity.financeiro.edi.retorno;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
