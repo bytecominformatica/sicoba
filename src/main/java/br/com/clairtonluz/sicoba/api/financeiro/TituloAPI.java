@@ -89,7 +89,7 @@ public class TituloAPI {
     public byte[] gerarPDF(@RequestParam(name = "titulos") List<Integer> titulos) {
         byte[] contents = null;
         if (titulos != null && !titulos.isEmpty()) {
-            contents = tituloService.gerarPDF(titulos);
+//            contents = tituloService.gerarPDF(titulos);
         }
         return contents;
     }

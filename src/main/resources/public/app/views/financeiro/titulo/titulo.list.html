@@ -19,13 +19,13 @@
                     <i class="glyphicon glyphicon-paperclip"></i> Novo Carne
                 </a>
             </li>
-            <li class="divider"></li>
+            <!--<li class="divider"></li>-->
 
-            <li>
-                <a ng-click="gerarBoletos()">
-                    <i class="glyphicon glyphicon-barcode"></i> Gerar Boletos
-                </a>
-            </li>
+            <!--<li>-->
+                <!--<a ng-click="gerarBoletos()">-->
+                    <!--<i class="glyphicon glyphicon-barcode"></i> Gerar Boletos-->
+                <!--</a>-->
+            <!--</li>-->
         </ul>
     </div>
 </h1>
@@ -41,7 +41,7 @@
             <table class="table table-striped table-bordered table-hover dataTable no-footer">
                 <thead>
                 <tr>
-                    <th></th>
+                    <!--<th></th>-->
                     <th>Id</th>
                     <th>Valor</th>
                     <th>Desconto</th>
@@ -55,7 +55,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="it in titulos track by it.id">
-                    <td><input type="checkbox" ng-model="it.selected" ng-show="it.status === 'PENDENTE'"/></td>
+                    <!--<td><input type="checkbox" ng-model="it.selected" ng-show="it.status === 'PENDENTE'"/></td>-->
                     <td>{{it.id}}</td>
                     <td>{{it.valor | currency}}</td>
                     <td>{{it.desconto | currency}}</td>
