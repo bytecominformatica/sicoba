@@ -34,6 +34,15 @@ public class Titulo extends BaseEntity {
     @Column(name = "numero_boleto")
     private Integer numeroBoleto;
 
+    @Column(name = "carnet_id")
+    private Integer carnetId;
+    @Column(name = "carnet_url")
+    private String carnetUrl;
+    @Column(name = "charge_id")
+    private Integer chargeId;
+    @Column(name = "charge_url")
+    private String chargeUrl;
+
     @JoinColumn(name = "cliente_id")
     @ManyToOne
     private Cliente cliente;

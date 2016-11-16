@@ -197,4 +197,8 @@ public class TituloService {
         return tituloRepository.findByClienteAndStatusAndDataVencimentoGreaterThan(cliente, StatusTitulo.PENDENTE, new Date());
     }
 
+    public byte[] criarBoletos(List<Integer> titulos) {
+
+        return new byte[0];
+    }
 }
