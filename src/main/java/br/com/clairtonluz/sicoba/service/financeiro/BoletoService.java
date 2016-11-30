@@ -1,6 +1,7 @@
 package br.com.clairtonluz.sicoba.service.financeiro;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Credentials;
+import br.com.clairtonluz.sicoba.util.StringUtil;
 import br.com.gerencianet.gnsdk.Gerencianet;
 import br.com.gerencianet.gnsdk.exceptions.GerencianetException;
 import org.json.JSONArray;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 public class BoletoService {
 
     public static void main(String... args) {
+
         new BoletoService().criarCarne();
     }
 
@@ -33,6 +35,7 @@ public class BoletoService {
 
         JSONArray items = new JSONArray();
 
+
         JSONObject item1 = new JSONObject();
         item1.put("name", "Internet Banda Larga 1MB");
         item1.put("amount", 1);
@@ -42,7 +45,7 @@ public class BoletoService {
 
         JSONObject customerAddres = new JSONObject();
         customerAddres.put("street", "Rua 23 de maio");
-        customerAddres.put("number", 256);
+        customerAddres.put("number", "S/N");
         customerAddres.put("neighborhood", "Patrícia Gomes");
         customerAddres.put("zipcode", "61607040");
         customerAddres.put("city", "Caucaia");
@@ -50,8 +53,13 @@ public class BoletoService {
         customerAddres.put("state", "CE");
 
         JSONObject customer = new JSONObject();
-        customer.put("name", "Francisco Cesar");
-        customer.put("cpf", "04267484171");
+
+        JSONObject juridicalPerson = new JSONObject();
+        juridicalPerson.put("corporate_name", "Lorenzo e Stella Pizzaria Ltda");
+        juridicalPerson.put("cnpj", "58438851000109");
+        customer.put("juridical_person", juridicalPerson);
+//        customer.put("name", "Francisco Cesar");
+//        customer.put("cpf", "04267484171");
         customer.put("phone_number", "5144916523");
         customer.put("email", "clairton.luz@bytecominformatica.com.br"); // opcional
         customer.put("address", customerAddres); // opcional

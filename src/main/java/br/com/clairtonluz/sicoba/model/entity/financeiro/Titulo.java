@@ -42,6 +42,7 @@ public class Titulo extends BaseEntity {
     private Integer chargeId;
     @Column(name = "charge_url")
     private String chargeUrl;
+    private Integer parcel;
 
     @JoinColumn(name = "cliente_id")
     @ManyToOne
@@ -139,5 +140,45 @@ public class Titulo extends BaseEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCarnetId() {
+        return carnetId;
+    }
+
+    public void setCarnetId(Integer carnetId) {
+        this.carnetId = carnetId;
+    }
+
+    public String getCarnetUrl() {
+        return carnetUrl;
+    }
+
+    public void setCarnetUrl(String carnetUrl) {
+        this.carnetUrl = carnetUrl;
+    }
+
+    public Integer getChargeId() {
+        return chargeId;
+    }
+
+    public void setChargeId(Integer chargeId) {
+        this.chargeId = chargeId;
+    }
+
+    public String getChargeUrl() {
+        return chargeUrl;
+    }
+
+    public void setChargeUrl(String chargeUrl) {
+        this.chargeUrl = chargeUrl;
+    }
+
+    public Integer getParcel() {
+        return parcel;
+    }
+
+    public void setParcel(Integer parcel) {
+        this.parcel = parcel;
     }
 }

@@ -1,0 +1,85 @@
+<h1 class="page-header">
+    <a ng-href="#/titulos/cliente/{{clienteId}}">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    Carnê
+    <small>Novo</small>
+</h1>
+
+<form name="form" class="form-horizontal" ng-submit="form.$valid && save(carne)" novalidate>
+    <div class="col-lg-12"
+         ng-class="{'has-error': (form.cliente.$invalid && (form.$submitted || form.cliente.$touched))}">
+        <label>Cliente</label>
+        <input name="cliente" ng-model="cliente.nome" class="form-control" type="text" required readonly>
+        <p class="help-block" ng-show="form.$submitted || form.cliente.$touched">
+            <i ng-show="form.cliente.$error.required">Nenhum cliente selecionado.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.valor.$invalid && (form.$submitted || form.valor.$touched))}">
+        <label>Valor</label>
+        <input type="number" step="any" name="valor" ng-model="carne.valor" class="form-control" required>
+        <p class="help-block" ng-show="form.$submitted || form.valor.$touched">
+            <i ng-show="form.valor.$error.required">Qual o valor de cada título?</i>
+            <i ng-show="form.valor.$error.number">Valor inválido.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.desconto.$invalid && (form.$submitted || form.desconto.$touched))}">
+        <label>Desconto</label>
+        <input type="number" step="any" name="desconto" ng-model="carne.desconto" class="form-control">
+        <p class="help-block" ng-show="form.$submitted || form.desconto.$touched">
+            <i ng-show="form.desconto.$error.number">Valor inválido.</i>
+        </p>
+    </div>
+
+    <div class="col-lg-2"
+         ng-class="{'has-error': (form.boletoInicio.$invalid && (form.$submitted || form.boletoInicio.$touched))}">
+        <label>Parcelas</label>
+        <input type="number" name="quantidadeParcela" ng-model="carne.quantidadeParcela" class="form-control" required
+               min="2" max="12">
+        <p class="help-block" ng-show="form.$submitted || form.boletoInicio.$touched">
+            <i ng-show="form.boletoInicio.$error.required">Qual o número do primeiro título?</i>
+            <i ng-show="form.boletoInicio.$error.number">Valor inválido.</i>
+            <i ng-show="form.boletoInicio.$error.min">Quantidade mínima de parcelas é 2</i>
+            <i ng-show="form.boletoInicio.$error.max">Quantidade máxima de parcelas é 12</i>
+
+        </p>
+    </div>
+
+    <div class="col-lg-3"
+         ng-class="{'has-error': (form.dataInicio.$invalid && (form.$submitted || form.dataInicio.$touched))}">
+        <div class="input-group">
+            <label>Data do primeiro título</label>
+            <div class="input-group">
+                <input name="dataInicio" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                       ng-model="carne.dataInicio"
+                       is-open="status.opened" close-text="Close" required/>
+                <i class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </i>
+            </div>
+            <p class="help-block" ng-show="form.$submitted || form.dataInicio.$touched">
+                <i ng-show="form.dataInicio.$error.required">
+                    Quando a data do primeiro título?
+                </i>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <br/>
+        <br/>
+
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit">{{carne.id ? 'Atualizar' : 'Salvar'}}</button>
+            <a ng-href="#/titulos/cliente/{{clienteId}}" class="btn btn-default">Cancelar</a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</form>

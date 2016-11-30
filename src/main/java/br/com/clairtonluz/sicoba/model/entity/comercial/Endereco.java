@@ -41,11 +41,11 @@ public class Endereco extends BaseEntity {
     }
 
     public String getNumero() {
-        return this.numero;
+        return numero;
     }
 
     public void setNumero(String numero) {
-        this.numero = numero;
+        this.numero = numero != null && !numero.isEmpty() ? numero : "S/N";
     }
 
     public Bairro getBairro() {
