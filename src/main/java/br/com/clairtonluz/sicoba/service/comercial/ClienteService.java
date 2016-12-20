@@ -49,12 +49,12 @@ public class ClienteService {
         if (c.getRg() != null) {
             cliente = clienteRepository.findOptionalByRg(c.getRg());
         }
-        return cliente == null || cliente.getId() == c.getId();
+        return cliente == null || cliente.getId().equals(c.getId());
     }
 
     public boolean cpfCnpjAvaliable(Cliente c) {
         Cliente cliente = clienteRepository.findOptionalByCpfCnpj(c.getCpfCnpj());
-        return cliente == null || cliente.getId() == c.getId();
+        return cliente == null || cliente.getId().equals(c.getId());
     }
 
     public boolean emailAvaliable(Cliente c) {
@@ -62,7 +62,7 @@ public class ClienteService {
         if (c.getEmail() != null) {
             cliente = clienteRepository.findOptionalByEmail(c.getEmail());
         }
-        return cliente == null || cliente.getId() == c.getId();
+        return cliente == null || cliente.getId().equals(c.getId());
     }
 
     @Transactional
