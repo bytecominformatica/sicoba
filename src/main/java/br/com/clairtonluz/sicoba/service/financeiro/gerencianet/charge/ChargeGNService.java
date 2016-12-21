@@ -27,8 +27,16 @@ class ChargeGNService {
     private static final String PAY_CHARGE = "payCharge";
     private static final String CANCEL_CHARGE = "cancelCharge";
     private static final String RESEND_BILLET = "resendBillet";
+    public static final String LINK_CHARGE = "linkCharge";
 
 
+    /**
+     * Cria um cobrança mas não define a forma de pagamento ainda.
+     *
+     * @param contrato
+     * @param charge
+     * @return
+     */
     JSONObject createCharge(Contrato contrato, Charge charge) {
         String item = String.format("Internet Banda Larga %s", contrato.getPlano().getNome());
         JSONArray items = new JSONArray().put(GNService.createItem(item, charge.getValue()));
@@ -40,6 +48,13 @@ class ChargeGNService {
         return GNService.call(CREATE_CHARGE, body);
     }
 
+    /**
+     * Define a forma de pagamento como boleto. Será definido no atributo charge.url o link para o boleto, assim o cliente
+     * poderá acessar esse link para pagar ou imprimir o boleto.
+     *
+     * @param charge
+     * @return
+     */
     JSONObject setPaymentToBankingBilletGN(Charge charge) {
         JSONObject customer = GNService.createConsumer(charge.getCliente(), false);
         JSONArray instructions = GNService.createInstructions(charge.getDiscount());
@@ -58,52 +73,14 @@ class ChargeGNService {
         return GNService.call(PAY_CHARGE, body);
     }
 
-    JSONObject cancelCharge(Charge charge) {
-        Map<String, String> params = new HashMap<>();
-        params.put("id", charge.getChargeId().toString());
 
-        return GNService.call(CANCEL_CHARGE, params);
-    }
-
-    JSONObject updateBilletExpireAt(Charge charge) {
-        Map<String, String> params = new HashMap<>();
-        params.put("id", charge.getChargeId().toString());
-
-        JSONObject body = new JSONObject();
-        body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
-
-        return GNService.call(UPDATE_BILLET, params, body);
-    }
-
-    JSONObject updateChargeMetadata(Charge charge) {
-        Map<String, String> params = new HashMap<>();
-        params.put("id", charge.getChargeId().toString());
-
-        JSONObject body = GNService.createMetadata(Credentials.getInstance().getNotificationUrl(), charge.getId());
-
-        return GNService.call(UPDATE_CHARGE_METADATA, params, body);
-    }
-
-    JSONObject detailCharge(Charge charge) {
-        Map<String, String> params = new HashMap<>();
-        params.put("id", charge.getChargeId().toString());
-        return GNService.call(DETAIL_CHARGE, params);
-    }
-
-    JSONObject resendBillet(Charge charge) {
-        if (StringUtil.isEmpty(charge.getCliente().getEmail())) {
-            throw new ConflitException("Cliente não possui email");
-        }
-
-        Map<String, String> params = new HashMap<>();
-        params.put("id", charge.getChargeId().toString());
-
-        JSONObject body = new JSONObject();
-        body.put("email", charge.getCliente().getEmail());
-
-        return GNService.call(RESEND_BILLET, params, body);
-    }
-
+    /**
+     * Criar uma link de uma página de pagamento para que o cliente possa pagar com boleto ou cartão de crédito
+     * através desse link de pagamento
+     *
+     * @param charge
+     * @return
+     */
     JSONObject linkCharge(Charge charge) {
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
@@ -121,6 +98,82 @@ class ChargeGNService {
         body.put("request_delivery_address", false);
         body.put("payment_method", "all");
 
-        return GNService.call(RESEND_BILLET, params, body);
+        return GNService.call(LINK_CHARGE, params, body);
+    }
+
+    /**
+     * Cancela uma cobrança
+     *
+     * @param charge
+     * @return
+     */
+    JSONObject cancelCharge(Charge charge) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", charge.getChargeId().toString());
+
+        return GNService.call(CANCEL_CHARGE, params);
+    }
+
+    /**
+     * atualiza a data do vencimento de uma cobrança
+     *
+     * @param charge
+     * @return
+     */
+    boolean updateBilletExpireAt(Charge charge) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", charge.getChargeId().toString());
+
+        JSONObject body = new JSONObject();
+        body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
+
+        return GNService.isOk(GNService.call(UPDATE_BILLET, params, body));
+    }
+
+    /**
+     * Atualiza a url de notificação e o customId da cobrança
+     *
+     * @param charge
+     * @return
+     */
+    boolean updateChargeMetadata(Charge charge) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", charge.getChargeId().toString());
+
+        JSONObject body = GNService.createMetadata(Credentials.getInstance().getNotificationUrl(), charge.getId());
+
+        return GNService.isOk(GNService.call(UPDATE_CHARGE_METADATA, params, body));
+    }
+
+    /**
+     * retorna informações da cobrança
+     *
+     * @param charge
+     * @return
+     */
+    JSONObject detailCharge(Charge charge) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", charge.getChargeId().toString());
+        return GNService.call(DETAIL_CHARGE, params);
+    }
+
+    /**
+     * reenvia a cobrança para o email do cliente
+     *
+     * @param charge
+     * @return
+     */
+    boolean resendBillet(Charge charge) {
+        if (StringUtil.isEmpty(charge.getCliente().getEmail())) {
+            throw new ConflitException("Cliente não possui email");
+        }
+
+        Map<String, String> params = new HashMap<>();
+        params.put("id", charge.getChargeId().toString());
+
+        JSONObject body = new JSONObject();
+        body.put("email", charge.getCliente().getEmail());
+
+        return GNService.isOk(GNService.call(RESEND_BILLET, params, body));
     }
 }

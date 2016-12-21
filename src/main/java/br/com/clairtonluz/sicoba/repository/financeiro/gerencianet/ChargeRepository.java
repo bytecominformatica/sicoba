@@ -18,4 +18,8 @@ import java.util.List;
 public interface ChargeRepository extends CrudRepository<Charge, Integer> {
 
     List<Charge> findByCarnet_id(Integer id);
+
+    List<Charge> findByCliente_id(Integer clienteId);
+
+    Charge findOptionalByCarnet_idAndParcel(Integer carnetId, Integer parcel);
 }

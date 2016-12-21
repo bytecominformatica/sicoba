@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by clairton on 09/11/16.
@@ -42,7 +43,7 @@ public class ChargeService {
     }
 
     @Transactional
-    private Charge createCharge(Charge charge) {
+    public Charge createCharge(Charge charge) {
         Contrato contrato = contratoService.buscarPorCliente(charge.getCliente().getId());
         JSONObject createChargeResult = chargeGNService.createCharge(contrato, charge);
 
@@ -76,16 +77,6 @@ public class ChargeService {
         return chargeRepository.save(charge);
     }
 
-    @Transactional
-    public Charge cancelCharge(Charge charge) {
-        JSONObject response = chargeGNService.cancelCharge(charge);
-        if (GNService.isOk(response)) {
-            charge.setStatus(StatusCharge.CANCELED);
-            charge = save(charge);
-        }
-        return charge;
-    }
-
     /**
      * para gerar um link de pagamento a cobrança deve está com status NEW
      *
@@ -106,8 +97,47 @@ public class ChargeService {
     }
 
     @Transactional
+    public Charge cancelCharge(Charge charge) {
+        JSONObject response = chargeGNService.cancelCharge(charge);
+        if (GNService.isOk(response)) {
+            charge.setStatus(StatusCharge.CANCELED);
+            charge = save(charge);
+        }
+        return charge;
+    }
+
+    @Transactional
+    public Charge updateBilletExpireAt(Charge charge) {
+        if (chargeGNService.updateBilletExpireAt(charge)) {
+            charge = save(charge);
+        }
+        return charge;
+    }
+
+    @Transactional
+    public boolean updateChargeMetadata(Charge charge) {
+        return chargeGNService.updateChargeMetadata(charge);
+    }
+
+    @Transactional
+    public void resendBillet(Charge charge) {
+        chargeGNService.resendBillet(charge);
+    }
+
+    @Transactional
     public Charge save(Charge charge) {
         return chargeRepository.save(charge);
     }
 
+    public Charge findById(Integer id) {
+        return chargeRepository.findOne(id);
+    }
+
+    public List<Charge> findByCliente(Integer clienteId) {
+        return chargeRepository.findByCliente_id(clienteId);
+    }
+
+    public Charge findByCarnetAndParcel(Integer carnetId, Integer parcel) {
+        return chargeRepository.findOptionalByCarnet_idAndParcel(carnetId, parcel);
+    }
 }

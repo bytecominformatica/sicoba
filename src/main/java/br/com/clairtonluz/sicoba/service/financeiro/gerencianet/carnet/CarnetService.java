@@ -77,8 +77,11 @@ public class CarnetService {
         }
     }
 
-    public void updateParcelExpireAt(Charge charge) {
-        JSONObject jsonObject = carnetGNService.updateParcelExpireAt(charge);
+    public Charge updateParcelExpireAt(Charge charge) {
+        if (carnetGNService.updateParcelExpireAt(charge)) {
+            charge = chargeRepository.save(charge);
+        }
+        return charge;
     }
 
     @Transactional
@@ -111,4 +114,11 @@ public class CarnetService {
         return carnetGNService.resendParcel(charge);
     }
 
+    public Carnet findById(Integer id) {
+        return carnetRepository.findOne(id);
+    }
+
+    public List<Carnet> findByCliente(Integer clienteId) {
+        return carnetRepository.findByCliente_id(clienteId);
+    }
 }

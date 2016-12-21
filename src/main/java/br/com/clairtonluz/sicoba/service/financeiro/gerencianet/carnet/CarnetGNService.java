@@ -50,7 +50,7 @@ class CarnetGNService {
         return GNService.call(CREATE_CARNET, body);
     }
 
-    JSONObject updateParcelExpireAt(Charge charge) {
+    boolean updateParcelExpireAt(Charge charge) {
         if (charge.getCarnet() == null || charge.getCarnet().getCarnetId() == null) {
             throw new ConflitException("Está cobrança não fas parte de um carnê");
         }
@@ -61,7 +61,7 @@ class CarnetGNService {
         JSONObject body = new JSONObject();
         body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
 
-        return GNService.call(UPDATE_PARCEL, params, body);
+        return GNService.isOk(GNService.call(UPDATE_PARCEL, params, body));
     }
 
     boolean cancelCarnet(Carnet carnet) {
