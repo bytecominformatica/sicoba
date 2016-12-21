@@ -2,7 +2,7 @@
     <a ng-href="#/cliente/{{cliente.id}}">
         <i class="fa fa-arrow-circle-left"></i>
     </a>
-    Titulos
+    Cobranças
     <div class="btn-group pull-right">
         <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button"
                 aria-expanded="false">
@@ -10,18 +10,13 @@
         </button>
         <ul class="dropdown-menu slidedown">
             <li>
-                <a ng-href="#/titulo/cliente/{{cliente.id}}">
-                    <i class="fa fa-plus"></i> Novo Titulo
+                <a ng-href="#/charge/cliente/{{cliente.id}}">
+                    <i class="fa fa-plus"></i> Nova Cobrança
                 </a>
             <li class="divider"></li>
             <li>
-                <a ng-href="#/titulo/cliente/{{cliente.id}}/carne">
+                <a ng-href="#/carnet/cliente/{{cliente.id}}">
                     <i class="glyphicon glyphicon-paperclip"></i> Novo Carne
-                </a>
-            </li>
-            <li>
-                <a ng-href="#/titulo/cliente/{{cliente.id}}/carnet">
-                    <i class="glyphicon glyphicon-paperclip"></i> Novo Carne GN
                 </a>
             </li>
         </ul>
@@ -39,14 +34,10 @@
             <table class="table table-striped table-bordered table-hover dataTable no-footer">
                 <thead>
                 <tr>
-                    <!--<th></th>-->
                     <th>Id</th>
                     <th>Valor</th>
                     <th>Desconto</th>
-                    <th>Valor Pago</th>
                     <th>Vencimento</th>
-                    <th>Ocorrencia</th>
-                    <th>Boleto</th>
                     <th>Status</th>
                     <th>Carnê</th>
                     <th>Cobrança</th>
@@ -54,36 +45,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="it in titulos track by it.id">
-                    <!--<td><input type="checkbox" ng-model="it.selected" ng-show="it.status === 'PENDENTE'"/></td>-->
+                <tr ng-repeat="it in charges track by it.id">
                     <td>{{it.id}}</td>
                     <td>{{it.valor | currency}}</td>
                     <td>{{it.desconto | currency}}</td>
-                    <td>{{it.valorPago | currency}}</td>
-                    <td>{{it.dataVencimento | date:'dd/MM/yyyy'}}</td>
-                    <td>{{it.dataOcorrencia | date:'dd/MM/yyyy'}}</td>
-                    <td>
-                        <div ng-show="{{it.numeroBoleto}}">{{it.modalidade}}/{{it.numeroBoleto}}</div>
-                    </td>
+                    <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
                     <td>
                         <i class="label" ng-class="getStatusClass(it.status)">
                             {{it.status}}
                         </i>
                     </td>
                     <td>
-                        <a title="Carnê PDF" ng-href="{{it.carnetUrl}}" ng-show="it.carnetId > 0" target="_blank">
-                            {{it.carnetId}} - {{it.parcel}}
+                        <a title="Carnê PDF" ng-href="{{it.carnet.link}}" ng-show="it.carnet" target="_blank">
+                            {{it.carnet.id}} - {{it.parcel}}
                         </a>
                     </td>
                     <td align="center">
-                        <a title="parcela{{it.parcel}}.pdf" ng-href="{{it.chargeUrl}}" ng-show="it.chargeId > 0"
+                        <a title="parcela{{it.parcel}}.pdf" ng-href="{{it.url}}" ng-show="it.chargeId > 0"
                            target="_blank">
                             {{it.chargeId}}
                         </a>
                     </td>
                     <td class="text-center">
-                        <a class="btn btn-primary" title="Editar" ng-href="#/titulo/{{it.id}}"
-                           ng-hide="it.status === 'PAGO_NO_BOLETO'">
+                        <a class="btn btn-primary" title="Editar" ng-href="#/charge/{{it.id}}"
+                           ng-hide="it.status === 'PAID'">
                             <i class="fa fa-edit"></i>
                         </a>
                     </td>

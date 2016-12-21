@@ -79,7 +79,7 @@ public class Cliente extends BaseEntity {
     }
 
     public void setFoneTitular(String foneTitular) {
-        this.foneTitular = foneTitular;
+        this.foneTitular = StringUtil.removerFormatacaoFone(foneTitular);
     }
 
     public String getContato() {

@@ -32,11 +32,16 @@ public final class DateUtil {
         return data;
     }
 
+    /**
+     * Return a String as yyyy-MM-dd
+     * @param vencimento
+     * @return
+     */
     public static String formatISO(Date vencimento) {
         return vencimento != null ? DATE_FORMAT.format(vencimento) : null;
     }
 
-    public static Date parseDate(String dateString) {
+    public static Date parseDateISO(String dateString) {
         try {
             return dateString != null ? DATE_FORMAT.parse(dateString) : null;
         } catch (ParseException e) {

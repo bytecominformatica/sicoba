@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by clairtonluz on 28/11/16.
  */
-public class Carnet {
+public class CarnetPojo {
 
     private Integer clienteId;
     private Integer quantidadeParcela;
@@ -13,7 +13,7 @@ public class Carnet {
     private Double desconto;
     private Date dataInicio;
 
-    public Carnet() {
+    public CarnetPojo() {
         this.desconto = 0d;
     }
 

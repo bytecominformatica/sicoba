@@ -39,6 +39,18 @@ bower install
 ```
 
 
+Setup integração Gerencianet (Opcional)
+---------------------------------------
+```shell
+sudo -i
+
+echo "export CLIENT_ID='Client_Id';" > /etc/profile.d/gerencianet.sh
+echo "export CLIENT_SECRET='Client_Secret';" > /etc/profile.d/gerencianet.sh
+echo "export SANDBOX='true';" > /etc/profile.d/gerencianet.sh
+echo "export NOTIFICATION_URL='http://www.example.com.br/api/notification';" > /etc/profile.d/gerencianet.sh
+
+```
+
 Credentials default to login in system
 --------------------------------------
 user:admin

@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet;
 
+import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONObject;
 
 /**
@@ -7,14 +8,27 @@ import org.json.JSONObject;
  */
 public class Credentials {
 
-    private String clientId;
-    private String clientSecret;
-    private boolean sandbox;
-    private JSONObject options;
+    private static Credentials instance;
 
-    public Credentials() {
+    private final String clientId;
+    private final String clientSecret;
+    private final String notificationUrl;
+    private final boolean sandbox;
+    private final JSONObject options;
+
+
+    public static synchronized Credentials getInstance() {
+        if (instance == null) {
+            instance = new Credentials();
+        }
+        return instance;
+    }
+
+    private Credentials() {
         this.clientId = System.getenv("CLIENT_ID");
         this.clientSecret = System.getenv("CLIENT_SECRET");
+        String notificationUrl = System.getenv("NOTIFICATION_URL");
+        this.notificationUrl = StringUtil.isEmpty(notificationUrl) ? null : notificationUrl;
         this.sandbox = Boolean.parseBoolean(System.getenv("SANDBOX"));
 
         options = new JSONObject();
@@ -37,5 +51,9 @@ public class Credentials {
 
     public boolean isSandbox() {
         return sandbox;
+    }
+
+    public String getNotificationUrl() {
+        return notificationUrl;
     }
 }

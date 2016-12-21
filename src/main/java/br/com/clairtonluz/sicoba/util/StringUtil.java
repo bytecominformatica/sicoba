@@ -61,11 +61,11 @@ public final class StringUtil {
     }
 
     public static String removerFormatacaoFone(String fone) {
-        return fone != null ? fone.replaceAll("[() -]", "") : fone;
+        return fone != null ? fone.replaceAll("[() -]", "") : null;
     }
 
     public static String removerFormatacaoCpfCnpj(String cpfCnpj) {
-        return cpfCnpj != null ? cpfCnpj.replaceAll("[. -]", "") : cpfCnpj;
+        return cpfCnpj != null ? cpfCnpj.replaceAll("[. -]", "") : null;
     }
 
     public static String removeCaracterEspecial(String str) {
@@ -127,4 +127,7 @@ public final class StringUtil {
         return String.format(LOCALE_BRAZIL, "%1$,.2f", value);
     }
 
+    public static boolean isEmpty(String notificationUrl) {
+        return notificationUrl == null || notificationUrl.isEmpty();
+    }
 }

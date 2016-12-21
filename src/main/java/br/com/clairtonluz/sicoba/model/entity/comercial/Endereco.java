@@ -84,6 +84,9 @@ public class Endereco extends BaseEntity {
     }
 
     public void setCep(String cep) {
+        if (cep != null && cep.contains("-")) {
+            cep = cep.replace("-", "");
+        }
         this.cep = cep;
     }
 

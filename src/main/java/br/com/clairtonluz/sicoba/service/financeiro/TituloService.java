@@ -7,7 +7,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.Carne;
-import br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet.Carnet;
+import br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet.CarnetPojo;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.CedenteRepository;
@@ -143,16 +143,16 @@ public class TituloService {
         return titulos;
     }
 
-    public List<Titulo> criarTitulos(Carnet carnet) {
+    public List<Titulo> criarTitulos(CarnetPojo carnetPojo) {
         List<Titulo> titulos = new ArrayList<>();
-        Cliente cliente = clienteRepository.findOne(carnet.getClienteId());
+        Cliente cliente = clienteRepository.findOne(carnetPojo.getClienteId());
 
-        LocalDate vencimento = DateUtil.toLocalDateTime(carnet.getDataInicio()).toLocalDate();
-        for (int i = 1; i <= carnet.getQuantidadeParcela(); i++) {
+        LocalDate vencimento = DateUtil.toLocalDateTime(carnetPojo.getDataInicio()).toLocalDate();
+        for (int i = 1; i <= carnetPojo.getQuantidadeParcela(); i++) {
             Titulo titulo = new Titulo();
             titulo.setCliente(cliente);
-            titulo.setValor(carnet.getValor());
-            titulo.setDesconto(carnet.getDesconto());
+            titulo.setValor(carnetPojo.getValor());
+            titulo.setDesconto(carnetPojo.getDesconto());
             titulo.setDataVencimento(DateUtil.toDate(vencimento));
             titulo.setStatus(StatusTitulo.PENDENTE);
             titulos.add(titulo);

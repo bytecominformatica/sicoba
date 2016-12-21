@@ -1,8 +1,8 @@
 package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
-import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
-import br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet.Carnet;
-import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.CarnetService;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet.CarnetPojo;
+import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +21,8 @@ public class CarnetAPI {
     private CarnetService carnetService;
 
     @RequestMapping(value = "gerar", method = RequestMethod.POST)
-    public List<Titulo> gerar(@RequestBody Carnet carnet) {
-        return carnetService.criarCarnet(carnet);
+    public List<Charge> gerar(@RequestBody CarnetPojo carnetPojo) {
+        return carnetService.createCarnet(carnetPojo);
     }
 
 
