@@ -14,14 +14,16 @@ SET
 
 
 CREATE TABLE carnet (
-  id         SERIAL    NOT NULL PRIMARY KEY,
+  id         SERIAL       NOT NULL PRIMARY KEY,
   carnet_id  INT,
   link       VARCHAR(255),
   cover      VARCHAR(255),
   status     VARCHAR(30),
-  cliente_id INT       NOT NULL CONSTRAINT fk_carnet_cliente_id_cliente_id REFERENCES cliente (id),
-  created_at TIMESTAMP NOT NULL,
-  updated_at TIMESTAMP NOT NULL,
+  cliente_id INT          NOT NULL CONSTRAINT fk_carnet_cliente_id_cliente_id REFERENCES cliente (id),
+  created_by VARCHAR(255) NOT NULL,
+  updated_by VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP    NOT NULL,
+  updated_at TIMESTAMP    NOT NULL,
   CONSTRAINT uk_carnet_carnet_id UNIQUE (carnet_id),
   CONSTRAINT uk_carnet_link UNIQUE (link)
 );
@@ -41,6 +43,8 @@ CREATE TABLE charge (
   expire_at   DATE           NOT NULL,
   carnet_id   INT CONSTRAINT fk_charge_carnet_id_carnet_id REFERENCES carnet (id),
   cliente_id  INT            NOT NULL CONSTRAINT fk_carnet_cliente_id_cliente_id REFERENCES cliente (id),
+  created_by  VARCHAR(255)   NOT NULL,
+  updated_by  VARCHAR(255)   NOT NULL,
   created_at  TIMESTAMP      NOT NULL,
   updated_at  TIMESTAMP      NOT NULL,
   CONSTRAINT uk_charge_charge_id UNIQUE (charge_id),

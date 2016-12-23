@@ -21,6 +21,11 @@
         <i class="fa fa-money"></i>
         Titulo
     </a>
+
+    <a ng-href="#/charges?clienteId={{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+        <i class="fa fa-money"></i>
+        Cobranças
+    </a>
 </p>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(cliente)" novalidate>

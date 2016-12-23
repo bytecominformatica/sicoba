@@ -5,8 +5,8 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .factory('Carnet', ['$resource', function ($resource) {
-            return $resource('api/carnets/:id', {id: '@id'},
+        .factory('Charge', ['$resource', function ($resource) {
+            return $resource('api/charges/:id', {id: '@id'},
                 {
                     gerar: {
                         method: 'POST',

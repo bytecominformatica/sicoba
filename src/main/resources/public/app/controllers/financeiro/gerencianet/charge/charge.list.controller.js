@@ -12,7 +12,7 @@
                 function _init() {
                     var clienteId = $location.search().clienteId;
                     $scope.cliente = Cliente.get({id: clienteId});
-                    $scope.charges = Charge.buscarPorCliente({clienteId: clienteId});
+                    $scope.charges = Charge.query({clienteId: clienteId});
                 }
 
                 function _getStatusClass(status) {
