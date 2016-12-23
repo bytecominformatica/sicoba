@@ -16,7 +16,19 @@
                 }
 
                 function _getStatusClass(status) {
-                    return status === 'PAID' ? 'label-success' : 'label-warning';
+                    var result;
+                    switch (status) {
+                        case 'PAID':
+                            result = 'label-success';
+                            break;
+                        case 'CANCELED':
+                            result = 'label-danger';
+                            break;
+                        default:
+                            result = 'label-warning'
+                    }
+
+                    return result;
                 }
 
             }]);

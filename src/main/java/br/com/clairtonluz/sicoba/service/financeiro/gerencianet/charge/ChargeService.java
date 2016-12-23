@@ -6,15 +6,18 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.PaymentType;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
+import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
-import br.com.clairtonluz.sicoba.service.comercial.ContratoService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
+import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +29,7 @@ public class ChargeService {
     @Autowired
     private ChargeRepository chargeRepository;
     @Autowired
-    private ContratoService contratoService;
+    private ContratoRepository contratoRepository;
     @Autowired
     private ChargeGNService chargeGNService;
 
@@ -38,13 +41,13 @@ public class ChargeService {
 
     public Charge createChargeLinkDePagamento(Charge charge) {
         charge = createCharge(charge);
-        charge = gerarLinkDePagamento(charge);
+        charge = createPaymentLink(charge);
         return charge;
     }
 
     @Transactional
     public Charge createCharge(Charge charge) {
-        Contrato contrato = contratoService.buscarPorCliente(charge.getCliente().getId());
+        Contrato contrato = contratoRepository.findOptionalByCliente_id(charge.getCliente().getId());
         JSONObject createChargeResult = chargeGNService.createCharge(contrato, charge);
 
         if (createChargeResult.getInt("code") == HttpStatus.OK.value()) {
@@ -84,7 +87,7 @@ public class ChargeService {
      * @return
      */
     @Transactional
-    public Charge gerarLinkDePagamento(Charge charge) {
+    public Charge createPaymentLink(Charge charge) {
         JSONObject response = chargeGNService.linkCharge(charge);
         if (GNService.isOk(response)) {
             JSONObject data = response.getJSONObject("data");
@@ -139,5 +142,26 @@ public class ChargeService {
 
     public Charge findByCarnetAndParcel(Integer carnetId, Integer parcel) {
         return chargeRepository.findOptionalByCarnet_idAndParcel(carnetId, parcel);
+    }
+
+    public Charge createModelo(Integer clienteId) {
+        Contrato contrato = contratoRepository.findOptionalByCliente_id(clienteId);
+        Charge charge = new Charge();
+        charge.setCliente(contrato.getCliente());
+        charge.setExpireAt(getNextExpireAt(contrato));
+        Double value = contrato.getPlano().getValor();
+        if (contrato.getEquipamentoWifi() != null) {
+            value += 5;
+            charge.setDiscount(5d);
+        }
+
+        charge.setValue(value);
+        charge.setStatus(StatusCharge.NEW);
+
+        return charge;
+    }
+
+    private Date getNextExpireAt(Contrato contrato) {
+        return DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
     }
 }

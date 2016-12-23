@@ -1,82 +1,69 @@
 <h1 class="page-header">
-    <a ng-href="#/titulos/cliente/{{clienteId}}">
+    <a ng-href="#/charges?clienteId={{clienteId}}">
         <i class="fa fa-arrow-circle-left"></i>
     </a>
     Cobrança
-    <small>{{titulo.id ? 'Editar' : 'Novo'}}</small>
+    <small>{{charge.id ? 'Editar' : 'Novo'}}</small>
 </h1>
 
-<form name="form" class="form-horizontal" ng-submit="form.$valid && save(titulo)" novalidate>
+<form name="form" class="form-horizontal" novalidate>
 
-    <div class="col-md-10" align="right" ng-show="titulo.carnetId > 0">
-        <a title="Carnê PDF" ng-href="{{titulo.carnetUrl}}" target="_blank">
-            <b>Carnê:</b> {{titulo.carnetId}} - {{titulo.parcel}}
+    <div class="col-md-2" align="right" ng-show="charge.paymentUrl">
+        <a title="Carnê PDF" ng-href="{{charge.paymentUrl}}" target="_blank">
+            <b>Link de pagamento:</b> {{charge.carnet.id}}
         </a>
     </div>
 
-    <div class="col-md-2" ng-show="titulo.chargeId > 0">
-        <a title="parcela{{titulo.parcel}}.pdf" ng-href="{{titulo.chargeUrl}}" target="_blank">
-            <b>Cobrança:</b> {{titulo.chargeId}}
+    <div class="col-md-2" align="right" ng-show="charge.carnet.link">
+        <a title="Carnê PDF" ng-href="{{charge.carnet.link}}" target="_blank">
+            <b>Carnê:</b> {{charge.carnet.id}} - {{charge.parcel}}
+        </a>
+    </div>
+
+    <div class="col-md-2" align="right" ng-show="charge.url">
+        <a title="parcela{{charge.parcel}}.pdf" ng-href="{{charge.url}}" target="_blank">
+            <b>Cobrança:</b> {{charge.chargeId}}
         </a>
     </div>
 
     <div class="col-lg-12">
         <label>Cliente:</label>
-        <div class="form-control">{{titulo.cliente.id}} - {{titulo.cliente.nome}}</div>
+        <div class="form-control">{{charge.cliente.id}} - {{charge.cliente.nome}}</div>
     </div>
 
-    <div class="col-md-3"
-         ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
+    <div class="col-md-3" ng-show="charge.status">
         <label>Status</label>
-        <select name="status" ng-model="titulo.statusCharge" class="form-control"
-                ng-change="atualizarValores(titulo)"
-                ng-options="status.value as status.descricao for status in statusList">
-            <option value="">---Escolha o status do boleto---</option>
-        </select>
-        <p class="help-block" ng-show="form.$submitted || form.status.$touched">
-            <i ng-show="form.status.$error.required">Qual status do boleto?</i>
-        </p>
+        <div class="form-control">{{charge.status}}</div>
     </div>
 
     <div class="col-md-3"
-         ng-class="{'has-error': (form.valor.$invalid && (form.$submitted || form.valor.$touched))}">
+         ng-class="{'has-error': (form.value.$invalid && (form.$submitted || form.value.$touched))}">
         <label>Valor</label>
-        <input type="number" step="any" name="valor" ng-model="titulo.valor" class="form-control" required
-               ng-change="atualizarValores(titulo)">
-        <p class="help-block" ng-show="form.$submitted || form.valor.$touched">
-            <i ng-show="form.valor.$error.required">Qual o valor dessa titulo?</i>
-            <i ng-show="form.valor.$error.number">Valor inválido.</i>
+        <input type="number" step="any" name="value" ng-model="charge.value" class="form-control" required
+               ng-change="atualizarValores(charge)">
+        <p class="help-block" ng-show="form.$submitted || form.value.$touched">
+            <i ng-show="form.value.$error.required">Qual o valor dessa cobrança?</i>
+            <i ng-show="form.value.$error.number">Valor inválido.</i>
         </p>
     </div>
 
     <div class="col-md-3"
-         ng-class="{'has-error': (form.desconto.$invalid && (form.$submitted || form.desconto.$touched))}">
+         ng-class="{'has-error': (form.discount.$invalid && (form.$submitted || form.discount.$touched))}">
         <label>Desconto</label>
-        <input type="number" step="any" name="desconto" ng-model="titulo.desconto" class="form-control"
-               ng-change="atualizarValores(titulo)">
-        <p class="help-block" ng-show="form.$submitted || form.desconto.$touched">
-            <i ng-show="form.desconto.$error.number">Valor inválido.</i>
-        </p>
-    </div>
-
-    <div class="col-md-3" ng-show="titulo.status === 'BAIXA_MANUAL'"
-         ng-class="{'has-error': (form.valorPago.$invalid && (form.$submitted || form.valorPago.$touched))}">
-        <label>Valor Pago</label>
-        <input type="number" step="any" name="valorPago" ng-model="titulo.valorPago" class="form-control" required
-               readonly>
-        <p class="help-block" ng-show="form.$submitted || form.valorPago.$touched">
-            <i ng-show="form.valorPago.$error.required">Qual valor foi pago nessa titulo?</i>
-            <i ng-show="form.valorPago.$error.number">Valor inválido.</i>
+        <input type="number" step="any" name="discount" ng-model="charge.discount" class="form-control"
+               ng-change="atualizarValores(charge)">
+        <p class="help-block" ng-show="form.$submitted || form.discount.$touched">
+            <i ng-show="form.discount.$error.number">Valor inválido.</i>
         </p>
     </div>
 
     <div class="col-md-3"
-         ng-class="{'has-error': (form.dataVencimento.$invalid && (form.$submitted || form.dataVencimento.$touched))}">
+         ng-class="{'has-error': (form.expireAt.$invalid && (form.$submitted || form.expireAt.$touched))}">
         <div class="input-group">
             <label>Vencimento</label>
             <div class="input-group">
-                <input name="dataVencimento" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                       ng-model="titulo.dataVencimento"
+                <input name="expireAt" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                       ng-model="charge.expireAt"
                        is-open="status.opened" close-text="Close" required/>
                 <i class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
@@ -84,31 +71,9 @@
                     </button>
                 </i>
             </div>
-            <p class="help-block" ng-show="form.$submitted || form.dataVencimento.$touched">
-                <i ng-show="form.dataVencimento.$error.required">
-                    Quando o vencimento desta titulo?
-                </i>
-            </p>
-        </div>
-    </div>
-
-    <div class="col-md-3" ng-show="titulo.status === 'BAIXA_MANUAL'"
-         ng-class="{'has-error': (form.dataOcorrencia.$invalid && (form.$submitted || form.dataOcorrencia.$touched))}">
-        <div class="input-group">
-            <label>Data Ocorrência</label>
-            <div class="input-group">
-                <input name="dataOcorrencia" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                       ng-model="titulo.dataOcorrencia"
-                       is-open="status.opened2" close-text="Close" ng-required="titulo.status === 'BAIXA_MANUAL'"/>
-                <i class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="status.opened2 = !status.opened2">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </button>
-                </i>
-            </div>
-            <p class="help-block" ng-show="form.$submitted || form.dataOcorrencia.$touched">
-                <i ng-show="form.dataOcorrencia.$error.required">
-                    Quando esta titulo foi paga?
+            <p class="help-block" ng-show="form.$submitted || form.expireAt.$touched">
+                <i ng-show="form.expireAt.$error.required">
+                    Quando o vencimento desta cobrança?
                 </i>
             </p>
         </div>
@@ -119,13 +84,22 @@
         <br/>
 
         <div class="pull-right">
-            <button class="btn btn-primary" type="submit">{{titulo.id ? 'Atualizar' : 'Salvar'}}</button>
-            <button class="btn btn-danger" type="button" ng-show="titulo.id"
-                    ng-click="remove(titulo)"
-                    confirm="Tem certeza que desseja remover a titulo do(a) {{titulo.cliente.nome}} no valor de {{titulo.valor}} com vencimento para {{titulo.dataVencimento | date}}?">
-                Remover
+            <button class="btn btn-primary" type="button" ng-click="form.$valid && create(charge)" ng-hide="charge.id">
+                Criar
             </button>
-            <a ng-href="#/titulos/cliente/{{clienteId}}" class="btn btn-default">Voltar</a>
+            <button class="btn btn-primary" type="button" ng-click="form.$valid && createBankingBillet(charge)"
+                    ng-show="charge.id && charge.status === 'NEW'">
+                Boleto bancario
+            </button>
+            <button class="btn btn-primary" type="button" ng-click="form.$valid && createPaymentLink(charge)"
+                    ng-show="charge.id && charge.status === 'NEW'">
+                Link de pagamento
+            </button>
+            <button class="btn btn-danger" type="button" ng-show="charge.id" ng-click="cancel(charge)"
+                    confirm="Tem certeza que desseja cancelar a cobrança do(a) {{charge.cliente.nome}} no valor de {{charge.valor}} com vencimento para {{charge.expireAt | date}}?">
+                Cancelar cobrança
+            </button>
+            <a ng-href="#/charges?clienteId={{clienteId}}" class="btn btn-default">Voltar</a>
         </div>
         <br/>
         <br/>

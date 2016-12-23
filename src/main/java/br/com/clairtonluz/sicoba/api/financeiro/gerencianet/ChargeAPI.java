@@ -19,13 +19,18 @@ public class ChargeAPI {
     private ChargeService chargeService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Charge> findByCliente(@RequestParam(value = "clienteId") Integer clienteId) {
+    public List<Charge> findByCliente(@RequestParam("clienteId") Integer clienteId) {
         return chargeService.findByCliente(clienteId);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Charge findById(@PathVariable Integer id) {
         return chargeService.findById(id);
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public Charge modelo(@RequestParam("clienteId") Integer clienteId) {
+        return chargeService.createModelo(clienteId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -40,7 +45,7 @@ public class ChargeAPI {
 
     @RequestMapping(value = "/{id}/link", method = RequestMethod.POST)
     public Charge createPaymentLink(@PathVariable Integer id) {
-        return chargeService.setPaymentToBankingBillet(chargeService.findById(id));
+        return chargeService.createPaymentLink(chargeService.findById(id));
     }
 
     @RequestMapping(value = "/{id}/cancel", method = RequestMethod.PUT)

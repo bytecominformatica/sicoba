@@ -49,6 +49,7 @@ public class GNService {
 
     /**
      * Se passar @notificationUrl com o valor null irá remover a url definida para notificação.
+     *
      * @param notificationUrl
      * @param customId
      * @return
@@ -95,12 +96,20 @@ public class GNService {
     public static JSONArray createInstructions(Double desconto) {
         JSONArray instructions = new JSONArray()
                 .put("Não receber após 60 dias do vencimento")
-                .put("Após o vencimento cobrar juros de 0.033% por dia")
-                .put("Após o vencimento cobrar multa de 5%");
+                .put("Sr. Caixa, cobrar juros de 0.033% ao dia após o vencimento")
+                .put("Sr. Caixa, cobrar multa de 5% após o vencimento");
         if (desconto != null && desconto > 0) {
             instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", StringUtil.formatCurrence(desconto)));
         }
         return instructions;
+    }
+
+    public static JSONObject createConfigurations() {
+        JSONObject configurations = new JSONObject()
+                .put("fine", 500)
+                .put("interest", 330);
+
+        return configurations;
     }
 
     public static boolean isOk(JSONObject response) {

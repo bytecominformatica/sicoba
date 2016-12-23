@@ -10,12 +10,12 @@
         </button>
         <ul class="dropdown-menu slidedown">
             <li>
-                <a ng-href="#/charge/cliente/{{cliente.id}}">
+                <a ng-href="#/charge/new?clienteId={{cliente.id}}">
                     <i class="fa fa-plus"></i> Nova Cobrança
                 </a>
             <li class="divider"></li>
             <li>
-                <a ng-href="#/carnet/cliente/{{cliente.id}}">
+                <a ng-href="#/carnet/new?clienteId={{cliente.id}}">
                     <i class="glyphicon glyphicon-paperclip"></i> Novo Carne
                 </a>
             </li>
@@ -67,7 +67,7 @@
                         </a>
                     </td>
                     <td class="text-center">
-                        <a class="btn btn-primary" title="Editar" ng-href="#/charge/{{it.id}}"
+                        <a class="btn btn-primary" title="Editar" ng-href="#/charges/{{it.id}}"
                            ng-hide="it.status === 'PAID'">
                             <i class="fa fa-edit"></i>
                         </a>

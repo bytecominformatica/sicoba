@@ -5,6 +5,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by clairtonluz on 09/01/16.
  */
 
-
+@Repository
 public interface TituloRepository extends CrudRepository<Titulo, Integer> {
 
     List<Titulo> findByCliente_idOrderByDataVencimentoDesc(Integer clienteId);

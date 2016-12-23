@@ -11,7 +11,11 @@
                     templateUrl: 'app/views/financeiro/gerencianet/charge/charge.list.html',
                     controller: 'ChargeListCtrl'
                 })
-                .when('/charge/:id', {
+                .when('/charges/:id', {
+                    templateUrl: 'app/views/financeiro/gerencianet/charge/charge.html',
+                    controller: 'ChargeCtrl'
+                })
+                .when('/charge/new', {
                     templateUrl: 'app/views/financeiro/gerencianet/charge/charge.html',
                     controller: 'ChargeCtrl'
                 });

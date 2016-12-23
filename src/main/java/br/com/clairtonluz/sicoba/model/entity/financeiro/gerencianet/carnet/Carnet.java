@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by clairton on 21/12/16.
  */
 @Entity
-@Table(name = "charge")
+@Table(name = "carnet")
 public class Carnet extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "charge_id_seq")

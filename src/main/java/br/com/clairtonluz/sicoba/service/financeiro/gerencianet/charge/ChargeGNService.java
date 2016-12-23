@@ -56,21 +56,29 @@ class ChargeGNService {
      * @return
      */
     JSONObject setPaymentToBankingBilletGN(Charge charge) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("id", charge.getChargeId().toString());
+
         JSONObject customer = GNService.createConsumer(charge.getCliente(), false);
         JSONArray instructions = GNService.createInstructions(charge.getDiscount());
+        JSONObject configurations = GNService.createConfigurations();
 
         JSONObject bankingBillet = new JSONObject();
         bankingBillet.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
         bankingBillet.put("customer", customer);
+        bankingBillet.put("instructions", instructions);
+//        bankingBillet.put("configurations", configurations);
+//        bankingBillet.put("discount", new JSONObject().put("type", "currency").put("value", 500));
+
 
         JSONObject payment = new JSONObject();
         payment.put("banking_billet", bankingBillet);
 
         JSONObject body = new JSONObject();
         body.put("payment", payment);
-        body.put("instructions", instructions); // opcional
 
-        return GNService.call(PAY_CHARGE, body);
+        return GNService.call(PAY_CHARGE, params, body);
     }
 
 
@@ -91,7 +99,7 @@ class ChargeGNService {
         }
 
         if (StringUtil.isEmpty(charge.getMessage())) {
-            body.put("message", charge.getMessage());
+            body.put("message", "Mensagem de teste");
         }
 
         body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
