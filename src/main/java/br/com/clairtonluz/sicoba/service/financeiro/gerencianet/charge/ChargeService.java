@@ -6,6 +6,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.PaymentType;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
+import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
@@ -30,6 +31,8 @@ public class ChargeService {
     private ChargeRepository chargeRepository;
     @Autowired
     private ContratoRepository contratoRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
     @Autowired
     private ChargeGNService chargeGNService;
 
@@ -137,7 +140,7 @@ public class ChargeService {
     }
 
     public List<Charge> findByCliente(Integer clienteId) {
-        return chargeRepository.findByCliente_id(clienteId);
+        return chargeRepository.findByCliente_idOrderByExpireAtDesc(clienteId);
     }
 
     public Charge findByCarnetAndParcel(Integer carnetId, Integer parcel) {
@@ -145,17 +148,25 @@ public class ChargeService {
     }
 
     public Charge createModelo(Integer clienteId) {
-        Contrato contrato = contratoRepository.findOptionalByCliente_id(clienteId);
         Charge charge = new Charge();
-        charge.setCliente(contrato.getCliente());
-        charge.setExpireAt(getNextExpireAt(contrato));
-        Double value = contrato.getPlano().getValor();
-        if (contrato.getEquipamentoWifi() != null) {
-            value += 5;
-            charge.setDiscount(5d);
+        Contrato contrato = contratoRepository.findOptionalByCliente_id(clienteId);
+        if (contrato != null) {
+            charge.setCliente(contrato.getCliente());
+            charge.setExpireAt(getNextExpireAt(contrato));
+            Double value = contrato.getPlano().getValor();
+            if (contrato.getEquipamentoWifi() != null) {
+                value += 5;
+                charge.setDiscount(5d);
+            }
+            charge.setValue(value);
+            charge.setDescription(String.format("Internet Banda Larga %s", contrato.getPlano().getNome()));
+            charge.setMessage(String.format("Olá, %s! \nObrigado por escolher a Bytecom Informática.", charge.getCliente().getNome()));
+        } else {
+            charge.setCliente(clienteRepository.findOne(clienteId));
+            charge.setExpireAt(new Date());
         }
 
-        charge.setValue(value);
+
         charge.setStatus(StatusCharge.NEW);
 
         return charge;

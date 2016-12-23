@@ -24,8 +24,17 @@
                         case 'CANCELED':
                             result = 'label-danger';
                             break;
+                        case 'REFUNDED':
+                            result = 'label-danger';
+                            break;
+                        case 'LINK':
+                            result = 'label-info';
+                            break;
+                        case 'WAITING':
+                            result = 'label-info';
+                            break;
                         default:
-                            result = 'label-warning'
+                            result = 'label-warning';
                     }
 
                     return result;

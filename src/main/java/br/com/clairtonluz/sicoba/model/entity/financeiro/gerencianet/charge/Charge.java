@@ -4,10 +4,10 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
+import br.com.clairtonluz.sicoba.util.StringUtil;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -28,9 +28,10 @@ public class Charge extends BaseEntity {
     @Column(name = "payment_url")
     private String paymentUrl;
     private String barcode;
-    @Min(value = 3, message = "A mensagem deve conter 3 ou mais caracteres")
-    @Max(value = 80, message = "A mensagem deve conter no máximo 80 caracteres")
+    @Size(min = 3, max = 80, message = "A mensagem deve conter entre 3 e 80 caracteres")
     private String message;
+    @Size(min = 1, max = 255, message = "A mensagem deve conter entre 1 e 255 caracteres")
+    private String description;
 
     @Column(name = "charge_id")
     private Integer chargeId;
@@ -103,7 +104,7 @@ public class Charge extends BaseEntity {
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.message = StringUtil.isEmpty(message) ? null : message;
     }
 
     public Integer getChargeId() {
@@ -160,5 +161,13 @@ public class Charge extends BaseEntity {
 
     public void setPaymentUrl(String paymentUrl) {
         this.paymentUrl = paymentUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

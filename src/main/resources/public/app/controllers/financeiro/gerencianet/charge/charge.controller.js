@@ -9,7 +9,6 @@
                 $scope.cancel = _cancel;
                 $scope.createBankingBillet = _createBankingBillet;
                 $scope.createPaymentLink = _createPaymentLink;
-                $scope.atualizarValores = _atualizarValores;
 
                 _init();
 
@@ -32,31 +31,31 @@
                         $scope.clienteId = charge.cliente.id;
                     });
                 }
-
-                function _atualizarValores(charge) {
-                    if (charge.status === 'BAIXA_MANUAL') {
-                        calculaValorAPagar(charge);
-                    } else {
-                        charge.valorPago = 0;
-                        charge.dataOcorrencia = null;
-                    }
-                }
-
-                function calculaValorAPagar(charge) {
-                    if (!charge.dataOcorrencia) {
-                        charge.dataOcorrencia = new Date();
-                    }
-
-                    var diff = DateDiff.inDays(new Date(charge.dataVencimento), charge.dataOcorrencia);
-                    if (diff <= 0) {
-                        charge.valorPago = charge.valor - charge.desconto;
-                    } else {
-                        var juros = charge.valor * 0.05;
-                        var mora = charge.valor * 0.006677 * diff;
-                        var vp = charge.valor + juros + mora;
-                        charge.valorPago = parseFloat(vp.toFixed(2));
-                    }
-                }
+                //
+                // function _atualizarValores(charge) {
+                //     if (charge.status === 'BAIXA_MANUAL') {
+                //         calculaValorAPagar(charge);
+                //     } else {
+                //         charge.valorPago = 0;
+                //         charge.dataOcorrencia = null;
+                //     }
+                // }
+                //
+                // function calculaValorAPagar(charge) {
+                //     if (!charge.dataOcorrencia) {
+                //         charge.dataOcorrencia = new Date();
+                //     }
+                //
+                //     var diff = DateDiff.inDays(new Date(charge.dataVencimento), charge.dataOcorrencia);
+                //     if (diff <= 0) {
+                //         charge.valorPago = charge.valor - charge.desconto;
+                //     } else {
+                //         var juros = charge.valor * 0.05;
+                //         var mora = charge.valor * 0.006677 * diff;
+                //         var vp = charge.valor + juros + mora;
+                //         charge.valorPago = parseFloat(vp.toFixed(2));
+                //     }
+                // }
 
                 function _create(charge) {
                     Charge.save(charge, function (data) {

@@ -89,7 +89,7 @@ public class CarnetService {
         if (carnetGNService.cancelCarnet(carnet)) {
             carnet.setStatus(StatusCarnet.CANCELED);
             carnetRepository.save(carnet);
-            List<Charge> charges = chargeRepository.findByCarnet_id(carnet.getId());
+            List<Charge> charges = chargeRepository.findByCarnet_idOrderByExpireAtDesc(carnet.getId());
             charges.forEach(it -> it.setStatus(StatusCharge.CANCELED));
             chargeRepository.save(charges);
         }

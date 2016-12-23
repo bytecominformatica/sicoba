@@ -6,11 +6,11 @@
     <small>{{charge.id ? 'Editar' : 'Novo'}}</small>
 </h1>
 
-<form name="form" class="form-horizontal" novalidate>
+<form name="form" class="form-horizontal">
 
     <div class="col-md-2" align="right" ng-show="charge.paymentUrl">
         <a title="Carnê PDF" ng-href="{{charge.paymentUrl}}" target="_blank">
-            <b>Link de pagamento:</b> {{charge.carnet.id}}
+            <b>Link de pagamento</b>
         </a>
     </div>
 
@@ -37,10 +37,35 @@
     </div>
 
     <div class="col-md-3"
+         ng-class="{'has-error': (form.description.$invalid && (form.$submitted || form.description.$touched))}">
+        <label>Descrição</label>
+        <input type="text" name="description" ng-model="charge.description" class="form-control" required
+               minlength="1" maxlength="255" ng-disabled="charge.id">
+        <p class="help-block" ng-show="form.$submitted || form.description.$touched">
+            <i ng-show="form.description.$error.required">Descreva o motivo dessa cobrança?</i>
+            <i ng-show="form.value.$error.minlength">A Mensagem deve conter no minimo 1 caracteres</i>
+            <i ng-show="form.value.$error.maxlength">A Mensagem deve conter no máximo 255 caracteres</i>
+        </p>
+    </div>
+
+    <div class="col-md-3"
+         ng-class="{'has-error': (form.message.$invalid && (form.$submitted || form.message.$touched))}">
+        <label>Mensagem</label>
+        <input type="text" name="message" ng-model="charge.message" class="form-control"
+               placeholder="Mensagem para ser exibida no link de pagamento" required ng-disabled="charge.id"
+               minlength="3" maxlength="80" >
+        <p class="help-block" ng-show="form.$submitted || form.message.$touched">
+            <i ng-show="form.value.$error.required">Defina a mensagem para ser exibida no link de pagamento</i>
+            <i ng-show="form.value.$error.minlength">A Mensagem deve conter no minimo 3 caracteres</i>
+            <i ng-show="form.value.$error.maxlength">A Mensagem deve conter no máximo 80 caracteres</i>
+        </p>
+    </div>
+
+    <div class="col-md-3"
          ng-class="{'has-error': (form.value.$invalid && (form.$submitted || form.value.$touched))}">
         <label>Valor</label>
         <input type="number" step="any" name="value" ng-model="charge.value" class="form-control" required
-               ng-change="atualizarValores(charge)">
+               ng-disabled="charge.id">
         <p class="help-block" ng-show="form.$submitted || form.value.$touched">
             <i ng-show="form.value.$error.required">Qual o valor dessa cobrança?</i>
             <i ng-show="form.value.$error.number">Valor inválido.</i>
@@ -50,8 +75,7 @@
     <div class="col-md-3"
          ng-class="{'has-error': (form.discount.$invalid && (form.$submitted || form.discount.$touched))}">
         <label>Desconto</label>
-        <input type="number" step="any" name="discount" ng-model="charge.discount" class="form-control"
-               ng-change="atualizarValores(charge)">
+        <input type="number" step="any" name="discount" ng-model="charge.discount" class="form-control">
         <p class="help-block" ng-show="form.$submitted || form.discount.$touched">
             <i ng-show="form.discount.$error.number">Valor inválido.</i>
         </p>
@@ -73,7 +97,7 @@
             </div>
             <p class="help-block" ng-show="form.$submitted || form.expireAt.$touched">
                 <i ng-show="form.expireAt.$error.required">
-                    Quando o vencimento desta cobrança?
+                    Escolha a data de vencimento desta cobrança?
                 </i>
             </p>
         </div>
@@ -84,7 +108,7 @@
         <br/>
 
         <div class="pull-right">
-            <button class="btn btn-primary" type="button" ng-click="form.$valid && create(charge)" ng-hide="charge.id">
+            <button class="btn btn-primary" type="submit" ng-click="form.$valid && create(charge)" ng-hide="charge.id">
                 Criar
             </button>
             <button class="btn btn-primary" type="button" ng-click="form.$valid && createBankingBillet(charge)"
@@ -95,8 +119,8 @@
                     ng-show="charge.id && charge.status === 'NEW'">
                 Link de pagamento
             </button>
-            <button class="btn btn-danger" type="button" ng-show="charge.id" ng-click="cancel(charge)"
-                    confirm="Tem certeza que desseja cancelar a cobrança do(a) {{charge.cliente.nome}} no valor de {{charge.valor}} com vencimento para {{charge.expireAt | date}}?">
+            <button class="btn btn-danger" type="button" ng-show="charge.id && charge.status !== 'CANCELED'" ng-click="cancel(charge)"
+                    confirm="Tem certeza que desseja cancelar a cobrança do(a) {{charge.cliente.nome}} no valor de {{charge.value | currency}} com vencimento para {{charge.expireAt | date}}?">
                 Cancelar cobrança
             </button>
             <a ng-href="#/charges?clienteId={{clienteId}}" class="btn btn-default">Voltar</a>

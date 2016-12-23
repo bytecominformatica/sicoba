@@ -5,6 +5,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by clairtonluz on 15/11/15.
  */
 
+@Repository
 public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
     List<Cliente> findByStatus(StatusCliente status);

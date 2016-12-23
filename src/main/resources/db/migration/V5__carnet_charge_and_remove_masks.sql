@@ -32,6 +32,7 @@ CREATE TABLE charge (
   id          SERIAL         NOT NULL PRIMARY KEY,
   charge_id   INT,
   message     VARCHAR(80),
+  description VARCHAR(255)    NOT NULL,
   status      VARCHAR(30),
   url         VARCHAR(255),
   payment_url VARCHAR(255),

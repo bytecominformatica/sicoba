@@ -38,8 +38,7 @@ class ChargeGNService {
      * @return
      */
     JSONObject createCharge(Contrato contrato, Charge charge) {
-        String item = String.format("Internet Banda Larga %s", contrato.getPlano().getNome());
-        JSONArray items = new JSONArray().put(GNService.createItem(item, charge.getValue()));
+        JSONArray items = new JSONArray().put(GNService.createItem(charge.getDescription(), charge.getValue()));
 
         JSONObject body = new JSONObject();
         body.put("items", items);
@@ -62,15 +61,11 @@ class ChargeGNService {
 
         JSONObject customer = GNService.createConsumer(charge.getCliente(), false);
         JSONArray instructions = GNService.createInstructions(charge.getDiscount());
-        JSONObject configurations = GNService.createConfigurations();
 
         JSONObject bankingBillet = new JSONObject();
         bankingBillet.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
         bankingBillet.put("customer", customer);
         bankingBillet.put("instructions", instructions);
-//        bankingBillet.put("configurations", configurations);
-//        bankingBillet.put("discount", new JSONObject().put("type", "currency").put("value", 500));
-
 
         JSONObject payment = new JSONObject();
         payment.put("banking_billet", bankingBillet);
@@ -98,9 +93,7 @@ class ChargeGNService {
             body.put("billet_discount", charge.getDiscount() * 100);
         }
 
-        if (StringUtil.isEmpty(charge.getMessage())) {
-            body.put("message", "Mensagem de teste");
-        }
+        body.put("message", charge.getMessage());
 
         body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
         body.put("request_delivery_address", false);
