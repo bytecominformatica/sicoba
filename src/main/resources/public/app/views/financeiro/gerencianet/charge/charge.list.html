@@ -47,8 +47,8 @@
                 <tbody>
                 <tr ng-repeat="it in charges track by it.id">
                     <td>{{it.id}}</td>
-                    <td>{{it.valor | currency}}</td>
-                    <td>{{it.desconto | currency}}</td>
+                    <td>{{it.value | currency}}</td>
+                    <td>{{it.discount | currency}}</td>
                     <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
                     <td>
                         <i class="label" ng-class="getStatusClass(it.status)">
@@ -61,7 +61,14 @@
                         </a>
                     </td>
                     <td align="center">
-                        <a title="parcela{{it.parcel}}.pdf" ng-href="{{it.url}}" ng-show="it.chargeId > 0"
+                        <div ng-hide="it.url || it.paymentUrl">
+                            {{it.chargeId}}
+                        </div>
+                        <a title="cobranca{{it.id}}.pdf" ng-href="{{it.url}}" ng-show="it.url"
+                           target="_blank">
+                            {{it.chargeId}}
+                        </a>
+                        <a title="cobranca{{it.id}}.pdf" ng-href="{{it.paymentUrl}}" ng-show="it.paymentUrl"
                            target="_blank">
                             {{it.chargeId}}
                         </a>

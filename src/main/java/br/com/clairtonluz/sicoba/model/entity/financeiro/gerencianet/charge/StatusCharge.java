@@ -7,6 +7,7 @@ public enum StatusCharge {
     NEW("Novo", "Cobrança gerada, aguardando definição da forma de pagamento."),
     WAITING("Aguardando", "Forma de pagamento selecionada, aguardando a confirmação do pagamento."),
     PAID("Pago", "Pagamento confirmado."),
+    UNPAID("Não Pago", "Boleto não foi pago até o momento."),
     REFUNDED("Devolvido", "Pagamento devolvido pelo lojista ou pelo intermediador Gerencianet."),
     CONTESTED("Contestado", "Pagamento em processo de contestação."),
     CANCELED("Cancelado", "Cobrança cancelada pelo vendedor ou pelo pagador."),
