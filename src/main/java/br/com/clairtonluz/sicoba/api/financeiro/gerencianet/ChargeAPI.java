@@ -2,6 +2,7 @@ package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge.ChargeService;
+import br.com.clairtonluz.sicoba.util.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,8 @@ public class ChargeAPI {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public Charge modelo(@RequestParam("clienteId") Integer clienteId) {
+        SendEmail.sendToAdmin("teste2", "conteudo de teste2");
+
         return chargeService.createModelo(clienteId);
     }
 
