@@ -60,7 +60,7 @@ class ChargeGNService {
         params.put("id", charge.getChargeId().toString());
 
         JSONObject customer = GNService.createConsumer(charge.getCliente(), false);
-        JSONArray instructions = GNService.createInstructions(charge.getDiscount());
+        JSONArray instructions = GNService.createInstructions(charge);
 
         JSONObject bankingBillet = new JSONObject();
         bankingBillet.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));

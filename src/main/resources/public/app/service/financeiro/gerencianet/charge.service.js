@@ -24,6 +24,10 @@
                         method: 'PUT',
                         params: {action: "cancel"}
                     },
+                    updateExpireAt: {
+                        method: 'PUT',
+                        params: {action: "billet"}
+                    },
                     refreshUrlsNotification: {
                         method: 'PUT',
                         params: {id: "all", action: "metadata"}

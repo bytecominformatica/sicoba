@@ -68,7 +68,7 @@ public class CarnetService {
                 charge.setUrl(it.getString("url"));
                 charge.setStatus(StatusCharge.valueOf(it.getString("status").toUpperCase()));
                 charge.setParcel(it.getInt("parcel"));
-                charge.setDiscount(carnet.getDiscount());
+                charge.setDiscount(carnet.getDiscountSplit());
                 charge.setDescription(carnet.getDescription());
                 charge.setCliente(carnet.getCliente());
 
@@ -86,8 +86,13 @@ public class CarnetService {
     }
 
     public Charge updateParcelExpireAt(Charge charge) {
-        if (carnetGNService.updateParcelExpireAt(charge)) {
-            charge = chargeRepository.save(charge);
+        Date expireAt = charge.getExpireAt();
+        charge = chargeRepository.findOne(charge.getId());
+        if (ChargeService.isExpireAtValid(charge, expireAt)) {
+            charge.setExpireAt(expireAt);
+            if (carnetGNService.updateParcelExpireAt(charge)) {
+                charge = chargeRepository.save(charge);
+            }
         }
         return charge;
     }

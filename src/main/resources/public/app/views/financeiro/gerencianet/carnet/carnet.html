@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        <div class="col-xs-3 col-md-2  pull-right" align="right" ng-show="carnet.id">
+        <div class="col-xs-3 col-md-2 pull-right" align="right" ng-show="carnet.id">
             <a title="Carnê PDF" ng-href="#/charges?clienteId={{clienteId}}&carnetId={{carnet.id}}">
                 Visualizar Parcelas
             </a>
@@ -27,7 +27,7 @@
         <div class="form-control">{{carnet.cliente.id}} - {{carnet.cliente.nome}}</div>
     </div>
 
-    <div class="col-md-2 col-xs-12" ng-show="carnet.status">
+    <div class="col-md-2 col-xs-12">
         <label>Status</label>
         <div class="form-control">{{carnet.status}}</div>
     </div>
@@ -94,7 +94,7 @@
 
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="input-group">
-            <label>Dividir valor entre as parcelas</label>
+            <label>Dividir valor e o desconto entre as parcelas</label>
             <div class="checkbox">
                 <label><input type="checkbox" name="splitItems" ng-model="carnet.splitItems" ng-disabled="carnet.id">
                     Dividir

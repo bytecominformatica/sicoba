@@ -4,6 +4,8 @@ import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Endereco;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Credentials;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import br.com.gerencianet.gnsdk.Gerencianet;
 import br.com.gerencianet.gnsdk.exceptions.GerencianetException;
@@ -23,6 +25,8 @@ public class GNService {
 
     private static final JSONObject BODY_EMPTY = new JSONObject();
     private static final HashMap<String, String> PARAMS_EMPTY = new HashMap<>();
+    private static final double FINE_RATE = 0.05;
+    private static final double INTEREST_RATE = 0.006677;
 
     private GNService() {
 
@@ -33,9 +37,10 @@ public class GNService {
     }
 
     public static JSONObject createItem(String name, Double value, Integer amount) {
+        int valueInt = (int) (value * 100); // retirando as casa decimais
         JSONObject item = new JSONObject()
                 .put("name", name)
-                .put("value", value * 100);
+                .put("value", valueInt);
         if (amount != null) {
             item.put("amount", 1); // não é obrigatório
         }
@@ -93,13 +98,23 @@ public class GNService {
         return customer;
     }
 
-    public static JSONArray createInstructions(Double desconto) {
+    public static JSONArray createInstructions(Charge charge) {
+        return createInstructions(charge.getValue(), charge.getDiscount());
+    }
+
+    public static JSONArray createInstructions(Carnet carnet) {
+        return createInstructions(carnet.getValue(), carnet.getDiscountSplit());
+    }
+
+    private static JSONArray createInstructions(Double valor, Double discount) {
+        Double fine = valor * FINE_RATE;
+        Double interest = valor * INTEREST_RATE;
         JSONArray instructions = new JSONArray()
                 .put("Não receber após 60 dias do vencimento")
-                .put("Sr. Caixa, cobrar juros de 0.033% ao dia após o vencimento")
-                .put("Sr. Caixa, cobrar multa de 5% após o vencimento");
-        if (desconto != null && desconto > 0) {
-            instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", StringUtil.formatCurrence(desconto)));
+                .put(String.format("Sr. Caixa, cobrar multa de %s após o vencimento", StringUtil.formatCurrence(fine)))
+                .put(String.format("Sr. Caixa, cobrar juros de %s ao dia após o vencimento", StringUtil.formatCurrence(interest)));
+        if (discount != null && discount > 0) {
+            instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", StringUtil.formatCurrence(discount)));
         }
         return instructions;
     }

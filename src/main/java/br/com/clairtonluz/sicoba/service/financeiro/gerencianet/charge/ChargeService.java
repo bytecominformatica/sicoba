@@ -115,10 +115,30 @@ public class ChargeService {
 
     @Transactional
     public Charge updateBilletExpireAt(Charge charge) {
-        if (chargeGNService.updateBilletExpireAt(charge)) {
-            charge = save(charge);
+        Date expireAt = charge.getExpireAt();
+        charge = findById(charge.getId());
+        if (isExpireAtValid(charge, expireAt)) {
+            charge.setExpireAt(expireAt);
+            if (chargeGNService.updateBilletExpireAt(charge)) {
+                charge = save(charge);
+            }
         }
         return charge;
+    }
+
+    public static boolean isExpireAtValid(Charge charge, Date expireAt) {
+        if (charge.getExpireAt().after(expireAt)) {
+            throw new ConflitException("Não é possível reduzir a data de vencimento de uma cobrança");
+        }
+
+        if (DateUtil.isPast(charge.getExpireAt())) {
+            throw new ConflitException("O vencimento deve ser maior ou igual a data atual");
+        }
+
+        if (StatusCharge.WAITING.equals(charge.getStatus()) || StatusCharge.UNPAID.equals(charge.getStatus())) {
+            throw new ConflitException("Apenas transações com status [waiting] ou [unpaid] podem ser atualizadas");
+        }
+        return true;
     }
 
     @Transactional

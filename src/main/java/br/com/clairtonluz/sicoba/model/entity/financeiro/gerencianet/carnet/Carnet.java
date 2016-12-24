@@ -178,4 +178,12 @@ public class Carnet extends BaseEntity {
     public void setTokenNotification(String tokenNotification) {
         this.tokenNotification = tokenNotification;
     }
+
+    public Double getDiscountSplit() {
+        Double discount = this.discount;
+        if (splitItems && discount != null && discount > 0) {
+            discount = discount / repeats;
+        }
+        return discount;
+    }
 }

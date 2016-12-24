@@ -1,11 +1,14 @@
 package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
+import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -77,4 +80,5 @@ public class ChargeAPI {
     public void updateCarnetMetadataAll() {
         chargeService.updateCarnetMetadataAll();
     }
+
 }

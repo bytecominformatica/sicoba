@@ -26,6 +26,10 @@ public final class DateUtil {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
+    public static LocalDate toLocalDate(Date date) {
+        return toLocalDateTime(date).toLocalDate();
+    }
+
     public static Date plusMonth(Date data, Integer value) {
         LocalDateTime localDateTime = DateUtil.toLocalDateTime(data).plusMonths(value);
         data = DateUtil.toDate(localDateTime);
@@ -34,6 +38,7 @@ public final class DateUtil {
 
     /**
      * Return a String as yyyy-MM-dd
+     *
      * @param vencimento
      * @return
      */
@@ -47,5 +52,12 @@ public final class DateUtil {
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    public static boolean isPast(Date date) {
+        LocalDate today = LocalDate.now();
+        LocalDate otherDate = toLocalDate(date);
+
+        return otherDate.isBefore(today);
     }
 }

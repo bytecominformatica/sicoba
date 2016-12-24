@@ -9,6 +9,7 @@
                 $scope.cancel = _cancel;
                 $scope.createBankingBillet = _createBankingBillet;
                 $scope.createPaymentLink = _createPaymentLink;
+                $scope.updateExpireAt = _updateExpireAt;
 
                 _init();
 
@@ -31,6 +32,7 @@
                         $scope.clienteId = charge.cliente.id;
                     });
                 }
+
                 //
                 // function _atualizarValores(charge) {
                 //     if (charge.status === 'BAIXA_MANUAL') {
@@ -92,7 +94,7 @@
 
                 function _cancel(charge) {
                     Charge.cancel({id: charge.id}, function (data) {
-                        _init();
+                        $scope.charge = data;
                         $rootScope.messages = [{
                             title: 'Sucesso',
                             body: 'Cancelada cobrança de número ' + data.id,
@@ -101,8 +103,15 @@
                     });
                 }
 
-                function _voltar() {
-                    $location.path('/charges?cliente=' + $scope.clienteId);
+                function _updateExpireAt(charge) {
+                    Charge.updateExpireAt(charge, function (data) {
+                        $scope.charge = data;
+                        $rootScope.messages = [{
+                            title: 'Sucesso',
+                            body: 'Cancelada cobrança de número ' + data.id,
+                            type: 'alert-success'
+                        }];
+                    });
                 }
             }]);
 }());

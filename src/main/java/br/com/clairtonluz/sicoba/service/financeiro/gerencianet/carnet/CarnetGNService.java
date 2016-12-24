@@ -30,10 +30,10 @@ class CarnetGNService {
     private static final String RESEND_PARCEL = "resendParcel";
 
     JSONObject createCarnet(Carnet carnet) {
-         /* *********  Set credentials parameters ******** */
         JSONArray items = new JSONArray().put(GNService.createItem(carnet.getDescription(), carnet.getValue()));
         JSONObject customer = GNService.createConsumer(carnet.getCliente(), false);
-        JSONArray instructions = GNService.createInstructions(carnet.getDiscount());
+
+        JSONArray instructions = GNService.createInstructions(carnet);
 
         JSONObject body = new JSONObject();
         body.put("items", items);
