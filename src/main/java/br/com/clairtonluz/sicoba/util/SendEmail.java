@@ -57,6 +57,7 @@ public class SendEmail {
                 e.printStackTrace();
             }
         } else {
+            System.out.println("ENV:" + env);
             System.out.println(subject);
             System.out.println(content);
         }
