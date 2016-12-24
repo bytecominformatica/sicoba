@@ -20,7 +20,7 @@ public class SendEmail {
     public static void notificarAdmin(String subject, Exception e) {
         subject = String.format("[SICOBA][%s][ERROR] - %s", EnvironmentFactory.create().getEnv(), subject);
         String content = stackTraceAsString(e);
-        send(System.getenv("EMAIL_ADMIN"), subject, content);
+        sendToAdmin(subject, content);
     }
 
     public static void sendToAdmin(String subject, String content) {
