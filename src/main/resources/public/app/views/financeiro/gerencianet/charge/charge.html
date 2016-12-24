@@ -9,14 +9,14 @@
 <form name="form" class="form-horizontal">
 
     <div class="col-xs-12">
-        <div class="col-xs-3 col-md-2 pull-right" align="right" ng-show="charge.paymentUrl">
+        <div class="col-xs-5 col-sm-4 col-md-3 pull-right" align="right" ng-show="charge.paymentUrl">
             <a title="Link de pagamento para cobrança {{charge.chargeId}}" ng-href="{{charge.paymentUrl}}"
                target="_blank">
                 Link de pagamento
             </a>
         </div>
 
-        <div class="col-xs-3 col-md-2 pull-right" align="right" ng-show="charge.carnet.link">
+        <div class="col-xs-5 col-sm-4 col-md-3 pull-right" align="right" ng-show="charge.carnet.link">
             <a title="Carnê {{charge.carnet.carnetId}} em PDF" ng-href="{{charge.carnet.link}}" target="_blank">
                 Carnê: {{charge.carnet.carnetId}} - {{charge.parcel}}
             </a>
