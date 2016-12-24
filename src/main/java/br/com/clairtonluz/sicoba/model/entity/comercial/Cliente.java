@@ -1,6 +1,7 @@
 package br.com.clairtonluz.sicoba.model.entity.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
+import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Table(name = "cliente")
 public class Cliente extends BaseEntity {
 
+    public static final int CNPJ_LENGTH = 14;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "cliente_id_seq")
     @SequenceGenerator(name = "cliente_id_seq", sequenceName = "cliente_id_seq")
@@ -77,7 +79,7 @@ public class Cliente extends BaseEntity {
     }
 
     public void setFoneTitular(String foneTitular) {
-        this.foneTitular = foneTitular;
+        this.foneTitular = StringUtil.removerFormatacaoFone(foneTitular);
     }
 
     public String getContato() {
@@ -93,7 +95,7 @@ public class Cliente extends BaseEntity {
     }
 
     public void setFoneContato(String foneContato) {
-        this.foneContato = foneContato;
+        this.foneContato = StringUtil.removerFormatacaoFone(foneContato);
     }
 
     public Endereco getEndereco() {
@@ -109,6 +111,7 @@ public class Cliente extends BaseEntity {
     }
 
     public void setCpfCnpj(String cpfCnpj) {
+        cpfCnpj = StringUtil.removerFormatacaoCpfCnpj(cpfCnpj);
         this.cpfCnpj = cpfCnpj != null && cpfCnpj.isEmpty() ? null : cpfCnpj;
     }
 

@@ -7,16 +7,13 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(titulo)" novalidate>
-    <div class="col-lg-12"
-         ng-class="{'has-error': (form.cliente.$invalid && (form.$submitted || form.cliente.$touched))}">
-        <label>Cliente</label>
-        <input name="cliente" ng-model="titulo.cliente.nome" class="form-control" type="text" required readonly>
-        <p class="help-block" ng-show="form.$submitted || form.cliente.$touched">
-            <i ng-show="form.cliente.$error.required">Nenhum cliente selecionado.</i>
-        </p>
+
+    <div class="col-lg-12">
+        <label>Cliente:</label>
+        <div class="form-control">{{titulo.cliente.id}} - {{titulo.cliente.nome}}</div>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
         <label>Status</label>
         <select name="status" ng-model="titulo.status" class="form-control" required
@@ -29,7 +26,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.valor.$invalid && (form.$submitted || form.valor.$touched))}">
         <label>Valor</label>
         <input type="number" step="any" name="valor" ng-model="titulo.valor" class="form-control" required
@@ -40,7 +37,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.desconto.$invalid && (form.$submitted || form.desconto.$touched))}">
         <label>Desconto</label>
         <input type="number" step="any" name="desconto" ng-model="titulo.desconto" class="form-control"
@@ -50,7 +47,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3" ng-show="titulo.status === 'BAIXA_MANUAL'"
+    <div class="col-md-3" ng-show="titulo.status === 'BAIXA_MANUAL'"
          ng-class="{'has-error': (form.valorPago.$invalid && (form.$submitted || form.valorPago.$touched))}">
         <label>Valor Pago</label>
         <input type="number" step="any" name="valorPago" ng-model="titulo.valorPago" class="form-control" required
@@ -61,7 +58,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.dataVencimento.$invalid && (form.$submitted || form.dataVencimento.$touched))}">
         <div class="input-group">
             <label>Vencimento</label>
@@ -83,7 +80,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3" ng-show="titulo.status === 'BAIXA_MANUAL'"
+    <div class="col-md-3" ng-show="titulo.status === 'BAIXA_MANUAL'"
          ng-class="{'has-error': (form.dataOcorrencia.$invalid && (form.$submitted || form.dataOcorrencia.$touched))}">
         <div class="input-group">
             <label>Data Ocorrência</label>
@@ -105,7 +102,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.modalidade.$invalid && (form.$submitted || form.modalidade.$touched))}">
         <label>Modalidade</label>
         <select name="modalidade" ng-model="titulo.modalidade" class="form-control" required
@@ -118,14 +115,14 @@
     </div>
 
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.numeroBoleto.$invalid && (form.$submitted || form.numeroBoleto.$touched))}">
         <label>Número Boleto</label>
         <input type="text" name="numeroBoleto" ng-model="titulo.numeroBoleto" class="form-control">
     </div>
 
 
-    <div class="col-lg-12">
+    <div class="col-xs-12">
         <br/>
         <br/>
 

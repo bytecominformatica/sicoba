@@ -6,6 +6,7 @@ package br.com.clairtonluz.sicoba.config;
 public interface Environment {
     String PRODUCTION = "PRODUCTION";
     String DEVELOPMENT = "DEVELOPMENT";
+    String QUALITY = "QUALITY";
 
     String getEnv();
 }

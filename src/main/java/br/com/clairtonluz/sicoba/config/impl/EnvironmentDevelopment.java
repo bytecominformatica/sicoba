@@ -8,7 +8,6 @@ import br.com.clairtonluz.sicoba.config.Environment;
 public class EnvironmentDevelopment implements Environment {
     @Override
     public String getEnv() {
-        System.out.println(Environment.DEVELOPMENT);
         return Environment.DEVELOPMENT;
     }
 }

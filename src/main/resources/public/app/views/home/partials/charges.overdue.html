@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="dataTables_filter">
+                                    <label>Search:<input ng-model="criterio.cliente.nome" type="search"
+                                                         placeholder="Nome do cliente aqui"
+                                                         class="form-control input-sm">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer">
+                                    <thead>
+                                    <tr>
+                                        <th ng-class="{'sorting':predicate != 'cliente.nome', 'sorting_asc': !reverse, 'sorting_desc': reverse}"
+                                            tabindex="0" ng-click="order('cliente.nome')">
+                                            Cliente
+                                        </th>
+                                        <th ng-class="{'sorting':predicate != 'value', 'sorting_asc': !reverse, 'sorting_desc': reverse}"
+                                            tabindex="1" ng-click="order('value')">
+                                            Valor
+                                        </th>
+                                        <th ng-class="{'sorting':predicate != 'expireAt', 'sorting_asc': !reverse, 'sorting_desc': reverse}"
+                                            tabindex="2" ng-click="order('expireAt')">
+                                            Vencimento
+                                        </th>
+                                        <th ng-class="{'sorting':predicate != 'status', 'sorting_asc': !reverse, 'sorting_desc': reverse}"
+                                            tabindex="2" ng-click="order('status')">
+                                            Status
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in chargesOverdue | filter:criterio | orderBy:predicate:reverse track by it.id">
+                                        <td><a ng-class="it.cliente.status" ng-href="#/cliente/{{it.cliente.id}}">{{it.cliente.nome}}</a>
+                                        </td>
+                                        <td>
+                                            <a ng-href="#/charges/{{it.id}}">{{it.value | currency}}</a>
+                                        </td>
+                                        <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
+                                        <td ng-class="it.status">{{it.status}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

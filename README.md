@@ -38,6 +38,27 @@ bower install
 
 ```
 
+Integration SendGrid (Optional)
+-------------
+```shell
+sudo -i
+
+echo "export SENDGRID_API_KEY='YOUR API KEY'" > /etc/profile.d/sendgrid.env
+
+```
+
+
+Integração Gerencianet (Optional)
+---------------------------------------
+```shell
+sudo -i
+
+echo "export CLIENT_ID='Client_Id';" > /etc/profile.d/gerencianet.sh
+echo "export CLIENT_SECRET='Client_Secret';" > /etc/profile.d/gerencianet.sh
+echo "export SANDBOX='true';" > /etc/profile.d/gerencianet.sh
+echo "export NOTIFICATION_URL='http://www.example.com.br/api/notification';" > /etc/profile.d/gerencianet.sh
+
+```
 
 Credentials default to login in system
 --------------------------------------

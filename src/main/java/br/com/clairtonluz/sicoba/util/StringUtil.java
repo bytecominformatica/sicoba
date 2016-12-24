@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.util;
 
+import javax.swing.text.MaskFormatter;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,9 +13,60 @@ import java.util.Random;
  */
 public final class StringUtil {
 
+    public static final Locale LOCALE_BRAZIL = new Locale("pt", "BR");
     private static final SimpleDateFormat FORMATTER_DATA = new SimpleDateFormat("ddMMyyyy");
     private static final SimpleDateFormat FORMATTER_DATA_HORA = new SimpleDateFormat("ddMMyyyyHHmmss");
+    public static final int CPF_SIZE = 11;
+    public static final int CNPJ_SIZE = 14;
 
+    public static String formatarString(String texto, String mascara) {
+        try {
+            MaskFormatter mf = null;
+            mf = new MaskFormatter(mascara);
+            mf.setValueContainsLiteralCharacters(false);
+            return mf.valueToString(texto);
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public static String formatarCpfCnpj(String cpfCnpj) {
+        if (isCpf(cpfCnpj)) {
+            cpfCnpj = formatarCpf(cpfCnpj);
+        } else if (isCnpj(cpfCnpj)) {
+            cpfCnpj = formatarCnpj(cpfCnpj);
+        }
+
+        return cpfCnpj;
+    }
+
+    public static String formatarCpf(String cpf) {
+        cpf = removerFormatacaoCpfCnpj(cpf);
+        return formatarString(cpf, "###.###.###-##");
+    }
+
+    public static String formatarCnpj(String cnpj) {
+        cnpj = removerFormatacaoCpfCnpj(cnpj);
+        return formatarString(cnpj, "##.###.###/####-##");
+    }
+
+    public static boolean isCpf(String cpf) {
+        cpf = removerFormatacaoCpfCnpj(cpf);
+        return cpf != null && cpf.length() == CPF_SIZE;
+    }
+
+    public static boolean isCnpj(String cnpj) {
+        cnpj = removerFormatacaoCpfCnpj(cnpj);
+        return cnpj != null && cnpj.length() == CNPJ_SIZE;
+    }
+
+    public static String removerFormatacaoFone(String fone) {
+        return fone != null ? fone.replaceAll("[() -]", "") : null;
+    }
+
+    public static String removerFormatacaoCpfCnpj(String cpfCnpj) {
+        return cpfCnpj != null ? cpfCnpj.replaceAll("[. -]", "") : null;
+    }
 
     public static String removeCaracterEspecial(String str) {
         str = Normalizer.normalize(str, Normalizer.Form.NFD);
@@ -72,8 +124,10 @@ public final class StringUtil {
     }
 
     public static String formatCurrence(double value) {
-        Locale brasil = new Locale("pt", "BR");
-        return String.format(brasil, "%1$,.2f", value);
+        return String.format(LOCALE_BRAZIL, "%1$,.2f", value);
     }
 
+    public static boolean isEmpty(String notificationUrl) {
+        return notificationUrl == null || notificationUrl.isEmpty();
+    }
 }

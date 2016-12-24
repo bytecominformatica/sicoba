@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import static me.legrange.mikrotik.ApiConnection.DEFAULT_COMMAND_TIMEOUT;
-import static me.legrange.mikrotik.ApiConnection.DEFAULT_PORT;
 
 /**
  * Created by clairtonluz<clairton.c.l@gmail.com> on 09/04/16.
@@ -41,7 +40,7 @@ public class ServidorMikrotik implements Servidor {
     @Override
     public List<Map<String, String>> execute(String command) {
         String env = EnvironmentFactory.create().getEnv();
-        if (env == Environment.PRODUCTION) {
+        if (Environment.PRODUCTION.equals(env)) {
             try {
                 System.out.println(command);
                 return con.execute(command);

@@ -7,6 +7,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.sicoba.model.pojo.financeiro.Carne;
+import br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet.CarnetPojo;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.CedenteRepository;
@@ -93,9 +94,11 @@ public class TituloService {
     public List<Integer> buscarNumeroBoletoSeExistir(List<Titulo> titulosRegistradas) {
         List<Integer> existentes = new ArrayList<>();
         titulosRegistradas.forEach((it) -> {
-            Titulo tituloExistente = tituloRepository.findOptionalByNumeroBoleto(it.getNumeroBoleto());
-            if (tituloExistente != null) {
-                existentes.add(tituloExistente.getNumeroBoleto());
+            if (it.getNumeroBoleto() != null && it.getNumeroBoleto() > 0) {
+                Titulo tituloExistente = tituloRepository.findOptionalByNumeroBoleto(it.getNumeroBoleto());
+                if (tituloExistente != null) {
+                    existentes.add(tituloExistente.getNumeroBoleto());
+                }
             }
         });
 
@@ -138,6 +141,29 @@ public class TituloService {
             save(titulos);
         }
         return titulos;
+    }
+
+    public List<Titulo> criarTitulos(CarnetPojo carnetPojo) {
+        List<Titulo> titulos = new ArrayList<>();
+        Cliente cliente = clienteRepository.findOne(carnetPojo.getClienteId());
+
+        LocalDate vencimento = DateUtil.toLocalDateTime(carnetPojo.getDataInicio()).toLocalDate();
+        for (int i = 1; i <= carnetPojo.getQuantidadeParcela(); i++) {
+            Titulo titulo = new Titulo();
+            titulo.setCliente(cliente);
+            titulo.setValor(carnetPojo.getValor());
+            titulo.setDesconto(carnetPojo.getDesconto());
+            titulo.setDataVencimento(DateUtil.toDate(vencimento));
+            titulo.setStatus(StatusTitulo.PENDENTE);
+            titulos.add(titulo);
+
+            vencimento = vencimento.plusMonths(1);
+        }
+
+        save(titulos);
+
+        return titulos;
+
     }
 
     private Titulo criarTitulo(Cliente cliente, Date c, Integer modalidade, Integer numeroBoleto,
@@ -197,4 +223,8 @@ public class TituloService {
         return tituloRepository.findByClienteAndStatusAndDataVencimentoGreaterThan(cliente, StatusTitulo.PENDENTE, new Date());
     }
 
+    public byte[] criarBoletos(List<Integer> titulos) {
+
+        return new byte[0];
+    }
 }

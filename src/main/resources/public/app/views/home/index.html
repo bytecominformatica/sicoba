@@ -1,38 +1,52 @@
 <h1 class="page-header">Home</h1>
 
 <div class="row">
-    <div class="col-lg-12 col-md-12">
+    <div class="col-xs-12">
         <ul class="nav nav-tabs" ng-init="tab = 'titulos.vencidos'">
-            <li ng-class="{'active': tab == 'titulos.vencidos'}"><a ng-click="tab = 'titulos.vencidos'">
-                Titulos em atraso
-                <span class="label label-warning">{{titulosVencidos.length}}</span>
-            </a>
+            <li ng-class="{'active': tab == 'titulos.vencidos'}">
+                <a ng-click="tab = 'titulos.vencidos'">
+                    Titulos em atraso
+                    <span class="label label-warning">{{titulosVencidos.length}}</span>
+                </a>
             </li>
-            <li ng-class="{'active': tab == 'cliente.sem.titulo'}"><a ng-click="tab = 'cliente.sem.titulo'">
-                Clientes sem titulo
-                <span class="label label-danger">{{clientesSemTitulo.length}}</span>
-            </a>
+            <li ng-class="{'active': tab == 'charges.overdue'}">
+                <a ng-click="tab = 'charges.overdue'">
+                    Cobranças em atraso
+                    <span class="label label-warning">{{chargesOverdue.length}}</span>
+                </a>
             </li>
-            <li ng-class="{'active': tab == 'ultimas.instalacoes'}"><a ng-click="tab = 'ultimas.instalacoes'">
-                Ultimas instalações
-                <span class="label label-success">{{contratosNovos.length}}</span>
-            </a>
+            <li ng-class="{'active': tab == 'cliente.sem.titulo'}">
+                <a ng-click="tab = 'cliente.sem.titulo'">
+                    Clientes sem titulo
+                    <span class="label label-danger">{{clientesSemTitulo.length}}</span>
+                </a>
             </li>
-            <li ng-class="{'active': tab == 'clientes.inativo'}"><a ng-click="tab = 'clientes.inativo'">
-                Clientes inativo
-                <span class="label label-warning">{{clientesInativo.length}}</span>
-            </a>
+            <li ng-class="{'active': tab == 'ultimas.instalacoes'}">
+                <a ng-click="tab = 'ultimas.instalacoes'">
+                    Ultimas instalações
+                    <span class="label label-success">{{contratosNovos.length}}</span>
+                </a>
             </li>
-            <li ng-class="{'active': tab == 'clientes.cancelados'}"><a ng-click="tab = 'clientes.cancelados'">
-                Clientes cancelados
-                <span class="label label-danger">{{clientesCancelados.length}}</span>
-            </a>
+            <li ng-class="{'active': tab == 'clientes.inativo'}">
+                <a ng-click="tab = 'clientes.inativo'">
+                    Clientes inativo
+                    <span class="label label-warning">{{clientesInativo.length}}</span>
+                </a>
+            </li>
+            <li ng-class="{'active': tab == 'clientes.cancelados'}">
+                <a ng-click="tab = 'clientes.cancelados'">
+                    Clientes cancelados
+                    <span class="label label-danger">{{clientesCancelados.length}}</span>
+                </a>
             </li>
         </ul>
     </div>
-    <div class="tab-content col-lg-12 col-md-12">
+    <div class="tab-content col-xs-12">
         <div class="tab-pane fade" ng-class="{'active in': tab == 'titulos.vencidos'}">
             <div ng-include="'app/views/home/partials/titulos.vencidos.html'"></div>
+        </div>
+        <div class="tab-pane fade" ng-class="{'active in': tab == 'charges.overdue'}">
+            <div ng-include="'app/views/home/partials/charges.overdue.html'"></div>
         </div>
         <div class="tab-pane" ng-class="{'active in': tab == 'cliente.sem.titulo'}">
             <div ng-include="'app/views/home/partials/cliente.sem.titulo.html'"></div>

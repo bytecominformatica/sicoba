@@ -8,8 +8,8 @@
 
 <p align="center">
     <a href="#/contrato/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="cliente.id">
-        <i class="fa fa-file-o"></i>
-        Contrato
+        <i class="fa fa-file-o"/>
+        Contrato <i ng-show="contrato.id > 0">- Venc:{{contrato.vencimento}}</i>
     </a>
 
     <a href="#/conexao/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
@@ -21,10 +21,28 @@
         <i class="fa fa-money"></i>
         Titulo
     </a>
+
+    <a ng-href="#/charges?clienteId={{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+        <i class="fa fa-money"></i>
+        Cobranças
+    </a>
+
+    <a ng-href="#/carnets?clienteId={{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+        <i class="fa fa-money"></i>
+        Carnês
+    </a>
 </p>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(cliente)" novalidate>
-    <div class="col-lg-12" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
+
+    <div class="col-md-1" ng-show="cliente.id > 0">
+        <label>Id</label>
+        <div class="form-control">
+            {{cliente.id}}
+        </div>
+    </div>
+
+    <div class="col-md-11" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
         <label>Nome</label>
         <input name="nome" ng-model="cliente.nome" class="form-control" type="text" required>
         <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
@@ -165,7 +183,9 @@
         <br/>
 
         <div class="pull-right">
-            <button class="btn btn-primary" type="submit" ng-hide="cliente.status == 'CANCELADO'">{{cliente.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-primary" type="submit" ng-hide="cliente.status == 'CANCELADO'">{{cliente.id ?
+                'Atualizar' : 'Salvar'}}
+            </button>
             <button class="btn btn-danger" type="button" ng-show="cliente.status == 'CANCELADO'"
                     ng-click="form.$valid && save(cliente)"
                     confirm="(ATENÇÃO) Ao cancelar um cliente os equipamentos serão desalocados e todos os titulos não vencidos serão apagados. Tem certeza que desseja cancelar o(a) cliente {{cliente.nome}}?">
