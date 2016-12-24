@@ -32,7 +32,11 @@ public class SendEmail {
     }
 
     public static void send(String from, String to, String subject, String content) {
-        if (EnvironmentFactory.create().getEnv().equals(Environment.PRODUCTION)) {
+        String env = EnvironmentFactory.create().getEnv();
+        if (Environment.PRODUCTION.equals(env) || Environment.QUALITY.equals(env)) {
+            if (!Environment.PRODUCTION.equals(env)) {
+                subject = String.format("[%s]%s", env, subject);
+            }
             Email emailFrom = new Email(from);
             Email emailTo = new Email(to);
             Content content2 = new Content("text/plain", content);
