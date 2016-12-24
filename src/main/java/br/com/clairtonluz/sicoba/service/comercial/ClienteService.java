@@ -119,6 +119,13 @@ public class ClienteService {
         return clientes;
     }
 
+    public void ativar(Cliente cliente) {
+        cliente.setStatus(StatusCliente.ATIVO);
+        clienteRepository.save(cliente);
+        Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
+        conexaoService.save(conexao);
+    }
+
     public List<Cliente> query(String nome, StatusCliente status) {
         List<Cliente> result;
         if (nome != null && !nome.isEmpty()) {

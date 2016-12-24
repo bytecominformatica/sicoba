@@ -38,8 +38,17 @@ bower install
 
 ```
 
+Integration SendGrid (Optional)
+-------------
+```shell
+sudo -i
 
-Setup integração Gerencianet (Opcional)
+echo "export SENDGRID_API_KEY='YOUR API KEY'" > /etc/profile.d/sendgrid.env
+
+```
+
+
+Integração Gerencianet (Optional)
 ---------------------------------------
 ```shell
 sudo -i
