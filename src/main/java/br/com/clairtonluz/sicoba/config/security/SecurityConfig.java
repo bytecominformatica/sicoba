@@ -29,11 +29,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**").permitAll()
+                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**", "/api/gerencianet/notification").permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
-                .and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().csrfTokenRepository(csrfTokenRepository());
+                .and()
+                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+                .csrf().ignoringAntMatchers("/api/gerencianet/notification")
+                .csrfTokenRepository(csrfTokenRepository())
+        ;
 
     }
 
