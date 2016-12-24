@@ -12,6 +12,11 @@
                         method: 'GET',
                         url: 'api/charges/new'
                     },
+                    overdue: {
+                        method: 'GET',
+                        params: {id: "overdue"},
+                        isArray: true
+                    },
                     bankingBillet: {
                         method: 'POST',
                         params: {action: "pay"}

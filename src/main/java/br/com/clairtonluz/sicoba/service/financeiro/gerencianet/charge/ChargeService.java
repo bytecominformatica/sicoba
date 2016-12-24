@@ -209,4 +209,7 @@ public class ChargeService {
         return DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
     }
 
+    public List<Charge> overdue() {
+        return chargeRepository.overdue(new Date());
+    }
 }
