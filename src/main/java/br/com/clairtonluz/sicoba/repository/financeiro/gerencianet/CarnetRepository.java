@@ -14,4 +14,6 @@ import java.util.List;
 public interface CarnetRepository extends CrudRepository<Carnet, Integer> {
 
     List<Carnet> findByCliente_id(Integer clienteId);
+
+    Carnet findOptionalByCarnetId(int carnetId);
 }

@@ -25,4 +25,6 @@ public interface ChargeRepository extends CrudRepository<Charge, Integer> {
     Charge findOptionalByCarnet_idAndParcel(Integer carnetId, Integer parcel);
 
     List<Charge> findByCarnet_id(Integer carnetId);
+
+    Charge findOptionalByChargeId(int chargeId);
 }

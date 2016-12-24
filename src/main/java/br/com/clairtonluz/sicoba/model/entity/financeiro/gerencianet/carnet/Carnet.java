@@ -40,6 +40,10 @@ public class Carnet extends BaseEntity {
     @NotNull
     private Double value;
     private Double discount;
+    @Column(name = "token_notification")
+    private String tokenNotification;
+    @Column(name = "last_notification")
+    private Integer lastNotification;
     @NotNull
     @Column(name = "first_pay")
     @Temporal(TemporalType.TIMESTAMP)
@@ -157,5 +161,21 @@ public class Carnet extends BaseEntity {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getLastNotification() {
+        return lastNotification;
+    }
+
+    public void setLastNotification(Integer lastNotification) {
+        this.lastNotification = lastNotification;
+    }
+
+    public String getTokenNotification() {
+        return tokenNotification;
+    }
+
+    public void setTokenNotification(String tokenNotification) {
+        this.tokenNotification = tokenNotification;
     }
 }

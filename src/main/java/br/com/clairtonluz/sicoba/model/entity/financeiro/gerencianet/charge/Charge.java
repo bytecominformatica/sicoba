@@ -24,8 +24,14 @@ public class Charge extends BaseEntity {
 
     @NotNull
     private Double value;
+    @Column(name = "paid_value")
+    private Double paidValue;
     private Double discount;
     private Integer parcel;
+    @Column(name = "token_notification")
+    private String tokenNotification;
+    @Column(name = "last_notification")
+    private Integer lastNotification;
     private String url;
     @Column(name = "payment_url")
     private String paymentUrl;
@@ -175,5 +181,29 @@ public class Charge extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getPaidValue() {
+        return paidValue;
+    }
+
+    public void setPaidValue(Double paidValue) {
+        this.paidValue = paidValue;
+    }
+
+    public Integer getLastNotification() {
+        return lastNotification;
+    }
+
+    public void setLastNotification(Integer lastNotification) {
+        this.lastNotification = lastNotification;
+    }
+
+    public String getTokenNotification() {
+        return tokenNotification;
+    }
+
+    public void setTokenNotification(String tokenNotification) {
+        this.tokenNotification = tokenNotification;
     }
 }

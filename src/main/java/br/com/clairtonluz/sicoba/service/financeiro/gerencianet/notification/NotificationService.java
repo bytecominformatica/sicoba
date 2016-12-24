@@ -1,14 +1,19 @@
 package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.notification;
 
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Credentials;
-import br.com.gerencianet.gnsdk.Gerencianet;
-import br.com.gerencianet.gnsdk.exceptions.GerencianetException;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.StatusCarnet;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
+import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.CarnetRepository;
+import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
+import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.transaction.Transactional;
+import java.util.logging.Logger;
 
 /**
  * Created by clairton on 20/12/16.
@@ -18,7 +23,95 @@ public class NotificationService {
 
     @Autowired
     private NotificationGNService notificationGNService;
-    public void getNotification(String token) {
-        JSONObject notification = notificationGNService.getNotification(token);
+    @Autowired
+    private ChargeRepository chargeRepository;
+    @Autowired
+    private CarnetRepository carnetRepository;
+
+    @Transactional
+    public void processNotification(String token) {
+        JSONObject response = notificationGNService.getNotification(token);
+
+        if (GNService.isOk(response)) {
+            JSONArray data = response.getJSONArray("data");
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject it = data.getJSONObject(i);
+                switch (it.getString("type")) {
+                    case "charge":
+                        processarCharge(token, it);
+                        break;
+                    case "carnet":
+                        processarCarnet(token, it);
+                        break;
+                    case "carnet_charge":
+                        processarCarnetCharge(token, it);
+                        break;
+                    default:
+                        Logger.getLogger(getClass().getName()).warning(it.toString());
+                }
+            }
+        }
+    }
+
+    private void processarCharge(String token, JSONObject data) {
+        Charge charge = chargeRepository.findOptionalByChargeId(data.getJSONObject("identifiers").getInt("charge_id"));
+        if (charge == null) {
+            Logger.getLogger(getClass().getName()).severe("Cobrança não processado:" + data.toString());
+            return;
+        }
+
+        int id = data.getInt("id");
+        if (charge.getLastNotification() == null || id > charge.getLastNotification()) {
+            charge.setTokenNotification(token);
+            charge.setLastNotification(id);
+            JSONObject status = data.getJSONObject("status");
+            charge.setStatus(StatusCharge.valueOf(status.getString("current").toUpperCase()));
+
+            if (charge.getStatus().equals(StatusCharge.PAID)) {
+                charge.setPaidValue(data.getDouble("value") / 100);
+            }
+
+            chargeRepository.save(charge);
+        }
+    }
+
+    private void processarCarnet(String token, JSONObject data) {
+        Carnet carnet = carnetRepository.findOptionalByCarnetId(data.getJSONObject("identifiers").getInt("carnet_id"));
+        if (carnet == null) {
+            Logger.getLogger(getClass().getName()).severe("Carnê não processado:" + data.toString());
+            return;
+        }
+
+        int id = data.getInt("id");
+        if (carnet.getLastNotification() == null || id > carnet.getLastNotification()) {
+            carnet.setTokenNotification(token);
+            carnet.setLastNotification(id);
+            JSONObject status = data.getJSONObject("status");
+            carnet.setStatus(StatusCarnet.valueOf(status.getString("current").toUpperCase()));
+
+            carnetRepository.save(carnet);
+        }
+    }
+
+    private void processarCarnetCharge(String token, JSONObject data) {
+        Charge charge = chargeRepository.findOptionalByChargeId(data.getJSONObject("identifiers").getInt("charge_id"));
+        if (charge == null) {
+            Logger.getLogger(getClass().getName()).severe("Cobrança Carnê não processado:" + data.toString());
+            return;
+        }
+
+        int id = data.getInt("id");
+        if (charge.getLastNotification() == null || id > charge.getLastNotification()) {
+            charge.setTokenNotification(token);
+            charge.setLastNotification(id);
+            JSONObject status = data.getJSONObject("status");
+            charge.setStatus(StatusCharge.valueOf(status.getString("current").toUpperCase()));
+
+            if (charge.getStatus().equals(StatusCharge.PAID)) {
+                charge.setPaidValue(data.getDouble("value") / 100);
+            }
+
+            chargeRepository.save(charge);
+        }
     }
 }
