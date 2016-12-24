@@ -17,6 +17,16 @@ import java.util.List;
 @Repository
 public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
+    String QUERY_CLIENTE_SEM_TITULOS = "select c from Cliente c where c.status <> 2 " +
+            "and (" +
+            "(SELECT count(*) FROM Titulo t where t.cliente.id = c.id and t.dataVencimento > :date) " +
+            "+ (SELECT count(*) FROM Charge t where t.cliente.id = c.id and t.expireAt > :date)" +
+            ") < 2 " +
+            "order by ( " +
+            "(SELECT count(*) FROM Titulo t where t.cliente.id = c.id and t.dataVencimento > :date) + " +
+            "(SELECT count(*) FROM Charge t where t.cliente.id = c.id and t.expireAt > :date) " +
+            ")";
+
     List<Cliente> findByStatus(StatusCliente status);
 
     Cliente findOptionalByEmail(String email);
@@ -29,7 +39,8 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
     List<Cliente> findByNomeLike(String nome);
 
-    @Query("select c from Cliente c where c.status <> 2 and c.id not in(select DISTINCT(m.cliente.id) from Titulo m where m.dataVencimento > :date)")
+    //    @Query("select c from Cliente c where c.status <> 2 and c.id not in(select DISTINCT(m.cliente.id) from Titulo m where m.dataVencimento > :date)")
+    @Query(QUERY_CLIENTE_SEM_TITULOS)
     List<Cliente> findBySemTitulosDepoisDe(@Param("date") Date date);
 
     List<Cliente> findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente status, Date data);

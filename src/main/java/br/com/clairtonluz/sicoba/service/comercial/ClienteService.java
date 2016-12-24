@@ -36,7 +36,7 @@ public class ClienteService {
 
 
     public List<Cliente> buscarUltimosAlterados() {
-        Date data = DateUtil.toDate(LocalDateTime.now().minusMonths(2));
+        Date data = DateUtil.toDate(LocalDateTime.now());
         return clienteRepository.findByUpdatedAtGreaterThan(data);
     }
 
@@ -114,8 +114,9 @@ public class ClienteService {
     }
 
     public List<Cliente> buscarSemTitulo() {
-        Date data = DateUtil.toDate(LocalDate.now().plusMonths(2));
-        return clienteRepository.findBySemTitulosDepoisDe(data);
+        Date data = DateUtil.toDate(LocalDate.now());
+        List<Cliente> clientes = clienteRepository.findBySemTitulosDepoisDe(data);
+        return clientes;
     }
 
     public List<Cliente> query(String nome, StatusCliente status) {
