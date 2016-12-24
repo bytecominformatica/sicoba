@@ -33,11 +33,6 @@ public class SendEmail {
 
     public static void send(String from, String to, String subject, String content) {
         String env = EnvironmentFactory.create().getEnv();
-        System.out.println(from);
-        System.out.println(to);
-        System.out.println(subject);
-        System.out.println(content);
-        System.out.println(env);
         if (Environment.PRODUCTION.equals(env) || Environment.QUALITY.equals(env)) {
             if (!Environment.PRODUCTION.equals(env)) {
                 subject = String.format("[%s]%s", env, subject);
@@ -62,7 +57,9 @@ public class SendEmail {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("ENV:" + env);
+            System.out.println(env);
+            System.out.println(from);
+            System.out.println(to);
             System.out.println(subject);
             System.out.println(content);
         }
