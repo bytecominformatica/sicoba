@@ -1,0 +1,146 @@
+<h1 class="page-header">
+    <a ng-href="#/carnets?clienteId={{clienteId}}">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    Carnê
+    <small>{{carnet.id ? 'Editar' : 'Novo'}}</small>
+</h1>
+
+<form name="form" class="form-horizontal">
+
+    <div class="col-xs-12">
+        <div class="col-xs-3 col-md-2 pull-right" align="right" ng-show="carnet.link">
+            <a title="Carnê PDF" ng-href="{{carnet.link}}" target="_blank">
+                Boleto do carnê {{carnet.carnetId}}
+            </a>
+        </div>
+
+        <div class="col-xs-3 col-md-2  pull-right" align="right" ng-show="carnet.id">
+            <a title="Carnê PDF" ng-href="#/charges?clienteId={{clienteId}}&carnetId={{carnet.id}}">
+                Visualizar Parcelas
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-10 col-xs-12">
+        <label>Cliente:</label>
+        <div class="form-control">{{carnet.cliente.id}} - {{carnet.cliente.nome}}</div>
+    </div>
+
+    <div class="col-md-2 col-xs-12" ng-show="carnet.status">
+        <label>Status</label>
+        <div class="form-control">{{carnet.status}}</div>
+    </div>
+
+    <div class="col-xs-12"
+         ng-class="{'has-error': (form.description.$invalid && (form.$submitted || form.description.$touched))}">
+        <label>Descrição</label>
+        <input type="text" name="description" ng-model="carnet.description" class="form-control" required
+               minlength="1" maxlength="255" ng-disabled="carnet.id">
+        <p class="help-block" ng-show="form.$submitted || form.description.$touched">
+            <i ng-show="form.description.$error.required">Descreva o motivo dessa cobrança?</i>
+            <i ng-show="form.value.$error.minlength">A Mensagem deve conter no minimo 1 caracteres</i>
+            <i ng-show="form.value.$error.maxlength">A Mensagem deve conter no máximo 255 caracteres</i>
+        </p>
+    </div>
+
+    <div class="col-xs-12"
+         ng-class="{'has-error': (form.message.$invalid && (form.$submitted || form.message.$touched))}">
+        <label>Mensagem</label>
+        <input type="text" name="message" ng-model="carnet.message" class="form-control"
+               placeholder="Mensagem para ser exibida no link de pagamento" required ng-disabled="carnet.id"
+               minlength="3" maxlength="80">
+        <p class="help-block" ng-show="form.$submitted || form.message.$touched">
+            <i ng-show="form.value.$error.required">Defina a mensagem para ser exibida no link de pagamento</i>
+            <i ng-show="form.value.$error.minlength">A Mensagem deve conter no minimo 3 caracteres</i>
+            <i ng-show="form.value.$error.maxlength">A Mensagem deve conter no máximo 80 caracteres</i>
+        </p>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12"
+         ng-class="{'has-error': (form.value.$invalid && (form.$submitted || form.value.$touched))}">
+        <label>Valor</label>
+        <input type="number" step="any" name="value" ng-model="carnet.value" class="form-control" required
+               min="0" ng-disabled="carnet.id">
+        <p class="help-block" ng-show="form.$submitted || form.value.$touched">
+            <i ng-show="form.value.$error.required">Qual o valor dessa cobrança?</i>
+            <i ng-show="form.value.$error.number">Valor inválido.</i>
+            <i ng-show="form.value.$error.min">Valor não pode ser negativo.</i>
+        </p>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12"
+         ng-class="{'has-error': (form.discount.$invalid && (form.$submitted || form.discount.$touched))}">
+        <label>Desconto</label>
+        <input type="number" step="any" name="discount" ng-model="carnet.discount" class="form-control" min="0"
+               ng-disabled="carnet.id">
+        <p class="help-block" ng-show="form.$submitted || form.discount.$touched">
+            <i ng-show="form.discount.$error.number">Valor inválido.</i>
+            <i ng-show="form.discount.$error.min">Desconto não pode ser negativo.</i>
+        </p>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12"
+         ng-class="{'has-error': (form.repeats.$invalid && (form.$submitted || form.repeats.$touched))}">
+        <label>Qtd. Parcelas</label>
+        <input type="number" name="repeats" ng-model="carnet.repeats" class="form-control" min="2" max="12"
+               ng-disabled="carnet.id">
+        <p class="help-block" ng-show="form.$submitted || form.repeats.$touched">
+            <i ng-show="form.repeats.$error.number">Valor inválido.</i>
+            <i ng-show="form.repeats.$error.min">Quantidade mínima de parcelas é 2.</i>
+            <i ng-show="form.repeats.$error.max">Quantidade máxima de parcelas é 12.</i>
+        </p>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="input-group">
+            <label>Dividir valor entre as parcelas</label>
+            <div class="checkbox">
+                <label><input type="checkbox" name="splitItems" ng-model="carnet.splitItems" ng-disabled="carnet.id">
+                    Dividir
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-12"
+         ng-class="{'has-error': (form.firstPay.$invalid && (form.$submitted || form.firstPay.$touched))}">
+        <div class="input-group">
+            <label>Primeiro pagamento</label>
+            <div class="input-group">
+                <input name="firstPay" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                       ng-model="carnet.firstPay" is-open="status.opened" close-text="Close" required/>
+                <i class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </i>
+            </div>
+            <p class="help-block" ng-show="form.$submitted || form.firstPay.$touched">
+                <i ng-show="form.firstPay.$error.required">
+                    Escolha a data do primeiro pagamento deste carnê?
+                </i>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <br/>
+        <br/>
+
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit" ng-click="form.$valid && create(carnet)" ng-hide="carnet.id">
+                Criar
+            </button>
+            <button class="btn btn-danger" type="button" ng-show="carnet.id && carnet.status !== 'CANCELED'"
+                    ng-click="cancel(carnet)"
+                    confirm="Tem certeza que desseja cancelar esse carnê de id {{carnet.id}} do(a) cliente {{carnet.cliente.nome}}?">
+                Cancelar carnê
+            </button>
+            <a ng-href="#/carnets?clienteId={{clienteId}}" class="btn btn-default">Voltar</a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</form>

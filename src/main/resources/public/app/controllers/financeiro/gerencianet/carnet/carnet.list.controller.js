@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ChargeListCtrl', ['$scope', '$location', 'Charge', 'Cliente',
-            function ($scope, $location, Charge, Cliente) {
+        .controller('CarnetListCtrl', ['$scope', '$location', 'Carnet', 'Cliente',
+            function ($scope, $location, Carnet, Cliente) {
 
                 $scope.getStatusClass = _getStatusClass;
 
@@ -11,28 +11,18 @@
 
                 function _init() {
                     var clienteId = $location.search().clienteId;
-                    var carnetId = $location.search().carnetId;
                     $scope.cliente = Cliente.get({id: clienteId});
-                    $scope.charges = Charge.query({clienteId: clienteId, carnetId: carnetId});
+                    $scope.carnets = Carnet.query({clienteId: clienteId});
                 }
 
                 function _getStatusClass(status) {
                     var result;
                     switch (status) {
-                        case 'PAID':
+                        case 'ACTIVE':
                             result = 'label-success';
                             break;
                         case 'CANCELED':
                             result = 'label-danger';
-                            break;
-                        case 'REFUNDED':
-                            result = 'label-danger';
-                            break;
-                        case 'LINK':
-                            result = 'label-info';
-                            break;
-                        case 'WAITING':
-                            result = 'label-info';
                             break;
                         default:
                             result = 'label-warning';

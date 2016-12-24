@@ -7,6 +7,7 @@ import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carn
 import br.com.clairtonluz.sicoba.util.StringUtil;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -21,6 +22,7 @@ public class Charge extends BaseEntity {
     @SequenceGenerator(name = "charge_id_seq", sequenceName = "charge_id_seq")
     private Integer id;
 
+    @NotNull
     private Double value;
     private Double discount;
     private Integer parcel;
@@ -30,19 +32,23 @@ public class Charge extends BaseEntity {
     private String barcode;
     @Size(min = 3, max = 80, message = "A mensagem deve conter entre 3 e 80 caracteres")
     private String message;
+    @NotNull
     @Size(min = 1, max = 255, message = "A mensagem deve conter entre 1 e 255 caracteres")
     private String description;
 
     @Column(name = "charge_id")
     private Integer chargeId;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private StatusCharge status;
+    @NotNull
     @Column(name = "expire_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expireAt;
     @Enumerated(EnumType.STRING)
     private PaymentType payment;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;

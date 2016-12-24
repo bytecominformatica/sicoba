@@ -55,8 +55,8 @@
                             {{it.status}}
                         </i>
                     </td>
-                    <td>
-                        <a title="Carnê PDF" ng-href="{{it.carnet.link}}" ng-show="it.carnet" target="_blank">
+                    <td align="center">
+                        <a title="Carnê PDF" ng-href="#/carnets/{{it.carnet.id}}" ng-show="it.carnet">
                             {{it.carnet.id}} - {{it.parcel}}
                         </a>
                     </td>

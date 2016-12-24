@@ -143,6 +143,10 @@ public class ChargeService {
         return chargeRepository.findByCliente_idOrderByExpireAtDesc(clienteId);
     }
 
+    public List<Charge> findByCarnet(Integer carnetId) {
+        return chargeRepository.findByCarnet_id(carnetId);
+    }
+
     public Charge findByCarnetAndParcel(Integer carnetId, Integer parcel) {
         return chargeRepository.findOptionalByCarnet_idAndParcel(carnetId, parcel);
     }
@@ -160,19 +164,19 @@ public class ChargeService {
             }
             charge.setValue(value);
             charge.setDescription(String.format("Internet Banda Larga %s", contrato.getPlano().getNome()));
-            charge.setMessage(String.format("Olá, %s! \nObrigado por escolher a Bytecom Informática.", charge.getCliente().getNome()));
         } else {
             charge.setCliente(clienteRepository.findOne(clienteId));
             charge.setExpireAt(new Date());
         }
 
-
+        charge.setMessage(String.format("Olá, %s! \nObrigado por escolher a Bytecom Informática.", charge.getCliente().getNome()));
         charge.setStatus(StatusCharge.NEW);
 
         return charge;
     }
 
-    private Date getNextExpireAt(Contrato contrato) {
+    public static Date getNextExpireAt(Contrato contrato) {
         return DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
     }
+
 }

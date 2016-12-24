@@ -19,8 +19,13 @@ public class ChargeAPI {
     private ChargeService chargeService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Charge> findByCliente(@RequestParam("clienteId") Integer clienteId) {
-        return chargeService.findByCliente(clienteId);
+    public List<Charge> findByClienteOrCarnet(@RequestParam("clienteId") Integer clienteId,
+                                              @RequestParam(value = "carnetId", required = false) Integer carnetId) {
+        if (carnetId != null) {
+            return chargeService.findByCarnet(carnetId);
+        } else {
+            return chargeService.findByCliente(clienteId);
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

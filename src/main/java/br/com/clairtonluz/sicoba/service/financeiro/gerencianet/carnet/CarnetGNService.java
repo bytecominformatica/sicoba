@@ -1,7 +1,6 @@
 package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet;
 
 import br.com.clairtonluz.sicoba.exception.ConflitException;
-import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Credentials;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
@@ -12,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,19 +29,18 @@ class CarnetGNService {
     private static final String RESEND_CARNET = "resendCarnet";
     private static final String RESEND_PARCEL = "resendParcel";
 
-    JSONObject createCarnet(Contrato contrato, Date vencimento, Double valor, Double desconto, Integer quantidadeParcela) {
+    JSONObject createCarnet(Carnet carnet) {
          /* *********  Set credentials parameters ******** */
-        String item = String.format("Internet Banda Larga %s", contrato.getPlano().getNome());
-        JSONArray items = new JSONArray().put(GNService.createItem(item, valor));
-        JSONObject customer = GNService.createConsumer(contrato.getCliente(), false);
-        JSONArray instructions = GNService.createInstructions(desconto);
+        JSONArray items = new JSONArray().put(GNService.createItem(carnet.getDescription(), carnet.getValue()));
+        JSONObject customer = GNService.createConsumer(carnet.getCliente(), false);
+        JSONArray instructions = GNService.createInstructions(carnet.getDiscount());
 
         JSONObject body = new JSONObject();
         body.put("items", items);
         body.put("customer", customer);
-        body.put("expire_at", DateUtil.formatISO(vencimento));
-        body.put("repeats", quantidadeParcela);
-        body.put("split_items", false);
+        body.put("expire_at", DateUtil.formatISO(carnet.getFirstPay()));
+        body.put("repeats", carnet.getRepeats());
+        body.put("split_items", carnet.getSplitItems());
         body.put("instructions", instructions);
         body.put("metadata", GNService.createMetadata(Credentials.getInstance().getNotificationUrl()));
 

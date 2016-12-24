@@ -2,7 +2,6 @@ package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
-import br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet.CarnetPojo;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,6 @@ public class CarnetAPI {
     @Autowired
     private ChargeService chargeService;
 
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Charge> criar(@RequestBody CarnetPojo carnetPojo) {
-        return carnetService.createCarnet(carnetPojo);
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Carnet findById(@PathVariable Integer id) {
         return carnetService.findById(id);
@@ -36,6 +30,16 @@ public class CarnetAPI {
     @RequestMapping(method = RequestMethod.GET)
     public List<Carnet> findByCliente(@RequestParam(value = "clienteId") Integer clienteId) {
         return carnetService.findByCliente(clienteId);
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public Carnet modelo(@RequestParam("clienteId") Integer clienteId) {
+        return carnetService.createModelo(clienteId);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Carnet criar(@Valid @RequestBody Carnet carnet) {
+        return carnetService.createCarnet(carnet);
     }
 
     @RequestMapping(value = "/{id}/metadata", method = RequestMethod.PUT)
