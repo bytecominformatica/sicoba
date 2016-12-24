@@ -28,7 +28,7 @@ public class SendEmail {
     }
 
     public static void send(String to, String subject, String content) {
-        send("SICOBA_EMAIL_SUPORTE", to, subject, content);
+        send(System.getenv("SICOBA_EMAIL_SUPORTE"), to, subject, content);
     }
 
     public static void send(String from, String to, String subject, String content) {
