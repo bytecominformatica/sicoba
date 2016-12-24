@@ -51,6 +51,9 @@ public class Charge extends BaseEntity {
     @Column(name = "expire_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expireAt;
+    @Column(name = "paid_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date paidAt;
     @Enumerated(EnumType.STRING)
     private PaymentType payment;
 
@@ -205,5 +208,13 @@ public class Charge extends BaseEntity {
 
     public void setTokenNotification(String tokenNotification) {
         this.tokenNotification = tokenNotification;
+    }
+
+    public Date getPaidAt() {
+        return paidAt;
+    }
+
+    public void setPaidAt(Date paidAt) {
+        this.paidAt = paidAt;
     }
 }

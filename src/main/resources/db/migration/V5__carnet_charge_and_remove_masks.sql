@@ -54,6 +54,7 @@ CREATE TABLE charge (
   paid_value         DECIMAL(20, 2),
   discount           DECIMAL(20, 2),
   expire_at          DATE           NOT NULL,
+  paid_at            DATE,
   carnet_id          INT CONSTRAINT fk_charge_carnet_id_carnet_id REFERENCES carnet (id),
   cliente_id         INT            NOT NULL CONSTRAINT fk_carnet_cliente_id_cliente_id REFERENCES cliente (id),
   created_by         VARCHAR(255)   NOT NULL,

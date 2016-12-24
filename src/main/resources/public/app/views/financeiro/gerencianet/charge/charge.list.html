@@ -38,6 +38,7 @@
                     <th>Valor</th>
                     <th>Desconto</th>
                     <th>Vencimento</th>
+                    <th>Pago em</th>
                     <th>Status</th>
                     <th>Carnê</th>
                     <th>Cobrança</th>
@@ -50,6 +51,7 @@
                     <td>{{it.value | currency}}</td>
                     <td>{{it.discount | currency}}</td>
                     <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
+                    <td>{{it.paidAt | date:'dd/MM/yyyy'}}</td>
                     <td>
                         <i class="label" ng-class="getStatusClass(it.status)">
                             {{it.status}}

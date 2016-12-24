@@ -19,11 +19,6 @@
                     <i class="glyphicon glyphicon-paperclip"></i> Novo Carne
                 </a>
             </li>
-            <li>
-                <a ng-href="#/titulo/cliente/{{cliente.id}}/carnet">
-                    <i class="glyphicon glyphicon-paperclip"></i> Novo Carne GN
-                </a>
-            </li>
         </ul>
     </div>
 </h1>
@@ -48,8 +43,6 @@
                     <th>Ocorrencia</th>
                     <th>Boleto</th>
                     <th>Status</th>
-                    <th>Carnê</th>
-                    <th>Cobrança</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -69,17 +62,6 @@
                         <i class="label" ng-class="getStatusClass(it.status)">
                             {{it.status}}
                         </i>
-                    </td>
-                    <td>
-                        <a title="Carnê PDF" ng-href="{{it.carnetUrl}}" ng-show="it.carnetId > 0" target="_blank">
-                            {{it.carnetId}} - {{it.parcel}}
-                        </a>
-                    </td>
-                    <td align="center">
-                        <a title="parcela{{it.parcel}}.pdf" ng-href="{{it.chargeUrl}}" ng-show="it.chargeId > 0"
-                           target="_blank">
-                            {{it.chargeId}}
-                        </a>
                     </td>
                     <td class="text-center">
                         <a class="btn btn-primary" title="Editar" ng-href="#/titulo/{{it.id}}"

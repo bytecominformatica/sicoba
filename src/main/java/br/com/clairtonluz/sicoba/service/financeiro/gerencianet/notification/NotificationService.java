@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -69,6 +70,7 @@ public class NotificationService {
 
             if (charge.getStatus().equals(StatusCharge.PAID)) {
                 charge.setPaidValue(data.getDouble("value") / 100);
+                charge.setPaidAt(new Date());
             }
 
             chargeRepository.save(charge);
@@ -109,6 +111,7 @@ public class NotificationService {
 
             if (charge.getStatus().equals(StatusCharge.PAID)) {
                 charge.setPaidValue(data.getDouble("value") / 100);
+                charge.setPaidAt(new Date());
             }
 
             chargeRepository.save(charge);

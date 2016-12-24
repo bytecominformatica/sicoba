@@ -8,18 +8,6 @@
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(titulo)" novalidate>
 
-    <div class="col-md-10" align="right" ng-show="titulo.carnetId > 0">
-        <a title="Carnê PDF" ng-href="{{titulo.carnetUrl}}" target="_blank">
-            <b>Carnê:</b> {{titulo.carnetId}} - {{titulo.parcel}}
-        </a>
-    </div>
-
-    <div class="col-md-2" ng-show="titulo.chargeId > 0">
-        <a title="parcela{{titulo.parcel}}.pdf" ng-href="{{titulo.chargeUrl}}" target="_blank">
-            <b>Cobrança:</b> {{titulo.chargeId}}
-        </a>
-    </div>
-
     <div class="col-lg-12">
         <label>Cliente:</label>
         <div class="form-control">{{titulo.cliente.id}} - {{titulo.cliente.nome}}</div>

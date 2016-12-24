@@ -53,7 +53,7 @@
         <label>Mensagem</label>
         <input type="text" name="message" ng-model="charge.message" class="form-control"
                placeholder="Mensagem para ser exibida no link de pagamento" required ng-disabled="charge.id"
-               minlength="3" maxlength="80" >
+               minlength="3" maxlength="80">
         <p class="help-block" ng-show="form.$submitted || form.message.$touched">
             <i ng-show="form.value.$error.required">Defina a mensagem para ser exibida no link de pagamento</i>
             <i ng-show="form.value.$error.minlength">A Mensagem deve conter no minimo 3 caracteres</i>
@@ -79,6 +79,11 @@
         <p class="help-block" ng-show="form.$submitted || form.discount.$touched">
             <i ng-show="form.discount.$error.number">Valor inválido.</i>
         </p>
+    </div>
+
+    <div class="col-md-3">
+        <label>Pago em</label>
+        <input type="text" name="paidAt" ng-model="charge.paidAt" class="form-control" disabled>
     </div>
 
     <div class="col-md-3"
@@ -119,7 +124,8 @@
                     ng-show="charge.id && charge.status === 'NEW'">
                 Link de pagamento
             </button>
-            <button class="btn btn-danger" type="button" ng-show="charge.id && charge.status !== 'CANCELED'" ng-click="cancel(charge)"
+            <button class="btn btn-danger" type="button" ng-show="charge.id && charge.status !== 'CANCELED'"
+                    ng-click="cancel(charge)"
                     confirm="Tem certeza que desseja cancelar a cobrança do(a) {{charge.cliente.nome}} no valor de {{charge.value | currency}} com vencimento para {{charge.expireAt | date}}?">
                 Cancelar cobrança
             </button>
