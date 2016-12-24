@@ -14,6 +14,7 @@ import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -124,6 +125,19 @@ public class ChargeService {
     public boolean updateChargeMetadata(Charge charge) {
         return chargeGNService.updateChargeMetadata(charge);
     }
+
+    @Async
+    public boolean updateCarnetMetadataAll() {
+        boolean result = true;
+        List<Charge> charges = chargeRepository.findByCarnetIsNullAndStatusNot(StatusCharge.PAID);
+        for (Charge c : charges) {
+            if (!chargeGNService.updateChargeMetadata(c)) {
+                result = false;
+            }
+        }
+        return result;
+    }
+
 
     @Transactional
     public void resendBillet(Charge charge) {

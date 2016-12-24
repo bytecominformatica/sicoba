@@ -6,6 +6,7 @@
             function ($scope, $location, Carnet, Cliente) {
 
                 $scope.getStatusClass = _getStatusClass;
+                $scope.refreshUrlsNotification = _refreshUrlsNotification;
 
                 _init();
 
@@ -13,6 +14,10 @@
                     var clienteId = $location.search().clienteId;
                     $scope.cliente = Cliente.get({id: clienteId});
                     $scope.carnets = Carnet.query({clienteId: clienteId});
+                }
+
+                function _refreshUrlsNotification() {
+                    Carnet.refreshUrlsNotification();
                 }
 
                 function _getStatusClass(status) {

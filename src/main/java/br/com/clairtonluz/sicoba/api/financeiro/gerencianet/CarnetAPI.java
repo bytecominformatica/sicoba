@@ -42,9 +42,24 @@ public class CarnetAPI {
         return carnetService.createCarnet(carnet);
     }
 
+    @RequestMapping(value = "/{id}/parcels/{parcel}/resend", method = RequestMethod.POST)
+    public void resendParcel(@PathVariable Integer id, @PathVariable Integer parcel) {
+        carnetService.resendParcel(chargeService.findByCarnetAndParcel(id, parcel));
+    }
+
+    @RequestMapping(value = "/{id}/resend", method = RequestMethod.POST)
+    public void resendCarnet(@PathVariable Integer id) {
+        carnetService.resendCarnet(carnetService.findById(id));
+    }
+
     @RequestMapping(value = "/{id}/metadata", method = RequestMethod.PUT)
     public void updateCarnetMetadata(@PathVariable Integer id) {
         carnetService.updateCarnetMetadata(carnetService.findById(id));
+    }
+
+    @RequestMapping(value = "/all/metadata", method = RequestMethod.PUT)
+    public void updateCarnetMetadataAll() {
+        carnetService.updateCarnetMetadataAll();
     }
 
     @RequestMapping(value = "/{id}/parcels/{parcel}", method = RequestMethod.PUT)
@@ -60,16 +75,6 @@ public class CarnetAPI {
     @RequestMapping(value = "/{id}/parcels/{parcel}/cancel", method = RequestMethod.PUT)
     public void cancelParcel(@PathVariable Integer id, @PathVariable Integer parcel) {
         carnetService.cancelParcel(chargeService.findByCarnetAndParcel(id, parcel));
-    }
-
-    @RequestMapping(value = "/{id}/resend", method = RequestMethod.POST)
-    public void resendCarnet(@PathVariable Integer id) {
-        carnetService.resendCarnet(carnetService.findById(id));
-    }
-
-    @RequestMapping(value = "/{id}/parcels/{parcel}/resend", method = RequestMethod.POST)
-    public void resendParcel(@PathVariable Integer id, @PathVariable Integer parcel) {
-        carnetService.resendParcel(chargeService.findByCarnetAndParcel(id, parcel));
     }
 
 }

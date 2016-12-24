@@ -13,10 +13,16 @@
                 <a ng-href="#/charge/new?clienteId={{cliente.id}}">
                     <i class="fa fa-plus"></i> Nova Cobrança
                 </a>
-            <li class="divider"></li>
+            </li>
             <li>
                 <a ng-href="#/carnet/new?clienteId={{cliente.id}}">
                     <i class="glyphicon glyphicon-paperclip"></i> Novo Carne
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a ng-click="refreshUrlsNotification()">
+                    <i class="fa fa-refresh"></i> Atualizar Urls de Notificação
                 </a>
             </li>
         </ul>

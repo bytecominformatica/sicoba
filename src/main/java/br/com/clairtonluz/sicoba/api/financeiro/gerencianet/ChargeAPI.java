@@ -53,6 +53,11 @@ public class ChargeAPI {
         return chargeService.createPaymentLink(chargeService.findById(id));
     }
 
+    @RequestMapping(value = "/{id}/billet/resend", method = RequestMethod.POST)
+    public void resendBillet(@PathVariable Integer id) {
+        chargeService.resendBillet(chargeService.findById(id));
+    }
+
     @RequestMapping(value = "/{id}/cancel", method = RequestMethod.PUT)
     public Charge cancel(@PathVariable Integer id) {
         return chargeService.cancelCharge(chargeService.findById(id));
@@ -68,8 +73,8 @@ public class ChargeAPI {
         chargeService.updateChargeMetadata(chargeService.findById(id));
     }
 
-    @RequestMapping(value = "/{id}/billet/resend", method = RequestMethod.POST)
-    public void resendBillet(@PathVariable Integer id) {
-        chargeService.resendBillet(chargeService.findById(id));
+    @RequestMapping(value = "/all/metadata", method = RequestMethod.PUT)
+    public void updateCarnetMetadataAll() {
+        chargeService.updateCarnetMetadataAll();
     }
 }

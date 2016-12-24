@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,6 +112,24 @@ public class CarnetService {
 
     public boolean updateCarnetMetadata(Carnet carnet) {
         return carnetGNService.updateCarnetMetadata(carnet);
+    }
+
+    /**
+     * esse metodo é executado assincronamente porque pode demorar muito tempo dependendo da quantidade de carnês
+     * retorna false caso algum dos carnês não conseguir executar a operação de atualização
+     *
+     * @return
+     */
+    @Async
+    public boolean updateCarnetMetadataAll() {
+        boolean result = true;
+        Iterable<Carnet> carnets = carnetRepository.findAll();
+        for (Carnet c : carnets) {
+            if (!carnetGNService.updateCarnetMetadata(c)) {
+                result = false;
+            }
+        }
+        return result;
     }
 
     public boolean resendCarnet(Carnet carnet) {

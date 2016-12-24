@@ -23,6 +23,10 @@
                     cancel: {
                         method: 'PUT',
                         params: {action: "cancel"}
+                    },
+                    refreshUrlsNotification: {
+                        method: 'PUT',
+                        params: {id: "all", action: "metadata"}
                     }
                 });
         }]);

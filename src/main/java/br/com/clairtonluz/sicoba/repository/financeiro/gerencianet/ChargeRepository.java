@@ -5,6 +5,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.StatusTitulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -27,4 +28,6 @@ public interface ChargeRepository extends CrudRepository<Charge, Integer> {
     List<Charge> findByCarnet_id(Integer carnetId);
 
     Charge findOptionalByChargeId(int chargeId);
+
+    List<Charge> findByCarnetIsNullAndStatusNot(StatusCharge paid);
 }
