@@ -36,8 +36,6 @@ public class ChargeAPI {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public Charge modelo(@RequestParam("clienteId") Integer clienteId) {
-        SendEmail.sendToAdmin("teste2", "conteudo de teste2");
-
         return chargeService.createModelo(clienteId);
     }
 
@@ -73,6 +71,8 @@ public class ChargeAPI {
 
     @RequestMapping(value = "/{id}/billet", method = RequestMethod.PUT)
     public Charge updateExpireAt(@PathVariable Integer id, @Valid @RequestBody Charge charge) {
+        SendEmail.sendToAdmin("teste2", "conteudo de teste2");
+
         return chargeService.updateBilletExpireAt(charge);
     }
 
