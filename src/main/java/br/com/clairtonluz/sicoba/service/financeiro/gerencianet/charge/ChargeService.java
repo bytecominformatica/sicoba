@@ -147,15 +147,11 @@ public class ChargeService {
     }
 
     @Async
-    public boolean updateCarnetMetadataAll() {
-        boolean result = true;
+    public void updateCarnetMetadataAll() {
         List<Charge> charges = chargeRepository.findByCarnetIsNullAndStatusNot(StatusCharge.PAID);
         for (Charge c : charges) {
-            if (!chargeGNService.updateChargeMetadata(c)) {
-                result = false;
-            }
+            chargeGNService.updateChargeMetadata(c);
         }
-        return result;
     }
 
 

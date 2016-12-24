@@ -126,15 +126,11 @@ public class CarnetService {
      * @return
      */
     @Async
-    public boolean updateCarnetMetadataAll() {
-        boolean result = true;
+    public void updateCarnetMetadataAll() {
         Iterable<Carnet> carnets = carnetRepository.findAll();
         for (Carnet c : carnets) {
-            if (!carnetGNService.updateCarnetMetadata(c)) {
-                result = false;
-            }
+            carnetGNService.updateCarnetMetadata(c);
         }
-        return result;
     }
 
     public boolean resendCarnet(Carnet carnet) {

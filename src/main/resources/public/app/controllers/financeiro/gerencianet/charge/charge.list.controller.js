@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ChargeListCtrl', ['$scope', '$location', 'Charge', 'Cliente',
-            function ($scope, $location, Charge, Cliente) {
+        .controller('ChargeListCtrl', ['$scope', '$rootScope', '$location', 'Charge', 'Cliente',
+            function ($scope, $rootScope, $location, Charge, Cliente) {
 
                 $scope.getStatusClass = _getStatusClass;
                 $scope.refreshUrlsNotification = _refreshUrlsNotification;
@@ -18,7 +18,13 @@
                 }
 
                 function _refreshUrlsNotification() {
-                    Carnet.refreshUrlsNotification();
+                    Charge.refreshUrlsNotification({}, function () {
+                        $rootScope.messages = [{
+                            title: 'Sucesso:',
+                            body: 'As URLs de notificação de todos as cobrança foram atualizadas',
+                            type: 'alert-success'
+                        }];
+                    });
                 }
 
                 function _getStatusClass(status) {
