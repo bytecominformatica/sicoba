@@ -21,7 +21,6 @@ sudo -i -u postgres
 
 ```
 
-
 ```sql
 CREATE USER bytecom WITH PASSWORD 'bytecom';
 GRANT ALL PRIVILEGES ON DATABASE bytecom to bytecom;
