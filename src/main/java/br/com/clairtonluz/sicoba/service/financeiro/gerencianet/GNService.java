@@ -72,7 +72,7 @@ public class GNService {
         Endereco endereco = cliente.getEndereco();
         if (endereco != null) {
             JSONObject customerAddres = new JSONObject();
-            customerAddres.put("street", endereco);
+            customerAddres.put("street", endereco.getLogradouro());
             customerAddres.put("number", endereco.getNumero());
             customerAddres.put("neighborhood", endereco.getBairro().getNome());
             customerAddres.put("zipcode", endereco.getCep());

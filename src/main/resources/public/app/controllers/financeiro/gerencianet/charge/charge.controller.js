@@ -7,13 +7,19 @@
 
                 $scope.create = _create;
                 $scope.cancel = _cancel;
+                $scope.manualPayment = _manualPayment;
                 $scope.createBankingBillet = _createBankingBillet;
                 $scope.createPaymentLink = _createPaymentLink;
                 $scope.updateExpireAt = _updateExpireAt;
+                $scope.updateValues = _updateValues;
+                $scope.isCancelable = _isCancelable;
+                $scope.isAssociable = _isAssociable;
+                $scope.isPaid = _isPaid;
 
                 _init();
 
                 function _init() {
+                    $scope.charge = {};
                     if ($routeParams.id) {
                         _findById($routeParams.id);
                     } else if ($location.search().clienteId) {
@@ -33,31 +39,34 @@
                     });
                 }
 
-                //
-                // function _atualizarValores(charge) {
-                //     if (charge.status === 'BAIXA_MANUAL') {
-                //         calculaValorAPagar(charge);
-                //     } else {
-                //         charge.valorPago = 0;
-                //         charge.dataOcorrencia = null;
-                //     }
-                // }
-                //
-                // function calculaValorAPagar(charge) {
-                //     if (!charge.dataOcorrencia) {
-                //         charge.dataOcorrencia = new Date();
-                //     }
-                //
-                //     var diff = DateDiff.inDays(new Date(charge.dataVencimento), charge.dataOcorrencia);
-                //     if (diff <= 0) {
-                //         charge.valorPago = charge.valor - charge.desconto;
-                //     } else {
-                //         var juros = charge.valor * 0.05;
-                //         var mora = charge.valor * 0.006677 * diff;
-                //         var vp = charge.valor + juros + mora;
-                //         charge.valorPago = parseFloat(vp.toFixed(2));
-                //     }
-                // }
+                function _updateValues(charge) {
+                    if (charge.manualPayment) {
+                        _calculatePaidValue(charge);
+                    } else {
+                        charge.paidValue = 0;
+                        charge.paidAt = null;
+                    }
+                }
+
+                function _calculatePaidValue(charge) {
+
+                    if (!charge.paidAt) {
+                        charge.paidAt = new Date();
+                    }
+
+                    var diff = DateDiff.inDays(new Date(charge.expireAt), charge.paidAt);
+                    if (diff <= 0) {
+                        charge.paidValue = charge.value;
+                        if (charge.discount) {
+                            charge.paidValue -= charge.discount;
+                        }
+                    } else {
+                        var fine = charge.value * 0.05;
+                        var interest = charge.value * 0.006677 * diff;
+                        var vp = charge.value + fine + interest;
+                        charge.paidValue = parseFloat(vp.toFixed(2));
+                    }
+                }
 
                 function _create(charge) {
                     Charge.save(charge, function (data) {
@@ -103,6 +112,17 @@
                     });
                 }
 
+                function _manualPayment(charge) {
+                    Charge.manualPayment(charge, function (data) {
+                        $scope.charge = data;
+                        $rootScope.messages = [{
+                            title: 'Sucesso',
+                            body: 'Baixa manual da cobrança de número ' + data.id,
+                            type: 'alert-success'
+                        }];
+                    });
+                }
+
                 function _updateExpireAt(charge) {
                     Charge.updateExpireAt(charge, function (data) {
                         $scope.charge = data;
@@ -113,5 +133,18 @@
                         }];
                     });
                 }
+
+                function _isCancelable(charge) {
+                    return charge.id && charge.status !== 'CANCELED' && charge.status !== 'PAID' && !charge.manualPayment;
+                }
+
+                function _isAssociable(charge) {
+                    return charge.id && charge.status === 'NEW';
+                }
+
+                function _isPaid(charge) {
+                    return charge && (charge.status === 'PAID' || charge.manualPayment);
+                }
+
             }]);
 }());

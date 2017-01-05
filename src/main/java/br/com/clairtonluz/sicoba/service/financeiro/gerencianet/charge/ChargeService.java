@@ -12,6 +12,7 @@ import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeReposit
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.SendEmail;
+import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -102,6 +103,23 @@ public class ChargeService {
             charge = save(charge);
         }
         return charge;
+    }
+
+    public Charge manualPayment(Charge charge) {
+        Charge chargeAtual = findById(charge.getId());
+        chargeAtual.setPaidValue(charge.getPaidValue());
+        chargeAtual.setPaidAt(charge.getPaidAt());
+        chargeAtual.setManualPayment(charge.getManualPayment());
+
+        String subject = "[CHARGE] Baixa manual da cobrança " + chargeAtual.getId();
+        String content = String.format("Cobrança %d do cliente %d - %s no valor de %s foi baixada manualmente com o valor de %s",
+                chargeAtual.getId(), chargeAtual.getCliente().getId(), chargeAtual.getCliente().getNome(),
+                StringUtil.formatCurrence(chargeAtual.getValue()), StringUtil.formatCurrence(chargeAtual.getPaidValue()));
+
+        chargeAtual = cancelCharge(chargeAtual);
+
+        SendEmail.sendToAdmin(subject, content);
+        return chargeAtual; // cancela o boleto no integrador e salva a cobrança com as alterações
     }
 
     @Transactional
@@ -213,4 +231,5 @@ public class ChargeService {
     public List<Charge> overdue() {
         return chargeRepository.overdue(new Date());
     }
+
 }

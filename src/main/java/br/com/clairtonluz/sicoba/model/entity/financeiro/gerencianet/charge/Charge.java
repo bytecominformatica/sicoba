@@ -41,6 +41,8 @@ public class Charge extends BaseEntity {
     @NotNull
     @Size(min = 1, max = 255, message = "A mensagem deve conter entre 1 e 255 caracteres")
     private String description;
+    @Column(name = "manual_payment")
+    private Boolean manualPayment;
 
     @Column(name = "charge_id")
     private Integer chargeId;
@@ -216,5 +218,13 @@ public class Charge extends BaseEntity {
 
     public void setPaidAt(Date paidAt) {
         this.paidAt = paidAt;
+    }
+
+    public Boolean getManualPayment() {
+        return manualPayment;
+    }
+
+    public void setManualPayment(Boolean manualPayment) {
+        this.manualPayment = manualPayment;
     }
 }

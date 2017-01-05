@@ -27,14 +27,17 @@
                     });
                 }
 
-                function _getStatusClass(status) {
+                function _getStatusClass(charge) {
                     var result;
-                    switch (status) {
+                    switch (charge.status) {
                         case 'PAID':
                             result = 'label-success';
                             break;
                         case 'CANCELED':
-                            result = 'label-danger';
+                            if (charge.manualPayment)
+                                result = 'label-success';
+                            else
+                                result = 'label-danger';
                             break;
                         case 'REFUNDED':
                             result = 'label-danger';

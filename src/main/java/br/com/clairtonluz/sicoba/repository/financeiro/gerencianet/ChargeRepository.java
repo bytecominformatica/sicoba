@@ -31,5 +31,4 @@ public interface ChargeRepository extends CrudRepository<Charge, Integer> {
 
     @Query("select c from Charge c where c.expireAt < :date and c.status <> 'PAID' and c.status <> 'CANCELED' and c.cliente.status <> 2 order by c.expireAt asc ")
     List<Charge> overdue(@Param("date") Date date);
-//    List<Charge> findByExpireAtLessThanAndStatusNotEqualAndStatusNotEqualAndCliente_statusNotOrderByExpireAtAsc(Date date, StatusCharge paid, StatusCharge canceled, StatusCliente cancelado);
 }

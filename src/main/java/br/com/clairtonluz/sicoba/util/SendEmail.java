@@ -13,6 +13,10 @@ import java.io.StringWriter;
  */
 public class SendEmail {
 
+    private SendEmail() {
+
+    }
+
     public static void notificarAdmin(Exception e) {
         notificarAdmin(e.getMessage(), e);
     }

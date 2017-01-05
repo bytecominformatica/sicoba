@@ -69,10 +69,13 @@ public class ChargeAPI {
         return chargeService.cancelCharge(chargeService.findById(id));
     }
 
+    @RequestMapping(value = "/{id}/manualpayment", method = RequestMethod.PUT)
+    public Charge manualPayment(@PathVariable Integer id, @RequestBody Charge charge) {
+        return chargeService.manualPayment(charge);
+    }
+
     @RequestMapping(value = "/{id}/billet", method = RequestMethod.PUT)
     public Charge updateExpireAt(@PathVariable Integer id, @Valid @RequestBody Charge charge) {
-        SendEmail.sendToAdmin("teste2", "conteudo de teste2");
-
         return chargeService.updateBilletExpireAt(charge);
     }
 

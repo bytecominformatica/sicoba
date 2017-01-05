@@ -29,6 +29,10 @@
                         method: 'PUT',
                         params: {action: "cancel"}
                     },
+                    manualPayment: {
+                        method: 'PUT',
+                        params: {action: "manualpayment"}
+                    },
                     updateExpireAt: {
                         method: 'PUT',
                         params: {action: "billet"}

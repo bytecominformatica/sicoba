@@ -63,7 +63,7 @@ public class NotificationService {
     private void processarCharge(String token, JSONObject data) {
         Charge charge = chargeRepository.findOptionalByChargeId(data.getJSONObject("identifiers").getInt("charge_id"));
         if (charge == null) {
-            Logger.getLogger(getClass().getName()).severe("Cobrança não processado:" + data.toString());
+            SendEmail.sendToAdmin("[NOTIFICATION] Cobrança não processada", "Cobrança não processado:" + data.toString());
             return;
         }
 
@@ -97,7 +97,7 @@ public class NotificationService {
     private void processarCarnet(String token, JSONObject data) {
         Carnet carnet = carnetRepository.findOptionalByCarnetId(data.getJSONObject("identifiers").getInt("carnet_id"));
         if (carnet == null) {
-            Logger.getLogger(getClass().getName()).severe("Carnê não processado:" + data.toString());
+            SendEmail.sendToAdmin("[NOTIFICATION] Carnê não processado", "Carnê não processado:" + data.toString());
             return;
         }
 
@@ -115,7 +115,7 @@ public class NotificationService {
     private void processarCarnetCharge(String token, JSONObject data) {
         Charge charge = chargeRepository.findOptionalByChargeId(data.getJSONObject("identifiers").getInt("charge_id"));
         if (charge == null) {
-            Logger.getLogger(getClass().getName()).severe("Cobrança Carnê não processado:" + data.toString());
+            SendEmail.sendToAdmin("[NOTIFICATION]Parcela do carnê não processado", "Parcela carnê não processado:" + data.toString());
             return;
         }
 
