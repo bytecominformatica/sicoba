@@ -114,14 +114,11 @@ public final class StringUtil {
 
     public static Date getData(String line, int inicio, int fim) {
         Date date = null;
-        String data = null;
         try {
-            data = get(line, inicio, fim);
+            String data = get(line, inicio, fim);
             date = FORMATTER_DATA.parse(data);
         } catch (ParseException e) {
             e.printStackTrace();
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(String.format("line: %s\ninicio:%d fim:%d\nDado inválido:%s", line, inicio, fim, data), e);
         }
         return date;
     }

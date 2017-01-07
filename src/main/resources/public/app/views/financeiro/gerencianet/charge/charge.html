@@ -115,9 +115,9 @@
             <label>Vencimento</label>
             <div class="input-group">
                 <input name="expireAt" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                       ng-model="charge.expireAt" ng-disabled="isPaid()"
+                       ng-model="charge.expireAt" ng-disabled="isPaid(charge)"
                        is-open="status.opened" close-text="Close" required/>
-                <i class="input-group-btn">
+                <i class="input-group-btn" ng-hide="isPaid(charge)">
                     <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
                         <i class="glyphicon glyphicon-calendar"></i>
                     </button>
