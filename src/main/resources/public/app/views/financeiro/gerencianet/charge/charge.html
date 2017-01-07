@@ -138,9 +138,9 @@
             <div class="input-group">
                 <input name="paidAt" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
                        ng-change="updateValues(charge)"
-                       ng-model="charge.paidAt" ng-disabled="charge.id && charge.status === 'PAID'"
+                       ng-model="charge.paidAt" ng-disabled="isPaidViaIntegration(charge)"
                        is-open="status.opened2" close-text="Close"/>
-                <i class="input-group-btn">
+                <i class="input-group-btn" ng-hide="isPaidViaIntegration(charge)">
                     <button type="button" class="btn btn-default" ng-click="status.opened2 = !status.opened2">
                         <i class="glyphicon glyphicon-calendar"></i>
                     </button>

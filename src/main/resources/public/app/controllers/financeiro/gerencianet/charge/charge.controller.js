@@ -15,6 +15,7 @@
                 $scope.isCancelable = _isCancelable;
                 $scope.isAssociable = _isAssociable;
                 $scope.isPaid = _isPaid;
+                $scope.isPaidViaIntegration = _isPaidViaIntegration;
 
                 _init();
 
@@ -144,6 +145,10 @@
 
                 function _isPaid(charge) {
                     return charge && (charge.status === 'PAID' || charge.manualPayment);
+                }
+
+                function _isPaidViaIntegration(charge) {
+                    return charge && charge.status === 'PAID';
                 }
 
             }]);
