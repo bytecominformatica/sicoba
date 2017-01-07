@@ -121,7 +121,7 @@ public final class StringUtil {
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (NumberFormatException e) {
-            throw new RuntimeException(String.format("line: %s\ninicio:%d fim:%d\nDado inválido:%s", data), e);
+            throw new RuntimeException(String.format("line: %s\ninicio:%d fim:%d\nDado inválido:%s", line, inicio, fim, data), e);
         }
         return date;
     }
