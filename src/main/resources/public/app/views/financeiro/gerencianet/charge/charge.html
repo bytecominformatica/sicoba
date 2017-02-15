@@ -85,7 +85,7 @@
         </p>
     </div>
 
-    <div class="col-md-3 col-sm-6 col-xs-12" ng-show="!isAssociable(charge) && charge.status !== 'PAID'">
+    <div class="col-md-3 col-sm-6 col-xs-12" ng-show="charge.id && !isAssociable(charge) && charge.status !== 'PAID'">
         <div class="input-group">
             <label>Recebi o valor pessoalmente</label>
             <div class="checkbox">
@@ -131,7 +131,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-6 col-xs-12"
+    <div class="col-md-3 col-sm-6 col-xs-12" ng-show="isPaid(charge)"
          ng-class="{'has-error': (form.paidAt.$invalid && (form.$submitted || form.paidAt.$touched))}">
         <div class="input-group">
             <label>Pago em</label>
