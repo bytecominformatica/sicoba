@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-6 col-xs-12" ng-show="isPaid(charge)"
+    <div class="col-md-3 col-sm-6 col-xs-12" ng-if="isPaid(charge)"
          ng-class="{'has-error': (form.paidValue.$invalid && (form.$submitted || form.paidValue.$touched))}">
         <label>Valor Pago</label>
         <input type="number" step="any" name="paidValue" ng-model="charge.paidValue" class="form-control" required
