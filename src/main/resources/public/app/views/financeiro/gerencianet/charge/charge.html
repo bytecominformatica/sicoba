@@ -55,7 +55,7 @@
          ng-class="{'has-error': (form.message.$invalid && (form.$submitted || form.message.$touched))}">
         <label>Mensagem</label>
         <input type="text" name="message" ng-model="charge.message" class="form-control"
-               placeholder="Mensagem para ser exibida no link de pagamento" required ng-disabled="charge.id"
+               placeholder="Mensagem para ser exibida no link de pagamento" ng-required="!charge.carnetId" ng-disabled="charge.id"
                minlength="3" maxlength="80">
         <p class="help-block" ng-show="form.$submitted || form.message.$touched">
             <i ng-show="form.message.$error.required">Defina a mensagem para ser exibida no link de pagamento</i>
