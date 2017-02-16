@@ -154,7 +154,7 @@ public class ChargeService {
             throw new ConflitException("O vencimento deve ser maior ou igual a data atual");
         }
 
-        if (StatusCharge.WAITING.equals(charge.getStatus()) || StatusCharge.UNPAID.equals(charge.getStatus())) {
+        if (!StatusCharge.WAITING.equals(charge.getStatus()) && !StatusCharge.UNPAID.equals(charge.getStatus())) {
             throw new ConflitException("Apenas transações com status [waiting] ou [unpaid] podem ser atualizadas");
         }
         return true;
