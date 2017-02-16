@@ -16,9 +16,17 @@
                 $scope.isAssociable = _isAssociable;
                 $scope.isPaid = _isPaid;
                 $scope.isPaidViaIntegration = _isPaidViaIntegration;
+                $scope.teste = _teste;
 
                 _init();
 
+                function _teste(form) {
+                    console.log('teste');
+                    console.log(form);
+                    console.log(form.$error);
+                    
+                    return true;
+                }
                 function _init() {
                     $scope.charge = {};
                     if ($routeParams.id) {
