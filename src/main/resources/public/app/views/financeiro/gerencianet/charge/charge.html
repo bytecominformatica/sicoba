@@ -46,8 +46,8 @@
                minlength="1" maxlength="255" ng-disabled="charge.id">
         <p class="help-block" ng-show="form.$submitted || form.description.$touched">
             <i ng-show="form.description.$error.required">Descreva o motivo dessa cobrança?</i>
-            <i ng-show="form.value.$error.minlength">A Mensagem deve conter no minimo 1 caracteres</i>
-            <i ng-show="form.value.$error.maxlength">A Mensagem deve conter no máximo 255 caracteres</i>
+            <i ng-show="form.description.$error.minlength">A Mensagem deve conter no minimo 1 caracteres</i>
+            <i ng-show="form.description.$error.maxlength">A Mensagem deve conter no máximo 255 caracteres</i>
         </p>
     </div>
 
@@ -58,9 +58,9 @@
                placeholder="Mensagem para ser exibida no link de pagamento" required ng-disabled="charge.id"
                minlength="3" maxlength="80">
         <p class="help-block" ng-show="form.$submitted || form.message.$touched">
-            <i ng-show="form.value.$error.required">Defina a mensagem para ser exibida no link de pagamento</i>
-            <i ng-show="form.value.$error.minlength">A Mensagem deve conter no minimo 3 caracteres</i>
-            <i ng-show="form.value.$error.maxlength">A Mensagem deve conter no máximo 80 caracteres</i>
+            <i ng-show="form.message.$error.required">Defina a mensagem para ser exibida no link de pagamento</i>
+            <i ng-show="form.message.$error.minlength">A Mensagem deve conter no minimo 3 caracteres</i>
+            <i ng-show="form.message.$error.maxlength">A Mensagem deve conter no máximo 80 caracteres</i>
         </p>
     </div>
 
@@ -154,11 +154,11 @@
         <br/>
 
         <div class="pull-right">
-            <button class="btn btn-primary" type="submit" ng-click="form.$valid && create(charge)" ng-hide="charge.id">
+            <button class="btn btn-primary" type="submit" ng-click="console.log(form) && console.log(form) && form.$valid && create(charge)" ng-hide="charge.id">
                 Criar
             </button>
             <button class="btn btn-primary" type="button"
-                    ng-click="form.$valid && updateExpireAt(charge)"
+                    ng-click="console.log(form) && form.$valid && updateExpireAt(charge)"
                     ng-show="charge.id && !isPaid(charge)">
                 Atualizar Vencimento
             </button>
