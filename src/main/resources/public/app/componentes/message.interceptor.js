@@ -13,7 +13,6 @@
                 },
                 responseError: function (rejection) {
                     if (rejection.status !== 401) {
-                        console.log(rejection);
                         var message;
                         if (rejection) {
                             if (rejection.data) {
@@ -22,8 +21,6 @@
                                 message = rejection.message;
                             }
                         }
-
-                        console.log(message);
 
                         $rootScope.messages.push({
                             title: 'Error:',

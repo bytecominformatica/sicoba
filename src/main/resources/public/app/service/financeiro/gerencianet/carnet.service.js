@@ -3,7 +3,7 @@
 
     angular.module('sicobaApp')
         .factory('Carnet', ['$resource', function ($resource) {
-            return $resource('api/carnets/:id/:action', {id: '@id'},
+            return $resource('api/carnets/:id/:action/:actionId', {id: '@id'},
                 {
                     new: {
                         method: 'GET',
@@ -12,6 +12,10 @@
                     cancel: {
                         method: 'PUT',
                         params: {action: "cancel"}
+                    },
+                    updateParcelExpireAt: {
+                        method: 'PUT',
+                        params: {id: '@carnet.id', action: "parcels", actionId: '@parcel'}
                     },
                     refreshUrlsNotification: {
                         method: 'PUT',

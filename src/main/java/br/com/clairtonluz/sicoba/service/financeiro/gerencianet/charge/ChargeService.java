@@ -146,8 +146,8 @@ public class ChargeService {
     }
 
     public static boolean isExpireAtValid(Charge charge, Date expireAt) {
-        if (charge.getExpireAt().after(expireAt)) {
-            throw new ConflitException("Não é possível reduzir a data de vencimento de uma cobrança");
+        if (!charge.getExpireAt().before(expireAt)) {
+            throw new ConflitException("A nova data de vencimento deve ser maior do que a anterior");
         }
 
         if (DateUtil.isPast(charge.getExpireAt())) {

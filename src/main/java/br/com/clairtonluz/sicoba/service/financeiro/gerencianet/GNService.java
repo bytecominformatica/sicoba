@@ -144,7 +144,6 @@ public class GNService {
         try {
             Gerencianet gn = new Gerencianet(Credentials.getInstance().getOptions());
             JSONObject response = gn.call(method, params, body);
-            System.out.println(response);
             return response;
         } catch (GerencianetException e) {
             e.printStackTrace();

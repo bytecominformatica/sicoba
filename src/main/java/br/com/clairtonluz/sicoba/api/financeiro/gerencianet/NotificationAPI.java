@@ -19,9 +19,7 @@ public class NotificationAPI {
 
     @RequestMapping(value = "notification", method = RequestMethod.POST)
     public void gerar(@RequestBody String body) {
-        System.out.println(body);
         String token = body.substring(body.indexOf('=') + 1);
-        System.out.println(token);
         notificationService.processNotification(token);
     }
 

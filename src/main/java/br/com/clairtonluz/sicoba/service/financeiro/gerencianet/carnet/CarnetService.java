@@ -85,9 +85,9 @@ public class CarnetService {
         }
     }
 
-    public Charge updateParcelExpireAt(Charge charge) {
+    public Charge updateParcelExpireAt(Integer carnetId, Integer parcel, Charge charge) {
         Date expireAt = charge.getExpireAt();
-        charge = chargeRepository.findOne(charge.getId());
+        charge = chargeRepository.findOptionalByCarnet_idAndParcel(carnetId, parcel);
         if (ChargeService.isExpireAtValid(charge, expireAt)) {
             charge.setExpireAt(expireAt);
             if (carnetGNService.updateParcelExpireAt(charge)) {

@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ChargeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Charge', 'DateDiff',
-            function ($scope, $rootScope, $routeParams, $location, Charge, DateDiff) {
+        .controller('ChargeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Charge', 'Carnet', 'DateDiff',
+            function ($scope, $rootScope, $routeParams, $location, Charge, Carnet, DateDiff) {
 
                 $scope.create = _create;
                 $scope.cancel = _cancel;
@@ -16,17 +16,9 @@
                 $scope.isAssociable = _isAssociable;
                 $scope.isPaid = _isPaid;
                 $scope.isPaidViaIntegration = _isPaidViaIntegration;
-                $scope.teste = _teste;
 
                 _init();
 
-                function _teste(form) {
-                    console.log('teste');
-                    console.log(form);
-                    console.log(form.$error);
-                    
-                    return true;
-                }
                 function _init() {
                     $scope.charge = {};
                     if ($routeParams.id) {
@@ -133,14 +125,26 @@
                 }
 
                 function _updateExpireAt(charge) {
-                    Charge.updateExpireAt(charge, function (data) {
-                        $scope.charge = data;
-                        $rootScope.messages = [{
-                            title: 'Sucesso',
-                            body: 'Cancelada cobrança de número ' + data.id,
-                            type: 'alert-success'
-                        }];
-                    });
+
+                    if (charge.carnet) {
+                        Carnet.updateParcelExpireAt(charge, function (data) {
+                            $scope.charge = data;
+                            $rootScope.messages = [{
+                                title: 'Sucesso',
+                                body: 'Vencimento atualizado para cobrança de número ' + data.id,
+                                type: 'alert-success'
+                            }];
+                        });
+                    } else {
+                        Charge.updateExpireAt(charge, function (data) {
+                            $scope.charge = data;
+                            $rootScope.messages = [{
+                                title: 'Sucesso',
+                                body: 'Vencimento atualizado para cobrança de número ' + data.id,
+                                type: 'alert-success'
+                            }];
+                        });
+                    }
                 }
 
                 function _isCancelable(charge) {

@@ -54,9 +54,6 @@ public class SendEmail {
                 request.endpoint = "mail/send";
                 request.body = mail.build();
                 Response response = sg.api(request);
-                System.out.println(response.statusCode);
-                System.out.println(response.body);
-                System.out.println(response.headers);
             } catch (IOException e) {
                 e.printStackTrace();
             }

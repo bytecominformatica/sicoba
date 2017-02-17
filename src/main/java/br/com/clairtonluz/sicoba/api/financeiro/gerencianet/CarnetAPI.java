@@ -64,7 +64,7 @@ public class CarnetAPI {
 
     @RequestMapping(value = "/{id}/parcels/{parcel}", method = RequestMethod.PUT)
     public Charge updateParcelExpireAt(@PathVariable Integer id, @PathVariable Integer parcel, @Valid @RequestBody Charge charge) {
-        return carnetService.updateParcelExpireAt(charge);
+        return carnetService.updateParcelExpireAt(id, parcel, charge);
     }
 
     @RequestMapping(value = "/{id}/cancel", method = RequestMethod.PUT)
