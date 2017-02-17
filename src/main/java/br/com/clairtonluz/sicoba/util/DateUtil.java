@@ -57,6 +57,9 @@ public final class DateUtil {
     public static boolean isPast(Date date) {
         LocalDate today = LocalDate.now();
         LocalDate otherDate = toLocalDate(date);
+        System.out.println("today");
+        System.out.println(today);
+        System.out.println(otherDate);
 
         return otherDate.isBefore(today);
     }
