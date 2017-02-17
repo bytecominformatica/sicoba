@@ -150,7 +150,7 @@ public class ChargeService {
             throw new ConflitException("A nova data de vencimento deve ser maior do que a anterior");
         }
 
-        if (DateUtil.isPast(charge.getExpireAt())) {
+        if (DateUtil.isPast(expireAt)) {
             throw new ConflitException("O vencimento deve ser maior ou igual a data atual");
         }
 
