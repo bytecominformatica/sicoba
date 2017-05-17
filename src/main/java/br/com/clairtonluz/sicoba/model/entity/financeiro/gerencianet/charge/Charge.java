@@ -4,11 +4,15 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
+import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
@@ -17,6 +21,11 @@ import java.util.Date;
 @Entity
 @Table(name = "charge")
 public class Charge extends BaseEntity {
+
+    public static final String VALID_PAYMENT = "Pagamento válido";
+    public static final String LATE_PAYMENT_WITHOUT_INTEREST = "Pagamento atrasado sem juros";
+    public static final String INVALID_DISCOUNT_PAYMENT = "Pagamento com desconto inválido";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "charge_id_seq")
     @SequenceGenerator(name = "charge_id_seq", sequenceName = "charge_id_seq")
@@ -66,6 +75,51 @@ public class Charge extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "carnet_id")
     private Carnet carnet;
+
+
+    public String verifyPayment() {
+        String status = VALID_PAYMENT;
+
+        if (isInterestFreePayment()) {
+            if (isLatePayment()) {
+                status = LATE_PAYMENT_WITHOUT_INTEREST;
+            }
+        }
+
+        if (status.equals(VALID_PAYMENT)) {
+            if (isInvalidDiscount())
+                status = INVALID_DISCOUNT_PAYMENT;
+        }
+
+        return status;
+    }
+
+    private boolean isInvalidDiscount() {
+        Double discount = getDiscount() != null ? getDiscount() : 0d;
+        Double correctValue = getValue() - discount;
+        return getPaidValue() < correctValue;
+    }
+
+    private boolean isLatePayment() {
+        boolean late = false;
+        LocalDate expireAt = DateUtil.toLocalDate(getExpireAt());
+        LocalDate paidAt = DateUtil.toLocalDate(getPaidAt());
+        long diference = ChronoUnit.DAYS.between(expireAt, paidAt);
+
+        if (diference > 0) {
+            late = !isLateForTheWeekend(paidAt, diference);
+        }
+
+        return late;
+    }
+
+    private boolean isLateForTheWeekend(LocalDate paidAt, long diference) {
+        return diference <= 2 && paidAt.getDayOfWeek().equals(DayOfWeek.MONDAY);
+    }
+
+    private boolean isInterestFreePayment() {
+        return getPaidValue() <= getValue();
+    }
 
     @Override
     public Integer getId() {
