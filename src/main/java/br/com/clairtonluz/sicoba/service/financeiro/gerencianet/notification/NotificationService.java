@@ -11,6 +11,7 @@ import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeReposit
 import br.com.clairtonluz.sicoba.service.comercial.ClienteService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.util.SendEmail;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,20 @@ public class NotificationService {
                 charge.setPaidAt(new Date());
 
                 Cliente cliente = charge.getCliente();
-                if (cliente.getStatus().equals(StatusCliente.INATIVO)) {
+                String messageVerify = charge.verifyPayment();
+                if (!messageVerify.equals(Charge.VALID_PAYMENT)) {
+                    try {
+                        clienteService.inativar(cliente);
+                        String subject = String.format("Cliente %s bloqueado por pagamento inválido", cliente.getNome());
+                        String chargeJson = new ObjectMapper().writeValueAsString(charge);
+                        String message = String.format("Cobrana: %s\nMotivo:%s", chargeJson, messageVerify);
+                        SendEmail.sendToAdmin(subject, message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        String subject = String.format("Não foi possível bloquear o cliente %s por pagamento inválido do tipo:%s", cliente.getNome(), messageVerify);
+                        SendEmail.notificarAdmin(subject, e);
+                    }
+                } else if (cliente.getStatus().equals(StatusCliente.INATIVO)) {
                     try {
                         clienteService.ativar(cliente);
                     } catch (Exception e) {
@@ -134,4 +148,5 @@ public class NotificationService {
             chargeRepository.save(charge);
         }
     }
+
 }
