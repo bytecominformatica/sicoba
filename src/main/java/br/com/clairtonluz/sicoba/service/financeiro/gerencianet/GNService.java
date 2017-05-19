@@ -110,9 +110,9 @@ public class GNService {
         Double fine = valor * FINE_RATE;
         Double interest = valor * INTEREST_RATE;
         JSONArray instructions = new JSONArray()
-                .put("Não receber após 60 dias do vencimento")
-                .put(String.format("Sr. Caixa, cobrar multa de %s após o vencimento", StringUtil.formatCurrence(fine)))
-                .put(String.format("Sr. Caixa, cobrar juros de %s ao dia após o vencimento", StringUtil.formatCurrence(interest)));
+                .put("Não receber após 60 dias do vencimento");
+//                .put(String.format("Sr. Caixa, cobrar multa de %s após o vencimento", StringUtil.formatCurrence(fine)))
+//                .put(String.format("Sr. Caixa, cobrar juros de %s ao dia após o vencimento", StringUtil.formatCurrence(interest)));
         if (discount != null && discount > 0) {
             instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", StringUtil.formatCurrence(discount)));
         }
@@ -125,6 +125,18 @@ public class GNService {
                 .put("interest", 330);
 
         return configurations;
+    }
+
+    public static JSONObject createDiscount(Double value) {
+        JSONObject discount = null;
+        if (value != null && value > 0) {
+            int discountValue = (int) (value * 100);
+            discount = new JSONObject()
+                    .put("type", "currency")
+                    .put("value", discountValue);
+        }
+
+        return discount;
     }
 
     public static boolean isOk(JSONObject response) {

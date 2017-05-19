@@ -33,7 +33,8 @@ class CarnetGNService {
         JSONArray items = new JSONArray().put(GNService.createItem(carnet.getDescription(), carnet.getValue()));
         JSONObject customer = GNService.createConsumer(carnet.getCliente(), false);
 
-        JSONArray instructions = GNService.createInstructions(carnet);
+//        JSONArray instructions = GNService.createInstructions(carnet);
+        JSONObject configurations = GNService.createConfigurations();
 
         JSONObject body = new JSONObject();
         body.put("items", items);
@@ -41,7 +42,8 @@ class CarnetGNService {
         body.put("expire_at", DateUtil.formatISO(carnet.getFirstPay()));
         body.put("repeats", carnet.getRepeats());
         body.put("split_items", carnet.getSplitItems());
-        body.put("instructions", instructions);
+//        body.put("instructions", instructions);
+        body.put("configurations", configurations);
         body.put("metadata", GNService.createMetadata(Credentials.getInstance().getNotificationUrl()));
 
         return GNService.call(CREATE_CARNET, body);
