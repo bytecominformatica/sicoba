@@ -103,7 +103,11 @@ public class CarnetService {
             carnet.setStatus(StatusCarnet.CANCELED);
             carnetRepository.save(carnet);
             List<Charge> charges = chargeRepository.findByCarnet_idOrderByExpireAtDesc(carnet.getId());
-            charges.forEach(it -> it.setStatus(StatusCharge.CANCELED));
+            charges.forEach((it) -> {
+                if (it.isCancelable()) {
+                    it.setStatus(StatusCharge.CANCELED);
+                }
+            });
             chargeRepository.save(charges);
         }
     }
