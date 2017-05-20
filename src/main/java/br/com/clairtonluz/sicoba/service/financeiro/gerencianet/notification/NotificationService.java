@@ -39,7 +39,6 @@ public class NotificationService {
     @Transactional
     public void processNotification(String token) {
         JSONObject response = notificationGNService.getNotification(token);
-        SendEmail.sendToAdmin("[NOTIFICATION] Token", String.format("token:%s\ncontent:%s", token, String.valueOf(response)));
         if (GNService.isOk(response)) {
             JSONArray data = response.getJSONArray("data");
             for (int i = 0; i < data.length(); i++) {

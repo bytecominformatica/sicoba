@@ -76,7 +76,6 @@ public class Charge extends BaseEntity {
     @JoinColumn(name = "carnet_id")
     private Carnet carnet;
 
-
     public String verifyPayment() {
         String status = VALID_PAYMENT;
 
@@ -119,6 +118,10 @@ public class Charge extends BaseEntity {
 
     private boolean isInterestFreePayment() {
         return getPaidValue() <= getValue();
+    }
+
+    public boolean isCancelable() {
+        return !StatusCharge.PAID.equals(status);
     }
 
     @Override
@@ -281,4 +284,5 @@ public class Charge extends BaseEntity {
     public void setManualPayment(Boolean manualPayment) {
         this.manualPayment = manualPayment;
     }
+
 }
