@@ -102,7 +102,8 @@ public class RetornoCaixaService {
                 Cliente cliente = m.getCliente();
                 Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
                 clienteRepository.save(m.getCliente());
-                conexaoService.save(conexao);
+                if (conexao != null)
+                    conexaoService.save(conexao);
             }
         }
         return m;
