@@ -2,12 +2,14 @@ package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.notification;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.StatusCarnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.CarnetRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
+import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.GerencianetAccountRepository;
 import br.com.clairtonluz.sicoba.service.comercial.ClienteService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.util.SendEmail;
@@ -32,33 +34,40 @@ public class NotificationService {
     @Autowired
     private ChargeRepository chargeRepository;
     @Autowired
+    private GerencianetAccountRepository gerencianetAccountRepository;
+    @Autowired
     private CarnetRepository carnetRepository;
     @Autowired
     private ClienteService clienteService;
 
     @Transactional
-    public void processNotification(String token) {
-        JSONObject response = notificationGNService.getNotification(token);
-        if (GNService.isOk(response)) {
-            JSONArray data = response.getJSONArray("data");
-            for (int i = 0; i < data.length(); i++) {
-                JSONObject it = data.getJSONObject(i);
-                switch (it.getString("type")) {
-                    case "charge":
-                        processarCharge(token, it);
-                        break;
-                    case "carnet":
-                        processarCarnet(token, it);
-                        break;
-                    case "carnet_charge":
-                        processarCarnetCharge(token, it);
-                        break;
-                    default:
-                        Logger.getLogger(getClass().getName()).warning(it.toString());
+    public void processNotification(Integer gerencianetAccountId, String token) {
+        GerencianetAccount account = gerencianetAccountRepository.findOne(gerencianetAccountId);
+        if (account != null) {
+            JSONObject response = notificationGNService.getNotification(account, token);
+            if (GNService.isOk(response)) {
+                JSONArray data = response.getJSONArray("data");
+                for (int i = 0; i < data.length(); i++) {
+                    JSONObject it = data.getJSONObject(i);
+                    switch (it.getString("type")) {
+                        case "charge":
+                            processarCharge(token, it);
+                            break;
+                        case "carnet":
+                            processarCarnet(token, it);
+                            break;
+                        case "carnet_charge":
+                            processarCarnetCharge(token, it);
+                            break;
+                        default:
+                            Logger.getLogger(getClass().getName()).warning(it.toString());
+                    }
                 }
+            } else {
+                SendEmail.sendToAdmin("[NOTIFICATION] Token não encontrado", String.format("token:%s\ncontent:%s", token, String.valueOf(response)));
             }
         } else {
-            SendEmail.sendToAdmin("[NOTIFICATION] Token não encontrado", String.format("token:%s\ncontent:%s", token, String.valueOf(response)));
+            SendEmail.sendToAdmin("[NOTIFICATION] Conta gerencianet não encontrada", String.format("conta gerencianet:%s\ntoken:%s", gerencianetAccountId, token));
         }
     }
 

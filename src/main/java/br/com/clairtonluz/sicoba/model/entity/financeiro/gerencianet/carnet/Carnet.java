@@ -17,8 +17,8 @@ import java.util.Date;
 @Table(name = "carnet")
 public class Carnet extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "charge_id_seq")
-    @SequenceGenerator(name = "charge_id_seq", sequenceName = "charge_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "carnet_id_seq")
+    @SequenceGenerator(name = "carnet_id_seq", sequenceName = "carnet_id_seq")
     private Integer id;
 
     @Column(name = "carnet_id")
@@ -48,6 +48,8 @@ public class Carnet extends BaseEntity {
     @Column(name = "first_pay")
     @Temporal(TemporalType.TIMESTAMP)
     private Date firstPay;
+    @Column(name = "gerencianet_account_id")
+    private Integer gerencianetAccountId;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -185,5 +187,13 @@ public class Carnet extends BaseEntity {
             discount = discount / repeats;
         }
         return discount;
+    }
+
+    public Integer getGerencianetAccountId() {
+        return gerencianetAccountId;
+    }
+
+    public void setGerencianetAccountId(Integer gerencianetAccountId) {
+        this.gerencianetAccountId = gerencianetAccountId;
     }
 }

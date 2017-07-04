@@ -20,9 +20,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -54,8 +52,7 @@ public class ChargeService {
 
     @Transactional
     public Charge createCharge(Charge charge) {
-        Contrato contrato = contratoRepository.findOptionalByCliente_id(charge.getCliente().getId());
-        JSONObject createChargeResult = chargeGNService.createCharge(contrato, charge);
+        JSONObject createChargeResult = chargeGNService.createCharge(charge);
 
         if (createChargeResult.getInt("code") == HttpStatus.OK.value()) {
             JSONObject data = createChargeResult.getJSONObject("data");

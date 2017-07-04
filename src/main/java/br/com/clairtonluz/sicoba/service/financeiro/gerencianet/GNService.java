@@ -3,7 +3,7 @@ package br.com.clairtonluz.sicoba.service.financeiro.gerencianet;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Endereco;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Credentials;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.util.StringUtil;
@@ -37,7 +37,7 @@ public class GNService {
     }
 
     public static JSONObject createItem(String name, Double value, Integer amount) {
-        int valueInt = (int) (value * 100); // retirando as casa decimais
+        int valueInt = retirarCasasDecimais(value); // retirando as casa decimais
         JSONObject item = new JSONObject()
                 .put("name", name)
                 .put("value", valueInt);
@@ -119,10 +119,13 @@ public class GNService {
         return instructions;
     }
 
-    public static JSONObject createConfigurations() {
-        JSONObject configurations = new JSONObject()
-                .put("fine", 500)
-                .put("interest", 330);
+    public static JSONObject createConfigurations(GerencianetAccount gerencianetAccount) {
+        JSONObject configurations = new JSONObject();
+        if (gerencianetAccount.getFine() != null)
+            configurations.put("fine", retirarCasasDecimais(gerencianetAccount.getFine()));
+
+        if (gerencianetAccount.getInterest() != null)
+            configurations.put("interest", 330);
 
         return configurations;
     }
@@ -130,7 +133,7 @@ public class GNService {
     public static JSONObject createDiscount(Double value) {
         JSONObject discount = null;
         if (value != null && value > 0) {
-            int discountValue = (int) (value * 100);
+            int discountValue = retirarCasasDecimais(value);
             discount = new JSONObject()
                     .put("type", "currency")
                     .put("value", discountValue);
@@ -139,22 +142,26 @@ public class GNService {
         return discount;
     }
 
+    private static int retirarCasasDecimais(Double value) {
+        return (int) (value * 100);
+    }
+
     public static boolean isOk(JSONObject response) {
         return response.getInt("code") == HttpStatus.OK.value();
     }
 
 
-    public static JSONObject call(String method, Map<String, String> params) {
-        return call(method, params, BODY_EMPTY);
+    public static JSONObject call(GerencianetAccount account, String method, Map<String, String> params) {
+        return call(account, method, params, BODY_EMPTY);
     }
 
-    public static JSONObject call(String method, JSONObject body) {
-        return call(method, PARAMS_EMPTY, body);
+    public static JSONObject call(GerencianetAccount account, String method, JSONObject body) {
+        return call(account, method, PARAMS_EMPTY, body);
     }
 
-    public static JSONObject call(String method, Map<String, String> params, JSONObject body) {
+    public static JSONObject call(GerencianetAccount account, String method, Map<String, String> params, JSONObject body) {
         try {
-            Gerencianet gn = new Gerencianet(Credentials.getInstance().getOptions());
+            Gerencianet gn = new Gerencianet(account.getOptions());
             JSONObject response = gn.call(method, params, body);
             return response;
         } catch (GerencianetException e) {

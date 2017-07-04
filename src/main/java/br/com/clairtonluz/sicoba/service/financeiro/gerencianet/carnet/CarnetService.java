@@ -61,6 +61,7 @@ public class CarnetService {
                 JSONObject it = chargesJson.getJSONObject(i);
                 Charge charge = new Charge();
                 charge.setCarnet(carnet);
+                charge.setGerencianetAccountId(carnet.getGerencianetAccountId());
                 charge.setChargeId(it.getInt("charge_id"));
                 charge.setExpireAt(DateUtil.parseDateISO(it.getString("expire_at")));
                 charge.setValue(it.getDouble("value") / 100);

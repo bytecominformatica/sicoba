@@ -55,6 +55,8 @@ public class Charge extends BaseEntity {
 
     @Column(name = "charge_id")
     private Integer chargeId;
+    @Column(name = "gerencianet_account_id")
+    private Integer gerencianetAccountId;
     @NotNull
     @Enumerated(EnumType.STRING)
     private StatusCharge status;
@@ -285,4 +287,11 @@ public class Charge extends BaseEntity {
         this.manualPayment = manualPayment;
     }
 
+    public Integer getGerencianetAccountId() {
+        return gerencianetAccountId;
+    }
+
+    public void setGerencianetAccountId(Integer gerencianetAccountId) {
+        this.gerencianetAccountId = gerencianetAccountId;
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.notification;
 
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,11 @@ class NotificationGNService {
 
     private static final String GET_NOTIFICATION = "getNotification";
 
-    JSONObject getNotification(String token) {
+    JSONObject getNotification(GerencianetAccount account, String token) {
         Map<String, String> params = new HashMap<>();
         params.put("token", token);
 
-        return GNService.call(GET_NOTIFICATION, params);
+        return GNService.call(account, GET_NOTIFICATION, params);
     }
 
 }
