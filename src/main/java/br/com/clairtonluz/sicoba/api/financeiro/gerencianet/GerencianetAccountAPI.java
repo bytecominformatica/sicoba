@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * Created by clairtonluz on 19/12/15.
  */
 @RestController
-@RequestMapping("api/gerencianet/account")
+@RequestMapping("api/gerencianet/accounts")
 public class GerencianetAccountAPI {
 
     @Autowired

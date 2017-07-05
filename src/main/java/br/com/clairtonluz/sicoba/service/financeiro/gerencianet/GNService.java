@@ -161,7 +161,7 @@ public class GNService {
 
     public static JSONObject call(GerencianetAccount account, String method, Map<String, String> params, JSONObject body) {
         try {
-            Gerencianet gn = new Gerencianet(account.getOptions());
+            Gerencianet gn = new Gerencianet(account.createOptions());
             JSONObject response = gn.call(method, params, body);
             return response;
         } catch (GerencianetException e) {

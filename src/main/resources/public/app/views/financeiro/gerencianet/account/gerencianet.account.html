@@ -1,0 +1,96 @@
+<h1 class="page-header">
+    <a ng-href="#/gerencianet/accounts">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    Conta Gerencianet
+    <small>{{gerencianetAccount.id ? 'Editar' : 'Novo'}}</small>
+</h1>
+
+<form name="form" class="form-horizontal" ng-submit="form.$valid && save(gerencianetAccount)" novalidate>
+    <div class="col-md-12" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
+        <label>Nome</label>
+        <input name="nome" ng-model="gerencianetAccount.nome" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
+            <i ng-show="form.nome.$error.required">Como deseja chamar essa conta?</i>
+        </p>
+    </div>
+    <div class="col-md-6"
+         ng-class="{'has-error': (form.clientId.$invalid && (form.$submitted || form.clientId.$touched))}">
+        <label>ClientId</label>
+        <input name="clientId" ng-model="gerencianetAccount.clientId" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.clientId.$touched">
+            <i ng-show="form.clientId.$error.required">Qual o clientId gerencianet dessa conta?</i>
+        </p>
+    </div>
+    <div class="col-md-6"
+         ng-class="{'has-error': (form.clientSecret.$invalid && (form.$submitted || form.clientSecret.$touched))}">
+        <label>ClientSecret</label>
+        <input name="clientSecret" ng-model="gerencianetAccount.clientSecret" class="form-control" type="text" required>
+        <p class="help-block" ng-show="form.$submitted || form.clientSecret.$touched">
+            <i ng-show="form.clientSecret.$error.required">Qual o clientSecret gerencianet dessa conta?</i>
+        </p>
+    </div>
+
+    <div class="col-md-4"
+         ng-class="{'has-error': (form.fine.$invalid && (form.$submitted || form.fine.$touched))}">
+        <label>Multa</label>
+        <div class="input-group">
+            <input name="fine" ng-model="gerencianetAccount.fine" class="form-control" type="number" step="any"
+                   max="10">
+            <i class="input-group-addon">%</i>
+        </div>
+        <p class="help-block" ng-show="form.$submitted || form.fine.$touched">
+            <i ng-show="form.fine.$error.number">Valor inválido</i>
+            <i ng-show="form.fine.$error.max">Valor máximo é de 10%</i>
+        </p>
+    </div>
+    <div class="col-md-4"
+         ng-class="{'has-error': (form.interest.$invalid && (form.$submitted || form.interest.$touched))}">
+        <label>Juros ao dia</label>
+        <div class="input-group">
+            <input name="interest" ng-model="gerencianetAccount.interest" class="form-control" type="number" step="any"
+                   max="3.3">
+            <i class="input-group-addon">%</i>
+        </div>
+        <p class="help-block" ng-show="form.$submitted || form.interest.$touched">
+            <i ng-show="form.interest.$error.number">Valor inválido</i>
+            <i ng-show="form.interest.$error.max">Valor máximo é de 3.3%</i>
+        </p>
+    </div>
+
+    <div ng-class="{'has-error': (form.sandbox.$invalid && (form.$submitted || form.sandbox.$touched))}"
+         class="col-md-2 col-sm-6">
+        <label>Sandbox</label>
+        <button type="button" class="btn btn-default form-control"
+                title="Altere de acordo com o ambiente, sim para desenvolvimento e não produção."
+                ng-class="{'btn-primary': gerencianetAccount.sandbox}"
+                ng-click="gerencianetAccount.sandbox = !gerencianetAccount.sandbox">
+            {{gerencianetAccount.sandbox ? 'Sim' : 'Não'}}
+        </button>
+    </div>
+    <div ng-class="{'has-error': (form.notifyClient.$invalid && (form.$submitted || form.notifyClient.$touched))}"
+         class="col-md-2 col-sm-6">
+        <label>Notificar clientes
+            <button type="button" class="btn btn-default form-control"
+                    title="Notificar clientes quando uma nova cobrança for gerada, lembrar sobre cobrança vencida, etc"
+                    ng-class="{'btn-primary': gerencianetAccount.notifyClient}"
+                    ng-click="gerencianetAccount.notifyClient = !gerencianetAccount.notifyClient">
+                {{gerencianetAccount.notifyClient ? 'Sim' : 'Não'}}
+            </button>
+        </label>
+    </div>
+
+    <div class="col-md-12" style="padding-top: 20px">
+        <div class="pull-right">
+            <button class="btn btn-primary" type="submit">{{gerencianetAccount.id ? 'Atualizar' : 'Salvar'}}</button>
+            <button class="btn btn-danger" type="button" ng-show="gerencianetAccount.id"
+                    ng-click="remove(gerencianetAccount)"
+                    confirm="Tem certeza que desseja remover a conta gerencianet chamada {{gerencianetAccount.nome}}?">
+                Remover
+            </button>
+            <a ng-href="#/gerencianet/accounts" class="btn btn-default">Voltar</a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</form>

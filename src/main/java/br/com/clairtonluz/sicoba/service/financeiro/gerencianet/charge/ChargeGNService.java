@@ -1,7 +1,6 @@
 package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge;
 
 import br.com.clairtonluz.sicoba.exception.ConflitException;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Credentials;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.GerencianetAccountRepository;
@@ -47,7 +46,7 @@ class ChargeGNService {
 
         JSONObject body = new JSONObject();
         body.put("items", items);
-        body.put("metadata", GNService.createMetadata(account.getNotificationUrl(), charge.getId()));
+        body.put("metadata", GNService.createMetadata(account.createNotificationUrl(), charge.getId()));
 
         return GNService.call(account, CREATE_CHARGE, body);
     }
@@ -156,7 +155,7 @@ class ChargeGNService {
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
 
-        JSONObject body = GNService.createMetadata(Credentials.getInstance().getNotificationUrl(), charge.getId());
+        JSONObject body = GNService.createMetadata(account.createNotificationUrl(), charge.getId());
 
         return GNService.isOk(GNService.call(account, UPDATE_CHARGE_METADATA, params, body));
     }

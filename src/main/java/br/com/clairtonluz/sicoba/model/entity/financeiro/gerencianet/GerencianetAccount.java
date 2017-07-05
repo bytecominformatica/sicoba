@@ -1,8 +1,9 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet;
 
+import br.com.clairtonluz.sicoba.config.Environment;
+import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONObject;
 
@@ -86,11 +87,11 @@ public class GerencianetAccount extends BaseEntity {
         this.interest = interest;
     }
 
-    public JSONObject getOptions() {
+    public JSONObject createOptions() {
         JSONObject options = new JSONObject();
         options.put("client_id", getClientId());
         options.put("client_secret", getClientSecret());
-        options.put("sandbox", isSandbox());
+        options.put("sandbox", Environment.PRODUCTION.equals(EnvironmentFactory.create().getEnv()));
         return options;
     }
 
@@ -108,7 +109,7 @@ public class GerencianetAccount extends BaseEntity {
      *
      * @return
      */
-    public String getNotificationUrl() {
+    public String createNotificationUrl() {
         String url = null;
         if (id == null) {
             throw new BadRequestException("Conta gerencianet não foi cadastrada no sistema");

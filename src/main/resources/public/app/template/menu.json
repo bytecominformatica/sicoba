@@ -35,6 +35,11 @@
         "url": "#/cedentes"
       },
       {
+        "title": "Contas Gerencianet",
+        "icon": "fa fa-upload",
+        "url": "#/gerencianet/accounts"
+      },
+      {
         "title": "Relatorio",
         "icon": "fa fa-files-o",
         "url": "#/titulos/relatorio"

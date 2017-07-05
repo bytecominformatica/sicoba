@@ -1,7 +1,6 @@
 package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet;
 
 import br.com.clairtonluz.sicoba.exception.ConflitException;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Credentials;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
@@ -49,7 +48,7 @@ class CarnetGNService {
         body.put("repeats", carnet.getRepeats());
         body.put("split_items", carnet.getSplitItems());
         body.put("configurations", configurations);
-        body.put("metadata", GNService.createMetadata(account.getNotificationUrl()));
+        body.put("metadata", GNService.createMetadata(account.createNotificationUrl()));
 
         return GNService.call(account, CREATE_CARNET, body);
     }
@@ -96,7 +95,7 @@ class CarnetGNService {
         GerencianetAccount account = getGerencianetAccount(carnet);
         Map<String, String> params = new HashMap<>();
         params.put("id", carnet.getCarnetId().toString());
-        JSONObject body = GNService.createMetadata(Credentials.getInstance().getNotificationUrl(), carnet.getId());
+        JSONObject body = GNService.createMetadata(account.createNotificationUrl(), carnet.getId());
         JSONObject response = GNService.call(account, UPDATE_CARNET_METADATA, params, body);
         return GNService.isOk(response);
     }

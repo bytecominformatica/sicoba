@@ -4,11 +4,13 @@ CREATE TABLE gerencianet_account (
   client_id      VARCHAR(255) NOT NULL,
   client_secret  VARCHAR(255) NOT NULL,
   sandbox        BOOLEAN      NOT NULL DEFAULT FALSE,
-  notify_cliente BOOLEAN      NOT NULL DEFAULT FALSE,
+  notify_client BOOLEAN      NOT NULL DEFAULT FALSE,
   fine           DECIMAL(10, 2),
   interest       DECIMAL(10, 2),
   created_at     TIMESTAMP    NOT NULL,
   updated_at     TIMESTAMP    NOT NULL,
+  created_by     VARCHAR(255) NOT NULL,
+  updated_by     VARCHAR(255) NOT NULL,
   UNIQUE (client_id)
 );
 
@@ -24,8 +26,8 @@ FOREIGN KEY (gerencianet_account_id)
 REFERENCES gerencianet_account (id);
 
 INSERT INTO gerencianet_account
-(nome, client_id, client_secret, sandbox, notify_cliente, fine, interest, created_at, updated_at)
-VALUES ('default', 'teste', 'teste', TRUE, FALSE, 5.0, 3.3, now(), now());
+(nome, client_id, client_secret, sandbox, notify_client, fine, interest, created_at, updated_at, created_by, updated_by)
+VALUES ('default', 'teste', 'teste', TRUE, FALSE, 5.0, 3.3, now(), now(), 'indefinido','indefinido');
 
 UPDATE charge
 SET gerencianet_account_id = (SELECT id
