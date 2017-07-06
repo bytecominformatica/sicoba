@@ -94,27 +94,6 @@
         </p>
     </div>
 
-    <div class="col-xs-12"
-         ng-class="{'has-error': (form.firstPay.$invalid && (form.$submitted || form.firstPay.$touched))}">
-        <div class="input-group">
-            <label>Primeiro pagamento</label>
-            <div class="input-group">
-                <input name="firstPay" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                       ng-model="carnet.firstPay" is-open="status.opened" close-text="Close" required/>
-                <i class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </button>
-                </i>
-            </div>
-            <p class="help-block" ng-show="form.$submitted || form.firstPay.$touched">
-                <i ng-show="form.firstPay.$error.required">
-                    Escolha a data do primeiro pagamento deste carnê?
-                </i>
-            </p>
-        </div>
-    </div>
-
     <div class="col-md-3 col-sm-6 col-xs-12"
          ng-class="{'has-error': (form.repeats.$invalid && (form.$submitted || form.repeats.$touched))}">
         <label>Qtd. Parcelas</label>
@@ -135,6 +114,27 @@
                     Dividir
                 </label>
             </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12"
+         ng-class="{'has-error': (form.firstPay.$invalid && (form.$submitted || form.firstPay.$touched))}">
+        <div class="input-group">
+            <label>Primeiro pagamento</label>
+            <div class="input-group">
+                <input name="firstPay" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                       ng-model="carnet.firstPay" is-open="status.opened" close-text="Close" required/>
+                <i class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </i>
+            </div>
+            <p class="help-block" ng-show="form.$submitted || form.firstPay.$touched">
+                <i ng-show="form.firstPay.$error.required">
+                    Escolha a data do primeiro pagamento deste carnê?
+                </i>
+            </p>
         </div>
     </div>
 

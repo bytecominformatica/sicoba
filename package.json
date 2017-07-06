@@ -2,6 +2,9 @@
   "name": "sicoba",
   "version": "1.0.0",
   "description": "SICOBA - SISTEMA DE CONTROLE DE BANDA",
+  "engines": {
+    "node": "7.9.0"
+  },
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
