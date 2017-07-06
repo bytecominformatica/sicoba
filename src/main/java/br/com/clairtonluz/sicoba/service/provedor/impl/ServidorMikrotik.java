@@ -24,7 +24,7 @@ public class ServidorMikrotik implements Servidor {
 
     @Override
     public ApiConnection connect(String host, int port, String user, String pass) {
-        if (EnvironmentFactory.create().getEnv() == Environment.PRODUCTION) {
+        if (Environment.isProduction()) {
             try {
                 con = ApiConnection.connect(SocketFactory.getDefault(), host, port, DEFAULT_COMMAND_TIMEOUT);
                 con.setTimeout(10000);
@@ -39,8 +39,7 @@ public class ServidorMikrotik implements Servidor {
 
     @Override
     public List<Map<String, String>> execute(String command) {
-        String env = EnvironmentFactory.create().getEnv();
-        if (Environment.PRODUCTION.equals(env)) {
+        if (Environment.isProduction()) {
             try {
                 System.out.println(command);
                 return con.execute(command);
@@ -49,6 +48,7 @@ public class ServidorMikrotik implements Servidor {
                 throw new RuntimeException(e.getMessage());
             }
         } else {
+            String env = EnvironmentFactory.create().getEnv();
             System.out.println("Ambiente: " + env + " não deve lançar comando para o servidor");
         }
         return new ArrayList<>();

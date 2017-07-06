@@ -9,4 +9,12 @@ public interface Environment {
     String QUALITY = "QUALITY";
 
     String getEnv();
+
+    static boolean isProduction() {
+        return PRODUCTION.equals(EnvironmentFactory.create().getEnv());
+    }
+
+    static boolean isQuality() {
+        return QUALITY.equals(EnvironmentFactory.create().getEnv());
+    }
 }

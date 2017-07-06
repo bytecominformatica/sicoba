@@ -41,6 +41,7 @@
                     <th>Desconto</th>
                     <th>Primeiro Vencimento</th>
                     <th>Status</th>
+                    <th>Conta</th>
                     <th>Carnê</th>
                     <th></th>
                 </tr>
@@ -56,6 +57,12 @@
                         <i class="label" ng-class="getStatusClass(it.status)">
                             {{it.status}}
                         </i>
+                    </td>
+                    <td class="text-center">
+                        <a title="Conta gerencianet"
+                           ng-href="#/gerencianet/account/{{it.gerencianetAccount.id}}">
+                            {{it.gerencianetAccount.name}}
+                        </a>
                     </td>
                     <td>
                         <a title="Carnê PDF" ng-href="{{it.link}}" ng-show="it.link" target="_blank">

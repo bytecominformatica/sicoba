@@ -3,6 +3,7 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
@@ -55,8 +56,6 @@ public class Charge extends BaseEntity {
 
     @Column(name = "charge_id")
     private Integer chargeId;
-    @Column(name = "gerencianet_account_id")
-    private Integer gerencianetAccountId;
     @NotNull
     @Enumerated(EnumType.STRING)
     private StatusCharge status;
@@ -74,6 +73,10 @@ public class Charge extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "gerencianet_account_id")
+    private GerencianetAccount gerencianetAccount;
     @ManyToOne
     @JoinColumn(name = "carnet_id")
     private Carnet carnet;
@@ -287,11 +290,11 @@ public class Charge extends BaseEntity {
         this.manualPayment = manualPayment;
     }
 
-    public Integer getGerencianetAccountId() {
-        return gerencianetAccountId;
+    public GerencianetAccount getGerencianetAccount() {
+        return gerencianetAccount;
     }
 
-    public void setGerencianetAccountId(Integer gerencianetAccountId) {
-        this.gerencianetAccountId = gerencianetAccountId;
+    public void setGerencianetAccount(GerencianetAccount gerencianetAccount) {
+        this.gerencianetAccount = gerencianetAccount;
     }
 }

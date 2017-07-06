@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('CarnetCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Carnet',
-            function ($scope, $rootScope, $routeParams, $location, Carnet) {
+        .controller('CarnetCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Carnet', 'GerencianetAccount',
+            function ($scope, $rootScope, $routeParams, $location, Carnet, GerencianetAccount) {
 
                 $scope.create = _create;
                 $scope.cancel = _cancel;
@@ -11,6 +11,7 @@
                 _init();
 
                 function _init() {
+                    $scope.accounts = GerencianetAccount.query();
                     if ($routeParams.id) {
                         _findById($routeParams.id);
                     } else if ($location.search().clienteId) {

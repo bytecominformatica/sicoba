@@ -2,6 +2,7 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -48,8 +49,6 @@ public class Carnet extends BaseEntity {
     @Column(name = "first_pay")
     @Temporal(TemporalType.TIMESTAMP)
     private Date firstPay;
-    @Column(name = "gerencianet_account_id")
-    private Integer gerencianetAccountId;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -59,6 +58,10 @@ public class Carnet extends BaseEntity {
     @JoinColumn(name = "cliente_id")
     @NotNull
     private Cliente cliente;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "gerencianet_account_id")
+    private GerencianetAccount gerencianetAccount;
 
     @Override
     public Integer getId() {
@@ -189,11 +192,11 @@ public class Carnet extends BaseEntity {
         return discount;
     }
 
-    public Integer getGerencianetAccountId() {
-        return gerencianetAccountId;
+    public GerencianetAccount getGerencianetAccount() {
+        return gerencianetAccount;
     }
 
-    public void setGerencianetAccountId(Integer gerencianetAccountId) {
-        this.gerencianetAccountId = gerencianetAccountId;
+    public void setGerencianetAccount(GerencianetAccount gerencianetAccount) {
+        this.gerencianetAccount = gerencianetAccount;
     }
 }

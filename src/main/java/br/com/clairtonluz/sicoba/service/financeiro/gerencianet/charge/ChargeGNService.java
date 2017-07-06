@@ -3,13 +3,11 @@ package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
-import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.GerencianetAccountRepository;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -21,9 +19,6 @@ import java.util.Map;
 @Service
 class ChargeGNService {
 
-    @Autowired
-    private GerencianetAccountRepository gerencianetAccountRepository;
-
     private static final String CREATE_CHARGE = "createCharge";
     private static final String DETAIL_CHARGE = "detailCharge";
     private static final String UPDATE_CHARGE_METADATA = "updateChargeMetadata";
@@ -33,7 +28,6 @@ class ChargeGNService {
     private static final String RESEND_BILLET = "resendBillet";
     public static final String LINK_CHARGE = "linkCharge";
 
-
     /**
      * Cria um cobrança mas não define a forma de pagamento ainda.
      *
@@ -41,7 +35,7 @@ class ChargeGNService {
      * @return
      */
     JSONObject createCharge(Charge charge) {
-        GerencianetAccount account = getGerencianetAccount(charge);
+        GerencianetAccount account = charge.getGerencianetAccount();
         JSONArray items = new JSONArray().put(GNService.createItem(charge.getDescription(), charge.getValue()));
 
         JSONObject body = new JSONObject();
@@ -59,7 +53,7 @@ class ChargeGNService {
      * @return
      */
     JSONObject setPaymentToBankingBilletGN(Charge charge) {
-        GerencianetAccount account = getGerencianetAccount(charge);
+        GerencianetAccount account = charge.getGerencianetAccount();
 
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
@@ -94,8 +88,6 @@ class ChargeGNService {
      * @return
      */
     JSONObject linkCharge(Charge charge) {
-        GerencianetAccount account = getGerencianetAccount(charge);
-
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
 
@@ -110,7 +102,7 @@ class ChargeGNService {
         body.put("request_delivery_address", false);
         body.put("payment_method", "all");
 
-        return GNService.call(account, LINK_CHARGE, params, body);
+        return GNService.call(charge.getGerencianetAccount(), LINK_CHARGE, params, body);
     }
 
     /**
@@ -120,11 +112,10 @@ class ChargeGNService {
      * @return
      */
     JSONObject cancelCharge(Charge charge) {
-        GerencianetAccount account = getGerencianetAccount(charge);
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
 
-        return GNService.call(account, CANCEL_CHARGE, params);
+        return GNService.call(charge.getGerencianetAccount(), CANCEL_CHARGE, params);
     }
 
     /**
@@ -134,14 +125,13 @@ class ChargeGNService {
      * @return
      */
     boolean updateBilletExpireAt(Charge charge) {
-        GerencianetAccount account = getGerencianetAccount(charge);
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
 
         JSONObject body = new JSONObject();
         body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
 
-        return GNService.isOk(GNService.call(account, UPDATE_BILLET, params, body));
+        return GNService.isOk(GNService.call(charge.getGerencianetAccount(), UPDATE_BILLET, params, body));
     }
 
     /**
@@ -151,10 +141,10 @@ class ChargeGNService {
      * @return
      */
     boolean updateChargeMetadata(Charge charge) {
-        GerencianetAccount account = getGerencianetAccount(charge);
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
 
+        GerencianetAccount account = charge.getGerencianetAccount();
         JSONObject body = GNService.createMetadata(account.createNotificationUrl(), charge.getId());
 
         return GNService.isOk(GNService.call(account, UPDATE_CHARGE_METADATA, params, body));
@@ -169,8 +159,7 @@ class ChargeGNService {
     JSONObject detailCharge(Charge charge) {
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
-        GerencianetAccount account = getGerencianetAccount(charge);
-        return GNService.call(account, DETAIL_CHARGE, params);
+        return GNService.call(charge.getGerencianetAccount(), DETAIL_CHARGE, params);
     }
 
     /**
@@ -190,16 +179,6 @@ class ChargeGNService {
         JSONObject body = new JSONObject();
         body.put("email", charge.getCliente().getEmail());
 
-        GerencianetAccount account = getGerencianetAccount(charge);
-        return GNService.isOk(GNService.call(account, RESEND_BILLET, params, body));
-    }
-
-    private GerencianetAccount getGerencianetAccount(Charge charge) {
-        return getGerencianetAccount(charge.getGerencianetAccountId());
-    }
-
-
-    private GerencianetAccount getGerencianetAccount(Integer gerencianetAccountId) {
-        return gerencianetAccountRepository.findOne(gerencianetAccountId);
+        return GNService.isOk(GNService.call(charge.getGerencianetAccount(), RESEND_BILLET, params, body));
     }
 }

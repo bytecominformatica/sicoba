@@ -37,8 +37,8 @@ public class SendEmail {
 
     public static void send(String from, String to, String subject, String content) {
         String env = EnvironmentFactory.create().getEnv();
-        if (Environment.PRODUCTION.equals(env) || Environment.QUALITY.equals(env)) {
-            if (!Environment.PRODUCTION.equals(env)) {
+        if (Environment.isProduction() || Environment.isQuality()) {
+            if (!Environment.isProduction()) {
                 subject = String.format("[%s]%s", env, subject);
             }
             Email emailFrom = new Email(from);

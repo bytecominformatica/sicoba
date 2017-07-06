@@ -1,7 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet;
 
 import br.com.clairtonluz.sicoba.config.Environment;
-import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.util.StringUtil;
@@ -19,7 +18,7 @@ public class GerencianetAccount extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "gerencianet_account_id_seq")
     @SequenceGenerator(name = "gerencianet_account_id_seq", sequenceName = "gerencianet_account_id_seq")
     private Integer id;
-    private String nome;
+    private String name;
     @Column(name = "client_id")
     private String clientId;
     @Column(name = "client_secret")
@@ -39,12 +38,12 @@ public class GerencianetAccount extends BaseEntity {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getClientId() {
@@ -91,11 +90,15 @@ public class GerencianetAccount extends BaseEntity {
         JSONObject options = new JSONObject();
         options.put("client_id", getClientId());
         options.put("client_secret", getClientSecret());
-        options.put("sandbox", Environment.PRODUCTION.equals(EnvironmentFactory.create().getEnv()));
+        options.put("sandbox", Environment.isProduction());
         return options;
     }
 
     public boolean isNotifyClient() {
+        if (!Environment.isProduction()) {
+            return false;
+        }
+
         return notifyClient;
     }
 

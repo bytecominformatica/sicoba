@@ -19,7 +19,7 @@
         <label>Plano</label>
         <select name="plano" ng-model="contrato.plano" class="form-control" required
                 ng-options="plano.nome for plano in planos track by plano.id">
-            <option value="">---Escolha o melhor plano para você---</option>
+            <option value="">Selecione</option>
         </select>
         <p class="help-block" ng-show="form.$submitted || form.plano.$touched">
             <i ng-show="form.plano.$error.required">Qual plano melhor lhe atende?</i>
@@ -84,7 +84,8 @@
         <div class="pull-right">
             <button class="btn btn-primary" type="submit">{{contrato.id ? 'Atualizar' : 'Salvar'}}</button>
             <button class="btn btn-danger" type="button" ng-show="contrato.id"
-                    ng-click="remove(contrato)" confirm="Tem certeza que desseja remover o contrato do(a) {{contrato.cliente.nome}}?">Remover
+                    ng-click="remove(contrato)"
+                    confirm="Tem certeza que desseja remover o contrato do(a) {{contrato.cliente.nome}}?">Remover
             </button>
             <a ng-href="#/cliente/{{clienteId}}" class="btn btn-default">Voltar</a>
         </div>

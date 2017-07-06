@@ -47,9 +47,10 @@
                     <th>Vencimento</th>
                     <th>Pago em</th>
                     <th>Status</th>
+                    <th>Conta</th>
                     <th>Carnê</th>
                     <th>Cobrança</th>
-                    <th></th>
+                    <th>Editar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,12 +66,18 @@
                             {{it.manualPayment ? 'MANUAL PAYMENT' : it.status}}
                         </i>
                     </td>
-                    <td align="center">
+                    <td class="text-center">
+                        <a title="Conta gerencianet"
+                           ng-href="#/gerencianet/account/{{it.gerencianetAccount.id}}">
+                            {{it.gerencianetAccount.name}}
+                        </a>
+                    </td>
+                    <td class="text-center">
                         <a title="Carnê PDF" ng-href="#/carnets/{{it.carnet.id}}" ng-show="it.carnet">
                             {{it.carnet.id}} - {{it.parcel}}
                         </a>
                     </td>
-                    <td align="center">
+                    <td class="text-center">
                         <div ng-hide="it.url || it.paymentUrl">
                             {{it.chargeId}}
                         </div>

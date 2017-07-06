@@ -20,7 +20,7 @@
                     $scope.gerencianetAccount = data;
                     $rootScope.messages = [{
                         title: 'Sucesso:',
-                        body: 'GerencianetAccount ' + data.nome + ' foi salvo.',
+                        body: 'GerencianetAccount ' + data.name + ' foi salvo.',
                         type: 'alert-success'
                     }];
                 });
@@ -30,7 +30,7 @@
                 GerencianetAccount.remove({id: gerencianetAccount.id}, function () {
                     $rootScope.messages = [{
                         title: 'Sucesso:',
-                        body: 'GerencianetAccount ' + gerencianetAccount.nome + ' foi removido.',
+                        body: 'GerencianetAccount ' + gerencianetAccount.name + ' foi removido.',
                         type: 'alert-success'
                     }];
                     $scope.gerencianetAccount = {};

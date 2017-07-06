@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ChargeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Charge', 'Carnet', 'DateDiff',
-            function ($scope, $rootScope, $routeParams, $location, Charge, Carnet, DateDiff) {
+        .controller('ChargeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Charge', 'Carnet', 'GerencianetAccount', 'DateDiff',
+            function ($scope, $rootScope, $routeParams, $location, Charge, Carnet, GerencianetAccount, DateDiff) {
 
                 $scope.create = _create;
                 $scope.cancel = _cancel;
@@ -20,6 +20,7 @@
                 _init();
 
                 function _init() {
+                    $scope.accounts = GerencianetAccount.query();
                     $scope.charge = {};
                     if ($routeParams.id) {
                         _findById($routeParams.id);

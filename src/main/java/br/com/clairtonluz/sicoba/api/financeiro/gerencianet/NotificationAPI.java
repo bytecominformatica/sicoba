@@ -17,7 +17,7 @@ public class NotificationAPI {
     @RequestMapping(value = "notification", method = RequestMethod.POST)
     public void gerar(@RequestBody String body) {
         String token = body.substring(body.indexOf('=') + 1);
-        notificationService.processNotification(null, token);
+        notificationService.processNotification(1, token);
     }
 
     @RequestMapping(value = "/{accountId}/notification", method = RequestMethod.POST)

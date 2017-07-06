@@ -64,6 +64,20 @@
         </p>
     </div>
 
+    <div class="col-md-6 col-sm-6 col-xs-12"
+         ng-class="{'has-error': (form.gerencianetAccount.$invalid && (form.$submitted || form.gerencianetAccount.$touched))}">
+        <label>Conta Gerencianet</label>
+        <select name="gerencianetAccount" ng-model="charge.gerencianetAccount" class="form-control" required
+                ng-options="account.name for account in accounts track by account.id" ng-disabled="charge.id">
+            <option value="">Selecione</option>
+        </select>
+        <p class="help-block" ng-show="form.$submitted || form.gerencianetAccount.$touched">
+            <i ng-show="form.gerencianetAccount.$error.required">
+                Em qual conta gerencianet você deseja criar essa cobrança?
+            </i>
+        </p>
+    </div>
+
     <div class="col-md-3 col-sm-6 col-xs-12"
          ng-class="{'has-error': (form.value.$invalid && (form.$submitted || form.value.$touched))}">
         <label>Valor</label>

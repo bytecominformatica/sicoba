@@ -52,12 +52,12 @@ Integração Gerencianet (Optional)
 ```shell
 sudo -i
 
-echo "export CLIENT_ID='Client_Id';" > /etc/profile.d/gerencianet.sh
-echo "export CLIENT_SECRET='Client_Secret';" > /etc/profile.d/gerencianet.sh
-echo "export SANDBOX='true';" > /etc/profile.d/gerencianet.sh
-echo "export NOTIFICATION_URL='http://www.example.com.br/api/notification';" > /etc/profile.d/gerencianet.sh
+echo "export NOTIFICATION_URL='http://www.example.com.br/api/gerencianet/%d/notification';" > /etc/profile.d/gerencianet.sh
 
 ```
+**Importante:** o caractere '%d' será substituido pelo o id da sua conta gerencianet automaticamente na hora de criar a cobrana. Você não precisa colocar o id na url apenas deixe o '%d' no local onde o id deve ser inserido.
+
+Agora você pode acessar o sistema e ir no menu **Finaneiro > Contas Gerencianet** e cadastrar a suas contas gerencianet que será utilizada para a geração das cobranças. Depois disso quando você for gerar as cobranças será possível escolher em qual conta deseja gerar aquela cobrana.
 
 Credentials default to login in system
 --------------------------------------

@@ -36,7 +36,7 @@
       },
       {
         "title": "Contas Gerencianet",
-        "icon": "fa fa-upload",
+        "icon": "fa fa-vcard-o",
         "url": "#/gerencianet/accounts"
       },
       {
@@ -67,5 +67,10 @@
         "url": "#/mikrotiks"
       }
     ]
+  },
+  {
+    "title": "Sugestões e Melhorias",
+    "icon": "fa fa-github",
+    "url": "https://github.com/bytecominformatica/sicoba/issues"
   }
 ]
