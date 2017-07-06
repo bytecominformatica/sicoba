@@ -36,7 +36,7 @@
       },
       {
         "title": "Contas Gerencianet",
-        "icon": "fa fa-vcard-o",
+        "icon": "fa fa-credit-card",
         "url": "#/gerencianet/accounts"
       },
       {
