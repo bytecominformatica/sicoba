@@ -2,7 +2,6 @@ package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge.ChargeService;
-import br.com.clairtonluz.sicoba.util.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +26,11 @@ public class ChargeAPI {
         } else {
             return chargeService.findByCliente(clienteId);
         }
+    }
+
+    @RequestMapping(value = "/current", method = RequestMethod.GET)
+    public List<Charge> findCurrentByCliente(@RequestParam("clienteId") Integer clienteId) {
+        return chargeService.findCurrentByClient(clienteId);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

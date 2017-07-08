@@ -7,9 +7,9 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(equipamento)" novalidate>
-    <div class="col-lg-4">
+    <div class="col-lg-12">
         <label>Cliente:</label>
-        <a ng-class="contrato.cliente.status" ng-href="#/cliente/{{contrato.cliente.id}}">{{contrato.cliente.nome}}</a>
+        <a ng-class="contrato.cliente.status" ng-href="#/cliente/{{contrato.cliente.id}}/dashboard">{{contrato.cliente.nome}}</a>
     </div>
 
     <div class="col-lg-4" ng-class="{'has-error': (form.marca.$invalid && (form.$submitted || form.marca.$touched))}">

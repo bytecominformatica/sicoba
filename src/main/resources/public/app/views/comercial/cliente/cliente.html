@@ -1,37 +1,13 @@
 <h1 class="page-header">
-    <a ng-href="#/clientes">
+    <a ng-href="#/clientes" ng-if="!cliente.id">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    <a ng-href="#/cliente/{{cliente.id}}/dashboard" ng-if="cliente.id">
         <i class="fa fa-arrow-circle-left"></i>
     </a>
     Cliente
     <small>{{cliente.id ? 'Editar' : 'Novo'}}</small>
 </h1>
-
-<p align="center">
-    <a href="#/contrato/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="cliente.id">
-        <i class="fa fa-file-o"/>
-        Contrato <i ng-show="contrato.id > 0">- Venc:{{contrato.vencimento}}</i>
-    </a>
-
-    <a href="#/conexao/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
-        <i class="fa fa-signal"></i>
-        Conexao
-    </a>
-
-    <a ng-href="#/titulos/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
-        <i class="fa fa-money"></i>
-        Titulo
-    </a>
-
-    <a ng-href="#/charges?clienteId={{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
-        <i class="fa fa-money"></i>
-        Cobranças
-    </a>
-
-    <a ng-href="#/carnets?clienteId={{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
-        <i class="fa fa-money"></i>
-        Carnês
-    </a>
-</p>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(cliente)" novalidate>
 

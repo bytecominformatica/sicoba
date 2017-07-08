@@ -32,7 +32,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="it in contratosNovos | filter:criterio | orderBy:predicate:reverse track by it.id">
-                                        <td><a ng-class="it.cliente.status" ng-href="#/cliente/{{it.cliente.id}}">{{it.cliente.nome}}</a>
+                                        <td><a ng-class="it.cliente.status" ng-href="#/cliente/{{it.cliente.id}}/dashboard">{{it.cliente.nome}}</a>
                                         </td>
                                         <td class="">{{it.dataInstalacao | date:'dd/MM/yyyy'}}</td>
                                     </tr>
