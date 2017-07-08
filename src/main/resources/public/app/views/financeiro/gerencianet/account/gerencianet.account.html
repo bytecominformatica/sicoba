@@ -48,13 +48,13 @@
          ng-class="{'has-error': (form.interest.$invalid && (form.$submitted || form.interest.$touched))}">
         <label>Juros ao dia</label>
         <div class="input-group">
-            <input name="interest" ng-model="gerencianetAccount.interest" class="form-control" type="number" step="any"
-                   max="3.3">
+            <input name="interest" ng-model="gerencianetAccount.interest" class="form-control" type="number" step="0.01"
+                   max="0.33">
             <i class="input-group-addon">%</i>
         </div>
         <p class="help-block" ng-show="form.$submitted || form.interest.$touched">
             <i ng-show="form.interest.$error.number">Valor inválido</i>
-            <i ng-show="form.interest.$error.max">Valor máximo é de 3.3%</i>
+            <i ng-show="form.interest.$error.max">Valor máximo é de 0.33%</i>
         </p>
     </div>
 

@@ -38,18 +38,6 @@ public class ChargeService {
     @Autowired
     private ChargeGNService chargeGNService;
 
-    public Charge createChargeBillet(Charge charge) {
-        charge = createCharge(charge);
-        charge = setPaymentToBankingBillet(charge);
-        return charge;
-    }
-
-    public Charge createChargeLinkDePagamento(Charge charge) {
-        charge = createCharge(charge);
-        charge = createPaymentLink(charge);
-        return charge;
-    }
-
     @Transactional
     public Charge createCharge(Charge charge) {
         JSONObject createChargeResult = chargeGNService.createCharge(charge);

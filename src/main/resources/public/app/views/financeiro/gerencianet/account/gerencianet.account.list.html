@@ -31,8 +31,8 @@
         <tr ng-repeat="it in gerencianetAccounts track by it.id">
             <td>{{it.id}}</td>
             <td>{{it.name}}</td>
-            <td>{{it.clientId}}</td>
-            <td>{{it.clientSecret}}</td>
+            <td title="{{it.clientId}}">{{it.clientId | limitTo : 10}}...</td>
+            <td title="{{it.clientSecret}}">{{it.clientSecret | limitTo : 10}}...</td>
             <td class="text-center">{{it.fine | number}}%</td>
             <td class="text-center">{{it.interest | number}}%</td>
             <td class="text-center">{{it.sandbox ? 'Sim' : 'Não'}}</td>
