@@ -17,6 +17,11 @@
                         params: {id: "overdue"},
                         isArray: true
                     },
+                    current: {
+                        method: 'GET',
+                        params: {id: "current"},
+                        isArray: true
+                    },
                     bankingBillet: {
                         method: 'POST',
                         params: {action: "pay"}

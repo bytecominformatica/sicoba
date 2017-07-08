@@ -1,5 +1,5 @@
 <h1 class="page-header">
-    <a ng-href="#/cliente/{{clienteId}}">
+    <a ng-href="#/cliente/{{clienteId}}/dashboard">
         <i class="fa fa-arrow-circle-left"></i>
     </a>
     Contrato
@@ -86,7 +86,7 @@
             <button class="btn btn-danger" type="button" ng-show="contrato.id"
                     ng-click="remove(contrato)" confirm="Tem certeza que desseja remover o contrato do(a) {{contrato.cliente.nome}}?">Remover
             </button>
-            <a ng-href="#/cliente/{{clienteId}}" class="btn btn-default">Voltar</a>
+            <a ng-href="#/cliente/{{clienteId}}/dashboard" class="btn btn-default">Voltar</a>
         </div>
         <br/>
         <br/>

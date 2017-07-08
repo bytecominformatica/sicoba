@@ -1,0 +1,256 @@
+<h1 class="page-header">
+    <a ng-href="#/clientes">
+        <i class="fa fa-arrow-circle-left"></i>
+    </a>
+    Dados do Cliente
+    <a href="#/cliente/{{cliente.id}}" class="btn btn-primary pull-right">
+        <i class="fa fa-user-plus"></i>
+        Editar
+    </a>
+</h1>
+
+<p align="center">
+    <a href="#/contrato/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="cliente.id">
+        <i class="fa fa-file-o"/>
+        Contrato
+    </a>
+
+    <a href="#/conexao/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+        <i class="fa fa-signal"></i>
+        Conexao
+    </a>
+
+    <a ng-href="#/titulos/cliente/{{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+        <i class="fa fa-money"></i>
+        Titulo
+    </a>
+
+    <a ng-href="#/charges?clienteId={{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+        <i class="fa fa-money"></i>
+        Cobranças
+    </a>
+
+    <a ng-href="#/carnets?clienteId={{cliente.id}}" class="btn btn-primary" ng-show="contrato.id">
+        <i class="fa fa-money"></i>
+        Carnês
+    </a>
+</p>
+
+<div class="panel-group">
+    <div class="panel"
+         ng-class="{'panel-success': cliente.status === 'ATIVO', 'panel-warning' : cliente.status === 'INATIVO', 'panel-danger' : cliente.status === 'CANCELADO'}">
+        <div class="panel-heading">
+            <a ng-href="#/cliente/{{cliente.id}}">
+                <strong>{{cliente.id}} - {{cliente.nome}}</strong>
+            </a>
+            <span class="badge pull-right">{{cliente.status}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>RG:</label>
+                    {{cliente.rg}}
+                </div>
+                <div class="col-md-9">
+                    <label>CPF/CNPJ:</label>
+                    {{cliente.cpfCnpj}}
+                </div>
+                <div class="col-md-4">
+                    <label>Telefone do titular:</label>
+                    {{cliente.foneTitular}}
+                </div>
+                <div class="col-md-4">
+                    <label>Telefone do(a) {{cliente.contato}}:</label>
+                    {{cliente.foneContato}}
+                </div>
+                <div class="col-md-4">
+                    <label>Email:</label>
+                    {{cliente.email}}
+                </div>
+                <div class="col-md-12">
+                    <label>Endereço:</label>
+                    {{endereco}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div ng-show="!contrato.id">
+                Conexão
+            </div>
+            <a ng-href="#/conexao/cliente/{{cliente.id}}" style="color:white" ng-show="contrato.id">
+                Conexão
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="row" ng-if="!conexao">
+                <div class="col-md-12 text-center">
+                    <label>Nenhuma conexão para esse cliente.</label>
+                </div>
+            </div>
+            <div class="row" ng-if="conexao">
+                <div class="col-md-6">
+                    <label>Gateway:</label>
+                    {{conexao.mikrotik.name}}
+                </div>
+                <div class="col-md-6">
+                    <label>IP:</label>
+                    <a ng-href="{{conexao.ip}}" target="_blank">{{conexao.ip}}</a>
+                </div>
+                <div class="col-md-6">
+                    <label>Username:</label>
+                    {{conexao.nome}}
+                </div>
+                <div class="col-md-6">
+                    <label>Senha:</label>
+                    {{conexao.senha}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div ng-show="!contrato.id">
+                Cobranças
+            </div>
+            <a ng-href="#/charges?clienteId={{cliente.id}}" style="color:white" ng-show="contrato.id">
+                Cobranças
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="row" ng-if="!charges.length">
+                <div class="col-md-12 text-center">
+                    <label>Nenhuma cobrança recente encontrada para esse cliente.</label>
+                </div>
+            </div>
+            <div class="row" ng-if="charges.length">
+                <div class="col-sm-12 table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer">
+                        <thead>
+                        <tr>
+                            <th>Valor</th>
+                            <th>Desconto</th>
+                            <th>Valor Pago</th>
+                            <th>Vencimento</th>
+                            <th>Pago em</th>
+                            <th>Status</th>
+                            <th>Cobrança</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="it in charges track by it.id">
+                            <td>
+                                <a ng-href="#/charges/{{it.id}}">{{it.value | currency}}</a>
+                            </td>
+                            <td>{{it.discount}}</td>
+                            <td>{{it.paidValue}}</td>
+                            <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
+                            <td>{{it.paidAt | date:'dd/MM/yyyy'}}</td>
+                            <td>
+                                <i class="label" ng-class="getStatusClass(it)">
+                                    {{it.manualPayment ? 'MANUAL PAYMENT' : it.status}}
+                                </i>
+                            </td>
+                            <td align="center">
+                                <div ng-hide="it.url || it.paymentUrl">
+                                    {{it.chargeId}}
+                                </div>
+                                <a title="cobranca{{it.id}}.pdf" ng-href="{{it.url}}" ng-show="it.url"
+                                   target="_blank">
+                                    {{it.chargeId}}
+                                </a>
+                                <a title="cobranca{{it.id}}.pdf" ng-href="{{it.paymentUrl}}" ng-show="it.paymentUrl"
+                                   target="_blank">
+                                    {{it.chargeId}}
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <a href="#/contrato/cliente/{{cliente.id}}" style="color:white">
+                Contrato
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="row" ng-if="!contrato">
+                <div class="col-md-12 text-center">
+                    <label>Nenhum contrato para esse cliente.</label>
+                </div>
+            </div>
+            <div class="row" ng-if="contrato">
+                <div class="col-md-12">
+                    <label>Plano:</label>
+                    {{contrato.plano.nome}}
+                </div>
+                <div class="col-md-12">
+                    <label>Vencimento:</label>
+                    {{contrato.vencimento}}
+                </div>
+                <div class="col-md-12">
+                    <label>Data de instalação:</label>
+                    {{contrato.dataInstalacao | date:'dd/MM/yyyy'}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading">Equipamentos</div>
+    <div class="panel-body">
+        <div class="row" ng-if="!contrato.equipamento && !contrato.equipamentoWifi">
+            <div class="col-md-12 text-center">
+                <label>Nenhum equipamento associado a esse cliente.</label>
+            </div>
+        </div>
+        <div class="row" ng-if="contrato.equipamento">
+            <div class="col-md-12">
+                <label>Equipamento de instalação:</label>
+                <a ng-href="#/equipamento/{{contrato.equipamento.id}}">
+                    {{contrato.equipamento.marca}} - {{contrato.equipamento.modelo}}
+                </a>
+            </div>
+            <div class="col-md-4">
+                <label>MAC:</label>
+                {{contrato.equipamento.mac}}
+            </div>
+            <div class="col-md-8">
+                <label>Status:</label>
+                {{contrato.equipamento.status}}
+            </div>
+            <div class="col-md-12">
+                <label>Descrição:</label>
+                {{contrato.equipamento.descricao}}
+            </div>
+        </div>
+        <hr/>
+        <div class="row" ng-if="contrato.equipamentoWifi">
+            <div class="col-md-12">
+                <label>Equipamento de wifi:</label>
+                <a ng-href="#/equipamento/{{contrato.equipamentoWifi.id}}">
+                    {{contrato.equipamentoWifi.marca}} - {{contrato.equipamentoWifi.modelo}}
+                </a>
+            </div>
+            <div class="col-md-4">
+                <label>MAC:</label>
+                {{contrato.equipamentoWifi.mac}}
+            </div>
+            <div class="col-md-8">
+                <label>Status:</label>
+                {{contrato.equipamentoWifi.status}}
+            </div>
+            <div class="col-md-12">
+                <label>Descrição:</label>
+                {{contrato.equipamentoWifi.descricao}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
