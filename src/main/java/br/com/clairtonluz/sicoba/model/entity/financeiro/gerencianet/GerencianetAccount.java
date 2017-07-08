@@ -90,7 +90,7 @@ public class GerencianetAccount extends BaseEntity {
         JSONObject options = new JSONObject();
         options.put("client_id", getClientId());
         options.put("client_secret", getClientSecret());
-        options.put("sandbox", Environment.isProduction());
+        options.put("sandbox", !Environment.isProduction());
         return options;
     }
 
