@@ -178,6 +178,12 @@ public class ChargeService {
         return chargeRepository.findByCliente_idOrderByExpireAtDesc(clienteId);
     }
 
+    public List<Charge> findCurrentByClient(Integer clienteId) {
+        Date begin = DateUtil.toDate(LocalDate.now().minusMonths(2));
+        Date finish = DateUtil.toDate(LocalDate.now().plusMonths(2));
+        return chargeRepository.findCurrentByClientAndDate(clienteId, begin, finish);
+    }
+
     public List<Charge> findByCarnet(Integer carnetId) {
         return chargeRepository.findByCarnet_id(carnetId);
     }
@@ -217,5 +223,4 @@ public class ChargeService {
     public List<Charge> overdue() {
         return chargeRepository.overdue(new Date());
     }
-
 }

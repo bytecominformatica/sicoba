@@ -54,7 +54,7 @@
         <tbody>
         <tr ng-repeat="it in clientes track by it.id">
             <td>{{it.id}}</td>
-            <td><a ng-class="it.status" ng-href="#/cliente/{{it.id}}">{{it.nome}}</a></td>
+            <td><a ng-class="it.status" ng-href="#/cliente/{{it.id}}/dashboard">{{it.nome}}</a></td>
             <td><a ng-href="http://{{it.conexao.ip}}" target="_blank" title="Conectar ao radio em uma nova aba">{{it.conexao.ip}}</a></td>
             <td class="text-center"><a ng-href="#/cliente/{{it.id}}" class="btn btn-primary" title="Editar">
                 <span class="fa fa-edit"></span>

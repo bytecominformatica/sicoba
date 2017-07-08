@@ -4,6 +4,10 @@
     angular.module('sicobaApp')
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
+                .when('/clientes', {
+                    templateUrl: 'app/views/comercial/cliente/cliente.list.html',
+                    controller: 'ClienteListCtrl'
+                })
                 .when('/cliente', {
                     templateUrl: 'app/views/comercial/cliente/cliente.html',
                     controller: 'ClienteCtrl'
@@ -12,9 +16,9 @@
                     templateUrl: 'app/views/comercial/cliente/cliente.html',
                     controller: 'ClienteCtrl'
                 })
-                .when('/clientes', {
-                    templateUrl: 'app/views/comercial/cliente/cliente.list.html',
-                    controller: 'ClienteListCtrl'
+                .when('/cliente/:id/dashboard', {
+                    templateUrl: 'app/views/comercial/cliente/cliente.dashboard.html',
+                    controller: 'ClienteDashboardCtrl'
                 });
         }]);
 }());

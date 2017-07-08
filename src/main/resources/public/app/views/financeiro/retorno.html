@@ -70,7 +70,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="it in f.retorno track by it.nossoNumero">
-                    <td><a ng-href="#/cliente/{{it.titulo.cliente.id}}">{{it.titulo.cliente.nome}}</a></td>
+                    <td><a ng-href="#/cliente/{{it.titulo.cliente.id}}/dashboard">{{it.titulo.cliente.nome}}</a></td>
                     <td>{{it.titulo.valor | currency}}</td>
                     <td>{{it.titulo.desconto | currency}}</td>
                     <td>{{it.titulo.valorPago | currency}}</td>
