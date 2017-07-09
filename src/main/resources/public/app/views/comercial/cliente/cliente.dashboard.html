@@ -96,7 +96,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>IP:</label>
-                    <a ng-href="{{conexao.ip}}" target="_blank">{{conexao.ip}}</a>
+                    <a ng-href="http://{{conexao.ip}}" target="_blank">{{conexao.ip}}</a>
                 </div>
                 <div class="col-md-6">
                     <label>Username:</label>
@@ -143,8 +143,8 @@
                             <td>
                                 <a ng-href="#/charges/{{it.id}}">{{it.value | currency}}</a>
                             </td>
-                            <td>{{it.discount}}</td>
-                            <td>{{it.paidValue}}</td>
+                            <td>{{it.discount | currency}}</td>
+                            <td>{{it.paidValue | currency}}</td>
                             <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
                             <td>{{it.paidAt | date:'dd/MM/yyyy'}}</td>
                             <td>
