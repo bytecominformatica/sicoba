@@ -20,6 +20,11 @@ public class ConexaoAPI {
     @Autowired
     private ConexaoService conexaoService;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public Conexao query(@RequestParam("ip") String ip) {
+        return conexaoService.findByIp(ip);
+    }
+
     @RequestMapping(value = "/atualizarTodos", method = RequestMethod.GET)
     public void getAtualizarTodos() throws Exception {
         conexaoService.atualizarTodos();
@@ -32,10 +37,6 @@ public class ConexaoAPI {
         return conexaoService.buscarOptionalPorCliente(cliente);
     }
 
-    @RequestMapping(value = "/ip/{ip}", method = RequestMethod.GET)
-    public Conexao getPorIp(@PathVariable String ip) {
-        return conexaoService.buscarPorIp(ip);
-    }
 
     @RequestMapping(value = "/ip/livre", method = RequestMethod.GET)
     public Map<String, String> getIpLivre() {

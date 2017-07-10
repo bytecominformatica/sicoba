@@ -28,9 +28,10 @@ public class Conexao extends BaseEntity {
     private String senha;
 
     @Pattern(
-            regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",
-            message = "IP inválido")
-    @Size(min = 1, max = 50)
+            message = "IP inválido",
+            regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+    )
+    @Size(min = 1, max = 40)
     private String ip;
 
     public Secret createSecret(Plano plano) {

@@ -35,11 +35,10 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
     Cliente findOptionalByRg(String rg);
 
-    List<Cliente> findByUpdatedAtGreaterThan(Date data);
+    List<Cliente> findTop20ByOrderByUpdatedAtDesc();
 
     List<Cliente> findByNomeLike(String nome);
 
-    //    @Query("select c from Cliente c where c.status <> 2 and c.id not in(select DISTINCT(m.cliente.id) from Titulo m where m.dataVencimento > :date)")
     @Query(QUERY_CLIENTE_SEM_TITULOS)
     List<Cliente> findBySemTitulosDepoisDe(@Param("date") Date date);
 

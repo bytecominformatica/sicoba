@@ -20,7 +20,7 @@
             }
 
             function _buscarPorIp(ip) {
-                Conexao.buscarPorIp({ip: ip}, function (conexao) {
+                Conexao.get({ip: ip}, function (conexao) {
                     if (conexao) {
                         conexao.cliente.conexao = conexao;
                         $scope.clientes = [conexao.cliente];
