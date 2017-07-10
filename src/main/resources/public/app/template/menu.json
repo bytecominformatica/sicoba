@@ -40,9 +40,14 @@
         "url": "#/gerencianet/accounts"
       },
       {
-        "title": "Relatorio",
+        "title": "Relatório de títulos",
         "icon": "fa fa-files-o",
         "url": "#/titulos/relatorio"
+      },
+      {
+        "title": "Relatório de cobranças",
+        "icon": "fa fa-files-o",
+        "url": "#/charge/report"
       }
     ]
   },

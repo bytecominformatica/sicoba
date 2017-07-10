@@ -18,6 +18,10 @@
                 .when('/charge/new', {
                     templateUrl: 'app/views/financeiro/gerencianet/charge/charge.html',
                     controller: 'ChargeCtrl'
+                })
+                .when('/charge/report', {
+                    templateUrl: 'app/views/financeiro/gerencianet/report/charge.report.html',
+                    controller: 'ChargeReportCtrl'
                 });
         }]);
 }());

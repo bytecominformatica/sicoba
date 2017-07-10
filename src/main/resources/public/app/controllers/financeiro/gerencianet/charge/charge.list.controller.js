@@ -5,7 +5,6 @@
         .controller('ChargeListCtrl', ['$scope', '$rootScope', '$location', 'Charge', 'Cliente',
             function ($scope, $rootScope, $location, Charge, Cliente) {
 
-                $scope.getStatusClass = _getStatusClass;
                 $scope.refreshUrlsNotification = _refreshUrlsNotification;
 
                 _init();
@@ -25,34 +24,6 @@
                             type: 'alert-success'
                         }];
                     });
-                }
-
-                function _getStatusClass(charge) {
-                    var result;
-                    switch (charge.status) {
-                        case 'PAID':
-                            result = 'label-success';
-                            break;
-                        case 'CANCELED':
-                            if (charge.manualPayment)
-                                result = 'label-success';
-                            else
-                                result = 'label-danger';
-                            break;
-                        case 'REFUNDED':
-                            result = 'label-danger';
-                            break;
-                        case 'LINK':
-                            result = 'label-info';
-                            break;
-                        case 'WAITING':
-                            result = 'label-info';
-                            break;
-                        default:
-                            result = 'label-warning';
-                    }
-
-                    return result;
                 }
 
             }]);

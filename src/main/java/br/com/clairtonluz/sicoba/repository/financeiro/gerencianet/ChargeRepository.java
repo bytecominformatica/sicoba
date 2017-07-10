@@ -34,4 +34,12 @@ public interface ChargeRepository extends CrudRepository<Charge, Integer> {
 
     @Query("SELECT c FROM Charge c where c.cliente.id = :clientId and (c.status = 'UNPAID' OR c.expireAt between :begin and :finish) order by c.expireAt asc ")
     List<Charge> findCurrentByClientAndDate(@Param("clientId") Integer clientId, @Param("begin") Date begin, @Param("finish") Date finish);
+
+    List<Charge> findByPaidAtBetween(Date start, Date end);
+
+    List<Charge> findByPaidAtBetweenAndStatus(Date start, Date end, StatusCharge status);
+
+    List<Charge> findByExpireAtBetween(Date start, Date end);
+
+    List<Charge> findByExpireAtBetweenAndStatus(Date start, Date end, StatusCharge status);
 }

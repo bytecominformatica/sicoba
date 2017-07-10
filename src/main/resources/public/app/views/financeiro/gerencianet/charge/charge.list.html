@@ -61,9 +61,9 @@
                     <td>{{it.paidValue | currency}}</td>
                     <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
                     <td>{{it.paidAt | date:'dd/MM/yyyy'}}</td>
-                    <td>
-                        <i class="label" ng-class="getStatusClass(it)">
-                            {{it.manualPayment ? 'MANUAL PAYMENT' : it.status}}
+                    <td class="text-center" title="{{it | chargeStatusDescription}}">
+                        <i class="label" ng-class="it | chargeStatusLabelClass">
+                            {{it | chargeStatusName}}
                         </i>
                     </td>
                     <td class="text-center">

@@ -40,13 +40,18 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="it in chargesOverdue | filter:criterio | orderBy:predicate:reverse track by it.id">
-                                        <td><a ng-class="it.cliente.status" ng-href="#/cliente/{{it.cliente.id}}/dashboard">{{it.cliente.nome}}</a>
+                                        <td><a ng-class="it.cliente.status"
+                                               ng-href="#/cliente/{{it.cliente.id}}/dashboard">{{it.cliente.nome}}</a>
                                         </td>
                                         <td>
                                             <a ng-href="#/charges/{{it.id}}">{{it.value | currency}}</a>
                                         </td>
                                         <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
-                                        <td ng-class="it.status">{{it.status}}</td>
+                                        <td class="text-center" title="{{it | chargeStatusDescription}}">
+                                            <i class="label" ng-class="it | chargeStatusLabelClass">
+                                                {{it | chargeStatusName}}
+                                            </i>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

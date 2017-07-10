@@ -45,6 +45,16 @@
                     refreshUrlsNotification: {
                         method: 'PUT',
                         params: {id: "all", action: "metadata"}
+                    },
+                    findByPaymentDate: {
+                        method: 'GET',
+                        url: 'api/charges/paymentdate',
+                        isArray: true
+                    },
+                    findByExpirationDate: {
+                        method: 'GET',
+                        url: 'api/charges/expirationdate',
+                        isArray: true
                     }
                 });
         }]);

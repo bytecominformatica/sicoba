@@ -8,8 +8,9 @@
                     return 0;
                 var sum = 0;
 
-                angular.forEach(data, function (v, k) {
-                    sum = sum + parseInt(v[key]);
+
+                angular.forEach(data, function (v) {
+                    sum = sum + Number(v[key]);
                 });
                 return sum;
             };

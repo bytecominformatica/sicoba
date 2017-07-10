@@ -1,11 +1,14 @@
 package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +20,7 @@ public class ChargeAPI {
 
     @Autowired
     private ChargeService chargeService;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Charge> findByClienteOrCarnet(@RequestParam("clienteId") Integer clienteId,
@@ -47,6 +51,24 @@ public class ChargeAPI {
     public List<Charge> overdue() {
         return chargeService.overdue();
     }
+
+    @RequestMapping(value = "paymentdate", method = RequestMethod.GET)
+    public List<Charge> paymentDate(
+            @RequestParam("start") Long start,
+            @RequestParam("end") Long end,
+            @RequestParam(value = "status", required = false) StatusCharge status) {
+        return chargeService.findByPaymentDateAndStatus(new Date(start), new Date(end), status);
+    }
+
+    @RequestMapping(value = "expirationdate", method = RequestMethod.GET)
+    public List<Charge> expirationDate(
+            @RequestParam("start") Long start,
+            @RequestParam("end") Long end,
+            @RequestParam(value = "status", required = false) StatusCharge status) {
+
+        return chargeService.findByExpirationDateAndStatus(new Date(start), new Date(end), status);
+    }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public Charge create(@Valid @RequestBody Charge charge) {

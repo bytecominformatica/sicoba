@@ -223,4 +223,22 @@ public class ChargeService {
     public List<Charge> overdue() {
         return chargeRepository.overdue(new Date());
     }
+
+    public List<Charge> findByPaymentDateAndStatus(Date start, Date end, StatusCharge status) {
+        if (status == null) {
+            return chargeRepository.findByPaidAtBetween(start, end);
+        } else {
+            return chargeRepository.findByPaidAtBetweenAndStatus(start, end, status);
+        }
+
+    }
+
+    public List<Charge> findByExpirationDateAndStatus(Date start, Date end, StatusCharge status) {
+        if (status == null) {
+            return chargeRepository.findByExpireAtBetween(start, end);
+        } else {
+            return chargeRepository.findByExpireAtBetweenAndStatus(start, end, status);
+        }
+    }
+
 }
