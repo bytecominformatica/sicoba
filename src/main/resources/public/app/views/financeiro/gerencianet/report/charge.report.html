@@ -57,7 +57,7 @@
 
         <div class="col-lg-2">
             <label></label>
-            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || params.status == 'PENDENTE'">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
                 Por pagamento
                 <i class="fa fa-search"></i>
             </button>
@@ -65,7 +65,7 @@
         <div class="col-lg-2">
             <label></label>
             <button type="button" ng-click="findByExpirationDate(params)" class="btn btn-primary"
-                    ng-disabled="form.$invalid">
+                    ng-disabled="form.$invalid || params.status === 'PAYMENT MANUAL'">
                 Por vencimento
                 <i class="fa fa-search"></i>
             </button>
