@@ -224,20 +224,28 @@ public class ChargeService {
         return chargeRepository.overdue(new Date());
     }
 
-    public List<Charge> findByPaymentDateAndStatus(Date start, Date end, StatusCharge status) {
-        if (status == null) {
+    public List<Charge> findByPaymentDateAndStatusAndGerencianetAccount(Date start, Date end, StatusCharge status, Integer gerencianetAccountId) {
+        if (status == null && gerencianetAccountId == null) {
             return chargeRepository.findByPaidAtBetween(start, end);
-        } else {
+        } else if (status == null) {
+            return chargeRepository.findByPaidAtBetweenAndGerencianetAccount_id(start, end, gerencianetAccountId);
+        } else if (gerencianetAccountId == null) {
             return chargeRepository.findByPaidAtBetweenAndStatus(start, end, status);
+        } else {
+            return chargeRepository.findByPaidAtBetweenAndStatusAndGerencianetAccount_id(start, end, status, gerencianetAccountId);
         }
-
     }
 
-    public List<Charge> findByExpirationDateAndStatus(Date start, Date end, StatusCharge status) {
-        if (status == null) {
+    public List<Charge> findByExpirationDateAndStatusAndGerencianetAccount(Date start, Date end, StatusCharge status, Integer gerencianetAccountId) {
+
+        if (status == null && gerencianetAccountId == null) {
             return chargeRepository.findByExpireAtBetween(start, end);
-        } else {
+        } else if (status == null) {
+            return chargeRepository.findByExpireAtBetweenAndGerencianetAccount_id(start, end, gerencianetAccountId);
+        } else if (gerencianetAccountId == null) {
             return chargeRepository.findByExpireAtBetweenAndStatus(start, end, status);
+        } else {
+            return chargeRepository.findByExpireAtBetweenAndStatusAndGerencianetAccount_id(start, end, status, gerencianetAccountId);
         }
     }
 

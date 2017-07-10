@@ -6,10 +6,10 @@
     <small>Cobranças</small>
 </h1>
 
-<div class="col-lg-12">
+<div class="col-md-12">
 
     <form name="form" class="form-horizontal" ng-submit="form.$valid && findByPaymentDate(params)" novalidate>
-        <div class="col-lg-3"
+        <div class="col-md-3"
              ng-class="{'has-error': (form.start.$invalid && (form.$submitted || form.start.$touched))}">
             <label>Início</label>
             <div class="input-group">
@@ -27,7 +27,7 @@
             </p>
         </div>
 
-        <div class="col-lg-3"
+        <div class="col-md-3"
              ng-class="{'has-error': (form.end.$invalid && (form.$submitted || form.end.$touched))}">
             <label>Fim</label>
             <div class="input-group">
@@ -46,7 +46,7 @@
         </div>
 
 
-        <div class="col-lg-2"
+        <div class="col-md-2"
              ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
             <label>Status</label>
             <select name="status" ng-model="params.status" class="form-control"
@@ -54,15 +54,23 @@
                 <option value="">Todos</option>
             </select>
         </div>
+        <div class="col-md-4">
+            <label>Conta Gerencianet</label>
+            <select name="gerencianetAccount" ng-model="params.gerencianetAccount" class="form-control"
+                    ng-options="account.name for account in accounts track by account.id">
+                <option value="">Selecione</option>
+            </select>
+        </div>
 
-        <div class="col-lg-2">
+
+        <div class="col-md-2">
             <label></label>
             <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
                 Por pagamento
                 <i class="fa fa-search"></i>
             </button>
         </div>
-        <div class="col-lg-2">
+        <div class="col-md-2">
             <label></label>
             <button type="button" ng-click="findByExpirationDate(params)" class="btn btn-primary"
                     ng-disabled="form.$invalid || params.status === 'PAYMENT MANUAL'">

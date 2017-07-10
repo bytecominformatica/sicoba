@@ -39,7 +39,15 @@ public interface ChargeRepository extends CrudRepository<Charge, Integer> {
 
     List<Charge> findByPaidAtBetweenAndStatus(Date start, Date end, StatusCharge status);
 
+    List<Charge> findByPaidAtBetweenAndGerencianetAccount_id(Date start, Date end, Integer gerencianetAccountId);
+
+    List<Charge> findByPaidAtBetweenAndStatusAndGerencianetAccount_id(Date start, Date end, StatusCharge status, Integer gerencianetAccountId);
+
     List<Charge> findByExpireAtBetween(Date start, Date end);
 
     List<Charge> findByExpireAtBetweenAndStatus(Date start, Date end, StatusCharge status);
+
+    List<Charge> findByExpireAtBetweenAndGerencianetAccount_id(Date start, Date end, Integer gerencianetAccountId);
+
+    List<Charge> findByExpireAtBetweenAndStatusAndGerencianetAccount_id(Date start, Date end, StatusCharge status, Integer gerencianetAccountId);
 }

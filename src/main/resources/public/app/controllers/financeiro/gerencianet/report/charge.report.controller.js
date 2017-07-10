@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ChargeReportCtrl', ['$scope', 'Charge', function ($scope, Charge) {
+        .controller('ChargeReportCtrl', ['$scope', 'Charge', 'GerencianetAccount', function ($scope, Charge, GerencianetAccount) {
             $scope.findByPaymentDate = _findByPaymentDate;
             $scope.findByExpirationDate = _findByExpirationDate;
 
@@ -26,23 +26,35 @@
                     {value: 'CANCELED', description: 'Cancelado'},
                     {value: 'LINK', description: 'Link'}
                 ];
+
+                $scope.accounts = GerencianetAccount.query();
             }
 
             function _findByPaymentDate(params) {
                 var status = params.status === 'PAYMENT MANUAL' ? 'CANCELED' : params.status;
-                $scope.charges = Charge.findByPaymentDate({
+                var params2 = {
                     start: params.start.getTime(),
                     end: params.end.getTime(),
                     status: status
-                });
+                };
+
+                if (params.gerencianetAccount)
+                    params2.gerencianetAccount = params.gerencianetAccount.id;
+
+                $scope.charges = Charge.findByPaymentDate(params2);
             }
 
             function _findByExpirationDate(params) {
-                $scope.charges = Charge.findByExpirationDate({
+                var params2 = {
                     start: params.start.getTime(),
                     end: params.end.getTime(),
                     status: params.status
-                });
+                };
+
+                if (params.gerencianetAccount)
+                    params2.gerencianetAccount = params.gerencianetAccount.id;
+
+                $scope.charges = Charge.findByExpirationDate(params2);
             }
         }]);
 }());

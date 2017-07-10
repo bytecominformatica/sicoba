@@ -56,17 +56,19 @@ public class ChargeAPI {
     public List<Charge> paymentDate(
             @RequestParam("start") Long start,
             @RequestParam("end") Long end,
-            @RequestParam(value = "status", required = false) StatusCharge status) {
-        return chargeService.findByPaymentDateAndStatus(new Date(start), new Date(end), status);
+            @RequestParam(value = "status", required = false) StatusCharge status,
+            @RequestParam(value = "gerencianetAccount", required = false) Integer gerencianetAccountId) {
+        return chargeService.findByPaymentDateAndStatusAndGerencianetAccount(new Date(start), new Date(end), status, gerencianetAccountId);
     }
 
     @RequestMapping(value = "expirationdate", method = RequestMethod.GET)
     public List<Charge> expirationDate(
             @RequestParam("start") Long start,
             @RequestParam("end") Long end,
-            @RequestParam(value = "status", required = false) StatusCharge status) {
+            @RequestParam(value = "status", required = false) StatusCharge status,
+            @RequestParam(value = "gerencianetAccount", required = false) Integer gerencianetAccountId) {
 
-        return chargeService.findByExpirationDateAndStatus(new Date(start), new Date(end), status);
+        return chargeService.findByExpirationDateAndStatusAndGerencianetAccount(new Date(start), new Date(end), status, gerencianetAccountId);
     }
 
 
