@@ -13,11 +13,6 @@
                         url: 'api/conexoes/cliente/:clienteId',
                         params: {id: '@id'}
                     },
-                    buscarPorIp: {
-                        method: 'GET',
-                        url: 'api/conexoes/ip/:ip',
-                        params: {ip: '@ip'}
-                    },
                     buscarIpLivre: {
                         method: 'GET',
                         url: 'api/conexoes/ip/livre'

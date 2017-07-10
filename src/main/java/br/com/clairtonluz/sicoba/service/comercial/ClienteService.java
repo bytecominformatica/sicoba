@@ -37,7 +37,7 @@ public class ClienteService {
 
     public List<Cliente> buscarUltimosAlterados() {
         Date data = DateUtil.toDate(LocalDateTime.now());
-        return clienteRepository.findByUpdatedAtGreaterThan(data);
+        return clienteRepository.findTop20ByOrderByUpdatedAtDesc();
     }
 
     public Cliente buscarPorId(Integer id) {

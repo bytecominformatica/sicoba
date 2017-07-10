@@ -155,7 +155,8 @@ public class ConexaoService {
         return ipLivre;
     }
 
-    public Conexao buscarPorIp(String ip) {
+    @Transactional
+    public Conexao findByIp(String ip) {
         return conexaoRepository.findOptionalByIp(ip);
     }
 }
