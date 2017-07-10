@@ -9,74 +9,73 @@
 <div class="col-md-12">
 
     <form name="form" class="form-horizontal" ng-submit="form.$valid && findByPaymentDate(params)" novalidate>
-        <div class="col-md-3"
-             ng-class="{'has-error': (form.start.$invalid && (form.$submitted || form.start.$touched))}">
-            <label>Início</label>
-            <div class="input-group">
-                <input name="start" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                       ng-model="params.start"
-                       is-open="status.opened" close-text="Close" required/>
-                <i class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </button>
-                </i>
+        <div class="row">
+            <div class="col-md-3"
+                 ng-class="{'has-error': (form.start.$invalid && (form.$submitted || form.start.$touched))}">
+                <label>Início</label>
+                <div class="input-group">
+                    <input name="start" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                           ng-model="params.start"
+                           is-open="status.opened" close-text="Close" required/>
+                    <i class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </i>
+                </div>
+                <p class="help-block" ng-show="form.$submitted || form.start.$touched">
+                    <i ng-show="form.start.$error.required">A partir de qual data deseja consultar?</i>
+                </p>
             </div>
-            <p class="help-block" ng-show="form.$submitted || form.start.$touched">
-                <i ng-show="form.start.$error.required">A partir de qual data deseja consultar?</i>
-            </p>
-        </div>
 
-        <div class="col-md-3"
-             ng-class="{'has-error': (form.end.$invalid && (form.$submitted || form.end.$touched))}">
-            <label>Fim</label>
-            <div class="input-group">
-                <input name="end" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                       ng-model="params.end"
-                       is-open="status.opened2" close-text="Close" required/>
-                <i class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="status.opened2 = !status.opened2">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </button>
-                </i>
+            <div class="col-md-3"
+                 ng-class="{'has-error': (form.end.$invalid && (form.$submitted || form.end.$touched))}">
+                <label>Fim</label>
+                <div class="input-group">
+                    <input name="end" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                           ng-model="params.end"
+                           is-open="status.opened2" close-text="Close" required/>
+                    <i class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="status.opened2 = !status.opened2">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </i>
+                </div>
+                <p class="help-block" ng-show="form.$submitted || form.end.$touched">
+                    <i ng-show="form.end.$error.required">Até que data deseja consultar?</i>
+                </p>
             </div>
-            <p class="help-block" ng-show="form.$submitted || form.end.$touched">
-                <i ng-show="form.end.$error.required">Até que data deseja consultar?</i>
-            </p>
-        </div>
 
 
-        <div class="col-md-2"
-             ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
-            <label>Status</label>
-            <select name="status" ng-model="params.status" class="form-control"
-                    ng-options="status.value as status.description for status in statusList">
-                <option value="">Todos</option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <label>Conta Gerencianet</label>
-            <select name="gerencianetAccount" ng-model="params.gerencianetAccount" class="form-control"
-                    ng-options="account.name for account in accounts track by account.id">
-                <option value="">Selecione</option>
-            </select>
-        </div>
+            <div class="col-md-2"
+                 ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
+                <label>Status</label>
+                <select name="status" ng-model="params.status" class="form-control"
+                        ng-options="status.value as status.description for status in statusList">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Conta Gerencianet</label>
+                <select name="gerencianetAccount" ng-model="params.gerencianetAccount" class="form-control"
+                        ng-options="account.name for account in accounts track by account.id">
+                    <option value="">Todas</option>
+                </select>
+            </div>
 
-
-        <div class="col-md-2">
-            <label></label>
-            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
-                Por pagamento
-                <i class="fa fa-search"></i>
-            </button>
         </div>
-        <div class="col-md-2">
-            <label></label>
-            <button type="button" ng-click="findByExpirationDate(params)" class="btn btn-primary"
-                    ng-disabled="form.$invalid || params.status === 'PAYMENT MANUAL'">
-                Por vencimento
-                <i class="fa fa-search"></i>
-            </button>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+                    Por pagamento
+                    <i class="fa fa-search"></i>
+                </button>
+                <button type="button" ng-click="findByExpirationDate(params)" class="btn btn-primary"
+                        ng-disabled="form.$invalid || params.status === 'PAYMENT MANUAL'">
+                    Por vencimento
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
         </div>
     </form>
 </div>
