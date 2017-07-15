@@ -14,12 +14,6 @@ public class NotificationAPI {
     @Autowired
     private NotificationService notificationService;
 
-    @RequestMapping(value = "notification", method = RequestMethod.POST)
-    public void gerar(@RequestBody String body) {
-        String token = body.substring(body.indexOf('=') + 1);
-        notificationService.processNotification(1, token);
-    }
-
     @RequestMapping(value = "/{accountId}/notification", method = RequestMethod.POST)
     public void process(@PathVariable Integer accountId, @RequestBody String body) {
         String token = body.substring(body.indexOf('=') + 1);

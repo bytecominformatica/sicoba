@@ -20,6 +20,8 @@ import javax.sql.DataSource;
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    public static final String API_GERENCIANET_NOTIFICATION = "/api/gerencianet/*/notification";
+
     @Autowired
     DataSource dataSource;
 
@@ -29,12 +31,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**", "/api/gerencianet/*/notification").permitAll()
+                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**",
+                        API_GERENCIANET_NOTIFICATION).permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().ignoringAntMatchers("/api/gerencianet/*/notification")
+                .csrf().ignoringAntMatchers(API_GERENCIANET_NOTIFICATION)
                 .csrfTokenRepository(csrfTokenRepository())
         ;
 
