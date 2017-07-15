@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout()
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().ignoringAntMatchers("/api/gerencianet/notification")
+                .csrf().ignoringAntMatchers("/api/gerencianet/*/notification")
                 .csrfTokenRepository(csrfTokenRepository())
         ;
 
