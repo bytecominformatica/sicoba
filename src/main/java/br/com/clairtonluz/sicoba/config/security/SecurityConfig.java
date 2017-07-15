@@ -20,7 +20,7 @@ import javax.sql.DataSource;
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    public static final String API_GERENCIANET_NOTIFICATION = "/api/gerencianet/*/notification";
+    public static final String API_GERENCIANET_NOTIFICATION = "/api/gerencianet/**/notification";
 
     @Autowired
     DataSource dataSource;
