@@ -54,8 +54,8 @@
                     <td>{{it.discount | currency}}</td>
                     <td>{{it.firstPay | date:'dd/MM/yyyy'}}</td>
                     <td>
-                        <i class="label" ng-class="getStatusClass(it.status)">
-                            {{it.status}}
+                        <i class="label" ng-class="it | carnetStatusLabelClass">
+                            {{it | carnetStatusName}}
                         </i>
                     </td>
                     <td class="text-center">

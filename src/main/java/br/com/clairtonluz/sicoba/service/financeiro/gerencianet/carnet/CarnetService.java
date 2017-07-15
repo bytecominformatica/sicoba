@@ -101,7 +101,7 @@ public class CarnetService {
     @Transactional
     public void cancelCarnet(Carnet carnet) {
         if (carnetGNService.cancelCarnet(carnet)) {
-            carnet.setStatus(StatusCarnet.CANCELED);
+            carnet.setStatus(StatusCarnet.FINISHED);
             carnetRepository.save(carnet);
             List<Charge> charges = chargeRepository.findByCarnet_idOrderByExpireAtDesc(carnet.getId());
             charges.forEach((it) -> {
@@ -173,7 +173,7 @@ public class CarnetService {
         }
 
         carnet.setMessage(String.format("Olá, %s! \nObrigado por escolher a Bytecom Informática.", carnet.getCliente().getNome()));
-        carnet.setStatus(StatusCarnet.ACTIVE);
+        carnet.setStatus(StatusCarnet.UP_TO_DATE);
         carnet.setRepeats(12);
         carnet.setSplitItems(false);
 
