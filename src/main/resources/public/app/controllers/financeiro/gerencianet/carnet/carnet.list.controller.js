@@ -4,8 +4,6 @@
     angular.module('sicobaApp')
         .controller('CarnetListCtrl', ['$scope', '$rootScope', '$location', 'Carnet', 'Cliente',
             function ($scope, $rootScope, $location, Carnet, Cliente) {
-
-                $scope.getStatusClass = _getStatusClass;
                 $scope.refreshUrlsNotification = _refreshUrlsNotification;
 
                 _init();
@@ -24,22 +22,6 @@
                             type: 'alert-success'
                         }];
                     });
-                }
-
-                function _getStatusClass(status) {
-                    var result;
-                    switch (status) {
-                        case 'ACTIVE':
-                            result = 'label-success';
-                            break;
-                        case 'CANCELED':
-                            result = 'label-danger';
-                            break;
-                        default:
-                            result = 'label-warning';
-                    }
-
-                    return result;
                 }
 
             }]);
