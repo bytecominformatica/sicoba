@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**", "/api/gerencianet/notification").permitAll()
+                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**", "/api/gerencianet/*/notification").permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
                 .and()
