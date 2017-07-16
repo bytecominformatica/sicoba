@@ -141,9 +141,8 @@ public class NotificationService {
         }
     }
 
-
     private Date getCreatedAt(JSONObject data) {
-        return DateUtil.parseDateISO(data.getString("created_at"));
+        return DateUtil.parseDatetimeISO(data.getString("created_at"));
     }
 
 }

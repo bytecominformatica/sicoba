@@ -54,6 +54,13 @@ public final class DateUtil {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+    public static Date parseDatetimeISO(String datetimeString) {
+        try {
+            return datetimeString != null ? DATE_ISO.parse(datetimeString) : null;
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
 
     public static boolean isPast(Date date) {
         LocalDate today = LocalDate.now();
