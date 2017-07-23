@@ -26,6 +26,7 @@ public class Charge extends BaseEntity {
     public static final String VALID_PAYMENT = "Pagamento válido";
     public static final String LATE_PAYMENT_WITHOUT_INTEREST = "Pagamento atrasado sem juros";
     public static final String INVALID_DISCOUNT_PAYMENT = "Pagamento com desconto inválido";
+    public static final int DAYS_OF_TOLERANCE = 5;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "charge_id_seq")
@@ -108,7 +109,7 @@ public class Charge extends BaseEntity {
         boolean late = false;
         LocalDate expireAt = DateUtil.toLocalDate(getExpireAt());
         LocalDate paidAt = DateUtil.toLocalDate(getPaidAt());
-        long diference = ChronoUnit.DAYS.between(expireAt, paidAt);
+        long diference = ChronoUnit.DAYS.between(expireAt.plusDays(DAYS_OF_TOLERANCE), paidAt);
 
         if (diference > 0) {
             late = !isLateForTheWeekend(paidAt, diference);
