@@ -10,7 +10,7 @@ import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
-import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetGNService;
+import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.SendEmail;
 import br.com.clairtonluz.sicoba.util.StringUtil;
@@ -39,7 +39,7 @@ public class ChargeService {
     @Autowired
     private ChargeGNService chargeGNService;
     @Autowired
-    private CarnetGNService carnetGNService;
+    private CarnetService carnetService;
 
     @Transactional
     public Charge createCharge(Charge charge) {
@@ -106,13 +106,13 @@ public class ChargeService {
                 StringUtil.formatCurrence(chargeAtual.getValue()), StringUtil.formatCurrence(chargeAtual.getPaidValue()));
 
         if (chargeAtual.getCarnet() == null) {
-            chargeAtual = cancelCharge(chargeAtual);
+            cancelCharge(chargeAtual);
         } else {
-            chargeAtual = carnetGNService.cancelParcel(chargeAtual);
+            carnetService.cancelParcel(chargeAtual);
         }
 
         SendEmail.sendToAdmin(subject, content);
-        return chargeAtual; // cancela o boleto no integrador e salva a cobrança com as alterações
+        return chargeAtual;
     }
 
     @Transactional
