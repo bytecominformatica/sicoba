@@ -18,7 +18,7 @@ public class ChargeTest {
         charge.setValue(35d);
         charge.setPaidValue(35d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 5);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 6);
+        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 6).plusDays(Charge.DAYS_OF_TOLERANCE);
         charge.setExpireAt(DateUtil.toDate(expireAt));
         charge.setPaidAt(DateUtil.toDate(paidAt));
 
@@ -55,20 +55,6 @@ public class ChargeTest {
         String status = charge.verifyPayment();
 
         Assert.assertEquals("pagamento atrazado por causa sábado não deveria ser inválido", Charge.VALID_PAYMENT, status);
-    }
-
-    @Test
-    public void testValidarPagamentoAtrazadoPorCausaDoSexta() throws Exception {
-        Charge charge = new Charge();
-        charge.setValue(35d);
-        charge.setPaidValue(35d);
-        LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 7);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 10);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
-
-        String status = charge.verifyPayment();
-        Assert.assertEquals("pagamento atrazado por causa sexta deveria cobrar juros", Charge.LATE_PAYMENT_WITHOUT_INTEREST, status);
     }
 
     @Test

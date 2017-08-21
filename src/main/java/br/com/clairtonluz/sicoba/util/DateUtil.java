@@ -12,7 +12,8 @@ import java.util.Date;
  */
 public final class DateUtil {
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat DATE_ISO = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat DATETIME_ISO = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static Date toDate(LocalDate localDate) {
         return toDate(localDate.atStartOfDay());
@@ -43,12 +44,19 @@ public final class DateUtil {
      * @return
      */
     public static String formatISO(Date vencimento) {
-        return vencimento != null ? DATE_FORMAT.format(vencimento) : null;
+        return vencimento != null ? DATE_ISO.format(vencimento) : null;
     }
 
     public static Date parseDateISO(String dateString) {
         try {
-            return dateString != null ? DATE_FORMAT.parse(dateString) : null;
+            return dateString != null ? DATE_ISO.parse(dateString) : null;
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+    public static Date parseDatetimeISO(String datetimeString) {
+        try {
+            return datetimeString != null ? DATE_ISO.parse(datetimeString) : null;
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
