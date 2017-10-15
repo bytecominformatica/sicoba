@@ -74,7 +74,7 @@ public class CarnetAPI {
 
     @RequestMapping(value = "/{id}/parcels/{parcel}/cancel", method = RequestMethod.PUT)
     public void cancelParcel(@PathVariable Integer id, @PathVariable Integer parcel) {
-        carnetService.cancelParcel(chargeService.findByCarnetAndParcel(id, parcel));
+        chargeService.cancelCharge(chargeService.findByCarnetAndParcel(id, parcel));
     }
 
 }

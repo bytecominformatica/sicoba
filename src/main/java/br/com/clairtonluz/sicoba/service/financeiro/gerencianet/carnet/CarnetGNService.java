@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by clairton on 09/11/16.
  */
 @Service
-class CarnetGNService {
+public class CarnetGNService {
 
     private static final String CREATE_CARNET = "createCarnet";
     private static final String DETAIL_CARNET = "detailCarnet";
@@ -70,7 +70,7 @@ class CarnetGNService {
         return GNService.isOk(response);
     }
 
-    boolean cancelParcel(Charge charge) {
+    public boolean cancelParcel(Charge charge) {
 
         if (charge.getCarnet() == null || charge.getCarnet().getCarnetId() == null) {
             throw new ConflitException("Está cobrança não fas parte de um carnê");

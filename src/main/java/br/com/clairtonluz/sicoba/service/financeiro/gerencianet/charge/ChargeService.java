@@ -10,7 +10,7 @@ import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
-import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetService;
+import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetGNService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.SendEmail;
 import br.com.clairtonluz.sicoba.util.StringUtil;
@@ -24,6 +24,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by clairton on 09/11/16.
@@ -39,7 +40,9 @@ public class ChargeService {
     @Autowired
     private ChargeGNService chargeGNService;
     @Autowired
-    private CarnetService carnetService;
+    private CarnetGNService carnetGNService;
+//    @Autowired
+//    private CarnetService carnetService;
 
     @Transactional
     public Charge createCharge(Charge charge) {
@@ -105,11 +108,7 @@ public class ChargeService {
                 chargeAtual.getId(), chargeAtual.getCliente().getId(), chargeAtual.getCliente().getNome(),
                 StringUtil.formatCurrence(chargeAtual.getValue()), StringUtil.formatCurrence(chargeAtual.getPaidValue()));
 
-        if (chargeAtual.getCarnet() == null) {
-            cancelCharge(chargeAtual);
-        } else {
-            carnetService.cancelParcel(chargeAtual);
-        }
+        cancelCharge(chargeAtual);
 
         SendEmail.sendToAdmin(subject, content);
         return chargeAtual;
@@ -117,8 +116,8 @@ public class ChargeService {
 
     @Transactional
     public Charge cancelCharge(Charge charge) {
-        JSONObject response = chargeGNService.cancelCharge(charge);
-        if (GNService.isOk(response)) {
+        Boolean canceled = Objects.isNull(charge.getCarnet()) ? chargeGNService.cancelCharge(charge) : carnetGNService.cancelParcel(charge);
+        if (canceled) {
             charge.setStatus(StatusCharge.CANCELED);
             charge = save(charge);
         }

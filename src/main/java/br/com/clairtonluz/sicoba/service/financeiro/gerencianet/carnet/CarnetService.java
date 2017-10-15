@@ -113,13 +113,6 @@ public class CarnetService {
         }
     }
 
-    public void cancelParcel(Charge charge) {
-        if (carnetGNService.cancelParcel(charge)) {
-            charge.setStatus(StatusCharge.CANCELED);
-            chargeRepository.save(charge);
-        }
-    }
-
     public boolean updateCarnetMetadata(Carnet carnet) {
         return carnetGNService.updateCarnetMetadata(carnet);
     }

@@ -111,11 +111,12 @@ class ChargeGNService {
      * @param charge
      * @return
      */
-    JSONObject cancelCharge(Charge charge) {
+    boolean cancelCharge(Charge charge) {
         Map<String, String> params = new HashMap<>();
         params.put("id", charge.getChargeId().toString());
 
-        return GNService.call(charge.getGerencianetAccount(), CANCEL_CHARGE, params);
+        JSONObject call = GNService.call(charge.getGerencianetAccount(), CANCEL_CHARGE, params);
+        return GNService.isOk(call);
     }
 
     /**
