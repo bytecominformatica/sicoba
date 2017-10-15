@@ -173,7 +173,7 @@
             </button>
             <button class="btn btn-primary" type="button"
                     ng-click="form.$valid && updateExpireAt(charge)"
-                    ng-show="charge.id && !isPaid(charge)">
+                    ng-show="charge.id && !isPaid(charge) && isCancelable(charge)">
                 Atualizar Vencimento
             </button>
             <button class="btn btn-primary" type="button" ng-click="form.$valid && createBankingBillet(charge)"
