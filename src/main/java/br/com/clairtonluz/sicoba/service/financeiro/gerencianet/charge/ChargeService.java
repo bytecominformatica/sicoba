@@ -205,10 +205,6 @@ public class ChargeService {
             charge.setCliente(contrato.getCliente());
             charge.setExpireAt(getNextExpireAt(contrato));
             Double value = contrato.getPlano().getValor();
-            if (contrato.getEquipamentoWifi() != null) {
-                value += 5;
-                charge.setDiscount(5d);
-            }
             charge.setValue(value);
             charge.setDescription(String.format("Internet Banda Larga %s", contrato.getPlano().getNome()));
         } else {

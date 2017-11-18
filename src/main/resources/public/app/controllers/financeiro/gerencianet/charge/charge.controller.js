@@ -2,10 +2,11 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ChargeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Charge', 'Carnet', 'GerencianetAccount', 'DateDiff',
-            function ($scope, $rootScope, $routeParams, $location, Charge, Carnet, GerencianetAccount, DateDiff) {
-
+        .controller('ChargeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Charge', 'Carnet',
+            'GerencianetAccount', 'DateDiff', 'Contrato',
+            function ($scope, $rootScope, $routeParams, $location, Charge, Carnet, GerencianetAccount, DateDiff, Contrato) {
                 $scope.create = _create;
+                $scope.calculateProportionalValue = _calculateProportionalValue;
                 $scope.cancel = _cancel;
                 $scope.manualPayment = _manualPayment;
                 $scope.createBankingBillet = _createBankingBillet;
@@ -68,6 +69,19 @@
                         var vp = charge.value + fine + interest;
                         charge.paidValue = parseFloat(vp.toFixed(2));
                     }
+                }
+
+                function _calculateProportionalValue(charge) {
+                    Contrato.buscarPorCliente({clienteId: charge.cliente.id}, function (contrato) {
+                        console.log('[chargeController]charge', charge);
+                        console.log('[chargeController]contrato', contrato);
+
+                        var days = DateDiff.inDays(new Date(contrato.dataInstalacao), new Date(charge.expireAt));
+                        console.log('[chargeController] days', days);
+                        var valueProportional = contrato.plano.valor / 30 * days;
+                        charge.value = parseFloat(valueProportional.toFixed(2));
+                        charge.description = 'Valor proporcional a ' + days + ' dia(s)';
+                    });
                 }
 
                 function _create(charge) {

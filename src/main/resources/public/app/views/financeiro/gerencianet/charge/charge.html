@@ -171,6 +171,10 @@
             <button class="btn btn-primary" type="submit" ng-click="form.$valid && create(charge)" ng-hide="charge.id">
                 Criar
             </button>
+            <button class="btn btn-success" type="button" ng-click="calculateProportionalValue(charge)" ng-hide="charge.id"
+                title="Calcular valor proporcional a partir da data de instalação">
+                Calcular valor proporcional
+            </button>
             <button class="btn btn-primary" type="button"
                     ng-click="form.$valid && updateExpireAt(charge)"
                     ng-show="charge.id && !isPaid(charge) && isCancelable(charge)">
