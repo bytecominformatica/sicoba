@@ -46,7 +46,6 @@ public class SecretPppoeService implements SecretService {
 
     private void create(Servidor servidor, Secret secret) {
         String disabled = secret.isDisabled() ? "yes" : "no";
-        System.out.println("Mac:" + secret.getMac());
         String command = String.format("/ppp/secret/add name=%s password=%s profile=%s remote-address=%s service=pppoe disabled=%s caller-id=\"%s\"",
                 secret.getLogin(), secret.getPass(), secret.getProfile(), secret.getIp(), disabled, secret.getMac());
         servidor.execute(command);
@@ -54,7 +53,6 @@ public class SecretPppoeService implements SecretService {
 
     private void update(Servidor servidor, Secret secret) {
         String disabled = secret.isDisabled() ? "yes" : "no";
-        System.out.println("Mac:" + secret.getMac());
         String command = String.format("/ppp/secret/set .id=%s password=%s profile=%s remote-address=%s service=pppoe disabled=%s caller-id=\"%s\"",
                 secret.getLogin(), secret.getPass(), secret.getProfile(), secret.getIp(), disabled, secret.getMac());
 

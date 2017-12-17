@@ -18,6 +18,7 @@ public class Secret implements IConnectionClienteCertified {
         this.login = login;
         this.pass = pass;
         this.ip = ip;
+        this.mac = mac;
         this.profile = profile;
         this.disabled = disabled;
     }
