@@ -3,20 +3,29 @@
 
     angular.module('sicobaApp')
         .controller('ClienteListCtrl', function ($scope, Cliente, Conexao) {
-            $scope.buscarPorNome = _buscarPorNome;
+            $scope.buscarPorCliente = _buscarPorCliente;
             $scope.buscarPorIp = _buscarPorIp;
 
             _init();
 
             function _init() {
+                buscarUltimosAlterados();
+            }
+
+            function buscarUltimosAlterados() {
                 Cliente.ultimosAlterados(function (data) {
                     $scope.clientes = data;
                     _buscarConexoes($scope.clientes);
                 });
             }
 
-            function _buscarPorNome(nome) {
-                $scope.clientes = Cliente.query({nome: nome});
+            function _buscarPorCliente(cliente) {
+                if (cliente.status === '') delete cliente.status;
+                if (Object.keys(cliente).length > 0) {
+                    $scope.clientes = Cliente.query(cliente);
+                } else {
+                    buscarUltimosAlterados();
+                }
             }
 
             function _buscarPorIp(ip) {

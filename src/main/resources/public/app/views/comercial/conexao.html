@@ -7,7 +7,7 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(conexao)" novalidate>
-    <div class="col-lg-9"
+    <div class="col-md-9"
          ng-class="{'has-error': (form.cliente.$invalid && (form.$submitted || form.cliente.$touched))}">
         <label>Cliente</label>
         <input name="cliente" ng-model="conexao.cliente.nome" class="form-control" type="text" required readonly>
@@ -16,7 +16,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3" ng-class="{'has-error': (form.plano.$invalid && (form.$submitted || form.plano.$touched))}">
+    <div class="col-md-3" ng-class="{'has-error': (form.plano.$invalid && (form.$submitted || form.plano.$touched))}">
         <label>Plano</label>
         <input name="plano" ng-model="contrato.plano.nome" class="form-control" type="text" required readonly>
         <p class="help-block" ng-show="form.$submitted || form.plano.$touched">
@@ -24,7 +24,7 @@
         </p>
     </div>
 
-    <div class="col-lg-4"
+    <div class="col-md-4"
          ng-class="{'has-error': (form.mikrotik.$invalid && (form.$submitted || form.mikrotik.$touched))}">
         <div class="input-group">
             <label>Mikrotik</label>
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
+    <div class="col-md-3" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
         <label>Nome</label>
         <input name="nome" ng-model="conexao.nome" class="form-control" required>
         <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
@@ -48,7 +48,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.senha.$invalid && (form.$submitted || form.senha.$touched))}">
         <label>Senha</label>
         <input name="senha" ng-model="conexao.senha" class="form-control" required>
@@ -57,7 +57,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.ip.$invalid && (form.$submitted || form.ip.$touched))}">
         <label>IP</label>
         <input name="ip" ng-model="conexao.ip" class="form-control" required
@@ -67,8 +67,22 @@
             <i ng-show="form.ip.$error.pattern">IP inválido</i>
         </p>
     </div>
+    <div class="col-md-2"
+         ng-class="{'has-error': (form.mac.$invalid && (form.$submitted || form.mac.$touched))}">
+        <label>MAC</label>
+        <div class="input-group">
+            <input name="mac" ng-model="conexao.mac" class="form-control" pattern="[a-fA-F0-9:]{17}|[a-fA-F0-9]{12}">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"
+                        ng-click="pegarMacDoEquipamento()">Pegar mac do equipamento</button>
+            </span>
+        </div><!-- /input-group -->
+        <p class="help-block" ng-show="form.$submitted || form.mac.$touched">
+            <i ng-show="form.mac.$error.pattern">MAC inválido</i>
+        </p>
+    </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <br/>
         <br/>
 

@@ -7,7 +7,7 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(contrato)" novalidate>
-    <div class="col-lg-12" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
+    <div class="col-md-12" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
         <label>Cliente</label>
         <input name="nome" ng-model="contrato.cliente.nome" class="form-control" type="text" required readonly>
         <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
@@ -15,7 +15,7 @@
         </p>
     </div>
 
-    <div class="col-lg-6" ng-class="{'has-error': (form.plano.$invalid && (form.$submitted || form.plano.$touched))}">
+    <div class="col-md-6" ng-class="{'has-error': (form.plano.$invalid && (form.$submitted || form.plano.$touched))}">
         <label>Plano</label>
         <select name="plano" ng-model="contrato.plano" class="form-control" required
                 ng-options="plano.nome for plano in planos track by plano.id">
@@ -26,7 +26,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.dataInstalacao.$invalid && (form.$submitted || form.dataInstalacao.$touched))}">
         <div class="input-group">
             <label>Data instalação</label>
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.vencimento.$invalid && (form.$submitted || form.vencimento.$touched))}">
         <label>Vencimento</label>
         <select name="vencimento" ng-model="contrato.vencimento" class="form-control" required
@@ -59,7 +59,7 @@
         </p>
     </div>
 
-    <div class="col-lg-6"
+    <div class="col-md-6"
          ng-class="{'has-error': (form.equipamento.$invalid && (form.$submitted || form.equipamento.$touched))}">
         <label>Equipamento</label>
         <select name="equipamento" ng-model="contrato.equipamento" class="form-control"
@@ -68,7 +68,7 @@
         </select>
     </div>
 
-    <div class="col-lg-6"
+    <div class="col-md-6"
          ng-class="{'has-error': (form.equipamentoWifi.$invalid && (form.$submitted || form.equipamentoWifi.$touched))}">
         <label>Equipamento Wifi</label>
         <select name="equipamentoWifi" ng-model="contrato.equipamentoWifi" class="form-control"
@@ -77,7 +77,7 @@
         </select>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <br/>
         <br/>
 

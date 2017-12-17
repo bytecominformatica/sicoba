@@ -7,7 +7,7 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(plano)" novalidate>
-    <div class="col-lg-4" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
+    <div class="col-md-4" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
         <label>Nome</label>
         <input name="nome" ng-model="plano.nome" class="form-control" type="text" required>
         <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
@@ -15,7 +15,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.download.$invalid && (form.$submitted || form.download.$touched))}">
         <label>Download</label>
         <div class="input-group">
@@ -28,7 +28,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.upload.$invalid && (form.$submitted || form.upload.$touched))}">
         <label>Upload</label>
         <div class="input-group">
@@ -41,7 +41,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.valorInstalacao.$invalid && (form.$submitted || form.valorInstalacao.$touched))}">
         <label>Valor instalação</label>
         <input name="valorInstalacao" ng-model="plano.valorInstalacao" class="form-control" type="number" step="any"
@@ -52,7 +52,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.valor.$invalid && (form.$submitted || form.valor.$touched))}">
         <label>Valor</label>
         <input name="valor" ng-model="plano.valor" class="form-control" type="number" step="any"
@@ -63,7 +63,7 @@
         </p>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <br/>
         <br/>
 

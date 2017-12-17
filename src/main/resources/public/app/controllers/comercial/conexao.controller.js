@@ -6,6 +6,7 @@
 
             $scope.save = _save;
             $scope.remove = _remove;
+            $scope.pegarMacDoEquipamento = _pegarMacDoEquipamento;
 
             _init();
 
@@ -14,7 +15,6 @@
                 _carregarConexao();
                 $scope.contrato = Contrato.buscarPorCliente({clienteId: $routeParams.clienteId});
                 $scope.mikrotiks = Mikrotik.query();
-
             }
 
             function _carregarConexao() {
@@ -25,6 +25,22 @@
                         _criarNovaConexao();
                     }
                 });
+            }
+
+            function _pegarMacDoEquipamento() {
+                console.log('tests', $scope.contrato);
+                if ($scope.contrato.equipamento) {
+                    $scope.conexao.mac = $scope.contrato.equipamento.mac;
+                    $rootScope.messages = [{
+                        title: 'Mac capturado do equipamento de instalação',
+                        type: 'alert-success'
+                    }];
+                } else if ($scope.contrato.equipamentoWifi) {
+                    $scope.conexao.mac = $scope.contrato.equipamentoWifi.mac;
+                    $rootScope.messages = [{title: 'Mac capturado do equipamento wifi', type: 'alert-success'}];
+                } else {
+                    $rootScope.messages = [{title: 'Nenhum equipamento encontrado', type: 'alert-success'}];
+                }
             }
 
             function _criarNovaConexao() {
@@ -61,7 +77,7 @@
                 });
             }
 
-            function _sucesso(){
+            function _sucesso() {
                 $rootScope.messages = [{title: 'Sucesso', type: 'alert-success'}];
             }
         });

@@ -9,10 +9,14 @@ import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Secret;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
+import br.com.clairtonluz.sicoba.service.generic.CrudService;
 import br.com.clairtonluz.sicoba.service.provedor.Servidor;
+import br.com.clairtonluz.sicoba.util.SendEmail;
 import me.legrange.mikrotik.ApiConnection;
 import me.legrange.mikrotik.ApiConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -23,29 +27,38 @@ import java.util.*;
  * Created by clairtonluz on 07/12/15.
  */
 @Service
-public class ConexaoService {
+public class ConexaoService extends CrudService<Conexao, ConexaoRepository, Integer> {
 
-    @Autowired
-    private ConexaoRepository conexaoRepository;
-    @Autowired
     private Servidor servidor;
-    @Autowired
     private SecretService secretService;
-    @Autowired
     private ContratoRepository contratoRepository;
 
-    public List<Conexao> buscarTodos() {
-        return conexaoRepository.findAllByOrderByNomeAsc();
+    @Autowired
+    public ConexaoService(ConexaoRepository repository, Servidor servidor,
+                          SecretService secretService, ContratoRepository contratoRepository) {
+        super(repository);
+        this.servidor = servidor;
+        this.secretService = secretService;
+        this.contratoRepository = contratoRepository;
+    }
+
+    @Override
+    public List<Conexao> findAll(Map<String, Object> params) {
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withMatcher("ip", match -> match.contains())
+                .withMatcher("mac", match -> match.ignoreCase().contains());
+        Example<Conexao> example = toQuery(params, matcher);
+        return super.findAll(example);
     }
 
     @Transactional
     public Conexao buscarOptionalPorCliente(Cliente cliente) {
-        return conexaoRepository.findOptionalByCliente(cliente);
+        return repository.findOptionalByCliente(cliente);
     }
 
     @Async
-    public void atualizarTodos() throws Exception {
-        List<Conexao> list = buscarTodos();
+    public void atualizarTodos() {
+        List<Conexao> list = repository.findAllByOrderByNomeAsc();
         Map<Integer, Plano> planos = getPlanos(list);
 
         Collection<List<Conexao>> conexoesPorMk = separarPorMikrotik(list);
@@ -54,9 +67,15 @@ public class ConexaoService {
             Mikrotik mikrotik = conexoes.get(0).getMikrotik();
             try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getPort(), mikrotik.getLogin(), mikrotik.getPass())) {
                 for (Conexao c : conexoes) {
-                    Secret secret = c.createSecret(planos.get(c.getId()));
-                    c.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
+                    try {
+                        Secret secret = c.createSecret(planos.get(c.getId()));
+                        c.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
+                    } catch (Exception e) {
+                        SendEmail.notificarAdmin(e);
+                    }
                 }
+            } catch (ApiConnectionException e) {
+                SendEmail.notificarAdmin(e);
             }
         }
     }
@@ -88,7 +107,7 @@ public class ConexaoService {
             Plano plano = contratoRepository.findOptionalByCliente_id(c.getCliente().getId()).getPlano();
             planos.put(c.getId(), plano);
             if (c.getCliente().getStatus() == StatusCliente.CANCELADO) {
-                conexaoRepository.delete(c);
+                repository.delete(c);
             }
         }
         return planos;
@@ -101,9 +120,9 @@ public class ConexaoService {
             atualizarNoServidor(conexao, plano);
 
             if (conexao.getCliente().getStatus() == StatusCliente.CANCELADO) {
-                conexaoRepository.delete(conexao);
+                repository.delete(conexao);
             } else {
-                conexaoRepository.save(conexao);
+                repository.save(conexao);
             }
             return conexao;
         } else {
@@ -118,18 +137,18 @@ public class ConexaoService {
         try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getPort(), mikrotik.getLogin(), mikrotik.getPass())) {
             conexao.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
         } catch (ApiConnectionException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new RuntimeException(e);
         }
     }
 
     public boolean isDisponivel(Conexao conexao) {
-        Conexao conexao2 = conexaoRepository.findOptionalByNome(conexao.getNome());
+        Conexao conexao2 = repository.findOptionalByNome(conexao.getNome());
         return conexao2 == null || conexao2.getId().equals(conexao.getId());
     }
 
     @Transactional
-    public void remove(Integer id) throws Exception {
-        Conexao c = conexaoRepository.findOne(id);
+    public void delete(Integer id) {
+        Conexao c = repository.findOne(id);
         Plano plano = contratoRepository.findOptionalByCliente_id(c.getCliente().getId()).getPlano();
 
         Secret secret = c.createSecret(plano);
@@ -137,16 +156,18 @@ public class ConexaoService {
 
         try (ApiConnection con = servidor.connect(mikrotik.getHost(), mikrotik.getPort(), mikrotik.getLogin(), mikrotik.getPass())) {
             secretService.remove(servidor, secret);
+        } catch (ApiConnectionException e) {
+            throw new RuntimeException(e);
         }
 
-        conexaoRepository.delete(c);
+        repository.delete(c);
     }
 
     public String buscarIpLivre() {
         String rede = "10.77.3.";
         String ipLivre = null;
         for (int i = 10; i <= 250; i++) {
-            Conexao result = conexaoRepository.findOptionalByIp(rede + i);
+            Conexao result = repository.findOptionalByIp(rede + i);
             if (result == null) {
                 ipLivre = rede + i;
                 break;
@@ -155,8 +176,8 @@ public class ConexaoService {
         return ipLivre;
     }
 
-    @Transactional
-    public Conexao findByIp(String ip) {
-        return conexaoRepository.findOptionalByIp(ip);
+    @Override
+    public Class<Conexao> getEntityClass() {
+        return Conexao.class;
     }
 }

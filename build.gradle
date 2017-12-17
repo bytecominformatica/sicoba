@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.3.2.RELEASE'
+        springBootVersion = '1.5.6.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -13,7 +13,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'sicoba'
@@ -32,6 +32,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-devtools'
+    compile 'org.springframework.boot:spring-boot-starter-tomcat'
     compile 'me.legrange:mikrotik:3.0.1'
     compile 'org.flywaydb:flyway-core'
     compile 'br.com.gerencianet.gnsdk:gn-api-sdk-java:0.2.2'

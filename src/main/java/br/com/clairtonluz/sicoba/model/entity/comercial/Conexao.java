@@ -27,16 +27,17 @@ public class Conexao extends BaseEntity {
 
     private String senha;
 
-    @Pattern(
-            message = "IP inválido",
-            regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
-    )
+    @Pattern(message = "IP inválido",
+            regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
     @Size(min = 1, max = 40)
     private String ip;
+    @Pattern(message = "MAC inválido",
+            regexp = "^[a-fA-F0-9:]{17}|[a-fA-F0-9]{12}$")
+    private String mac;
 
     public Secret createSecret(Plano plano) {
         boolean disabled = cliente.getStatus() != StatusCliente.ATIVO;
-        return new Secret(nome, senha, ip, plano.getNome(), disabled);
+        return new Secret(nome, senha, ip, mac, plano.getNome(), disabled);
     }
 
     public String getNome() {
@@ -86,5 +87,13 @@ public class Conexao extends BaseEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
     }
 }

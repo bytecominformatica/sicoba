@@ -7,7 +7,7 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(profile)" novalidate>
-    <div class="col-lg-6" ng-class="{'has-error': (form.name.$invalid && (form.$submitted || form.name.$touched))}">
+    <div class="col-md-6" ng-class="{'has-error': (form.name.$invalid && (form.$submitted || form.name.$touched))}">
         <label>Nome</label>
         <input name="name" ng-model="profile.name" class="form-control" type="text" required>
         <p class="help-block" ng-show="form.$submitted || form.name.$touched">
@@ -15,7 +15,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.username.$invalid && (form.$submitted || form.username.$touched))}">
         <label>Usuário</label>
         <input name="username" ng-model="profile.username" class="form-control" type="text" required disabled="true">
@@ -24,7 +24,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.password.$invalid && (form.$submitted || form.password.$touched))}">
         <label>Senha</label>
         <input name="password" ng-model="profile.password" class="form-control" type="password" required>
@@ -33,7 +33,7 @@
         </p>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <br/>
         <br/>
 

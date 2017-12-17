@@ -2,6 +2,7 @@ package br.com.clairtonluz.sicoba.repository.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 
 @Repository
-public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
     String QUERY_CLIENTE_SEM_TITULOS = "select c from Cliente c where c.status <> 2 " +
             "and (" +
