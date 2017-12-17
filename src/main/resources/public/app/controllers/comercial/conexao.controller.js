@@ -28,7 +28,6 @@
             }
 
             function _pegarMacDoEquipamento() {
-                console.log('tests', $scope.contrato);
                 if ($scope.contrato.equipamento) {
                     $scope.conexao.mac = $scope.contrato.equipamento.mac;
                     $rootScope.messages = [{
@@ -64,6 +63,9 @@
             }
 
             function _save(conexao) {
+                if (conexao.mac === '') {
+                    delete conexao.mac;
+                }
                 Conexao.save(conexao, function (data) {
                     $scope.conexao = data;
                     _sucesso();
