@@ -8,36 +8,67 @@
         Adicionar
     </a>
 </h1>
-
 <div class="row">
-    <div class="col-md-6">
-        <form ng-submit="buscarPorNome(search.nome)">
-            <label>
-                Nome
-                <div class="input-group">
-                    <input ng-model="search.nome" name="nome" type="text" class="form-control" placeholder="Nome">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><span class="fa fa-search"></span></button>
-                    </span>
-                </div><!-- /input-group -->
-            </label>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <form ng-submit="buscarPorIp(search.ip)">
-            <label>
-                Ip
-                <div class="input-group">
-                    <input ng-model="search.ip" name="ip" type="text" class="form-control" placeholder="Ip">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><span class="fa fa-search"></span></button>
-                    </span>
-                </div><!-- /input-group -->
-            </label>
-        </form>
-    </div><!-- /.col-lg-6 -->
-</div><!-- /.row -->
 
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Consulta por dados do cliente</div>
+            <div class="panel-body">
+                <form ng-submit="buscarPorCliente(cliente)">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Nome</label>
+                            <input ng-model="cliente.nome" name="nome"
+                                   type="text" class="form-control"
+                                   placeholder="Nome">
+                        </div>
+                        <div class="col-md-12">
+                            <label>Status</label>
+                            <select name="status" ng-model="cliente.status" class="form-control">
+                                <option value="">Todos</option>
+                                <option>ATIVO</option>
+                                <option>INATIVO</option>
+                                <option>CANCELADO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-default" type="submit">
+                                <span class="fa fa-search"/>
+                                Consultar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Consulta por dados da conexão</div>
+            <div class="panel-body">
+                <form ng-submit="buscarPorIp(search.ip)">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Ip </label>
+                            <input ng-model="search.ip" name="ip" type="text"
+                                   class="form-control" placeholder="Ip">
+                        </div>
+
+                        <div class="col-md-12">
+                            <button class="btn btn-default" type="submit">
+                                <span class="fa fa-search"></span>
+                                Consultar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <br/>
 <br/>
 
@@ -45,6 +76,7 @@
     <table class="table table-striped table-bordered table-hover dataTable no-footer">
         <thead>
         <tr>
+            <th></th>
             <th>Id</th>
             <th>Nome</th>
             <th>IP</th>
@@ -53,9 +85,11 @@
         </thead>
         <tbody>
         <tr ng-repeat="it in clientes track by it.id">
+            <td>{{$index + 1}}</td>
             <td>{{it.id}}</td>
             <td><a ng-class="it.status" ng-href="#/cliente/{{it.id}}/dashboard">{{it.nome}}</a></td>
-            <td><a ng-href="http://{{it.conexao.ip}}" target="_blank" title="Conectar ao radio em uma nova aba">{{it.conexao.ip}}</a></td>
+            <td><a ng-href="http://{{it.conexao.ip}}" target="_blank" title="Conectar ao radio em uma nova aba">{{it.conexao.ip}}</a>
+            </td>
             <td class="text-center"><a ng-href="#/cliente/{{it.id}}" class="btn btn-primary" title="Editar">
                 <span class="fa fa-edit"></span>
             </a></td>

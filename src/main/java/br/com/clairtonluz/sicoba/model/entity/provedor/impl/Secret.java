@@ -14,7 +14,7 @@ public class Secret implements IConnectionClienteCertified {
     private String profile;
     private boolean disabled;
 
-    public Secret(String login, String pass, String ip, String profile, boolean disabled) {
+    public Secret(String login, String pass, String ip, String mac, String profile, boolean disabled) {
         this.login = login;
         this.pass = pass;
         this.ip = ip;
@@ -60,7 +60,7 @@ public class Secret implements IConnectionClienteCertified {
 
     @Override
     public String getMac() {
-        return mac;
+        return mac == null ? "" : mac.toUpperCase();
     }
 
     public void setMac(String mac) {

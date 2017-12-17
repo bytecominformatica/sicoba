@@ -7,7 +7,7 @@
 </h1>
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(mikrotik)" novalidate>
-    <div class="col-lg-12" ng-class="{'has-error': (form.name.$invalid && (form.$submitted || form.name.$touched))}">
+    <div class="col-md-12" ng-class="{'has-error': (form.name.$invalid && (form.$submitted || form.name.$touched))}">
         <label>Nome</label>
         <input name="name" ng-model="mikrotik.name" class="form-control" type="text" required>
         <p class="help-block" ng-show="form.$submitted || form.name.$touched">
@@ -15,7 +15,7 @@
         </p>
     </div>
 
-    <div class="col-lg-6"
+    <div class="col-md-6"
          ng-class="{'has-error': (form.host.$invalid && (form.$submitted || form.host.$touched))}">
         <label>Host</label>
         <div class="input-group">
@@ -27,7 +27,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.port.$invalid && (form.$submitted || form.port.$touched))}">
         <label>Porta</label>
         <input name="port" ng-model="mikrotik.port" class="form-control" type="number" required>
@@ -37,7 +37,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.login.$invalid && (form.$submitted || form.login.$touched))}">
         <label>Login</label>
         <input name="login" ng-model="mikrotik.login" class="form-control" type="text" required>
@@ -46,7 +46,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.pass.$invalid && (form.$submitted || form.pass.$touched))}">
         <label>Senha</label>
         <input name="pass" ng-model="mikrotik.pass" class="form-control" type="password" required>
@@ -55,13 +55,13 @@
         </p>
     </div>
 
-    <div class="col-lg-12"
+    <div class="col-md-12"
          ng-class="{'has-error': (form.description.$invalid && (form.$submitted || form.description.$touched))}">
         <label>Descrição</label>
         <textarea name="description" ng-model="mikrotik.description" class="form-control" type="text"></textarea>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <br/>
         <br/>
 

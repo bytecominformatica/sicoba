@@ -1,12 +1,16 @@
 package br.com.clairtonluz.sicoba.api.comercial;
 
+import br.com.clairtonluz.sicoba.api.CrudEndpoint;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
+import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,50 +19,30 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("api/conexoes")
-public class ConexaoAPI {
+public class ConexaoAPI extends CrudEndpoint<Conexao, ConexaoRepository,ConexaoService, Integer> {
 
-    @Autowired
-    private ConexaoService conexaoService;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public Conexao query(@RequestParam("ip") String ip) {
-        return conexaoService.findByIp(ip);
+    public ConexaoAPI(ConexaoService service) {
+        super(service);
     }
 
     @RequestMapping(value = "/atualizarTodos", method = RequestMethod.GET)
     public void getAtualizarTodos() throws Exception {
-        conexaoService.atualizarTodos();
+        service.atualizarTodos();
     }
 
     @RequestMapping(value = "/cliente/{id}", method = RequestMethod.GET)
     public Conexao getPorCliente(@PathVariable Integer id) {
         Cliente cliente = new Cliente();
         cliente.setId(id);
-        return conexaoService.buscarOptionalPorCliente(cliente);
+        return service.buscarOptionalPorCliente(cliente);
     }
-
 
     @RequestMapping(value = "/ip/livre", method = RequestMethod.GET)
     public Map<String, String> getIpLivre() {
-        String ip = conexaoService.buscarIpLivre();
+        String ip = service.buscarIpLivre();
         Map<String, String> map = new HashMap<>();
         map.put("ip", ip);
         return map;
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public Conexao save(@Valid @RequestBody Conexao conexao) throws Exception {
-        return conexaoService.save(conexao);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Conexao update(@Valid @RequestBody Conexao conexao) throws Exception {
-        return conexaoService.save(conexao);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathVariable Integer id) throws Exception {
-        conexaoService.remove(id);
     }
 
 }

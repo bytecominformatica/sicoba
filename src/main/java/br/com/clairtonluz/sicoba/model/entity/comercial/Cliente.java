@@ -45,9 +45,7 @@ public class Cliente extends BaseEntity {
     private Endereco endereco;
 
     public Cliente() {
-        this.createdAt = new Date();
         this.endereco = new Endereco();
-        this.status = StatusCliente.ATIVO;
     }
 
     public String getNome() {

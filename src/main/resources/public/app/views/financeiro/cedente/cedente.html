@@ -8,7 +8,7 @@
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(cedente)" novalidate>
 
-    <div class="col-lg-6"
+    <div class="col-md-6"
          ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
         <label>Nome</label>
         <input type="text" name="nome" ng-model="cedente.nome" class="form-control" required>
@@ -17,7 +17,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.cpfCnpj.$invalid && (form.$submitted || form.cpfCnpj.$touched))}">
         <label>CPF/CNPJ</label>
         <input type="text" name="cpfCnpj" ng-model="cedente.cpfCnpj" class="form-control" required>
@@ -26,7 +26,7 @@
         </p>
     </div>
 
-    <div class="col-lg-2"
+    <div class="col-md-2"
          ng-class="{'has-error': (form.codigo.$invalid && (form.$submitted || form.codigo.$touched))}">
         <label>Código Convênio</label>
         <input type="number" name="codigo" ng-model="cedente.codigo" class="form-control" required>
@@ -35,7 +35,7 @@
         </p>
     </div>
 
-    <div class="col-lg-1"
+    <div class="col-md-1"
          ng-class="{'has-error': (form.digitoVerificador.$invalid && (form.$submitted || form.digitoVerificador.$touched))}">
         <label>DV</label>
         <input type="number" name="digitoVerificador" ng-model="cedente.digitoVerificador" class="form-control"
@@ -45,7 +45,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.numeroAgencia.$invalid && (form.$submitted || form.numeroAgencia.$touched))}">
         <label>Agência</label>
         <input type="number" name="numeroAgencia" ng-model="cedente.numeroAgencia" class="form-control" required>
@@ -54,13 +54,13 @@
         </p>
     </div>
 
-    <div class="col-lg-1"
+    <div class="col-md-1"
          ng-class="{'has-error': (form.digitoAgencia.$invalid && (form.$submitted || form.digitoAgencia.$touched))}">
         <label>DV</label>
         <input type="number" name="digitoAgencia" ng-model="cedente.digitoAgencia" class="form-control">
     </div>
 
-    <div class="col-lg-3"
+    <div class="col-md-3"
          ng-class="{'has-error': (form.numeroConta.$invalid && (form.$submitted || form.numeroConta.$touched))}">
         <label>Conta</label>
         <input type="number" name="numeroConta" ng-model="cedente.numeroConta" class="form-control" required>
@@ -69,7 +69,7 @@
         </p>
     </div>
 
-    <div class="col-lg-1"
+    <div class="col-md-1"
          ng-class="{'has-error': (form.digitoConta.$invalid && (form.$submitted || form.digitoConta.$touched))}">
         <label>DV</label>
         <input type="number" name="digitoConta" ng-model="cedente.digitoConta" class="form-control" required>
@@ -78,13 +78,13 @@
         </p>
     </div>
 
-    <div class="col-lg-4"
+    <div class="col-md-4"
          ng-class="{'has-error': (form.codigoOperacao.$invalid && (form.$submitted || form.codigoOperacao.$touched))}">
         <label>Cód. Operação</label>
         <input type="number" name="codigoOperacao" ng-model="cedente.codigoOperacao" class="form-control">
     </div>
 
-    <div class="col-lg-4"
+    <div class="col-md-4"
          ng-class="{'has-error': (form.prazo.$invalid && (form.$submitted || form.prazo.$touched))}">
         <label>Prazo</label>
         <div class="input-group">
@@ -97,7 +97,7 @@
         </p>
     </div>
 
-    <div class="col-lg-4"
+    <div class="col-md-4"
          ng-class="{'has-error': (form.multa.$invalid && (form.$submitted || form.multa.$touched))}">
         <label>Multa</label>
 
@@ -110,7 +110,7 @@
         </p>
     </div>
 
-    <div class="col-lg-4"
+    <div class="col-md-4"
          ng-class="{'has-error': (form.juros.$invalid && (form.$submitted || form.juros.$touched))}">
         <label>Juros</label>
 
@@ -123,7 +123,7 @@
         </p>
     </div>
 
-    <div class="col-lg-3" ng-class="{'has-error': (form.cep.$invalid && (form.$submitted || form.cep.$touched))}">
+    <div class="col-md-3" ng-class="{'has-error': (form.cep.$invalid && (form.$submitted || form.cep.$touched))}">
         <label>CEP</label>
         <input name="cep" type="text" ng-model="cedente.cep" class="form-control" required
                pattern="(^[0-9]{5}-[0-9]{3}$) || (^[0-9]{8}$)"
@@ -135,7 +135,7 @@
         </p>
     </div>
 
-    <div class="col-lg-10"
+    <div class="col-md-10"
          ng-class="{'has-error': (form.logradouro.$invalid && (form.$submitted || form.logradouro.$touched))}">
         <label>Logradouro</label>
         <input name="logradouro" type="text" ng-model="cedente.logradouro" class="form-control" required>
@@ -144,14 +144,14 @@
         </p>
     </div>
 
-    <div class="col-lg-5" ng-class="{'has-error': (form.bairro.$invalid && (form.$submitted || form.bairro.$touched))}">
+    <div class="col-md-5" ng-class="{'has-error': (form.bairro.$invalid && (form.$submitted || form.bairro.$touched))}">
         <label>Bairro</label>
         <input name="bairro" type="text" ng-model="cedente.bairro" class="form-control" required readonly>
         <p class="help-block" ng-show="form.$submitted || form.bairro.$touched">
             <span ng-show="form.bairro.$error.required">Informe um CEP válido para encontrar seu bairro.</span>
         </p>
     </div>
-    <div class="col-lg-5" ng-class="{'has-error': (form.cidade.$invalid && (form.$submitted || form.cidade.$touched))}">
+    <div class="col-md-5" ng-class="{'has-error': (form.cidade.$invalid && (form.$submitted || form.cidade.$touched))}">
         <label>Cidade</label>
         <input name="cidade" type="text" ng-model="cedente.cidade" class="form-control" required
                readonly>
@@ -159,7 +159,7 @@
             <span ng-show="form.cidade.$error.required">Informe um CEP válido para encontrar sua cidade.</span>
         </p>
     </div>
-    <div class="col-lg-2" ng-class="{'has-error': (form.uf.$invalid && (form.$submitted || form.uf.$touched))}">
+    <div class="col-md-2" ng-class="{'has-error': (form.uf.$invalid && (form.$submitted || form.uf.$touched))}">
         <label>UF</label>
         <input name="uf" type="text" ng-model="cedente.uf" class="form-control" required
                readonly>
@@ -168,7 +168,7 @@
         </p>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <br/>
         <br/>
 

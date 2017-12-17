@@ -8,8 +8,11 @@ import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.sicoba.service.financeiro.TituloService;
+import br.com.clairtonluz.sicoba.service.generic.CrudService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,63 +20,71 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class ClienteService {
+public class ClienteService extends CrudService<Cliente, ClienteRepository, Integer> {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-    @Autowired
     private ConexaoRepository conexaoRepository;
-    @Autowired
     private TituloService tituloService;
-    @Autowired
     private ContratoRepository contratoRepository;
-    @Autowired
     private ConexaoService conexaoService;
-    @Autowired
     private BairroService bairroService;
 
+    @Autowired
+    public ClienteService(ClienteRepository clienteRepository, ConexaoRepository conexaoRepository,
+                          TituloService tituloService, ContratoRepository contratoRepository,
+                          ConexaoService conexaoService, BairroService bairroService) {
+        super(clienteRepository);
+        this.conexaoRepository = conexaoRepository;
+        this.tituloService = tituloService;
+        this.contratoRepository = contratoRepository;
+        this.conexaoService = conexaoService;
+        this.bairroService = bairroService;
+    }
 
     public List<Cliente> buscarUltimosAlterados() {
         Date data = DateUtil.toDate(LocalDateTime.now());
-        return clienteRepository.findTop20ByOrderByUpdatedAtDesc();
+        return repository.findTop20ByOrderByUpdatedAtDesc();
     }
 
-    public Cliente buscarPorId(Integer id) {
-        return clienteRepository.findOne(id);
+    public List<Cliente> findAll(Map<String, Object> params) {
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withMatcher("nome", match -> match.ignoreCase().contains());
+        Example<Cliente> example = toQuery(params, matcher);
+        return super.findAll(example);
     }
 
     public boolean rgAvaliable(Cliente c) {
         Cliente cliente = null;
         if (c.getRg() != null) {
-            cliente = clienteRepository.findOptionalByRg(c.getRg());
+            cliente = repository.findOptionalByRg(c.getRg());
         }
         return cliente == null || cliente.getId().equals(c.getId());
     }
 
     public boolean cpfCnpjAvaliable(Cliente c) {
-        Cliente cliente = clienteRepository.findOptionalByCpfCnpj(c.getCpfCnpj());
+        Cliente cliente = repository.findOptionalByCpfCnpj(c.getCpfCnpj());
         return cliente == null || cliente.getId().equals(c.getId());
     }
 
     public boolean emailAvaliable(Cliente c) {
         Cliente cliente = null;
         if (c.getEmail() != null) {
-            cliente = clienteRepository.findOptionalByEmail(c.getEmail());
+            cliente = repository.findOptionalByEmail(c.getEmail());
         }
         return cliente == null || cliente.getId().equals(c.getId());
     }
 
     @Transactional
-    public Cliente save(Cliente cliente) throws Exception {
+    public Cliente save(Cliente cliente) {
         if (cliente.getEndereco().getBairro().getId() == null) {
             Bairro bairro = bairroService.buscarOuCriarBairro(cliente.getEndereco());
             cliente.getEndereco().setBairro(bairro);
         }
 
         if (isAvaliable(cliente)) {
-            clienteRepository.save(cliente);
+            repository.save(cliente);
             Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
 
             if (conexao != null) {
@@ -115,20 +126,20 @@ public class ClienteService {
 
     public List<Cliente> buscarSemTitulo() {
         Date data = DateUtil.toDate(LocalDate.now());
-        List<Cliente> clientes = clienteRepository.findBySemTitulosDepoisDe(data);
+        List<Cliente> clientes = repository.findBySemTitulosDepoisDe(data);
         return clientes;
     }
 
     public void ativar(Cliente cliente) {
         cliente.setStatus(StatusCliente.ATIVO);
-        clienteRepository.save(cliente);
+        repository.save(cliente);
         Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
         conexaoService.save(conexao);
     }
 
     public void inativar(Cliente cliente) {
         cliente.setStatus(StatusCliente.INATIVO);
-        clienteRepository.save(cliente);
+        repository.save(cliente);
         Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
         conexaoService.save(conexao);
     }
@@ -136,21 +147,26 @@ public class ClienteService {
     public List<Cliente> query(String nome, StatusCliente status) {
         List<Cliente> result;
         if (nome != null && !nome.isEmpty()) {
-            result = clienteRepository.findByNomeLike("%" + nome.toUpperCase() + "%");
+            result = repository.findByNomeLike("%" + nome.toUpperCase() + "%");
         } else if (status != null) {
-            result = clienteRepository.findByStatus(status);
+            result = repository.findByStatus(status);
         } else {
-            result = (List<Cliente>) clienteRepository.findAll();
+            result = (List<Cliente>) repository.findAll();
         }
         return result;
     }
 
-    public Conexao buscarPorCliente(Integer clienteId) {
-        return conexaoRepository.findOptionalByCliente(buscarPorId(clienteId));
+    public Conexao buscarConexaoPorCliente(Integer clienteId) {
+        return conexaoRepository.findOptionalByCliente(findById(clienteId));
     }
 
     public List<Cliente> buscarUltimosCancelados() {
         Date data = DateUtil.toDate(LocalDate.now().minusMonths(2));
-        return clienteRepository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, data);
+        return repository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, data);
+    }
+
+    @Override
+    public Class<Cliente> getEntityClass() {
+        return Cliente.class;
     }
 }
