@@ -154,10 +154,6 @@ public class CarnetService {
             carnet.setCliente(contrato.getCliente());
             carnet.setFirstPay(ChargeService.getNextExpireAt(contrato));
             Double value = contrato.getPlano().getValor();
-            if (contrato.getEquipamentoWifi() != null) {
-                value += 5;
-                carnet.setDiscount(5d);
-            }
             carnet.setValue(value);
             carnet.setDescription(String.format("Internet Banda Larga %s", contrato.getPlano().getNome()));
         } else {
