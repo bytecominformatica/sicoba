@@ -40,6 +40,10 @@ public class Cliente extends BaseEntity {
     @Column(name = "fone_contato")
     private String foneContato;
 
+    private String comment;
+    @Column(name = "bypass_auto_block_until")
+    private Date bypassAutoBlockUntil;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
@@ -136,5 +140,21 @@ public class Cliente extends BaseEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getBypassAutoBlockUntil() {
+        return bypassAutoBlockUntil;
+    }
+
+    public void setBypassAutoBlockUntil(Date bypassAutoBlockUntil) {
+        this.bypassAutoBlockUntil = bypassAutoBlockUntil;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

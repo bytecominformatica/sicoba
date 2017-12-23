@@ -47,29 +47,47 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label>RG:</label>
                     {{cliente.rg}}
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-6">
                     <label>CPF/CNPJ:</label>
                     {{cliente.cpfCnpj}}
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     <label>Telefone do titular:</label>
                     {{cliente.foneTitular}}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label>Telefone do(a) {{cliente.contato}}:</label>
                     {{cliente.foneContato}}
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <label>Email:</label>
                     {{cliente.email}}
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <label>Endereço:</label>
                     {{endereco}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Ignorar auto block até:</label>
+                    {{cliente.bypassAutoBlockUntil | date}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Commentário:</label>
+                    {{cliente.comment}}
                 </div>
             </div>
         </div>

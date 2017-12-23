@@ -6,9 +6,11 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.service.comercial.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -42,5 +44,10 @@ public class ClienteAPI extends CrudEndpoint<Cliente, ClienteRepository, Cliente
     @RequestMapping(value = "/ultimos_cancelados", method = RequestMethod.GET)
     public List<Cliente> getUltimosCancelados() {
         return service.buscarUltimosCancelados();
+    }
+
+    @RequestMapping(value = "/block_late_customers", method = RequestMethod.POST)
+    public Map<String, String> blockLateCustomers() {
+        return service.blockLateCustomers();
     }
 }

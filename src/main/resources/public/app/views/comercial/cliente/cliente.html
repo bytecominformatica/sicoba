@@ -11,158 +11,208 @@
 
 <form name="form" class="form-horizontal" ng-submit="form.$valid && save(cliente)" novalidate>
 
-    <div class="col-md-12" ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
-        <label>Nome</label>
-        <input name="nome" ng-model="cliente.nome" class="form-control" type="text" required>
-        <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
-            <span ng-show="form.nome.$error.required">Escreva o nome do cliente.</span>
-        </p>
+    <div class="row">
+        <div class="col-md-9"
+             ng-class="{'has-error': (form.nome.$invalid && (form.$submitted || form.nome.$touched))}">
+            <label>Nome</label>
+            <input name="nome" ng-model="cliente.nome" class="form-control" type="text" required>
+            <p class="help-block" ng-show="form.$submitted || form.nome.$touched">
+                <span ng-show="form.nome.$error.required">Escreva o nome do cliente.</span>
+            </p>
+        </div>
+        <div class="col-md-3"
+             ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
+            <label>Status</label>
+            <select name="status" ng-model="cliente.status" class="form-control">
+                <option>ATIVO</option>
+                <option>INATIVO</option>
+                <option>CANCELADO</option>
+            </select>
+        </div>
     </div>
 
-    <div class="col-md-3"
-         ng-class="{'has-error': (form.nascimento.$invalid && (form.$submitted || form.nascimento.$touched))}">
-        <div class="input-group">
-            <label>Nascimento</label>
+
+    <div class="row">
+        <div class="col-md-4"
+             ng-class="{'has-error': (form.nascimento.$invalid && (form.$submitted || form.nascimento.$touched))}">
             <div class="input-group">
-                <input name="nascimento" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                       ng-model="cliente.dataNascimento" max-date="hoje"
-                       is-open="status.opened" close-text="Close"/>
-                <i class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened"><i
-                            class="glyphicon glyphicon-calendar"></i></button>
-                </i>
+                <label>Nascimento</label>
+                <div class="input-group">
+                    <input name="nascimento" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                           ng-model="cliente.dataNascimento" max-date="hoje"
+                           is-open="status.opened" close-text="Close"/>
+                    <i class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="status.opened = !status.opened"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                    </i>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-3" ng-class="{'has-error': (form.rg.$invalid && (form.$submitted || form.rg.$touched))}">
-        <label>RG</label>
-        <input name="rg" type="text" ng-model="cliente.rg" class="form-control"/>
-    </div>
-
-    <div class="col-md-4"
-         ng-class="{'has-error': (form.cpfCnpj.$invalid && (form.$submitted || form.cpfCnpj.$touched))}">
-        <label>CPF/CNPJ</label>
-        <input name="cpfCnpj" type="text" ng-model="cliente.cpfCnpj" class="form-control" required>
-        <p class="help-block" ng-show="form.$submitted || form.cpfCnpj.$touched">
-            <span ng-show="form.cpfCnpj.$error.required">Precisamos do seu CPF/CNPJ.</span>
-        </p>
-    </div>
-
-    <div class="col-md-2" ng-class="{'has-error': (form.status.$invalid && (form.$submitted || form.status.$touched))}">
-        <label>Status</label>
-        <select name="status" ng-model="cliente.status" class="form-control">
-            <option>ATIVO</option>
-            <option>INATIVO</option>
-            <option>CANCELADO</option>
-        </select>
-    </div>
-    <div class="col-md-4"
-         ng-class="{'has-error': (form.foneTitular.$invalid && (form.$submitted || form.foneTitular.$touched))}">
-        <label>Fone Titular</label>
-        <input name="foneTitular" type="tel" ng-model="cliente.foneTitular" class="form-control" mask="(99)9?9999-9999"
-               placeholder="Telefone" required>
-        <p class="help-block" ng-show="form.$submitted || form.foneTitular.$touched">
-            <span ng-show="form.foneTitular.$error.required">Precisamos do seu telefone.</span>
-            <span ng-show="form.foneTitular.$error.mask">Telefone invalido veja os padroes aceitos: (99)99999-9999 ou (99)9999-9999</span>
-        </p>
-    </div>
-    <div class="col-md-4"
-         ng-class="{'has-error': (form.contato.$invalid && (form.$submitted || form.contato.$touched))}">
-        <label>Contato</label>
-        <input name="contato" type="text" ng-model="cliente.contato" class="form-control"/>
-    </div>
-
-    <div class="col-md-4"
-         ng-class="{'has-error': (form.foneContato.$invalid && (form.$submitted || form.foneContato.$touched))}">
-        <label>Fone Contato</label>
-        <input name="foneContato" type="tel" ng-model="cliente.foneContato" class="form-control" mask="(99)9?9999-9999"
-               placeholder="Telefone"/>
-        <p class="help-block" ng-show="form.$submitted || form.foneContato.$touched">
-            <span ng-show="form.foneContato.$error.mask">Telefone invalido veja os padroes aceitos: (99)99999-9999 ou (99)9999-9999</span>
-        </p>
-
-    </div>
-
-    <div class="col-md-9" ng-class="{'has-error': (form.email.$invalid && (form.$submitted || form.email.$touched))}">
-        <label>Email</label>
-        <input name="email" type="email" ng-model="cliente.email" class="form-control"/>
-        <p class="help-block" ng-show="form.$submitted || form.email.$touched">
-            <span ng-show="form.email.$error.email">Email invalido</span>
-        </p>
-    </div>
-
-    <div class="col-md-3" ng-class="{'has-error': (form.cep.$invalid && (form.$submitted || form.cep.$touched))}">
-        <label>CEP</label>
-        <input name="cep" type="text" ng-model="cliente.endereco.cep" class="form-control" required
-               pattern="(^[0-9]{5}-[0-9]{3}$) || (^[0-9]{8}$)"
-               ng-blur="form.cep.$valid && buscarEnderecoPorCep(cliente.endereco.cep, form)">
-        <p class="help-block" ng-show="form.$submitted || form.cep.$touched">
-            <span ng-show="form.cep.$error.required">Digite seu CEP para que possamos encontrar seu endereço.</span>
-            <span ng-show="form.cep.$error.pattern">CEP inválido.</span>
-            <span ng-show="form.cep.$error.notFound">CEP não encontrado.</span>
-        </p>
-    </div>
-
-    <div class="col-md-10"
-         ng-class="{'has-error': (form.logradouro.$invalid && (form.$submitted || form.logradouro.$touched))}">
-        <label>Logradouro</label>
-        <input name="logradouro" type="text" ng-model="cliente.endereco.logradouro" class="form-control" required>
-        <p class="help-block" ng-show="form.$submitted || form.logradouro.$touched">
-            <span ng-show="form.logradouro.$error.required">Qual a rua ou avenida que você mora?</span>
-        </p>
-    </div>
-
-    <div class="col-md-2" ng-class="{'has-error': (form.numero.$invalid && (form.$submitted || form.numero.$touched))}">
-        <label>Numero</label>
-        <input name="numero" type="text" ng-model="cliente.endereco.numero" class="form-control"/>
-    </div>
-    <div class="col-md-5" ng-class="{'has-error': (form.bairro.$invalid && (form.$submitted || form.bairro.$touched))}">
-        <label>Bairro</label>
-        <input name="bairro" type="text" ng-model="cliente.endereco.bairro.nome" class="form-control" required readonly>
-        <p class="help-block" ng-show="form.$submitted || form.bairro.$touched">
-            <span ng-show="form.bairro.$error.required">Informe um CEP válido para encontrar seu bairro.</span>
-        </p>
-    </div>
-    <div class="col-md-5" ng-class="{'has-error': (form.cidade.$invalid && (form.$submitted || form.cidade.$touched))}">
-        <label>Cidade</label>
-        <input name="cidade" type="text" ng-model="cliente.endereco.bairro.cidade.nome" class="form-control" required
-               readonly>
-        <p class="help-block" ng-show="form.$submitted || form.cidade.$touched">
-            <span ng-show="form.cidade.$error.required">Informe um CEP válido para encontrar sua cidade.</span>
-        </p>
-    </div>
-    <div class="col-md-2" ng-class="{'has-error': (form.uf.$invalid && (form.$submitted || form.uf.$touched))}">
-        <label>UF</label>
-        <input name="uf" type="text" ng-model="cliente.endereco.bairro.cidade.estado.uf" class="form-control" required
-               readonly>
-        <p class="help-block" ng-show="form.$submitted || form.uf.$touched">
-            <span ng-show="form.uf.$error.required">Informe um CEP válido para encontrar seu distrito.</span>
-        </p>
-    </div>
-
-    <div class="col-md-12"
-         ng-class="{'has-error': (form.complemento.$invalid && (form.$submitted || form.complemento.$touched))}">
-        <label>Complemento</label>
-        <input name="complemento" type="text" ng-model="cliente.endereco.complemento" class="form-control"/>
-    </div>
-
-    <div class="col-md-12">
-        <br/>
-        <br/>
-
-        <div class="pull-right">
-            <button class="btn btn-primary" type="submit" ng-hide="cliente.status == 'CANCELADO'">{{cliente.id ?
-                'Atualizar' : 'Salvar'}}
-            </button>
-            <button class="btn btn-danger" type="button" ng-show="cliente.status == 'CANCELADO'"
-                    ng-click="form.$valid && save(cliente)"
-                    confirm="(ATENÇÃO) Ao cancelar um cliente os equipamentos serão desalocados e todos os titulos não vencidos serão apagados. Tem certeza que desseja cancelar o(a) cliente {{cliente.nome}}?">
-                {{cliente.id ? 'Atualizar' : 'Salvar'}}
-            </button>
-            <a ng-href="#/cliente/{{cliente.id}}/dashboard" class="btn btn-default">Voltar</a>
+        <div class="col-md-4" ng-class="{'has-error': (form.rg.$invalid && (form.$submitted || form.rg.$touched))}">
+            <label>RG</label>
+            <input name="rg" type="text" ng-model="cliente.rg" class="form-control"/>
         </div>
-        <br/>
-        <br/>
+
+        <div class="col-md-4"
+             ng-class="{'has-error': (form.cpfCnpj.$invalid && (form.$submitted || form.cpfCnpj.$touched))}">
+            <label>CPF/CNPJ</label>
+            <input name="cpfCnpj" type="text" ng-model="cliente.cpfCnpj" class="form-control" required>
+            <p class="help-block" ng-show="form.$submitted || form.cpfCnpj.$touched">
+                <span ng-show="form.cpfCnpj.$error.required">Precisamos do seu CPF/CNPJ.</span>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4"
+             ng-class="{'has-error': (form.foneTitular.$invalid && (form.$submitted || form.foneTitular.$touched))}">
+            <label>Fone Titular</label>
+            <input name="foneTitular" type="tel" ng-model="cliente.foneTitular" class="form-control"
+                   mask="(99)9?9999-9999"
+                   placeholder="Telefone" required>
+            <p class="help-block" ng-show="form.$submitted || form.foneTitular.$touched">
+                <span ng-show="form.foneTitular.$error.required">Precisamos do seu telefone.</span>
+                <span ng-show="form.foneTitular.$error.mask">Telefone invalido veja os padroes aceitos: (99)99999-9999 ou (99)9999-9999</span>
+            </p>
+        </div>
+        <div class="col-md-4"
+             ng-class="{'has-error': (form.contato.$invalid && (form.$submitted || form.contato.$touched))}">
+            <label>Contato</label>
+            <input name="contato" type="text" ng-model="cliente.contato" class="form-control"/>
+        </div>
+        <div class="col-md-4"
+             ng-class="{'has-error': (form.foneContato.$invalid && (form.$submitted || form.foneContato.$touched))}">
+            <label>Fone Contato</label>
+            <input name="foneContato" type="tel" ng-model="cliente.foneContato" class="form-control"
+                   mask="(99)9?9999-9999"
+                   placeholder="Telefone"/>
+            <p class="help-block" ng-show="form.$submitted || form.foneContato.$touched">
+                <span ng-show="form.foneContato.$error.mask">Telefone invalido veja os padroes aceitos: (99)99999-9999 ou (99)9999-9999</span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9"
+             ng-class="{'has-error': (form.email.$invalid && (form.$submitted || form.email.$touched))}">
+            <label>Email</label>
+            <input name="email" type="email" ng-model="cliente.email" class="form-control"/>
+            <p class="help-block" ng-show="form.$submitted || form.email.$touched">
+                <span ng-show="form.email.$error.email">Email invalido</span>
+            </p>
+        </div>
+
+        <div class="col-md-3" ng-class="{'has-error': (form.cep.$invalid && (form.$submitted || form.cep.$touched))}">
+            <label>CEP</label>
+            <input name="cep" type="text" ng-model="cliente.endereco.cep" class="form-control" required
+                   pattern="(^[0-9]{5}-[0-9]{3}$) || (^[0-9]{8}$)"
+                   ng-blur="form.cep.$valid && buscarEnderecoPorCep(cliente.endereco.cep, form)">
+            <p class="help-block" ng-show="form.$submitted || form.cep.$touched">
+                <span ng-show="form.cep.$error.required">Digite seu CEP para que possamos encontrar seu endereço.</span>
+                <span ng-show="form.cep.$error.pattern">CEP inválido.</span>
+                <span ng-show="form.cep.$error.notFound">CEP não encontrado.</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9"
+             ng-class="{'has-error': (form.logradouro.$invalid && (form.$submitted || form.logradouro.$touched))}">
+            <label>Logradouro</label>
+            <input name="logradouro" type="text" ng-model="cliente.endereco.logradouro" class="form-control" required>
+            <p class="help-block" ng-show="form.$submitted || form.logradouro.$touched">
+                <span ng-show="form.logradouro.$error.required">Qual a rua ou avenida que você mora?</span>
+            </p>
+        </div>
+
+        <div class="col-md-3"
+             ng-class="{'has-error': (form.numero.$invalid && (form.$submitted || form.numero.$touched))}">
+            <label>Numero</label>
+            <input name="numero" type="text" ng-model="cliente.endereco.numero" class="form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5"
+             ng-class="{'has-error': (form.bairro.$invalid && (form.$submitted || form.bairro.$touched))}">
+            <label>Bairro</label>
+            <input name="bairro" type="text" ng-model="cliente.endereco.bairro.nome" class="form-control" required
+                   readonly>
+            <p class="help-block" ng-show="form.$submitted || form.bairro.$touched">
+                <span ng-show="form.bairro.$error.required">Informe um CEP válido para encontrar seu bairro.</span>
+            </p>
+        </div>
+        <div class="col-md-5"
+             ng-class="{'has-error': (form.cidade.$invalid && (form.$submitted || form.cidade.$touched))}">
+            <label>Cidade</label>
+            <input name="cidade" type="text" ng-model="cliente.endereco.bairro.cidade.nome" class="form-control"
+                   required
+                   readonly>
+            <p class="help-block" ng-show="form.$submitted || form.cidade.$touched">
+                <span ng-show="form.cidade.$error.required">Informe um CEP válido para encontrar sua cidade.</span>
+            </p>
+        </div>
+        <div class="col-md-2" ng-class="{'has-error': (form.uf.$invalid && (form.$submitted || form.uf.$touched))}">
+            <label>UF</label>
+            <input name="uf" type="text" ng-model="cliente.endereco.bairro.cidade.estado.uf" class="form-control"
+                   required
+                   readonly>
+            <p class="help-block" ng-show="form.$submitted || form.uf.$touched">
+                <span ng-show="form.uf.$error.required">Informe um CEP válido para encontrar seu distrito.</span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"
+             ng-class="{'has-error': (form.complemento.$invalid && (form.$submitted || form.complemento.$touched))}">
+            <label>Complemento</label>
+            <input name="complemento" type="text" ng-model="cliente.endereco.complemento" class="form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"
+             ng-class="{'has-error': (form.bypassAutoBlockUntil.$invalid && (form.$submitted || form.bypassAutoBlockUntil.$touched))}">
+            <div class="input-group">
+                <label>Ignorar auto block até</label>
+                <div class="input-group">
+                    <input name="bypassAutoBlockUntil" type="text" class="form-control"
+                           uib-datepicker-popup="dd/MM/yyyy"
+                           ng-model="cliente.bypassAutoBlockUntil"
+                           is-open="status.bypassOpened" close-text="Close"/>
+                    <i class="input-group-btn">
+                        <button type="button" class="btn btn-default"
+                                ng-click="status.bypassOpened = !status.bypassOpened">
+                            <i class="glyphicon glyphicon-calendar"/>
+                        </button>
+                    </i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9"
+             ng-class="{'has-error': (form.comment.$invalid && (form.$submitted || form.comment.$touched))}">
+            <label>Comentário</label>
+            <textarea rows="4" name="comment" type="text" ng-model="cliente.comment" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <br/>
+            <br/>
+
+            <div class="pull-right">
+                <button class="btn btn-primary" type="submit" ng-hide="cliente.status == 'CANCELADO'">{{cliente.id ?
+                    'Atualizar' : 'Salvar'}}
+                </button>
+                <button class="btn btn-danger" type="button" ng-show="cliente.status == 'CANCELADO'"
+                        ng-click="form.$valid && save(cliente)"
+                        confirm="(ATENÇÃO) Ao cancelar um cliente os equipamentos serão desalocados e todos os titulos não vencidos serão apagados. Tem certeza que desseja cancelar o(a) cliente {{cliente.nome}}?">
+                    {{cliente.id ? 'Atualizar' : 'Salvar'}}
+                </button>
+                <a ng-href="#/cliente/{{cliente.id}}/dashboard" class="btn btn-default">Voltar</a>
+            </div>
+            <br/>
+            <br/>
+        </div>
     </div>
 </form>

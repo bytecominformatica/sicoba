@@ -12,6 +12,7 @@ import java.io.StringWriter;
  * Created by clairton on 24/12/16.
  */
 public class SendEmail {
+    public static final String EMAIL_SAC = "sac@bytecominformatica.com.br";
 
     private SendEmail() {
 

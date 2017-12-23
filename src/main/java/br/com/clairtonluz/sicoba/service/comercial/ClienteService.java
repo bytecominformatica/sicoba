@@ -3,13 +3,16 @@ package br.com.clairtonluz.sicoba.service.comercial;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.*;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.Titulo;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
+import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.sicoba.service.financeiro.TituloService;
 import br.com.clairtonluz.sicoba.service.generic.CrudService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
+import br.com.clairtonluz.sicoba.util.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -19,13 +22,16 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class ClienteService extends CrudService<Cliente, ClienteRepository, Integer> {
+    public static final int DELAY_TOLERANCE_IN_DAYS = 15;
 
     private ConexaoRepository conexaoRepository;
+    private ChargeRepository chargeRepository;
     private TituloService tituloService;
     private ContratoRepository contratoRepository;
     private ConexaoService conexaoService;
@@ -33,10 +39,11 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
 
     @Autowired
     public ClienteService(ClienteRepository clienteRepository, ConexaoRepository conexaoRepository,
-                          TituloService tituloService, ContratoRepository contratoRepository,
+                          ChargeRepository chargeRepository, TituloService tituloService, ContratoRepository contratoRepository,
                           ConexaoService conexaoService, BairroService bairroService) {
         super(clienteRepository);
         this.conexaoRepository = conexaoRepository;
+        this.chargeRepository = chargeRepository;
         this.tituloService = tituloService;
         this.contratoRepository = contratoRepository;
         this.conexaoService = conexaoService;
@@ -54,6 +61,56 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
         Example<Cliente> example = toQuery(params, matcher);
         return super.findAll(example);
     }
+
+    public Map<String, String> blockLateCustomers() {
+        try {
+            Map<String, String> response = new HashMap<>();
+
+            LocalDate now = LocalDate.now();
+            Date tolerancia = DateUtil.toDate(now.minusDays(DELAY_TOLERANCE_IN_DAYS));
+            List<Charge> lateCharges = chargeRepository.overdue(tolerancia);
+            StringBuilder blockedCustomers = new StringBuilder();
+            StringBuilder bypassCustomers = new StringBuilder();
+            lateCharges.forEach(charge -> {
+                Cliente cliente = charge.getCliente();
+                if (StatusCliente.ATIVO.equals(cliente.getStatus())) {
+                    LocalDate bypass = DateUtil.toLocalDate(cliente.getBypassAutoBlockUntil());
+                    if (bypass == null || now.isAfter(bypass)) {
+                        inativar(cliente);
+                        addCustomersToStringBuilder(blockedCustomers, cliente);
+                    } else {
+                        addCustomersToStringBuilder(bypassCustomers, cliente);
+                    }
+                }
+            });
+
+            if (blockedCustomers.length() > 0) {
+                String subject = "[NOTIFICATION] Bloqueio automatico de clientes em atraso";
+                SendEmail.send(SendEmail.EMAIL_SAC, subject,
+                        "Clientes bloqueados:\n" +
+                                blockedCustomers.toString() +
+                                "\nClientes não bloqueados por decisões administrativas:\n" +
+                                bypassCustomers.toString());
+            }
+
+            response.put("blocked", blockedCustomers.toString());
+            response.put("bypassed", bypassCustomers.toString());
+            return response;
+        } catch (Exception e) {
+            SendEmail.notificarAdmin("[NOTIFICATION] Erro ao bloquear automaticamente clientes atrasados", e);
+            return null;
+        }
+    }
+
+    private void addCustomersToStringBuilder(StringBuilder sb, Cliente cliente) {
+        if (sb.length() > 0) {
+            sb.append(", \n");
+        }
+        sb.append(cliente.getId());
+        sb.append(" - ");
+        sb.append(cliente.getNome());
+    }
+
 
     public boolean rgAvaliable(Cliente c) {
         Cliente cliente = null;
@@ -141,7 +198,8 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
         cliente.setStatus(StatusCliente.INATIVO);
         repository.save(cliente);
         Conexao conexao = conexaoService.buscarOptionalPorCliente(cliente);
-        conexaoService.save(conexao);
+        if (conexao != null)
+            conexaoService.save(conexao);
     }
 
     public List<Cliente> query(String nome, StatusCliente status) {

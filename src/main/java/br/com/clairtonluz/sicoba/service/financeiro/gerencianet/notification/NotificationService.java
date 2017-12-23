@@ -64,6 +64,8 @@ public class NotificationService {
                             Logger.getLogger(getClass().getName()).warning(it.toString());
                     }
                 }
+
+                clienteService.blockLateCustomers();
             } else {
                 SendEmail.sendToAdmin("[NOTIFICATION] Token não encontrado", String.format("token:%s\ncontent:%s", token, String.valueOf(response)));
             }

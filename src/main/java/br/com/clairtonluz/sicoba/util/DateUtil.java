@@ -16,19 +16,19 @@ public final class DateUtil {
     public static final SimpleDateFormat DATETIME_ISO = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static Date toDate(LocalDate localDate) {
-        return toDate(localDate.atStartOfDay());
+        return localDate != null ? toDate(localDate.atStartOfDay()) : null;
     }
 
     public static Date toDate(LocalDateTime localDateTime) {
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        return localDateTime != null ? Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()) : null;
     }
 
     public static LocalDateTime toLocalDateTime(Date date) {
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return date != null ? date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime() : null;
     }
 
     public static LocalDate toLocalDate(Date date) {
-        return toLocalDateTime(date).toLocalDate();
+        return date != null ? toLocalDateTime(date).toLocalDate() : null;
     }
 
     public static Date plusMonth(Date data, Integer value) {
@@ -54,6 +54,7 @@ public final class DateUtil {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
     public static Date parseDatetimeISO(String datetimeString) {
         try {
             return datetimeString != null ? DATE_ISO.parse(datetimeString) : null;

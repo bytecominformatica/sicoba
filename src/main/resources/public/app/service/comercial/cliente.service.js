@@ -22,6 +22,10 @@
                         method: 'GET',
                         url: 'api/clientes/ultimos_cancelados',
                         isArray: true
+                    },
+                    blockLateCustomers: {
+                        method: 'POST',
+                        url: 'api/clientes/block_late_customers'
                     }
                 });
         });

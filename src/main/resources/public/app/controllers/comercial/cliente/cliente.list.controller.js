@@ -2,9 +2,10 @@
     'use strict';
 
     angular.module('sicobaApp')
-        .controller('ClienteListCtrl', function ($scope, Cliente, Conexao) {
+        .controller('ClienteListCtrl', function ($scope, $rootScope, Cliente, Conexao) {
             $scope.buscarPorCliente = _buscarPorCliente;
             $scope.buscarPorIp = _buscarPorIp;
+            $scope.blockLateCustomers = _blockLateCustomers;
 
             _init();
 
@@ -42,6 +43,19 @@
             function _buscarConexoes(clientes) {
                 clientes.forEach(function (cliente) {
                     cliente.conexao = Conexao.buscarPorCliente({clienteId: cliente.id});
+                });
+            }
+
+            function _blockLateCustomers() {
+                console.log('bloqueand clientes em atraso');
+                Cliente.blockLateCustomers(function (data) {
+                    console.log('block late customers', data);
+                    $rootScope.messages = [{
+                        title: 'Sucesso:',
+                        body: 'Operação realizada com sucesso.',
+                        type: 'alert-success'
+                    }];
+
                 });
             }
 

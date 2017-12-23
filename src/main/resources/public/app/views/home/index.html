@@ -2,17 +2,17 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <ul class="nav nav-tabs" ng-init="tab = 'titulos.vencidos'">
-            <li ng-class="{'active': tab == 'titulos.vencidos'}">
-                <a ng-click="tab = 'titulos.vencidos'">
-                    Titulos em atraso
-                    <span class="label label-warning">{{titulosVencidos.length}}</span>
-                </a>
-            </li>
+        <ul class="nav nav-tabs" ng-init="tab = 'charges.overdue'">
             <li ng-class="{'active': tab == 'charges.overdue'}">
                 <a ng-click="tab = 'charges.overdue'">
                     Cobranças em atraso
                     <span class="label label-warning">{{chargesOverdue.length}}</span>
+                </a>
+            </li>
+            <li ng-class="{'active': tab == 'titulos.vencidos'}">
+                <a ng-click="tab = 'titulos.vencidos'">
+                    Titulos em atraso
+                    <span class="label label-warning">{{titulosVencidos.length}}</span>
                 </a>
             </li>
             <li ng-class="{'active': tab == 'cliente.sem.titulo'}">
