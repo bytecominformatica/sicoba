@@ -1,13 +1,34 @@
-#PARA DESENVOLVIMENTO: jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL}
+    url: jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom
     driverClassName: org.postgresql.Driver
     maxActive: 10
     maxIdle: 5
     minIdle: 1
     initialSize: 1
     removeAbandoned: true
-#  jpa:
-#    show-sql: true
-#    hibernate.ddl-auto: create-drop
+  jpa:
+    show-sql: false
+
+---
+# DEFAULT
+spring:
+  profiles: default
+
+---
+# STAGING
+spring:
+  profiles: staging
+  security.require-ssl: true
+
+---
+# PRODUCTION
+spring:
+  profiles: production
+  security.require-ssl: true
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+  jpa:
+    show-sql: false
+    properties:
+       hibernate.format_sql: false
