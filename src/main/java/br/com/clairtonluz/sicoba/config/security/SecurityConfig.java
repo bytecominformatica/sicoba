@@ -28,7 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         if (securityProperties.isRequireSsl()) http.requiresChannel().anyRequest().requiresSecure();
