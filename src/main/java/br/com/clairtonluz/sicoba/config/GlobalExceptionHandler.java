@@ -3,7 +3,8 @@ package br.com.clairtonluz.sicoba.config;
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.pojo.ErrorInfo;
-import br.com.clairtonluz.sicoba.util.SendEmail;
+import br.com.clairtonluz.sicoba.service.notification.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @Autowired
+    private EmailService emailService;
 
     @ResponseStatus(HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(ConflitException.class)
@@ -37,7 +41,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ErrorInfo handleException(HttpServletRequest req, Exception e) {
         e.printStackTrace();
-        SendEmail.notificarAdmin(e);
+        emailService.notificarAdmin(e);
         return new ErrorInfo(req.getRequestURI(), e);
     }
 }

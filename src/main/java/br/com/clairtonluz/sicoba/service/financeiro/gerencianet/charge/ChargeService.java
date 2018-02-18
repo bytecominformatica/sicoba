@@ -11,8 +11,8 @@ import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetGNService;
+import br.com.clairtonluz.sicoba.service.notification.EmailService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
-import br.com.clairtonluz.sicoba.util.SendEmail;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +31,41 @@ import java.util.Objects;
  */
 @Service
 public class ChargeService {
+    private final ChargeRepository chargeRepository;
+    private final ContratoRepository contratoRepository;
+    private final ClienteRepository clienteRepository;
+    private final ChargeGNService chargeGNService;
+    private final CarnetGNService carnetGNService;
+    private final EmailService emailService;
+
     @Autowired
-    private ChargeRepository chargeRepository;
-    @Autowired
-    private ContratoRepository contratoRepository;
-    @Autowired
-    private ClienteRepository clienteRepository;
-    @Autowired
-    private ChargeGNService chargeGNService;
-    @Autowired
-    private CarnetGNService carnetGNService;
-//    @Autowired
-//    private CarnetService carnetService;
+    public ChargeService(ChargeRepository chargeRepository, ContratoRepository contratoRepository, ClienteRepository clienteRepository, ChargeGNService chargeGNService, CarnetGNService carnetGNService, EmailService emailService) {
+        this.chargeRepository = chargeRepository;
+        this.contratoRepository = contratoRepository;
+        this.clienteRepository = clienteRepository;
+        this.chargeGNService = chargeGNService;
+        this.carnetGNService = carnetGNService;
+        this.emailService = emailService;
+    }
+
+    public static boolean isExpireAtValid(Charge charge, Date expireAt) {
+        if (!charge.getExpireAt().before(expireAt)) {
+            throw new ConflitException("A nova data de vencimento deve ser maior do que a anterior");
+        }
+
+        if (DateUtil.isPast(expireAt)) {
+            throw new ConflitException("O vencimento deve ser maior ou igual a data atual");
+        }
+
+        if (!StatusCharge.WAITING.equals(charge.getStatus()) && !StatusCharge.UNPAID.equals(charge.getStatus())) {
+            throw new ConflitException("Apenas transações com status [waiting] ou [unpaid] podem ser atualizadas");
+        }
+        return true;
+    }
+
+    public static Date getNextExpireAt(Contrato contrato) {
+        return DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
+    }
 
     @Transactional
     public Charge createCharge(Charge charge) {
@@ -110,7 +133,7 @@ public class ChargeService {
 
         cancelCharge(chargeAtual);
 
-        SendEmail.sendToAdmin(subject, content);
+        emailService.sendToAdmin(subject, content);
         return chargeAtual;
     }
 
@@ -137,21 +160,6 @@ public class ChargeService {
         return charge;
     }
 
-    public static boolean isExpireAtValid(Charge charge, Date expireAt) {
-        if (!charge.getExpireAt().before(expireAt)) {
-            throw new ConflitException("A nova data de vencimento deve ser maior do que a anterior");
-        }
-
-        if (DateUtil.isPast(expireAt)) {
-            throw new ConflitException("O vencimento deve ser maior ou igual a data atual");
-        }
-
-        if (!StatusCharge.WAITING.equals(charge.getStatus()) && !StatusCharge.UNPAID.equals(charge.getStatus())) {
-            throw new ConflitException("Apenas transações com status [waiting] ou [unpaid] podem ser atualizadas");
-        }
-        return true;
-    }
-
     @Transactional
     public boolean updateChargeMetadata(Charge charge) {
         return chargeGNService.updateChargeMetadata(charge);
@@ -164,7 +172,6 @@ public class ChargeService {
             chargeGNService.updateChargeMetadata(c);
         }
     }
-
 
     @Transactional
     public void resendBillet(Charge charge) {
@@ -216,10 +223,6 @@ public class ChargeService {
         charge.setStatus(StatusCharge.NEW);
 
         return charge;
-    }
-
-    public static Date getNextExpireAt(Contrato contrato) {
-        return DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
     }
 
     public List<Charge> overdue() {

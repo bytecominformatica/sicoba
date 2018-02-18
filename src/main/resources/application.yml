@@ -1,4 +1,7 @@
+
 spring:
+  application:
+    name: sicoba
   datasource:
     url: jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom
     driverClassName: org.postgresql.Driver
@@ -9,28 +12,47 @@ spring:
     removeAbandoned: true
   jpa:
     show-sql: false
-  profiles:
-    active: ${PROFILE}
+  mail:
+    default-encoding: UTF-8
+    host: smtp.zoho.com
+    username: sicoba@bytecominformatica.com.br
+    password: secretPassword
+    port: 465
+    protocol: smtp
+    properties.mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+    properties.mail.smtp.socketFactory.fallback: false
+    properties.mail.smtp.startssl.enable: true
+    properties.mail.smtp.socketFactory.port: 465
+    properties.mail.smtp.debug: true
+myapp:
+  email:
+    sac: sac@bytecominformatica.com.br
+    admin: admin@bytecominformatica.com.br
+    suporte: suporte@bytecominformatica.com.br
+  boleto:
+    notification-url: https://mydomain.com.br/api/gerencianet/%d/notification
 
 ---
 # DEFAULT
 spring:
   profiles: default
-
 ---
 # STAGING
 spring:
   profiles: staging
-  security.require-ssl: true
+security:
+  require-ssl: true
 
 ---
 # PRODUCTION
 spring:
   profiles: production
-  security.require-ssl: true
   datasource:
     url: ${JDBC_DATABASE_URL}
   jpa:
     show-sql: false
     properties:
        hibernate.format_sql: false
+
+security:
+  require-ssl: true

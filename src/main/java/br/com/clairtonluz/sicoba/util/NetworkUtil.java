@@ -1,5 +1,7 @@
 package br.com.clairtonluz.sicoba.util;
 
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.InetAddress;
 
@@ -10,15 +12,12 @@ public enum NetworkUtil {
 
     INSTANCE;
 
-    public String getIp() {
-//        HttpServletRequest request = (HttpServletRequest) FacesContext
-//                .getCurrentInstance().getExternalContext().getRequest();
-//        String ipAddress = request.getHeader("X-FORWARDED-FOR");
-//
-//        if (ipAddress == null) {
-//            ipAddress = request.getRemoteAddr();
-//        }
-        return "implementar";
+    public String getIp(HttpServletRequest request) {
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+        return ipAddress;
     }
 
     public boolean ping(String ip) throws IOException {

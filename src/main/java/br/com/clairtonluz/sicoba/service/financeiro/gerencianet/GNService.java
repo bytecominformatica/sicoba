@@ -1,5 +1,7 @@
 package br.com.clairtonluz.sicoba.service.financeiro.gerencianet;
 
+import br.com.clairtonluz.sicoba.config.MyEnvironment;
+import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Endereco;
@@ -11,6 +13,8 @@ import br.com.gerencianet.gnsdk.Gerencianet;
 import br.com.gerencianet.gnsdk.exceptions.GerencianetException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +31,11 @@ public class GNService {
     private static final HashMap<String, String> PARAMS_EMPTY = new HashMap<>();
     private static final double FINE_RATE = 0.05;
     private static final double INTEREST_RATE = 0.006677;
+    private final MyEnvironment myEnvironment;
 
-    private GNService() {
-
+    @Autowired
+    public GNService(MyEnvironment myEnvironment) {
+        this.myEnvironment = myEnvironment;
     }
 
     public static JSONObject createItem(String name, Double value) {
@@ -151,17 +157,17 @@ public class GNService {
     }
 
 
-    public static JSONObject call(GerencianetAccount account, String method, Map<String, String> params) {
+    public JSONObject call(GerencianetAccount account, String method, Map<String, String> params) {
         return call(account, method, params, BODY_EMPTY);
     }
 
-    public static JSONObject call(GerencianetAccount account, String method, JSONObject body) {
+    public JSONObject call(GerencianetAccount account, String method, JSONObject body) {
         return call(account, method, PARAMS_EMPTY, body);
     }
 
-    public static JSONObject call(GerencianetAccount account, String method, Map<String, String> params, JSONObject body) {
+    public JSONObject call(GerencianetAccount account, String method, Map<String, String> params, JSONObject body) {
         try {
-            Gerencianet gn = new Gerencianet(account.createOptions());
+            Gerencianet gn = new Gerencianet(createOptions(account));
             JSONObject response = gn.call(method, params, body);
             return response;
         } catch (GerencianetException e) {
@@ -172,4 +178,42 @@ public class GNService {
             throw new ConflitException(e.getMessage());
         }
     }
+
+
+    public JSONObject createOptions(GerencianetAccount account) {
+        JSONObject options = new JSONObject();
+        options.put("client_id", account.getClientId());
+        options.put("client_secret", account.getClientSecret());
+        options.put("sandbox", !myEnvironment.isProduction());
+        return options;
+    }
+
+    public boolean isNotifyClient(GerencianetAccount account) {
+        return myEnvironment.isProduction() && account.isNotifyClient();
+
+    }
+
+    /**
+     * O padrão de url a ser configurada: https://mydomain.com.br/api/gerencianet/%d/notification
+     * onde o %d será substituido pelo o id da conta gerencianet configurada.
+     *
+     * @return
+     * @param account
+     */
+    public String createNotificationUrl(GerencianetAccount account) {
+        String url = null;
+        if (account == null || account.getId() == null) {
+            throw new BadRequestException("Conta gerencianet não foi cadastrada no sistema");
+        }
+
+        String notificationUrl = myEnvironment.getNotificationUrl();
+        if (!StringUtil.isEmpty(notificationUrl)) {
+            if (!notificationUrl.contains("%d")) {
+                throw new BadRequestException("A url e notificação segue o padrão expecificado");
+            }
+            url = String.format(notificationUrl, account.getId());
+        }
+        return url;
+    }
+
 }

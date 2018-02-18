@@ -17,7 +17,7 @@ passwd bytecom
 
 echo "export JDBC_DATABASE_URL='jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom'" > /etc/profile.d/database.sh
 
-sudo -i -u postgres
+sudo -u postgres psql
 
 ```
 

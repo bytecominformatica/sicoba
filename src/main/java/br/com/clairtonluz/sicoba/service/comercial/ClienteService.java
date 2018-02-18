@@ -11,8 +11,8 @@ import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeReposit
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
 import br.com.clairtonluz.sicoba.service.financeiro.TituloService;
 import br.com.clairtonluz.sicoba.service.generic.CrudService;
+import br.com.clairtonluz.sicoba.service.notification.EmailService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
-import br.com.clairtonluz.sicoba.util.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -30,17 +30,19 @@ import java.util.Map;
 public class ClienteService extends CrudService<Cliente, ClienteRepository, Integer> {
     public static final int DELAY_TOLERANCE_IN_DAYS = 15;
 
-    private ConexaoRepository conexaoRepository;
-    private ChargeRepository chargeRepository;
-    private TituloService tituloService;
-    private ContratoRepository contratoRepository;
-    private ConexaoService conexaoService;
-    private BairroService bairroService;
+    private final ConexaoRepository conexaoRepository;
+    private final ChargeRepository chargeRepository;
+    private final TituloService tituloService;
+    private final ContratoRepository contratoRepository;
+    private final ConexaoService conexaoService;
+    private final BairroService bairroService;
+    private final EmailService emailService;
 
     @Autowired
     public ClienteService(ClienteRepository clienteRepository, ConexaoRepository conexaoRepository,
                           ChargeRepository chargeRepository, TituloService tituloService, ContratoRepository contratoRepository,
-                          ConexaoService conexaoService, BairroService bairroService) {
+                          ConexaoService conexaoService, BairroService bairroService,
+                          EmailService emailService) {
         super(clienteRepository);
         this.conexaoRepository = conexaoRepository;
         this.chargeRepository = chargeRepository;
@@ -48,6 +50,7 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
         this.contratoRepository = contratoRepository;
         this.conexaoService = conexaoService;
         this.bairroService = bairroService;
+        this.emailService = emailService;
     }
 
     public List<Cliente> buscarUltimosAlterados() {
@@ -86,7 +89,7 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
 
             if (blockedCustomers.length() > 0) {
                 String subject = "[NOTIFICATION] Bloqueio automatico de clientes em atraso";
-                SendEmail.send(SendEmail.EMAIL_SAC, subject,
+                emailService.sendToSac(subject,
                         "Clientes bloqueados:\n" +
                                 blockedCustomers.toString() +
                                 "\nClientes não bloqueados por decisões administrativas:\n" +
@@ -97,7 +100,7 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
             response.put("bypassed", bypassCustomers.toString());
             return response;
         } catch (Exception e) {
-            SendEmail.notificarAdmin("[NOTIFICATION] Erro ao bloquear automaticamente clientes atrasados", e);
+            emailService.notificarAdmin("[NOTIFICATION] Erro ao bloquear automaticamente clientes atrasados", e);
             return null;
         }
     }

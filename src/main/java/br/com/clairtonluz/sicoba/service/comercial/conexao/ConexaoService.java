@@ -11,7 +11,7 @@ import br.com.clairtonluz.sicoba.repository.comercial.ConexaoRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.service.generic.CrudService;
 import br.com.clairtonluz.sicoba.service.provedor.Servidor;
-import br.com.clairtonluz.sicoba.util.SendEmail;
+import br.com.clairtonluz.sicoba.service.notification.EmailService;
 import me.legrange.mikrotik.ApiConnection;
 import me.legrange.mikrotik.ApiConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +29,19 @@ import java.util.*;
 @Service
 public class ConexaoService extends CrudService<Conexao, ConexaoRepository, Integer> {
 
-    private Servidor servidor;
-    private SecretService secretService;
-    private ContratoRepository contratoRepository;
+    private final Servidor servidor;
+    private final SecretService secretService;
+    private final ContratoRepository contratoRepository;
+    private final EmailService emailService;
 
     @Autowired
     public ConexaoService(ConexaoRepository repository, Servidor servidor,
-                          SecretService secretService, ContratoRepository contratoRepository) {
+                          SecretService secretService, ContratoRepository contratoRepository, EmailService emailService) {
         super(repository);
         this.servidor = servidor;
         this.secretService = secretService;
         this.contratoRepository = contratoRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -71,11 +73,11 @@ public class ConexaoService extends CrudService<Conexao, ConexaoRepository, Inte
                         Secret secret = c.createSecret(planos.get(c.getId()));
                         c.getCliente().getStatus().atualizarSecret(secretService, servidor, secret);
                     } catch (Exception e) {
-                        SendEmail.notificarAdmin(e);
+                        emailService.notificarAdmin(e);
                     }
                 }
             } catch (ApiConnectionException e) {
-                SendEmail.notificarAdmin(e);
+                emailService.notificarAdmin(e);
             }
         }
     }
@@ -96,7 +98,7 @@ public class ConexaoService extends CrudService<Conexao, ConexaoRepository, Inte
 
 
     @Transactional
-    private Map<Integer, Plano> getPlanos(List<Conexao> list) {
+    Map<Integer, Plano> getPlanos(List<Conexao> list) {
         Map<Integer, Plano> planos = new HashMap<>();
         for (Conexao c : list) {
 

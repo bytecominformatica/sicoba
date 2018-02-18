@@ -9,6 +9,7 @@ import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -28,11 +29,17 @@ public class CarnetGNService {
     private static final String CANCEL_PARCEL = "cancelParcel";
     private static final String RESEND_CARNET = "resendCarnet";
     private static final String RESEND_PARCEL = "resendParcel";
+    private final GNService gnService;
+
+    @Autowired
+    public CarnetGNService(GNService gnService) {
+        this.gnService = gnService;
+    }
 
     JSONObject createCarnet(Carnet carnet) {
         GerencianetAccount account = carnet.getGerencianetAccount();
         JSONArray items = new JSONArray().put(GNService.createItem(carnet.getDescription(), carnet.getValue()));
-        JSONObject customer = GNService.createConsumer(carnet.getCliente(), account.isNotifyClient());
+        JSONObject customer = GNService.createConsumer(carnet.getCliente(), gnService.isNotifyClient(account));
 
         JSONObject configurations = GNService.createConfigurations(account);
 
@@ -43,9 +50,9 @@ public class CarnetGNService {
         body.put("repeats", carnet.getRepeats());
         body.put("split_items", carnet.getSplitItems());
         body.put("configurations", configurations);
-        body.put("metadata", GNService.createMetadata(account.createNotificationUrl()));
+        body.put("metadata", GNService.createMetadata(gnService.createNotificationUrl(account)));
 
-        return GNService.call(account, CREATE_CARNET, body);
+        return gnService.call(account, CREATE_CARNET, body);
     }
 
     boolean updateParcelExpireAt(Charge charge) {
@@ -59,14 +66,14 @@ public class CarnetGNService {
         JSONObject body = new JSONObject();
         body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
 
-        return GNService.isOk(GNService.call(charge.getGerencianetAccount(), UPDATE_PARCEL, params, body));
+        return GNService.isOk(gnService.call(charge.getGerencianetAccount(), UPDATE_PARCEL, params, body));
     }
 
     boolean cancelCarnet(Carnet carnet) {
         Map<String, String> params = new HashMap<>();
         params.put("id", carnet.getCarnetId().toString());
 
-        JSONObject response = GNService.call(carnet.getGerencianetAccount(), CANCEL_CARNET, params);
+        JSONObject response = gnService.call(carnet.getGerencianetAccount(), CANCEL_CARNET, params);
         return GNService.isOk(response);
     }
 
@@ -79,7 +86,7 @@ public class CarnetGNService {
         params.put("id", charge.getCarnet().getCarnetId().toString());
         params.put("parcel", charge.getParcel().toString());
 
-        JSONObject response = GNService.call(charge.getGerencianetAccount(), CANCEL_PARCEL, params);
+        JSONObject response = gnService.call(charge.getGerencianetAccount(), CANCEL_PARCEL, params);
         return GNService.isOk(response);
     }
 
@@ -87,15 +94,15 @@ public class CarnetGNService {
         GerencianetAccount account = carnet.getGerencianetAccount();
         Map<String, String> params = new HashMap<>();
         params.put("id", carnet.getCarnetId().toString());
-        JSONObject body = GNService.createMetadata(account.createNotificationUrl(), carnet.getId());
-        JSONObject response = GNService.call(account, UPDATE_CARNET_METADATA, params, body);
+        JSONObject body = GNService.createMetadata(gnService.createNotificationUrl(account), carnet.getId());
+        JSONObject response = gnService.call(account, UPDATE_CARNET_METADATA, params, body);
         return GNService.isOk(response);
     }
 
     JSONObject detailCarnet(Carnet carnet) {
         Map<String, String> params = new HashMap<>();
         params.put("id", carnet.getCarnetId().toString());
-        return GNService.call(carnet.getGerencianetAccount(), DETAIL_CARNET, params);
+        return gnService.call(carnet.getGerencianetAccount(), DETAIL_CARNET, params);
     }
 
     boolean resendCarnet(Carnet carnet) {
@@ -108,7 +115,7 @@ public class CarnetGNService {
         JSONObject body = new JSONObject();
         body.put("email", carnet.getCliente().getEmail());
 
-        return GNService.isOk(GNService.call(carnet.getGerencianetAccount(), RESEND_CARNET, params, body));
+        return GNService.isOk(gnService.call(carnet.getGerencianetAccount(), RESEND_CARNET, params, body));
     }
 
     boolean resendParcel(Charge charge) {
@@ -123,6 +130,6 @@ public class CarnetGNService {
         JSONObject body = new JSONObject();
         body.put("email", charge.getCliente().getEmail());
 
-        return GNService.isOk(GNService.call(charge.getGerencianetAccount(), RESEND_PARCEL, params, body));
+        return GNService.isOk(gnService.call(charge.getGerencianetAccount(), RESEND_PARCEL, params, body));
     }
 }

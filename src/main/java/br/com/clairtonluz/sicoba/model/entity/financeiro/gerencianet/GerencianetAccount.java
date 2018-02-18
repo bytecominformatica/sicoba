@@ -1,10 +1,8 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet;
 
-import br.com.clairtonluz.sicoba.config.Environment;
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.util.StringUtil;
-import org.json.JSONObject;
 
 import javax.persistence.*;
 
@@ -86,19 +84,7 @@ public class GerencianetAccount extends BaseEntity {
         this.interest = interest;
     }
 
-    public JSONObject createOptions() {
-        JSONObject options = new JSONObject();
-        options.put("client_id", getClientId());
-        options.put("client_secret", getClientSecret());
-        options.put("sandbox", !Environment.isProduction());
-        return options;
-    }
-
     public boolean isNotifyClient() {
-        if (!Environment.isProduction()) {
-            return false;
-        }
-
         return notifyClient;
     }
 
@@ -106,25 +92,5 @@ public class GerencianetAccount extends BaseEntity {
         this.notifyClient = notifyClient;
     }
 
-    /**
-     * O padrão de url a ser configurada: https://meudominio.com.br/api/service/%d/metodo
-     * onde o %d será substituido pelo o id da conta gerencianet configurada.
-     *
-     * @return
-     */
-    public String createNotificationUrl() {
-        String url = null;
-        if (id == null) {
-            throw new BadRequestException("Conta gerencianet não foi cadastrada no sistema");
-        }
 
-        String notificationUrl = System.getenv("NOTIFICATION_URL");
-        if (!StringUtil.isEmpty(notificationUrl)) {
-            if (!notificationUrl.contains("%d")) {
-                throw new BadRequestException("A url e notificação segue o padrão expecificado");
-            }
-            url = String.format(notificationUrl, id);
-        }
-        return url;
-    }
 }

@@ -9,4 +9,19 @@
     
 #### Copy database from a app to another one    
     heroku pg:copy appnameorigin::DATABASE DATABASE --app appnamedestiny
+
+#### Publicação em uma EC2
+    https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html
+
+###### depois crie um arquivo appname.conf com as configuraçoes iniciais
+    RUN_ARGS="
+    --spring.profiles.active=production
+    --spring.datasource.url=jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom
+    --myapp.email.admin=clairton.c.l@gmail.com
+    --myapp.boleto.notification-url=https://sicoba.bytecominformatica.com.br/api/gerencianet/%d/notification
+    --spring.mail.username=sicoba@bytecominformatica.com.br
+    --spring.mail.password=myPassword"
+                                                 
+
+    
     

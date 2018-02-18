@@ -1,10 +1,10 @@
 package br.com.clairtonluz.sicoba.service.provedor.impl;
 
-import br.com.clairtonluz.sicoba.config.Environment;
-import br.com.clairtonluz.sicoba.config.EnvironmentFactory;
+import br.com.clairtonluz.sicoba.config.MyEnvironment;
 import br.com.clairtonluz.sicoba.service.provedor.Servidor;
 import me.legrange.mikrotik.ApiConnection;
 import me.legrange.mikrotik.MikrotikApiException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.net.SocketFactory;
@@ -20,11 +20,17 @@ import static me.legrange.mikrotik.ApiConnection.DEFAULT_COMMAND_TIMEOUT;
 @Service
 public class ServidorMikrotik implements Servidor {
 
+    private final MyEnvironment myEnvironment;
     private ApiConnection con;
+
+    @Autowired
+    public ServidorMikrotik(MyEnvironment myEnvironment) {
+        this.myEnvironment = myEnvironment;
+    }
 
     @Override
     public ApiConnection connect(String host, int port, String user, String pass) {
-        if (Environment.isProduction()) {
+        if (myEnvironment.isProduction()) {
             try {
                 con = ApiConnection.connect(SocketFactory.getDefault(), host, port, DEFAULT_COMMAND_TIMEOUT);
                 con.setTimeout(10000);
@@ -39,7 +45,7 @@ public class ServidorMikrotik implements Servidor {
 
     @Override
     public List<Map<String, String>> execute(String command) {
-        if (Environment.isProduction()) {
+        if (myEnvironment.isProduction()) {
             try {
                 System.out.println(command);
                 return con.execute(command);
@@ -48,8 +54,7 @@ public class ServidorMikrotik implements Servidor {
                 throw new RuntimeException(e.getMessage());
             }
         } else {
-            String env = EnvironmentFactory.create().getEnv();
-            System.out.println("Ambiente: " + env + " não deve lançar comando para o servidor");
+            System.out.println("Ambiente: " + myEnvironment.getEnv() + " não deve lançar comando para o servidor");
         }
         return new ArrayList<>();
     }

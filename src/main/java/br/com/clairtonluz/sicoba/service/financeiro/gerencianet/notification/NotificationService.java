@@ -12,8 +12,8 @@ import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeReposit
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.GerencianetAccountRepository;
 import br.com.clairtonluz.sicoba.service.comercial.ClienteService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
+import br.com.clairtonluz.sicoba.service.notification.EmailService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
-import br.com.clairtonluz.sicoba.util.SendEmail;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,16 +30,22 @@ import java.util.logging.Logger;
 @Service
 public class NotificationService {
 
+    private final NotificationGNService notificationGNService;
+    private final ChargeRepository chargeRepository;
+    private final GerencianetAccountRepository gerencianetAccountRepository;
+    private final CarnetRepository carnetRepository;
+    private final ClienteService clienteService;
+    private final EmailService emailService;
+
     @Autowired
-    private NotificationGNService notificationGNService;
-    @Autowired
-    private ChargeRepository chargeRepository;
-    @Autowired
-    private GerencianetAccountRepository gerencianetAccountRepository;
-    @Autowired
-    private CarnetRepository carnetRepository;
-    @Autowired
-    private ClienteService clienteService;
+    public NotificationService(NotificationGNService notificationGNService, ChargeRepository chargeRepository, GerencianetAccountRepository gerencianetAccountRepository, CarnetRepository carnetRepository, ClienteService clienteService, EmailService emailService) {
+        this.notificationGNService = notificationGNService;
+        this.chargeRepository = chargeRepository;
+        this.gerencianetAccountRepository = gerencianetAccountRepository;
+        this.carnetRepository = carnetRepository;
+        this.clienteService = clienteService;
+        this.emailService = emailService;
+    }
 
     @Transactional
     public void processNotification(Integer gerencianetAccountId, String token) {
@@ -67,17 +73,17 @@ public class NotificationService {
 
                 clienteService.blockLateCustomers();
             } else {
-                SendEmail.sendToAdmin("[NOTIFICATION] Token não encontrado", String.format("token:%s\ncontent:%s", token, String.valueOf(response)));
+                emailService.sendToAdmin("[NOTIFICATION] Token não encontrado", String.format("token:%s\ncontent:%s", token, String.valueOf(response)));
             }
         } else {
-            SendEmail.sendToAdmin("[NOTIFICATION] Conta gerencianet não encontrada", String.format("conta gerencianet:%s\ntoken:%s", gerencianetAccountId, token));
+            emailService.sendToAdmin("[NOTIFICATION] Conta gerencianet não encontrada", String.format("conta gerencianet:%s\ntoken:%s", gerencianetAccountId, token));
         }
     }
 
     private void processarCarnet(String token, JSONObject data) {
         Carnet carnet = carnetRepository.findOptionalByCarnetId(data.getJSONObject("identifiers").getInt("carnet_id"));
         if (carnet == null) {
-            SendEmail.sendToAdmin("[NOTIFICATION] Carnê não processado", "Carnê não processado:" + data.toString());
+            emailService.sendToAdmin("[NOTIFICATION] Carnê não processado", "Carnê não processado:" + data.toString());
             return;
         }
 
@@ -95,7 +101,7 @@ public class NotificationService {
     private void processarCharge(String token, JSONObject data) {
         Charge charge = chargeRepository.findOptionalByChargeId(data.getJSONObject("identifiers").getInt("charge_id"));
         if (charge == null) {
-            SendEmail.sendToAdmin("[NOTIFICATION] Cobrança não processada", "Cobrança não processado:" + data.toString());
+            emailService.sendToAdmin("[NOTIFICATION] Cobrança não processada", "Cobrança não processado:" + data.toString());
             return;
         }
 
@@ -126,11 +132,11 @@ public class NotificationService {
                 String subject = String.format("Cliente %s bloqueado por pagamento inválido", cliente.getNome());
                 String chargeJson = new ObjectMapper().writeValueAsString(charge);
                 String message = String.format("Cobrana: %s\nMotivo:%s", chargeJson, messageVerify);
-                SendEmail.sendToAdmin(subject, message);
+                emailService.sendToAdmin(subject, message);
             } catch (Exception e) {
                 e.printStackTrace();
                 String subject = String.format("Não foi possível bloquear o cliente %s por pagamento inválido do tipo:%s", cliente.getNome(), messageVerify);
-                SendEmail.notificarAdmin(subject, e);
+                emailService.notificarAdmin(subject, e);
             }
         } else if (cliente.getStatus().equals(StatusCliente.INATIVO)) {
             try {
@@ -138,7 +144,7 @@ public class NotificationService {
             } catch (Exception e) {
                 e.printStackTrace();
                 String subject = String.format("Não foi possível ativar o cliente %s", cliente.getNome());
-                SendEmail.notificarAdmin(subject, e);
+                emailService.notificarAdmin(subject, e);
             }
         }
     }
