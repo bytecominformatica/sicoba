@@ -14,7 +14,6 @@ import br.com.clairtonluz.sicoba.service.comercial.ClienteService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.service.notification.EmailService;
 import br.com.clairtonluz.sicoba.util.DateUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,10 +128,9 @@ public class NotificationService {
         if (!messageVerify.equals(Charge.VALID_PAYMENT)) {
             try {
                 clienteService.inativar(cliente);
-                String subject = String.format("Cliente %s bloqueado por pagamento inválido", cliente.getNome());
-                String chargeJson = new ObjectMapper().writeValueAsString(charge);
-                String message = String.format("Cobrana: %s\nMotivo:%s", chargeJson, messageVerify);
-                emailService.sendToAdmin(subject, message);
+                String subject = String.format("Cliente %s bloqueado por %s", cliente.getNome(), messageVerify);
+                String message = getChargeDetails(charge);
+                emailService.sendToSac(subject, message);
             } catch (Exception e) {
                 e.printStackTrace();
                 String subject = String.format("Não foi possível bloquear o cliente %s por pagamento inválido do tipo:%s", cliente.getNome(), messageVerify);
@@ -147,6 +145,19 @@ public class NotificationService {
                 emailService.notificarAdmin(subject, e);
             }
         }
+    }
+
+    String getChargeDetails(Charge charge) {
+        return "Cobrança: " +
+                charge.getId() + "\n" +
+                "Boleto: " + charge.getUrl() + "\n" +
+                "Descrição: " + charge.getDescription() + "\n" +
+                "Valor: " + ": " + charge.getValue() + "\n" +
+                "Desconto: " + charge.getDiscount() + "\n" +
+                "Valor pago: " + charge.getPaidValue() + "\n" +
+                "Vencimento: " + charge.getExpireAt() + "\n" +
+                "Data Pagamento: " + charge.getPaidAt() + "\n" +
+                "Conta: " + charge.getGerencianetAccount().getName() + "\n";
     }
 
     private Date getCreatedAt(JSONObject data) {
