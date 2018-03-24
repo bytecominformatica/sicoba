@@ -37,6 +37,7 @@ dependencies {
     compile 'me.legrange:mikrotik:3.0.1'
     compile 'org.flywaydb:flyway-core'
     compile 'br.com.gerencianet.gnsdk:gn-api-sdk-java:0.2.2'
+    compile 'com.sendgrid:sendgrid-java:4.0.1'
 
     runtime 'com.h2database:h2'
     runtime 'org.postgresql:postgresql'

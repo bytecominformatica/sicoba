@@ -24,6 +24,8 @@ spring:
     properties.mail.smtp.startssl.enable: true
     properties.mail.smtp.socketFactory.port: 465
     properties.mail.smtp.debug: true
+  sendgrid:
+    api-key: your-secret-api-key
 myapp:
   email:
     sac: sac@bytecominformatica.com.br

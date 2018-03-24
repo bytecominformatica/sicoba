@@ -1,12 +1,12 @@
 package br.com.clairtonluz.sicoba.service.notification;
 
 import br.com.clairtonluz.sicoba.config.MyEnvironment;
+import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -17,7 +17,9 @@ import java.util.List;
 @Service
 public class EmailService {
     private final MyEnvironment myEnvironment;
-    private final JavaMailSender javaMailSender;
+    private final SendGrid sendGrid;
+    //    @Value("${spring.sendgrid.api-key}")
+//    private String sendgridApiKey;
     @Value("${spring.mail.username}")
     private String from;
     @Value("${myapp.email.sac}")
@@ -28,9 +30,9 @@ public class EmailService {
     private String emailSuporte;
 
     @Autowired
-    public EmailService(MyEnvironment myEnvironment, JavaMailSender javaMailSender) {
+    public EmailService(MyEnvironment myEnvironment, SendGrid sendGrid) {
         this.myEnvironment = myEnvironment;
-        this.javaMailSender = javaMailSender;
+        this.sendGrid = sendGrid;
     }
 
     private static String stackTraceAsString(Exception e) {
@@ -67,12 +69,29 @@ public class EmailService {
             if (!myEnvironment.isProduction()) {
                 subject = String.format("%s%s", env, subject);
             }
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(from);
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(content);
-            javaMailSender.send(message);
+
+            Mail mail = new Mail(new Email(from), subject, new Email(to),
+                    new Content("text/plain", content));
+
+            Request request = new Request();
+            try {
+                request.setMethod(Method.POST);
+                request.setEndpoint("mail/send");
+                request.setBody(mail.build());
+                Response response = sendGrid.api(request);
+                System.out.println(response.getStatusCode());
+                System.out.println(response.getBody());
+                System.out.println(response.getHeaders());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.out.println("======ERROR======");
+                System.out.println(env);
+                System.out.println(from);
+                System.out.println(to);
+                System.out.println(subject);
+                System.out.println(content);
+                System.out.println("======ERROR======");
+            }
         } else {
             System.out.println(env);
             System.out.println(from);
