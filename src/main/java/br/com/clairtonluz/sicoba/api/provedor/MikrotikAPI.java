@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.websocket.server.PathParam;
 
 /**
  * Created by clairtonluz on 09/01/16.
@@ -42,5 +41,12 @@ public class MikrotikAPI {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void remove(@PathVariable @NotNull Integer id) {
         mikrotikService.remove(id);
+    }
+
+    @PatchMapping("/{id}/host")
+    public void atualizarHost(@PathVariable @NotNull Integer id,
+                              @RequestParam("token") String token,
+                              @RequestBody Mikrotik mikrotik) {
+        mikrotikService.atualizarHost(id, token, mikrotik);
     }
 }

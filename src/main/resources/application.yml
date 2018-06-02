@@ -38,6 +38,8 @@ myapp:
 # DEFAULT
 spring:
   profiles: default
+myapp:
+  token: tokenTeste
 ---
 # STAGING
 spring:

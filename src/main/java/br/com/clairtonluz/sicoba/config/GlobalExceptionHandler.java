@@ -2,6 +2,7 @@ package br.com.clairtonluz.sicoba.config;
 
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
+import br.com.clairtonluz.sicoba.exception.NotFoundException;
 import br.com.clairtonluz.sicoba.model.pojo.ErrorInfo;
 import br.com.clairtonluz.sicoba.service.notification.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BadRequestException.class)
     @ResponseBody
-    public ErrorInfo handleEmpty(HttpServletRequest req, Exception e) {
+    public ErrorInfo handleBadRequest(HttpServletRequest req, Exception e) {
+        return new ErrorInfo(req.getRequestURI(), e);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseBody
+    public ErrorInfo handleNotFound(HttpServletRequest req, Exception e) {
         return new ErrorInfo(req.getRequestURI(), e);
     }
 

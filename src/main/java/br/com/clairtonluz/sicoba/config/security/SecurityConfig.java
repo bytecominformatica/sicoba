@@ -3,6 +3,7 @@ package br.com.clairtonluz.sicoba.config.security;
 import br.com.clairtonluz.sicoba.filter.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +22,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String API_GERENCIANET_NOTIFICATION = "/api/gerencianet/**/notification";
+    public static final String API_UPDATE_MK_HOST = "/api/mikrotiks/**/host";
 
     @Autowired
     private DataSource dataSource;
@@ -33,11 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**",
                         API_GERENCIANET_NOTIFICATION).permitAll()
+                .antMatchers(HttpMethod.PATCH, API_UPDATE_MK_HOST).permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().ignoringAntMatchers(API_GERENCIANET_NOTIFICATION)
+                .csrf().ignoringAntMatchers(API_GERENCIANET_NOTIFICATION, API_UPDATE_MK_HOST)
                 .csrfTokenRepository(csrfTokenRepository())
         ;
 
