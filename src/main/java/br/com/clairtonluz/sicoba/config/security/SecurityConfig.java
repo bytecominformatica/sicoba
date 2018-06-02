@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**",
                         API_GERENCIANET_NOTIFICATION).permitAll()
-                .antMatchers(HttpMethod.PATCH, API_UPDATE_MK_HOST).permitAll()
+                .antMatchers(HttpMethod.POST, API_UPDATE_MK_HOST).permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
                 .and()
