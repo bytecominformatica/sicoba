@@ -2,7 +2,6 @@ package br.com.clairtonluz.sicoba.api.provedor;
 
 import br.com.clairtonluz.sicoba.model.entity.provedor.impl.Mikrotik;
 import br.com.clairtonluz.sicoba.service.provedor.MikrotikService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,35 +14,38 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("api/mikrotiks")
 public class MikrotikAPI {
 
-    @Autowired
-    private MikrotikService mikrotikService;
+    private final MikrotikService mikrotikService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    public MikrotikAPI(MikrotikService mikrotikService) {
+        this.mikrotikService = mikrotikService;
+    }
+
+    @GetMapping
     public Iterable<Mikrotik> query() {
         return mikrotikService.buscarTodos();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public Mikrotik getPorId(@PathVariable Integer id) {
         return mikrotikService.buscarPorId(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public Mikrotik save(@Valid @RequestBody Mikrotik mikrotik) {
         return mikrotikService.save(mikrotik);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @PostMapping("/{id}")
     public Mikrotik update(@Valid @RequestBody Mikrotik mikrotik) {
         return mikrotikService.save(mikrotik);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     public void remove(@PathVariable @NotNull Integer id) {
         mikrotikService.remove(id);
     }
 
-    @PatchMapping("/{id}/host")
+    @PostMapping("/{id}/host")
     public void atualizarHost(@PathVariable @NotNull Integer id,
                               @RequestParam("token") String token,
                               @RequestBody Mikrotik mikrotik) {
