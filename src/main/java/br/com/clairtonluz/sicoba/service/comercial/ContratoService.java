@@ -50,6 +50,6 @@ public class ContratoService {
     }
 
     public Contrato buscarPorEquipamento(Integer equipamentoId) {
-        return contratoRepository.findOptionalByEquipamento_id(equipamentoId);
+        return contratoRepository.findByEquipamento(equipamentoId);
     }
 }

@@ -44,7 +44,7 @@ public class ContratoAPI {
     }
 
 
-    @RequestMapping(value = "equipamento/{id}", method = RequestMethod.GET)
+    @GetMapping("equipamento/{id}")
     public Contrato buscarPorEquipamento(@PathVariable Integer id) {
         return contratoService.buscarPorEquipamento(id);
     }

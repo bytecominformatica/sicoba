@@ -11,21 +11,11 @@ Contact
 Setup database
 --------------
 ```shell
-sudo -i
-adduser bytecom
-passwd bytecom
-
-echo "export JDBC_DATABASE_URL='jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom'" > /etc/profile.d/database.sh
-
 sudo -u postgres psql
 
-```
-
-```sql
 CREATE USER bytecom WITH PASSWORD 'bytecom';
 CREATE DATABASE bytecom;
 GRANT ALL PRIVILEGES ON DATABASE bytecom to bytecom;
-\q
 ```
 
 Setup project
@@ -44,9 +34,7 @@ Integration SendGrid (Optional)
 sudo -i
 
 echo "export SENDGRID_API_KEY='YOUR API KEY'" > /etc/profile.d/sendgrid.env
-
 ```
-
 
 Integração Gerencianet (Optional)
 ---------------------------------------

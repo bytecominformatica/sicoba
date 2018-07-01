@@ -1,5 +1,5 @@
 #### Restore file dump made by autobus.io
-    pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d mydb DATABASE_54d4041969702d0295380301.dump
+    pg_restore --verbose --clean --no-acl --no-owner -h localhost -U bytecom -d bytecom DATABASE.dump
    
 #### Create backup database    
     heroku pg:backups:capture --app appname
