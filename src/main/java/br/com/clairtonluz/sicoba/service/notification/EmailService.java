@@ -4,11 +4,15 @@ import br.com.clairtonluz.sicoba.config.MyEnvironment;
 import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.security.Principal;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -38,15 +42,62 @@ public class EmailService {
     private static String stackTraceAsString(Exception e) {
         StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
-        return errors.toString();
+
+        String[] erroLines = errors.toString().split(System.getProperty("line.separator"));
+        StringBuilder sb = new StringBuilder();
+        for (String it : erroLines) {
+            if (it.contains("br.com.clairtonluz")) {
+                sb.append("<b>").append(it).append("</b>");
+            } else {
+                sb.append(it);
+            }
+            sb.append("</br>").append(System.getProperty("line.separator"));
+        }
+
+        return sb.toString();
     }
 
     public void notificarAdmin(Exception e) {
         notificarAdmin(e.getMessage(), e);
     }
 
+
+    public void notificarAdmin(HttpServletRequest req, Exception e) {
+        String subject = String.format("[SICOBA]%s[ERROR] - %s", myEnvironment.getEnv(), e.getMessage());
+        StringBuilder sb = new StringBuilder();
+        Principal userPrincipal = req.getUserPrincipal();
+        sb
+                .append("<table>")
+                .append("<tr><th>Username:</th><td>")
+                .append(userPrincipal == null ? "Anônimo" : userPrincipal.getName())
+                .append("</td></tr>")
+                .append("<tr><th>URL:</th><td>")
+                .append(req.getMethod())
+                .append(" - ")
+                .append(req.getRequestURI())
+                .append("</td></tr>");
+
+        Enumeration<String> headerNames = req.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            sb.append("<tr><th>")
+                    .append(headerName)
+                    .append(":</th><td>")
+                    .append(req.getHeader(headerName))
+                    .append("</td></tr>");
+        }
+
+        sb.append("</table>");
+
+        sb.append("<strong>Stacktrace</strong>")
+                .append("<div><code>")
+                .append(stackTraceAsString(e))
+                .append("</code></div>");
+        send(emailAdmin, subject, sb.toString(), MediaType.TEXT_HTML_VALUE);
+    }
+
     public void notificarAdmin(String subject, Exception e) {
-        subject = String.format("[SICOBA]%s[ERROR] - %s", myEnvironment.getEnv(), subject);
+        subject = String.format("[SICOBA]%s[ERROR] - %s", myEnvironment.getEnv(), e.getMessage());
         String content = stackTraceAsString(e);
         sendToAdmin(subject, content);
     }
@@ -64,6 +115,10 @@ public class EmailService {
     }
 
     public void send(String from, String to, String subject, String content) {
+        send(from, to, subject, content, MediaType.TEXT_PLAIN_VALUE);
+    }
+
+    public void send(String from, String to, String subject, String content, String type) {
         List<String> env = myEnvironment.getEnv();
         if (myEnvironment.isProduction() || myEnvironment.isQuality()) {
             if (!myEnvironment.isProduction()) {
@@ -71,7 +126,7 @@ public class EmailService {
             }
 
             Mail mail = new Mail(new Email(from), subject, new Email(to),
-                    new Content("text/plain", content));
+                    new Content(type, content));
 
             Request request = new Request();
             try {

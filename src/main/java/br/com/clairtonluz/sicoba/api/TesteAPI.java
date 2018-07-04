@@ -25,6 +25,11 @@ public class TesteAPI {
         this.emailService = emailService;
     }
 
+    @RequestMapping("/exception")
+    public String testeException() {
+        throw new RuntimeException("Teste");
+    }
+
     @RequestMapping("/profile")
     public String[] profile() {
         return environment.getActiveProfiles();

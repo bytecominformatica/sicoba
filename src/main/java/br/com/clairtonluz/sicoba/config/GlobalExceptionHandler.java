@@ -7,12 +7,10 @@ import br.com.clairtonluz.sicoba.model.pojo.ErrorInfo;
 import br.com.clairtonluz.sicoba.service.notification.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Created by clairtonluz<clairton.c.l@gmail.com> on 02/04/16.
@@ -49,7 +47,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ErrorInfo handleException(HttpServletRequest req, Exception e) {
         e.printStackTrace();
-        emailService.notificarAdmin(e);
+        emailService.notificarAdmin(req, e);
         return new ErrorInfo(req.getRequestURI(), e);
     }
 }

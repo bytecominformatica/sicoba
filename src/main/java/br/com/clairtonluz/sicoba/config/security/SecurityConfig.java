@@ -21,8 +21,9 @@ import javax.sql.DataSource;
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    public static final String API_GERENCIANET_NOTIFICATION = "/api/gerencianet/**/notification";
-    public static final String API_UPDATE_MK_HOST = "/api/mikrotiks/**/host";
+    private static final String API_GERENCIANET_NOTIFICATION = "/api/gerencianet/**/notification";
+    private static final String API_UPDATE_MK_HOST = "/api/mikrotiks/**/host";
+    private static final String API_TESTES = "/api/testes/**";
 
     @Autowired
     private DataSource dataSource;
@@ -34,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**",
-                        API_GERENCIANET_NOTIFICATION).permitAll()
+                        API_GERENCIANET_NOTIFICATION, API_TESTES).permitAll()
                 .antMatchers(HttpMethod.POST, API_UPDATE_MK_HOST).permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
