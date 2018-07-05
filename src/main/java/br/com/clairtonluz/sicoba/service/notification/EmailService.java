@@ -4,6 +4,7 @@ import br.com.clairtonluz.sicoba.config.MyEnvironment;
 import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,7 +96,7 @@ public class EmailService {
     }
 
     public void notificarAdmin(String subject, Exception e) {
-        subject = String.format("[SICOBA]%s[ERROR] - %s", myEnvironment.getEnv(), e.getMessage());
+        subject = String.format("[SICOBA]%s[ERROR] - %s", myEnvironment.getEnv(), subject);
         String content = stackTraceAsString(e);
         sendToAdmin(subject, content);
     }
@@ -120,7 +121,7 @@ public class EmailService {
             }
 
             Mail mail = new Mail(new Email(from), subject, new Email(to),
-                    new Content("text/plain", content));
+                    new Content(MediaType.TEXT_HTML_VALUE, content));
 
             Request request = new Request();
             try {
