@@ -41,3 +41,7 @@ dependencies {
     compile 'br.com.gerencianet.gnsdk:gn-api-sdk-java:0.2.3'
     compile 'com.sendgrid:sendgrid-java:4.2.1'
 }
+
+springBoot {
+    executable = true
+}
