@@ -8,10 +8,6 @@ import javax.persistence.*;
 @Table(name = "trailer_lote")
 public class TrailerLote extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "trailer_lote_id_seq")
-    @SequenceGenerator(name = "trailer_lote_id_seq", sequenceName = "trailer_lote_id_seq")
-    private Integer id;
     @Column(name = "quantidade_registro_lote")
     int quantidadeRegistroLote;
 
@@ -35,12 +31,4 @@ public class TrailerLote extends BaseEntity {
         this.headerLote = headerLote;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

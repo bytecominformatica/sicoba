@@ -4,6 +4,7 @@ import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -12,10 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name = "plano")
 public class Plano extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "plano_id_seq")
-    @SequenceGenerator(name = "plano_id_seq", sequenceName = "plano_id_seq")
-    private Integer id;
+
     @NotNull(message = "nome é obrigatório")
     private String nome;
     @NotNull(message = "Upload é obrigatório")
@@ -66,27 +64,19 @@ public class Plano extends BaseEntity {
         this.valor = valor;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

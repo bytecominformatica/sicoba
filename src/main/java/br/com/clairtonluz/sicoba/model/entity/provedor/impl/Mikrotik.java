@@ -9,10 +9,6 @@ import javax.persistence.*;
 @Table(name = "mikrotik")
 public class Mikrotik extends BaseEntity implements IServer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "mikrotik_id_seq")
-    @SequenceGenerator(name = "mikrotik_id_seq", sequenceName = "mikrotik_id_seq")
-    private Integer id;
     @Lob
     private String description;
     private String name;
@@ -75,12 +71,4 @@ public class Mikrotik extends BaseEntity implements IServer {
         this.login = login;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

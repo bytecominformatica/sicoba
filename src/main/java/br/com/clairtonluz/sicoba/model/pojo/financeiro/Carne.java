@@ -1,6 +1,6 @@
 package br.com.clairtonluz.sicoba.model.pojo.financeiro;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Created by clairtonluz on 10/01/16.
@@ -13,7 +13,7 @@ public class Carne {
     Integer boletoFim;
     Double valor;
     Double desconto;
-    Date dataInicio;
+    LocalDate dataInicio;
 
     public Carne() {
         this.desconto = 0d;
@@ -67,11 +67,11 @@ public class Carne {
         this.desconto = desconto;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 }

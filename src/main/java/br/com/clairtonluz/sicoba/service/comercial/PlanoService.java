@@ -31,7 +31,7 @@ public class PlanoService {
     }
 
     public Plano buscarPorId(Integer id) {
-        return planoRepository.findOne(id);
+        return planoRepository.getOne(id);
     }
 
     @Transactional
@@ -41,7 +41,7 @@ public class PlanoService {
 
     @Transactional
     public void remover(Integer id) {
-        Plano plano = planoRepository.findOne(id);
+        Plano plano = planoRepository.getOne(id);
         planoRepository.delete(plano);
     }
 

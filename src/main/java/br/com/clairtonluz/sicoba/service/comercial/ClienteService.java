@@ -54,7 +54,6 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
     }
 
     public List<Cliente> buscarUltimosAlterados() {
-        Date data = DateUtil.toDate(LocalDateTime.now());
         return repository.findTop20ByOrderByUpdatedAtDesc();
     }
 
@@ -70,14 +69,13 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
             Map<String, String> response = new HashMap<>();
 
             LocalDate now = LocalDate.now();
-            Date tolerancia = DateUtil.toDate(now.minusDays(DELAY_TOLERANCE_IN_DAYS));
-            List<Charge> lateCharges = chargeRepository.overdue(tolerancia);
+            List<Charge> lateCharges = chargeRepository.overdue(now.minusDays(DELAY_TOLERANCE_IN_DAYS));
             StringBuilder blockedCustomers = new StringBuilder();
             StringBuilder bypassCustomers = new StringBuilder();
             lateCharges.forEach(charge -> {
                 Cliente cliente = charge.getCliente();
                 if (StatusCliente.ATIVO.equals(cliente.getStatus())) {
-                    LocalDate bypass = DateUtil.toLocalDate(cliente.getBypassAutoBlockUntil());
+                    LocalDate bypass = cliente.getBypassAutoBlockUntil();
                     if (bypass == null || now.isAfter(bypass)) {
                         inativar(cliente);
                         addCustomersToStringBuilder(blockedCustomers, cliente);
@@ -185,9 +183,7 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
     }
 
     public List<Cliente> buscarSemTitulo() {
-        Date data = DateUtil.toDate(LocalDate.now());
-        List<Cliente> clientes = repository.findBySemTitulosDepoisDe(data);
-        return clientes;
+        return repository.findBySemTitulosDepoisDe(LocalDate.now());
     }
 
     public void ativar(Cliente cliente) {
@@ -212,7 +208,7 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
         } else if (status != null) {
             result = repository.findByStatus(status);
         } else {
-            result = (List<Cliente>) repository.findAll();
+            result = repository.findAll();
         }
         return result;
     }
@@ -222,8 +218,7 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
     }
 
     public List<Cliente> buscarUltimosCancelados() {
-        Date data = DateUtil.toDate(LocalDate.now().minusMonths(2));
-        return repository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, data);
+        return repository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, LocalDate.now().minusMonths(2));
     }
 
     @Override

@@ -4,7 +4,6 @@ import br.com.clairtonluz.sicoba.config.MyEnvironment;
 import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +21,6 @@ import java.util.List;
 public class EmailService {
     private final MyEnvironment myEnvironment;
     private final SendGrid sendGrid;
-    //    @Value("${spring.sendgrid.api-key}")
-//    private String sendgridApiKey;
     @Value("${spring.mail.username}")
     private String from;
     @Value("${myapp.email.sac}")
@@ -93,7 +90,7 @@ public class EmailService {
                 .append("<div><code>")
                 .append(stackTraceAsString(e))
                 .append("</code></div>");
-        send(emailAdmin, subject, sb.toString(), MediaType.TEXT_HTML_VALUE);
+        send(emailAdmin, subject, sb.toString());
     }
 
     public void notificarAdmin(String subject, Exception e) {
@@ -115,10 +112,6 @@ public class EmailService {
     }
 
     public void send(String from, String to, String subject, String content) {
-        send(from, to, subject, content, MediaType.TEXT_PLAIN_VALUE);
-    }
-
-    public void send(String from, String to, String subject, String content, String type) {
         List<String> env = myEnvironment.getEnv();
         if (myEnvironment.isProduction() || myEnvironment.isQuality()) {
             if (!myEnvironment.isProduction()) {
@@ -126,7 +119,7 @@ public class EmailService {
             }
 
             Mail mail = new Mail(new Email(from), subject, new Email(to),
-                    new Content(type, content));
+                    new Content("text/plain", content));
 
             Request request = new Request();
             try {

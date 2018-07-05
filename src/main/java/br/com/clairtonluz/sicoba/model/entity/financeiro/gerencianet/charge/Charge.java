@@ -5,7 +5,6 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
-import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 /**
  * @author clairton
@@ -24,14 +22,9 @@ import java.util.Date;
 public class Charge extends BaseEntity {
 
     public static final String VALID_PAYMENT = "Pagamento válido";
-    public static final String LATE_PAYMENT_WITHOUT_INTEREST = "Pagamento atrasado sem juros";
-    public static final String INVALID_DISCOUNT_PAYMENT = "Pagamento com desconto inválido";
-    public static final int DAYS_OF_TOLERANCE = 5;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "charge_id_seq")
-    @SequenceGenerator(name = "charge_id_seq", sequenceName = "charge_id_seq")
-    private Integer id;
+    static final String LATE_PAYMENT_WITHOUT_INTEREST = "Pagamento atrasado sem juros";
+    static final String INVALID_DISCOUNT_PAYMENT = "Pagamento com desconto inválido";
+    static final int DAYS_OF_TOLERANCE = 5;
 
     @NotNull
     private Double value;
@@ -62,11 +55,9 @@ public class Charge extends BaseEntity {
     private StatusCharge status;
     @NotNull
     @Column(name = "expire_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expireAt;
+    private LocalDate expireAt;
     @Column(name = "paid_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date paidAt;
+    private LocalDate paidAt;
     @Enumerated(EnumType.STRING)
     private PaymentType payment;
 
@@ -107,8 +98,8 @@ public class Charge extends BaseEntity {
 
     private boolean isLatePayment() {
         boolean late = false;
-        LocalDate expireAt = DateUtil.toLocalDate(getExpireAt());
-        LocalDate paidAt = DateUtil.toLocalDate(getPaidAt());
+        LocalDate expireAt = getExpireAt();
+        LocalDate paidAt = getPaidAt();
         long diference = ChronoUnit.DAYS.between(expireAt.plusDays(DAYS_OF_TOLERANCE), paidAt);
 
         if (diference > 0) {
@@ -128,15 +119,6 @@ public class Charge extends BaseEntity {
 
     public boolean isCancelable() {
         return !StatusCharge.PAID.equals(status);
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Double getValue() {
@@ -203,11 +185,11 @@ public class Charge extends BaseEntity {
         this.status = status;
     }
 
-    public Date getExpireAt() {
+    public LocalDate getExpireAt() {
         return expireAt;
     }
 
-    public void setExpireAt(Date expireAt) {
+    public void setExpireAt(LocalDate expireAt) {
         this.expireAt = expireAt;
     }
 
@@ -275,11 +257,11 @@ public class Charge extends BaseEntity {
         this.tokenNotification = tokenNotification;
     }
 
-    public Date getPaidAt() {
+    public LocalDate getPaidAt() {
         return paidAt;
     }
 
-    public void setPaidAt(Date paidAt) {
+    public void setPaidAt(LocalDate paidAt) {
         this.paidAt = paidAt;
     }
 

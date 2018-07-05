@@ -12,10 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "gerencianet_account")
 public class GerencianetAccount extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "gerencianet_account_id_seq")
-    @SequenceGenerator(name = "gerencianet_account_id_seq", sequenceName = "gerencianet_account_id_seq")
-    private Integer id;
     private String name;
     @Column(name = "client_id")
     private String clientId;
@@ -26,15 +22,6 @@ public class GerencianetAccount extends BaseEntity {
     private boolean sandbox;
     @Column(name = "notify_client")
     private boolean notifyClient;
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

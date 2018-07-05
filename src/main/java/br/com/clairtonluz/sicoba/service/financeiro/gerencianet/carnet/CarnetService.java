@@ -20,6 +20,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +64,7 @@ public class CarnetService {
                 charge.setCarnet(carnet);
                 charge.setGerencianetAccount(carnet.getGerencianetAccount());
                 charge.setChargeId(it.getInt("charge_id"));
-                charge.setExpireAt(DateUtil.parseDateISO(it.getString("expire_at")));
+                charge.setExpireAt(LocalDate.parse(it.getString("expire_at")));
                 charge.setValue(it.getDouble("value") / 100);
                 charge.setBarcode(it.getString("barcode"));
                 charge.setUrl(it.getString("url"));
@@ -76,7 +77,7 @@ public class CarnetService {
                 charges.add(charge);
             }
 
-            Iterable<Charge> chargesSaved = chargeRepository.save(charges);
+            Iterable<Charge> chargesSaved = chargeRepository.saveAll(charges);
             charges.clear();
             chargesSaved.forEach(charges::add);
 
@@ -87,7 +88,7 @@ public class CarnetService {
     }
 
     public Charge updateParcelExpireAt(Integer carnetId, Integer parcel, Charge charge) {
-        Date expireAt = charge.getExpireAt();
+        LocalDate expireAt = charge.getExpireAt();
         charge = chargeRepository.findOptionalByCarnet_idAndParcel(carnetId, parcel);
         if (ChargeService.isExpireAtValid(charge, expireAt)) {
             charge.setExpireAt(expireAt);
@@ -109,7 +110,7 @@ public class CarnetService {
                     it.setStatus(StatusCharge.CANCELED);
                 }
             });
-            chargeRepository.save(charges);
+            chargeRepository.saveAll(charges);
         }
     }
 
@@ -140,7 +141,7 @@ public class CarnetService {
     }
 
     public Carnet findById(Integer id) {
-        return carnetRepository.findOne(id);
+        return carnetRepository.getOne(id);
     }
 
     public List<Carnet> findByCliente(Integer clienteId) {
@@ -157,8 +158,8 @@ public class CarnetService {
             carnet.setValue(value);
             carnet.setDescription(String.format("Internet Banda Larga %s", contrato.getPlano().getNome()));
         } else {
-            carnet.setCliente(clienteRepository.findOne(clienteId));
-            carnet.setFirstPay(new Date());
+            carnet.setCliente(clienteRepository.getOne(clienteId));
+            carnet.setFirstPay(LocalDate.now());
         }
 
         carnet.setMessage(String.format("Olá, %s! \nObrigado por escolher a Bytecom Informática.", carnet.getCliente().getNome()));

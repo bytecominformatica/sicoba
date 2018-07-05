@@ -48,12 +48,12 @@ public class ChargeService {
         this.emailService = emailService;
     }
 
-    public static boolean isExpireAtValid(Charge charge, Date expireAt) {
-        if (!charge.getExpireAt().before(expireAt)) {
+    public static boolean isExpireAtValid(Charge charge, LocalDate expireAt) {
+        if (!charge.getExpireAt().isBefore(expireAt)) {
             throw new ConflitException("A nova data de vencimento deve ser maior do que a anterior");
         }
 
-        if (DateUtil.isPast(expireAt)) {
+        if (expireAt.isBefore(LocalDate.now())) {
             throw new ConflitException("O vencimento deve ser maior ou igual a data atual");
         }
 
@@ -63,8 +63,8 @@ public class ChargeService {
         return true;
     }
 
-    public static Date getNextExpireAt(Contrato contrato) {
-        return DateUtil.toDate(LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento()));
+    public static LocalDate getNextExpireAt(Contrato contrato) {
+        return LocalDate.now().plusMonths(1).withDayOfMonth(contrato.getVencimento());
     }
 
     @Transactional
@@ -149,7 +149,7 @@ public class ChargeService {
 
     @Transactional
     public Charge updateBilletExpireAt(Charge charge) {
-        Date expireAt = charge.getExpireAt();
+        LocalDate expireAt = charge.getExpireAt();
         charge = findById(charge.getId());
         if (isExpireAtValid(charge, expireAt)) {
             charge.setExpireAt(expireAt);
@@ -184,7 +184,7 @@ public class ChargeService {
     }
 
     public Charge findById(Integer id) {
-        return chargeRepository.findOne(id);
+        return chargeRepository.getOne(id);
     }
 
     public List<Charge> findByCliente(Integer clienteId) {
@@ -192,8 +192,8 @@ public class ChargeService {
     }
 
     public List<Charge> findCurrentByClient(Integer clienteId) {
-        Date begin = DateUtil.toDate(LocalDate.now().minusMonths(2));
-        Date finish = DateUtil.toDate(LocalDate.now().plusMonths(2));
+        LocalDate begin = LocalDate.now().minusMonths(2);
+        LocalDate finish = LocalDate.now().plusMonths(2);
         return chargeRepository.findCurrentByClientAndDate(clienteId, begin, finish);
     }
 
@@ -215,8 +215,8 @@ public class ChargeService {
             charge.setValue(value);
             charge.setDescription(String.format("Internet Banda Larga %s", contrato.getPlano().getNome()));
         } else {
-            charge.setCliente(clienteRepository.findOne(clienteId));
-            charge.setExpireAt(new Date());
+            charge.setCliente(clienteRepository.getOne(clienteId));
+            charge.setExpireAt(LocalDate.now());
         }
 
         charge.setMessage(String.format("Olá, %s! \nObrigado por escolher a Bytecom Informática.", charge.getCliente().getNome()));
@@ -226,10 +226,10 @@ public class ChargeService {
     }
 
     public List<Charge> overdue() {
-        return chargeRepository.overdue(new Date());
+        return chargeRepository.overdue(LocalDate.now());
     }
 
-    public List<Charge> findByPaymentDateAndStatusAndGerencianetAccount(Date start, Date end, StatusCharge status, Integer gerencianetAccountId) {
+    public List<Charge> findByPaymentDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
         if (status == null && gerencianetAccountId == null) {
             return chargeRepository.findByPaidAtBetween(start, end);
         } else if (status == null) {
@@ -241,7 +241,7 @@ public class ChargeService {
         }
     }
 
-    public List<Charge> findByExpirationDateAndStatusAndGerencianetAccount(Date start, Date end, StatusCharge status, Integer gerencianetAccountId) {
+    public List<Charge> findByExpirationDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
 
         if (status == null && gerencianetAccountId == null) {
             return chargeRepository.findByExpireAtBetween(start, end);

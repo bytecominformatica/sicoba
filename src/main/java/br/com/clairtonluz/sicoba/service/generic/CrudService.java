@@ -28,7 +28,7 @@ public abstract class CrudService<ENTITY extends BaseEntity,
     }
 
     public ENTITY findById(ID id) {
-        return repository.findOne(id);
+        return repository.getOne(id);
     }
 
     public ENTITY save(ENTITY entity) {
@@ -36,7 +36,7 @@ public abstract class CrudService<ENTITY extends BaseEntity,
     }
 
     public void delete(ID id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
 

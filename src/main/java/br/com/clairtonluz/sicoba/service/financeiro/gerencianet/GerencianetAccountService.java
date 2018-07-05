@@ -18,7 +18,7 @@ public class GerencianetAccountService {
     }
 
     public GerencianetAccount findById(Integer id) {
-        return gerencianetAccountRepository.findOne(id);
+        return gerencianetAccountRepository.getOne(id);
     }
 
     public GerencianetAccount save(GerencianetAccount gerencianetAccount) {
@@ -26,6 +26,6 @@ public class GerencianetAccountService {
     }
 
     public void remover(Integer id) {
-        gerencianetAccountRepository.delete(id);
+        gerencianetAccountRepository.deleteById(id);
     }
 }

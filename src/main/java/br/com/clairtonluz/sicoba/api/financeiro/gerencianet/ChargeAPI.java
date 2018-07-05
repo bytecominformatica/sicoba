@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -54,21 +56,21 @@ public class ChargeAPI {
 
     @RequestMapping(value = "paymentdate", method = RequestMethod.GET)
     public List<Charge> paymentDate(
-            @RequestParam("start") Long start,
-            @RequestParam("end") Long end,
+            @RequestParam("start") String start,
+            @RequestParam("end") String end,
             @RequestParam(value = "status", required = false) StatusCharge status,
             @RequestParam(value = "gerencianetAccount", required = false) Integer gerencianetAccountId) {
-        return chargeService.findByPaymentDateAndStatusAndGerencianetAccount(new Date(start), new Date(end), status, gerencianetAccountId);
+        return chargeService.findByPaymentDateAndStatusAndGerencianetAccount(LocalDate.parse(start), LocalDate.parse(end), status, gerencianetAccountId);
     }
 
     @RequestMapping(value = "expirationdate", method = RequestMethod.GET)
     public List<Charge> expirationDate(
-            @RequestParam("start") Long start,
-            @RequestParam("end") Long end,
+            @RequestParam("start") String start,
+            @RequestParam("end") String end,
             @RequestParam(value = "status", required = false) StatusCharge status,
             @RequestParam(value = "gerencianetAccount", required = false) Integer gerencianetAccountId) {
 
-        return chargeService.findByExpirationDateAndStatusAndGerencianetAccount(new Date(start), new Date(end), status, gerencianetAccountId);
+        return chargeService.findByExpirationDateAndStatusAndGerencianetAccount(LocalDate.parse(start), LocalDate.parse(end), status, gerencianetAccountId);
     }
 
 

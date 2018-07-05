@@ -150,7 +150,7 @@ public class ConexaoService extends CrudService<Conexao, ConexaoRepository, Inte
 
     @Transactional
     public void delete(Integer id) {
-        Conexao c = repository.findOne(id);
+        Conexao c = repository.getOne(id);
         Plano plano = contratoRepository.findOptionalByCliente_id(c.getCliente().getId()).getPlano();
 
         Secret secret = c.createSecret(plano);

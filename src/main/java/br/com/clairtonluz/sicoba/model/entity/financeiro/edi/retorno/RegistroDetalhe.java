@@ -3,6 +3,7 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.edi.retorno;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,10 +13,6 @@ import java.util.Date;
 @Table(name = "registro_detalhe")
 public class RegistroDetalhe extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "registro_detalhe_id_seq")
-    @SequenceGenerator(name = "registro_detalhe_id_seq", sequenceName = "registro_detalhe_id_seq")
-    private Integer id;
     @Column(name = "juros_multas_encargos")
     private double jurosMultasEncargos;
     private double desconto;
@@ -26,15 +23,11 @@ public class RegistroDetalhe extends BaseEntity {
     @Column(name = "valor_liquido")
     private double valorLiquido;
     @Column(name = "data_ocorrencia")
-    @Temporal(TemporalType.DATE)
-    private Date dataOcorrencia;
+    private LocalDate dataOcorrencia;
     @Column(name = "data_credito")
-    @Temporal(TemporalType.DATE)
-    private Date dataCredito;
+    private LocalDate dataCredito;
     @Column(name = "data_debito_tarifa")
-    @Temporal(TemporalType.DATE)
-    private Date dataDebitoTarifa;
-
+    private LocalDate dataDebitoTarifa;
     @OneToOne
     @JoinColumn(name = "registro_id")
     private Registro registro;
@@ -87,27 +80,27 @@ public class RegistroDetalhe extends BaseEntity {
         this.valorLiquido = valorLiquido;
     }
 
-    public Date getDataOcorrencia() {
+    public LocalDate getDataOcorrencia() {
         return dataOcorrencia;
     }
 
-    public void setDataOcorrencia(Date dataOcorrencia) {
+    public void setDataOcorrencia(LocalDate dataOcorrencia) {
         this.dataOcorrencia = dataOcorrencia;
     }
 
-    public Date getDataCredito() {
+    public LocalDate getDataCredito() {
         return dataCredito;
     }
 
-    public void setDataCredito(Date dataCredito) {
+    public void setDataCredito(LocalDate dataCredito) {
         this.dataCredito = dataCredito;
     }
 
-    public Date getDataDebitoTarifa() {
+    public LocalDate getDataDebitoTarifa() {
         return dataDebitoTarifa;
     }
 
-    public void setDataDebitoTarifa(Date dataDebitoTarifa) {
+    public void setDataDebitoTarifa(LocalDate dataDebitoTarifa) {
         this.dataDebitoTarifa = dataDebitoTarifa;
     }
 
@@ -119,12 +112,4 @@ public class RegistroDetalhe extends BaseEntity {
         this.registro = registro;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

@@ -5,6 +5,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -13,16 +14,11 @@ import java.util.Date;
 @Entity
 @Table(name = "titulo")
 public class Titulo extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "titulo_id_seq")
-    @SequenceGenerator(name = "titulo_id_seq", sequenceName = "titulo_id_seq")
-    private Integer id;
+
     @Column(name = "data_vencimento")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataVencimento;
+    private LocalDate dataVencimento;
     @Column(name = "data_ocorrencia")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataOcorrencia;
+    private LocalDate dataOcorrencia;
     private double valor;
     @Column(name = "valor_pago")
     private double valorPago;
@@ -43,11 +39,11 @@ public class Titulo extends BaseEntity {
         modalidade = 14;
     }
 
-    public Date getDataVencimento() {
+    public LocalDate getDataVencimento() {
         return dataVencimento;
     }
 
-    public void setDataVencimento(Date dataVencimento) {
+    public void setDataVencimento(LocalDate dataVencimento) {
         this.dataVencimento = dataVencimento;
     }
 
@@ -99,11 +95,11 @@ public class Titulo extends BaseEntity {
         this.tarifa = tarifa;
     }
 
-    public Date getDataOcorrencia() {
+    public LocalDate getDataOcorrencia() {
         return dataOcorrencia;
     }
 
-    public void setDataOcorrencia(Date dataOcorrencia) {
+    public void setDataOcorrencia(LocalDate dataOcorrencia) {
         this.dataOcorrencia = dataOcorrencia;
     }
 
@@ -121,14 +117,5 @@ public class Titulo extends BaseEntity {
 
     public void setModalidade(Integer modalidade) {
         this.modalidade = modalidade;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

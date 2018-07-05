@@ -14,7 +14,11 @@
                 $scope.hoje = new Date();
 
                 if ($routeParams.id) {
-                    $scope.cliente = Cliente.get({id: $routeParams.id});
+                    Cliente.get({id: $routeParams.id}, function (cliente) {
+                        if(cliente.dataNascimento) cliente.dataNascimento = moment(cliente.dataNascimento).toDate();
+                        if(cliente.bypassAutoBlockUntil) cliente.bypassAutoBlockUntil = moment(cliente.bypassAutoBlockUntil).toDate();
+                        $scope.cliente = cliente;
+                    });
                     $scope.contrato = Contrato.buscarPorCliente({clienteId: $routeParams.id});
                 }
 

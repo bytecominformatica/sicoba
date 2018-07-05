@@ -2,11 +2,11 @@ package br.com.clairtonluz.sicoba.model.entity.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.util.StringUtil;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * @author clairton
@@ -15,11 +15,6 @@ import java.util.Date;
 @Table(name = "cliente")
 public class Cliente extends BaseEntity {
 
-    public static final int CNPJ_LENGTH = 14;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cliente_id_seq")
-    @SequenceGenerator(name = "cliente_id_seq", sequenceName = "cliente_id_seq")
-    private Integer id;
     @NotNull(message = "nome é obrigatório")
     private String nome;
     private String rg;
@@ -29,8 +24,7 @@ public class Cliente extends BaseEntity {
     @Column(name = "cpf_cnpj")
     private String cpfCnpj;
     @Column(name = "dt_nascimento")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
     @Email(message = "Email inválido")
     private String email;
     @NotNull(message = "Fone titular é obrigatório")
@@ -42,7 +36,7 @@ public class Cliente extends BaseEntity {
 
     private String comment;
     @Column(name = "bypass_auto_block_until")
-    private Date bypassAutoBlockUntil;
+    private LocalDate bypassAutoBlockUntil;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
@@ -117,14 +111,6 @@ public class Cliente extends BaseEntity {
         this.cpfCnpj = cpfCnpj != null && cpfCnpj.isEmpty() ? null : cpfCnpj;
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
     public StatusCliente getStatus() {
         return status;
     }
@@ -133,20 +119,19 @@ public class Cliente extends BaseEntity {
         this.status = status;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
-    public Date getBypassAutoBlockUntil() {
+    public LocalDate getBypassAutoBlockUntil() {
         return bypassAutoBlockUntil;
     }
 
-    public void setBypassAutoBlockUntil(Date bypassAutoBlockUntil) {
+    public void setBypassAutoBlockUntil(LocalDate bypassAutoBlockUntil) {
         this.bypassAutoBlockUntil = bypassAutoBlockUntil;
     }
 

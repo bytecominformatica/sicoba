@@ -8,10 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "bairro")
 public class Bairro extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "bairro_id_seq")
-    @SequenceGenerator(name = "bairro_id_seq", sequenceName = "bairro_id_seq")
-    private Integer id;
+
     private String nome;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -31,14 +28,5 @@ public class Bairro extends BaseEntity {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

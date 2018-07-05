@@ -14,24 +14,25 @@
                 _carregarContrato();
                 $scope.hoje = new Date();
                 $scope.planos = Plano.query();
-                $scope.equipamentosInstalacao = Equipamento.disponiveisParaInstalacao();
-                $scope.equipamentosWifi = Equipamento.disponiveisParaWifi();
             }
 
             function _carregarContrato() {
                 Contrato.buscarPorCliente({clienteId: $routeParams.clienteId}, function (contrato) {
+                    if (contrato.dataInstalacao) contrato.dataInstalacao = moment(contrato.dataInstalacao).toDate();
+
+                    Equipamento.disponiveisParaInstalacao(function (equipamentosList) {
+                        $scope.equipamentosInstalacao = equipamentosList;
+                        if (contrato.id && contrato.equipamento) $scope.equipamentosInstalacao.push(contrato.equipamento);
+                    });
+                    Equipamento.disponiveisParaWifi({}, function (equipamentoList) {
+                        $scope.equipamentosWifi = equipamentoList;
+                        if (contrato.id && contrato.equipamentoWifi) $scope.equipamentosWifi.push(contrato.equipamentoWifi);
+                    });
+
                     if (contrato.id) {
-                        if (contrato.equipamento) {
-                            $scope.equipamentosInstalacao.push(contrato.equipamento);
-                        }
-                        if (contrato.equipamentoWifi) {
-                            $scope.equipamentosWifi.push(contrato.equipamentoWifi);
-                        }
                         $scope.contrato = contrato;
                     } else {
-                        $scope.contrato = {
-                            cliente: Cliente.get({id: $routeParams.clienteId})
-                        };
+                        $scope.contrato = {cliente: Cliente.get({id: $routeParams.clienteId})};
                     }
                 });
             }

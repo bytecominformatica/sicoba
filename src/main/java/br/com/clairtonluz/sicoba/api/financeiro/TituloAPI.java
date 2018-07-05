@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,15 +24,14 @@ public class TituloAPI {
 
     @Autowired
     private TituloService tituloService;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @RequestMapping(value = "ocorrencia", method = RequestMethod.GET)
     public List<Titulo> porDataOcorrencia(@RequestParam("inicio") String inicio,
                                           @RequestParam("fim") String fim,
                                           @RequestParam(value = "status", required = false) StatusTitulo status) throws ParseException {
 
-        Date i = sdf.parse(inicio);
-        Date f = sdf.parse(fim);
+        LocalDate i = LocalDate.parse(inicio);
+        LocalDate f = LocalDate.parse(fim);
         return tituloService.buscarPorDataOcorreciaStatus(i, f, status);
     }
 
@@ -40,8 +40,8 @@ public class TituloAPI {
                                           @RequestParam("fim") @NotNull(message = "Fim é obrigatório") String fim,
                                           @RequestParam(value = "status", required = false) StatusTitulo status) throws ParseException {
 
-        Date i = sdf.parse(inicio);
-        Date f = sdf.parse(fim);
+        LocalDate i = LocalDate.parse(inicio);
+        LocalDate f = LocalDate.parse(fim);
         return tituloService.buscarPorDataVencimentoStatus(i, f, status);
     }
 

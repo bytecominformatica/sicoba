@@ -8,10 +8,6 @@ import javax.persistence.*;
 @Table(name = "cedente")
 public class Cedente extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cedente_id_seq")
-    @SequenceGenerator(name = "cedente_id_seq", sequenceName = "cedente_id_seq")
-    private Integer id;
     private String nome;
     private int codigo;
     @Column(name = "digito_verificador")
@@ -131,15 +127,6 @@ public class Cedente extends BaseEntity {
 
     public void setJuros(double juros) {
         this.juros = juros;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getCep() {

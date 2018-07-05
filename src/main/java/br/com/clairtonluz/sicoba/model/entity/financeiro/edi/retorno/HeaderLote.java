@@ -3,21 +3,18 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.edi.retorno;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "header_lote")
 public class HeaderLote extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "header_lote_id_seq")
-    @SequenceGenerator(name = "header_lote_id_seq", sequenceName = "header_lote_id_seq")
-    private Integer id;
     @Column(name = "numero_remessa_retorno")
     private int numeroRemessaRetorno;
     @Column(name = "data_gravacao_remessa_retorno")
-    @Temporal(TemporalType.DATE)
-    private Date dataGravacaoRemessaRetorno;
+    private LocalDate dataGravacaoRemessaRetorno;
 
     @ManyToOne
     @JoinColumn(name = "header_id")
@@ -35,11 +32,11 @@ public class HeaderLote extends BaseEntity {
         this.numeroRemessaRetorno = numeroRemessaRetorno;
     }
 
-    public Date getDataGravacaoRemessaRetorno() {
+    public LocalDate getDataGravacaoRemessaRetorno() {
         return dataGravacaoRemessaRetorno;
     }
 
-    public void setDataGravacaoRemessaRetorno(Date dataGravacaoRemessaRetorno) {
+    public void setDataGravacaoRemessaRetorno(LocalDate dataGravacaoRemessaRetorno) {
         this.dataGravacaoRemessaRetorno = dataGravacaoRemessaRetorno;
     }
 
@@ -65,14 +62,5 @@ public class HeaderLote extends BaseEntity {
 
     public void setTrailerLote(TrailerLote trailerLote) {
         this.trailerLote = trailerLote;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

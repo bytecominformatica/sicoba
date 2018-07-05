@@ -46,7 +46,7 @@ public class CarnetGNService {
         JSONObject body = new JSONObject();
         body.put("items", items);
         body.put("customer", customer);
-        body.put("expire_at", DateUtil.formatISO(carnet.getFirstPay()));
+        body.put("expire_at", carnet.getFirstPay()).toString();
         body.put("repeats", carnet.getRepeats());
         body.put("split_items", carnet.getSplitItems());
         body.put("configurations", configurations);
@@ -64,7 +64,7 @@ public class CarnetGNService {
         params.put("parcel", charge.getParcel().toString());
 
         JSONObject body = new JSONObject();
-        body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
+        body.put("expire_at", charge.getExpireAt()).toString();
 
         return GNService.isOk(gnService.call(charge.getGerencianetAccount(), UPDATE_PARCEL, params, body));
     }

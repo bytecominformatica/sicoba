@@ -3,6 +3,8 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.edi.retorno;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -18,18 +20,13 @@ public class Registro extends BaseEntity {
     public static final int BAIXA = 9;
     public static final int CONFIRMACAO_ALTERACAO_VENCIMENTO = 9;
     public static final int TARIFA = 28;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "registro_id_seq")
-    @SequenceGenerator(name = "registro_id_seq", sequenceName = "registro_id_seq")
-    private Integer id;
     @Column(name = "modalidade_nosso_numero")
     private int modalidadeNossoNumero;
     @Column(name = "nosso_numero")
     private int nossoNumero;
     @Column(name = "numero_documento")
     private String numeroDocumento;
-    @Temporal(TemporalType.DATE)
-    private Date vencimento;
+    private LocalDate vencimento;
     @Column(name = "valor_titulo")
     private double valorTitulo;
     @Column(name = "valor_tarifa")
@@ -76,11 +73,11 @@ public class Registro extends BaseEntity {
         this.nossoNumero = nossoNumero;
     }
 
-    public Date getVencimento() {
+    public LocalDate getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(Date vencimento) {
+    public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
     }
 
@@ -156,12 +153,4 @@ public class Registro extends BaseEntity {
         this.codigoMovimento = codigoMovimento;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

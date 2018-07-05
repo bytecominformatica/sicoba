@@ -5,22 +5,17 @@ import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "contrato")
 public class Contrato extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "contrato_id_seq")
-    @SequenceGenerator(name = "contrato_id_seq", sequenceName = "contrato_id_seq")
-    private Integer id;
     @NotNull(message = "vencimento é obrigatório")
     private short vencimento;
     @Column(name = "data_instalacao")
     @NotNull(message = "data de instalação é obrigatório")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInstalacao;
+    private LocalDateTime dataInstalacao;
 
 
     @JoinColumn(name = "equipamento_wifi_id", referencedColumnName = "id")
@@ -49,11 +44,11 @@ public class Contrato extends BaseEntity {
         this.vencimento = vencimento;
     }
 
-    public Date getDataInstalacao() {
+    public LocalDateTime getDataInstalacao() {
         return dataInstalacao;
     }
 
-    public void setDataInstalacao(Date dataInstalacao) {
+    public void setDataInstalacao(LocalDateTime dataInstalacao) {
         this.dataInstalacao = dataInstalacao;
     }
 
@@ -89,12 +84,4 @@ public class Contrato extends BaseEntity {
         this.cliente = cliente;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

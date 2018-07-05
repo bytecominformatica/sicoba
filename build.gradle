@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.6.RELEASE'
+        springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -14,59 +14,30 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
-jar {
-    baseName = 'sicoba'
-    version = '2.0.0'
-}
+group = 'br.com.clairtonluz'
+version = '2.0.0'
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-jdbc'
-    compile 'org.springframework.boot:spring-boot-starter-security'
-    compile 'org.springframework.boot:spring-boot-starter-mail'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.springframework.boot:spring-boot-devtools'
-    compile 'org.springframework.boot:spring-boot-starter-tomcat'
-    compile 'me.legrange:mikrotik:3.0.1'
-    compile 'org.flywaydb:flyway-core'
-    compile 'br.com.gerencianet.gnsdk:gn-api-sdk-java:0.2.2'
-    compile 'com.sendgrid:sendgrid-java:4.0.1'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.flywaydb:flyway-core')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('com.h2database:h2')
+    runtime('org.postgresql:postgresql')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
 
-    runtime 'com.h2database:h2'
-    runtime 'org.postgresql:postgresql'
-
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'junit:junit'
-}
-
-springBoot {
-    executable = true
-}
-
-eclipse {
-    classpath {
-        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.9'
-}
-
-// task to heroku
-task stage(dependsOn: [clean, build]) {
-
-}
-stage.mustRunAfter(clean)
-
-clean << {
-    project.file('app.jar').delete()
+    compile 'me.legrange:mikrotik:3.0.4'
+    compile 'br.com.gerencianet.gnsdk:gn-api-sdk-java:0.2.3'
+    compile 'com.sendgrid:sendgrid-java:4.2.1'
 }

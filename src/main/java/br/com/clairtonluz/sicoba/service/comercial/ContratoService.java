@@ -4,13 +4,11 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Conexao;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.service.comercial.conexao.ConexaoService;
-import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,11 +20,9 @@ public class ContratoService {
     private ConexaoService conexaoService;
 
     public List<Contrato> buscarRecentes() {
-        LocalDate hoje = LocalDate.now();
-        Date to = DateUtil.toDate(hoje);
-        Date from = DateUtil.toDate(hoje.minusDays(30));
-        List<Contrato> result = contratoRepository.findByDataInstalacaoBetween(from, to);
-        return result;
+        LocalDate to = LocalDate.now();
+        LocalDate from = to.minusDays(30);
+        return contratoRepository.findByDataInstalacaoBetween(from, to);
     }
 
     @Transactional
@@ -41,7 +37,7 @@ public class ContratoService {
 
     @Transactional
     public void remove(Integer id) {
-        Contrato c = contratoRepository.findOne(id);
+        Contrato c = contratoRepository.getOne(id);
         contratoRepository.delete(c);
     }
 

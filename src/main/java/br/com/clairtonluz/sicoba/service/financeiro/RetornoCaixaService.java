@@ -112,7 +112,7 @@ public class RetornoCaixaService {
     private Titulo criarTituloRegistrada(Registro r) {
         String[] split = r.getNumeroDocumento().split("-");
         int clienteId = Integer.parseInt(split[0]);
-        Cliente c = clienteRepository.findOne(clienteId);
+        Cliente c = clienteRepository.getOne(clienteId);
         Titulo m = new Titulo();
         m.setCliente(c);
         m.setDataVencimento(r.getVencimento());

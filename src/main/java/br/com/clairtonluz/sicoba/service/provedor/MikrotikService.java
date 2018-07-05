@@ -41,14 +41,14 @@ public class MikrotikService {
     }
 
     public Mikrotik buscarPorId(Integer id) {
-        return mikrotikRepository.findOne(id);
+        return mikrotikRepository.getOne(id);
     }
 
     public void atualizarHost(Integer id, String token, Mikrotik mikrotik) {
         validaToken(token);
         validaNovoHost(mikrotik);
 
-        Mikrotik currentMikrotik = mikrotikRepository.findOne(id);
+        Mikrotik currentMikrotik = mikrotikRepository.getOne(id);
 
         if (currentMikrotik == null) throw new NotFoundException("Mikrotik " + id + " não encontrado");
 

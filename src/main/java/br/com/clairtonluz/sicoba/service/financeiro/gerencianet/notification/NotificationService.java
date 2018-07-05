@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -48,7 +50,7 @@ public class NotificationService {
 
     @Transactional
     public void processNotification(Integer gerencianetAccountId, String token) {
-        GerencianetAccount account = gerencianetAccountRepository.findOne(gerencianetAccountId);
+        GerencianetAccount account = gerencianetAccountRepository.getOne(gerencianetAccountId);
         if (account != null) {
             JSONObject response = notificationGNService.getNotification(account, token);
             if (GNService.isOk(response)) {
@@ -113,7 +115,7 @@ public class NotificationService {
 
             if (charge.getStatus().equals(StatusCharge.PAID)) {
                 charge.setPaidValue(data.getDouble("value") / 100);
-                Date paidAt = getCreatedAt(data);
+                LocalDate paidAt = getCreatedAt(data);
                 charge.setPaidAt(paidAt);
                 ativarCliente(charge);
             }
@@ -160,8 +162,8 @@ public class NotificationService {
                 "Conta: " + charge.getGerencianetAccount().getName() + "\n";
     }
 
-    private Date getCreatedAt(JSONObject data) {
-        return DateUtil.parseDatetimeISO(data.getString("created_at"));
+    private LocalDate getCreatedAt(JSONObject data) {
+        return LocalDate.parse(data.getString("created_at"));
     }
 
 }

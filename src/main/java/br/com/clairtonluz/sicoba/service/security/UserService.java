@@ -19,7 +19,7 @@ public class UserService {
     }
 
     public User buscarPorId(Integer id) {
-        return userRepository.findOne(id);
+        return userRepository.getOne(id);
     }
 
     @Transactional
@@ -47,7 +47,7 @@ public class UserService {
 
     @Transactional
     public void remover(Integer id) {
-        User user = userRepository.findOne(id);
+        User user = userRepository.getOne(id);
         userRepository.delete(user);
     }
 

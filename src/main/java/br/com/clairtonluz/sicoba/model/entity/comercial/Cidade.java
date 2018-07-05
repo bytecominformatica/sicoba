@@ -2,15 +2,15 @@ package br.com.clairtonluz.sicoba.model.entity.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "cidade")
 public class Cidade extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cidade_id_seq")
-    @SequenceGenerator(name = "cidade_id_seq", sequenceName = "cidade_id_seq")
-    private Integer id;
+
     private String nome;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -34,14 +34,5 @@ public class Cidade extends BaseEntity {
 
     public String toString() {
         return nome;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

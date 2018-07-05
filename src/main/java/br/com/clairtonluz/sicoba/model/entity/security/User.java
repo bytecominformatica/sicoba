@@ -11,10 +11,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "users_id_seq")
-    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq")
-    private Integer id;
+
     @NotNull(message = "nome é obrigatório")
     private String name;
     @NotNull(message = "username é obrigatório")
@@ -60,12 +57,4 @@ public class User extends BaseEntity {
         this.enabled = enabled;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

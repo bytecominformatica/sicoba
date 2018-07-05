@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ public class CarnetPojo {
     private Integer quantidadeParcela;
     private Double valor;
     private Double desconto;
-    private Date dataInicio;
+    private LocalDate dataInicio;
 
     public CarnetPojo() {
         this.desconto = 0d;
@@ -49,11 +50,11 @@ public class CarnetPojo {
         this.desconto = desconto;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 }

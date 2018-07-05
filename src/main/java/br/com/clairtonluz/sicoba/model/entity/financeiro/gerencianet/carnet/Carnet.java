@@ -9,6 +9,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -17,10 +18,6 @@ import java.util.Date;
 @Entity
 @Table(name = "carnet")
 public class Carnet extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "carnet_id_seq")
-    @SequenceGenerator(name = "carnet_id_seq", sequenceName = "carnet_id_seq")
-    private Integer id;
 
     @Column(name = "carnet_id")
     private Integer carnetId;
@@ -47,8 +44,7 @@ public class Carnet extends BaseEntity {
     private Integer lastNotification;
     @NotNull
     @Column(name = "first_pay")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date firstPay;
+    private LocalDate firstPay;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -62,15 +58,6 @@ public class Carnet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "gerencianet_account_id")
     private GerencianetAccount gerencianetAccount;
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getCarnetId() {
         return carnetId;
@@ -152,11 +139,11 @@ public class Carnet extends BaseEntity {
         this.discount = discount;
     }
 
-    public Date getFirstPay() {
+    public LocalDate getFirstPay() {
         return firstPay;
     }
 
-    public void setFirstPay(Date firstPay) {
+    public void setFirstPay(LocalDate firstPay) {
         this.firstPay = firstPay;
     }
 

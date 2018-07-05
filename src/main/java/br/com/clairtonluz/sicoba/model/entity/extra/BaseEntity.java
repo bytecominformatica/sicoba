@@ -1,26 +1,38 @@
 package br.com.clairtonluz.sicoba.model.entity.extra;
 
 import br.com.clairtonluz.sicoba.config.persistence.BaseEntityListener;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners({BaseEntityListener.class, AuditingEntityListener.class})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     @Column(name = "created_at")
     @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    protected Date createdAt;
+    protected LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    protected Date updatedAt;
+    protected LocalDateTime updatedAt;
 
     @Column(name = "created_by")
     protected String createdBy;
@@ -28,21 +40,19 @@ public abstract class BaseEntity {
     @Column(name = "updated_by")
     protected String updatedBy;
 
-    public abstract Integer getId();
-
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

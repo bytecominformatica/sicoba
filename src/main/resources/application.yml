@@ -12,6 +12,8 @@ spring:
     removeAbandoned: true
   jpa:
     show-sql: false
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
   mail:
     default-encoding: UTF-8
     host: smtp.zoho.com
@@ -26,6 +28,8 @@ spring:
     properties.mail.smtp.debug: true
   sendgrid:
     api-key: your-secret-api-key
+  jackson:
+    time-zone: America/Fortaleza
 myapp:
   email:
     sac: sac@bytecominformatica.com.br
@@ -44,8 +48,6 @@ myapp:
 # STAGING
 spring:
   profiles: staging
-security:
-  require-ssl: true
 
 ---
 # PRODUCTION
@@ -57,6 +59,3 @@ spring:
     show-sql: false
     properties:
        hibernate.format_sql: false
-
-security:
-  require-ssl: true

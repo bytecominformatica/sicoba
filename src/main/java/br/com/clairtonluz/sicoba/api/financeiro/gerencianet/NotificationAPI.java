@@ -13,8 +13,12 @@ import java.util.*;
 @RequestMapping("api/gerencianet")
 public class NotificationAPI {
 
+    private final NotificationService notificationService;
+
     @Autowired
-    private NotificationService notificationService;
+    public NotificationAPI(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     @RequestMapping(value = "/{accountId}/notification", method = RequestMethod.POST)
     public void process(@PathVariable Integer accountId, @RequestBody String body) {

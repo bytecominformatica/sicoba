@@ -33,8 +33,8 @@
             function _findByPaymentDate(params) {
                 var status = params.status === 'PAYMENT MANUAL' ? 'CANCELED' : params.status;
                 var params2 = {
-                    start: params.start.getTime(),
-                    end: params.end.getTime(),
+                    start: moment(params.start).format('YYYY-MM-DD'),
+                    end: moment(params.end).format('YYYY-MM-DD'),
                     status: status
                 };
 
@@ -46,8 +46,8 @@
 
             function _findByExpirationDate(params) {
                 var params2 = {
-                    start: params.start.getTime(),
-                    end: params.end.getTime(),
+                    start: moment(params.start).format('YYYY-MM-DD'),
+                    end: moment(params.end).format('YYYY-MM-DD'),
                     status: params.status
                 };
 

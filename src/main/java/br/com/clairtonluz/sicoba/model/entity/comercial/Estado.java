@@ -8,10 +8,6 @@ import javax.persistence.*;
 @Table(name = "estado")
 public class Estado extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "estado_id_seq")
-    @SequenceGenerator(name = "estado_id_seq", sequenceName = "estado_id_seq")
-    private Integer id;
     private String nome;
     private String uf;
 
@@ -43,12 +39,4 @@ public class Estado extends BaseEntity {
         this.pais = pais;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

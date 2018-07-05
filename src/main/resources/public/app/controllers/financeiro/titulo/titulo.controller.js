@@ -30,7 +30,10 @@
                 }
 
                 function _novoTitulo() {
-                    $scope.titulo = Titulo.novo({clienteId: $routeParams.clienteId});
+                    Titulo.novo({clienteId: $routeParams.clienteId}, function (titulo) {
+                        if(titulo.dataVencimento) titulo.dataVencimento = moment(titulo.dataVencimento).toDate();
+                        $scope.titulo = titulo;
+                    });
                 }
 
                 function _buscarPorId(id) {

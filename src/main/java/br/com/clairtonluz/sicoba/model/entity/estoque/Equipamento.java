@@ -13,10 +13,6 @@ import javax.validation.constraints.Size;
 @Table(name = "equipamento")
 public class Equipamento extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "equipamento_id_seq")
-    @SequenceGenerator(name = "equipamento_id_seq", sequenceName = "equipamento_id_seq")
-    private Integer id;
     private String descricao;
     @Size(min = 1, max = 30)
     private String marca;
@@ -89,14 +85,5 @@ public class Equipamento extends BaseEntity {
 
     public void setStatus(StatusEquipamento status) {
         this.status = status;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

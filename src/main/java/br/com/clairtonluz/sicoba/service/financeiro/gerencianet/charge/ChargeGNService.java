@@ -70,7 +70,7 @@ class ChargeGNService {
         JSONObject discount = GNService.createDiscount(charge.getDiscount());
 
         JSONObject bankingBillet = new JSONObject();
-        bankingBillet.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
+        bankingBillet.put("expire_at", charge.getExpireAt()).toString();
         bankingBillet.put("customer", customer);
         bankingBillet.put("configurations", configurations);
         if (discount != null) {
@@ -105,7 +105,7 @@ class ChargeGNService {
 
         body.put("message", charge.getMessage());
 
-        body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
+        body.put("expire_at", charge.getExpireAt()).toString();
         body.put("request_delivery_address", false);
         body.put("payment_method", "all");
 
@@ -137,7 +137,7 @@ class ChargeGNService {
         params.put("id", charge.getChargeId().toString());
 
         JSONObject body = new JSONObject();
-        body.put("expire_at", DateUtil.formatISO(charge.getExpireAt()));
+        body.put("expire_at", charge.getExpireAt()).toString();
 
         return GNService.isOk(gnService.call(charge.getGerencianetAccount(), UPDATE_BILLET, params, body));
     }

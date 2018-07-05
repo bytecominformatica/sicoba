@@ -15,7 +15,7 @@ public class EquipamentoService {
     private EquipamentoRepository equipamentoRepository;
 
     public Equipamento buscarPorId(Integer id) {
-        return equipamentoRepository.findOne(id);
+        return equipamentoRepository.getOne(id);
     }
 
     public List<Equipamento> buscarDisponiveisParaInstalacao() {
@@ -42,7 +42,7 @@ public class EquipamentoService {
 
     @Transactional
     public void remove(Integer id) {
-        Equipamento e = equipamentoRepository.findOne(id);
+        Equipamento e = equipamentoRepository.getOne(id);
         equipamentoRepository.delete(e);
     }
 }

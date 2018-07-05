@@ -21,7 +21,7 @@ public class CedenteService {
     }
 
     public Cedente buscarPorId(Integer id) {
-        return cedenteRepository.findOne(id);
+        return cedenteRepository.getOne(id);
     }
 
     @Transactional
@@ -31,7 +31,7 @@ public class CedenteService {
 
     @Transactional
     public void remover(Integer id) {
-        Cedente cedente = cedenteRepository.findOne(id);
+        Cedente cedente = cedenteRepository.getOne(id);
         cedenteRepository.delete(cedente);
     }
 }

@@ -32,11 +32,15 @@
                 }
 
                 function _newCharge(clienteId) {
-                    $scope.charge = Charge.new({clienteId: clienteId});
+                    Charge.new({clienteId: clienteId}, function (charge) {
+                        if(charge.expireAt) charge.expireAt = moment(charge.expireAt).toDate();
+                        $scope.charge = charge;
+                    });
                 }
 
                 function _findById(id) {
                     Charge.get({id: id}, function (charge) {
+                        if(charge.expireAt) charge.expireAt = moment(charge.expireAt).toDate();
                         $scope.charge = charge;
                         $scope.clienteId = charge.cliente.id;
                     });

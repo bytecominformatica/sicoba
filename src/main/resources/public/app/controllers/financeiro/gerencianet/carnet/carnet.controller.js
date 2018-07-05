@@ -21,11 +21,15 @@
                 }
 
                 function _newCarnet(clienteId) {
-                    $scope.carnet = Carnet.new({clienteId: clienteId});
+                    Carnet.new({clienteId: clienteId}, function (carnet) {
+                        if(carnet.firstPay) carnet.firstPay = moment(carnet.firstPay).toDate();
+                        $scope.carnet = carnet;
+                    });
                 }
 
                 function _findById(id) {
                     Carnet.get({id: id}, function (carnet) {
+                        if(carnet.firstPay) carnet.firstPay = moment(carnet.firstPay).toDate();
                         $scope.carnet = carnet;
                         $scope.clienteId = carnet.cliente.id;
                     });
