@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,8 +20,8 @@ public class ContratoService {
     private ConexaoService conexaoService;
 
     public List<Contrato> buscarRecentes() {
-        LocalDate to = LocalDate.now();
-        LocalDate from = to.minusDays(30);
+        LocalDateTime to = LocalDateTime.now();
+        LocalDateTime from = to.minusDays(30);
         return contratoRepository.findByDataInstalacaoBetween(from, to);
     }
 

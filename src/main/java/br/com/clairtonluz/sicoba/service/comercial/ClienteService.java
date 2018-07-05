@@ -218,7 +218,7 @@ public class ClienteService extends CrudService<Cliente, ClienteRepository, Inte
     }
 
     public List<Cliente> buscarUltimosCancelados() {
-        return repository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, LocalDate.now().minusMonths(2));
+        return repository.findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente.CANCELADO, LocalDateTime.now().minusMonths(2));
     }
 
     @Override

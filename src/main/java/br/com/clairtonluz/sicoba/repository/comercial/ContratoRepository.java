@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
 
-    List<Contrato> findByDataInstalacaoBetween(LocalDate from, LocalDate to);
+    List<Contrato> findByDataInstalacaoBetween(LocalDateTime from, LocalDateTime to);
 
     Contrato findOptionalByCliente_id(Integer clienteId);
 

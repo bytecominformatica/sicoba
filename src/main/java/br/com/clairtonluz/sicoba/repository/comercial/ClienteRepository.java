@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -43,5 +44,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     @Query(QUERY_CLIENTE_SEM_TITULOS)
     List<Cliente> findBySemTitulosDepoisDe(@Param("date") LocalDate date);
 
-    List<Cliente> findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente status, LocalDate data);
+    List<Cliente> findByStatusAndUpdatedAtGreaterThanOrderByUpdatedAtDesc(StatusCliente status, LocalDateTime data);
 }
