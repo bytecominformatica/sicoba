@@ -42,6 +42,6 @@ dependencies {
     compile 'com.sendgrid:sendgrid-java:4.2.1'
 }
 
-springBoot {
-    executable = true
+bootJar {
+    launchScript()
 }
