@@ -14,6 +14,7 @@ import java.io.StringWriter;
 import java.security.Principal;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by clairton on 24/12/16.
@@ -84,6 +85,18 @@ public class EmailService {
                     .append(":</th><td>")
                     .append(req.getHeader(headerName))
                     .append("</td></tr>");
+        }
+
+        if ("POST".equalsIgnoreCase(req.getMethod()) || "PUT".equalsIgnoreCase(req.getMethod())) {
+            try {
+                String body = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+                sb.append("<tr><th>Body:</th><td>")
+                        .append(body)
+                        .append("</td></tr>");
+
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
 
         sb.append("</table>");

@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout()
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().ignoringAntMatchers(API_GERENCIANET_NOTIFICATION, API_UPDATE_MK_HOST)
+                .csrf().ignoringAntMatchers(API_GERENCIANET_NOTIFICATION, API_UPDATE_MK_HOST, API_TESTES)
                 .csrfTokenRepository(csrfTokenRepository())
         ;
 
