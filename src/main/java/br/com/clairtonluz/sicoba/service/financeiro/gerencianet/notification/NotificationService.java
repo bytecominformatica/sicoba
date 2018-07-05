@@ -13,16 +13,14 @@ import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.GerencianetAc
 import br.com.clairtonluz.sicoba.service.comercial.ClienteService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.service.notification.EmailService;
-import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 /**
@@ -31,6 +29,7 @@ import java.util.logging.Logger;
 @Service
 public class NotificationService {
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final NotificationGNService notificationGNService;
     private final ChargeRepository chargeRepository;
     private final GerencianetAccountRepository gerencianetAccountRepository;
@@ -115,7 +114,7 @@ public class NotificationService {
 
             if (charge.getStatus().equals(StatusCharge.PAID)) {
                 charge.setPaidValue(data.getDouble("value") / 100);
-                LocalDate paidAt = getCreatedAt(data);
+                LocalDateTime paidAt = getCreatedAt(data);
                 charge.setPaidAt(paidAt);
                 ativarCliente(charge);
             }
@@ -162,8 +161,8 @@ public class NotificationService {
                 "Conta: " + charge.getGerencianetAccount().getName() + "\n";
     }
 
-    private LocalDate getCreatedAt(JSONObject data) {
-        return LocalDate.parse(data.getString("created_at"));
+    private LocalDateTime getCreatedAt(JSONObject data) {
+        return LocalDateTime.parse(data.getString("created_at"), DATE_TIME_FORMATTER);
     }
 
 }

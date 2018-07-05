@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 /**
@@ -18,9 +19,9 @@ public class ChargeTest {
         charge.setValue(35d);
         charge.setPaidValue(35d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 5);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 6).plusDays(Charge.DAYS_OF_TOLERANCE);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 6).atStartOfDay().plusDays(Charge.DAYS_OF_TOLERANCE);
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
 
@@ -33,9 +34,9 @@ public class ChargeTest {
         charge.setValue(35d);
         charge.setPaidValue(35d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 9);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 10);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 10).atStartOfDay();
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
 
@@ -48,9 +49,9 @@ public class ChargeTest {
         charge.setValue(35d);
         charge.setPaidValue(35d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 8);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 10);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 10).atStartOfDay();
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
 
@@ -63,9 +64,9 @@ public class ChargeTest {
         charge.setValue(35d);
         charge.setPaidValue(35d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 5);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 5);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 5).atStartOfDay();
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
         Assert.assertEquals("pagamento no dia do vencimento não deveria ser inválido", Charge.VALID_PAYMENT, status);
@@ -78,9 +79,9 @@ public class ChargeTest {
         charge.setPaidValue(30d);
         charge.setDiscount(5d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 5);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 5);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 5).atStartOfDay();
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
         Assert.assertEquals("pagamento no dia do vencimento com desconto não deveria ser inválido", Charge.VALID_PAYMENT, status);
@@ -92,9 +93,9 @@ public class ChargeTest {
         charge.setValue(35d);
         charge.setPaidValue(35d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 5);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 4);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 4).atStartOfDay();
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
         Assert.assertEquals("pagamento adiantado não deveria ser inválido", Charge.VALID_PAYMENT, status);
@@ -107,9 +108,9 @@ public class ChargeTest {
         charge.setPaidValue(30d);
         charge.setDiscount(5d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 5);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 4);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 4).atStartOfDay();
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
         Assert.assertEquals("pagamento adiantado com desconto não deveria ser inválido", Charge.VALID_PAYMENT, status);
@@ -122,9 +123,9 @@ public class ChargeTest {
         charge.setPaidValue(29d);
         charge.setDiscount(5d);
         LocalDate expireAt = LocalDate.of(2017, Month.APRIL, 5);
-        LocalDate paidAt = LocalDate.of(2017, Month.APRIL, 4);
-        charge.setExpireAt(DateUtil.toDate(expireAt));
-        charge.setPaidAt(DateUtil.toDate(paidAt));
+        LocalDateTime paidAt = LocalDate.of(2017, Month.APRIL, 4).atStartOfDay();
+        charge.setExpireAt(expireAt);
+        charge.setPaidAt(paidAt);
 
         String status = charge.verifyPayment();
         Assert.assertEquals("pagamento com desconto maior do que foi definido deveria ser inválido", Charge.INVALID_DISCOUNT_PAYMENT, status);

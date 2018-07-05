@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -57,7 +58,7 @@ public class Charge extends BaseEntity {
     @Column(name = "expire_at")
     private LocalDate expireAt;
     @Column(name = "paid_at")
-    private LocalDate paidAt;
+    private LocalDateTime paidAt;
     @Enumerated(EnumType.STRING)
     private PaymentType payment;
 
@@ -99,7 +100,7 @@ public class Charge extends BaseEntity {
     private boolean isLatePayment() {
         boolean late = false;
         LocalDate expireAt = getExpireAt();
-        LocalDate paidAt = getPaidAt();
+        LocalDate paidAt = getPaidAt().toLocalDate();
         long diference = ChronoUnit.DAYS.between(expireAt.plusDays(DAYS_OF_TOLERANCE), paidAt);
 
         if (diference > 0) {
@@ -257,11 +258,11 @@ public class Charge extends BaseEntity {
         this.tokenNotification = tokenNotification;
     }
 
-    public LocalDate getPaidAt() {
+    public LocalDateTime getPaidAt() {
         return paidAt;
     }
 
-    public void setPaidAt(LocalDate paidAt) {
+    public void setPaidAt(LocalDateTime paidAt) {
         this.paidAt = paidAt;
     }
 

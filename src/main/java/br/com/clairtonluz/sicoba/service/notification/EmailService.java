@@ -63,6 +63,7 @@ public class EmailService {
         String subject = String.format("[SICOBA]%s[ERROR] - %s", myEnvironment.getEnv(), e.getMessage());
         StringBuilder sb = new StringBuilder();
         Principal userPrincipal = req.getUserPrincipal();
+
         sb
                 .append("<table>")
                 .append("<tr><th>Username:</th><td>")
