@@ -12,7 +12,6 @@ import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeReposit
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetGNService;
 import br.com.clairtonluz.sicoba.service.notification.EmailService;
-import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -231,13 +229,13 @@ public class ChargeService {
 
     public List<Charge> findByPaymentDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
         if (status == null && gerencianetAccountId == null) {
-            return chargeRepository.findByPaidAtBetween(start, end);
+            return chargeRepository.findByPaidAtBetween(start.atStartOfDay(), end.atTime(23, 59, 59));
         } else if (status == null) {
-            return chargeRepository.findByPaidAtBetweenAndGerencianetAccount_id(start, end, gerencianetAccountId);
+            return chargeRepository.findByPaidAtBetweenAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), gerencianetAccountId);
         } else if (gerencianetAccountId == null) {
-            return chargeRepository.findByPaidAtBetweenAndStatus(start, end, status);
+            return chargeRepository.findByPaidAtBetweenAndStatus(start.atStartOfDay(), end.atTime(23, 59, 59), status);
         } else {
-            return chargeRepository.findByPaidAtBetweenAndStatusAndGerencianetAccount_id(start, end, status, gerencianetAccountId);
+            return chargeRepository.findByPaidAtBetweenAndStatusAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), status, gerencianetAccountId);
         }
     }
 

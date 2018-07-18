@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -36,13 +37,13 @@ public interface ChargeRepository extends JpaRepository<Charge, Integer> {
     @Query("SELECT c FROM Charge c where c.cliente.id = :clientId and (c.status = 'UNPAID' OR c.expireAt between :begin and :finish) order by c.expireAt asc ")
     List<Charge> findCurrentByClientAndDate(@Param("clientId") Integer clientId, @Param("begin") LocalDate begin, @Param("finish") LocalDate finish);
 
-    List<Charge> findByPaidAtBetween(LocalDate start, LocalDate end);
+    List<Charge> findByPaidAtBetween(LocalDateTime start, LocalDateTime end);
 
-    List<Charge> findByPaidAtBetweenAndStatus(LocalDate start, LocalDate end, StatusCharge status);
+    List<Charge> findByPaidAtBetweenAndStatus(LocalDateTime start, LocalDateTime end, StatusCharge status);
 
-    List<Charge> findByPaidAtBetweenAndGerencianetAccount_id(LocalDate start, LocalDate end, Integer gerencianetAccountId);
+    List<Charge> findByPaidAtBetweenAndGerencianetAccount_id(LocalDateTime start, LocalDateTime end, Integer gerencianetAccountId);
 
-    List<Charge> findByPaidAtBetweenAndStatusAndGerencianetAccount_id(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId);
+    List<Charge> findByPaidAtBetweenAndStatusAndGerencianetAccount_id(LocalDateTime start, LocalDateTime end, StatusCharge status, Integer gerencianetAccountId);
 
     List<Charge> findByExpireAtBetween(LocalDate start, LocalDate end);
 
