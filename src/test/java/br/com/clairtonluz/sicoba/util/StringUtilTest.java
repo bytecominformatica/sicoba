@@ -15,4 +15,20 @@ public class StringUtilTest {
         String expected = "1.345.432.098,32";
         Assert.assertEquals(expected, atual);
     }
+
+    @Test
+    public void deveriaCompeltarComZeros() {
+        int value = 1234;
+        String atual = StringUtil.padLeft(value, 10);
+        String expected = "0000001234";
+        Assert.assertEquals(expected, atual);
+    }
+
+    @Test
+    public void deveriaCompeltarComEspacos() {
+        int value = 1234;
+        String atual = StringUtil.padLeft(value, 10, " ");
+        String expected = "      1234";
+        Assert.assertEquals(expected, atual);
+    }
 }

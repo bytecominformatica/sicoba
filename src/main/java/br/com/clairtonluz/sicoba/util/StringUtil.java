@@ -120,4 +120,33 @@ public final class StringUtil {
     public static boolean isEmpty(String notificationUrl) {
         return notificationUrl == null || notificationUrl.isEmpty();
     }
+
+    /**
+     * preenche com zeros a esqueda
+     *
+     * @param value
+     * @param size
+     * @return
+     */
+    public static String padLeft(Object value, int size) {
+        return padLeft(value, size, "0");
+    }
+
+    /**
+     * Preenche com o caractere especificado a esquerda
+     *
+     * @param value
+     * @param size
+     * @param fill
+     * @return
+     */
+    public static String padLeft(Object value, int size, String fill) {
+        if (value == null) return null;
+
+        StringBuilder sb = new StringBuilder(String.valueOf(value));
+        while (sb.length() < size) {
+            sb.insert(0, fill);
+        }
+        return sb.toString();
+    }
 }

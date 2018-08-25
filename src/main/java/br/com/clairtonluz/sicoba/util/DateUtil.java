@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -12,6 +13,8 @@ import java.util.Date;
  */
 public final class DateUtil {
 
+    public static final DateTimeFormatter DATE_PT_BR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter DATE_TIME_PT_BR = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     public static final SimpleDateFormat DATE_ISO = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat DATETIME_ISO = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -40,11 +43,15 @@ public final class DateUtil {
     /**
      * Return a String as yyyy-MM-dd
      *
-     * @param vencimento
+     * @param data
      * @return
      */
-    public static String formatISO(Date vencimento) {
-        return vencimento != null ? DATE_ISO.format(vencimento) : null;
+    public static String formatISO(Date data) {
+        return data != null ? DATE_ISO.format(data) : null;
+    }
+
+    public static String formatDate(LocalDate data) {
+        return data != null ? DATE_PT_BR.format(data) : null;
     }
 
     public static Date parseDateISO(String dateString) {
