@@ -1,30 +1,38 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Optional;
 
 @Entity
 @Table(name = "nfe_item")
 public class NfeItem extends BaseEntity {
-    private ClassificacaoServico classificacaoServico;
+    private ClassificacaoServico classificacaoServico; // 104
     private String descricao;
-    private Double valorUnitario ;
-    private Double icms;
-    private Double aliquotaReducao;
-    private String unidade;
-    private Double quantidadeContratada;
-    private Double quantidadeFornecida;
-    private Double aliquotaIcms;
-    private Double bc;
-    private Double valoresIsentos;
-    private Double outrosValores;
+    private Double valorUnitario;
+    private Double icms;// 0
+    private Double aliquotaReducao; // 0
+    private String unidade; // UN
+    private Double quantidadeContratada; // 1
+    private Double quantidadeFornecida; // 1
+    private Double aliquotaIcms;// 0
+    private Double bc;// 0
+    private Double valoresIsentos;// 0
+    private Double outrosValores;// 0
     private Double desconto;
-    private Double valorAproximadoTributosFederal;
-    private Double valorAproximadoTributosEstadual;
-    private Double valorAproximadoTributosMunicipal;
+    private Double valorAproximadoTributosFederal;// 0
+    private Double valorAproximadoTributosEstadual;// 0
+    private Double valorAproximadoTributosMunicipal;// 0
+
+    // unique (charge_id)
+    @OneToMany
+    @JoinColumn(name = "charge_id")
+    private Charge charge;
 
     public ClassificacaoServico getClassificacaoServico() {
         return classificacaoServico;
@@ -152,5 +160,13 @@ public class NfeItem extends BaseEntity {
 
     public void setValorAproximadoTributosMunicipal(Double valorAproximadoTributosMunicipal) {
         this.valorAproximadoTributosMunicipal = valorAproximadoTributosMunicipal;
+    }
+
+    public Charge getCharge() {
+        return charge;
+    }
+
+    public void setCharge(Charge charge) {
+        this.charge = charge;
     }
 }

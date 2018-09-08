@@ -2,9 +2,7 @@ package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +15,6 @@ public class NFe extends BaseEntity {
 
     @Column(name = "cliente_id")
     private Integer clienteId;
-
     private String nome;
     private String logradouro;
     private String numero;
@@ -26,12 +23,12 @@ public class NFe extends BaseEntity {
     private String cidade;
     private String uf;
     private String cep;
-
     private String cnpj;
     private String ie;
     private String cpf;
     private String rg;
 
+    @Column(name = "dia_vencimento")
     private Integer diaDeVencimento;
 
     private int modelo;
@@ -39,14 +36,16 @@ public class NFe extends BaseEntity {
 
     private String telefone;
     private String email;
+    @Column(name = "codigo_consumidor")
     private Integer codigoConsumidor;
+    @Enumerated(EnumType.STRING)
     private TipoAssinante tipoAssinante;
+    @Enumerated(EnumType.STRING)
     private TipoUtilizacao tipoUtilizacao;
     private LocalDate dataEmissao;
     private LocalDate dataPrestacao;
-    private String numeroNFe;
-    private String observacao;
-    private String codigoMunicipio;
+    private String observacao; // null
+    private String codigoMunicipio; // null
 
     private List<NfeItem> itens;
 
@@ -224,14 +223,6 @@ public class NFe extends BaseEntity {
 
     public void setDataPrestacao(LocalDate dataPrestacao) {
         this.dataPrestacao = dataPrestacao;
-    }
-
-    public String getNumeroNFe() {
-        return numeroNFe;
-    }
-
-    public void setNumeroNFe(String numeroNFe) {
-        this.numeroNFe = numeroNFe;
     }
 
     public Optional<String> getObservacao() {
