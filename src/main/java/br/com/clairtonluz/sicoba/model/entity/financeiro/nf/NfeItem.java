@@ -1,4 +1,4 @@
-package br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe;
+package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.util.Optional;
 
 @Entity
-@Table(name = "sync_nfe_item")
+@Table(name = "nfe_item")
 public class NfeItem extends BaseEntity {
     private ClassificacaoServico classificacaoServico;
     private String descricao;

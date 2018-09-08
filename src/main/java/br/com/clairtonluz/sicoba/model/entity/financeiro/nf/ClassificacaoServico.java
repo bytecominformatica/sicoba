@@ -1,4 +1,4 @@
-package br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe;
+package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
 public enum ClassificacaoServico {
     ASSINATURA_DE_SERVICOS_DE_TELEFONIA(101),

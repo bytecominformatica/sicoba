@@ -20,9 +20,12 @@ import java.util.List;
 @RequestMapping("api/charges")
 public class ChargeAPI {
 
+    private final ChargeService chargeService;
+
     @Autowired
-    private ChargeService chargeService;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public ChargeAPI(ChargeService chargeService) {
+        this.chargeService = chargeService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Charge> findByClienteOrCarnet(@RequestParam("clienteId") Integer clienteId,

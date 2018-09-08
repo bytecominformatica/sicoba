@@ -1,8 +1,9 @@
-package br.com.clairtonluz.sicoba.service.financeiro.syncnfe;
+package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 
-import br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe.NFe;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe.NfeItem;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe.SyncNFeImportacao;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NfeItem;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.SyncNFeImportacao;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.springframework.lang.NonNull;
@@ -14,18 +15,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class SyncNFeService {
 
-    public SyncNFeImportacao gerarImportacao(@NonNull List<NFe> notas) {
+    public List<NFe> generateNotas(List<Charge> charges) {
+        return null;
+    }
 
+    public SyncNFeImportacao generateFiles(@NonNull List<NFe> notas) {
         SyncNFeImportacao syncNFeImportacao = new SyncNFeImportacao();
         AtomicInteger index = new AtomicInteger(1);
+        StringBuilder master = new StringBuilder();
+        StringBuilder detail = new StringBuilder();
         notas.forEach(nFe -> {
             nFe.getItens().forEach(nfeItem -> {
-                gerarMaster(index.get(), nFe);
-                gerarDetail(index.getAndIncrement(), nfeItem);
+                master.append(gerarMaster(index.get(), nFe));
+                detail.append(gerarDetail(index.getAndIncrement(), nfeItem));
             });
         });
-//        syncNFeImportacao.setMaster(gerarMaster(notas));
-//        syncNFeImportacao.setDetail(gerarDetail(notas));
+        syncNFeImportacao.setMaster(master.toString());
+        syncNFeImportacao.setDetail(detail.toString());
         return syncNFeImportacao;
     }
 
@@ -81,4 +87,5 @@ public class SyncNFeService {
                 nFe.getCodigoMunicipio().orElse("") + "|" +
                 "\n";
     }
+
 }

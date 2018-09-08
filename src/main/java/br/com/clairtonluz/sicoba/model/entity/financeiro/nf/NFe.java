@@ -1,4 +1,4 @@
-package br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe;
+package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Entity
-@Table(name = "sync_nfe")
+@Table(name = "nfe")
 public class NFe extends BaseEntity {
     public static final int MODELO_21 = 21;
     public static final int MODELO_22 = 22;

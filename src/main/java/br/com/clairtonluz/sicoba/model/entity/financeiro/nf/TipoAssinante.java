@@ -1,4 +1,4 @@
-package br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe;
+package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
 public enum TipoAssinante {
     COMERCIAL_OU_INDUSTRIAL(1),

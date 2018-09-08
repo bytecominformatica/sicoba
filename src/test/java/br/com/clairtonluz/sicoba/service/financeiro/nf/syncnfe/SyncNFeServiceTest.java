@@ -1,9 +1,8 @@
-package br.com.clairtonluz.sicoba.service.financeiro.syncnfe;
+package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 
 import br.com.clairtonluz.sicoba.model.entity.comercial.TipoPessoa;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.syncnfe.*;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.*;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -12,19 +11,12 @@ import java.time.Month;
 public class SyncNFeServiceTest {
 
     private SyncNFeService syncNFeService = new SyncNFeService();
-//    private List<NFe> notaList;
-
-//    @Before
-//    public void setUp() {
-//        createNotas();
-//    }
 
     @Test
     public void gerarMaster() {
         NFe nFe = criarNfe();
         String masterExpected = "1|1468|RODRIGO JOSE ZAMIATOWSKI|R. PROJETADA E|000|ULTIMA RUA DO LADO DE CIMA|NOVO HORIZONTE|CAPINZAL|SC|89665-000|||013.285.380-95|2091770319|20|21|5307|(49)3555-0000|sem@sem.com|0000001468|3|4|25/08/2018|26/08/2018|123|Nota de teste||\n";
         String masterActual = syncNFeService.gerarMaster(1, nFe);
-        System.out.println(masterActual);
         Assert.assertEquals("master", masterExpected, masterActual);
     }
 
@@ -32,7 +24,7 @@ public class SyncNFeServiceTest {
     public void gerarDetail() {
         NfeItem nfeItem = criarNfeItem();
         String detailActual = syncNFeService.gerarDetail(1, nfeItem);
-        String detailExpected = "1|104|SERVICO DE ACESSO A INTERNET|49,00|0|0|UN|1|1|0|104|0|0|0|0|0|0|0|\n";
+        String detailExpected = "1|104|SERVICO DE ACESSO A INTERNET|50,00|0,00|0,00|UN|1,00|1,00|0,00|104|0,00|0,00|0,00|0,00|0,00|0,00|0,00|\n";
         Assert.assertEquals("detail", detailExpected, detailActual);
     }
 
