@@ -27,24 +27,26 @@ public class NFe extends BaseEntity {
     private String ie;
     private String cpf;
     private String rg;
-
     @Column(name = "dia_vencimento")
     private Integer diaDeVencimento;
-
     private int modelo;
     private int cfop;
-
     private String telefone;
     private String email;
     @Column(name = "codigo_consumidor")
     private Integer codigoConsumidor;
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_assinante")
     private TipoAssinante tipoAssinante;
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_utilizacao")
     private TipoUtilizacao tipoUtilizacao;
+    @Column(name = "data_emissao")
     private LocalDate dataEmissao;
+    @Column(name = "data_prestacao")
     private LocalDate dataPrestacao;
     private String observacao; // null
+    @Column(name = "codigo_municipio")
     private String codigoMunicipio; // null
 
     private List<NfeItem> itens;

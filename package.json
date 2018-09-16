@@ -32,5 +32,8 @@
     "gulp-util": "^3.0.7",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0"
+  },
+  "dependencies": {
+    "gulp-install": "^1.1.0"
   }
 }
