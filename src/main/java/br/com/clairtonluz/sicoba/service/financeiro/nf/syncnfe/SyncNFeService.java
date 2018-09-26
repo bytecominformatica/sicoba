@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -49,28 +50,21 @@ public class SyncNFeService {
     		    	nfe.setCpf(charge.getCliente().getCpfCnpj()); 
 				}else {
 					nfe.setCnpj(charge.getCliente().getCpfCnpj()); 
-				}   		    
-    		    
-    		    
-    		   // nfe.setIe(null);   		    
-    		    
+				} 	        		        		    
+    		    nfe.setIe(null);  		        		    
     		    nfe.setRg(charge.getCliente().getRg());     		    
-    		   // nfe.setDiaDeVencimento(charge.getExpireAt());
-
+    		    nfe.setDiaDeVencimento(charge.getExpireAt().getDayOfMonth());
     		    nfe.setModelo( nfe.MODELO_21); 
-    		    //nfe.setCfop();
-
+    		    nfe.setCfop(0);
     		    nfe.setTelefone(charge.getCliente().getFoneTitular());
     		    nfe.setEmail(charge.getCliente().getEmail());    		   
     		    nfe.setCodigoConsumidor(charge.getCliente().getId());   		        		    
     		    nfe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
-    		    nfe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);
-    		   
-    		   // nfe.setDataEmissao(dataEmissao);
-    		   // nfe.setDataPrestacao(dataPrestacao);
-    		   
+    		    nfe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);    		   
+    		    nfe.setDataEmissao(LocalDate.now());
+    		    nfe.setDataPrestacao(LocalDate.now());    		   
     		    nfe.setObservacao(null);
-    		    nfe.setCodigoMunicipio(null); 	       		    		   
+    		    nfe.setCodigoMunicipio(null); 	      		    		   
     		    
     		    List<NfeItem> itens = new ArrayList<NfeItem>();  		        		    
     		   
@@ -96,8 +90,8 @@ public class SyncNFeService {
     	    	itens.add(nfeItem);
     	    	nfe.setItens(itens);
     	    	
-    	    	nFeRepository.save(nfe); 
-    	    	//nFeItemRepository.save(nfeItem);
+    	    	nFeRepository.save(nfe);
+    	    	
 		}   	    	    	        
         return null;
     }
@@ -170,10 +164,14 @@ public class SyncNFeService {
                 nFe.getCodigoMunicipio().orElse("") + "|" +
                 "\n";
     }
-
-	public List<NFe> buscarAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
+	public List<NFe> getAll() {        
+        return nFeRepository.findAll();
+    }
+	
+	public List<NFe> busca() {        
+        return null;
+    }
 
 }

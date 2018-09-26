@@ -48,7 +48,8 @@ public class NFe extends BaseEntity {
     private String observacao; // null
     @Column(name = "codigo_municipio")
     private String codigoMunicipio; // null
-
+    
+    @OneToMany(mappedBy = "nfe", targetEntity = NfeItem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<NfeItem> itens;
 
     public Integer getClienteId() {

@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import java.util.Optional;
 
 @Entity
@@ -47,9 +49,12 @@ public class NfeItem extends BaseEntity {
 
     // unique (charge_id)
     @ManyToOne
-    @JoinColumn(name = "charge_id")
-    @Column(unique=true)
-    private Charge charge;      
+    @JoinColumn(name = "charge_id",unique=true)    
+    private Charge charge; 
+    
+    @ManyToOne
+    @JoinColumn(name = "nfe_id",unique=true)    
+    private NFe nfe;        
 
     public ClassificacaoServico getClassificacaoServico() {
         return classificacaoServico;
@@ -186,4 +191,14 @@ public class NfeItem extends BaseEntity {
     public void setCharge(Charge charge) {
         this.charge = charge;
     }
+
+	public NFe getNfe() {
+		return nfe;
+	}
+
+	public void setNfe(NFe nfe) {
+		this.nfe = nfe;
+	}
+    
+    
 }
