@@ -1,81 +1,91 @@
 [
-  {
-    "title": "Dashboard",
-    "icon": "fa fa-dashboard fa-fw",
-    "url": "#/"
-  },
-  {
-    "title": "Comercial",
-    "icon": "fa fa-group fa-fw",
-    "items": [
-      {
-        "title": "Clientes",
-        "icon": "fa fa-user fa-fw",
-        "url": "#/clientes"
-      },
-      {
-        "title": "Planos",
-        "icon": "fa fa-cloud",
-        "url": "#/planos"
-      }
-    ]
-  },
-  {
-    "title": "Financeiro",
-    "icon": "fa fa-dollar",
-    "items": [
-      {
-        "title": "Enviar Retorno",
-        "icon": "fa fa-upload",
-        "url": "#/retorno"
-      },
-      {
-        "title": "Cedentes",
-        "icon": "fa fa-upload",
-        "url": "#/cedentes"
-      },
-      {
-        "title": "Contas Gerencianet",
-        "icon": "fa fa-credit-card",
-        "url": "#/gerencianet/accounts"
-      },
-      {
-        "title": "Relatório de títulos",
-        "icon": "fa fa-files-o",
-        "url": "#/titulos/relatorio"
-      },
-      {
-        "title": "Relatório de cobranças",
-        "icon": "fa fa-files-o",
-        "url": "#/charge/report"
-      }
-    ]
-  },
-  {
-    "title": "Estoque",
-    "icon": "fa fa-dropbox",
-    "items": [
-      {
-        "title": "Equipamentos",
-        "icon": "fa fa-wrench",
-        "url": "#/equipamentos"
-      }
-    ]
-  },
-  {
-    "title": "Provedor",
-    "icon": "fa fa-linux",
-    "items": [
-      {
-        "title": "Mikrotik",
-        "icon": "fa fa-maxcdn",
-        "url": "#/mikrotiks"
-      }
-    ]
-  },
-  {
-    "title": "Sugestões e Melhorias",
-    "icon": "fa fa-github",
-    "url": "https://github.com/bytecominformatica/sicoba/issues"
-  }
+	{
+		"title": "Dashboard",
+		"icon": "fa fa-dashboard fa-fw",
+		"url": "#/"
+	},
+	{
+		"title": "Comercial",
+		"icon": "fa fa-group fa-fw",
+		"items": [
+			{
+				"title": "Clientes",
+				"icon": "fa fa-user fa-fw",
+				"url": "#/clientes"
+			},
+			{
+				"title": "Planos",
+				"icon": "fa fa-cloud",
+				"url": "#/planos"
+			}
+		]
+	},
+	{
+		"title": "Financeiro",
+		"icon": "fa fa-dollar",
+		"items": [
+			{
+				"title": "Gerar Notas",
+				"icon": "fa fa-files-o",
+				"url": "#/notas/gerar"
+			},
+			{
+				"title": "Sync NFE",
+				"icon": "fa fa-files-o",
+				"url": "#/notas/syncnfe"
+			},
+			{
+				"title": "Enviar Retorno",
+				"icon": "fa fa-upload",
+				"url": "#/retorno"
+			},
+			{
+				"title": "Cedentes",
+				"icon": "fa fa-upload",
+				"url": "#/cedentes"
+			},
+			{
+				"title": "Contas Gerencianet",
+				"icon": "fa fa-credit-card",
+				"url": "#/gerencianet/accounts"
+			},
+			{
+				"title": "Relatório de títulos",
+				"icon": "fa fa-files-o",
+				"url": "#/titulos/relatorio"
+			},
+			{
+				"title": "Relatório de cobranças",
+				"icon": "fa fa-files-o",
+				"url": "#/charge/report"
+			}
+		]
+	},
+	{
+		"title": "Estoque",
+		"icon": "fa fa-dropbox",
+		"items": [
+			{
+				"title": "Equipamentos",
+				"icon": "fa fa-wrench",
+				"url": "#/equipamentos"
+			}
+		]
+	},
+	{
+		"title": "Provedor",
+		"icon": "fa fa-linux",
+		"items": [
+			{
+				"title": "Mikrotik",
+				"icon": "fa fa-maxcdn",
+				"url": "#/mikrotiks"
+			}
+		]
+	},
+	{
+		"title": "Sugestões e Melhorias",
+		"icon": "fa fa-github",
+		"url": "https://github.com/bytecominformatica/sicoba/issues"
+	}
 ]

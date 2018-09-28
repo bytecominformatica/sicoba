@@ -1,21 +1,98 @@
 package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.ClassificacaoServico;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NfeItem;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.SyncNFeImportacao;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.TipoAssinante;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.TipoUtilizacao;
+import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemRepository;
+import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeRepository;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+
 @Service
 public class SyncNFeService {
+	
+	@Autowired
+    private NFeRepository nFeRepository;
+	
+	@Autowired
+    private NFeItemRepository nFeItemRepository;
 
     public List<NFe> generateNotas(List<Charge> charges) {
+    	
+    	for (Charge charge : charges) {
+    		
+    		NFe nfe = new NFe();
+    		    nfe.setClienteId(charge.getCliente().getId());
+    		    nfe.setNome(charge.getCliente().getNome());
+    		    nfe.setLogradouro(charge.getCliente().getEndereco().getLogradouro());
+    		    nfe.setNumero(charge.getCliente().getEndereco().getNumero());
+    		    nfe.setComplemento(charge.getCliente().getEndereco().getComplemento()); 
+    		    nfe.setBairo(charge.getCliente().getEndereco().getBairro().getNome());
+    		    nfe.setCidade(charge.getCliente().getEndereco().getBairro().getCidade().getNome()); 
+    		    nfe.setUf(charge.getCliente().getEndereco().getBairro().getCidade().getEstado().getUf());    		    
+    		    nfe.setCep(charge.getCliente().getEndereco().getCep());    		    
+    		    if (charge.getCliente().getCpfCnpj().length() == 11) {
+    		    	nfe.setCpf(charge.getCliente().getCpfCnpj()); 
+				}else {
+					nfe.setCnpj(charge.getCliente().getCpfCnpj()); 
+				} 	        		        		    
+    		    nfe.setIe(null);  		        		    
+    		    nfe.setRg(charge.getCliente().getRg());     		    
+    		    nfe.setDiaDeVencimento(charge.getExpireAt().getDayOfMonth());
+    		    nfe.setModelo( nfe.MODELO_21); 
+    		    nfe.setCfop(0);
+    		    nfe.setTelefone(charge.getCliente().getFoneTitular());
+    		    nfe.setEmail(charge.getCliente().getEmail());    		   
+    		    nfe.setCodigoConsumidor(charge.getCliente().getId());   		        		    
+    		    nfe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
+    		    nfe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);    		   
+    		    nfe.setDataEmissao(LocalDate.now());
+    		    nfe.setDataPrestacao(LocalDate.now());    		   
+    		    nfe.setObservacao(null);
+    		    nfe.setCodigoMunicipio(null); 	      		    		   
+    		    
+    		    List<NfeItem> itens = new ArrayList<NfeItem>();  		        		    
+    		   
+    		    NfeItem nfeItem = new NfeItem();
+    		    nfeItem.setCharge(charge);
+    	    	nfeItem.setClassificacaoServico(ClassificacaoServico.ASSINATURA_DE_SERVICOS_DE_PROVIMENTO_DE_ACESSO_A_INTERNET);
+    	    	nfeItem.setDescricao(charge.getDescription()); 
+    	    	nfeItem.setValorUnitario(charge.getValue());
+    	    	nfeItem.setIcms(0.0);
+    	    	nfeItem.setAliquotaReducao(0.0); 
+    	    	nfeItem.setUnidade("UN");
+    	    	nfeItem.setQuantidadeContratada(1.0);
+    	    	nfeItem.setQuantidadeFornecida(1.0);
+    	    	nfeItem.setAliquotaIcms(0.0); 
+    	    	nfeItem.setBc(0.0);
+    	    	nfeItem.setValoresIsentos(0.0);
+    	    	nfeItem.setOutrosValores(0.0);
+    	    	nfeItem.setDesconto(charge.getDiscount());
+    	    	nfeItem.setValorAproximadoTributosFederal(0.0);
+    	    	nfeItem.setValorAproximadoTributosEstadual(0.0); 
+    	    	nfeItem.setValorAproximadoTributosMunicipal(0.0);   	    	
+    	    	
+    	    	itens.add(nfeItem);
+    	    	nfe.setItens(itens);
+    	    	
+    	    	nFeRepository.save(nfe);
+    	    	
+		}   	    	    	        
         return null;
     }
 
@@ -86,6 +163,15 @@ public class SyncNFeService {
                 nFe.getObservacao().orElse("") + "|" +
                 nFe.getCodigoMunicipio().orElse("") + "|" +
                 "\n";
+    }
+	
+	
+	public List<NFe> getAll() {        
+        return nFeRepository.findAll();
+    }
+	
+	public List<NFe> busca() {        
+        return null;
     }
 
 }

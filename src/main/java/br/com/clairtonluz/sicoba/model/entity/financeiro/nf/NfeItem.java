@@ -1,38 +1,60 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
+import br.com.clairtonluz.sicoba.model.entity.comercial.Endereco;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import java.util.Optional;
 
 @Entity
 @Table(name = "nfe_item")
 public class NfeItem extends BaseEntity {
+	@Column(name = "classificacao_servico")
     private ClassificacaoServico classificacaoServico; // 104
     private String descricao;
     private Double valorUnitario;
-    private Double icms;// 0
+    private Double icms;// 0    
+    @Column(name = "aliquota_reducao")
     private Double aliquotaReducao; // 0
     private String unidade; // UN
+    @Column(name = "quantidade_contratada")
     private Double quantidadeContratada; // 1
+    @Column(name = "quantidade_fornecida")
     private Double quantidadeFornecida; // 1
+    @Column(name = "aliquota_icms")
     private Double aliquotaIcms;// 0
     private Double bc;// 0
+    @Column(name = "valores_isentos")
     private Double valoresIsentos;// 0
+    @Column(name = "outros_valores")
     private Double outrosValores;// 0
     private Double desconto;
+    @Column(name = "valor_aproximado_tributos_federal")
     private Double valorAproximadoTributosFederal;// 0
+    @Column(name = "valor_aproximado_tributos_estadual")
     private Double valorAproximadoTributosEstadual;// 0
+    @Column(name = "valor_aproximado_tributos_municipal")
     private Double valorAproximadoTributosMunicipal;// 0
 
     // unique (charge_id)
-    @OneToMany
-    @JoinColumn(name = "charge_id")
-    private Charge charge;
+    @ManyToOne
+    @JoinColumn(name = "charge_id",unique=true)    
+    private Charge charge; 
+    
+    @ManyToOne
+    @JoinColumn(name = "nfe_id",unique=true)    
+    private NFe nfe;        
 
     public ClassificacaoServico getClassificacaoServico() {
         return classificacaoServico;
@@ -169,4 +191,14 @@ public class NfeItem extends BaseEntity {
     public void setCharge(Charge charge) {
         this.charge = charge;
     }
+
+	public NFe getNfe() {
+		return nfe;
+	}
+
+	public void setNfe(NFe nfe) {
+		this.nfe = nfe;
+	}
+    
+    
 }
