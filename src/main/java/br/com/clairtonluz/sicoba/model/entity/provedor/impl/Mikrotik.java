@@ -3,13 +3,13 @@ package br.com.clairtonluz.sicoba.model.entity.provedor.impl;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.provedor.IServer;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "mikrotik")
 public class Mikrotik extends BaseEntity implements IServer {
 
-    @Lob
     private String description;
     private String name;
     private String host;
