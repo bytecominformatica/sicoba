@@ -8,6 +8,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Endereco;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.util.NumberUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import br.com.gerencianet.gnsdk.Gerencianet;
 import br.com.gerencianet.gnsdk.exceptions.GerencianetException;
@@ -117,10 +118,8 @@ public class GNService {
         Double interest = valor * INTEREST_RATE;
         JSONArray instructions = new JSONArray()
                 .put("Não receber após 60 dias do vencimento");
-//                .put(String.format("Sr. Caixa, cobrar multa de %s após o vencimento", StringUtil.formatCurrence(fine)))
-//                .put(String.format("Sr. Caixa, cobrar juros de %s ao dia após o vencimento", StringUtil.formatCurrence(interest)));
         if (discount != null && discount > 0) {
-            instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", StringUtil.formatCurrence(discount)));
+            instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", NumberUtil.formatCurrence(discount)));
         }
         return instructions;
     }

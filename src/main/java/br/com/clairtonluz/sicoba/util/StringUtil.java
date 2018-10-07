@@ -14,7 +14,6 @@ import java.util.Random;
  */
 public final class StringUtil {
 
-    public static final Locale LOCALE_BRAZIL = new Locale("pt", "BR");
     public static final int CPF_SIZE = 11;
     public static final int CNPJ_SIZE = 14;
     private static final DateTimeFormatter FORMATTER_DATA = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -111,10 +110,6 @@ public final class StringUtil {
     public static LocalDate getData(String line, int inicio, int fim) {
         String data = get(line, inicio, fim);
         return LocalDate.parse(data, FORMATTER_DATA);
-    }
-
-    public static String formatCurrence(double value) {
-        return String.format(LOCALE_BRAZIL, "%1$,.2f", value);
     }
 
     public static boolean isEmpty(String notificationUrl) {

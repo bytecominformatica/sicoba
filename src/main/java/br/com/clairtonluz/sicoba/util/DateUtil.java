@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ public final class DateUtil {
 
     public static final SimpleDateFormat DATE_ISO = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat DATETIME_ISO = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter DATE_PT_BR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static Date toDate(LocalDate localDate) {
         return localDate != null ? toDate(localDate.atStartOfDay()) : null;

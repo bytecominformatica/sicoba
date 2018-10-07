@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Contrato extends BaseEntity {
 
     @NotNull(message = "vencimento é obrigatório")
-    private short vencimento;
+    private Integer vencimento;
     @Column(name = "data_instalacao")
     @NotNull(message = "data de instalação é obrigatório")
     private LocalDateTime dataInstalacao;
@@ -36,11 +36,11 @@ public class Contrato extends BaseEntity {
     @NotNull(message = "cliente é obrigatório")
     private Cliente cliente;
 
-    public short getVencimento() {
+    public Integer getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(short vencimento) {
+    public void setVencimento(Integer vencimento) {
         this.vencimento = vencimento;
     }
 
