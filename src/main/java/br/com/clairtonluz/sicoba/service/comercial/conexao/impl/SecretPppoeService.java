@@ -18,7 +18,9 @@ public class SecretPppoeService implements SecretService {
     public void save(Servidor servidor, Secret... secrets) {
         for (Secret it : secrets) {
             if (exists(servidor, it)) {
+                boolean needReconnect = isActiveProfileWrong(servidor, it);
                 update(servidor, it);
+                if (needReconnect) disconnect(servidor, it);
             } else {
                 create(servidor, it);
             }
@@ -41,6 +43,20 @@ public class SecretPppoeService implements SecretService {
     private List getActive(Servidor servidor, Secret secret) {
         String command = String.format("/ppp/active/print where name=%s", secret.getLogin());
         return servidor.execute(command);
+    }
+
+    private boolean isActiveProfileWrong(Servidor servidor, Secret secret) {
+        return isActive(servidor, secret) && isDifferentProfile(servidor, secret);
+    }
+
+    private boolean isActive(Servidor servidor, Secret secret) {
+        List activeList = getActive(servidor, secret);
+        return !activeList.isEmpty();
+    }
+
+    private boolean isDifferentProfile(Servidor servidor, Secret secret) {
+        List withSameProfile = servidor.execute(String.format("/ppp/secret/print where name=%s and profile=%s", secret.getLogin(), secret.getProfile()));
+        return withSameProfile.isEmpty();
     }
 
 
