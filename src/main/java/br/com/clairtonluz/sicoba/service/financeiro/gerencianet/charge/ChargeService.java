@@ -2,6 +2,7 @@ package br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge;
 
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
+import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.PaymentType;
@@ -224,7 +225,11 @@ public class ChargeService {
     }
 
     public List<Charge> overdue() {
-        return chargeRepository.overdue(LocalDate.now());
+        return overdue(LocalDate.now());
+    }
+
+    public List<Charge> overdue(LocalDate dateReference) {
+        return chargeRepository.overdue(dateReference);
     }
 
     public List<Charge> findByPaymentDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
@@ -252,4 +257,12 @@ public class ChargeService {
         }
     }
 
+    public List<Charge> buscarNaoVencidosPorCliente(Cliente cliente) {
+        return chargeRepository.findByClienteAndStatusAndExpireAtGreaterThan(cliente, StatusCharge.WAITING, LocalDate.now());
+    }
+
+    public void cancelarCobrancasNaoVencidas(Cliente cliente) {
+        List<Charge> chargesNaoVencidos = buscarNaoVencidosPorCliente(cliente);
+        chargesNaoVencidos.forEach(this::cancelCharge);
+    }
 }

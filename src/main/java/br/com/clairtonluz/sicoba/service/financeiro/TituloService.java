@@ -11,13 +11,11 @@ import br.com.clairtonluz.sicoba.model.pojo.financeiro.gerencianet.CarnetPojo;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.TituloRepository;
-import br.com.clairtonluz.sicoba.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -221,5 +219,10 @@ public class TituloService {
     public byte[] criarBoletos(List<Integer> titulos) {
 
         return new byte[0];
+    }
+
+    public void cancelarCobrancasNaoVencidas(Cliente cliente) {
+        List<Titulo> titulosNaoVencidos = buscarNaoVencidosPorCliente(cliente);
+        titulosNaoVencidos.forEach(titulo -> remove(titulo.getId()));
     }
 }
