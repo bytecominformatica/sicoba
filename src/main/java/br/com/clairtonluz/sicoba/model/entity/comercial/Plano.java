@@ -14,6 +14,7 @@ import java.util.Date;
 @Table(name = "plano")
 public class Plano extends BaseEntity {
 
+    public static final String PLANO_INATIVO = "INATIVO";
     @NotNull(message = "nome é obrigatório")
     private String nome;
     @NotNull(message = "Upload é obrigatório")

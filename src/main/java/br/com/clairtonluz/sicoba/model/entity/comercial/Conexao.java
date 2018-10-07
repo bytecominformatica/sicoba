@@ -33,8 +33,9 @@ public class Conexao extends BaseEntity {
     private String mac;
 
     public Secret createSecret(Plano plano) {
-        boolean disabled = cliente.getStatus() != StatusCliente.ATIVO;
-        return new Secret(nome, senha, ip, mac, plano.getNome(), disabled);
+        boolean disabled = cliente.getStatus() == StatusCliente.CANCELADO;
+        String nomeDoPlano = cliente.getStatus() == StatusCliente.INATIVO ? Plano.PLANO_INATIVO : plano.getNome();
+        return new Secret(nome, senha, ip, mac, nomeDoPlano, disabled);
     }
 
     public String getNome() {
