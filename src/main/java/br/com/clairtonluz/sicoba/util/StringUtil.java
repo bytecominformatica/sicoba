@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -114,5 +113,11 @@ public final class StringUtil {
 
     public static boolean isEmpty(String notificationUrl) {
         return notificationUrl == null || notificationUrl.isEmpty();
+    }
+
+    public static String formatarCep(String cep) {
+        if (cep == null) return null;
+        cep = cep.replaceAll("[^\\d.]", "");
+        return cep.substring(0, 5) + '-' + cep.substring(5);
     }
 }
