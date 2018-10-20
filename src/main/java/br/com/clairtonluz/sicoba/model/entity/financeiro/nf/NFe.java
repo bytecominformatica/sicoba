@@ -45,11 +45,11 @@ public class NFe extends BaseEntity {
     private LocalDate dataEmissao;
     @Column(name = "data_prestacao")
     private LocalDate dataPrestacao;
-    private String observacao; // null
+    private String observacao;
     @Column(name = "codigo_municipio")
-    private String codigoMunicipio; // null
+    private String codigoMunicipio;
     
-    @OneToMany(mappedBy = "nfe", targetEntity = NfeItem.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "nfe")
     private List<NfeItem> itens;
 
     public Integer getClienteId() {

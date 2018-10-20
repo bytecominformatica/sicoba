@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +24,7 @@ public class ChargeAPI {
         this.chargeService = chargeService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<Charge> findByClienteOrCarnet(@RequestParam("clienteId") Integer clienteId,
                                               @RequestParam(value = "carnetId", required = false) Integer carnetId) {
         if (carnetId != null) {
