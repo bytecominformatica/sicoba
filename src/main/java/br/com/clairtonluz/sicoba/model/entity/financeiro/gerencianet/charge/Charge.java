@@ -5,6 +5,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NfeItem;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 
 import javax.persistence.*;
@@ -73,6 +74,8 @@ public class Charge extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "carnet_id")
     private Carnet carnet;
+    @OneToOne(mappedBy = "charge")
+    private NfeItem nfeItem;
 
     public String verifyPayment() {
         String status = VALID_PAYMENT;
@@ -280,5 +283,13 @@ public class Charge extends BaseEntity {
 
     public void setGerencianetAccount(GerencianetAccount gerencianetAccount) {
         this.gerencianetAccount = gerencianetAccount;
+    }
+
+    public NfeItem getNfeItem() {
+        return nfeItem;
+    }
+
+    public void setNfeItem(NfeItem nfeItem) {
+        this.nfeItem = nfeItem;
     }
 }

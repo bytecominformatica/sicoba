@@ -1,26 +1,17 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
-import br.com.clairtonluz.sicoba.model.entity.comercial.Endereco;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
+import javax.persistence.*;
 import java.util.Optional;
 
 @Entity
 @Table(name = "nfe_item")
 public class NfeItem extends BaseEntity {
-	@Column(name = "classificacao_servico")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "classificacao_servico")
     private ClassificacaoServico classificacaoServico; // 104
     private String descricao;
     private Double valorUnitario;
@@ -47,14 +38,14 @@ public class NfeItem extends BaseEntity {
     @Column(name = "valor_aproximado_tributos_municipal")
     private Double valorAproximadoTributosMunicipal;// 0
 
-    // unique (charge_id)
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "charge_id", unique = true)
+    private Charge charge;
+
     @ManyToOne
-    @JoinColumn(name = "charge_id",unique=true)    
-    private Charge charge; 
-    
-    @ManyToOne
-    @JoinColumn(name = "nfe_id",unique=true)    
-    private NFe nfe;        
+    @JoinColumn(name = "nfe_id", unique = true)
+    private NFe nfe;
 
     public ClassificacaoServico getClassificacaoServico() {
         return classificacaoServico;
@@ -152,12 +143,12 @@ public class NfeItem extends BaseEntity {
         this.outrosValores = outrosValores;
     }
 
-    public Optional<Double> getDesconto() {
-        return Optional.ofNullable(desconto);
+    public Double getDesconto() {
+        return desconto;
     }
 
     public void setDesconto(Double desconto) {
-        this.desconto = desconto;
+        this.desconto = desconto == null ? 0 : desconto;
     }
 
     public Optional<Double> getValorAproximadoTributosFederal() {
@@ -192,13 +183,13 @@ public class NfeItem extends BaseEntity {
         this.charge = charge;
     }
 
-	public NFe getNfe() {
-		return nfe;
-	}
+    public NFe getNfe() {
+        return nfe;
+    }
 
-	public void setNfe(NFe nfe) {
-		this.nfe = nfe;
-	}
-    
-    
+    public void setNfe(NFe nfe) {
+        this.nfe = nfe;
+    }
+
+
 }

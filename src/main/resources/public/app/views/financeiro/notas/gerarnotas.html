@@ -84,7 +84,9 @@
     <div class="row" style="margin-bottom: 1em">
         <div class="col-sm-9">
             <div class="dataTables_filter">
-                <button class="btn btn-primary" ng-click="gerarNotas()" ng-disabled="totalSelecionado() == 0">Gerar {{totalSelecionado()}} nota(s)</button>
+                <button class="btn btn-primary" ng-click="gerarNotas()" ng-disabled="totalSelecionado() == 0">Gerar
+                    {{totalSelecionado()}} nota(s)
+                </button>
             </div>
         </div>
         <div class="col-sm-3">
@@ -112,6 +114,7 @@
                 <th>Conta</th>
                 <th>Cobrança</th>
                 <th>Status</th>
+                <th>Nota</th>
             </tr>
             </thead>
             <tfoot>
@@ -121,6 +124,7 @@
                 <th>{{charges | filter:searchText | sumOfValue:'value' | currency}}</th>
                 <th>{{charges | filter:searchText | sumOfValue:'paidValue' | currency}}</th>
                 <th>{{charges | filter:searchText | sumOfValue:'discount' | currency}}</th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -165,6 +169,11 @@
                     <i class="label" ng-class="it | chargeStatusLabelClass">
                         {{it | chargeStatusName}}
                     </i>
+                </td>
+                <td class="text-center">
+                    <span class="label" ng-class="{'label-success' : it.nfeItem, 'label-warning' : !it.nfeItem }">
+                        {{it.nfeItem ? 'OK' : 'Pendente'}}
+                    </span>
                 </td>
             </tr>
             </tbody>

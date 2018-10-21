@@ -1,6 +1,7 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.nf;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -33,8 +34,6 @@ public class NFe extends BaseEntity {
     private int cfop;
     private String telefone;
     private String email;
-    @Column(name = "codigo_consumidor")
-    private Integer codigoConsumidor;
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_assinante")
     private TipoAssinante tipoAssinante;
@@ -48,7 +47,8 @@ public class NFe extends BaseEntity {
     private String observacao;
     @Column(name = "codigo_municipio")
     private String codigoMunicipio;
-    
+
+    @JsonIgnore
     @OneToMany(mappedBy = "nfe")
     private List<NfeItem> itens;
 
@@ -81,7 +81,7 @@ public class NFe extends BaseEntity {
     }
 
     public void setNumero(String numero) {
-        this.numero = numero;
+        this.numero = numero == null ? "S/N" : numero;
     }
 
     public Optional<String> getComplemento() {
@@ -186,14 +186,6 @@ public class NFe extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getCodigoConsumidor() {
-        return codigoConsumidor;
-    }
-
-    public void setCodigoConsumidor(Integer codigoConsumidor) {
-        this.codigoConsumidor = codigoConsumidor;
     }
 
     public TipoAssinante getTipoAssinante() {

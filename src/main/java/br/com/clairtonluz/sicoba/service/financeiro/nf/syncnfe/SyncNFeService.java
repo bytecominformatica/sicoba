@@ -2,12 +2,14 @@ package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.*;
+import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeRepository;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +22,14 @@ import static br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe.MODELO_21
 public class SyncNFeService {
 
     private final NFeRepository nFeRepository;
+    private final NFeItemRepository nFeItemRepository;
 
-    public SyncNFeService(NFeRepository nFeRepository) {
+    public SyncNFeService(NFeRepository nFeRepository, NFeItemRepository nFeItemRepository) {
         this.nFeRepository = nFeRepository;
+        this.nFeItemRepository = nFeItemRepository;
     }
 
+    @Transactional
     public List<NFe> generateNotas(List<Charge> charges) {
         for (Charge charge : charges) {
             NFe nfe = new NFe();
@@ -49,7 +54,6 @@ public class SyncNFeService {
             nfe.setCfop(0);
             nfe.setTelefone(charge.getCliente().getFoneTitular());
             nfe.setEmail(charge.getCliente().getEmail());
-            nfe.setCodigoConsumidor(charge.getCliente().getId());
             nfe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
             nfe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);
             nfe.setDataEmissao(LocalDate.now());
@@ -57,32 +61,28 @@ public class SyncNFeService {
             nfe.setObservacao(null);
             nfe.setCodigoMunicipio(null);
 
-            List<NfeItem> itens = new ArrayList<>();
-
             NfeItem nfeItem = new NfeItem();
             nfeItem.setCharge(charge);
             nfeItem.setClassificacaoServico(ClassificacaoServico.ASSINATURA_DE_SERVICOS_DE_PROVIMENTO_DE_ACESSO_A_INTERNET);
             nfeItem.setDescricao(charge.getDescription());
             nfeItem.setValorUnitario(charge.getValue());
-            nfeItem.setIcms(0.0);
-            nfeItem.setAliquotaReducao(0.0);
+            nfeItem.setIcms(0d);
+            nfeItem.setAliquotaReducao(0d);
             nfeItem.setUnidade("UN");
             nfeItem.setQuantidadeContratada(1.0);
             nfeItem.setQuantidadeFornecida(1.0);
-            nfeItem.setAliquotaIcms(0.0);
-            nfeItem.setBc(0.0);
-            nfeItem.setValoresIsentos(0.0);
-            nfeItem.setOutrosValores(0.0);
+            nfeItem.setAliquotaIcms(0d);
+            nfeItem.setBc(0d);
+            nfeItem.setValoresIsentos(0d);
+            nfeItem.setOutrosValores(0d);
             nfeItem.setDesconto(charge.getDiscount());
-            nfeItem.setValorAproximadoTributosFederal(0.0);
-            nfeItem.setValorAproximadoTributosEstadual(0.0);
-            nfeItem.setValorAproximadoTributosMunicipal(0.0);
-
-            itens.add(nfeItem);
-            nfe.setItens(itens);
+            nfeItem.setValorAproximadoTributosFederal(0d);
+            nfeItem.setValorAproximadoTributosEstadual(0d);
+            nfeItem.setValorAproximadoTributosMunicipal(0d);
 
             nFeRepository.save(nfe);
-
+            nfeItem.setNfe(nfe);
+            nFeItemRepository.save(nfeItem);
         }
         return null;
     }
@@ -118,7 +118,7 @@ public class SyncNFeService {
                 StringUtil.formatCurrence(nfeItem.getBc().orElse(0d)) + "|" +
                 StringUtil.formatCurrence(nfeItem.getValoresIsentos().orElse(0d)) + "|" +
                 StringUtil.formatCurrence(nfeItem.getOutrosValores().orElse(0d)) + "|" +
-                StringUtil.formatCurrence(nfeItem.getDesconto().orElse(0d)) + "|" +
+                StringUtil.formatCurrence(nfeItem.getDesconto()) + "|" +
                 StringUtil.formatCurrence(nfeItem.getValorAproximadoTributosFederal().orElse(0d)) + "|" +
                 StringUtil.formatCurrence(nfeItem.getValorAproximadoTributosEstadual().orElse(0d)) + "|" +
                 StringUtil.formatCurrence(nfeItem.getValorAproximadoTributosMunicipal().orElse(0d)) + "|" +
@@ -127,7 +127,7 @@ public class SyncNFeService {
 
     String gerarMaster(int sequencial, @NonNull NFe nFe) {
         return sequencial + "|" +
-                nFe.getCodigoConsumidor() + "|" +
+                nFe.getClienteId() + "|" +
                 nFe.getNome() + "|" +
                 nFe.getLogradouro() + "|" +
                 nFe.getNumero() + "|" +
@@ -145,7 +145,7 @@ public class SyncNFeService {
                 nFe.getCfop() + "|" +
                 nFe.getTelefone() + "|" +
                 nFe.getEmail().orElse("") + "|" +
-                StringUtil.padLeft(nFe.getCodigoConsumidor(), 10) + "|" +
+                StringUtil.padLeft(nFe.getClienteId(), 10) + "|" +
                 nFe.getTipoAssinante().getCodigo() + "|" +
                 nFe.getTipoUtilizacao().getCodigo() + "|" +
                 DateUtil.formatDate(nFe.getDataEmissao()) + "|" +
