@@ -36,23 +36,27 @@
 
             function _toogle() {
                 if ($scope.charges) {
-                    $scope.charges.forEach(c => {
+                    $scope.charges.forEach(function (c) {
                         c.selected = $scope.allSelected;
-                    })
+                    });
                 }
             }
 
             function _totalSelecionado() {
                 if (!$scope.charges) return 0;
-                return $scope.charges.filter(c => c.selected).length;
+                return $scope.charges.filter(function (c) {
+                    return c.selected;
+                }).length;
             }
 
             function _gerarNotas() {
-                let notasSelecionadas = $scope.charges.filter(c => c.selected);
-                Notas.gerar(notasSelecionadas, notasGeradas => {
+                var notasSelecionadas = $scope.charges.filter(function (c) {
+                    return c.selected;
+                });
+                Notas.gerar(notasSelecionadas, function (notasGeradas) {
                     $rootScope.messages = [{
                         title: 'Sucesso:',
-                        body: `${notasGeradas.length} nota(s) geradas com sucesso`,
+                        body: notasGeradas.length + ' nota(s) geradas com sucesso',
                         type: 'alert-success'
                     }];
                 });

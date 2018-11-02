@@ -34,9 +34,9 @@
 
             function _toogle() {
                 if ($scope.nfeItemList) {
-                    $scope.nfeItemList.forEach(c => {
+                    $scope.nfeItemList.forEach(function (c) {
                         c.selected = $scope.allSelected;
-                    })
+                    });
                 }
             }
 
@@ -46,11 +46,13 @@
             }
 
             function getItensSelecionadas() {
-                return $scope.nfeItemList.filter(c => c.selected);
+                return $scope.nfeItemList.filter(function (c) {
+                    return c.selected;
+                });
             }
 
             function _gerarArquivoSyncNfe() {
-                let itensSelecionados = getItensSelecionadas();
+                var itensSelecionados = getItensSelecionadas();
                 $http.post('api/notas/syncnfe/files', itensSelecionados, {responseType: 'arraybuffer'})
                     .then(function (response) {
                         var file = new Blob([response.data], {type: 'application/zip'});
@@ -59,26 +61,32 @@
                         a.href = url;
                         a.download = 'syncnfe.zip';
                         a.click();
-                        setTimeout(() => window.URL.revokeObjectURL(url), 100);
+                        setTimeout(function () {
+                            window.URL.revokeObjectURL(url);
+                        }, 100);
                     });
             }
 
             function _removerSelecionados() {
-                let itensSelecionados = getItensSelecionadas();
-                let idsSelecionados = itensSelecionados.map(it => it.id);
+                var itensSelecionados = getItensSelecionadas();
+                var idsSelecionados = itensSelecionados.map(function (it) {
+                    return it.id;
+                });
 
-                let params = "";
+                var params = "";
 
                 if (idsSelecionados.length) {
                     params = idsSelecionados
-                        .reduce((prev, current) => prev + '&id=' + current, '')
+                        .reduce(function (prev, current) {
+                            return prev + '&id=' + current;
+                        }, '')
                         .replace("&", "");
                 }
 
-                Notas.removeAll({params: params}, () => {
+                Notas.removeAll({params: params}, function () {
                     $rootScope.messages = [{
                         title: 'Sucesso:',
-                        body: `${itensSelecionados.length} nota(s) removidas com sucesso`,
+                        body: itensSelecionados.length + ' nota(s) removidas com sucesso',
                         type: 'alert-success'
                     }];
 
