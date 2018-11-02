@@ -1,9 +1,6 @@
 package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.ChargeWithoutChargeInNfeItem;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.ChargeWithoutNfeItem;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.*;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +54,7 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "paymentdate", method = RequestMethod.GET)
-    public List<ChargeWithoutChargeInNfeItem> paymentDate(
+    public List<ChargeVO> paymentDate(
             @RequestParam("start") String start,
             @RequestParam("end") String end,
             @RequestParam(value = "status", required = false) StatusCharge status,
@@ -66,7 +63,7 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "expirationdate", method = RequestMethod.GET)
-    public List<ChargeWithoutChargeInNfeItem> expirationDate(
+    public List<ChargeVO> expirationDate(
             @RequestParam("start") String start,
             @RequestParam("end") String end,
             @RequestParam(value = "status", required = false) StatusCharge status,

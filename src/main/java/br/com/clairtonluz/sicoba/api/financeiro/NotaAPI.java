@@ -1,6 +1,7 @@
 package br.com.clairtonluz.sicoba.api.financeiro;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NfeItem;
 import br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe.NFeService;
@@ -35,8 +36,9 @@ public class NotaAPI {
     public List<NfeItem> findItensByDatePrestacao(
             @RequestParam("start") String start,
             @RequestParam("end") String end,
+            @RequestParam(value = "status", required = false) StatusCharge status,
             @RequestParam(value = "gerencianetAccount", required = false) Integer gerencianetAccountId) {
-        return nfeService.findItensByDatePrestacao(LocalDate.parse(start), LocalDate.parse(end));
+        return nfeService.findItensByDatePrestacao(LocalDate.parse(start), LocalDate.parse(end), status, gerencianetAccountId);
     }
 
     @RequestMapping(value = "syncnfe/listar", method = RequestMethod.GET)

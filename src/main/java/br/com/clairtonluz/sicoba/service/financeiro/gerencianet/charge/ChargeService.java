@@ -5,10 +5,7 @@ import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.ChargeWithoutChargeInNfeItem;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.PaymentType;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.*;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
@@ -27,6 +24,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Created by clairton on 09/11/16.
@@ -229,34 +227,37 @@ public class ChargeService {
     }
 
     public <T> List<T> overdue(LocalDate dateReference) {
-//        return chargeRepository.overdue(dateReference);
         return chargeRepository.findByExpireAtLessThanAndStatusNotInAndCliente_statusNotOrderByExpireAt(dateReference,
                 Arrays.asList(StatusCharge.PAID, StatusCharge.CANCELED), StatusCliente.CANCELADO);
     }
 
-    public <T> List<T> findByPaymentDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
+    public List<ChargeVO> findByPaymentDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
+        List<Charge> chargeList;
         if (status == null && gerencianetAccountId == null) {
-            return chargeRepository.findByPaidAtBetween(start.atStartOfDay(), end.atTime(23, 59, 59));
+            chargeList = chargeRepository.findByPaidAtBetween(start.atStartOfDay(), end.atTime(23, 59, 59));
         } else if (status == null) {
-            return chargeRepository.findByPaidAtBetweenAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), gerencianetAccountId);
+            chargeList = chargeRepository.findByPaidAtBetweenAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), gerencianetAccountId);
         } else if (gerencianetAccountId == null) {
-            return chargeRepository.findByPaidAtBetweenAndStatus(start.atStartOfDay(), end.atTime(23, 59, 59), status);
+            chargeList = chargeRepository.findByPaidAtBetweenAndStatus(start.atStartOfDay(), end.atTime(23, 59, 59), status);
         } else {
-            return chargeRepository.findByPaidAtBetweenAndStatusAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), status, gerencianetAccountId);
+            chargeList = chargeRepository.findByPaidAtBetweenAndStatusAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), status, gerencianetAccountId);
         }
+
+        return chargeList.stream().map(ChargeVO::new).collect(Collectors.toList());
     }
 
-    public List<ChargeWithoutChargeInNfeItem> findByExpirationDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
-
+    public List<ChargeVO> findByExpirationDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
+        List<Charge> chargeList;
         if (status == null && gerencianetAccountId == null) {
-            return chargeRepository.findByExpireAtBetween(start, end);
+            chargeList = chargeRepository.findByExpireAtBetween(start, end);
         } else if (status == null) {
-            return chargeRepository.findByExpireAtBetweenAndGerencianetAccount_id(start, end, gerencianetAccountId);
+            chargeList = chargeRepository.findByExpireAtBetweenAndGerencianetAccount_id(start, end, gerencianetAccountId);
         } else if (gerencianetAccountId == null) {
-            return chargeRepository.findByExpireAtBetweenAndStatus(start, end, status);
+            chargeList = chargeRepository.findByExpireAtBetweenAndStatus(start, end, status);
         } else {
-            return chargeRepository.findByExpireAtBetweenAndStatusAndGerencianetAccount_id(start, end, status, gerencianetAccountId);
+            chargeList = chargeRepository.findByExpireAtBetweenAndStatusAndGerencianetAccount_id(start, end, status, gerencianetAccountId);
         }
+        return chargeList.stream().map(ChargeVO::new).collect(Collectors.toList());
     }
 
     public <T> List<T> buscarNaoVencidosPorCliente(Cliente cliente) {

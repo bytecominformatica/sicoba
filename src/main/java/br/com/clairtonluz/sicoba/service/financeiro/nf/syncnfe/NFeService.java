@@ -3,6 +3,7 @@ package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.*;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemSpec;
@@ -193,8 +194,12 @@ public class NFeService {
         return null;
     }
 
-    public List<NfeItem> findItensByDatePrestacao(LocalDate begin, LocalDate end) {
+    public List<NfeItem> findItensByDatePrestacao(LocalDate begin, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
         Specification<NfeItem> where = Specification.where(NFeItemSpec.dataPrestacaoBetween(begin, end));
+        if(status != null)
+            where = where.and(NFeItemSpec.statusChargeEqual(status));
+        if (gerencianetAccountId != null)
+            where = where.and(NFeItemSpec.gerencianetAccountIdEqual(gerencianetAccountId));
         return nFeItemRepository.findAll(where);
     }
 

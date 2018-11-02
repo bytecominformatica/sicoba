@@ -89,7 +89,8 @@
             function _findItensByDateOfProvision(params) {
                 var params2 = {
                     start: moment(params.start).format('YYYY-MM-DD'),
-                    end: moment(params.end).format('YYYY-MM-DD')
+                    end: moment(params.end).format('YYYY-MM-DD'),
+                    status: params.status
                 };
 
                 if (params.gerencianetAccount)
