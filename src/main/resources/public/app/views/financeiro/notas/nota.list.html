@@ -79,7 +79,7 @@
     <div class="row" style="margin-bottom: 1em">
         <div class="col-sm-9">
             <div class="dataTables_filter">
-                <button class="btn btn-primary" ng-click="gerarArquivoSyncNfes()" ng-disabled="totalSelecionado() == 0">Gerar
+                <button class="btn btn-primary" ng-click="gerarArquivoSyncNfe()" ng-disabled="totalSelecionado() == 0">Gerar arquivo para
                     {{totalSelecionado()}} nota(s)
                 </button>
             </div>
@@ -112,7 +112,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="it in notas | filter:searchText | limitTo:limit:(currentPage -1) * limit track by it.id">
+            <tr ng-repeat="it in nfeItemList | filter:searchText | limitTo:limit:(currentPage -1) * limit track by it.id">
                 <td><input type="checkbox" ng-model="it.selected"/></td>
                 <td>{{it.id}}</td>
                 <td>{{it.descricao}}</td>
@@ -154,15 +154,15 @@
             <tr>
                 <th colspan="3"></th>
                 <th>Total</th>
-                <th>{{notas | filter:searchText | sumOfValue:'value' | currency}}</th>
-                <th>{{notas | filter:searchText | sumOfValue:'paidValue' | currency}}</th>
-                <th>{{notas | filter:searchText | sumOfValue:'discount' | currency}}</th>
+                <th>{{nfeItemList | filter:searchText | sumOfValue:'value' | currency}}</th>
+                <th>{{nfeItemList | filter:searchText | sumOfValue:'paidValue' | currency}}</th>
+                <th>{{nfeItemList | filter:searchText | sumOfValue:'discount' | currency}}</th>
                 <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
- .nfe           </tr>
- .nfe           </.nfetfoot>
+            </tr>
+            </tfoot>
 
         </table>
     </div>
@@ -180,18 +180,18 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <uib-pagination total-items="notas.length" ng-model="currentPage" items-per-page="limit"
+        <uib-pagination total-items="nfeItemList.length" ng-model="currentPage" items-per-page="limit"
                         ng-init="currentPage = 1" class="pagination-sm" max-size="6"
                         boundary-links="true"></uib-pagination>
     </div>
 
     <div class="col-sm-3">
         <div class="dataTables_length">
-            <div class="d.nfeataTables_info" ng-show="notas">
+            <div class="dataTables_info" ng-show="nfeItemList">
                 Exibindo de {{(currentPage - 1) * limit + 1}} até {{(currentPage - 1) * limit + limit}} de
-                {{notas.length}}
+                {{nfeItemList.length}}
             </div>
         </div>
     </div>
-<.nfe/div>
+</div>
 </div>

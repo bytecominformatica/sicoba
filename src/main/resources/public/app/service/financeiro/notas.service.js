@@ -14,6 +14,11 @@
                         method: 'GET',
                         url: 'api/notas/itens/dateprovision',
                         isArray: true
+                    },
+                    downloadSyncnfeFiles: {
+                        method: 'POST',
+                        url: 'api/notas/syncnfe/files',
+                        responseType: 'arraybuffer'
                     }
                 });
         }]);

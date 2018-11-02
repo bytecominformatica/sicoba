@@ -6,13 +6,18 @@ import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemSpec;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeRepository;
 import br.com.clairtonluz.sicoba.util.DateUtil;
+import br.com.clairtonluz.sicoba.util.FileUtils;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -66,11 +71,8 @@ public class NFeService {
             nfeItem.setCharge(charge);
             nfeItem.setClassificacaoServico(ClassificacaoServico.ASSINATURA_DE_SERVICOS_DE_PROVIMENTO_DE_ACESSO_A_INTERNET);
             nfeItem.setDescricao(charge.getDescription());
-            if (charge.getPaidValue() != null) {
-                nfeItem.setValorUnitario(charge.getPaidValue());
-            } else {
-                nfeItem.setValorUnitario(charge.getValue());
-            }
+            nfeItem.setValorUnitario(charge.getValue());
+            nfeItem.setDesconto(charge.getDiscount());
             nfeItem.setIcms(0d);
             nfeItem.setAliquotaReducao(0d);
             nfeItem.setUnidade("UN");
@@ -80,7 +82,6 @@ public class NFeService {
             nfeItem.setBc(0d);
             nfeItem.setValoresIsentos(0d);
             nfeItem.setOutrosValores(0d);
-            nfeItem.setDesconto(charge.getDiscount());
             nfeItem.setValorAproximadoTributosFederal(0d);
             nfeItem.setValorAproximadoTributosEstadual(0d);
             nfeItem.setValorAproximadoTributosMunicipal(0d);
@@ -92,20 +93,31 @@ public class NFeService {
         return null;
     }
 
-    public SyncNFeImportacao generateFiles(@NonNull List<NFe> notas) {
-        SyncNFeImportacao syncNFeImportacao = new SyncNFeImportacao();
+    public void generateFiles(@NonNull List<NfeItem> nfeItemList, HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Type", "application/zip");
+        response.addHeader("Content-Disposition", "attachment; filename=\"syncnfe.zip\"");
+        generateFiles(nfeItemList, response.getOutputStream());
+    }
+
+    private void generateFiles(@NonNull List<NfeItem> nfeItemList, OutputStream outputStream) {
+//        SyncNFeImportacao syncNFeImportacao = new SyncNFeImportacao();
         AtomicInteger index = new AtomicInteger(1);
         StringBuilder master = new StringBuilder();
         StringBuilder detail = new StringBuilder();
-        notas.forEach(nFe -> {
-            nFe.getItens().forEach(nfeItem -> {
-                master.append(gerarMaster(index.get(), nFe));
-                detail.append(gerarDetail(index.getAndIncrement(), nfeItem));
-            });
+        nfeItemList.forEach(nfeItem -> {
+            master.append(gerarMaster(index.get(), nfeItem.getNfe()));
+            detail.append(gerarDetail(index.getAndIncrement(), nfeItem));
         });
-        syncNFeImportacao.setMaster(master.toString());
-        syncNFeImportacao.setDetail(detail.toString());
-        return syncNFeImportacao;
+
+        InputStream masterIn = new ByteArrayInputStream(master.toString().getBytes(StandardCharsets.UTF_8));
+        InputStream detailIn = new ByteArrayInputStream(detail.toString().getBytes(StandardCharsets.UTF_8));
+        File masterFile = FileUtils.writeInDisk(masterIn, "/tmp/master.txt");
+        File detailFile = FileUtils.writeInDisk(detailIn, "/tmp/detail.txt");
+
+        byte[] masterAndDetailBytes = FileUtils.zipFiles(Arrays.asList(masterFile, detailFile));
+        File masterAndDetailZipped = FileUtils.writeInDisk(new ByteArrayInputStream(masterAndDetailBytes), "/tmp/syncnfe.zip");
+        FileUtils.downloadFile(masterAndDetailZipped.getPath(), outputStream);
+
     }
 
     String gerarDetail(int sequencial, @NonNull NfeItem nfeItem) {
