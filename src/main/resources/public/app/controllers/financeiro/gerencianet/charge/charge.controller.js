@@ -77,11 +77,7 @@
 
                 function _calculateProportionalValue(charge) {
                     Contrato.buscarPorCliente({clienteId: charge.cliente.id}, function (contrato) {
-                        console.log('[chargeController]charge', charge);
-                        console.log('[chargeController]contrato', contrato);
-
                         var days = DateDiff.inDays(new Date(contrato.dataInstalacao), new Date(charge.expireAt));
-                        console.log('[chargeController] days', days);
                         var valueProportional = contrato.plano.valor / 30 * days;
                         charge.value = parseFloat(valueProportional.toFixed(2));
                         charge.description = 'Valor proporcional a ' + days + ' dia(s)';

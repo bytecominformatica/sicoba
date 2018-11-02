@@ -15,10 +15,12 @@
                         url: 'api/notas/itens/dateprovision',
                         isArray: true
                     },
-                    downloadSyncnfeFiles: {
-                        method: 'POST',
-                        url: 'api/notas/syncnfe/files',
-                        responseType: 'arraybuffer'
+                    removeAll: {
+                        method: 'DELETE',
+                        url: 'api/notas/all?:params',
+                        params: {
+                            params: '@params'
+                        }
                     }
                 });
         }]);

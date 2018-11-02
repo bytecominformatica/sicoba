@@ -1,5 +1,6 @@
 package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 
+import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.*;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemRepository;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe.MODELO_21;
 
@@ -48,13 +50,18 @@ public class NFeService {
             nfe.setCidade(charge.getCliente().getEndereco().getBairro().getCidade().getNome());
             nfe.setUf(charge.getCliente().getEndereco().getBairro().getCidade().getEstado().getUf());
             nfe.setCep(charge.getCliente().getEndereco().getCep());
+
+            if (charge.getCliente().getRg() == null)
+                throw new BadRequestException("Cliente " + charge.getCliente().getNome() + " não possui RG ou IE, esse campo é obrigatório para a nota fiscal.");
+
             if (charge.getCliente().getCpfCnpj().length() == 11) {
                 nfe.setCpf(charge.getCliente().getCpfCnpj());
+                nfe.setIe(charge.getCliente().getRg());
             } else {
                 nfe.setCnpj(charge.getCliente().getCpfCnpj());
+                nfe.setRg(charge.getCliente().getRg());
             }
-            nfe.setIe(null);
-            nfe.setRg(charge.getCliente().getRg());
+
             nfe.setDiaDeVencimento(charge.getExpireAt().getDayOfMonth());
             nfe.setModelo(MODELO_21);
             nfe.setCfop(0);
@@ -63,7 +70,7 @@ public class NFeService {
             nfe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
             nfe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);
             nfe.setDataEmissao(LocalDate.now());
-            nfe.setDataPrestacao(LocalDate.now());
+            nfe.setDataPrestacao(charge.getExpireAt());
             nfe.setObservacao(null);
             nfe.setCodigoMunicipio(null);
 
@@ -185,5 +192,13 @@ public class NFeService {
     public List<NfeItem> findItensByDatePrestacao(LocalDate begin, LocalDate end) {
         Specification<NfeItem> where = Specification.where(NFeItemSpec.dataPrestacaoBetween(begin, end));
         return nFeItemRepository.findAll(where);
+    }
+
+    @Transactional
+    public void deleteAll(List<Integer> nfeItemIdList) {
+        List<NfeItem> nfeItemList = nFeItemRepository.findAllById(nfeItemIdList);
+        List<NFe> nFeList = nfeItemList.stream().map(NfeItem::getNfe).collect(Collectors.toList());
+        nFeItemRepository.deleteAll(nfeItemList);
+        nFeRepository.deleteAll(nFeList);
     }
 }

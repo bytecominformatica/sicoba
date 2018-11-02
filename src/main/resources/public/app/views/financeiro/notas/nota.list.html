@@ -3,10 +3,14 @@
         <i class="fa fa-arrow-circle-left"></i>
     </a>
     Notas
+    <a href="#/notas/gerar" class="btn btn-primary pull-right">
+        <i class="fa fa-plus"></i>
+        Gerar novas notas
+    </a>
 </h1>
 
 <div class="col-md-12">
-    <form name="form" class="form-horizontal" ng-submit="form.$valid && findItensByDateOfProvision(params)" novalidate>
+    <form id="form", name="form" class="form-horizontal" ng-submit="form.$valid && findItensByDateOfProvision(params)" novalidate>
         <div class="row">
             <div class="col-md-3"
                  ng-class="{'has-error': (form.start.$invalid && (form.$submitted || form.start.$touched))}">
@@ -86,9 +90,9 @@
         </div>
         <div class="col-sm-3">
             <div class="dataTables_filter">
-                <label>Filtro:
-                    <input ng-model="searchText" type="search" class="form-control input-sm" placeholder="Filtrar...">
-                </label>
+                <button class="btn btn-danger" ng-click="removerSelecionados()" ng-disabled="totalSelecionado() == 0">
+                    Apagar {{totalSelecionado()}} nota(s)
+                </button>
             </div>
         </div>
     </div>

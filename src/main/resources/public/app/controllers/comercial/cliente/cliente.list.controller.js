@@ -47,9 +47,7 @@
             }
 
             function _blockLateCustomers() {
-                console.log('bloqueand clientes em atraso');
                 Cliente.blockLateCustomers(function (data) {
-                    console.log('block late customers', data);
                     $rootScope.messages = [{
                         title: 'Sucesso:',
                         body: 'Operação realizada com sucesso.',

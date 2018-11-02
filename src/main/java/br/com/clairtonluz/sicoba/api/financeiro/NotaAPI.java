@@ -49,6 +49,11 @@ public class NotaAPI {
         nfeService.generateFiles(nfeItemList, response);
     }
 
+    @DeleteMapping("all")
+    public void deleteAll(@RequestParam("id") List<Integer> ids) {
+        nfeService.deleteAll(ids);
+    }
+
     @RequestMapping(value = "syncnfe/busca", method = RequestMethod.GET)
     public List<NFe> buscaNfe() {
         return nfeService.busca();

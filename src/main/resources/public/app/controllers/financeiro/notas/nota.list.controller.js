@@ -7,15 +7,14 @@
             $scope.toogle = _toogle;
             $scope.totalSelecionado = _totalSelecionado;
             $scope.gerarArquivoSyncNfe = _gerarArquivoSyncNfe;
+            $scope.removerSelecionados = _removerSelecionados;
 
             _init();
 
             function _init() {
                 $scope.params = {
                     start: new Date(),
-                    end: new Date(),
-                    byPaymentDate: true,
-                    allSelected: false
+                    end: new Date()
                 };
 
                 $scope.statusList = [
@@ -34,7 +33,6 @@
             }
 
             function _toogle() {
-                console.log($scope.allSelected);
                 if ($scope.nfeItemList) {
                     $scope.nfeItemList.forEach(c => {
                         c.selected = $scope.allSelected;
@@ -44,57 +42,48 @@
 
             function _totalSelecionado() {
                 if (!$scope.nfeItemList) return 0;
-                return $scope.nfeItemList.filter(c => c.selected).length;
+                return getItensSelecionadas().length;
+            }
+
+            function getItensSelecionadas() {
+                return $scope.nfeItemList.filter(c => c.selected);
             }
 
             function _gerarArquivoSyncNfe() {
-                let notasSelecionadas = $scope.nfeItemList.filter(c => c.selected);
-                $http.post('api/notas/syncnfe/files', notasSelecionadas, {responseType: 'arraybuffer'})
+                let itensSelecionados = getItensSelecionadas();
+                $http.post('api/notas/syncnfe/files', itensSelecionados, {responseType: 'arraybuffer'})
                     .then(function (response) {
                         var file = new Blob([response.data], {type: 'application/zip'});
-                        console.log('file', file);
                         var url = window.URL.createObjectURL(file);
-                        console.log('url', url);
                         var a = document.createElement('a');
                         a.href = url;
                         a.download = 'syncnfe.zip';
                         a.click();
                         setTimeout(() => window.URL.revokeObjectURL(url), 100);
                     });
-                // Notas.downloadSyncnfeFiles(notasSelecionadas, (data) => {
-                //         var file = new Blob([data], {type: 'text/plain'});
-                //         console.log('file', file);
-                //         // console.log('file', file.data);
-                //         var url = window.URL.createObjectURL(file);
-                //         console.log('url', url);
-                //         var a = document.createElement('a');
-                //         a.href = url;
-                //         a.download = 'master.txt';
-                //         a.click();
-                //
-                //         // let byteArray = res.data;
-                //         // byteArray = new Uint8Array(byteArray);
-                //         // let file = new Blob([byteArray], { type: 'text/plan' });
-                //         // let fileURL = URL.createObjectURL(file);
-                //         // window.open(fileURL);
-                //         //
-                //         // let blob = new Blob([data], {type: "text/plan"});
-                //         // console.log('blob2', blob);
-                //         // let objectUrl = $window.URL.createObjectURL(blob);
-                //         // // let file = headers('Content-Disposition');
-                //         //
-                //         // window.open(objectUrl);
-                //
-                //
-                //         // let url = window.URL.createObjectURL(blob);
-                //         // let a = document.createElement('a');
-                //         // a.href = url;
-                //         // a.download = 'master.txt';
-                //         // a.click();
-                //
-                //         // For Firefox it is necessary to delay revoking the ObjectURL
-                //         setTimeout(() => window.URL.revokeObjectURL(url), 100);
-                //     });
+            }
+
+            function _removerSelecionados() {
+                let itensSelecionados = getItensSelecionadas();
+                let idsSelecionados = itensSelecionados.map(it => it.id);
+
+                let params = "";
+
+                if (idsSelecionados.length) {
+                    params = idsSelecionados
+                        .reduce((prev, current) => prev + '&id=' + current, '')
+                        .replace("&", "");
+                }
+
+                Notas.removeAll({params: params}, () => {
+                    $rootScope.messages = [{
+                        title: 'Sucesso:',
+                        body: `${itensSelecionados.length} nota(s) removidas com sucesso`,
+                        type: 'alert-success'
+                    }];
+
+                    _findItensByDateOfProvision($scope.params);
+                });
             }
 
             function _findItensByDateOfProvision(params) {

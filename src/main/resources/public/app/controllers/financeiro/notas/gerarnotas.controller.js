@@ -35,7 +35,6 @@
             }
 
             function _toogle() {
-                console.log($scope.allSelected);
                 if ($scope.charges) {
                     $scope.charges.forEach(c => {
                         c.selected = $scope.allSelected;
@@ -50,11 +49,10 @@
 
             function _gerarNotas() {
                 let notasSelecionadas = $scope.charges.filter(c => c.selected);
-                console.log('gerando notas....2', notasSelecionadas);
                 Notas.gerar(notasSelecionadas, notasGeradas => {
                     $rootScope.messages = [{
                         title: 'Sucesso:',
-                        body: `${notasGeradas.leading} nota(s) geradas com sucesso`,
+                        body: `${notasGeradas.length} nota(s) geradas com sucesso`,
                         type: 'alert-success'
                     }];
                 });
