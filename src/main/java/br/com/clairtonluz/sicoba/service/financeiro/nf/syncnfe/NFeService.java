@@ -51,7 +51,7 @@ public class NFeService {
             nfe.setUf(charge.getCliente().getEndereco().getBairro().getCidade().getEstado().getUf());
             nfe.setCep(charge.getCliente().getEndereco().getCep());
 
-            if (charge.getCliente().getRg() == null)
+            if (charge.getCliente().getRg() == null || charge.getCliente().getRg().trim().isEmpty())
                 throw new BadRequestException("Cliente " + charge.getCliente().getNome() + " não possui RG ou IE, esse campo é obrigatório para a nota fiscal.");
 
             if (charge.getCliente().getCpfCnpj().length() == 11) {
