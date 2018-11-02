@@ -59,6 +59,7 @@
                         body: notasGeradas.length + ' nota(s) geradas com sucesso',
                         type: 'alert-success'
                     }];
+                    _findByPaymentDate($scope.params);
                 });
             }
 
