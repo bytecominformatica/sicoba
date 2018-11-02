@@ -9,6 +9,11 @@
                         method: 'POST',
                         url: 'api/notas/gerar',
                         isArray: true
+                    },
+                    findItensByDateOfProvision: {
+                        method: 'GET',
+                        url: 'api/notas/itens/dateprovision',
+                        isArray: true
                     }
                 });
         }]);

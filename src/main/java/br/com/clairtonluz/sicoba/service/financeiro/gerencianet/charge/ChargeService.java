@@ -4,7 +4,9 @@ import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
+import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.ChargeWithoutChargeInNfeItem;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.PaymentType;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,7 +88,7 @@ public class ChargeService {
     }
 
     @Transactional
-    public Charge setPaymentToBankingBillet(Charge charge) {
+    public <T> T setPaymentToBankingBillet(Charge charge) {
         JSONObject response = chargeGNService.setPaymentToBankingBilletGN(charge);
         if (!GNService.isOk(response))
             throw new ConflitException("Ocorreu um erro ao tentar definir a forma de pagamento para boleto");
@@ -97,7 +100,8 @@ public class ChargeService {
         charge.setStatus(StatusCharge.valueOf(data.getString("status").toUpperCase()));
         charge.setPayment(PaymentType.valueOf(data.getString("payment").toUpperCase()));
 
-        return chargeRepository.save(charge);
+        charge = chargeRepository.save(charge);
+        return chargeRepository.findOptionalById(charge.getId());
     }
 
     /**
@@ -107,7 +111,7 @@ public class ChargeService {
      * @return
      */
     @Transactional
-    public Charge createPaymentLink(Charge charge) {
+    public <T> T createPaymentLink(Charge charge) {
         JSONObject response = chargeGNService.linkCharge(charge);
         if (GNService.isOk(response)) {
             JSONObject data = response.getJSONObject("data");
@@ -116,10 +120,10 @@ public class ChargeService {
             charge.setPayment(PaymentType.valueOf(data.getString("payment_method").toUpperCase()));
             charge = save(charge);
         }
-        return charge;
+        return chargeRepository.findOptionalById(charge.getId());
     }
 
-    public Charge manualPayment(Charge charge) {
+    public <T> T manualPayment(Charge charge) {
         Charge chargeAtual = findById(charge.getId());
         chargeAtual.setPaidValue(charge.getPaidValue());
         chargeAtual.setPaidAt(charge.getPaidAt());
@@ -130,24 +134,24 @@ public class ChargeService {
                 chargeAtual.getId(), chargeAtual.getCliente().getId(), chargeAtual.getCliente().getNome(),
                 StringUtil.formatCurrence(chargeAtual.getValue()), StringUtil.formatCurrence(chargeAtual.getPaidValue()));
 
-        cancelCharge(chargeAtual);
+        T result = cancelCharge(chargeAtual);
 
         emailService.sendToAdmin(subject, content);
-        return chargeAtual;
+        return result;
     }
 
     @Transactional
-    public Charge cancelCharge(Charge charge) {
-        Boolean canceled = Objects.isNull(charge.getCarnet()) ? chargeGNService.cancelCharge(charge) : carnetGNService.cancelParcel(charge);
+    public <T> T cancelCharge(Charge charge) {
+        boolean canceled = Objects.isNull(charge.getCarnet()) ? chargeGNService.cancelCharge(charge) : carnetGNService.cancelParcel(charge);
         if (canceled) {
             charge.setStatus(StatusCharge.CANCELED);
             charge = save(charge);
         }
-        return charge;
+        return chargeRepository.findOptionalById(charge.getId());
     }
 
     @Transactional
-    public Charge updateBilletExpireAt(Charge charge) {
+    public <T> T updateBilletExpireAt(Charge charge) {
         LocalDate expireAt = charge.getExpireAt();
         charge = findById(charge.getId());
         if (isExpireAtValid(charge, expireAt)) {
@@ -156,7 +160,7 @@ public class ChargeService {
                 charge = save(charge);
             }
         }
-        return charge;
+        return chargeRepository.findOptionalById(charge.getId());
     }
 
     @Transactional
@@ -178,29 +182,29 @@ public class ChargeService {
     }
 
     @Transactional
-    public Charge save(Charge charge) {
-        return chargeRepository.save(charge);
+    public <T> T save(Charge charge) {
+        return chargeRepository.findOptionalById(chargeRepository.save(charge).getId());
     }
 
-    public Charge findById(Integer id) {
-        return chargeRepository.getOne(id);
+    public <T> T findById(Integer id) {
+        return chargeRepository.findOptionalById(id);
     }
 
-    public List<Charge> findByCliente(Integer clienteId) {
+    public <T> List<T> findByCliente(Integer clienteId) {
         return chargeRepository.findByCliente_idOrderByExpireAtDesc(clienteId);
     }
 
-    public List<Charge> findCurrentByClient(Integer clienteId) {
+    public <T> List<T> findCurrentByClient(Integer clienteId) {
         LocalDate begin = LocalDate.now().minusMonths(2);
         LocalDate finish = LocalDate.now().plusMonths(2);
         return chargeRepository.findCurrentByClientAndDate(clienteId, begin, finish);
     }
 
-    public List<Charge> findByCarnet(Integer carnetId) {
+    public <T> List<T> findByCarnet(Integer carnetId) {
         return chargeRepository.findByCarnet_id(carnetId);
     }
 
-    public Charge findByCarnetAndParcel(Integer carnetId, Integer parcel) {
+    public <T> T findByCarnetAndParcel(Integer carnetId, Integer parcel) {
         return chargeRepository.findOptionalByCarnet_idAndParcel(carnetId, parcel);
     }
 
@@ -224,15 +228,13 @@ public class ChargeService {
         return charge;
     }
 
-    public List<Charge> overdue() {
-        return overdue(LocalDate.now());
+    public <T> List<T> overdue(LocalDate dateReference) {
+//        return chargeRepository.overdue(dateReference);
+        return chargeRepository.findByExpireAtLessThanAndStatusNotInAndCliente_statusNotOrderByExpireAt(dateReference,
+                Arrays.asList(StatusCharge.PAID, StatusCharge.CANCELED), StatusCliente.CANCELADO);
     }
 
-    public List<Charge> overdue(LocalDate dateReference) {
-        return chargeRepository.overdue(dateReference);
-    }
-
-    public List<Charge> findByPaymentDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
+    public <T> List<T> findByPaymentDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
         if (status == null && gerencianetAccountId == null) {
             return chargeRepository.findByPaidAtBetween(start.atStartOfDay(), end.atTime(23, 59, 59));
         } else if (status == null) {
@@ -244,7 +246,7 @@ public class ChargeService {
         }
     }
 
-    public List<Charge> findByExpirationDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
+    public List<ChargeWithoutChargeInNfeItem> findByExpirationDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
 
         if (status == null && gerencianetAccountId == null) {
             return chargeRepository.findByExpireAtBetween(start, end);
@@ -257,7 +259,7 @@ public class ChargeService {
         }
     }
 
-    public List<Charge> buscarNaoVencidosPorCliente(Cliente cliente) {
+    public <T> List<T> buscarNaoVencidosPorCliente(Cliente cliente) {
         return chargeRepository.findByClienteAndStatusAndExpireAtGreaterThan(cliente, StatusCharge.WAITING, LocalDate.now());
     }
 

@@ -1,6 +1,8 @@
 package br.com.clairtonluz.sicoba.api.financeiro.gerencianet;
 
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.ChargeWithoutChargeInNfeItem;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.ChargeWithoutNfeItem;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.charge.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class ChargeAPI {
     }
 
     @GetMapping
-    public List<Charge> findByClienteOrCarnet(@RequestParam("clienteId") Integer clienteId,
+    public List<ChargeWithoutNfeItem> findByClienteOrCarnet(@RequestParam("clienteId") Integer clienteId,
                                               @RequestParam(value = "carnetId", required = false) Integer carnetId) {
         if (carnetId != null) {
             return chargeService.findByCarnet(carnetId);
@@ -35,12 +37,12 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "/current", method = RequestMethod.GET)
-    public List<Charge> findCurrentByCliente(@RequestParam("clienteId") Integer clienteId) {
+    public List<ChargeWithoutNfeItem> findCurrentByCliente(@RequestParam("clienteId") Integer clienteId) {
         return chargeService.findCurrentByClient(clienteId);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Charge findById(@PathVariable Integer id) {
+    public ChargeWithoutNfeItem findById(@PathVariable Integer id) {
         return chargeService.findById(id);
     }
 
@@ -50,12 +52,12 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "/overdue", method = RequestMethod.GET)
-    public List<Charge> overdue() {
-        return chargeService.overdue();
+    public List<ChargeWithoutNfeItem> overdue() {
+        return chargeService.overdue(LocalDate.now());
     }
 
     @RequestMapping(value = "paymentdate", method = RequestMethod.GET)
-    public List<Charge> paymentDate(
+    public List<ChargeWithoutChargeInNfeItem> paymentDate(
             @RequestParam("start") String start,
             @RequestParam("end") String end,
             @RequestParam(value = "status", required = false) StatusCharge status,
@@ -64,7 +66,7 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "expirationdate", method = RequestMethod.GET)
-    public List<Charge> expirationDate(
+    public List<ChargeWithoutChargeInNfeItem> expirationDate(
             @RequestParam("start") String start,
             @RequestParam("end") String end,
             @RequestParam(value = "status", required = false) StatusCharge status,
@@ -80,12 +82,12 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "/{id}/pay", method = RequestMethod.POST)
-    public Charge createBankingBillet(@PathVariable Integer id) {
+    public ChargeWithoutNfeItem createBankingBillet(@PathVariable Integer id) {
         return chargeService.setPaymentToBankingBillet(chargeService.findById(id));
     }
 
     @RequestMapping(value = "/{id}/link", method = RequestMethod.POST)
-    public Charge createPaymentLink(@PathVariable Integer id) {
+    public ChargeWithoutNfeItem createPaymentLink(@PathVariable Integer id) {
         return chargeService.createPaymentLink(chargeService.findById(id));
     }
 
@@ -95,17 +97,17 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "/{id}/cancel", method = RequestMethod.PUT)
-    public Charge cancel(@PathVariable Integer id) {
+    public ChargeWithoutNfeItem cancel(@PathVariable Integer id) {
         return chargeService.cancelCharge(chargeService.findById(id));
     }
 
     @RequestMapping(value = "/{id}/manualpayment", method = RequestMethod.PUT)
-    public Charge manualPayment(@PathVariable Integer id, @RequestBody Charge charge) {
+    public ChargeWithoutNfeItem manualPayment(@PathVariable Integer id, @RequestBody Charge charge) {
         return chargeService.manualPayment(charge);
     }
 
     @RequestMapping(value = "/{id}/billet", method = RequestMethod.PUT)
-    public Charge updateExpireAt(@PathVariable Integer id, @Valid @RequestBody Charge charge) {
+    public ChargeWithoutNfeItem updateExpireAt(@PathVariable Integer id, @Valid @RequestBody Charge charge) {
         return chargeService.updateBilletExpireAt(charge);
     }
 

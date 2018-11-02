@@ -25,14 +25,9 @@
 		"icon": "fa fa-dollar",
 		"items": [
 			{
-				"title": "Gerar Notas",
+				"title": "Notas",
 				"icon": "fa fa-files-o",
-				"url": "#/notas/gerar"
-			},
-			{
-				"title": "Sync NFE",
-				"icon": "fa fa-files-o",
-				"url": "#/notas/syncnfe"
+				"url": "#/notas"
 			},
 			{
 				"title": "Enviar Retorno",

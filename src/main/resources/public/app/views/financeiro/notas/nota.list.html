@@ -2,11 +2,11 @@
     <a ng-href="#/">
         <i class="fa fa-arrow-circle-left"></i>
     </a>
-    Gerar notas
+    Notas
 </h1>
 
 <div class="col-md-12">
-    <form name="form" class="form-horizontal" ng-submit="form.$valid && findByPaymentDate(params)" novalidate>
+    <form name="form" class="form-horizontal" ng-submit="form.$valid && findItensByDateOfProvision(params)" novalidate>
         <div class="row">
             <div class="col-md-3"
                  ng-class="{'has-error': (form.start.$invalid && (form.$submitted || form.start.$touched))}">
@@ -65,12 +65,7 @@
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-12">
                 <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
-                    Por pagamento
-                    <i class="fa fa-search"></i>
-                </button>
-                <button type="button" ng-click="findByExpirationDate(params)" class="btn btn-primary"
-                        ng-disabled="form.$invalid">
-                    Por vencimento
+                    Consultar
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -84,7 +79,7 @@
     <div class="row" style="margin-bottom: 1em">
         <div class="col-sm-9">
             <div class="dataTables_filter">
-                <button class="btn btn-primary" ng-click="gerarNotas()" ng-disabled="totalSelecionado() == 0">Gerar
+                <button class="btn btn-primary" ng-click="gerarArquivoSyncNfes()" ng-disabled="totalSelecionado() == 0">Gerar
                     {{totalSelecionado()}} nota(s)
                 </button>
             </div>
@@ -105,78 +100,70 @@
             <tr>
                 <th><input type="checkbox" ng-model="allSelected" ng-change="toogle()"/></th>
                 <th>Id</th>
+                <th>Descrição</th>
                 <th>Cliente</th>
-                <th>Valor</th>
-                <th>Valor Pago</th>
+                <th>Valor Unitário</th>
                 <th>Desconto</th>
-                <th>Vencimento</th>
-                <th>Pago em</th>
+                <th>Emissão</th>
+                <th>Prestação</th>
                 <th>Conta</th>
                 <th>Cobrança</th>
                 <th>Status</th>
-                <th>Nota</th>
             </tr>
             </thead>
+            <tbody>
+            <tr ng-repeat="it in notas | filter:searchText | limitTo:limit:(currentPage -1) * limit track by it.id">
+                <td><input type="checkbox" ng-model="it.selected"/></td>
+                <td>{{it.id}}</td>
+                <td>{{it.descricao}}</td>
+                <td>
+                    <a ng-class="it.charge.cliente.status"
+                       ng-href="#/cliente/{{it.charge.cliente.id}}/dashboard">{{it.charge.cliente.nome}}</a>
+                </td>
+                <td>{{it.valorUnitario | currency}}</td>
+                <td>{{it.desconto | currency}}</td>
+                <td>{{it.nfe.dataEmissao | date:'dd/MM/yyyy'}}</td>
+                <td>{{it.nfe.dataPrestacao | date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">
+                    <a title="Conta gerencianet"
+                       ng-href="#/gerencianet/account/{{it.charge.gerencianetAccount.id}}">
+                        {{it.charge.gerencianetAccount.name}}
+                    </a>
+                </td>
+                <td class="text-center">
+                    <div ng-hide="it.charge.url || it.charge.paymentUrl">
+                        {{it.charge.chargeId}}
+                    </div>
+                    <a title="cobranca{{it.charge.id}}.pdf" ng-href="{{it.charge.url}}" ng-show="it.charge.url"
+                       target="_blank">
+                        {{it.charge.chargeId}}
+                    </a>
+                    <a title="cobranca{{it.charge.id}}.pdf" ng-href="{{it.charge.paymentUrl}}" ng-show="it.charge.paymentUrl"
+                       target="_blank">
+                        {{it.charge.chargeId}}
+                    </a>
+                </td>
+                <td class="text-center" title="{{it.charge | chargeStatusDescription}}">
+                    <i class="label" ng-class="it.charge | chargeStatusLabelClass">
+                        {{it.charge | chargeStatusName}}
+                    </i>
+                </td>
+            </tr>
+            </tbody>
             <tfoot>
             <tr>
                 <th colspan="3"></th>
                 <th>Total</th>
-                <th>{{charges | filter:searchText | sumOfValue:'value' | currency}}</th>
-                <th>{{charges | filter:searchText | sumOfValue:'paidValue' | currency}}</th>
-                <th>{{charges | filter:searchText | sumOfValue:'discount' | currency}}</th>
+                <th>{{notas | filter:searchText | sumOfValue:'value' | currency}}</th>
+                <th>{{notas | filter:searchText | sumOfValue:'paidValue' | currency}}</th>
+                <th>{{notas | filter:searchText | sumOfValue:'discount' | currency}}</th>
                 <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
-            </tr>
-            </tfoot>
-            <tbody>
-            <tr ng-repeat="it in charges | filter:searchText | limitTo:limit:(currentPage -1) * limit track by it.id">
-                <td><input type="checkbox" ng-model="it.selected"/></td>
-                <td>{{it.id}}</td>
-                <td>
-                    <a ng-class="it.cliente.status"
-                       ng-href="#/cliente/{{it.cliente.id}}/dashboard">{{it.cliente.nome}}</a>
-                </td>
-                <td>
-                    <a ng-href="#/charges/{{it.id}}">{{it.value | currency}}</a>
-                </td>
-                <td>{{it.paidValue | currency}}</td>
-                <td>{{it.discount | currency}}</td>
-                <td>{{it.expireAt | date:'dd/MM/yyyy'}}</td>
-                <td>{{it.paidAt | date:'dd/MM/yyyy'}}</td>
-                <td class="text-center">
-                    <a title="Conta gerencianet"
-                       ng-href="#/gerencianet/account/{{it.gerencianetAccount.id}}">
-                        {{it.gerencianetAccount.name}}
-                    </a>
-                </td>
-                <td class="text-center">
-                    <div ng-hide="it.url || it.paymentUrl">
-                        {{it.chargeId}}
-                    </div>
-                    <a title="cobranca{{it.id}}.pdf" ng-href="{{it.url}}" ng-show="it.url"
-                       target="_blank">
-                        {{it.chargeId}}
-                    </a>
-                    <a title="cobranca{{it.id}}.pdf" ng-href="{{it.paymentUrl}}" ng-show="it.paymentUrl"
-                       target="_blank">
-                        {{it.chargeId}}
-                    </a>
-                </td>
-                <td class="text-center" title="{{it | chargeStatusDescription}}">
-                    <i class="label" ng-class="it | chargeStatusLabelClass">
-                        {{it | chargeStatusName}}
-                    </i>
-                </td>
-                <td class="text-center">
-                    <a title="Nota" ng-if="it.nfeItem" ng-href="#/notas/{{it.nfeItem.nfe.id}}">
-                        {{it.nfeItem.nfe.id}}
-                    </a>
-                </td>
-            </tr>
-            </tbody>
+ .nfe           </tr>
+ .nfe           </.nfetfoot>
+
         </table>
     </div>
 </div>
@@ -193,18 +180,18 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <uib-pagination total-items="charges.length" ng-model="currentPage" items-per-page="limit"
+        <uib-pagination total-items="notas.length" ng-model="currentPage" items-per-page="limit"
                         ng-init="currentPage = 1" class="pagination-sm" max-size="6"
                         boundary-links="true"></uib-pagination>
     </div>
 
     <div class="col-sm-3">
         <div class="dataTables_length">
-            <div class="dataTables_info" ng-show="charges">
+            <div class="d.nfeataTables_info" ng-show="notas">
                 Exibindo de {{(currentPage - 1) * limit + 1}} até {{(currentPage - 1) * limit + limit}} de
-                {{charges.length}}
+                {{notas.length}}
             </div>
         </div>
     </div>
-</div>
+<.nfe/div>
 </div>

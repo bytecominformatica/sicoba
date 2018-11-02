@@ -8,22 +8,22 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.Month;
 
-public class SyncNFeServiceTest {
+public class NFeServiceTest {
 
-    private SyncNFeService syncNFeService = new SyncNFeService();
+    private NFeService NFeService = new NFeService();
 
     @Test
     public void gerarMaster() {
         NFe nFe = criarNfe();
         String masterExpected = "1|1468|RODRIGO JOSE ZAMIATOWSKI|R. PROJETADA E|000|ULTIMA RUA DO LADO DE CIMA|NOVO HORIZONTE|CAPINZAL|SC|89665-000|||013.285.380-95|2091770319|20|21|5307|(49)3555-0000|sem@sem.com|0000001468|3|4|25/08/2018|26/08/2018|123|Nota de teste||\n";
-        String masterActual = syncNFeService.gerarMaster(1, nFe);
+        String masterActual = NFeService.gerarMaster(1, nFe);
         Assert.assertEquals("master", masterExpected, masterActual);
     }
 
     @Test
     public void gerarDetail() {
         NfeItem nfeItem = criarNfeItem();
-        String detailActual = syncNFeService.gerarDetail(1, nfeItem);
+        String detailActual = NFeService.gerarDetail(1, nfeItem);
         String detailExpected = "1|104|SERVICO DE ACESSO A INTERNET|50,00|0,00|0,00|UN|1,00|1,00|0,00|104|0,00|0,00|0,00|0,00|0,00|0,00|0,00|\n";
         Assert.assertEquals("detail", detailExpected, detailActual);
     }

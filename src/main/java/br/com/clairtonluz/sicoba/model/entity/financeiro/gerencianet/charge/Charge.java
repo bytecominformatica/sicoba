@@ -7,6 +7,7 @@ import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Gerencianet
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NfeItem;
 import br.com.clairtonluz.sicoba.util.StringUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -74,6 +75,7 @@ public class Charge extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "carnet_id")
     private Carnet carnet;
+    @JsonIgnore
     @OneToOne(mappedBy = "charge")
     private NfeItem nfeItem;
 

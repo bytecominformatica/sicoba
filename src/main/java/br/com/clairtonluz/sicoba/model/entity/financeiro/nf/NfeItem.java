@@ -38,7 +38,6 @@ public class NfeItem extends BaseEntity {
     @Column(name = "valor_aproximado_tributos_municipal")
     private Double valorAproximadoTributosMunicipal;// 0
 
-    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "charge_id", unique = true)
     private Charge charge;

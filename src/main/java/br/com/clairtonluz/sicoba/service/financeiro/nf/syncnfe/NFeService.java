@@ -3,15 +3,16 @@ package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.*;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemRepository;
+import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemSpec;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeRepository;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,12 +20,12 @@ import static br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe.MODELO_21
 
 
 @Service
-public class SyncNFeService {
+public class NFeService {
 
     private final NFeRepository nFeRepository;
     private final NFeItemRepository nFeItemRepository;
 
-    public SyncNFeService(NFeRepository nFeRepository, NFeItemRepository nFeItemRepository) {
+    public NFeService(NFeRepository nFeRepository, NFeItemRepository nFeItemRepository) {
         this.nFeRepository = nFeRepository;
         this.nFeItemRepository = nFeItemRepository;
     }
@@ -65,7 +66,11 @@ public class SyncNFeService {
             nfeItem.setCharge(charge);
             nfeItem.setClassificacaoServico(ClassificacaoServico.ASSINATURA_DE_SERVICOS_DE_PROVIMENTO_DE_ACESSO_A_INTERNET);
             nfeItem.setDescricao(charge.getDescription());
-            nfeItem.setValorUnitario(charge.getValue());
+            if (charge.getPaidValue() != null) {
+                nfeItem.setValorUnitario(charge.getPaidValue());
+            } else {
+                nfeItem.setValorUnitario(charge.getValue());
+            }
             nfeItem.setIcms(0d);
             nfeItem.setAliquotaReducao(0d);
             nfeItem.setUnidade("UN");
@@ -165,4 +170,8 @@ public class SyncNFeService {
         return null;
     }
 
+    public List<NfeItem> findItensByDatePrestacao(LocalDate begin, LocalDate end) {
+        Specification<NfeItem> where = Specification.where(NFeItemSpec.dataPrestacaoBetween(begin, end));
+        return nFeItemRepository.findAll(where);
+    }
 }
