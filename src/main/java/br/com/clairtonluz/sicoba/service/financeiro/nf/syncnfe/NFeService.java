@@ -1,6 +1,7 @@
 package br.com.clairtonluz.sicoba.service.financeiro.nf.syncnfe;
 
 import br.com.clairtonluz.sicoba.exception.BadRequestException;
+import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.*;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemRepository;
@@ -40,6 +41,9 @@ public class NFeService {
     @Transactional
     public List<NFe> generateNotas(List<Charge> charges) {
         for (Charge charge : charges) {
+            if (nFeItemRepository.existsByCharge(charge))
+                throw new ConflitException("Já existe uma nota fiscal para a cobrança " + charge.getId());
+
             NFe nfe = new NFe();
             nfe.setClienteId(charge.getCliente().getId());
             nfe.setNome(charge.getCliente().getNome());
