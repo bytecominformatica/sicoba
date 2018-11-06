@@ -31,6 +31,7 @@ import static br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe.MODELO_21
 @Service
 public class NFeService {
 
+    public static final String SPED_CODIGO_MUNICIPIO_CAUCAIA = "2303709";
     private final NFeRepository nFeRepository;
     private final NFeItemRepository nFeItemRepository;
 
@@ -77,7 +78,7 @@ public class NFeService {
             nfe.setDataEmissao(LocalDate.now());
             nfe.setDataPrestacao(charge.getExpireAt());
             nfe.setObservacao(null);
-            nfe.setCodigoMunicipio(null);
+            nfe.setCodigoMunicipio(SPED_CODIGO_MUNICIPIO_CAUCAIA);
 
             NfeItem nfeItem = new NfeItem();
             nfeItem.setCharge(charge);
@@ -196,7 +197,7 @@ public class NFeService {
 
     public List<NfeItem> findItensByDatePrestacao(LocalDate begin, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
         Specification<NfeItem> where = Specification.where(NFeItemSpec.dataPrestacaoBetween(begin, end));
-        if(status != null)
+        if (status != null)
             where = where.and(NFeItemSpec.statusChargeEqual(status));
         if (gerencianetAccountId != null)
             where = where.and(NFeItemSpec.gerencianetAccountIdEqual(gerencianetAccountId));

@@ -10,7 +10,7 @@ import java.time.Month;
 
 public class NFeServiceTest {
 
-    private NFeService NFeService = new NFeService();
+    private NFeService NFeService = new NFeService(null, null);
 
     @Test
     public void gerarMaster() {
@@ -31,7 +31,6 @@ public class NFeServiceTest {
 
     private NFe criarNfe() {
         NFe nFe = new NFe();
-        nFe.setCodigoConsumidor(1468);
         nFe.setNome("RODRIGO JOSE ZAMIATOWSKI");
         nFe.setLogradouro("R. PROJETADA E");
         nFe.setNumero("000");
@@ -80,40 +79,5 @@ public class NFeServiceTest {
 
         return nfeItem;
     }
-
-
-//    private void createNotas() {
-//        notaList = new ArrayList<>();
-//        NFe nFe = criarNfe();
-//        notaList.add(nFe);
-//
-//        nFe = new NFe();
-//        nFe.setCodigoConsumidor(2691);
-//        nFe.setNome("MORGANA ALVES");
-//        nFe.setLogradouro("R.FRANCISCO HELT");
-//        nFe.setNumero("618");
-//        nFe.setComplemento(null);
-//        nFe.setBairo("NOVO HORIZONTE");
-//        nFe.setCidade("CAPINZAL");
-//        nFe.setUf("SC");
-//        nFe.setCep("89665-000");
-//        nFe.setCnpj(null);
-//        nFe.setIe(null);
-//        nFe.setCpf("013.285.380-95");
-//        nFe.setRg("2091770319");
-//        nFe.setDiaDeVencimento(20);
-//        nFe.setModelo(NFe.MODELO_21);
-//        nFe.setCfop(TipoPessoa.PF.getCfop());
-//        nFe.setTelefone("(49)3555-0000");
-//        nFe.setEmail("sem@sem.com");
-//        nFe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
-//        nFe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);
-//        nFe.setDataEmissao(LocalDate.of(2018, Month.AUGUST, 25));
-//        nFe.setDataPrestacao(LocalDate.of(2018, Month.AUGUST, 26));
-//        nFe.setId(123);
-//        nFe.setObservacao("Nota de teste");
-//        nFe.setCodigoMunicipio(null);
-//        notaList.add(nFe);
-//    }
 
 }
