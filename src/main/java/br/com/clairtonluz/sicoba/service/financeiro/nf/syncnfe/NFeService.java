@@ -31,7 +31,8 @@ import static br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe.MODELO_21
 @Service
 public class NFeService {
 
-    public static final String SPED_CODIGO_MUNICIPIO_CAUCAIA = "2303709";
+    private static final double ALICOTA_ICMP_ATE_180_MIL = 2.04d;
+    private static final String SPED_CODIGO_MUNICIPIO_CAUCAIA = "2303709";
     private final NFeRepository nFeRepository;
     private final NFeItemRepository nFeItemRepository;
 
@@ -80,21 +81,36 @@ public class NFeService {
             nfe.setObservacao(null);
             nfe.setCodigoMunicipio(SPED_CODIGO_MUNICIPIO_CAUCAIA);
 
+
             NfeItem nfeItem = new NfeItem();
             nfeItem.setCharge(charge);
             nfeItem.setClassificacaoServico(ClassificacaoServico.ASSINATURA_DE_SERVICOS_DE_PROVIMENTO_DE_ACESSO_A_INTERNET);
             nfeItem.setDescricao(charge.getDescription());
-            nfeItem.setValorUnitario(charge.getValue());
-            nfeItem.setDesconto(charge.getDiscount());
-            nfeItem.setIcms(0d);
-            nfeItem.setAliquotaReducao(0d);
+
+            Double valorUnitario = charge.getValue();
+            double outrosValores = 0d;
+            double desconto = 0d;
+            Double paidValue = charge.getPaidValue() == null ? 0d : charge.getPaidValue();
+
+            if (valorUnitario < paidValue) {
+                outrosValores = paidValue - valorUnitario;
+            } else {
+                desconto = valorUnitario - paidValue;
+            }
+
+            double baseDeCalculo = valorUnitario + outrosValores - desconto;
+
+            nfeItem.setValorUnitario(valorUnitario);
+            nfeItem.setDesconto(desconto);
+            nfeItem.setOutrosValores(outrosValores);
+            nfeItem.setBc(baseDeCalculo);
             nfeItem.setUnidade("UN");
+            nfeItem.setIcms(0d);
+            nfeItem.setAliquotaIcms(ALICOTA_ICMP_ATE_180_MIL);
+            nfeItem.setAliquotaReducao(0d);
             nfeItem.setQuantidadeContratada(1.0);
             nfeItem.setQuantidadeFornecida(1.0);
-            nfeItem.setAliquotaIcms(0d);
-            nfeItem.setBc(0d);
             nfeItem.setValoresIsentos(0d);
-            nfeItem.setOutrosValores(0d);
             nfeItem.setValorAproximadoTributosFederal(0d);
             nfeItem.setValorAproximadoTributosEstadual(0d);
             nfeItem.setValorAproximadoTributosMunicipal(0d);
@@ -113,7 +129,6 @@ public class NFeService {
     }
 
     private void generateFiles(@NonNull List<NfeItem> nfeItemList, OutputStream outputStream) {
-//        SyncNFeImportacao syncNFeImportacao = new SyncNFeImportacao();
         AtomicInteger index = new AtomicInteger(1);
         StringBuilder master = new StringBuilder();
         StringBuilder detail = new StringBuilder();
