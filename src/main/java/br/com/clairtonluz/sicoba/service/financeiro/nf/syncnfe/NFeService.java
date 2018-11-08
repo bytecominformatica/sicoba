@@ -63,15 +63,16 @@ public class NFeService {
 
             if (charge.getCliente().getCpfCnpj().length() == 11) {
                 nfe.setCpf(charge.getCliente().getCpfCnpj());
-                nfe.setIe(charge.getCliente().getRg());
+                nfe.setRg(charge.getCliente().getRg());
+                nfe.setCfop(NFe.CFOP_PF);
             } else {
                 nfe.setCnpj(charge.getCliente().getCpfCnpj());
-                nfe.setRg(charge.getCliente().getRg());
+                nfe.setIe(charge.getCliente().getRg());
+                nfe.setCfop(NFe.CFOP_PJ);
             }
 
             nfe.setDiaDeVencimento(charge.getExpireAt().getDayOfMonth());
             nfe.setModelo(MODELO_21);
-            nfe.setCfop(0);
             nfe.setTelefone(charge.getCliente().getFoneTitular());
             nfe.setEmail(charge.getCliente().getEmail());
             nfe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
