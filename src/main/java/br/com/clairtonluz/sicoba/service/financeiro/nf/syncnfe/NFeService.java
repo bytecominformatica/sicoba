@@ -105,15 +105,15 @@ public class NFeService {
             nfeItem.setOutrosValores(outrosValores);
             nfeItem.setBc(baseDeCalculo);
             nfeItem.setUnidade("UN");
-            nfeItem.setIcms(0d);
+            nfeItem.setIcms(baseDeCalculo * ALICOTA_ICMP_ATE_180_MIL / 100);
             nfeItem.setAliquotaIcms(ALICOTA_ICMP_ATE_180_MIL);
             nfeItem.setAliquotaReducao(0d);
             nfeItem.setQuantidadeContratada(1.0);
             nfeItem.setQuantidadeFornecida(1.0);
             nfeItem.setValoresIsentos(0d);
-            nfeItem.setValorAproximadoTributosFederal(0d);
-            nfeItem.setValorAproximadoTributosEstadual(0d);
-            nfeItem.setValorAproximadoTributosMunicipal(0d);
+            nfeItem.setValorAproximadoTributosFederal(13.45d);
+            nfeItem.setValorAproximadoTributosEstadual(10.89d);
+            nfeItem.setValorAproximadoTributosMunicipal(4.64d);
 
             nFeRepository.save(nfe);
             nfeItem.setNfe(nfe);
