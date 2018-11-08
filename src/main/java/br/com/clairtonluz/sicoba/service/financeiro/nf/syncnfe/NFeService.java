@@ -31,6 +31,9 @@ import static br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe.MODELO_21
 @Service
 public class NFeService {
 
+    public static final double PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_FEDERAL = 13.45d;
+    public static final double PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_ESTADUAL = 10.89d;
+    public static final double PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_MUNICIPAL = 4.64d;
     private static final double ALICOTA_ICMP_ATE_180_MIL = 2.04d;
     private static final String SPED_CODIGO_MUNICIPIO_CAUCAIA = "2303709";
     private final NFeRepository nFeRepository;
@@ -112,9 +115,9 @@ public class NFeService {
             nfeItem.setQuantidadeContratada(1.0);
             nfeItem.setQuantidadeFornecida(1.0);
             nfeItem.setValoresIsentos(0d);
-            nfeItem.setValorAproximadoTributosFederal(13.45d);
-            nfeItem.setValorAproximadoTributosEstadual(10.89d);
-            nfeItem.setValorAproximadoTributosMunicipal(4.64d);
+            nfeItem.setValorAproximadoTributosFederal(baseDeCalculo * PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_FEDERAL / 100);
+            nfeItem.setValorAproximadoTributosEstadual(baseDeCalculo * PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_ESTADUAL / 100);
+            nfeItem.setValorAproximadoTributosMunicipal(baseDeCalculo * PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_MUNICIPAL / 100);
 
             nFeRepository.save(nfe);
             nfeItem.setNfe(nfe);
