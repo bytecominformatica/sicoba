@@ -194,7 +194,7 @@ public class NFeService {
                 nFe.getCfop() + "|" +
                 nFe.getTelefone() + "|" +
                 nFe.getEmail().orElse("") + "|" +
-                StringUtil.padLeft(nFe.getClienteId(), 10) + "|" +
+                nFe.getClienteId() + "|" +
                 nFe.getTipoAssinante().getCodigo() + "|" +
                 nFe.getTipoUtilizacao().getCodigo() + "|" +
                 DateUtil.formatDate(nFe.getDataEmissao()) + "|" +
