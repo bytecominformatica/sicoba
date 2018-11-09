@@ -253,7 +253,7 @@ public class ChargeService {
 
     private List<Charge> removeCanceled(List<Charge> chargeList) {
         return chargeList.stream()
-                .filter(charge -> charge.getManualPayment() || !StatusCharge.CANCELED.equals(charge.getStatus()))
+                .filter(charge -> (charge.getManualPayment() != null && charge.getManualPayment())  || !StatusCharge.CANCELED.equals(charge.getStatus()))
                 .collect(Collectors.toList());
     }
 
