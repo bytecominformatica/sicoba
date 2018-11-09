@@ -80,7 +80,7 @@ public class NFeService {
             nfe.setEmail(charge.getCliente().getEmail());
             nfe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
             nfe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);
-            nfe.setDataEmissao(LocalDate.now());
+            nfe.setDataEmissao(charge.getExpireAt());
             nfe.setDataPrestacao(charge.getExpireAt());
             nfe.setObservacao(null);
             nfe.setCodigoMunicipio(SPED_CODIGO_MUNICIPIO_CAUCAIA);

@@ -238,8 +238,10 @@ public class ChargeService {
         List<Charge> chargeList;
         if (status == null && gerencianetAccountId == null) {
             chargeList = chargeRepository.findByPaidAtBetween(start.atStartOfDay(), end.atTime(23, 59, 59));
+            chargeList = removeCanceled(chargeList);
         } else if (status == null) {
             chargeList = chargeRepository.findByPaidAtBetweenAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), gerencianetAccountId);
+            chargeList = removeCanceled(chargeList);
         } else if (gerencianetAccountId == null) {
             chargeList = chargeRepository.findByPaidAtBetweenAndStatus(start.atStartOfDay(), end.atTime(23, 59, 59), status);
         } else {
@@ -247,6 +249,12 @@ public class ChargeService {
         }
 
         return chargeList.stream().map(ChargeVO::new).collect(Collectors.toList());
+    }
+
+    private List<Charge> removeCanceled(List<Charge> chargeList) {
+        return chargeList.stream()
+                .filter(charge -> charge.getManualPayment() || !StatusCharge.CANCELED.equals(charge.getStatus()))
+                .collect(Collectors.toList());
     }
 
     public List<ChargeVO> findByExpirationDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
