@@ -261,8 +261,10 @@ public class ChargeService {
         List<Charge> chargeList;
         if (status == null && gerencianetAccountId == null) {
             chargeList = chargeRepository.findByExpireAtBetween(start, end);
+            chargeList = removeCanceled(chargeList);
         } else if (status == null) {
             chargeList = chargeRepository.findByExpireAtBetweenAndGerencianetAccount_id(start, end, gerencianetAccountId);
+            chargeList = removeCanceled(chargeList);
         } else if (gerencianetAccountId == null) {
             chargeList = chargeRepository.findByExpireAtBetweenAndStatus(start, end, status);
         } else {
