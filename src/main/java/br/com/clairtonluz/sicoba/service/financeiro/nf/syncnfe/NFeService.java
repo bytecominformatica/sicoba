@@ -85,24 +85,19 @@ public class NFeService {
             nfe.setObservacao(null);
             nfe.setCodigoMunicipio(SPED_CODIGO_MUNICIPIO_CAUCAIA);
 
-
             NfeItem nfeItem = new NfeItem();
             nfeItem.setCharge(charge);
             nfeItem.setClassificacaoServico(ClassificacaoServico.ASSINATURA_DE_SERVICOS_DE_PROVIMENTO_DE_ACESSO_A_INTERNET);
             nfeItem.setDescricao(charge.getDescription());
 
-            Double valorUnitario = charge.getValue();
-            double desconto = 0d;
-            Double paidValue = charge.getPaidValue() == null ? 0d : charge.getPaidValue();
+            double desconto = charge.getDiscount() == null ? 0d : charge.getDiscount();
 
-            if (valorUnitario > paidValue) {
-                desconto = valorUnitario - paidValue;
-            }
+            Double valorUnitario = charge.getValue() - desconto;
 
-            double baseDeCalculo = valorUnitario - desconto;
+            double baseDeCalculo = valorUnitario;
 
             nfeItem.setValorUnitario(valorUnitario);
-            nfeItem.setDesconto(desconto);
+            nfeItem.setDesconto(0d);
             nfeItem.setOutrosValores(0d);
             nfeItem.setBc(baseDeCalculo);
             nfeItem.setUnidade("UN");
