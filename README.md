@@ -65,7 +65,7 @@ Technologies In Use
 <br/>
 
 2. Back end
-    - JDK 8
+    - JDK 11
     - Mikrotik API
     - Spring Boot
     - JPA
