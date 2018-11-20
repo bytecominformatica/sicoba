@@ -10,7 +10,7 @@ public class StringUtilTest {
 
     @Test
     public void deveriaFormatarCurrence() {
-        double value = 1_345_432_098.32;
+        var value = 1_345_432_098.32;
         String atual = StringUtil.formatCurrence(value);
         String expected = "1.345.432.098,32";
         Assert.assertEquals(expected, atual);
@@ -18,7 +18,7 @@ public class StringUtilTest {
 
     @Test
     public void deveriaCompeltarComZeros() {
-        int value = 1234;
+        var value = 1234;
         String atual = StringUtil.padLeft(value, 10);
         String expected = "0000001234";
         Assert.assertEquals(expected, atual);
@@ -26,7 +26,7 @@ public class StringUtilTest {
 
     @Test
     public void deveriaCompeltarComEspacos() {
-        int value = 1234;
+        var value = 1234;
         String atual = StringUtil.padLeft(value, 10, " ");
         String expected = "      1234";
         Assert.assertEquals(expected, atual);
