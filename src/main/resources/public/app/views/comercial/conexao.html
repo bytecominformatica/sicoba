@@ -74,7 +74,11 @@
             <input name="mac" ng-model="conexao.mac" class="form-control" pattern="[a-fA-F0-9:]{17}|[a-fA-F0-9]{12}">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"
-                        ng-click="pegarMacDoEquipamento()">Pegar mac do equipamento</button>
+                        ng-click="pegarMacDoEquipamentoInstalacao()">Mac Instalação</button>
+            </span>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"
+                        ng-click="pegarMacDoEquipamentoWifi()">Mac WIFI</button>
             </span>
         </div><!-- /input-group -->
         <p class="help-block" ng-show="form.$submitted || form.mac.$touched">

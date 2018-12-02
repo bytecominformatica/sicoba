@@ -5,7 +5,10 @@ import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Cliente;
 import br.com.clairtonluz.sicoba.model.entity.comercial.Contrato;
 import br.com.clairtonluz.sicoba.model.entity.comercial.StatusCliente;
-import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.*;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.ChargeVO;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.PaymentType;
+import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.StatusCharge;
 import br.com.clairtonluz.sicoba.repository.comercial.ClienteRepository;
 import br.com.clairtonluz.sicoba.repository.comercial.ContratoRepository;
 import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeRepository;
@@ -86,7 +89,7 @@ public class ChargeService {
     }
 
     @Transactional
-    public <T> T setPaymentToBankingBillet(Charge charge) {
+    public Charge setPaymentToBankingBillet(Charge charge) {
         JSONObject response = chargeGNService.setPaymentToBankingBilletGN(charge);
         if (!GNService.isOk(response))
             throw new ConflitException("Ocorreu um erro ao tentar definir a forma de pagamento para boleto");
@@ -99,7 +102,7 @@ public class ChargeService {
         charge.setPayment(PaymentType.valueOf(data.getString("payment").toUpperCase()));
 
         charge = chargeRepository.save(charge);
-        return chargeRepository.findOptionalById(charge.getId());
+        return chargeRepository.getOne(charge.getId());
     }
 
     /**
@@ -109,7 +112,7 @@ public class ChargeService {
      * @return
      */
     @Transactional
-    public <T> T createPaymentLink(Charge charge) {
+    public Charge createPaymentLink(Charge charge) {
         JSONObject response = chargeGNService.linkCharge(charge);
         if (GNService.isOk(response)) {
             JSONObject data = response.getJSONObject("data");
@@ -121,7 +124,7 @@ public class ChargeService {
         return chargeRepository.findOptionalById(charge.getId());
     }
 
-    public <T> T manualPayment(Charge charge) {
+    public Charge manualPayment(Charge charge) {
         Charge chargeAtual = findById(charge.getId());
         chargeAtual.setPaidValue(charge.getPaidValue());
         chargeAtual.setPaidAt(charge.getPaidAt());
@@ -132,14 +135,14 @@ public class ChargeService {
                 chargeAtual.getId(), chargeAtual.getCliente().getId(), chargeAtual.getCliente().getNome(),
                 StringUtil.formatCurrence(chargeAtual.getValue()), StringUtil.formatCurrence(chargeAtual.getPaidValue()));
 
-        T result = cancelCharge(chargeAtual);
+        charge = cancelCharge(chargeAtual);
 
         emailService.sendToAdmin(subject, content);
-        return result;
+        return charge;
     }
 
     @Transactional
-    public <T> T cancelCharge(Charge charge) {
+    public Charge cancelCharge(Charge charge) {
         boolean canceled = Objects.isNull(charge.getCarnet()) ? chargeGNService.cancelCharge(charge) : carnetGNService.cancelParcel(charge);
         if (canceled) {
             charge.setStatus(StatusCharge.CANCELED);
@@ -149,7 +152,7 @@ public class ChargeService {
     }
 
     @Transactional
-    public <T> T updateBilletExpireAt(Charge charge) {
+    public Charge updateBilletExpireAt(Charge charge) {
         LocalDate expireAt = charge.getExpireAt();
         charge = findById(charge.getId());
         if (isExpireAtValid(charge, expireAt)) {
@@ -180,11 +183,11 @@ public class ChargeService {
     }
 
     @Transactional
-    public <T> T save(Charge charge) {
+    public Charge save(Charge charge) {
         return chargeRepository.findOptionalById(chargeRepository.save(charge).getId());
     }
 
-    public <T> T findById(Integer id) {
+    public Charge findById(Integer id) {
         return chargeRepository.findOptionalById(id);
     }
 
@@ -202,7 +205,7 @@ public class ChargeService {
         return chargeRepository.findByCarnet_id(carnetId);
     }
 
-    public <T> T findByCarnetAndParcel(Integer carnetId, Integer parcel) {
+    public Charge findByCarnetAndParcel(Integer carnetId, Integer parcel) {
         return chargeRepository.findOptionalByCarnet_idAndParcel(carnetId, parcel);
     }
 
@@ -235,8 +238,10 @@ public class ChargeService {
         List<Charge> chargeList;
         if (status == null && gerencianetAccountId == null) {
             chargeList = chargeRepository.findByPaidAtBetween(start.atStartOfDay(), end.atTime(23, 59, 59));
+            chargeList = removeCanceled(chargeList);
         } else if (status == null) {
             chargeList = chargeRepository.findByPaidAtBetweenAndGerencianetAccount_id(start.atStartOfDay(), end.atTime(23, 59, 59), gerencianetAccountId);
+            chargeList = removeCanceled(chargeList);
         } else if (gerencianetAccountId == null) {
             chargeList = chargeRepository.findByPaidAtBetweenAndStatus(start.atStartOfDay(), end.atTime(23, 59, 59), status);
         } else {
@@ -246,12 +251,20 @@ public class ChargeService {
         return chargeList.stream().map(ChargeVO::new).collect(Collectors.toList());
     }
 
+    private List<Charge> removeCanceled(List<Charge> chargeList) {
+        return chargeList.stream()
+                .filter(charge -> (charge.getManualPayment() != null && charge.getManualPayment())  || !StatusCharge.CANCELED.equals(charge.getStatus()))
+                .collect(Collectors.toList());
+    }
+
     public List<ChargeVO> findByExpirationDateAndStatusAndGerencianetAccount(LocalDate start, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
         List<Charge> chargeList;
         if (status == null && gerencianetAccountId == null) {
             chargeList = chargeRepository.findByExpireAtBetween(start, end);
+            chargeList = removeCanceled(chargeList);
         } else if (status == null) {
             chargeList = chargeRepository.findByExpireAtBetweenAndGerencianetAccount_id(start, end, gerencianetAccountId);
+            chargeList = removeCanceled(chargeList);
         } else if (gerencianetAccountId == null) {
             chargeList = chargeRepository.findByExpireAtBetweenAndStatus(start, end, status);
         } else {

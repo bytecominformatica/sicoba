@@ -6,7 +6,8 @@
 
             $scope.save = _save;
             $scope.remove = _remove;
-            $scope.pegarMacDoEquipamento = _pegarMacDoEquipamento;
+            $scope.pegarMacDoEquipamentoInstalacao = _pegarMacDoEquipamentoInstalacao;
+            $scope.pegarMacDoEquipamentoWifi = _pegarMacDoEquipamentoWifi;
 
             _init();
 
@@ -27,18 +28,20 @@
                 });
             }
 
-            function _pegarMacDoEquipamento() {
-                if ($scope.contrato.equipamento) {
-                    $scope.conexao.mac = $scope.contrato.equipamento.mac;
-                    $rootScope.messages = [{
-                        title: 'Mac capturado do equipamento de instalação',
-                        type: 'alert-success'
-                    }];
-                } else if ($scope.contrato.equipamentoWifi) {
-                    $scope.conexao.mac = $scope.contrato.equipamentoWifi.mac;
-                    $rootScope.messages = [{title: 'Mac capturado do equipamento wifi', type: 'alert-success'}];
+            function _pegarMacDoEquipamentoInstalacao() {
+                _pegarMacDoEquipamento($scope.contrato.equipamento);
+            }
+
+            function _pegarMacDoEquipamentoWifi() {
+                _pegarMacDoEquipamento($scope.contrato.equipamentoWifi);
+            }
+
+
+            function _pegarMacDoEquipamento(equipamento) {
+                if (equipamento) {
+                    $scope.conexao.mac = equipamento.mac;
                 } else {
-                    $rootScope.messages = [{title: 'Nenhum equipamento encontrado', type: 'alert-success'}];
+                    $rootScope.messages = [{title: 'Nenhum equipamento encontrado', type: 'alert-warning'}];
                 }
             }
 

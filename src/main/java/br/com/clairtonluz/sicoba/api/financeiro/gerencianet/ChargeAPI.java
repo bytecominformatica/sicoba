@@ -39,7 +39,7 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ChargeWithoutNfeItem findById(@PathVariable Integer id) {
+    public Charge findById(@PathVariable Integer id) {
         return chargeService.findById(id);
     }
 
@@ -79,12 +79,12 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "/{id}/pay", method = RequestMethod.POST)
-    public ChargeWithoutNfeItem createBankingBillet(@PathVariable Integer id) {
+    public Charge createBankingBillet(@PathVariable Integer id) {
         return chargeService.setPaymentToBankingBillet(chargeService.findById(id));
     }
 
     @RequestMapping(value = "/{id}/link", method = RequestMethod.POST)
-    public ChargeWithoutNfeItem createPaymentLink(@PathVariable Integer id) {
+    public Charge createPaymentLink(@PathVariable Integer id) {
         return chargeService.createPaymentLink(chargeService.findById(id));
     }
 
@@ -94,17 +94,17 @@ public class ChargeAPI {
     }
 
     @RequestMapping(value = "/{id}/cancel", method = RequestMethod.PUT)
-    public ChargeWithoutNfeItem cancel(@PathVariable Integer id) {
+    public Charge cancel(@PathVariable Integer id) {
         return chargeService.cancelCharge(chargeService.findById(id));
     }
 
     @RequestMapping(value = "/{id}/manualpayment", method = RequestMethod.PUT)
-    public ChargeWithoutNfeItem manualPayment(@PathVariable Integer id, @RequestBody Charge charge) {
+    public Charge manualPayment(@PathVariable Integer id, @RequestBody Charge charge) {
         return chargeService.manualPayment(charge);
     }
 
     @RequestMapping(value = "/{id}/billet", method = RequestMethod.PUT)
-    public ChargeWithoutNfeItem updateExpireAt(@PathVariable Integer id, @Valid @RequestBody Charge charge) {
+    public Charge updateExpireAt(@PathVariable Integer id, @Valid @RequestBody Charge charge) {
         return chargeService.updateBilletExpireAt(charge);
     }
 

@@ -13,6 +13,8 @@ import java.util.Optional;
 public class NFe extends BaseEntity {
     public static final int MODELO_21 = 21;
     public static final int MODELO_22 = 22;
+    public static final int CFOP_PJ = 5303;
+    public static final int CFOP_PF = 5307;
 
     @Column(name = "cliente_id")
     private Integer clienteId;

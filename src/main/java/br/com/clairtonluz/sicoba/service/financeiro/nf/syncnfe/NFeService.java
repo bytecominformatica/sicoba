@@ -31,6 +31,11 @@ import static br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NFe.MODELO_21
 @Service
 public class NFeService {
 
+    private static final double PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_FEDERAL = 13.45d;
+    private static final double PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_ESTADUAL = 10.89d;
+    private static final double PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_MUNICIPAL = 4.64d;
+    private static final double ALICOTA_ICMP_ATE_180_MIL = 2.04d;
+    private static final String SPED_CODIGO_MUNICIPIO_CAUCAIA = "2303709";
     private final NFeRepository nFeRepository;
     private final NFeItemRepository nFeItemRepository;
 
@@ -61,42 +66,50 @@ public class NFeService {
 
             if (charge.getCliente().getCpfCnpj().length() == 11) {
                 nfe.setCpf(charge.getCliente().getCpfCnpj());
-                nfe.setIe(charge.getCliente().getRg());
+                nfe.setRg(charge.getCliente().getRg());
+                nfe.setCfop(NFe.CFOP_PF);
             } else {
                 nfe.setCnpj(charge.getCliente().getCpfCnpj());
-                nfe.setRg(charge.getCliente().getRg());
+                nfe.setIe(charge.getCliente().getRg());
+                nfe.setCfop(NFe.CFOP_PJ);
             }
 
             nfe.setDiaDeVencimento(charge.getExpireAt().getDayOfMonth());
             nfe.setModelo(MODELO_21);
-            nfe.setCfop(0);
             nfe.setTelefone(charge.getCliente().getFoneTitular());
             nfe.setEmail(charge.getCliente().getEmail());
             nfe.setTipoAssinante(TipoAssinante.RESIDENCIAL_OU_PESSOA_FISICA);
             nfe.setTipoUtilizacao(TipoUtilizacao.PROVIMENTO_DE_INTERNET);
-            nfe.setDataEmissao(LocalDate.now());
+            nfe.setDataEmissao(charge.getExpireAt());
             nfe.setDataPrestacao(charge.getExpireAt());
             nfe.setObservacao(null);
-            nfe.setCodigoMunicipio(null);
+            nfe.setCodigoMunicipio(SPED_CODIGO_MUNICIPIO_CAUCAIA);
 
             NfeItem nfeItem = new NfeItem();
             nfeItem.setCharge(charge);
             nfeItem.setClassificacaoServico(ClassificacaoServico.ASSINATURA_DE_SERVICOS_DE_PROVIMENTO_DE_ACESSO_A_INTERNET);
             nfeItem.setDescricao(charge.getDescription());
-            nfeItem.setValorUnitario(charge.getValue());
-            nfeItem.setDesconto(charge.getDiscount());
-            nfeItem.setIcms(0d);
-            nfeItem.setAliquotaReducao(0d);
+
+            double desconto = charge.getDiscount() == null ? 0d : charge.getDiscount();
+
+            Double valorUnitario = charge.getValue() - desconto;
+
+            double baseDeCalculo = valorUnitario;
+
+            nfeItem.setValorUnitario(valorUnitario);
+            nfeItem.setDesconto(0d);
+            nfeItem.setOutrosValores(0d);
+            nfeItem.setBc(baseDeCalculo);
             nfeItem.setUnidade("UN");
+            nfeItem.setIcms(baseDeCalculo * ALICOTA_ICMP_ATE_180_MIL / 100);
+            nfeItem.setAliquotaIcms(ALICOTA_ICMP_ATE_180_MIL);
+            nfeItem.setAliquotaReducao(0d);
             nfeItem.setQuantidadeContratada(1.0);
             nfeItem.setQuantidadeFornecida(1.0);
-            nfeItem.setAliquotaIcms(0d);
-            nfeItem.setBc(0d);
             nfeItem.setValoresIsentos(0d);
-            nfeItem.setOutrosValores(0d);
-            nfeItem.setValorAproximadoTributosFederal(0d);
-            nfeItem.setValorAproximadoTributosEstadual(0d);
-            nfeItem.setValorAproximadoTributosMunicipal(0d);
+            nfeItem.setValorAproximadoTributosFederal(baseDeCalculo * PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_FEDERAL / 100);
+            nfeItem.setValorAproximadoTributosEstadual(baseDeCalculo * PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_ESTADUAL / 100);
+            nfeItem.setValorAproximadoTributosMunicipal(baseDeCalculo * PORCENTAGEM_VALOR_APROXIMADO_TRIBUTOS_MUNICIPAL / 100);
 
             nFeRepository.save(nfe);
             nfeItem.setNfe(nfe);
@@ -112,7 +125,6 @@ public class NFeService {
     }
 
     private void generateFiles(@NonNull List<NfeItem> nfeItemList, OutputStream outputStream) {
-//        SyncNFeImportacao syncNFeImportacao = new SyncNFeImportacao();
         AtomicInteger index = new AtomicInteger(1);
         StringBuilder master = new StringBuilder();
         StringBuilder detail = new StringBuilder();
@@ -174,7 +186,7 @@ public class NFeService {
                 nFe.getCfop() + "|" +
                 nFe.getTelefone() + "|" +
                 nFe.getEmail().orElse("") + "|" +
-                StringUtil.padLeft(nFe.getClienteId(), 10) + "|" +
+                nFe.getClienteId() + "|" +
                 nFe.getTipoAssinante().getCodigo() + "|" +
                 nFe.getTipoUtilizacao().getCodigo() + "|" +
                 DateUtil.formatDate(nFe.getDataEmissao()) + "|" +
@@ -196,7 +208,7 @@ public class NFeService {
 
     public List<NfeItem> findItensByDatePrestacao(LocalDate begin, LocalDate end, StatusCharge status, Integer gerencianetAccountId) {
         Specification<NfeItem> where = Specification.where(NFeItemSpec.dataPrestacaoBetween(begin, end));
-        if(status != null)
+        if (status != null)
             where = where.and(NFeItemSpec.statusChargeEqual(status));
         if (gerencianetAccountId != null)
             where = where.and(NFeItemSpec.gerencianetAccountIdEqual(gerencianetAccountId));

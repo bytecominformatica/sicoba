@@ -80,7 +80,7 @@
                         var days = DateDiff.inDays(new Date(contrato.dataInstalacao), new Date(charge.expireAt));
                         var valueProportional = contrato.plano.valor / 30 * days;
                         charge.value = parseFloat(valueProportional.toFixed(2));
-                        charge.description = 'Valor proporcional a ' + days + ' dia(s)';
+                        charge.description = charge.description + ' (' + days + ' dia(s))';
                     });
                 }
 
