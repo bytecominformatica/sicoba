@@ -22,6 +22,7 @@ WORKDIR /opt/sicoba
 COPY --from=build-front /opt/sicoba .
 RUN ./gradlew clean build -x test && \
     ls -lah && \
+    shopt -s extglob && \
     rm -Rf !(app.jar)
 #    mv build/libs/sicoba-2.0.0.jar app.jar && \
 #    rm -Rf .bowerrc .gradle bower.json build build.gradle gradle gradlew gulpfile.js \
