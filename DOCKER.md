@@ -1,5 +1,5 @@
 #### Build
-    docker build -t bytecom/sicoba:2 -t bytecom/sicoba:latest .
+    docker build -t bytecom/sicoba:latest .
 
 #### Create a network to connect app with database
     docker network create --driver bridge postgres-network
@@ -15,8 +15,44 @@
     docker run -it --rm --link bytecom-postgres postgres psql -h bytecom -U bytecom
 
 
-#### Run in development    
-    docker run -p 8080:8080 bytecom/sicoba --spring.datasource.url=jdbc:postgresql://10.77.5.81:5432/bytecom?user=bytecom\&password=bytecom
+#### Variables to run docker image
+
+* __DATABASE_HOST__     : (default: "localhost"                           ) __required__
+* __DATABASE_PORT__     : (default: 5432                                  ) 
+* __DATABASE_NAME__     : (default: "bytecom"                             ) 
+* __DATABASE_USER__     : (default: "bytecom"                             ) 
+* __DATABASE_PASS__     : (default: "bytecom"                             ) 
+* __PROFILE__           : (default: "staging"                             ) 
+* __APP_TOKEN__         : (default: "TOKEN_EXAMPLE"                       ) 
+* __EMAIL_SAC__         : (default: "sac@bytecominformatica.com.br"       ) 
+* __EMAIL_ADMIN__       : (default: "admin@bytecominformatica.com.br"     ) 
+* __EMAIL_SUPORTE__     : (default: "suporte@bytecominformatica.com.br"   ) 
+* __EMAIL_HOST__        : (default: "smtp.zoho.com"                       )
+* __EMAIL_USERNAME__    : (default: "sicoba@bytecominformatica.com.br"    ) 
+* __EMAIL_PASSWORD__    : (default: "secretPassword"                      ) __required__
+* __EMAIL_PORT__        : (default: 465                                   ) 
+* __DOMAIN__            : (default: "localhost:8080"                      ) __required__
+* __SENDGRID_API_KEY__  : (default: "SENDGRID_API_KEY_SECRET"             ) __required__
+
+#### Run in staging
+    docker run -p 80:8080 -e DATABASE_HOST="ip_do_banco" bytecom/sicoba
     
-#### Run in production    
-    heroku pg:backups:download --app appname
+#### Run in production
+    docker run -p 80:8080 \
+    -e PROFILE="production" \
+    -e DATABASE_HOST="database_id"\
+    -e DATABASE_PASS="database_password" \
+    -e APP_TOKEN="token_para_acesso_do_mk" \
+    -e DOMAIN="seu_dominio" \
+    -e SENDGRID_API_KEY="sendgrid_token" \ 
+    bytecom/sicoba
+    
+#### baixar imagem gerada pelo gitlab
+    docker login registry.gitlab.com -u username -p deploy-token
+    docker pull registry.gitlab.com/bytecom/sicoba
+    
+    # para executar essa imagem basta usar o comando acima 
+    # alterando o nome da imagem 
+    # de: bytecom/sicoba para: registry.gitlab.com/bytecom/sicoba 
+    
+    

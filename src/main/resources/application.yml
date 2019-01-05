@@ -1,9 +1,8 @@
-
 spring:
   application:
     name: sicoba
   datasource:
-    url: jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?user=${DATABASE_USER}&password=${DATABASE_PASS}
     driverClassName: org.postgresql.Driver
     maxActive: 10
     maxIdle: 5
@@ -16,6 +15,43 @@ spring:
       hibernate.temp.use_jdbc_metadata_defaults: false
   mail:
     default-encoding: UTF-8
+    host: ${EMAIL_HOST}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    port: ${EMAIL_PORT}
+    protocol: smtp
+    properties.mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+    properties.mail.smtp.socketFactory.fallback: false
+    properties.mail.smtp.startssl.enable: true
+    properties.mail.smtp.socketFactory.port: ${EMAIL_PORT}
+    properties.mail.smtp.debug: true
+  sendgrid:
+    api-key: ${SENDGRID_API_KEY}
+  jackson:
+    time-zone: America/Fortaleza
+  profiles:
+    active: ${PROFILE}
+myapp:
+  token: ${APP_TOKEN}
+  email:
+    sac: ${EMAIL_SAC}
+    admin: ${EMAIL_ADMIN}
+    suporte: ${EMAIL_SUPORTE}
+  boleto:
+    notification-url: https://${DOMAIN}/api/gerencianet/%d/notification
+server:
+  servlet:
+    session:
+      timeout: 5m
+---
+# DEFAULT
+spring:
+  profiles: default
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom
+  sendgrid:
+    api-key: secret
+  mail:
     host: smtp.zoho.com
     username: sicoba@bytecominformatica.com.br
     password: secretPassword
@@ -26,24 +62,9 @@ spring:
     properties.mail.smtp.startssl.enable: true
     properties.mail.smtp.socketFactory.port: 465
     properties.mail.smtp.debug: true
-  sendgrid:
-    api-key: your-secret-api-key
-  jackson:
-    time-zone: America/Fortaleza
-myapp:
-  email:
-    sac: sac@bytecominformatica.com.br
-    admin: admin@bytecominformatica.com.br
-    suporte: suporte@bytecominformatica.com.br
-  boleto:
-    notification-url: https://mydomain.com.br/api/gerencianet/%d/notification
 
----
-# DEFAULT
-spring:
-  profiles: default
 myapp:
-  token: tokenTeste
+  token: testeToken
 ---
 # STAGING
 spring:
@@ -53,9 +74,7 @@ spring:
 # PRODUCTION
 spring:
   profiles: production
-  datasource:
-    url: ${JDBC_DATABASE_URL}
   jpa:
     show-sql: false
     properties:
-       hibernate.format_sql: false
+      hibernate.format_sql: false
