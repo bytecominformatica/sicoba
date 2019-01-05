@@ -47,6 +47,14 @@
     -e SENDGRID_API_KEY="sendgrid_token" \ 
     bytecom/sicoba
     
+    # As as service
+    DATABASE_HOST="DATABASE_HOST" \
+    DATABASE_PASS="DATABASE_PASS" \
+    APP_TOKEN="APP_TOKEN" \
+    DOMAIN="DOMAIN" \
+    SENDGRID_API_KEY="SENDGRID_API_KEY" \
+    docker stack deploy -c docker-compose.yml bytecom-sicoba
+    
 #### baixar imagem gerada pelo gitlab
     docker login registry.gitlab.com -u username -p deploy-token
     docker pull registry.gitlab.com/bytecom/sicoba

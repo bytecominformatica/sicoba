@@ -1,18 +1,21 @@
 version: "3"
 services:
-  bytecom-sicoba:
+  web:
     image: registry.gitlab.com/bytecom/sicoba:latest
+    environment:
+      PROFILE: "production"
+      DATABASE_HOST: "${DATABASE_HOST}"
+      DATABASE_PASS: "${DATABASE_PASS}"
+      APP_TOKEN: "${APP_TOKEN}"
+      DOMAIN: "${DOMAIN}"
+      SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
     deploy:
       replicas: 1
-      resources:
-        limits:
-          cpus: "0.4"
-          memory: 850M
       restart_policy:
         condition: on-failure
     ports:
       - "8080:8080"
     networks:
-      - bytecom-net
+      - webnet
 networks:
-  bytecom-net:
+  webnet:
