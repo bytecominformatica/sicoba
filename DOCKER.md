@@ -4,7 +4,7 @@
 #### Create a network to connect app with database
     docker network create --driver bridge postgres-network
     
-#### Database in docker
+#### Database in docker (you need run the code down below into root folder of the project)
     docker pull postgres
     docker run --name bytecom-postgres --network postgres-network -e POSTGRES_PASSWORD=postgres \
         -p 5432:5432 \

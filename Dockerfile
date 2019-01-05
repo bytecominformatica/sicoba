@@ -3,7 +3,10 @@
 #    --spring.datasource.url=jdbc:postgresql://10.77.5.81:5432/bytecom?user=bytecom&password=bytecom"
 FROM node:10-alpine as build-front
 WORKDIR /opt/sicoba
+#VOLUME /tmp
 RUN echo "$RUN_ARGS"
+#RUN apk update && apk upgrade && \
+#    apk add --no-cache bash git openssh
 ADD gradle gradle
 ADD src src
 ADD .bowerrc .
