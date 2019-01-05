@@ -4,8 +4,8 @@
 FROM node:10-alpine as build-front
 WORKDIR /opt/sicoba
 RUN echo "$RUN_ARGS"
-#RUN apk update && apk upgrade && \
-#    apk add --no-cache bash git openssh
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
 ADD gradle gradle
 ADD src src
 ADD .bowerrc .
