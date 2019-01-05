@@ -40,7 +40,7 @@
 #### Run in production
     docker run -p 80:8080 \
     -e PROFILE="production" \
-    -e DATABASE_HOST="database_ip"\
+    -e DATABASE_HOST="database_ip" \
     -e DATABASE_PASS="database_password" \
     -e APP_TOKEN="token_para_acesso_do_mk" \
     -e DOMAIN="seu_dominio" \

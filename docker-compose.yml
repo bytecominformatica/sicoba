@@ -1,7 +1,7 @@
 version: "3"
 services:
-  web:
-    image: clairtonluz/bytecom:latest
+  bytecom-sicoba:
+    image: registry.gitlab.com/bytecom/sicoba:latest
     deploy:
       replicas: 1
       resources:
@@ -13,6 +13,6 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - bytecomnet
+      - bytecom-net
 networks:
-  bytecomnet:
+  bytecom-net:
