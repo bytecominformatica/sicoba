@@ -28,14 +28,14 @@ services:
         constraints: [node.role == manager]
     networks:
       - webnet
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: bytecom
-      POSTGRES_USER: bytecom
-      POSTGRES_DB: bytecom
-    networks:
-      - webnet
+#  db:
+#    image: postgres
+#    environment:
+#      POSTGRES_PASSWORD: bytecom
+#      POSTGRES_USER: bytecom
+#      POSTGRES_DB: bytecom
+#    networks:
+#      - webnet
 
 networks:
   webnet:

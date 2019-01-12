@@ -46,8 +46,8 @@
     -e DOMAIN="seu_dominio" \
     -e SENDGRID_API_KEY="sendgrid_token" \ 
     bytecom/sicoba
-    
-    # As as service
+
+#### Run in production as service
     DATABASE_HOST="DATABASE_HOST" \
     DATABASE_PASS="DATABASE_PASS" \
     APP_TOKEN="APP_TOKEN" \
