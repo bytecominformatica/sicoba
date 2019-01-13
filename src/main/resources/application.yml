@@ -2,13 +2,15 @@ spring:
   application:
     name: sicoba
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?user=${DATABASE_USER}&password=${DATABASE_PASS}
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
     maxActive: 10
     driverClassName: org.postgresql.Driver
     maxIdle: 5
     minIdle: 1
     initialSize: 1
     removeAbandoned: true
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
   jpa:
     show-sql: false
     properties:
@@ -50,7 +52,9 @@ server:
 spring:
   profiles: default
   datasource:
-    url: jdbc:postgresql://localhost:5432/bytecom?user=bytecom&password=bytecom
+    url: jdbc:postgresql://localhost:5432/bytecom
+    username: bytecom
+    password: bytecom
   sendgrid:
     api-key: secret
   mail:
