@@ -10,7 +10,7 @@ services:
       DOMAIN: "${DOMAIN}"
       SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: on-failure
     ports:

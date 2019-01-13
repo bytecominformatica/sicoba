@@ -41,5 +41,5 @@ ENV EMAIL_USERNAME="sicoba@bytecominformatica.com.br"
 ENV EMAIL_PASSWORD="secretPassword"
 ENV EMAIL_PORT=465
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$PROFILE","-jar","app.jar"]
 EXPOSE 8080

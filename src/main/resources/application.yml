@@ -3,8 +3,8 @@ spring:
     name: sicoba
   datasource:
     url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?user=${DATABASE_USER}&password=${DATABASE_PASS}
-    driverClassName: org.postgresql.Driver
     maxActive: 10
+    driverClassName: org.postgresql.Driver
     maxIdle: 5
     minIdle: 1
     initialSize: 1
@@ -29,8 +29,10 @@ spring:
     api-key: ${SENDGRID_API_KEY}
   jackson:
     time-zone: America/Fortaleza
-  profiles:
-    active: ${PROFILE}
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
 myapp:
   token: ${APP_TOKEN}
   email:
@@ -65,6 +67,12 @@ spring:
 
 myapp:
   token: testeToken
+  email:
+    sac: sac@bytecominformatica.com.br
+    admin: admin@bytecominformatica.com.br
+    suporte: suporte@bytecominformatica.com.br
+  boleto:
+    notification-url: https://example.bytecominformatica.com.br/api/gerencianet/%d/notification
 ---
 # STAGING
 spring:
