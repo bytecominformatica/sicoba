@@ -35,6 +35,8 @@ spring:
     store-type: jdbc
     jdbc:
       initialize-schema: always
+  profiles:
+    active: ${PROFILE:default}
 myapp:
   token: ${APP_TOKEN}
   email:
