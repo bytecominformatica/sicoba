@@ -24,6 +24,7 @@ RUN ./gradlew clean build -x test && \
     mv build/libs/sicoba-2.0.0.jar app.jar && \
     find . ! -name 'app.jar' -delete
 
+ENV PROFILE="staging"
 ENV DATABASE_HOST="localhost"
 ENV DATABASE_PORT=5432
 ENV DATABASE_NAME="bytecom"

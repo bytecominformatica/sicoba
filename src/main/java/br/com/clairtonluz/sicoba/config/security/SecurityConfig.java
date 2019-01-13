@@ -30,11 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/index.html", "/app/**", "/dist/**", "/bower_components/**",
+                .antMatchers("/", "/index.html", "favicon.ico", "favicon-96x96.png", "/app/**", "/dist/**", "/bower_components/**",
                         API_GERENCIANET_NOTIFICATION, API_TESTES).permitAll()
                 .antMatchers(HttpMethod.POST, API_UPDATE_MK_HOST).permitAll()
                 .anyRequest().authenticated()
