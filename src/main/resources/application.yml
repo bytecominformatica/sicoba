@@ -32,9 +32,10 @@ spring:
   jackson:
     time-zone: America/Fortaleza
   session:
-    store-type: jdbc
-    jdbc:
-      initialize-schema: always
+#    store-type: jdbc
+#    jdbc:
+#      initialize-schema: always
+#    timeout: 5m
   profiles:
     active: ${PROFILE:default}
 myapp:

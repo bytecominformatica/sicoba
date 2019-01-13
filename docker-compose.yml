@@ -3,14 +3,14 @@ services:
   web:
     image: registry.gitlab.com/bytecom/sicoba:latest
     environment:
-      PROFILE: "production"
+#      PROFILE: "default"
       DATABASE_HOST: "${DATABASE_HOST}"
-      DATABASE_PASS: "${DATABASE_PASS}"
-      APP_TOKEN: "${APP_TOKEN}"
-      DOMAIN: "${DOMAIN}"
-      SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
+#      DATABASE_PASS: "${DATABASE_PASS}"
+#      APP_TOKEN: "${APP_TOKEN}"
+#      DOMAIN: "${DOMAIN}"
+#      SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: on-failure
     ports:
