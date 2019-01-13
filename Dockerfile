@@ -24,7 +24,6 @@ RUN ./gradlew clean build -x test && \
     mv build/libs/sicoba-2.0.0.jar app.jar && \
     find . ! -name 'app.jar' -delete
 
-ENV PROFILE="staging"
 ENV DATABASE_HOST="localhost"
 ENV DATABASE_PORT=5432
 ENV DATABASE_NAME="bytecom"
@@ -41,5 +40,5 @@ ENV EMAIL_USERNAME="sicoba@bytecominformatica.com.br"
 ENV EMAIL_PASSWORD="secretPassword"
 ENV EMAIL_PORT=465
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$PROFILE","-jar","app.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
 EXPOSE 8080
