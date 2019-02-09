@@ -1,0 +1,32 @@
+*.class
+~*
+*~
+out/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Maven #
+server/target/
+.classpath
+.project
+.settings
+target
+
+# gradle
+build/
+.gradle
+!gradle-wrapper.jar
+
+.idea/
+*.iml
+
+bower_components
+node_modules
+
+src/main/resources/public/dist/js/app.js
+#!app.jar
+/bin/
+.env
