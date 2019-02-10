@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Button from '@material-ui/core/Button'
+import MyAppBar from './ui/components/template/MyAppBar';
+import themeCustomization from './ui/components/template/themaCustomization'
+import { MuiThemeProvider, Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add'
 
 class App extends Component {
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <MuiThemeProvider theme={themeCustomization}>
+        <header>
+          <MyAppBar />
         </header>
-      </div>
+        <nav>nav</nav>
+        <main>
+          <h1>Sicoba</h1>
+          <Button variant='contained' color='primary'>
+            Hello world
+          </Button>
+        </main>
+        <footer>
+          Footer
+        <Fab aria-label="Add" color="secondary">
+            <AddIcon />
+          </Fab>
+        </footer>
+      </MuiThemeProvider>
     );
   }
 }
