@@ -3,7 +3,7 @@ import React from 'react'
 export default () => {
   return (
     <div>
-      Not found
+      Not found Page
     </div>
   )
 }

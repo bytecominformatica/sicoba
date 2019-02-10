@@ -3,11 +3,13 @@ import './App.css';
 import MyAppBar from './ui/components/template/MyAppBar';
 import themeCustomization from './ui/components/template/themaCustomization'
 import { MuiThemeProvider } from '@material-ui/core';
+import LoginPage from './ui/pages/LoginPage';
 
 class App extends Component {
 
   render() {
-    return (
+    let logged = false;
+    const screen = logged ? (
       <MuiThemeProvider theme={themeCustomization}>
         <nav>
           <MyAppBar />
@@ -16,7 +18,8 @@ class App extends Component {
           {this.props.children}
         </main>
       </MuiThemeProvider>
-    );
+    ) : <LoginPage />
+    return screen;
   }
 }
 

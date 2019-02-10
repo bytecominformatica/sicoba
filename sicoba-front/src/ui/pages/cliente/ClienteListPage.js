@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class AboutPage extends Component {
+export default class ClienteListPage extends Component {
   render() {
     return (
       <div>
-        About Page
+        Cliente list page
       </div>
     )
   }

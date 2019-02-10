@@ -22,7 +22,7 @@ const styles = theme => ({
   list: {
     width: '100%',
     minWidth: 250,
-    maxWidth: 360,
+    maxWidth: 300,
     backgroundColor: theme.palette.background.paper,
   },
   nested: {
@@ -32,7 +32,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 8,
   },
   card: {
-    maxWidth: 360,
+    maxWidth: 300,
     position: 'relative',
   },
   media: {

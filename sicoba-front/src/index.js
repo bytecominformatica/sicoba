@@ -6,9 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
-import HomePage from './ui/pages/HomePage';
-import AboutPage from './ui/pages/AboutPage';
-import NotFound from './ui/components/template/NotFound';
 import Routes from './routes';
 
 ReactDOM.render(
