@@ -83,28 +83,28 @@ class MyDrawer extends React.Component {
             />
           </CardActionArea>
         </Card>
-        <MyMenuItem label='Dashboad' icon={<Dashboard />} afterClicked={toggleDrawer(false)} />
+        <MyMenuItem label='Dashboad' url='/' icon={<Dashboard />} afterClicked={toggleDrawer(false)} />
         <MyMenuItemExpandable label='Comercial' icon={<i className='fas fa-hand-holding-usd' />}>
-          <MyMenuItem label='Clientes' icon={<AccountCircle />} afterClicked={toggleDrawer(false)} className={classes.nested} />
-          <MyMenuItem label='Planos' icon={<NetworkCheck />} afterClicked={toggleDrawer(false)} className={classes.nested} />
+          <MyMenuItem url='/clientes' label='Clientes' icon={<AccountCircle />} afterClicked={toggleDrawer(false)} className={classes.nested} />
+          <MyMenuItem url='/planos' label='Planos' icon={<NetworkCheck />} afterClicked={toggleDrawer(false)} className={classes.nested} />
         </MyMenuItemExpandable>
         <MyMenuItemExpandable label='Financeiro' icon={<AccountBalance />}>
-          <MyMenuItem label='Notas' icon={<MonetizationOn />} afterClicked={toggleDrawer(false)} className={classes.nested} />
+          <MyMenuItem url='/notas' label='Notas' icon={<MonetizationOn />} afterClicked={toggleDrawer(false)} className={classes.nested} />
           <MyMenuItemExpandable label='Caixa Economica Federal' icon={<AccountBalanceOutlined />} className={classes.nested}>
-            <MyMenuItem label='Enviar Retorno' icon={<CloudUpload />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
-            <MyMenuItem label='Cedentes' icon={<Person />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
-            <MyMenuItem label='Relatório de títulos' icon={<TrendingUp />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
+            <MyMenuItem url='/cef/enviar_retorno' label='Enviar Retorno' icon={<CloudUpload />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
+            <MyMenuItem url='/cef/cedentes' label='Cedentes' icon={<Person />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
+            <MyMenuItem url='/cef/titulos/report' label='Relatório de títulos' icon={<TrendingUp />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
           </MyMenuItemExpandable>
           <MyMenuItemExpandable label='Gerencianet' icon={<Group />} className={classes.nested}>
-            <MyMenuItem label='Contas' icon={<AccountCircle />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
-            <MyMenuItem label='Relatório de cobranças' icon={<TrendingUp />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
+            <MyMenuItem url='/gn/contas' label='Contas' icon={<AccountCircle />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
+            <MyMenuItem url='/gn/cobrancas/report' label='Relatório de cobranças' icon={<TrendingUp />} afterClicked={toggleDrawer(false)} className={classes.nested2} />
           </MyMenuItemExpandable>
         </MyMenuItemExpandable>
         <MyMenuItemExpandable label='Estoque' icon={<Store />}>
-          <MyMenuItem label='Equipamentos' icon={<i className="fas fa-tools" />} afterClicked={toggleDrawer(false)} className={classes.nested} />
+          <MyMenuItem url='/estoque/equipamentos' label='Equipamentos' icon={<i className="fas fa-tools" />} afterClicked={toggleDrawer(false)} className={classes.nested} />
         </MyMenuItemExpandable>
         <MyMenuItemExpandable label='Provedor' icon={<i className='fas fa-server' />}>
-          <MyMenuItem label='Mikrotik' icon={<i className="fas fa-shield-alt" />} afterClicked={toggleDrawer(false)} className={classes.nested} />
+          <MyMenuItem url='/provedor/mikrotik' label='Mikrotik' icon={<i className="fas fa-shield-alt" />} afterClicked={toggleDrawer(false)} className={classes.nested} />
         </MyMenuItemExpandable>
       </div>
     );
