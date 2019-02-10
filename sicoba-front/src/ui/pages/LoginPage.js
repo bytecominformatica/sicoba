@@ -11,13 +11,24 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import logo from '../../images/logo.png';
-import backgroundLogin from '../../images/background-login.png';
+import backgroundLogin from '../../images/b2.png';
 
 const styles = theme => ({
+    root: {
+        height: '100%',
+        paddingTop: theme.spacing.unit * 1,
+        paddingBottom: theme.spacing.unit * 1,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+            backgroundImage: `url(${backgroundLogin})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+        },
+    },
     main: {
         width: 'auto',
-        display: 'block', // Fix IE 11 issue.
-        backgroundImage: `url(${backgroundLogin})`,
+        height: '100%',
+        display: 'flex', 
+        alignItems: 'center',
         marginLeft: theme.spacing.unit * 1,
         marginRight: theme.spacing.unit * 1,
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
@@ -27,22 +38,19 @@ const styles = theme => ({
         },
     },
     paper: {
-        marginTop: theme.spacing.unit * 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-            marginTop: theme.spacing.unit * 8,
-        },
     },
     logo: {
         width: `${theme.spacing.unit * 20}px`,
-        margin: theme.spacing.unit,
+        marginTop: theme.spacing.unit * 6,
     },
     form: {
+        height: '100%',
         width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing.unit,
+        marginTop: theme.spacing.unit * 6,
     },
     submit: {
         marginTop: theme.spacing.unit * 3,
@@ -53,34 +61,36 @@ function LoginPage(props) {
     const { classes } = props;
 
     return (
-        <div className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
-                <img src={logo} className={classes.logo} alt='logo bytecom' />
-                <form className={classes.form}>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="username">Usuário</InputLabel>
-                        <Input id="username" name="username" autoComplete="username" autoFocus />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Senha</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Lembrar"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Entrar
+        <div className={classes.root}>
+            <div className={classes.main}>
+                <CssBaseline />
+                <Paper className={classes.paper}>
+                    <img src={logo} className={classes.logo} alt='logo bytecom' />
+                    <form className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="username">Usuário</InputLabel>
+                            <Input id="username" name="username" autoComplete="username" autoFocus />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Senha</InputLabel>
+                            <Input name="password" type="password" id="password" autoComplete="current-password" />
+                        </FormControl>
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Lembrar"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Entrar
                     </Button>
-                </form>
-            </Paper>
+                    </form>
+                </Paper>
+            </div>
         </div>
     );
 }
