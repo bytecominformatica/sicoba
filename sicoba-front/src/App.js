@@ -8,7 +8,7 @@ import LoginPage from './ui/pages/LoginPage';
 class App extends Component {
 
   render() {
-    let logged = false;
+    let logged = true;
     const screen = logged ? (
       <MuiThemeProvider theme={themeCustomization}>
         <nav>

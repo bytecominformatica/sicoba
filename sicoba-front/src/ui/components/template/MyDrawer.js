@@ -14,9 +14,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import menuBackgroundImage from '../../../images/menu-background.jpg';
+import menuBackgroundImage from '../../../images/bg-drawer.jpg';
 import { Avatar } from '@material-ui/core';
-import { SECONDARY_COLOR } from './colors';
+import { PRIMARY_COLOR } from './colors';
 
 const styles = theme => ({
   list: {
@@ -46,8 +46,9 @@ const styles = theme => ({
     color: 'white'
   },
   avatar: {
-    backgroundColor: SECONDARY_COLOR.main,
+    backgroundColor: PRIMARY_COLOR.main,
     marginBottom: '30px',
+    border: 'solid 2px',
     width: 60,
     height: 60,
   },
@@ -64,7 +65,7 @@ class MyDrawer extends React.Component {
           <CardActionArea>
             <CardContent className={classes.accountInfo}>
               <Avatar aria-label="User" className={classes.avatar}>
-                C
+                CL
             </Avatar>
               <Typography gutterBottom variant="h5" component="h2" color='inherit'>
                 Clairton Luz

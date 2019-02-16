@@ -8,10 +8,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import logo from '../../images/logo.png';
-import backgroundLogin from '../../images/b2.png';
+import backgroundLogin from '../../images/bg-login.png';
 
 const styles = theme => ({
     root: {
