@@ -24,7 +24,7 @@ const styles = {
 
 class MyAppBar extends React.Component {
     state = {
-        open: true,
+        open: false,
     };
 
     toggleDrawer = (open) => () => {

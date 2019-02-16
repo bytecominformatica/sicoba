@@ -25,6 +25,11 @@ public class User extends BaseEntity {
         enabled = true;
     }
 
+    public User(@NotNull(message = "username é obrigatório") String username, @NotNull(message = "password é obrigatório") String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }

@@ -1,6 +1,5 @@
 package br.com.clairtonluz.sicoba.config.security;
 
-import br.com.clairtonluz.sicoba.filter.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -8,11 +7,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -24,37 +22,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String API_GERENCIANET_NOTIFICATION = "/api/gerencianet/**/notification";
     private static final String API_UPDATE_MK_HOST = "/api/mikrotiks/**/host";
     private static final String API_TESTES = "/api/testes/**";
+    private static final String API_LOGIN = "/api/login";
+
+    private final DataSource datasource;
 
     @Autowired
-    private DataSource dataSource;
+    public SecurityConfig(DataSource datasource) {
+        this.datasource = datasource;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic()
+        http.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/index.html", "favicon.ico", "favicon-96x96.png", "/app/**", "/dist/**", "/bower_components/**",
-                        API_GERENCIANET_NOTIFICATION, API_TESTES).permitAll()
-                .antMatchers(HttpMethod.POST, API_UPDATE_MK_HOST).permitAll()
+                .antMatchers(API_GERENCIANET_NOTIFICATION, API_TESTES).permitAll()
+                .antMatchers(HttpMethod.POST, API_LOGIN, API_UPDATE_MK_HOST).permitAll()
                 .anyRequest().authenticated()
-                .and().logout()
                 .and()
-                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().ignoringAntMatchers(API_GERENCIANET_NOTIFICATION, API_UPDATE_MK_HOST, API_TESTES)
-                .csrfTokenRepository(csrfTokenRepository())
-        ;
+                // filtra requisições de login
+                .addFilterBefore(new JWTLoginFilter(API_LOGIN, HttpMethod.POST, authenticationManager()),
+                        UsernamePasswordAuthenticationFilter.class)
 
-    }
+                // filtra outras requisições para verificar a presença do JWT no header
+                .addFilterBefore(new JWTAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class);
 
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
     }
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
+        auth.jdbcAuthentication().dataSource(datasource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery(
                         "select username,password, enabled from users where username=? and enabled = true")
@@ -64,7 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 }

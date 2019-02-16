@@ -30,13 +30,16 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-mail')
     implementation('org.springframework.boot:spring-boot-starter-security')
     implementation('org.springframework.boot:spring-boot-starter-web')
-//    implementation('org.springframework.session:spring-session-jdbc')
     implementation('org.flywaydb:flyway-core')
+    implementation('io.jsonwebtoken:jjwt:0.9.1')
+
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     runtimeOnly('com.h2database:h2')
     runtimeOnly('org.postgresql:postgresql')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.security:spring-security-test')
+
+
 
     implementation 'me.legrange:mikrotik:3.0.4'
     implementation 'br.com.gerencianet.gnsdk:gn-api-sdk-java:0.2.3'

@@ -117,8 +117,12 @@ public final class StringUtil {
         return String.format(LOCALE_BRAZIL, "%1$,.2f", value);
     }
 
-    public static boolean isEmpty(String notificationUrl) {
-        return notificationUrl == null || notificationUrl.isEmpty();
+    public static boolean isBlank(String value) {
+        return value == null || value.isEmpty();
+    }
+
+    public static boolean isNotBlank(String value) {
+        return !isBlank(value);
     }
 
     /**

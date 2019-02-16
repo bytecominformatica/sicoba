@@ -5,7 +5,6 @@ import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.Gerencianet
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
-import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -106,7 +105,7 @@ public class CarnetGNService {
     }
 
     boolean resendCarnet(Carnet carnet) {
-        if (StringUtil.isEmpty(carnet.getCliente().getEmail())) {
+        if (StringUtil.isBlank(carnet.getCliente().getEmail())) {
             throw new ConflitException("Cliente não possui email");
         }
         Map<String, String> params = new HashMap<>();
@@ -119,7 +118,7 @@ public class CarnetGNService {
     }
 
     boolean resendParcel(Charge charge) {
-        if (StringUtil.isEmpty(charge.getCliente().getEmail())) {
+        if (StringUtil.isBlank(charge.getCliente().getEmail())) {
             throw new ConflitException("Cliente não possui email");
         }
 

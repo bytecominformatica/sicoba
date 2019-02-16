@@ -14,7 +14,6 @@ import br.com.gerencianet.gnsdk.exceptions.GerencianetException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -98,7 +97,7 @@ public class GNService {
             customer.put("cpf", cliente.getCpfCnpj());
         }
         customer.put("phone_number", cliente.getFoneTitular());
-        if (notificarClientePorEmail && !StringUtil.isEmpty(cliente.getEmail())) {
+        if (notificarClientePorEmail && !StringUtil.isBlank(cliente.getEmail())) {
             customer.put("email", cliente.getEmail());
         }
         return customer;
@@ -207,7 +206,7 @@ public class GNService {
         }
 
         String notificationUrl = myEnvironment.getNotificationUrl();
-        if (!StringUtil.isEmpty(notificationUrl)) {
+        if (!StringUtil.isBlank(notificationUrl)) {
             if (!notificationUrl.contains("%d")) {
                 throw new BadRequestException("A url e notificação segue o padrão expecificado");
             }

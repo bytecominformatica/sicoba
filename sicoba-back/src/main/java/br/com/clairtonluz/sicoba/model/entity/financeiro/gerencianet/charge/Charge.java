@@ -172,7 +172,7 @@ public class Charge extends BaseEntity {
     }
 
     public void setMessage(String message) {
-        this.message = StringUtil.isEmpty(message) ? null : message;
+        this.message = StringUtil.isBlank(message) ? null : message;
     }
 
     public Integer getChargeId() {
