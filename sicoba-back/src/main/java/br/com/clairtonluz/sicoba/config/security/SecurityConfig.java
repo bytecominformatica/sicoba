@@ -1,6 +1,7 @@
 package br.com.clairtonluz.sicoba.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,10 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String API_LOGIN = "/api/login";
 
     private final DataSource datasource;
+    private final String secret;
 
     @Autowired
-    public SecurityConfig(DataSource datasource) {
+    public SecurityConfig(DataSource datasource, @Value("${myapp.boleto.notification-url}") String secret) {
         this.datasource = datasource;
+        this.secret = secret;
     }
 
     @Override
@@ -42,11 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 // filtra requisições de login
-                .addFilterBefore(new JWTLoginFilter(API_LOGIN, HttpMethod.POST, authenticationManager()),
+                .addFilterBefore(new JWTLoginFilter(API_LOGIN, HttpMethod.POST, authenticationManager(), secret),
                         UsernamePasswordAuthenticationFilter.class)
 
                 // filtra outras requisições para verificar a presença do JWT no header
-                .addFilterBefore(new JWTAuthenticationFilter(),
+                .addFilterBefore(new JWTAuthenticationFilter(secret),
                         UsernamePasswordAuthenticationFilter.class);
 
     }

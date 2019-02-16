@@ -5,6 +5,7 @@ services:
     environment:
 #      PROFILE: "default"
       DATABASE_HOST: "${DATABASE_HOST}"
+      JWT_TOKEN: "${JWT_TOKEN}"
 #      DATABASE_PASS: "${DATABASE_PASS}"
 #      APP_TOKEN: "${APP_TOKEN}"
 #      DOMAIN: "${DOMAIN}"

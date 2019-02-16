@@ -14,35 +14,34 @@ import org.springframework.security.core.Authentication;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class TokenAuthenticationService {
+class TokenAuthenticationService {
     private static final long EXPIRATION_TIME = 860_000_000;// EXPIRATION_TIME = 10 dias
-    private static final String SECRET = "MySecret";
+//    private static final String SECRET = "MySecret";
     private static final String TOKEN_PREFIX = "Bearer";
 
-    static void addAuthentication(HttpServletResponse response, String username) {
+    static void addAuthentication(HttpServletResponse response, String username, String secret) {
         String JWT = Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
 
 
         response.addHeader(HttpHeaders.AUTHORIZATION, TOKEN_PREFIX + " " + JWT);
     }
 
-    static Authentication getAuthentication(HttpServletRequest request) {
+    static Authentication getAuthentication(HttpServletRequest request, String secret) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (StringUtil.isNotBlank(token) && token.startsWith(TOKEN_PREFIX)) {
-            // faz parse do token
-            String user = Jwts.parser()
-                    .setSigningKey(SECRET)
+            String username = Jwts.parser()
+                    .setSigningKey(secret)
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject();
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+            if (username != null) {
+                return new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
             }
         }
         return null;

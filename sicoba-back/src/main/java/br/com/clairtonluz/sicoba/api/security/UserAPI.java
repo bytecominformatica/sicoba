@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by clairtonluz on 11/01/16.
- */
 @RestController()
 @RequestMapping("api/users")
 public class UserAPI {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserAPI(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public Iterable<User> query() {

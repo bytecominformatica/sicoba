@@ -25,9 +25,11 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final String BASIC_AUTH_PREFIX = "Basic";
     private ObjectMapper objectMapper = new ObjectMapper();
+    private String secret;
 
-    JWTLoginFilter(String url, HttpMethod method, AuthenticationManager authManager) {
+    JWTLoginFilter(String url, HttpMethod method, AuthenticationManager authManager, String secret) {
         super(new AntPathRequestMatcher(url, method.name()));
+        this.secret = secret;
         setAuthenticationManager(authManager);
     }
 
@@ -64,7 +66,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             FilterChain filterChain,
             Authentication auth) {
 
-        TokenAuthenticationService.addAuthentication(response, auth.getName());
+        TokenAuthenticationService.addAuthentication(response, auth.getName(), secret);
     }
 
     @Override
