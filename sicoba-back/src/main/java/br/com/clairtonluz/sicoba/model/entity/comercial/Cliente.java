@@ -1,7 +1,7 @@
 package br.com.clairtonluz.sicoba.model.entity.comercial;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
-import br.com.clairtonluz.sicoba.util.StringUtil;
+import br.com.clairtonluz.sicoba.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -75,7 +75,7 @@ public class Cliente extends BaseEntity {
     }
 
     public void setFoneTitular(String foneTitular) {
-        this.foneTitular = StringUtil.removerFormatacaoFone(foneTitular);
+        this.foneTitular = StringUtils.removerFormatacaoFone(foneTitular);
     }
 
     public String getContato() {
@@ -91,7 +91,7 @@ public class Cliente extends BaseEntity {
     }
 
     public void setFoneContato(String foneContato) {
-        this.foneContato = StringUtil.removerFormatacaoFone(foneContato);
+        this.foneContato = StringUtils.removerFormatacaoFone(foneContato);
     }
 
     public Endereco getEndereco() {
@@ -107,7 +107,7 @@ public class Cliente extends BaseEntity {
     }
 
     public void setCpfCnpj(String cpfCnpj) {
-        cpfCnpj = StringUtil.removerFormatacaoCpfCnpj(cpfCnpj);
+        cpfCnpj = StringUtils.removerFormatacaoCpfCnpj(cpfCnpj);
         this.cpfCnpj = cpfCnpj != null && cpfCnpj.isEmpty() ? null : cpfCnpj;
     }
 

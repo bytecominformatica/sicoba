@@ -1,6 +1,7 @@
 package br.com.clairtonluz.sicoba.model.entity.security;
 
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ public class User extends BaseEntity {
     private String name;
     @NotNull(message = "username é obrigatório")
     private String username;
+    @JsonIgnore
     @NotNull(message = "password é obrigatório")
     private String password;
 

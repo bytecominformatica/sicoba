@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * @author clairton
  */
-public final class StringUtil {
+public final class StringUtils {
 
     public static final Locale LOCALE_BRAZIL = new Locale("pt", "BR");
     public static final int CPF_SIZE = 11;

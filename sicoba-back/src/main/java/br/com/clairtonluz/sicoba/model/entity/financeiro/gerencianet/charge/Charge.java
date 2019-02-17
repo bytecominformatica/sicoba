@@ -6,7 +6,7 @@ import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.nf.NfeItem;
-import br.com.clairtonluz.sicoba.util.StringUtil;
+import br.com.clairtonluz.sicoba.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -172,7 +172,7 @@ public class Charge extends BaseEntity {
     }
 
     public void setMessage(String message) {
-        this.message = StringUtil.isBlank(message) ? null : message;
+        this.message = StringUtils.isBlank(message) ? null : message;
     }
 
     public Integer getChargeId() {

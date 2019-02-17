@@ -8,7 +8,7 @@ import br.com.clairtonluz.sicoba.model.entity.comercial.Endereco;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.carnet.Carnet;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
-import br.com.clairtonluz.sicoba.util.StringUtil;
+import br.com.clairtonluz.sicoba.util.StringUtils;
 import br.com.gerencianet.gnsdk.Gerencianet;
 import br.com.gerencianet.gnsdk.exceptions.GerencianetException;
 import org.json.JSONArray;
@@ -87,7 +87,7 @@ public class GNService {
             customer.put("address", customerAddres); // opcional
         }
 
-        if (StringUtil.isCnpj(cliente.getCpfCnpj())) {
+        if (StringUtils.isCnpj(cliente.getCpfCnpj())) {
             JSONObject juridicalPerson = new JSONObject();
             juridicalPerson.put("corporate_name", cliente.getNome());
             juridicalPerson.put("cnpj", cliente.getCpfCnpj());
@@ -97,7 +97,7 @@ public class GNService {
             customer.put("cpf", cliente.getCpfCnpj());
         }
         customer.put("phone_number", cliente.getFoneTitular());
-        if (notificarClientePorEmail && !StringUtil.isBlank(cliente.getEmail())) {
+        if (notificarClientePorEmail && !StringUtils.isBlank(cliente.getEmail())) {
             customer.put("email", cliente.getEmail());
         }
         return customer;
@@ -116,10 +116,10 @@ public class GNService {
         Double interest = valor * INTEREST_RATE;
         JSONArray instructions = new JSONArray()
                 .put("Não receber após 60 dias do vencimento");
-//                .put(String.format("Sr. Caixa, cobrar multa de %s após o vencimento", StringUtil.formatCurrence(fine)))
-//                .put(String.format("Sr. Caixa, cobrar juros de %s ao dia após o vencimento", StringUtil.formatCurrence(interest)));
+//                .put(String.format("Sr. Caixa, cobrar multa de %s após o vencimento", StringUtils.formatCurrence(fine)))
+//                .put(String.format("Sr. Caixa, cobrar juros de %s ao dia após o vencimento", StringUtils.formatCurrence(interest)));
         if (discount != null && discount > 0) {
-            instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", StringUtil.formatCurrence(discount)));
+            instructions.put(String.format("Até o dia do vencimento conceder desconto de R$%s", StringUtils.formatCurrence(discount)));
         }
         return instructions;
     }
@@ -206,7 +206,7 @@ public class GNService {
         }
 
         String notificationUrl = myEnvironment.getNotificationUrl();
-        if (!StringUtil.isBlank(notificationUrl)) {
+        if (!StringUtils.isBlank(notificationUrl)) {
             if (!notificationUrl.contains("%d")) {
                 throw new BadRequestException("A url e notificação segue o padrão expecificado");
             }

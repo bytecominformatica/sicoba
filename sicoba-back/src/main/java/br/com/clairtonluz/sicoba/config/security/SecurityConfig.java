@@ -25,11 +25,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String API_TESTES = "/api/testes/**";
     private static final String API_LOGIN = "/api/login";
 
+    private final TokenAuthenticationService tokenAuthenticationService;
     private final DataSource datasource;
     private final String secret;
 
     @Autowired
-    public SecurityConfig(DataSource datasource, @Value("${myapp.boleto.notification-url}") String secret) {
+    public SecurityConfig(TokenAuthenticationService tokenAuthenticationService, DataSource datasource, @Value("${myapp.boleto.notification-url}") String secret) {
+        this.tokenAuthenticationService = tokenAuthenticationService;
         this.datasource = datasource;
         this.secret = secret;
     }
@@ -45,11 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 // filtra requisições de login
-                .addFilterBefore(new JWTLoginFilter(API_LOGIN, HttpMethod.POST, authenticationManager(), secret),
+                .addFilterBefore(new JWTLoginFilter(API_LOGIN, HttpMethod.POST, authenticationManager(), secret, tokenAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class)
 
                 // filtra outras requisições para verificar a presença do JWT no header
-                .addFilterBefore(new JWTAuthenticationFilter(secret),
+                .addFilterBefore(new JWTAuthenticationFilter(secret, tokenAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class);
 
     }

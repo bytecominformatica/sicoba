@@ -1,8 +1,6 @@
 package br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet;
 
-import br.com.clairtonluz.sicoba.exception.BadRequestException;
 import br.com.clairtonluz.sicoba.model.entity.extra.BaseEntity;
-import br.com.clairtonluz.sicoba.util.StringUtil;
 
 import javax.persistence.*;
 

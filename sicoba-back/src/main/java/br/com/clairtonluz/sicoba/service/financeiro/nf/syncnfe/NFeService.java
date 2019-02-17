@@ -10,7 +10,7 @@ import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeItemSpec;
 import br.com.clairtonluz.sicoba.repository.financeiro.nf.NFeRepository;
 import br.com.clairtonluz.sicoba.util.DateUtil;
 import br.com.clairtonluz.sicoba.util.FileUtils;
-import br.com.clairtonluz.sicoba.util.StringUtil;
+import br.com.clairtonluz.sicoba.util.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -148,21 +148,21 @@ public class NFeService {
         return sequencial + "|" +
                 nfeItem.getClassificacaoServico().getCodigo() + "|" +
                 nfeItem.getDescricao() + "|" +
-                StringUtil.formatCurrence(nfeItem.getValorUnitario()) + "|" +
-                StringUtil.formatCurrence(nfeItem.getIcms()) + "|" +
-                StringUtil.formatCurrence(nfeItem.getAliquotaReducao()) + "|" +
+                StringUtils.formatCurrence(nfeItem.getValorUnitario()) + "|" +
+                StringUtils.formatCurrence(nfeItem.getIcms()) + "|" +
+                StringUtils.formatCurrence(nfeItem.getAliquotaReducao()) + "|" +
                 nfeItem.getUnidade() + "|" +
-                StringUtil.formatCurrence(nfeItem.getQuantidadeContratada()) + "|" +
-                StringUtil.formatCurrence(nfeItem.getQuantidadeFornecida()) + "|" +
-                StringUtil.formatCurrence(nfeItem.getAliquotaIcms()) + "|" +
-                StringUtil.padLeft(nfeItem.getClassificacaoServico().getCodigo(), 3) + "|" +
-                StringUtil.formatCurrence(nfeItem.getBc().orElse(0d)) + "|" +
-                StringUtil.formatCurrence(nfeItem.getValoresIsentos().orElse(0d)) + "|" +
-                StringUtil.formatCurrence(nfeItem.getOutrosValores().orElse(0d)) + "|" +
-                StringUtil.formatCurrence(nfeItem.getDesconto()) + "|" +
-                StringUtil.formatCurrence(nfeItem.getValorAproximadoTributosFederal().orElse(0d)) + "|" +
-                StringUtil.formatCurrence(nfeItem.getValorAproximadoTributosEstadual().orElse(0d)) + "|" +
-                StringUtil.formatCurrence(nfeItem.getValorAproximadoTributosMunicipal().orElse(0d)) + "|" +
+                StringUtils.formatCurrence(nfeItem.getQuantidadeContratada()) + "|" +
+                StringUtils.formatCurrence(nfeItem.getQuantidadeFornecida()) + "|" +
+                StringUtils.formatCurrence(nfeItem.getAliquotaIcms()) + "|" +
+                StringUtils.padLeft(nfeItem.getClassificacaoServico().getCodigo(), 3) + "|" +
+                StringUtils.formatCurrence(nfeItem.getBc().orElse(0d)) + "|" +
+                StringUtils.formatCurrence(nfeItem.getValoresIsentos().orElse(0d)) + "|" +
+                StringUtils.formatCurrence(nfeItem.getOutrosValores().orElse(0d)) + "|" +
+                StringUtils.formatCurrence(nfeItem.getDesconto()) + "|" +
+                StringUtils.formatCurrence(nfeItem.getValorAproximadoTributosFederal().orElse(0d)) + "|" +
+                StringUtils.formatCurrence(nfeItem.getValorAproximadoTributosEstadual().orElse(0d)) + "|" +
+                StringUtils.formatCurrence(nfeItem.getValorAproximadoTributosMunicipal().orElse(0d)) + "|" +
                 "\n";
     }
 

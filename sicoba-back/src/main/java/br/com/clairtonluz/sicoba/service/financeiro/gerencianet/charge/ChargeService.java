@@ -15,7 +15,7 @@ import br.com.clairtonluz.sicoba.repository.financeiro.gerencianet.ChargeReposit
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.carnet.CarnetGNService;
 import br.com.clairtonluz.sicoba.service.notification.EmailService;
-import br.com.clairtonluz.sicoba.util.StringUtil;
+import br.com.clairtonluz.sicoba.util.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -133,7 +133,7 @@ public class ChargeService {
         String subject = "[CHARGE] Baixa manual da cobrança " + chargeAtual.getId();
         String content = String.format("Cobrança %d do cliente %d - %s no valor de %s foi baixada manualmente com o valor de %s",
                 chargeAtual.getId(), chargeAtual.getCliente().getId(), chargeAtual.getCliente().getNome(),
-                StringUtil.formatCurrence(chargeAtual.getValue()), StringUtil.formatCurrence(chargeAtual.getPaidValue()));
+                StringUtils.formatCurrence(chargeAtual.getValue()), StringUtils.formatCurrence(chargeAtual.getPaidValue()));
 
         charge = cancelCharge(chargeAtual);
 

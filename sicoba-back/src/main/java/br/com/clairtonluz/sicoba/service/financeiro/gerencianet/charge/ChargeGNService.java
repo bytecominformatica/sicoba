@@ -4,7 +4,7 @@ import br.com.clairtonluz.sicoba.exception.ConflitException;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.GerencianetAccount;
 import br.com.clairtonluz.sicoba.model.entity.financeiro.gerencianet.charge.Charge;
 import br.com.clairtonluz.sicoba.service.financeiro.gerencianet.GNService;
-import br.com.clairtonluz.sicoba.util.StringUtil;
+import br.com.clairtonluz.sicoba.util.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,7 +176,7 @@ class ChargeGNService {
      * @return
      */
     boolean resendBillet(Charge charge) {
-        if (StringUtil.isBlank(charge.getCliente().getEmail())) {
+        if (StringUtils.isBlank(charge.getCliente().getEmail())) {
             throw new ConflitException("Cliente não possui email");
         }
 
