@@ -9,7 +9,7 @@
     docker run --name bytecom-postgres --network postgres-network -e POSTGRES_PASSWORD=postgres \
         -p 5432:5432 \
         -v "$PWD/docker-entrypoint-initdb.d/init-user-db.sh":/docker-entrypoint-initdb.d/init-user-db.sh \
-        -v $var/lib/postgresql/sicoba/data:/var/lib/postgresql/data \
+        -v /var/lib/postgresql/sicoba/data:/var/lib/postgresql/data \
         -d postgres
 
 #### Database via psql
