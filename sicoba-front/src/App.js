@@ -8,8 +8,8 @@ import LoginPage from './ui/pages/LoginPage';
 class App extends Component {
 
   render() {
-    let logged = true;
-    const screen = logged ? (
+    let logged = false;
+    return logged ? (
       <MuiThemeProvider theme={themeCustomization}>
         <nav>
           <MyAppBar />
@@ -18,8 +18,7 @@ class App extends Component {
           {this.props.children}
         </main>
       </MuiThemeProvider>
-    ) : <LoginPage />
-    return screen;
+    ) : <LoginPage />;
   }
 }
 

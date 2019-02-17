@@ -5,12 +5,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import logo from '../../images/logo.png';
 import backgroundLogin from '../../images/bg-login.png';
+import {IconButton, InputAdornment, TextField} from "@material-ui/core";
 
 const styles = theme => ({
     root: {
@@ -26,7 +25,7 @@ const styles = theme => ({
     main: {
         width: 'auto',
         height: '100%',
-        display: 'flex', 
+        display: 'flex',
         alignItems: 'center',
         marginLeft: theme.spacing.unit * 1,
         marginRight: theme.spacing.unit * 1,
@@ -54,44 +53,108 @@ const styles = theme => ({
     submit: {
         marginTop: theme.spacing.unit * 3,
     },
+    textField: {
+        // flexBasis: 200,
+        // margin: theme.spacing.unit,
+    },
 });
 
-function LoginPage(props) {
-    const { classes } = props;
+class LoginPage extends React.Component {
+    state = {
+        username: '',
+        password: '',
+        lembrar: false,
+        showPassword: false,
+    };
 
-    return (
-        <div className={classes.root}>
-            <div className={classes.main}>
-                <CssBaseline />
-                <Paper className={classes.paper}>
-                    <img src={logo} className={classes.logo} alt='logo bytecom' />
-                    <form className={classes.form}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="username">Usuário</InputLabel>
-                            <Input id="username" name="username" autoComplete="username" autoFocus />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Senha</InputLabel>
-                            <Input name="password" type="password" id="password" autoComplete="current-password" />
-                        </FormControl>
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Lembrar"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Entrar
-                    </Button>
-                    </form>
-                </Paper>
+
+    handleChange = prop => event => {
+        this.setState({[prop]: event.target.value});
+    };
+
+    handleClickShowPassword = () => {
+        this.setState(state => ({showPassword: !state.showPassword}));
+    };
+
+    render() {
+        const {classes} = this.props;
+        return (
+            <div className={classes.root}>
+                <div className={classes.main}>
+                    <CssBaseline/>
+                    <Paper className={classes.paper}>
+                        <img src={logo} className={classes.logo} alt='logo bytecom'/>
+                        <form className={classes.form}>
+                            <FormControl margin="normal" required fullWidth >
+                                <TextField
+                                    id="username"
+                                    fullWidth
+                                    className={classes.textField}
+                                    placeholder="Usuário"
+                                    value={this.state.username}
+                                    onChange={this.handleChange('username')}
+                                    autoComplete='username'
+                                    autoFocus
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <i className='fas fa-user-circle'/>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <TextField
+                                    id="password"
+                                    fullWidth
+                                    className={classes.textField}
+                                    type={this.state.showPassword ? 'text' : 'password'}
+                                    placeholder="Senha"
+                                    value={this.state.password}
+                                    onChange={this.handleChange('password')}
+                                    autoComplete='current-password'
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <i className='fas fa-key'/>
+                                            </InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="Toggle password visibility"
+                                                    onClick={this.handleClickShowPassword}
+                                                >
+                                                    {this.state.showPassword ? <i className='fas fa-eye-slash'/> :
+                                                        <i className='fas fa-eye'/>}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+
+                            <FormControlLabel
+                                onChange={this.handleChange('lembrar')}
+                                control={<Checkbox value="remember" color="primary"/>}
+                                label="Lembrar"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Entrar
+                            </Button>
+                        </form>
+                    </Paper>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 LoginPage.propTypes = {
