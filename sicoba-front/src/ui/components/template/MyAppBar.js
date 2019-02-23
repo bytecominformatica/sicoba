@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MyDrawer from './MyDrawer';
+import {AuthContext} from "../../../contexts/auth-context";
 
 const styles = {
     root: {
@@ -27,28 +28,32 @@ class MyAppBar extends React.Component {
         open: false,
     };
 
+    static contextType = AuthContext;
+
     toggleDrawer = (open) => () => {
         this.setState({
             open: open,
         });
     };
 
+    logout = () => this.context.logout();
+
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <Fragment>
-                <MyDrawer open={this.state.open} toggleDrawer={this.toggleDrawer} />
+                <MyDrawer open={this.state.open} toggleDrawer={this.toggleDrawer}/>
                 <div className={classes.root}>
                     <AppBar position="static">
                         <Toolbar>
                             <IconButton className={classes.menuButton} color="inherit"
-                                aria-label="Menu" onClick={this.toggleDrawer(true)}>
-                                <MenuIcon />
+                                        aria-label="Menu" onClick={this.toggleDrawer(true)}>
+                                <MenuIcon/>
                             </IconButton>
                             <Typography variant="h6" color="inherit" className={classes.grow}>
                                 SICOBA - Bytecom
-                             </Typography>
-                            <Button color="inherit">Sair</Button>
+                            </Typography>
+                            <Button color="inherit" onClick={this.logout}>Sair</Button>
                         </Toolbar>
                     </AppBar>
                 </div>

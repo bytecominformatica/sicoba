@@ -10,6 +10,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import logo from '../../images/logo.png';
 import backgroundLogin from '../../images/bg-login.png';
 import {IconButton, InputAdornment, TextField} from "@material-ui/core";
+import {AuthContext} from "../../contexts/auth-context";
 
 const styles = theme => ({
     root: {
@@ -67,6 +68,7 @@ class LoginPage extends React.Component {
         showPassword: false,
     };
 
+    static contextType = AuthContext;
 
     handleChange = prop => event => {
         this.setState({[prop]: event.target.value});
@@ -74,6 +76,17 @@ class LoginPage extends React.Component {
 
     handleClickShowPassword = () => {
         this.setState(state => ({showPassword: !state.showPassword}));
+    };
+
+    login = (event) => {
+        event.preventDefault();
+        let credential = {
+            ...this.state,
+            nome: 'Clairton Luz',
+            iniciais: 'CL',
+            email: 'clairton.luz@bytecominformatica.com.br'
+        };
+        this.context.login(credential);
     };
 
     render() {
@@ -84,8 +97,9 @@ class LoginPage extends React.Component {
                     <CssBaseline/>
                     <Paper className={classes.paper}>
                         <img src={logo} className={classes.logo} alt='logo bytecom'/>
-                        <form className={classes.form}>
-                            <FormControl margin="normal" required fullWidth >
+
+                        <form className={classes.form} onSubmit={this.login}>
+                            <FormControl margin="normal" required fullWidth>
                                 <TextField
                                     id="username"
                                     fullWidth
@@ -126,7 +140,8 @@ class LoginPage extends React.Component {
                                                     aria-label="Toggle password visibility"
                                                     onClick={this.handleClickShowPassword}
                                                 >
-                                                    {this.state.showPassword ? <i className='fas fa-eye-slash'/> :
+                                                    {this.state.showPassword ?
+                                                        <i className='fas fa-eye-slash'/> :
                                                         <i className='fas fa-eye'/>}
                                                 </IconButton>
                                             </InputAdornment>

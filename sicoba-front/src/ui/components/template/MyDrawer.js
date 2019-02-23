@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import menuBackgroundImage from '../../../images/bg-drawer.jpg';
 import { Avatar } from '@material-ui/core';
 import { PRIMARY_COLOR } from './colors';
+import {AuthContext} from "../../../contexts/auth-context";
 
 const styles = theme => ({
   list: {
@@ -55,9 +56,11 @@ const styles = theme => ({
 });
 
 class MyDrawer extends React.Component {
+  static contextType = AuthContext;
 
   render() {
-    const { classes, open, toggleDrawer } = this.props;
+    let { classes, open, toggleDrawer } = this.props;
+    let currentUser = this.context.currentUser;
 
     const sideList = (
       <div className={classes.list}>
@@ -65,13 +68,13 @@ class MyDrawer extends React.Component {
           <CardActionArea>
             <CardContent className={classes.accountInfo}>
               <Avatar aria-label="User" className={classes.avatar}>
-                CL
+                {currentUser.iniciais}
             </Avatar>
               <Typography gutterBottom variant="h5" component="h2" color='inherit'>
-                Clairton Luz
+                {currentUser.nome}
               </Typography>
               <Typography component="p" color='inherit'>
-                clairton.c.l@gmail.com.br
+                {currentUser.email}
               </Typography>
             </CardContent>
             <CardMedia

@@ -35,23 +35,23 @@ class HomePage extends Component {
                     textColor="secondary"
                 >
                     <Tooltip title='COBRANÇAS EM ATRASO'>
-                        <Tab icon={<i class="fas fa-clock fa-2x" />} label={<Hidden xsDown>COBRANÇAS EM ATRASO</Hidden>} />
+                        <Tab icon={<i className="fas fa-clock fa-2x" />} label={<Hidden xsDown>COBRANÇAS EM ATRASO</Hidden>} />
                     </Tooltip>
 
                     <Tooltip title='GERAR BOLETOS'>
-                        <Tab icon={<i class="fas fa-cash-register fa-2x" />} label={<Hidden xsDown>GERAR BOLETOS</Hidden>} />
+                        <Tab icon={<i className="fas fa-cash-register fa-2x" />} label={<Hidden xsDown>GERAR BOLETOS</Hidden>} />
                     </Tooltip>
 
                     <Tooltip title='INSTALAÇÕES RECENTES'>
-                        <Tab icon={<i class="fas fa-tools fa-2x" />} label={<Hidden xsDown>INSTALAÇÕES RECENTES</Hidden>} />
+                        <Tab icon={<i className="fas fa-tools fa-2x" />} label={<Hidden xsDown>INSTALAÇÕES RECENTES</Hidden>} />
                     </Tooltip>
 
                     <Tooltip title='CLIENTES INATIVOS'>
-                        <Tab icon={<i class="fas fa-sad-tear fa-2x" />} label={<Hidden xsDown>CLIENTES INATIVOS</Hidden>} />
+                        <Tab icon={<i className="fas fa-sad-tear fa-2x" />} label={<Hidden xsDown>CLIENTES INATIVOS</Hidden>} />
                     </Tooltip>
 
                     <Tooltip title='CLIENTES CANCELADOS'>
-                        <Tab icon={<i class="fas fa-ban fa-2x" />} label={<Hidden xsDown>CLIENTES CANCELADOS</Hidden>} />
+                        <Tab icon={<i className="fas fa-ban fa-2x" />} label={<Hidden xsDown>CLIENTES CANCELADOS</Hidden>} />
                     </Tooltip>
                 </Tabs>
             </Paper>
