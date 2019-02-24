@@ -1,5 +1,7 @@
 package br.com.clairtonluz.sicoba.config.security;
 
+import br.com.clairtonluz.sicoba.repository.security.UserRepository;
+import br.com.clairtonluz.sicoba.repository.security.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,12 +28,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String API_LOGIN = "/api/login";
 
     private final TokenAuthenticationService tokenAuthenticationService;
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
     private final DataSource datasource;
     private final String secret;
 
     @Autowired
-    public SecurityConfig(TokenAuthenticationService tokenAuthenticationService, DataSource datasource, @Value("${myapp.boleto.notification-url}") String secret) {
+    public SecurityConfig(TokenAuthenticationService tokenAuthenticationService, UserRepository userRepository, UserRoleRepository userRoleRepository, DataSource datasource, @Value("${myapp.boleto.notification-url}") String secret) {
         this.tokenAuthenticationService = tokenAuthenticationService;
+        this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
         this.datasource = datasource;
         this.secret = secret;
     }
@@ -47,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 // filtra requisições de login
-                .addFilterBefore(new JWTLoginFilter(API_LOGIN, HttpMethod.POST, authenticationManager(), secret, tokenAuthenticationService),
+                .addFilterBefore(new JWTLoginFilter(API_LOGIN, HttpMethod.POST, authenticationManager(), secret, tokenAuthenticationService, userRepository, userRoleRepository),
                         UsernamePasswordAuthenticationFilter.class)
 
                 // filtra outras requisições para verificar a presença do JWT no header

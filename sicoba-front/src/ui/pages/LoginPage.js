@@ -11,6 +11,7 @@ import logo from '../../images/logo.png';
 import backgroundLogin from '../../images/bg-login.png';
 import {IconButton, InputAdornment, TextField} from "@material-ui/core";
 import {AuthContext} from "../../contexts/auth-context";
+import AuthApi from "../../resources/auth-api";
 
 const styles = theme => ({
     root: {
@@ -78,15 +79,18 @@ class LoginPage extends React.Component {
         this.setState(state => ({showPassword: !state.showPassword}));
     };
 
-    login = (event) => {
+    login = async (event) => {
         event.preventDefault();
-        let credential = {
-            ...this.state,
-            nome: 'Clairton Luz',
-            iniciais: 'CL',
-            email: 'clairton.luz@bytecominformatica.com.br'
-        };
-        this.context.login(credential);
+        let {username, password, lembrar} = this.state;
+        let response = await new AuthApi().login(username, password, lembrar);
+        console.log('response', response);
+        // let credential = {
+        //     ...this.state,
+        //     nome: 'Clairton Luz',
+        //     iniciais: 'CL',
+        //     email: 'clairton.luz@bytecominformatica.com.br'
+        // };
+        // this.context.login(credential);
     };
 
     render() {
