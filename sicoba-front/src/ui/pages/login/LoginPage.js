@@ -7,59 +7,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
-import logo from '../../images/logo.png';
-import backgroundLogin from '../../images/bg-login.png';
-import {IconButton, InputAdornment, TextField} from "@material-ui/core";
-import {AuthContext} from "../../contexts/auth-context";
-import AuthApi from "../../resources/auth-api";
-
-const styles = theme => ({
-    root: {
-        height: '100%',
-        paddingTop: theme.spacing.unit * 1,
-        paddingBottom: theme.spacing.unit * 1,
-        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-            backgroundImage: `url(${backgroundLogin})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-        },
-    },
-    main: {
-        width: 'auto',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        marginLeft: theme.spacing.unit * 1,
-        marginRight: theme.spacing.unit * 1,
-        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-            width: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-    },
-    paper: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-    },
-    logo: {
-        width: `${theme.spacing.unit * 20}px`,
-        marginTop: theme.spacing.unit * 6,
-    },
-    form: {
-        height: '100%',
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing.unit * 6,
-    },
-    submit: {
-        marginTop: theme.spacing.unit * 3,
-    },
-    textField: {
-        // flexBasis: 200,
-        // margin: theme.spacing.unit,
-    },
-});
+import logo from '../../../images/logo.png';
+import {IconButton, InputAdornment, Snackbar} from "@material-ui/core";
+import {AuthContext} from "../../../contexts/auth-context";
+import loginStyles from "./loginStyles";
+import MyTextField from "../../components/inputs/MyTextField";
+import CloseIcon from '@material-ui/icons/Close';
+import MySnackbar from "../../components/MySnackbar";
 
 class LoginPage extends React.Component {
     state = {
@@ -82,8 +36,8 @@ class LoginPage extends React.Component {
     login = async (event) => {
         event.preventDefault();
         let {username, password, lembrar} = this.state;
-        let response = await new AuthApi().login(username, password, lembrar);
-        console.log('response', response);
+        await this.context.login(username, password, lembrar);
+        // console.log('response', response);
         // let credential = {
         //     ...this.state,
         //     nome: 'Clairton Luz',
@@ -94,7 +48,10 @@ class LoginPage extends React.Component {
     };
 
     render() {
-        const {classes} = this.props;
+        let {classes} = this.props;
+        let currentUserSnapshot = this.context.currentUser;
+        console.log('user', currentUserSnapshot);
+        // return <Test/>;
         return (
             <div className={classes.root}>
                 <div className={classes.main}>
@@ -104,10 +61,8 @@ class LoginPage extends React.Component {
 
                         <form className={classes.form} onSubmit={this.login}>
                             <FormControl margin="normal" required fullWidth>
-                                <TextField
+                                <MyTextField
                                     id="username"
-                                    fullWidth
-                                    className={classes.textField}
                                     placeholder="Usuário"
                                     value={this.state.username}
                                     onChange={this.handleChange('username')}
@@ -123,10 +78,8 @@ class LoginPage extends React.Component {
                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
-                                <TextField
+                                <MyTextField
                                     id="password"
-                                    fullWidth
-                                    className={classes.textField}
                                     type={this.state.showPassword ? 'text' : 'password'}
                                     placeholder="Senha"
                                     value={this.state.password}
@@ -169,6 +122,40 @@ class LoginPage extends React.Component {
                                 Entrar
                             </Button>
                         </form>
+
+                        {/*<MySnackbar message={'testse'}*/}
+                                    {/*// onClose={this.context.logout}*/}
+                            {/*onClose={()=> console.log('close')}*/}
+                                    {/*// open={currentUserSnapshot.hasError()}*/}
+                                    {/*open={true}*/}
+                        {/*/>*/}
+                        <Snackbar
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            open={currentUserSnapshot.hasError()}
+                            autoHideDuration={6000}
+                            onClose={this.context.logout}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">{currentUserSnapshot.error}</span>}
+                            action={[
+                                <Button key="undo" color="secondary" size="small" onClick={this.context.logout}>
+                                    UNDO
+                                </Button>,
+                                <IconButton
+                                    key="close"
+                                    aria-label="Close"
+                                    color="inherit"
+                                    className={classes.close}
+                                    onClick={this.context.logout}
+                                >
+                                    <CloseIcon />
+                                </IconButton>,
+                            ]}
+                        />
                     </Paper>
                 </div>
             </div>
@@ -180,4 +167,4 @@ LoginPage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(loginStyles)(LoginPage);
