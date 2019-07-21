@@ -5,10 +5,9 @@ spring:
     url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
     maxActive: 10
     driverClassName: org.postgresql.Driver
-    maxIdle: 5
-    minIdle: 1
-    initialSize: 1
-    removeAbandoned: true
+    remove-abandoned: true
+    testOnBorrow: true
+    validationQuery: SELECT 1
     username: ${DATABASE_USER}
     password: ${DATABASE_PASS}
   jpa:

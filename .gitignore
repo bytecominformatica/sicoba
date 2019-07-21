@@ -30,3 +30,4 @@ src/main/resources/public/dist/js/app.js
 #!app.jar
 /bin/
 .env
+.vscode/
